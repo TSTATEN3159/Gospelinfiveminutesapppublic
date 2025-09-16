@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, MessageCircle } from "lucide-react";
+import { Send, MessageCircle, Book } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
+import { useToast } from "@/hooks/use-toast";
 
 interface Message {
   id: string;
@@ -19,26 +22,48 @@ interface AskPastorSectionProps {
 export default function AskPastorSection({ backgroundImage }: AskPastorSectionProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const { toast } = useToast();
 
-  // todo: remove mock functionality - replace with OpenAI API
-  const mockPastorResponses = [
-    {
-      content: "Thank you for your question about faith during difficult times. In Matthew 17:20, Jesus tells us that with faith as small as a mustard seed, we can move mountains. This teaches us that even small faith can accomplish great things when placed in God's hands.",
-      scriptureRef: "Matthew 17:20"
+  // OpenAI Pastor API Integration  
+  const askPastorMutation = useMutation({
+    mutationFn: async (question: string) => {
+      const response = await fetch("/api/ask-pastor", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ question }),
+      });
+      return response.json();
     },
-    {
-      content: "Your question about God's love is beautiful. Romans 8:38-39 reminds us that nothing can separate us from God's love - not trouble, hardship, or any circumstance. His love for you is unchanging and eternal.",
-      scriptureRef: "Romans 8:38-39"
+    onSuccess: (data: any, question) => {
+      if (data.success) {
+        const pastorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "pastor",
+          content: data.response,
+          timestamp: new Date(),
+          scriptureRef: data.scriptureRef
+        };
+        setMessages(prev => [...prev, pastorMessage]);
+      } else {
+        toast({
+          title: "Pastor Unavailable",
+          description: data.error || "Please try asking your question again.",
+          variant: "destructive"
+        });
+      }
     },
-    {
-      content: "What a wonderful question about prayer! In 1 Thessalonians 5:17, Paul encourages us to 'pray continually.' This means we can talk to God throughout our day, sharing our joys, concerns, and gratitude with Him.",
-      scriptureRef: "1 Thessalonians 5:17"
+    onError: (error) => {
+      console.error("Ask Pastor error:", error);
+      toast({
+        title: "Connection Issue",
+        description: "Unable to reach the pastor right now. Please try again.",
+        variant: "destructive"
+      });
     }
-  ];
+  });
 
-  const handleSendMessage = async () => {
-    if (!currentMessage.trim()) return;
+  const handleSendMessage = () => {
+    if (!currentMessage.trim() || askPastorMutation.isPending) return;
 
     const userMessage: Message = {
       id: Date.now().toString(),
@@ -47,24 +72,12 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
       timestamp: new Date()
     };
 
+    const questionToSend = currentMessage;
     setMessages(prev => [...prev, userMessage]);
     setCurrentMessage("");
-    setIsLoading(true);
-
-    // todo: remove mock functionality - replace with OpenAI API
-    setTimeout(() => {
-      const randomResponse = mockPastorResponses[Math.floor(Math.random() * mockPastorResponses.length)];
-      const pastorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "pastor",
-        content: randomResponse.content,
-        timestamp: new Date(),
-        scriptureRef: randomResponse.scriptureRef
-      };
-      
-      setMessages(prev => [...prev, pastorMessage]);
-      setIsLoading(false);
-    }, 2000);
+    
+    // Call OpenAI API via server route
+    askPastorMutation.mutate(questionToSend);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -117,20 +130,24 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
               >
                 <p className="text-sm leading-relaxed">{message.content}</p>
                 {message.scriptureRef && (
-                  <p className="text-xs mt-2 opacity-80 font-medium">📖 {message.scriptureRef}</p>
+                  <div className="flex items-center gap-1 mt-2">
+                    <Book className="w-3 h-3 opacity-80" />
+                    <p className="text-xs opacity-80 font-medium">{message.scriptureRef}</p>
+                  </div>
                 )}
               </div>
             </div>
           ))}
           
-          {isLoading && (
-            <div className="flex justify-start">
+          {askPastorMutation.isPending && (
+            <div className="flex justify-start" data-testid="loading-pastor">
               <div className="bg-secondary p-3 rounded-lg">
                 <div className="flex space-x-1">
                   <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
                   <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
                   <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
                 </div>
+                <p className="text-xs text-muted-foreground mt-1">Pastor is praying and thinking...</p>
               </div>
             </div>
           )}
@@ -144,12 +161,12 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
             placeholder="Ask your Bible question here..."
             rows={2}
             className="resize-none"
-            disabled={isLoading}
+            disabled={askPastorMutation.isPending}
             data-testid="textarea-question"
           />
           <Button
             onClick={handleSendMessage}
-            disabled={!currentMessage.trim() || isLoading}
+            disabled={!currentMessage.trim() || askPastorMutation.isPending}
             size="icon"
             className="h-auto"
             data-testid="button-send"

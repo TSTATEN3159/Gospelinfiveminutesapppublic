@@ -10,7 +10,7 @@ import BottomNavigation from "./components/BottomNavigation";
 
 // Pages
 import HomePage from "./pages/HomePage";
-import BiblePage from "./pages/BiblePage";
+import AskPage from "./pages/BiblePage";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/MorePage";
 
@@ -23,7 +23,7 @@ interface User {
   phone: string;
 }
 
-type NavPage = "home" | "bible" | "search" | "more";
+type NavPage = "home" | "ask" | "search" | "more";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -78,8 +78,8 @@ function App() {
     switch (currentPage) {
       case "home":
         return <HomePage user={user || undefined} />;
-      case "bible":
-        return <BiblePage />;
+      case "ask":
+        return <AskPage />;
       case "search":
         return <SearchPage />;
       case "more":

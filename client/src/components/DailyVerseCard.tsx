@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Copy, Share2, Book } from "lucide-react";
+import { Separator } from "@/components/ui/separator";
+import { Copy, Share2, Book, Lightbulb, Heart } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface Verse {
@@ -9,6 +10,8 @@ interface Verse {
   reference: string;
   chapter: string;
   book: string;
+  meaning?: string;
+  application?: string;
 }
 
 interface DailyVerseCardProps {
@@ -67,8 +70,17 @@ export default function DailyVerseCard({ verse, backgroundImage }: DailyVerseCar
     });
   };
 
+  // todo: Replace with API call to get meaning and application
+  const getMeaning = () => {
+    return verse.meaning || "This verse teaches us about trusting God completely rather than relying on our own understanding. It emphasizes surrendering our will to God's wisdom and allowing Him to guide our paths. When we acknowledge God in all our decisions, He promises to direct our steps toward righteousness.";
+  };
+
+  const getApplication = () => {
+    return verse.application || "Today, bring every decision—big or small—to God in prayer. Before acting on your own understanding, pause and ask for His wisdom. Trust that His guidance, even when it doesn't align with your plans, leads to the best outcome for your life.";
+  };
+
   return (
-    <Card className="relative overflow-hidden min-h-[300px] shadow-lg" data-testid="card-dailyVerse">
+    <Card className="relative overflow-hidden shadow-lg" data-testid="card-dailyVerse">
       {backgroundImage && (
         <div 
           className="absolute inset-0 bg-cover bg-center opacity-80"
@@ -77,8 +89,9 @@ export default function DailyVerseCard({ verse, backgroundImage }: DailyVerseCar
       )}
       <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30" />
       
-      <CardContent className="relative z-10 p-8 h-full flex flex-col justify-between text-white">
-        <div className="text-center space-y-6">
+      <CardContent className="relative z-10 p-6 text-white space-y-6">
+        {/* Verse Section */}
+        <div className="text-center space-y-4">
           <h2 className="text-2xl font-bold">Today's Verse</h2>
           
           <blockquote className="text-lg leading-relaxed font-serif italic">
@@ -90,7 +103,36 @@ export default function DailyVerseCard({ verse, backgroundImage }: DailyVerseCar
           </cite>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-3 mt-8">
+        <Separator className="bg-white/30" />
+
+        {/* Meaning Section */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 justify-center">
+            <Lightbulb className="w-5 h-5 text-yellow-300" />
+            <h3 className="font-bold text-lg">Meaning</h3>
+          </div>
+          <p className="text-sm leading-relaxed text-white/90 text-center">
+            {getMeaning()}
+          </p>
+        </div>
+
+        <Separator className="bg-white/30" />
+
+        {/* Application Section */}
+        <div className="space-y-3">
+          <div className="flex items-center gap-2 justify-center">
+            <Heart className="w-5 h-5 text-red-300" />
+            <h3 className="font-bold text-lg">Application</h3>
+          </div>
+          <p className="text-sm leading-relaxed text-white/90 text-center">
+            {getApplication()}
+          </p>
+        </div>
+
+        <Separator className="bg-white/30" />
+
+        {/* Action Buttons */}
+        <div className="flex flex-wrap justify-center gap-3">
           <Button
             variant="outline"
             size="sm"
