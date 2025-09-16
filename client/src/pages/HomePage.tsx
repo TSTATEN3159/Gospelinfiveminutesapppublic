@@ -42,7 +42,7 @@ export default function HomePage({ user }: HomePageProps) {
   };
 
   return (
-    <div className="pb-20 px-4 py-6">
+    <div className="min-h-screen bg-background pb-20 px-4 py-6">
       {/* App Title */}
       <div className="text-center mb-6">
         <h1 className="text-4xl font-bold text-primary" style={{ fontFamily: 'var(--font-cursive)' }}>
