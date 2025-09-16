@@ -1,97 +1,98 @@
 # Design Guidelines for "The Gospel in 5 Minutes" App
 
-## Design Approach: Reference-Based with Spiritual Focus
-Drawing inspiration from wellness apps like Headspace and Calm, combined with the clean functionality of Bible apps like YouVersion, creating a peaceful yet vibrant spiritual experience.
+## Design Approach: Warm Brown Sanctuary Theme
+Creating a peaceful, warm spiritual experience using rich brown and cream tones that evoke comfort, stability, and natural warmth - like sitting in a cozy wooden chapel or reading by a warm fireplace.
 
 ## Core Design Elements
 
 ### Color Palette
-**Primary Colors:**
-- Soft Blue: 210 45% 85% (peaceful, spiritual)
-- Deep Navy: 215 60% 25% (grounding, trustworthy)
-- Pure White: 0 0% 100% (clean background)
+**Primary Colors (Light Mode):**
+- Cream Background: 35 20% 96% (soft, warm base)
+- Rich Brown: 25 45% 35% (primary actions, grounding)
+- Dark Brown Text: 25 30% 15% (excellent readability)
+
+**Secondary Colors:**
+- Warm Beige: 30 25% 92% (cards, elevated surfaces)
+- Light Brown: 30 20% 85% (secondary elements)
+- Medium Brown: 30 15% 80% (borders, muted elements)
 
 **Accent Colors:**
-- Warm Gold: 45 85% 65% (divine, uplifting)
-- Gentle Green: 145 40% 70% (growth, hope)
-- Soft Purple: 270 35% 75% (spiritual contemplation)
+- Warm Tan: 35 40% 65% (highlights, gentle emphasis)
+- Deep Coffee: 25 35% 25% (strong emphasis)
+- Soft Caramel: 30 55% 60% (interactive elements)
 
-**Gradients:**
-- Subtle sky gradients (blue to white) for section backgrounds
-- Warm sunrise gradients (gold to soft orange) for call-to-action areas
+**Dark Mode Adaptation:**
+- Deep Brown Base: 25 25% 8% (rich dark foundation)
+- Warm Light Text: 35 15% 85% (comfortable on dark)
+- Golden Brown Accents: 35 50% 55% (warm highlights)
 
 ### Typography
-- **Primary Font:** Inter (Google Fonts) - clean, readable
-- **Scripture Font:** Crimson Text (Google Fonts) - elegant serif for Bible verses
-- **Sizes:** Text-sm to text-2xl for hierarchy
+- **Primary Font:** Inter - clean, readable for all content
+- **Scripture Font:** Crimson Text - elegant serif for Bible verses  
+- **App Title:** Dancing Script - cursive for warm, personal feel
+- **Sizes:** Text-sm to text-2xl for clear hierarchy
 - **Weights:** Regular (400) and semibold (600)
 
 ### Layout System
-**Spacing:** Tailwind units of 4, 6, 8, and 12 for consistent rhythm
-- Generous padding (p-8, p-12) for breathing room
-- Consistent gaps (gap-6, gap-8) between elements
+**Spacing:** Consistent Tailwind units (4, 6, 8, 12) for harmonious rhythm
+- Generous padding for breathing room and comfort
+- Consistent gaps between elements
+- Warm, inviting white space
 
 ### Component Library
 
-**Main Navigation:**
-- Four colorful rounded squares/cards in 2x2 grid
-- Each card: 200px minimum height with gradient backgrounds
-- Subtle shadow and hover lift effect
+**Bottom Navigation:**
+- Four small brown-toned squares with icons
+- Subtle warm shadows and gentle hover effects
+- Active states in rich brown
 
 **Daily Verse Section:**
-- Centered card with scripture in elegant typography
-- Share and copy buttons with soft styling
-- Link to full chapter in subtle text
+- Cream-colored card with warm brown borders
+- Scripture in elegant typography
+- Warm brown action buttons
+- Soft caramel accents for links
 
 **User Registration Modal:**
-- Clean white modal with soft shadows
-- Friendly form styling with rounded inputs
-- Gentle blue submit button
+- Clean cream modal with warm brown shadows
+- Friendly form styling with soft brown borders
+- Rich brown submit buttons
 
-**Emotion Dropdown:**
-- Searchable select with 100+ emotions
-- Clean results display with relevant verses
-- Uplifting messaging throughout
+**Emotion & Scripture Finder:**
+- Warm searchable interface
+- Results in comfortable brown tones
+- Encouraging, gentle messaging
 
 **Ask the Pastor:**
-- Chat-like interface with clean bubbles
-- AI responses with clear Scripture references
-- Encouraging tone in all interactions
+- Chat interface with warm brown and cream bubbles
+- User messages in rich brown
+- Pastor responses in soft cream with brown text
+- Scripture references with book icons
 
 **Bible Search:**
-- Simple search bar with version selector
-- Clean results formatting
-- Easy verse copying functionality
+- Simple search in warm brown styling
+- Clean results with comfortable contrast
+- Easy copying with brown accent buttons
 
 ### Visual Elements
 
-**Section Cards:**
-Each functional area represented by vibrant, relevant imagery:
-- **Daily Verse:** Sunrise over peaceful landscape
-- **Feelings & Scripture:** Gentle hands or peaceful nature scene
-- **Ask Pastor:** Warm, welcoming pastoral imagery
-- **Bible Search:** Open book with soft lighting
-
 **Time-Based Greetings:**
-- Morning: Soft sunrise colors
-- Afternoon: Bright, clear sky tones
-- Evening: Gentle sunset warmth
+- Morning: Soft cream with warm brown accents
+- Afternoon: Balanced brown and cream
+- Evening: Deeper brown tones with golden highlights
 
-### Images
-**Hero Section:** No large hero image - focus on functional card grid
-**Section Cards:** Each 200x300px card features relevant spiritual imagery:
-- Peaceful landscapes for daily verse
-- Comforting scenes for emotional support
-- Warm, approachable imagery for pastor section
-- Clean, scholarly visuals for Bible search
+**Interactive States:**
+- Hover: Subtle brown elevation
+- Active: Rich brown emphasis
+- Focus: Warm brown ring indicators
+- Loading: Gentle brown animations
 
 ### Accessibility & Interaction
-- High contrast ratios for all text
-- Gentle hover states without aggressive animations
-- Touch-friendly button sizes (minimum 44px)
-- Clear focus indicators for keyboard navigation
+- High contrast between brown text and cream backgrounds
+- Gentle hover states with warm brown elevations
+- Touch-friendly buttons (minimum 44px)
+- Clear brown focus indicators
 - Encouraging micro-copy throughout
-- Loading states with peaceful animations
+- Loading states with peaceful brown animations
 
 ### Overall Aesthetic
-Clean, peaceful, and uplifting interface that feels like a spiritual sanctuary. White background provides calm foundation while colorful sections add warmth and engagement without overwhelming the peaceful atmosphere.
+A warm, inviting spiritual sanctuary using natural brown and cream tones. The color scheme evokes the comfort of natural wood, warm earth, and cozy reading spaces - creating an environment that feels safe, stable, and spiritually nourishing. Every element uses variations of brown and cream to maintain perfect color harmony throughout the entire app experience.
