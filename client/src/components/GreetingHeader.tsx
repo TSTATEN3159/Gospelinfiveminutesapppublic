@@ -55,13 +55,13 @@ export default function GreetingHeader({ user }: GreetingHeaderProps) {
 
   return (
     <div 
-      className={`bg-gradient-to-r ${getGradientClass()} p-6 text-center rounded-lg mb-8`}
+      className={`bg-gradient-to-r ${getGradientClass()} p-4 text-center rounded-lg mb-4`}
       data-testid="greeting-header"
     >
-      <h1 className="text-3xl font-bold text-primary mb-2">
+      <h2 className="text-xl font-semibold text-primary mb-1">
         {greeting}{user ? `, ${user.firstName}` : ""}!
-      </h1>
-      <p className="text-lg text-muted-foreground">
+      </h2>
+      <p className="text-sm text-muted-foreground">
         Welcome to your daily spiritual journey
       </p>
     </div>

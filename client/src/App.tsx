@@ -2,26 +2,17 @@ import { useState, useEffect } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { queryClient } from "./lib/queryClient";
 
 // Components
-import GreetingHeader from "./components/GreetingHeader";
 import UserRegistrationModal from "./components/UserRegistrationModal";
-import SectionCard from "./components/SectionCard";
-import DailyVerseCard from "./components/DailyVerseCard";
-import EmotionScriptureSection from "./components/EmotionScriptureSection";
-import AskPastorSection from "./components/AskPastorSection";
-import BibleSearchSection from "./components/BibleSearchSection";
+import BottomNavigation from "./components/BottomNavigation";
 
-// Icons
-import { BookOpen, Heart, MessageCircle, Search } from "lucide-react";
-
-// Images
-import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
-import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
-import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
-import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
+// Pages
+import HomePage from "./pages/HomePage";
+import BiblePage from "./pages/BiblePage";
+import SearchPage from "./pages/SearchPage";
+import MorePage from "./pages/MorePage";
 
 interface User {
   firstName: string;
@@ -32,14 +23,15 @@ interface User {
   phone: string;
 }
 
-type ModalType = "dailyVerse" | "emotions" | "askPastor" | "bibleSearch" | null;
+type NavPage = "home" | "bible" | "search" | "more";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
-  const [activeModal, setActiveModal] = useState<ModalType>(null);
+  const [currentPage, setCurrentPage] = useState<NavPage>("home");
+  const [language, setLanguage] = useState("en");
 
-  // Check if user is registered on first visit
+  // Check if user is registered on first visit and detect language
   useEffect(() => {
     const userData = localStorage.getItem("gospelAppUser");
     if (userData) {
@@ -48,6 +40,23 @@ function App() {
       // Show registration modal for first-time users
       setShowRegistration(true);
     }
+
+    // Detect user language based on browser/location
+    const detectLanguage = () => {
+      const savedLanguage = localStorage.getItem("gospelAppLanguage");
+      if (savedLanguage) {
+        setLanguage(savedLanguage);
+      } else {
+        // Use browser language detection
+        const browserLang = navigator.language.split("-")[0];
+        const supportedLanguages = ["en", "es", "fr", "pt", "zh", "ar", "hi"];
+        const detectedLang = supportedLanguages.includes(browserLang) ? browserLang : "en";
+        setLanguage(detectedLang);
+        localStorage.setItem("gospelAppLanguage", detectedLang);
+      }
+    };
+
+    detectLanguage();
   }, []);
 
   const handleRegistrationComplete = (userData?: User) => {
@@ -58,121 +67,48 @@ function App() {
     setShowRegistration(false);
   };
 
-  // todo: remove mock functionality - replace with real Bible API
-  const mockDailyVerse = {
-    text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
-    reference: "Proverbs 3:5-6",
-    chapter: "3",
-    book: "Proverbs"
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage);
+    localStorage.setItem("gospelAppLanguage", newLanguage);
+    // todo: implement actual language translations
+    console.log("Language changed to:", newLanguage);
   };
 
-  const sections = [
-    {
-      id: "dailyVerse" as const,
-      title: "Daily Verse",
-      description: "Discover today's inspiring Bible verse to guide your spiritual journey",
-      icon: BookOpen,
-      backgroundImage: sunriseImage,
-      gradientFrom: "from-yellow-400",
-      gradientTo: "to-orange-500"
-    },
-    {
-      id: "emotions" as const,
-      title: "Feelings & Scripture",
-      description: "Find Bible verses that speak to your heart based on how you're feeling today",
-      icon: Heart,
-      backgroundImage: handsImage,
-      gradientFrom: "from-green-400",
-      gradientTo: "to-blue-500"
-    },
-    {
-      id: "askPastor" as const,
-      title: "Ask the Pastor",
-      description: "Get Scripture-based answers to your Bible questions from our AI pastor",
-      icon: MessageCircle,
-      backgroundImage: shepherdImage,
-      gradientFrom: "from-purple-400",
-      gradientTo: "to-pink-500"
-    },
-    {
-      id: "bibleSearch" as const,
-      title: "Bible Search",
-      description: "Search for any Bible verse by reference and explore different translations",
-      icon: Search,
-      backgroundImage: bibleImage,
-      gradientFrom: "from-blue-400",
-      gradientTo: "to-indigo-500"
+  const renderCurrentPage = () => {
+    switch (currentPage) {
+      case "home":
+        return <HomePage user={user || undefined} />;
+      case "bible":
+        return <BiblePage />;
+      case "search":
+        return <SearchPage />;
+      case "more":
+        return <MorePage language={language} onLanguageChange={handleLanguageChange} />;
+      default:
+        return <HomePage user={user || undefined} />;
     }
-  ];
+  };
 
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
         <div className="min-h-screen bg-background">
-          <div className="container mx-auto px-4 py-8 max-w-6xl">
-            {/* Greeting Header */}
-            <GreetingHeader user={user || undefined} />
+          {/* Current Page Content */}
+          <main className="min-h-screen">
+            {renderCurrentPage()}
+          </main>
 
-            {/* Main Sections Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {sections.map((section) => (
-                <SectionCard
-                  key={section.id}
-                  title={section.title}
-                  description={section.description}
-                  icon={section.icon}
-                  backgroundImage={section.backgroundImage}
-                  gradientFrom={section.gradientFrom}
-                  gradientTo={section.gradientTo}
-                  onClick={() => setActiveModal(section.id)}
-                  testId={`card-${section.id}`}
-                />
-              ))}
-            </div>
-
-            {/* App Description */}
-            <div className="mt-12 text-center">
-              <h2 className="text-2xl font-bold text-primary mb-4">
-                The Gospel in 5 Minutes
-              </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-                Discover the transformative power of God's word in just a few minutes each day. 
-                Whether you're seeking comfort, guidance, or simply want to grow in your faith, 
-                find what your heart needs through Scripture.
-              </p>
-            </div>
-          </div>
+          {/* Bottom Navigation */}
+          <BottomNavigation 
+            currentPage={currentPage} 
+            onPageChange={setCurrentPage} 
+          />
 
           {/* Registration Modal */}
           <UserRegistrationModal 
             isOpen={showRegistration} 
             onClose={handleRegistrationComplete} 
           />
-
-          {/* Section Modals */}
-          <Dialog open={activeModal === "dailyVerse"} onOpenChange={() => setActiveModal(null)}>
-            <DialogContent className="max-w-2xl">
-              <DailyVerseCard verse={mockDailyVerse} backgroundImage={sunriseImage} />
-            </DialogContent>
-          </Dialog>
-
-          <Dialog open={activeModal === "emotions"} onOpenChange={() => setActiveModal(null)}>
-            <DialogContent className="max-w-2xl">
-              <EmotionScriptureSection backgroundImage={handsImage} />
-            </DialogContent>
-          </Dialog>
-
-          <Dialog open={activeModal === "askPastor"} onOpenChange={() => setActiveModal(null)}>
-            <DialogContent className="max-w-2xl max-h-[80vh]">
-              <AskPastorSection backgroundImage={shepherdImage} />
-            </DialogContent>
-          </Dialog>
-
-          <Dialog open={activeModal === "bibleSearch"} onOpenChange={() => setActiveModal(null)}>
-            <DialogContent className="max-w-2xl">
-              <BibleSearchSection backgroundImage={bibleImage} />
-            </DialogContent>
-          </Dialog>
         </div>
 
         <Toaster />
