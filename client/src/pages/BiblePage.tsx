@@ -47,7 +47,7 @@ export default function AskPage() {
             textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
             color: '#8B4513'
           }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
-            The Gospel in 5 Minutes
+            The Gospel in 5 Minutes™
           </h2>
         </div>
       </div>

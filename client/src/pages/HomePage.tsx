@@ -86,8 +86,8 @@ export default function HomePage({ user }: HomePageProps) {
           </div>
         </div>
         
-        {/* Social Media Buttons */}
-        <div className="flex justify-start gap-3 mb-3">
+        {/* Social Media Buttons - Centered on Home only */}
+        <div className="flex justify-center gap-3 mb-3">
           <a 
             href="https://www.facebook.com/TheGospelIn5Minutes" 
             target="_blank" 
@@ -119,7 +119,7 @@ export default function HomePage({ user }: HomePageProps) {
             textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
             color: '#8B4513'
           }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
-            The Gospel in 5 Minutes
+            The Gospel in 5 Minutes™
           </h2>
         </div>
       </div>

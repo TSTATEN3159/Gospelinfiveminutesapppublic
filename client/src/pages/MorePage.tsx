@@ -145,7 +145,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate }: Mor
         <Card className="mt-8">
           <CardContent className="p-4 text-center">
             <h3 className="font-bold text-primary text-lg" style={{ fontFamily: 'var(--font-cursive)' }}>
-              The Gospel in 5 Minutes
+              The Gospel in 5 Minutes™
             </h3>
             <p className="text-sm text-muted-foreground mt-1">
               Bringing God's word to the world
