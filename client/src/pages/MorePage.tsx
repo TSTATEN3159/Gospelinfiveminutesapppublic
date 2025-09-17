@@ -185,6 +185,23 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             </p>
           </CardContent>
         </Card>
+        
+        {/* Professional Website Footer */}
+        <div className="mt-8 pt-6 border-t border-gray-200">
+          <div className="text-center">
+            <p className="text-sm text-gray-500 mb-2">Visit our website for more resources</p>
+            <a 
+              href="https://www.thegospelin5minutes.org" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200"
+              data-testid="link-website-footer-more"
+              aria-label="Visit The Gospel in 5 Minutes website - Opens in new window"
+            >
+              www.thegospelin5minutes.org
+            </a>
+          </div>
+        </div>
       </div>
     </div>
   );
