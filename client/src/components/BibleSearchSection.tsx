@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Copy, Book } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import openBibleImage from '@assets/generated_images/Open_used_Bible_pages_5ad97f45.png';
 
 interface SearchResult {
   text: string;
@@ -186,6 +187,19 @@ export default function BibleSearchSection({ backgroundImage }: BibleSearchSecti
             <p>No results found. Please check your verse reference and try again.</p>
           </div>
         )}
+        
+        {/* Open Bible Image at Bottom */}
+        <div className="mt-6">
+          <div className="relative">
+            <img 
+              src={openBibleImage}
+              alt="Open Bible with worn pages"
+              className="w-full h-32 object-cover rounded-lg shadow-md"
+              style={{ objectPosition: 'center' }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+          </div>
+        </div>
       </CardContent>
     </Card>
   );

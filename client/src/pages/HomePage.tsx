@@ -7,7 +7,7 @@ import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Book, FileText, Cross, Infinity, Facebook, Loader2, AlertCircle } from "lucide-react";
+import { Book, FileText, Cross, Infinity, Facebook, Instagram, Loader2, AlertCircle } from "lucide-react";
 
 // Services
 import { bibleService, type DailyVerse } from "../services/bibleService";
@@ -79,15 +79,15 @@ export default function HomePage({ user }: HomePageProps) {
             </h1>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="flex items-center gap-1 text-sm text-gray-600">
-              <Infinity className="w-4 h-4" />
-              <span>{streakDays}</span>
+            <div className="flex items-center gap-1">
+              <Infinity className="w-6 h-6 text-red-600" />
+              <span className="text-lg font-bold text-red-600">{streakDays}</span>
             </div>
           </div>
         </div>
         
-        {/* Small Facebook Button */}
-        <div className="flex justify-start mb-3">
+        {/* Social Media Buttons */}
+        <div className="flex justify-start gap-3 mb-3">
           <a 
             href="https://www.facebook.com/TheGospelIn5Minutes" 
             target="_blank" 
@@ -99,13 +99,25 @@ export default function HomePage({ user }: HomePageProps) {
             <Facebook className="w-3 h-3" aria-hidden="true" />
             <span>Follow</span>
           </a>
+          <a 
+            href="https://www.instagram.com/thegospelin5minutes" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs hover-elevate ios-tap-target"
+            data-testid="button-instagram-small"
+            aria-label="Follow us on Instagram - Opens in new window"
+          >
+            <Instagram className="w-3 h-3" aria-hidden="true" />
+            <span>Follow</span>
+          </a>
         </div>
         
         {/* App Title */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold text-gray-800" style={{ 
+          <h2 className="text-3xl font-bold" style={{ 
             fontFamily: 'Dancing Script, Brush Script MT, cursive',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+            color: '#8B4513'
           }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
             The Gospel in 5 Minutes
           </h2>
