@@ -79,6 +79,15 @@
   --font-sans: Inter, sans-serif;
   --font-serif: 'Crimson Text', serif;
   --font-cursive: 'Dancing Script', cursive;
+  
+  /* iOS App Store Compliance - Safe Areas and Measurements */
+  --safe-area-inset-top: env(safe-area-inset-top);
+  --safe-area-inset-right: env(safe-area-inset-right);
+  --safe-area-inset-bottom: env(safe-area-inset-bottom);
+  --safe-area-inset-left: env(safe-area-inset-left);
+  
+  /* iOS minimum tap target size (44pt = 44px at 1x scale) */
+  --ios-tap-target-min: 44px;
   --font-mono: Menlo, monospace;
   --radius: .5rem; /* 8px */
   --shadow-2xs: 0px 2px 0px 0px hsl(25 20% 60% / 0.08);
@@ -325,5 +334,79 @@
   .border.active-elevate-2:not(.no-active-interaction-elevate)::after,
   .border.hover-elevate:not(.no-hover-interaction-elevate)::after {
     inset: -1px;
+  }
+}
+
+/* iOS App Store Compliance Utilities */
+
+/* Minimum tap target size for iOS compliance (44pt) */
+.ios-tap-target {
+  min-height: var(--ios-tap-target-min);
+  min-width: var(--ios-tap-target-min);
+}
+
+/* Safe area support for iOS devices */
+.ios-safe-top {
+  padding-top: var(--safe-area-inset-top);
+}
+
+.ios-safe-bottom {
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
+.ios-safe-left {
+  padding-left: var(--safe-area-inset-left);
+}
+
+.ios-safe-right {
+  padding-right: var(--safe-area-inset-right);
+}
+
+.ios-safe-x {
+  padding-left: var(--safe-area-inset-left);
+  padding-right: var(--safe-area-inset-right);
+}
+
+.ios-safe-y {
+  padding-top: var(--safe-area-inset-top);
+  padding-bottom: var(--safe-area-inset-bottom);
+}
+
+.ios-safe-all {
+  padding-top: var(--safe-area-inset-top);
+  padding-right: var(--safe-area-inset-right);
+  padding-bottom: var(--safe-area-inset-bottom);
+  padding-left: var(--safe-area-inset-left);
+}
+
+/* VoiceOver and accessibility improvements */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  :root {
+    --border: 30 15% 60%;
+    --card-border: 30 20% 65%;
+    --sidebar-border: 30 20% 62%;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

@@ -54,10 +54,10 @@ export default function HomePage({ user }: HomePageProps) {
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100">
+      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">
+            <h1 className="text-2xl font-bold text-gray-900" aria-label="Welcome to The Gospel in 5 Minutes">
               Welcome!
             </h1>
           </div>
@@ -75,10 +75,11 @@ export default function HomePage({ user }: HomePageProps) {
             href="https://www.facebook.com/TheGospelIn5Minutes" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-full text-xs hover-elevate"
+            className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-full text-xs hover-elevate ios-tap-target"
             data-testid="button-facebook-small"
+            aria-label="Follow us on Facebook - Opens in new window"
           >
-            <Facebook className="w-3 h-3" />
+            <Facebook className="w-3 h-3" aria-hidden="true" />
             <span>Follow</span>
           </a>
         </div>
@@ -88,18 +89,27 @@ export default function HomePage({ user }: HomePageProps) {
           <h2 className="text-3xl font-bold text-gray-800" style={{ 
             fontFamily: 'Dancing Script, Brush Script MT, cursive',
             textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
-          }}>
+          }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
             The Gospel in 5 Minutes
           </h2>
         </div>
       </div>
 
-      <div className="px-4 py-4 space-y-4">
+      <div className="px-4 py-4 space-y-4 ios-safe-bottom">
         {/* Daily Verse Card with Image */}
         <div 
           className="bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer hover-elevate"
           onClick={() => setShowVerseModal(true)}
           data-testid="card-dailyVerse"
+          role="button"
+          tabIndex={0}
+          aria-label="Today's Scripture - Click to view full verse with meaning and application"
+          onKeyDown={(e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+              e.preventDefault();
+              setShowVerseModal(true);
+            }
+          }}
         >
           <div className="flex items-center p-4">
             <div className="flex-1 pr-4">

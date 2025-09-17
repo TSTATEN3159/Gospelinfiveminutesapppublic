@@ -1,0 +1,114 @@
+{
+  "appPrivacy": {
+    "dataCollected": [
+      {
+        "category": "Contact Info",
+        "types": [
+          {
+            "dataType": "Name",
+            "purposes": ["App Functionality", "Product Personalization"],
+            "linkedToUser": true,
+            "usedForTracking": false,
+            "dataSource": "User"
+          },
+          {
+            "dataType": "Email Address",
+            "purposes": ["App Functionality", "Product Personalization", "Customer Support"],
+            "linkedToUser": true,
+            "usedForTracking": false,
+            "dataSource": "User"
+          },
+          {
+            "dataType": "Phone Number",
+            "purposes": ["App Functionality", "Customer Support"],
+            "linkedToUser": true,
+            "usedForTracking": false,
+            "dataSource": "User"
+          }
+        ]
+      },
+      {
+        "category": "User Content",
+        "types": [
+          {
+            "dataType": "Other User Content",
+            "description": "Questions submitted to Ask the Pastor feature",
+            "purposes": ["App Functionality", "Product Personalization"],
+            "linkedToUser": true,
+            "usedForTracking": false,
+            "dataSource": "User",
+            "thirdPartyProcessing": {
+              "processor": "OpenAI",
+              "purpose": "Generate Biblical guidance responses",
+              "dataSharing": "For processing only, subject to OpenAI's privacy policy"
+            }
+          }
+        ]
+      },
+      {
+        "category": "Usage Data",
+        "types": [
+          {
+            "dataType": "Product Interaction",
+            "description": "Daily app usage, streak counters, verse preferences",
+            "purposes": ["App Functionality", "Product Personalization", "Analytics"],
+            "linkedToUser": true,
+            "usedForTracking": false,
+            "dataSource": "Generated"
+          }
+        ]
+      },
+      {
+        "category": "Identifiers",
+        "types": [
+          {
+            "dataType": "User ID",
+            "description": "Internal app identifier for user preferences",
+            "purposes": ["App Functionality", "Analytics"],
+            "linkedToUser": true,
+            "usedForTracking": false,
+            "dataSource": "Generated"
+          }
+        ]
+      }
+    ],
+    "dataNotCollected": [
+      "Precise Location",
+      "Financial Info",
+      "Health & Fitness",
+      "Sensitive Info",
+      "Browsing History",
+      "Search History",
+      "Purchases",
+      "Diagnostics",
+      "Surroundings",
+      "Body & Mind Wellness Records",
+      "Other Diagnostic Data"
+    ],
+    "trackingPolicy": {
+      "appTracking": false,
+      "description": "This app does not use data for tracking. No IDFA collection or cross-app tracking.",
+      "attRequired": false
+    },
+    "dataRetention": {
+      "policy": "Data is retained until user requests deletion or removes the app",
+      "userControl": "Users can delete their data at any time through the Support page"
+    },
+    "childrensPrivacy": {
+      "ageRestriction": "13+",
+      "coppaCompliance": true,
+      "description": "App is designed for users 13 years and older. No knowingly collecting data from children under 13."
+    }
+  },
+  "appStoreMetadata": {
+    "privacyPolicyURL": "https://thegospelin5minutes.app/privacy",
+    "termsOfServiceURL": "https://thegospelin5minutes.app/terms",
+    "supportURL": "https://thegospelin5minutes.app/support",
+    "category": "Lifestyle",
+    "contentRating": "4+",
+    "keywords": "Bible, Gospel, Daily Devotional, Scripture, Christianity, Faith, Spiritual Growth, Prayer",
+    "subtitle": "Daily Bible verses and spiritual guidance",
+    "description": "Start each day with God's Word. The Gospel in 5 Minutes delivers daily Bible verses with meaningful explanations, AI-powered pastoral guidance, and 3-day study plans to deepen your faith journey.",
+    "whatsNew": "• Beautiful nature-themed design with vivid imagery\n• Enhanced daily streak tracking with consecutive day counter\n• Improved privacy controls and data management\n• Direct support access and feedback options\n• Optimized for iOS performance and accessibility"
+  }
+}

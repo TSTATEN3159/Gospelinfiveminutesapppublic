@@ -79,7 +79,9 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string) => {
-    setCurrentPage(page as NavPage);
+    if (page === "privacy" || page === "terms" || page === "support") {
+      setCurrentPage(page as NavPage);
+    }
   };
 
   const handleBackFromLegal = () => {
