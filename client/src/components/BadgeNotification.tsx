@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Trophy, Star, Crown, Heart, Flame, Award, Sparkles } from "lucide-react";
 
@@ -64,6 +64,11 @@ export default function BadgeNotification({ isOpen, onClose, badgeType, streakDa
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-sm text-center">
+        <DialogHeader>
+          <DialogTitle className="sr-only">
+            {badgeType} Badge Earned
+          </DialogTitle>
+        </DialogHeader>
         <div className={`relative p-6 rounded-lg bg-gradient-to-br ${getBadgeColor()}`}>
           {showConfetti && (
             <div className="absolute inset-0 pointer-events-none">
