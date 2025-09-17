@@ -42,55 +42,82 @@ export default function HomePage({ user }: HomePageProps) {
   };
 
   return (
-    <div className="min-h-screen pb-20 px-4 py-6">
-      {/* App Title */}
-      <div className="text-center mb-6">
-        <h1 
-          className="text-4xl font-bold" 
-          style={{ 
-            fontFamily: 'var(--font-cursive)', 
-            color: 'hsl(25, 45%, 35%)' 
-          }}
-        >
-          The Gospel in 5 Minutes
-        </h1>
-        <p className="mt-2" style={{ color: 'hsl(25, 20%, 50%)' }}>
-          Daily spiritual nourishment for your soul
-        </p>
+    <div className="min-h-screen pb-20">
+      {/* Header Section */}
+      <div className="bg-white px-4 py-6 border-b border-gray-100">
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">
+              Today
+            </h1>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="text-sm text-gray-600">⚡12</div>
+          </div>
+        </div>
       </div>
 
-      <div className="max-w-md mx-auto space-y-6">
-        {/* Streak Counter */}
-        <StreakCounter onBadgeEarned={handleBadgeEarned} />
-
-        {/* Greeting */}
-        <GreetingHeader user={user} />
-
-        {/* Daily Verse Card */}
+      <div className="px-4 py-4 space-y-4">
+        {/* Daily Verse Card with Image */}
         <div 
-          className="relative rounded-lg p-4 border shadow-sm cursor-pointer hover-elevate"
+          className="bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer hover-elevate"
           onClick={() => setShowVerseModal(true)}
           data-testid="card-dailyVerse"
-          style={{ 
-            backgroundColor: 'hsl(30, 25%, 92%)', 
-            borderColor: 'hsl(30, 20%, 85%)' 
-          }}
         >
-          <div 
-            className="absolute inset-0 bg-cover bg-center opacity-30 rounded-lg"
-            style={{ backgroundImage: `url(${sunriseImage})` }}
-          />
-          <div className="relative z-10">
-            <h2 className="text-lg font-semibold mb-2" style={{ color: 'hsl(25, 45%, 35%)' }}>
-              Today's Verse
-            </h2>
-            <p className="text-sm italic" style={{ color: 'hsl(25, 20%, 50%)' }}>
-              "{mockDailyVerse.text.substring(0, 80)}..."
-            </p>
-            <p className="text-xs mt-2 font-medium" style={{ color: 'hsl(25, 45%, 35%)' }}>
-              - {mockDailyVerse.reference}
-            </p>
+          <div className="flex items-center p-4">
+            <div className="flex-1 pr-4">
+              <div className="flex items-center mb-2">
+                <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center text-white text-xs font-bold mr-2">
+                  📖
+                </div>
+                <span className="text-sm font-medium text-gray-700">Daily Verse Experience</span>
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 mb-1">
+                Today's Scripture 📝
+              </h2>
+            </div>
+            <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+              <img 
+                src={sunriseImage}
+                alt="Daily verse"
+                className="w-full h-full object-cover"
+              />
+            </div>
           </div>
+        </div>
+
+        {/* Bible Study Section */}
+        <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div className="relative h-40">
+            <img 
+              src={sunriseImage}
+              alt="Bible study"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          </div>
+          <div className="p-4">
+            <h2 className="text-lg font-bold text-gray-900 mb-2">
+              3-Day Study Plans
+            </h2>
+            <p className="text-gray-600 text-sm mb-3">
+              Deepen your faith with guided Biblical studies and reflection.
+            </p>
+            <div className="flex justify-between items-center">
+              <button className="text-blue-600 font-medium text-sm">
+                Start Study
+              </button>
+              <button className="text-gray-400 text-sm">
+                Dismiss
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Streak Counter Section */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm">
+          <h2 className="text-lg font-bold text-gray-900 mb-3">Daily Progress</h2>
+          <StreakCounter onBadgeEarned={handleBadgeEarned} />
         </div>
 
         {/* Bible Study Plans */}
