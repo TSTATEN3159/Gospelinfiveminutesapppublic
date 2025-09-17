@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import GreetingHeader from "../components/GreetingHeader";
 import DailyVerseCard from "../components/DailyVerseCard";
 import StreakCounter from "../components/StreakCounter";
@@ -7,7 +7,10 @@ import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Book, FileText, Cross, Infinity, Facebook } from "lucide-react";
+import { Book, FileText, Cross, Infinity, Facebook, Loader2, AlertCircle } from "lucide-react";
+
+// Services
+import { bibleService, type DailyVerse } from "../services/bibleService";
 
 // Images
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
@@ -33,14 +36,28 @@ export default function HomePage({ user }: HomePageProps) {
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
   const [streakDays, setStreakDays] = useState(0);
+  const [dailyVerse, setDailyVerse] = useState<DailyVerse | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // todo: remove mock functionality - replace with real Bible API
-  const mockDailyVerse = {
-    text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
-    reference: "Proverbs 3:5-6",
-    chapter: "3",
-    book: "Proverbs"
-  };
+  // Load daily verse from Bible API
+  useEffect(() => {
+    const loadDailyVerse = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        const verse = await bibleService.getDailyVerse();
+        setDailyVerse(verse);
+      } catch (err) {
+        setError('Unable to load today\'s verse. Please check your connection.');
+        console.error('Failed to load daily verse:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadDailyVerse();
+  }, []);
 
   const handleBadgeEarned = (badgeType: string, streakDays: number) => {
     setBadgeData({ type: badgeType, days: streakDays });
@@ -125,12 +142,26 @@ export default function HomePage({ user }: HomePageProps) {
                 </h2>
                 <FileText className="w-4 h-4 text-gray-600" />
               </div>
-              <p className="text-sm text-gray-700 mb-1 line-clamp-2">
-                "{mockDailyVerse.text}"
-              </p>
-              <p className="text-xs text-gray-500 font-medium">
-                {mockDailyVerse.reference}
-              </p>
+              {loading ? (
+                <div className="flex items-center gap-2 text-gray-500">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span className="text-sm">Loading today's verse...</span>
+                </div>
+              ) : error ? (
+                <div className="flex items-center gap-2 text-red-500">
+                  <AlertCircle className="w-4 h-4" />
+                  <span className="text-sm">Unable to load verse</span>
+                </div>
+              ) : dailyVerse ? (
+                <>
+                  <p className="text-sm text-gray-700 mb-1 line-clamp-2">
+                    "{dailyVerse.text}"
+                  </p>
+                  <p className="text-xs text-gray-500 font-medium">
+                    {dailyVerse.reference}
+                  </p>
+                </>
+              ) : null}
             </div>
             <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
               <img 
@@ -225,7 +256,13 @@ export default function HomePage({ user }: HomePageProps) {
       {/* Modals */}
       <Dialog open={showVerseModal} onOpenChange={setShowVerseModal}>
         <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
-          <DailyVerseCard verse={mockDailyVerse} backgroundImage={sunriseImage} />
+          {dailyVerse ? (
+            <DailyVerseCard verse={dailyVerse} backgroundImage={sunriseImage} />
+          ) : (
+            <div className="p-6 text-center">
+              <p className="text-gray-500">Loading verse...</p>
+            </div>
+          )}
         </DialogContent>
       </Dialog>
 
