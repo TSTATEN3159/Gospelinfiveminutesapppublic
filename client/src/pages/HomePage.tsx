@@ -120,11 +120,30 @@ export default function HomePage({ user }: HomePageProps) {
           <StreakCounter onBadgeEarned={handleBadgeEarned} />
         </div>
 
-        {/* Bible Study Plans */}
-        <BibleStudyPlans />
+        {/* Ask Pastor Section */}
+        <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div className="p-4">
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                <span className="text-blue-600 text-sm">✝️</span>
+              </div>
+              <h2 className="text-lg font-bold text-gray-900">Ask the Pastor</h2>
+            </div>
+            <p className="text-gray-600 text-sm mb-3">
+              Get Biblical guidance and spiritual counsel for your questions.
+            </p>
+            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-medium text-sm hover-elevate">
+              Ask a Question
+            </button>
+          </div>
+        </div>
 
-        {/* Live Install Counter */}
-        <LiveInstallCounter />
+        {/* Live Install Counter - Compact */}
+        <div className="bg-white rounded-2xl p-4 shadow-sm">
+          <div className="text-center">
+            <LiveInstallCounter />
+          </div>
+        </div>
       </div>
 
       {/* Modals */}
