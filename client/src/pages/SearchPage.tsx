@@ -1,6 +1,7 @@
 import BibleSearchSection from "../components/BibleSearchSection";
 import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function SearchPage() {
   return (
@@ -38,21 +39,52 @@ export default function SearchPage() {
           </a>
         </div>
         
-        {/* App Title */}
+        {/* App Title and Donate Button */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold" style={{ 
+          <h2 className="text-3xl font-bold mb-3" style={{ 
             fontFamily: 'Dancing Script, Brush Script MT, cursive',
             textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
             color: '#8B4513'
           }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
             The Gospel in 5 Minutes™
           </h2>
+          <Button 
+            className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
+            data-testid="button-donate-search"
+            aria-label="Donate to help spread the Gospel"
+          >
+            <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
+            Donate
+          </Button>
         </div>
       </div>
 
       <div className="px-4 py-4 ios-safe-bottom">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-md mx-auto space-y-6">
           <BibleSearchSection backgroundImage={bibleImage} />
+          
+          {/* Donation Appeal Section */}
+          <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200 shadow-sm">
+            <div className="text-center">
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Heart className="w-6 h-6 text-amber-600" aria-hidden="true" />
+              </div>
+              <h3 className="text-lg font-bold text-gray-900 mb-2">
+                Help Spread God's Word
+              </h3>
+              <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+                The Gospel in 5 Minutes™ is accepting donations to get the Holy Bible to more people around the world. Your support helps us reach souls in need of spiritual guidance.
+              </p>
+              <Button 
+                className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-full font-medium shadow-sm"
+                data-testid="button-donate-appeal"
+                aria-label="Donate to help spread the Gospel worldwide"
+              >
+                <Heart className="w-4 h-4 mr-2" aria-hidden="true" />
+                Make a Donation
+              </Button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

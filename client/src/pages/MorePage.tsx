@@ -1,6 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight } from "lucide-react";
+import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface MorePageProps {
   language: string;
@@ -46,6 +47,13 @@ const menuItems = [
     description: "Terms and conditions of use",
     icon: FileText,
     comingSoon: false
+  },
+  {
+    id: "donate",
+    title: "Donate",
+    description: "Support our mission to spread the Gospel",
+    icon: DollarSign,
+    comingSoon: false
   }
 ];
 
@@ -60,6 +68,17 @@ export default function MorePage({ language, onLanguageChange, onNavigate }: Mor
       <div className="text-center mb-6">
         <h1 className="text-2xl font-bold text-primary">More</h1>
         <p className="text-muted-foreground mt-2">Settings and additional features</p>
+        <div className="mt-4">
+          <Button 
+            className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
+            data-testid="button-donate-more"
+            aria-label="Donate to help spread the Gospel"
+            onClick={() => onNavigate?.('donate')}
+          >
+            <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
+            Donate
+          </Button>
+        </div>
       </div>
 
       <div className="max-w-md mx-auto space-y-4">

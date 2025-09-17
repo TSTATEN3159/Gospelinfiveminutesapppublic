@@ -2,7 +2,8 @@ import AskPastorSection from "../components/AskPastorSection";
 import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
-import { Facebook, Instagram } from "lucide-react";
+import { Facebook, Instagram, Heart } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 export default function AskPage() {
   return (
@@ -40,15 +41,23 @@ export default function AskPage() {
           </a>
         </div>
         
-        {/* App Title */}
+        {/* App Title and Donate Button */}
         <div className="text-center">
-          <h2 className="text-3xl font-bold" style={{ 
+          <h2 className="text-3xl font-bold mb-3" style={{ 
             fontFamily: 'Dancing Script, Brush Script MT, cursive',
             textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
             color: '#8B4513'
           }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
             The Gospel in 5 Minutes™
           </h2>
+          <Button 
+            className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
+            data-testid="button-donate-ask"
+            aria-label="Donate to help spread the Gospel"
+          >
+            <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
+            Donate
+          </Button>
         </div>
       </div>
 

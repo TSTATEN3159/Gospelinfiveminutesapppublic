@@ -17,6 +17,7 @@ import MorePage from "./pages/MorePage";
 import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import SupportPage from "./pages/SupportPage";
+import DonationPage from "./pages/DonationPage";
 
 interface User {
   firstName: string;
@@ -27,12 +28,12 @@ interface User {
   phone: string;
 }
 
-type NavPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support";
+type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
-  const [currentPage, setCurrentPage] = useState<NavPage>("home");
+  const [currentPage, setCurrentPage] = useState<AppPage>("home");
   const [language, setLanguage] = useState("en");
 
   // Check if user is registered on first visit and detect language
@@ -79,8 +80,8 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string) => {
-    if (page === "privacy" || page === "terms" || page === "support") {
-      setCurrentPage(page as NavPage);
+    if (page === "privacy" || page === "terms" || page === "support" || page === "donate") {
+      setCurrentPage(page as AppPage);
     }
   };
 
@@ -104,6 +105,8 @@ function App() {
         return <TermsOfServicePage onBack={handleBackFromLegal} />;
       case "support":
         return <SupportPage onBack={handleBackFromLegal} />;
+      case "donate":
+        return <DonationPage onNavigate={handleNavigateToLegal} />;
       default:
         return <HomePage user={user || undefined} />;
     }
@@ -119,7 +122,7 @@ function App() {
           </main>
 
           {/* Bottom Navigation - Hide on legal pages */}
-          {!["privacy", "terms", "support"].includes(currentPage) && (
+          {!["privacy", "terms", "support", "donate"].includes(currentPage) && (
             <BottomNavigation 
               currentPage={currentPage} 
               onPageChange={setCurrentPage} 
