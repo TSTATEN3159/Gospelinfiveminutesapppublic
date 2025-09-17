@@ -3,7 +3,11 @@ import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e
 import { Facebook, Instagram, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function SearchPage() {
+interface SearchPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+export default function SearchPage({ onNavigate }: SearchPageProps) {
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
@@ -52,6 +56,7 @@ export default function SearchPage() {
             className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
             data-testid="button-donate-search"
             aria-label="Donate to help spread the Gospel"
+            onClick={() => onNavigate?.('donate')}
           >
             <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
             Donate
@@ -79,6 +84,7 @@ export default function SearchPage() {
                 className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-full font-medium shadow-sm"
                 data-testid="button-donate-appeal"
                 aria-label="Donate to help spread the Gospel worldwide"
+                onClick={() => onNavigate?.('donate')}
               >
                 <Heart className="w-4 h-4 mr-2" aria-hidden="true" />
                 Make a Donation

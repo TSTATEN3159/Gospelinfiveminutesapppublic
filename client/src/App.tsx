@@ -92,11 +92,11 @@ function App() {
   const renderCurrentPage = () => {
     switch (currentPage) {
       case "home":
-        return <HomePage user={user || undefined} />;
+        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} />;
       case "ask":
-        return <AskPage />;
+        return <AskPage onNavigate={handleNavigateToLegal} />;
       case "search":
-        return <SearchPage />;
+        return <SearchPage onNavigate={handleNavigateToLegal} />;
       case "more":
         return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} />;
       case "privacy":
@@ -124,8 +124,8 @@ function App() {
           {/* Bottom Navigation - Hide on legal pages */}
           {!["privacy", "terms", "support", "donate"].includes(currentPage) && (
             <BottomNavigation 
-              currentPage={currentPage} 
-              onPageChange={setCurrentPage} 
+              currentPage={currentPage as "home" | "ask" | "search" | "more"} 
+              onPageChange={(page) => setCurrentPage(page as AppPage)} 
             />
           )}
 

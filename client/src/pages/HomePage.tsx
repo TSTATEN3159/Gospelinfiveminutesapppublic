@@ -29,9 +29,10 @@ interface User {
 
 interface HomePageProps {
   user?: User;
+  onNavigate?: (page: string) => void;
 }
 
-export default function HomePage({ user }: HomePageProps) {
+export default function HomePage({ user, onNavigate }: HomePageProps) {
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
@@ -125,6 +126,7 @@ export default function HomePage({ user }: HomePageProps) {
             className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
             data-testid="button-donate-home"
             aria-label="Donate to help spread the Gospel"
+            onClick={() => onNavigate?.('donate')}
           >
             <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
             Donate

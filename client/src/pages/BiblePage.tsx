@@ -5,7 +5,11 @@ import handsImage from '@assets/generated_images/Caring_hands_emotional_support_
 import { Facebook, Instagram, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export default function AskPage() {
+interface AskPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+export default function AskPage({ onNavigate }: AskPageProps) {
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
@@ -54,6 +58,7 @@ export default function AskPage() {
             className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
             data-testid="button-donate-ask"
             aria-label="Donate to help spread the Gospel"
+            onClick={() => onNavigate?.('donate')}
           >
             <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
             Donate

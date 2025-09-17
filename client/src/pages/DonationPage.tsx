@@ -182,7 +182,11 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                 <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
                 <Input
                   id="custom-amount"
-                  type="text"
+                  type="number"
+                  inputMode="decimal"
+                  step="0.01"
+                  min="1"
+                  max="10000"
                   placeholder="Enter amount (min $1, max $10,000)"
                   value={customAmount}
                   onChange={(e) => handleCustomAmountChange(e.target.value)}
