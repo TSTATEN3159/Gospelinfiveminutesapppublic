@@ -256,11 +256,23 @@ export default function HomePage({ user }: HomePageProps) {
       {/* Modals */}
       <Dialog open={showVerseModal} onOpenChange={setShowVerseModal}>
         <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
-          {dailyVerse ? (
+          {dailyVerse && !loading ? (
             <DailyVerseCard verse={dailyVerse} backgroundImage={sunriseImage} />
           ) : (
             <div className="p-6 text-center">
-              <p className="text-gray-500">Loading verse...</p>
+              {loading ? (
+                <div className="flex items-center gap-2 text-gray-500">
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  <span>Loading verse...</span>
+                </div>
+              ) : error ? (
+                <div className="flex items-center gap-2 text-red-500">
+                  <AlertCircle className="w-4 h-4" />
+                  <span>Unable to load verse</span>
+                </div>
+              ) : (
+                <p className="text-gray-500">Loading verse...</p>
+              )}
             </div>
           )}
         </DialogContent>
