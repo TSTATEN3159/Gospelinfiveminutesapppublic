@@ -92,9 +92,15 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <div className="min-h-screen bg-background">
+        <div 
+          className="min-h-screen" 
+          style={{ backgroundColor: 'hsl(35, 20%, 96%)' }}
+        >
           {/* Current Page Content */}
-          <main className="min-h-screen">
+          <main 
+            className="min-h-screen" 
+            style={{ backgroundColor: 'hsl(35, 20%, 96%)' }}
+          >
             {renderCurrentPage()}
           </main>
 

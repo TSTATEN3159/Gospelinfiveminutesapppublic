@@ -42,10 +42,7 @@ export default function HomePage({ user }: HomePageProps) {
   };
 
   return (
-    <div 
-      className="min-h-screen pb-20 px-4 py-6" 
-      style={{ backgroundColor: 'hsl(35, 20%, 96%)' }}
-    >
+    <div className="min-h-screen pb-20 px-4 py-6">
       {/* App Title */}
       <div className="text-center mb-6">
         <h1 
