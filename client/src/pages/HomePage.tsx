@@ -6,6 +6,8 @@ import BibleStudyPlans from "../components/BibleStudyPlans";
 import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
+import { Book, FileText, Cross, Activity } from "lucide-react";
 
 // Images
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
@@ -67,14 +69,17 @@ export default function HomePage({ user }: HomePageProps) {
           <div className="flex items-center p-4">
             <div className="flex-1 pr-4">
               <div className="flex items-center mb-2">
-                <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center text-white text-xs font-bold mr-2">
-                  📖
+                <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center text-white mr-2">
+                  <Book className="w-3 h-3" />
                 </div>
                 <span className="text-sm font-medium text-gray-700">Daily Verse Experience</span>
               </div>
-              <h2 className="text-lg font-bold text-gray-900 mb-1">
-                Today's Scripture 📝
-              </h2>
+              <div className="flex items-center gap-2 mb-1">
+                <h2 className="text-lg font-bold text-gray-900">
+                  Today's Scripture
+                </h2>
+                <FileText className="w-4 h-4 text-gray-600" />
+              </div>
             </div>
             <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
               <img 
@@ -104,19 +109,22 @@ export default function HomePage({ user }: HomePageProps) {
               Deepen your faith with guided Biblical studies and reflection.
             </p>
             <div className="flex justify-between items-center">
-              <button className="text-blue-600 font-medium text-sm">
+              <Button variant="ghost" size="sm" className="text-blue-600 p-0 h-auto" data-testid="button-startStudy">
                 Start Study
-              </button>
-              <button className="text-gray-400 text-sm">
+              </Button>
+              <Button variant="ghost" size="sm" className="text-gray-400 p-0 h-auto" data-testid="button-dismissStudy">
                 Dismiss
-              </button>
+              </Button>
             </div>
           </div>
         </div>
 
         {/* Streak Counter Section */}
         <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <h2 className="text-lg font-bold text-gray-900 mb-3">Daily Progress</h2>
+          <div className="flex items-center gap-2 mb-3">
+            <Activity className="w-5 h-5 text-gray-700" />
+            <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-dailyProgress">Daily Progress</h2>
+          </div>
           <StreakCounter onBadgeEarned={handleBadgeEarned} />
         </div>
 
@@ -125,16 +133,16 @@ export default function HomePage({ user }: HomePageProps) {
           <div className="p-4">
             <div className="flex items-center mb-3">
               <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                <span className="text-blue-600 text-sm">✝️</span>
+                <Cross className="w-4 h-4 text-blue-600" />
               </div>
-              <h2 className="text-lg font-bold text-gray-900">Ask the Pastor</h2>
+              <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-askPastor">Ask the Pastor</h2>
             </div>
             <p className="text-gray-600 text-sm mb-3">
               Get Biblical guidance and spiritual counsel for your questions.
             </p>
-            <button className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg font-medium text-sm hover-elevate">
+            <Button className="w-full bg-blue-600" data-testid="button-askPastor">
               Ask a Question
-            </button>
+            </Button>
           </div>
         </div>
 
