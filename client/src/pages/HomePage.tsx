@@ -7,10 +7,13 @@ import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Book, FileText, Cross, Activity } from "lucide-react";
+import { Book, FileText, Cross, Infinity, Facebook } from "lucide-react";
 
 // Images
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
+import mountainLakeImage from '@assets/generated_images/Mountain_lake_sunrise_scripture_98ce5cc4.png';
+import forestPathImage from '@assets/generated_images/Forest_path_study_plans_fab1c678.png';
+import oceanCliffImage from '@assets/generated_images/Ocean_cliff_pastor_counseling_10177ffd.png';
 
 interface User {
   firstName: string;
@@ -54,7 +57,10 @@ export default function HomePage({ user }: HomePageProps) {
             </h1>
           </div>
           <div className="flex items-center space-x-2">
-            <div className="text-sm text-gray-600">⚡12</div>
+            <div className="flex items-center gap-1 text-sm text-gray-600">
+              <Infinity className="w-4 h-4" />
+              <span>∞</span>
+            </div>
           </div>
         </div>
       </div>
@@ -74,17 +80,23 @@ export default function HomePage({ user }: HomePageProps) {
                 </div>
                 <span className="text-sm font-medium text-gray-700">Daily Verse Experience</span>
               </div>
-              <div className="flex items-center gap-2 mb-1">
+              <div className="flex items-center gap-2 mb-2">
                 <h2 className="text-lg font-bold text-gray-900">
                   Today's Scripture
                 </h2>
                 <FileText className="w-4 h-4 text-gray-600" />
               </div>
+              <p className="text-sm text-gray-700 mb-1 line-clamp-2">
+                "{mockDailyVerse.text}"
+              </p>
+              <p className="text-xs text-gray-500 font-medium">
+                {mockDailyVerse.reference}
+              </p>
             </div>
             <div className="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
               <img 
-                src={sunriseImage}
-                alt="Daily verse"
+                src={mountainLakeImage}
+                alt="Today's Scripture"
                 className="w-full h-full object-cover"
               />
             </div>
@@ -95,8 +107,8 @@ export default function HomePage({ user }: HomePageProps) {
         <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
           <div className="relative h-40">
             <img 
-              src={sunriseImage}
-              alt="Bible study"
+              src={forestPathImage}
+              alt="3-Day Study Plans"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
@@ -119,17 +131,17 @@ export default function HomePage({ user }: HomePageProps) {
           </div>
         </div>
 
-        {/* Streak Counter Section */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <div className="flex items-center gap-2 mb-3">
-            <Activity className="w-5 h-5 text-gray-700" />
-            <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-dailyProgress">Daily Progress</h2>
-          </div>
-          <StreakCounter onBadgeEarned={handleBadgeEarned} />
-        </div>
 
         {/* Ask Pastor Section */}
         <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div className="relative h-40">
+            <img 
+              src={oceanCliffImage}
+              alt="Ask the Pastor"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          </div>
           <div className="p-4">
             <div className="flex items-center mb-3">
               <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
@@ -146,10 +158,22 @@ export default function HomePage({ user }: HomePageProps) {
           </div>
         </div>
 
-        {/* Live Install Counter - Compact */}
+        {/* Facebook & Live Counter Section */}
         <div className="bg-white rounded-2xl p-4 shadow-sm">
-          <div className="text-center">
-            <LiveInstallCounter />
+          <div className="flex flex-col items-center space-y-4">
+            <div className="text-center">
+              <LiveInstallCounter />
+            </div>
+            <a 
+              href="https://www.facebook.com/TheGospelIn5Minutes" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full hover-elevate transition-all duration-200"
+              data-testid="button-facebook"
+            >
+              <Facebook className="w-5 h-5" />
+              <span className="font-medium">Follow on Facebook</span>
+            </a>
           </div>
         </div>
       </div>
