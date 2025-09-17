@@ -7,12 +7,16 @@ import { queryClient } from "./lib/queryClient";
 // Components
 import UserRegistrationModal from "./components/UserRegistrationModal";
 import BottomNavigation from "./components/BottomNavigation";
+import OfflineIndicator from "./components/OfflineIndicator";
 
 // Pages
 import HomePage from "./pages/HomePage";
 import AskPage from "./pages/BiblePage";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/MorePage";
+import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
+import TermsOfServicePage from "./pages/TermsOfServicePage";
+import SupportPage from "./pages/SupportPage";
 
 interface User {
   firstName: string;
@@ -23,7 +27,7 @@ interface User {
   phone: string;
 }
 
-type NavPage = "home" | "ask" | "search" | "more";
+type NavPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -74,6 +78,14 @@ function App() {
     console.log("Language changed to:", newLanguage);
   };
 
+  const handleNavigateToLegal = (page: string) => {
+    setCurrentPage(page as NavPage);
+  };
+
+  const handleBackFromLegal = () => {
+    setCurrentPage("more");
+  };
+
   const renderCurrentPage = () => {
     switch (currentPage) {
       case "home":
@@ -83,7 +95,13 @@ function App() {
       case "search":
         return <SearchPage />;
       case "more":
-        return <MorePage language={language} onLanguageChange={handleLanguageChange} />;
+        return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} />;
+      case "privacy":
+        return <PrivacyPolicyPage onBack={handleBackFromLegal} />;
+      case "terms":
+        return <TermsOfServicePage onBack={handleBackFromLegal} />;
+      case "support":
+        return <SupportPage onBack={handleBackFromLegal} />;
       default:
         return <HomePage user={user || undefined} />;
     }
@@ -98,11 +116,13 @@ function App() {
             {renderCurrentPage()}
           </main>
 
-          {/* Bottom Navigation */}
-          <BottomNavigation 
-            currentPage={currentPage} 
-            onPageChange={setCurrentPage} 
-          />
+          {/* Bottom Navigation - Hide on legal pages */}
+          {!["privacy", "terms", "support"].includes(currentPage) && (
+            <BottomNavigation 
+              currentPage={currentPage} 
+              onPageChange={setCurrentPage} 
+            />
+          )}
 
           {/* Registration Modal */}
           <UserRegistrationModal 
@@ -112,6 +132,7 @@ function App() {
         </div>
 
         <Toaster />
+        <OfflineIndicator />
       </TooltipProvider>
     </QueryClientProvider>
   );
