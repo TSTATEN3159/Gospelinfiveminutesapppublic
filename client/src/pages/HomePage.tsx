@@ -32,6 +32,7 @@ export default function HomePage({ user }: HomePageProps) {
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
+  const [streakDays, setStreakDays] = useState(0);
 
   // todo: remove mock functionality - replace with real Bible API
   const mockDailyVerse = {
@@ -46,6 +47,10 @@ export default function HomePage({ user }: HomePageProps) {
     setShowBadgeModal(true);
   };
 
+  const handleStreakUpdate = (days: number) => {
+    setStreakDays(days);
+  };
+
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section */}
@@ -53,15 +58,39 @@ export default function HomePage({ user }: HomePageProps) {
         <div className="flex items-center justify-between mb-4">
           <div>
             <h1 className="text-2xl font-bold text-gray-900">
-              Today
+              Welcome!
             </h1>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1 text-sm text-gray-600">
               <Infinity className="w-4 h-4" />
-              <span>∞</span>
+              <span>{streakDays}</span>
             </div>
           </div>
+        </div>
+        
+        {/* Small Facebook Button */}
+        <div className="flex justify-start mb-3">
+          <a 
+            href="https://www.facebook.com/TheGospelIn5Minutes" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-full text-xs hover-elevate"
+            data-testid="button-facebook-small"
+          >
+            <Facebook className="w-3 h-3" />
+            <span>Follow</span>
+          </a>
+        </div>
+        
+        {/* App Title */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold text-gray-800" style={{ 
+            fontFamily: 'Dancing Script, Brush Script MT, cursive',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+          }}>
+            The Gospel in 5 Minutes
+          </h2>
         </div>
       </div>
 
@@ -156,6 +185,11 @@ export default function HomePage({ user }: HomePageProps) {
               Ask a Question
             </Button>
           </div>
+        </div>
+
+        {/* Streak Counter Section (Hidden - Just for Logic) */}
+        <div className="hidden">
+          <StreakCounter onBadgeEarned={handleBadgeEarned} onStreakUpdate={handleStreakUpdate} />
         </div>
 
         {/* Facebook & Live Counter Section */}

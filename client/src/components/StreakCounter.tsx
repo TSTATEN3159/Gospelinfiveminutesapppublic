@@ -4,9 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 
 interface StreakCounterProps {
   onBadgeEarned?: (badgeType: string, streakDays: number) => void;
+  onStreakUpdate?: (days: number) => void;
 }
 
-export default function StreakCounter({ onBadgeEarned }: StreakCounterProps) {
+export default function StreakCounter({ onBadgeEarned, onStreakUpdate }: StreakCounterProps) {
   const [streakDays, setStreakDays] = useState(0);
   const [lastVisit, setLastVisit] = useState<string | null>(null);
 
@@ -19,7 +20,9 @@ export default function StreakCounter({ onBadgeEarned }: StreakCounterProps) {
       if (savedLastVisit === today) {
         // Already visited today, just load the streak
         if (savedStreak) {
-          setStreakDays(parseInt(savedStreak));
+          const currentStreak = parseInt(savedStreak);
+          setStreakDays(currentStreak);
+          onStreakUpdate?.(currentStreak);
         }
         setLastVisit(savedLastVisit);
         return;
@@ -36,6 +39,7 @@ export default function StreakCounter({ onBadgeEarned }: StreakCounterProps) {
           const newStreak = savedStreak ? parseInt(savedStreak) + 1 : 1;
           setStreakDays(newStreak);
           localStorage.setItem("gospelAppStreak", newStreak.toString());
+          onStreakUpdate?.(newStreak);
           
           // Check for badge eligibility
           if (onBadgeEarned && shouldEarnBadge(newStreak)) {
@@ -45,16 +49,20 @@ export default function StreakCounter({ onBadgeEarned }: StreakCounterProps) {
           // Streak broken - reset to 1
           setStreakDays(1);
           localStorage.setItem("gospelAppStreak", "1");
+          onStreakUpdate?.(1);
         } else {
           // Same day or past date, keep existing streak
           if (savedStreak) {
-            setStreakDays(parseInt(savedStreak));
+            const currentStreak = parseInt(savedStreak);
+            setStreakDays(currentStreak);
+            onStreakUpdate?.(currentStreak);
           }
         }
       } else {
         // First visit ever
         setStreakDays(1);
         localStorage.setItem("gospelAppStreak", "1");
+        onStreakUpdate?.(1);
       }
 
       localStorage.setItem("gospelAppLastVisit", today);
