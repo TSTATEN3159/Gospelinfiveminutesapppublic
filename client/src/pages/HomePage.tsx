@@ -81,7 +81,7 @@ export default function HomePage({ user, onNavigate }: HomePageProps) {
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
-              <Flame className="w-6 h-6 text-red-600" />
+              <Flame className="w-6 h-6 text-red-600 fill-red-600" />
               <span className="text-lg font-bold text-red-600">{streakDays}</span>
             </div>
           </div>
