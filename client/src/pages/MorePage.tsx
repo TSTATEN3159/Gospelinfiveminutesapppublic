@@ -1,12 +1,13 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign } from "lucide-react";
+import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface MorePageProps {
   language: string;
   onLanguageChange: (language: string) => void;
   onNavigate?: (page: string) => void;
+  streakDays?: number;
 }
 
 const languages = [
@@ -57,7 +58,7 @@ const menuItems = [
   }
 ];
 
-export default function MorePage({ language, onLanguageChange, onNavigate }: MorePageProps) {
+export default function MorePage({ language, onLanguageChange, onNavigate, streakDays = 0 }: MorePageProps) {
   const handleMenuClick = (id: string) => {
     console.log(`Menu item clicked: ${id}`);
     // todo: implement navigation to each section
@@ -65,10 +66,20 @@ export default function MorePage({ language, onLanguageChange, onNavigate }: Mor
 
   return (
     <div className="pb-20 px-4 py-6">
-      <div className="text-center mb-6">
-        <h1 className="text-2xl font-bold text-primary">More</h1>
-        <p className="text-muted-foreground mt-2">Settings and additional features</p>
-        <div className="mt-4">
+      <div className="mb-6">
+        <div className="flex items-center justify-between mb-2">
+          <div>
+            <h1 className="text-2xl font-bold text-primary">More</h1>
+            <p className="text-muted-foreground mt-2">Settings and additional features</p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-1">
+              <Flame className="w-6 h-6 text-red-600 fill-red-600" />
+              <span className="text-lg font-bold text-red-600">{streakDays}</span>
+            </div>
+          </div>
+        </div>
+        <div className="text-center mt-4">
           <Button 
             className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
             data-testid="button-donate-more"

@@ -1,20 +1,29 @@
 import BibleSearchSection from "../components/BibleSearchSection";
 import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
-import { Facebook, Instagram, Heart } from "lucide-react";
+import { Facebook, Instagram, Heart, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface SearchPageProps {
   onNavigate?: (page: string) => void;
+  streakDays?: number;
 }
 
-export default function SearchPage({ onNavigate }: SearchPageProps) {
+export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPageProps) {
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
       <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
-        <div className="text-center mb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Bible Search</h1>
-          <p className="text-gray-600 mt-2">Search for any Bible verse by reference</p>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Bible Search</h1>
+            <p className="text-gray-600 mt-2">Search for any Bible verse by reference</p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-1">
+              <Flame className="w-6 h-6 text-red-600 fill-red-600" />
+              <span className="text-lg font-bold text-red-600">{streakDays}</span>
+            </div>
+          </div>
         </div>
         
         {/* Social Media Buttons and Donate Button - Same line */}

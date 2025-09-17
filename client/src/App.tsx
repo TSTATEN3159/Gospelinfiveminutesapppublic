@@ -35,6 +35,7 @@ function App() {
   const [showRegistration, setShowRegistration] = useState(false);
   const [currentPage, setCurrentPage] = useState<AppPage>("home");
   const [language, setLanguage] = useState("en");
+  const [streakDays, setStreakDays] = useState(0);
 
   // Check if user is registered on first visit and detect language
   useEffect(() => {
@@ -92,13 +93,13 @@ function App() {
   const renderCurrentPage = () => {
     switch (currentPage) {
       case "home":
-        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} />;
+        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
       case "ask":
-        return <AskPage onNavigate={handleNavigateToLegal} />;
+        return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "search":
-        return <SearchPage onNavigate={handleNavigateToLegal} />;
+        return <SearchPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "more":
-        return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} />;
+        return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "privacy":
         return <PrivacyPolicyPage onBack={handleBackFromLegal} />;
       case "terms":
@@ -108,7 +109,7 @@ function App() {
       case "donate":
         return <DonationPage onNavigate={handleNavigateToLegal} />;
       default:
-        return <HomePage user={user || undefined} />;
+        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }
   };
 

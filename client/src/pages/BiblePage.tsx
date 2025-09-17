@@ -2,21 +2,30 @@ import AskPastorSection from "../components/AskPastorSection";
 import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
-import { Facebook, Instagram, Heart } from "lucide-react";
+import { Facebook, Instagram, Heart, Flame } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface AskPageProps {
   onNavigate?: (page: string) => void;
+  streakDays?: number;
 }
 
-export default function AskPage({ onNavigate }: AskPageProps) {
+export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
       <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
-        <div className="text-center mb-4">
-          <h1 className="text-2xl font-bold text-gray-900">Ask the Pastor</h1>
-          <p className="text-gray-600 mt-2">Get Scripture-based guidance and emotional support</p>
+        <div className="flex items-center justify-between mb-4">
+          <div>
+            <h1 className="text-2xl font-bold text-gray-900">Ask the Pastor</h1>
+            <p className="text-gray-600 mt-2">Get Scripture-based guidance and emotional support</p>
+          </div>
+          <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-1">
+              <Flame className="w-6 h-6 text-red-600 fill-red-600" />
+              <span className="text-lg font-bold text-red-600">{streakDays}</span>
+            </div>
+          </div>
         </div>
         
         {/* Social Media Buttons and Donate Button - Same line */}

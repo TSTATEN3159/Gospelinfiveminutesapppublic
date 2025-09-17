@@ -30,9 +30,10 @@ interface User {
 interface HomePageProps {
   user?: User;
   onNavigate?: (page: string) => void;
+  onStreakUpdate?: (days: number) => void;
 }
 
-export default function HomePage({ user, onNavigate }: HomePageProps) {
+export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageProps) {
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
@@ -67,6 +68,7 @@ export default function HomePage({ user, onNavigate }: HomePageProps) {
 
   const handleStreakUpdate = (days: number) => {
     setStreakDays(days);
+    onStreakUpdate?.(days);
   };
 
   return (
