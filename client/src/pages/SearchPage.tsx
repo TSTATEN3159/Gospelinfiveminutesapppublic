@@ -17,8 +17,8 @@ export default function SearchPage({ onNavigate }: SearchPageProps) {
           <p className="text-gray-600 mt-2">Search for any Bible verse by reference</p>
         </div>
         
-        {/* Social Media Buttons */}
-        <div className="flex justify-center gap-3 mb-3">
+        {/* Social Media Buttons and Donate Button - Same line */}
+        <div className="flex justify-center items-center gap-3 mb-3">
           <a 
             href="https://www.facebook.com/TheGospelIn5Minutes" 
             target="_blank" 
@@ -41,9 +41,18 @@ export default function SearchPage({ onNavigate }: SearchPageProps) {
             <Instagram className="w-3 h-3" aria-hidden="true" />
             <span>Follow</span>
           </a>
+          <Button 
+            className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
+            data-testid="button-donate-search"
+            aria-label="Donate to help spread the Gospel"
+            onClick={() => onNavigate?.('donate')}
+          >
+            <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
+            Donate
+          </Button>
         </div>
         
-        {/* App Title and Donate Button */}
+        {/* App Title */}
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-3" style={{ 
             fontFamily: 'Dancing Script, Brush Script MT, cursive',
@@ -52,15 +61,6 @@ export default function SearchPage({ onNavigate }: SearchPageProps) {
           }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
             The Gospel in 5 Minutes™
           </h2>
-          <Button 
-            className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
-            data-testid="button-donate-search"
-            aria-label="Donate to help spread the Gospel"
-            onClick={() => onNavigate?.('donate')}
-          >
-            <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
-            Donate
-          </Button>
         </div>
       </div>
 

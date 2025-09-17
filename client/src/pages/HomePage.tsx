@@ -75,7 +75,7 @@ export default function HomePage({ user, onNavigate }: HomePageProps) {
       <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900" aria-label="Welcome to The Gospel in 5 Minutes">
+            <h1 className="text-2xl font-bold" style={{ color: '#8B4513' }} aria-label="Welcome to The Gospel in 5 Minutes">
               Welcome!
             </h1>
           </div>
@@ -87,8 +87,8 @@ export default function HomePage({ user, onNavigate }: HomePageProps) {
           </div>
         </div>
         
-        {/* Social Media Buttons - Centered on Home only */}
-        <div className="flex justify-center gap-3 mb-3">
+        {/* Social Media Buttons and Donate Button - Same line */}
+        <div className="flex justify-center items-center gap-3 mb-3">
           <a 
             href="https://www.facebook.com/TheGospelIn5Minutes" 
             target="_blank" 
@@ -111,9 +111,18 @@ export default function HomePage({ user, onNavigate }: HomePageProps) {
             <Instagram className="w-3 h-3" aria-hidden="true" />
             <span>Follow</span>
           </a>
+          <Button 
+            className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
+            data-testid="button-donate-home"
+            aria-label="Donate to help spread the Gospel"
+            onClick={() => onNavigate?.('donate')}
+          >
+            <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
+            Donate
+          </Button>
         </div>
         
-        {/* App Title and Donate Button */}
+        {/* App Title */}
         <div className="text-center">
           <h2 className="text-3xl font-bold mb-3" style={{ 
             fontFamily: 'Dancing Script, Brush Script MT, cursive',
@@ -122,15 +131,6 @@ export default function HomePage({ user, onNavigate }: HomePageProps) {
           }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
             The Gospel in 5 Minutes™
           </h2>
-          <Button 
-            className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
-            data-testid="button-donate-home"
-            aria-label="Donate to help spread the Gospel"
-            onClick={() => onNavigate?.('donate')}
-          >
-            <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
-            Donate
-          </Button>
         </div>
       </div>
 
