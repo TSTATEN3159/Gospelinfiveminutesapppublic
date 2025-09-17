@@ -51,7 +51,7 @@ export default function SupportPage({ onBack }: SupportPageProps) {
       {/* Header */}
       <div className="bg-white px-4 py-6 border-b border-gray-100 sticky top-0 z-10">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back">
+          <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-xl font-bold text-gray-900">Support & Privacy</h1>

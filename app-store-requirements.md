@@ -2,10 +2,11 @@
 
 ## 🔒 Privacy & Legal Compliance ✅
 
-### Privacy Policy
-- ✅ **URL**: https://thegospelin5minutes.app/privacy
-- ✅ **In-App Access**: Available through More → Support & Legal
+### Privacy Policy  
+- ⚠️ **URL**: https://thegospelin5minutes.app/privacy (MUST BE HOSTED - Required for App Store)
+- ✅ **In-App Access**: Available through More → Support & Legal  
 - ✅ **Compliant Content**: Covers all data collection, OpenAI processing, user rights
+- ⚠️ **ACTION REQUIRED**: Host live privacy policy at the URL before App Store submission
 
 ### Terms of Service
 - ✅ **URL**: https://thegospelin5minutes.app/terms  
@@ -132,21 +133,23 @@ Privacy Features:
 The app helps users build consistent Bible reading habits with personalized content and AI assistance, suitable for all denominations and experience levels.
 ```
 
-## ✅ Submission Checklist
+## 🔄 Submission Checklist
 
 - [x] Privacy Policy URL added to App Store Connect
 - [x] Terms of Service created and accessible  
 - [x] App Privacy questionnaire completed accurately
 - [x] In-app data deletion functionality implemented
-- [x] 44pt minimum tap targets throughout app
+- [x] 44pt minimum tap targets throughout app (CSS enforced)
 - [x] Safe area support for all iOS devices
-- [x] VoiceOver and accessibility features  
+- [x] VoiceOver and accessibility features (ARIA labels added)
 - [x] Offline functionality and error handling
 - [x] High contrast and reduced motion support
-- [ ] App icons created in all required sizes
-- [ ] Screenshots captured for all device sizes
-- [ ] App Store Connect metadata completed
+- [x] App icons created in all required sizes
+- [x] Screenshots captured for all device sizes  
+- [x] App Store Connect metadata completed
+- [ ] **HOST LIVE PRIVACY POLICY & TERMS URLs** (CRITICAL)
 - [ ] TestFlight build uploaded and tested
+- [ ] Network error handling for API calls (Ask Pastor, Bible features)
 
 ## 🚨 Critical Review Areas
 
