@@ -7,7 +7,7 @@ import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Book, FileText, Cross, Infinity, Facebook, Instagram, Loader2, AlertCircle, Heart } from "lucide-react";
+import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart } from "lucide-react";
 
 // Services
 import { bibleService, type DailyVerse } from "../services/bibleService";
@@ -81,7 +81,7 @@ export default function HomePage({ user, onNavigate }: HomePageProps) {
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
-              <Infinity className="w-6 h-6 text-red-600" />
+              <Flame className="w-6 h-6 text-red-600" />
               <span className="text-lg font-bold text-red-600">{streakDays}</span>
             </div>
           </div>
