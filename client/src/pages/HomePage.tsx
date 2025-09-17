@@ -42,13 +42,24 @@ export default function HomePage({ user }: HomePageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-background pb-20 px-4 py-6">
+    <div 
+      className="min-h-screen pb-20 px-4 py-6" 
+      style={{ backgroundColor: 'hsl(35, 20%, 96%)' }}
+    >
       {/* App Title */}
       <div className="text-center mb-6">
-        <h1 className="text-4xl font-bold text-primary" style={{ fontFamily: 'var(--font-cursive)' }}>
+        <h1 
+          className="text-4xl font-bold" 
+          style={{ 
+            fontFamily: 'var(--font-cursive)', 
+            color: 'hsl(25, 45%, 35%)' 
+          }}
+        >
           The Gospel in 5 Minutes
         </h1>
-        <p className="text-muted-foreground mt-2">Daily spiritual nourishment for your soul</p>
+        <p className="mt-2" style={{ color: 'hsl(25, 20%, 50%)' }}>
+          Daily spiritual nourishment for your soul
+        </p>
       </div>
 
       <div className="max-w-md mx-auto space-y-6">
@@ -60,20 +71,28 @@ export default function HomePage({ user }: HomePageProps) {
 
         {/* Daily Verse Card */}
         <div 
-          className="relative bg-card rounded-lg p-4 border shadow-sm cursor-pointer hover-elevate"
+          className="relative rounded-lg p-4 border shadow-sm cursor-pointer hover-elevate"
           onClick={() => setShowVerseModal(true)}
           data-testid="card-dailyVerse"
+          style={{ 
+            backgroundColor: 'hsl(30, 25%, 92%)', 
+            borderColor: 'hsl(30, 20%, 85%)' 
+          }}
         >
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-30 rounded-lg"
             style={{ backgroundImage: `url(${sunriseImage})` }}
           />
           <div className="relative z-10">
-            <h2 className="text-lg font-semibold text-primary mb-2">Today's Verse</h2>
-            <p className="text-sm text-muted-foreground italic">
+            <h2 className="text-lg font-semibold mb-2" style={{ color: 'hsl(25, 45%, 35%)' }}>
+              Today's Verse
+            </h2>
+            <p className="text-sm italic" style={{ color: 'hsl(25, 20%, 50%)' }}>
               "{mockDailyVerse.text.substring(0, 80)}..."
             </p>
-            <p className="text-xs text-primary mt-2 font-medium">- {mockDailyVerse.reference}</p>
+            <p className="text-xs mt-2 font-medium" style={{ color: 'hsl(25, 45%, 35%)' }}>
+              - {mockDailyVerse.reference}
+            </p>
           </div>
         </div>
 
