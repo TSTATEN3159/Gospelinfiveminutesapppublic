@@ -77,7 +77,11 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
       <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold" style={{ color: '#8B4513' }} aria-label="Welcome to The Gospel in 5 Minutes">
+            <h1 className="text-2xl font-bold" style={{ 
+              color: '#8B4513',
+              fontFamily: 'Dancing Script, Brush Script MT, cursive',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            }} aria-label="Welcome to The Gospel in 5 Minutes">
               Welcome!
             </h1>
           </div>
