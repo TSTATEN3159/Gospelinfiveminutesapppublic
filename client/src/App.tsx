@@ -70,10 +70,38 @@ function App() {
     detectLanguage();
   }, []);
 
-  const handleRegistrationComplete = (userData?: User) => {
+  const handleRegistrationComplete = async (userData?: User) => {
     if (userData) {
-      setUser(userData);
-      localStorage.setItem("gospelAppUser", JSON.stringify(userData));
+      try {
+        // Create app_users entry in the database
+        const response = await fetch('/api/users', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(userData),
+        });
+        
+        const result = await response.json();
+        console.log("User creation result:", result);
+        
+        if (result.success) {
+          // Add the appUserId to the userData
+          const userWithId = { ...userData, appUserId: result.user.id };
+          setUser(userWithId);
+          localStorage.setItem("gospelAppUser", JSON.stringify(userWithId));
+        } else {
+          console.error("Failed to create app user:", result.error);
+          // Still save locally but without appUserId
+          setUser(userData);
+          localStorage.setItem("gospelAppUser", JSON.stringify(userData));
+        }
+      } catch (error) {
+        console.error("Error creating app user:", error);
+        // Still save locally but without appUserId
+        setUser(userData);
+        localStorage.setItem("gospelAppUser", JSON.stringify(userData));
+      }
     }
     setShowRegistration(false);
   };
@@ -122,7 +150,7 @@ function App() {
       case "settings":
         return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "friends":
-        return <FriendsPage />;
+        return <FriendsPage currentUserId={user?.appUserId || "demo-user-123"} language={language} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }

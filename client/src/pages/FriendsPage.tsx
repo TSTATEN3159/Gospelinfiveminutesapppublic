@@ -26,19 +26,18 @@ type FriendRequest = {
   email: string;
 };
 
-// Mock current user for demo - in real app this would come from auth context
-const CURRENT_USER_ID = "demo-user-123";
+interface FriendsPageProps {
+  currentUserId: string;
+  language: string;
+}
 
-export default function FriendsPage() {
+export default function FriendsPage({ currentUserId, language }: FriendsPageProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
-
-  // Get current language from localStorage or default to English
-  const currentLanguage = localStorage.getItem("selectedLanguage") || "en";
-  const t = useTranslations(currentLanguage);
+  const t = useTranslations(language);
 
   // Search users
-  const { data: searchResults = [], isLoading: isSearching } = useQuery({
+  const { data: searchResults = { users: [] }, isLoading: isSearching } = useQuery({
     queryKey: ['/api/users/search', searchQuery],
     queryFn: () => searchQuery.length >= 2 ? fetch(`/api/users/search?q=${encodeURIComponent(searchQuery)}`).then(r => r.json()) : Promise.resolve({ users: [] }),
     enabled: searchQuery.length >= 2
@@ -46,20 +45,20 @@ export default function FriendsPage() {
 
   // Get friends list
   const { data: friendsData, isLoading: isLoadingFriends } = useQuery({
-    queryKey: ['/api/friends', CURRENT_USER_ID],
-    queryFn: () => fetch(`/api/friends/${CURRENT_USER_ID}`).then(r => r.json())
+    queryKey: ['/api/friends', currentUserId],
+    queryFn: () => fetch(`/api/friends/${currentUserId}`).then(r => r.json())
   });
 
   // Get friend requests
   const { data: requestsData, isLoading: isLoadingRequests } = useQuery({
-    queryKey: ['/api/friends/requests', CURRENT_USER_ID],
-    queryFn: () => fetch(`/api/friends/requests/${CURRENT_USER_ID}`).then(r => r.json())
+    queryKey: ['/api/friends/requests', currentUserId],
+    queryFn: () => fetch(`/api/friends/requests/${currentUserId}`).then(r => r.json())
   });
 
   // Send friend request mutation
   const sendRequestMutation = useMutation({
     mutationFn: (addresseeId: string) => 
-      apiRequest('POST', '/api/friends/request', { requesterId: CURRENT_USER_ID, addresseeId }),
+      apiRequest('POST', '/api/friends/request', { requesterId: currentUserId, addresseeId }),
     onSuccess: () => {
       toast({
         title: t.success,
@@ -106,7 +105,7 @@ export default function FriendsPage() {
   // Remove friend mutation
   const removeFriendMutation = useMutation({
     mutationFn: (friendId: string) => 
-      apiRequest('DELETE', `/api/friends/${CURRENT_USER_ID}/${friendId}`),
+      apiRequest('DELETE', `/api/friends/${currentUserId}/${friendId}`),
     onSuccess: () => {
       toast({
         title: t.success,
