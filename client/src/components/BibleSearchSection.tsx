@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -42,27 +42,42 @@ const mockSearchResults: Record<string, SearchResult> = {
 
 interface BibleSearchSectionProps {
   backgroundImage?: string;
+  initialSearchQuery?: string;
+  onSearchUsed?: () => void;
 }
 
-export default function BibleSearchSection({ backgroundImage }: BibleSearchSectionProps) {
+export default function BibleSearchSection({ backgroundImage, initialSearchQuery, onSearchUsed }: BibleSearchSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVersion, setSelectedVersion] = useState("NIV");
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const { toast } = useToast();
+  const ranInitial = useRef<string | null>(null);
 
-  const handleSearch = async () => {
-    if (!searchQuery.trim()) return;
+  // Handle initial search query from navigation
+  useEffect(() => {
+    if (initialSearchQuery && initialSearchQuery.trim() && ranInitial.current !== initialSearchQuery) {
+      setSearchQuery(initialSearchQuery);
+      // Auto-search the initial query immediately
+      handleSearch(initialSearchQuery);
+      ranInitial.current = initialSearchQuery;
+      onSearchUsed?.(); // Clear the search query from parent
+    }
+  }, [initialSearchQuery]);
+
+  const handleSearch = async (q?: string) => {
+    const query = (q ?? searchQuery).trim();
+    if (!query) return;
 
     setIsLoading(true);
     setHasSearched(true);
 
     // todo: remove mock functionality - replace with real Bible API
     setTimeout(() => {
-      const result = mockSearchResults[searchQuery] || {
+      const result = mockSearchResults[query] || {
         text: "Search results will be displayed here when connected to a Bible API.",
-        reference: searchQuery,
+        reference: query,
         version: selectedVersion
       };
       
@@ -139,7 +154,7 @@ export default function BibleSearchSection({ backgroundImage }: BibleSearchSecti
               data-testid="input-search"
             />
             <Button 
-              onClick={handleSearch} 
+              onClick={() => handleSearch()} 
               disabled={!searchQuery.trim() || isLoading}
               data-testid="button-search"
             >

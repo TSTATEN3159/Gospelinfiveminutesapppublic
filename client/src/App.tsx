@@ -41,6 +41,7 @@ function App() {
   const [currentPage, setCurrentPage] = useState<AppPage>("home");
   const [language, setLanguage] = useState("en");
   const [streakDays, setStreakDays] = useState(0);
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
   // Check if user is registered on first visit and detect language
   useEffect(() => {
@@ -112,10 +113,13 @@ function App() {
     console.log("Language changed to:", newLanguage);
   };
 
-  const handleNavigateToLegal = (page: string) => {
-    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "more"];
+  const handleNavigateToLegal = (page: string, searchQuery?: string) => {
+    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "more", "search"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
+      if (searchQuery) {
+        setSearchQuery(searchQuery);
+      }
     }
   };
 
@@ -130,7 +134,13 @@ function App() {
       case "ask":
         return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "search":
-        return <SearchPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
+        return <SearchPage 
+          onNavigate={handleNavigateToLegal} 
+          streakDays={streakDays} 
+          language={language}
+          initialSearchQuery={searchQuery}
+          onSearchUsed={() => setSearchQuery("")}
+        />;
       case "more":
         return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "privacy":

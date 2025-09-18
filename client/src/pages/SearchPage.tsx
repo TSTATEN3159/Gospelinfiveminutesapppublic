@@ -5,12 +5,14 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 
 interface SearchPageProps {
-  onNavigate?: (page: string) => void;
+  onNavigate?: (page: string, searchQuery?: string) => void;
   streakDays?: number;
   language?: string;
+  initialSearchQuery?: string;
+  onSearchUsed?: () => void;
 }
 
-export default function SearchPage({ onNavigate, streakDays = 0, language = "en" }: SearchPageProps) {
+export default function SearchPage({ onNavigate, streakDays = 0, language = "en", initialSearchQuery, onSearchUsed }: SearchPageProps) {
   const t = useTranslations(language);
   return (
     <div className="min-h-screen pb-20">
@@ -106,7 +108,11 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
 
       <div className="px-4 py-4 ios-safe-bottom">
         <div className="max-w-md mx-auto space-y-6">
-          <BibleSearchSection backgroundImage={bibleImage} />
+          <BibleSearchSection 
+            backgroundImage={bibleImage}
+            initialSearchQuery={initialSearchQuery}
+            onSearchUsed={onSearchUsed}
+          />
           
           {/* Donation Appeal Section */}
           <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200 shadow-sm">

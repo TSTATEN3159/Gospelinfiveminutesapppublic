@@ -17,9 +17,10 @@ interface Verse {
 interface DailyVerseCardProps {
   verse: Verse;
   backgroundImage?: string;
+  onNavigate?: (page: string, searchQuery?: string) => void;
 }
 
-export default function DailyVerseCard({ verse, backgroundImage }: DailyVerseCardProps) {
+export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: DailyVerseCardProps) {
   const { toast } = useToast();
   const [isSharing, setIsSharing] = useState(false);
 
@@ -64,10 +65,22 @@ export default function DailyVerseCard({ verse, backgroundImage }: DailyVerseCar
 
   const goToChapter = () => {
     console.log(`Navigate to ${verse.book} ${verse.chapter}`);
-    toast({
-      title: "Opening Chapter",
-      description: `Loading ${verse.book} ${verse.chapter}...`,
-    });
+    
+    if (onNavigate) {
+      // Navigate to search page with the chapter reference
+      const chapterReference = `${verse.book} ${verse.chapter}`;
+      onNavigate("search", chapterReference);
+      toast({
+        title: "Opening Chapter",
+        description: `Loading ${verse.book} ${verse.chapter}...`,
+      });
+    } else {
+      toast({
+        title: "Navigation not available",
+        description: "Chapter reading functionality is being set up.",
+        variant: "destructive",
+      });
+    }
   };
 
   // todo: Replace with API call to get meaning and application

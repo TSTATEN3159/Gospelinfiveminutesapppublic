@@ -30,7 +30,7 @@ interface User {
 
 interface HomePageProps {
   user?: User;
-  onNavigate?: (page: string) => void;
+  onNavigate?: (page: string, searchQuery?: string) => void;
   onStreakUpdate?: (days: number) => void;
 }
 
@@ -340,7 +340,14 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
       <Dialog open={showVerseModal} onOpenChange={setShowVerseModal}>
         <DialogContent className="max-w-md max-h-[80vh] overflow-y-auto">
           {dailyVerse && !loading ? (
-            <DailyVerseCard verse={dailyVerse} backgroundImage={sunriseImage} />
+            <DailyVerseCard 
+              verse={dailyVerse} 
+              backgroundImage={sunriseImage} 
+              onNavigate={(page, searchQuery) => {
+                setShowVerseModal(false); // Close the modal
+                onNavigate?.(page, searchQuery);
+              }}
+            />
           ) : (
             <div className="p-6 text-center">
               {loading ? (
