@@ -22,6 +22,7 @@ import GivingPage from "./pages/GivingPage";
 import VideosPage from "./pages/VideosPage";
 import BlogPage from "./pages/BlogPage";
 import SettingsPage from "./pages/SettingsPage";
+import FriendsPage from "./pages/FriendsPage";
 
 interface User {
   firstName: string;
@@ -32,7 +33,7 @@ interface User {
   phone: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate" | "giving" | "videos" | "blog" | "settings";
+type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate" | "giving" | "videos" | "blog" | "settings" | "friends";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -80,12 +81,11 @@ function App() {
   const handleLanguageChange = (newLanguage: string) => {
     setLanguage(newLanguage);
     localStorage.setItem("gospelAppLanguage", newLanguage);
-    // todo: implement actual language translations
     console.log("Language changed to:", newLanguage);
   };
 
   const handleNavigateToLegal = (page: string) => {
-    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "more"];
+    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "more"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
     }
@@ -102,7 +102,7 @@ function App() {
       case "ask":
         return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "search":
-        return <SearchPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+        return <SearchPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "more":
         return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "privacy":
@@ -121,6 +121,8 @@ function App() {
         return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "settings":
         return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+      case "friends":
+        return <FriendsPage />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }
@@ -135,8 +137,8 @@ function App() {
             {renderCurrentPage()}
           </main>
 
-          {/* Bottom Navigation - Hide on legal pages */}
-          {!["privacy", "terms", "support", "donate"].includes(currentPage) && (
+          {/* Bottom Navigation - Hide on legal pages and friends page */}
+          {!["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends"].includes(currentPage) && (
             <BottomNavigation 
               currentPage={currentPage as "home" | "ask" | "search" | "more"} 
               onPageChange={(page) => setCurrentPage(page as AppPage)} 

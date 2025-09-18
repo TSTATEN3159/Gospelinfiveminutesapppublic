@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/lib/translations";
 
 interface MorePageProps {
   language: string;
@@ -20,66 +21,69 @@ const languages = [
   { code: "hi", name: "हिन्दी", flag: "🇮🇳" },
 ];
 
-const menuItems = [
+const getMenuItems = (t: any) => [
   {
     id: "giving",
-    title: "Giving Impact",
-    description: "See how donations spread God's word",
+    title: t.givingImpact,
+    description: t.givingImpactDesc,
     icon: TrendingUp,
     comingSoon: false
   },
   {
     id: "videos",
-    title: "Faith Videos",
-    description: "Sermons, Gospel tidbits, and Christian advice",
+    title: t.faithVideos,
+    description: t.faithVideosDesc,
     icon: Play,
     comingSoon: false
   },
   {
     id: "blog",
-    title: "Christian Blog",
-    description: "Inspiring articles to grow your faith",
+    title: t.christianBlog,
+    description: t.christianBlogDesc,
     icon: BookOpen,
     comingSoon: false
   },
   {
     id: "settings",
-    title: "Settings",
-    description: "Manage your profile and preferences",
+    title: t.settings,
+    description: t.settingsDesc,
     icon: Settings,
     comingSoon: false
   },
   {
     id: "friends",
-    title: "Friends",
-    description: "Connect with fellow believers",
+    title: t.friends,
+    description: t.friendsDesc,
     icon: Users,
-    comingSoon: true
+    comingSoon: false
   },
   {
     id: "privacy",
-    title: "Privacy Statement",
-    description: "Learn how we protect your data",
+    title: t.privacyStatement,
+    description: t.privacyStatementDesc,
     icon: Shield,
     comingSoon: false
   },
   {
     id: "terms",
-    title: "End User Agreement",
-    description: "Terms and conditions of use",
+    title: t.endUserAgreement,
+    description: t.endUserAgreementDesc,
     icon: FileText,
     comingSoon: false
   },
   {
     id: "donate",
-    title: "Donate",
-    description: "Support our mission to spread the Gospel",
+    title: t.donate,
+    description: t.donateDesc,
     icon: DollarSign,
     comingSoon: false
   }
 ];
 
 export default function MorePage({ language, onLanguageChange, onNavigate, streakDays = 0 }: MorePageProps) {
+  const t = useTranslations(language);
+  const menuItems = getMenuItems(t);
+  
   const handleMenuClick = (id: string) => {
     console.log(`Menu item clicked: ${id}`);
     // Navigate to the selected page if it's not coming soon
@@ -93,8 +97,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
       <div className="mb-6">
         <div className="flex items-center justify-between mb-2">
           <div>
-            <h1 className="text-2xl font-bold text-primary">More</h1>
-            <p className="text-muted-foreground mt-2">Settings and additional features</p>
+            <p className="text-muted-foreground mt-2">{t.settingsDescription}</p>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
@@ -115,7 +118,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             aria-label="Follow us on Facebook - Opens in new window"
           >
             <Facebook className="w-3 h-3" aria-hidden="true" />
-            <span>Follow</span>
+            <span>{t.follow}</span>
           </a>
           <a 
             href="https://www.instagram.com/thegospelin5minutes" 
@@ -126,7 +129,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             aria-label="Follow us on Instagram - Opens in new window"
           >
             <Instagram className="w-3 h-3" aria-hidden="true" />
-            <span>Follow</span>
+            <span>{t.follow}</span>
           </a>
           <Button 
             className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
@@ -160,7 +163,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             }}
           >
             <Share className="w-3 h-3 mr-1" aria-hidden="true" />
-            Share The Gospel in 5 Minutes
+            {t.share}
           </Button>
         </div>
       </div>
@@ -171,7 +174,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           <CardContent className="p-4">
             <div className="flex items-center gap-3 mb-3">
               <Globe className="w-5 h-5 text-primary" />
-              <h3 className="font-semibold text-primary">Language</h3>
+              <h3 className="font-semibold text-primary">{t.language}</h3>
             </div>
             <Select value={language} onValueChange={onLanguageChange}>
               <SelectTrigger data-testid="select-language">
@@ -208,7 +211,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
                       {item.title}
                       {item.comingSoon && (
                         <span className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded">
-                          Coming Soon
+                          {t.comingSoon}
                         </span>
                       )}
                     </h3>
@@ -226,7 +229,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           <CardContent className="p-4">
             <h2 className="font-semibold text-primary mb-4 flex items-center gap-2">
               <Scale className="w-5 h-5" />
-              Support & Legal
+              {t.supportLegal}
             </h2>
             <div className="space-y-3">
               <button 
@@ -236,7 +239,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               >
                 <div className="flex items-center gap-3">
                   <HeadphonesIcon className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-800">Support & Privacy Rights</span>
+                  <span className="text-gray-800">{t.supportPrivacyRights}</span>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </button>
@@ -251,10 +254,10 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               The Gospel in 5 Minutes™
             </h3>
             <p className="text-sm text-muted-foreground mt-1">
-              Bringing God's word to the world
+              {t.appTagline}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
-              Version 1.0.0
+              {t.version}
             </p>
           </CardContent>
         </Card>
@@ -262,7 +265,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         {/* Professional Website Footer */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="text-center">
-            <p className="text-sm text-gray-500 mb-2">Visit our website for more resources</p>
+            <p className="text-sm text-gray-500 mb-2">{t.visitWebsite}</p>
             <a 
               href="https://www.thegospelin5minutes.org" 
               target="_blank" 

@@ -3,7 +3,7 @@ import { createServer, type Server } from "http";
 import { z } from "zod";
 import OpenAI from "openai";
 import { storage } from "./storage";
-import { insertSubscriberSchema } from "@shared/schema";
+import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
@@ -226,6 +226,284 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         error: "Failed to get subscriber count."
+      });
+    }
+  });
+
+  // App User Routes
+  app.post("/api/users", async (req, res) => {
+    try {
+      const userData = insertAppUserSchema.parse(req.body);
+      
+      // Check if user already exists
+      const existingUser = await storage.getAppUserByEmail(userData.email);
+      if (existingUser) {
+        return res.status(400).json({
+          success: false,
+          error: "A user with this email already exists."
+        });
+      }
+      
+      const newUser = await storage.createAppUser(userData);
+      res.json({
+        success: true,
+        message: "User profile created successfully!",
+        user: {
+          id: newUser.id,
+          firstName: newUser.firstName,
+          lastName: newUser.lastName,
+          email: newUser.email
+        }
+      });
+    } catch (error) {
+      console.error("Create user error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Please provide valid user information."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "Failed to create user profile."
+      });
+    }
+  });
+
+  app.get("/api/users/search", async (req, res) => {
+    try {
+      const { q } = z.object({ q: z.string().min(1) }).parse(req.query);
+      
+      const users = await storage.searchAppUsers(q);
+      
+      res.json({
+        success: true,
+        users: users.map(user => ({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email
+        }))
+      });
+    } catch (error) {
+      console.error("Search users error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Please provide a search query."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "Failed to search users."
+      });
+    }
+  });
+
+  app.get("/api/users/:id", async (req, res) => {
+    try {
+      const { id } = z.object({ id: z.string().min(1) }).parse(req.params);
+      
+      const user = await storage.getAppUser(id);
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: "User not found."
+        });
+      }
+      
+      res.json({
+        success: true,
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          joinDate: user.joinDate
+        }
+      });
+    } catch (error) {
+      console.error("Get user error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get user information."
+      });
+    }
+  });
+
+  // Friends Routes
+  app.post("/api/friends/request", async (req, res) => {
+    try {
+      const { requesterId, addresseeId } = z.object({
+        requesterId: z.string().min(1),
+        addresseeId: z.string().min(1)
+      }).parse(req.body);
+      
+      // Check if users exist
+      const requester = await storage.getAppUser(requesterId);
+      const addressee = await storage.getAppUser(addresseeId);
+      
+      if (!requester || !addressee) {
+        return res.status(404).json({
+          success: false,
+          error: "One or both users not found."
+        });
+      }
+      
+      // Check if friendship already exists
+      const existingFriendship = await storage.getFriendship(requesterId, addresseeId);
+      if (existingFriendship) {
+        return res.status(400).json({
+          success: false,
+          error: "Friend request already exists or you are already friends."
+        });
+      }
+      
+      const friendship = await storage.createFriendRequest(requesterId, addresseeId);
+      
+      res.json({
+        success: true,
+        message: "Friend request sent successfully!",
+        friendship: {
+          id: friendship.id,
+          status: friendship.status
+        }
+      });
+    } catch (error) {
+      console.error("Create friend request error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request data."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "Failed to send friend request."
+      });
+    }
+  });
+
+  app.put("/api/friends/request/:id", async (req, res) => {
+    try {
+      const { id } = z.object({ id: z.string().min(1) }).parse(req.params);
+      const { status } = z.object({ 
+        status: z.enum(["accepted", "declined", "blocked"]) 
+      }).parse(req.body);
+      
+      const friendship = await storage.updateFriendshipStatus(id, status);
+      
+      const statusMessages = {
+        accepted: "Friend request accepted!",
+        declined: "Friend request declined.",
+        blocked: "User has been blocked."
+      };
+      
+      res.json({
+        success: true,
+        message: statusMessages[status as keyof typeof statusMessages],
+        friendship: {
+          id: friendship.id,
+          status: friendship.status,
+          updatedAt: friendship.updatedAt
+        }
+      });
+    } catch (error) {
+      console.error("Update friendship status error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request data."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "Failed to update friend request."
+      });
+    }
+  });
+
+  app.get("/api/friends/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
+      
+      const friends = await storage.getFriends(userId);
+      
+      res.json({
+        success: true,
+        friends: friends.map(friend => ({
+          id: friend.id,
+          firstName: friend.firstName,
+          lastName: friend.lastName,
+          email: friend.email,
+          joinDate: friend.joinDate
+        }))
+      });
+    } catch (error) {
+      console.error("Get friends error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get friends list."
+      });
+    }
+  });
+
+  app.get("/api/friends/requests/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
+      
+      const requests = await storage.getFriendRequests(userId);
+      
+      res.json({
+        success: true,
+        incoming: requests.incoming.map(user => ({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email
+        })),
+        outgoing: requests.outgoing.map(user => ({
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email
+        }))
+      });
+    } catch (error) {
+      console.error("Get friend requests error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get friend requests."
+      });
+    }
+  });
+
+  app.delete("/api/friends/:userId/:friendId", async (req, res) => {
+    try {
+      const { userId, friendId } = z.object({
+        userId: z.string().min(1),
+        friendId: z.string().min(1)
+      }).parse(req.params);
+      
+      await storage.removeFriend(userId, friendId);
+      
+      res.json({
+        success: true,
+        message: "Friend removed successfully."
+      });
+    } catch (error) {
+      console.error("Remove friend error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to remove friend."
       });
     }
   });

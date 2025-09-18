@@ -1,14 +1,17 @@
 import BibleSearchSection from "../components/BibleSearchSection";
 import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
-import { Facebook, Instagram, Heart, Flame } from "lucide-react";
+import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/lib/translations";
 
 interface SearchPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
+  language?: string;
 }
 
-export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPageProps) {
+export default function SearchPage({ onNavigate, streakDays = 0, language = "en" }: SearchPageProps) {
+  const t = useTranslations(language);
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
@@ -19,7 +22,7 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
               color: '#8B4513'
-            }}>Search for any Bible verse by reference</p>
+            }}>{t.searchPageDescription}</p>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
@@ -51,7 +54,7 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
             aria-label="Follow us on Facebook - Opens in new window"
           >
             <Facebook className="w-3 h-3" aria-hidden="true" />
-            <span>Follow</span>
+            <span>{t.follow}</span>
           </a>
           <a 
             href="https://www.instagram.com/thegospelin5minutes" 
@@ -62,7 +65,7 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
             aria-label="Follow us on Instagram - Opens in new window"
           >
             <Instagram className="w-3 h-3" aria-hidden="true" />
-            <span>Follow</span>
+            <span>{t.follow}</span>
           </a>
           <Button 
             className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
@@ -72,6 +75,31 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
           >
             <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
             Donate
+          </Button>
+        </div>
+        
+        {/* Share Button */}
+        <div className="flex justify-center mt-3">
+          <Button 
+            className="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1 rounded-full text-xs font-medium shadow-sm"
+            data-testid="button-share-search"
+            aria-label="Share The Gospel in 5 Minutes with friends"
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: 'The Gospel in 5 Minutes',
+                  text: 'Search for any Bible verse by reference with The Gospel in 5 Minutes app!',
+                  url: 'https://www.thegospelin5minutes.org'
+                }).catch(console.error);
+              } else {
+                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
+                  console.log('Link copied to clipboard');
+                }).catch(console.error);
+              }
+            }}
+          >
+            <Share className="w-3 h-3 mr-1" aria-hidden="true" />
+            {t.share}
           </Button>
         </div>
       </div>
@@ -86,11 +114,11 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
               <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Heart className="w-6 h-6 text-amber-600" aria-hidden="true" />
               </div>
-              <h3 className="text-lg font-bold text-gray-900 mb-2">
-                Help Spread God's Word
+              <h3 className="text-lg font-bold text-red-600 mb-2">
+                {t.helpSpreadGodsWord}
               </h3>
               <p className="text-gray-700 text-sm mb-4 leading-relaxed">
-                The Gospel in 5 Minutes™ is accepting donations to get the Holy Bible to more people around the world. Your support helps us reach souls in need of spiritual guidance.
+                {t.donationAppealText}
               </p>
               <Button 
                 className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-full font-medium shadow-sm"
@@ -99,7 +127,7 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
                 onClick={() => onNavigate?.('donate')}
               >
                 <Heart className="w-4 h-4 mr-2" aria-hidden="true" />
-                Make a Donation
+                {t.makeADonation}
               </Button>
             </div>
           </div>
@@ -108,7 +136,7 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
         {/* Professional Website Footer */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="text-center">
-            <p className="text-sm text-gray-500 mb-2">Visit our website for more resources</p>
+            <p className="text-sm text-gray-500 mb-2">{t.visitWebsite}</p>
             <a 
               href="https://www.thegospelin5minutes.org" 
               target="_blank" 
