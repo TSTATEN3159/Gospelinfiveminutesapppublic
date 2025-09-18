@@ -22,47 +22,43 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/ask-pastor", async (req, res) => {
     try {
       const { question } = askPastorSchema.parse(req.body);
+      console.log("Ask Pastor - Question:", question);
 
       const response = await openai.chat.completions.create({
-        model: "gpt-5",
+        model: "gpt-4o-mini",
         messages: [
           {
             role: "system",
             content: `You are a wise, compassionate pastor providing Bible-based guidance. Always:
             1. Be encouraging and loving in your responses
-            2. Include relevant Bible verses with references
+            2. Include relevant Bible verses with references when applicable
             3. Provide practical, faith-based advice
             4. Keep responses concise but meaningful (2-3 paragraphs max)
             5. If you reference a Bible verse, include the full reference (book, chapter:verse)
             6. Respond in a warm, pastoral tone
-            7. If the question is not faith/Bible related, gently redirect to spiritual matters
-            
-            Format your response as JSON with these fields:
-            - "response": your pastoral guidance
-            - "scriptureRef": the main Bible reference cited (if any)
-            - "additionalVerses": array of other relevant verses (optional)`
+            7. If the question is not faith/Bible related, gently redirect to spiritual matters`
           },
           {
             role: "user",
             content: question
           }
         ],
-        response_format: { type: "json_object" },
-        max_tokens: 500,
-        temperature: 0.7
+        max_completion_tokens: 400
       });
 
       const content = response.choices[0].message.content;
       if (!content) {
         throw new Error("No response content from OpenAI");
       }
-      const result = JSON.parse(content);
+      
+      // Extract scripture reference if mentioned (simple pattern matching)
+      const scriptureMatch = content.match(/(\d?\s?[A-Za-z]+\s+\d+:\d+(-\d+)?)/);
+      const scriptureRef = scriptureMatch ? scriptureMatch[0] : null;
       
       res.json({
         success: true,
-        response: result.response,
-        scriptureRef: result.scriptureRef,
-        additionalVerses: result.additionalVerses || []
+        response: content,
+        scriptureRef: scriptureRef
       });
 
     } catch (error) {
