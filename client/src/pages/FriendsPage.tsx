@@ -64,7 +64,7 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
         title: t.success,
         description: t.friendRequestSent,
       });
-      queryClient.invalidateQueries({ queryKey: ['/api/friends/requests'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends/requests', currentUserId] });
     },
     onError: () => {
       toast({
@@ -84,8 +84,8 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
         title: t.success,
         description: t.friendRequestAccepted,
       });
-      queryClient.invalidateQueries({ queryKey: ['/api/friends'] });
-      queryClient.invalidateQueries({ queryKey: ['/api/friends/requests'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends', currentUserId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends/requests', currentUserId] });
     }
   });
 
@@ -98,7 +98,7 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
         title: t.success,
         description: t.friendRequestDeclined,
       });
-      queryClient.invalidateQueries({ queryKey: ['/api/friends/requests'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends/requests', currentUserId] });
     }
   });
 
@@ -111,7 +111,7 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
         title: t.success,
         description: t.friendRemoved,
       });
-      queryClient.invalidateQueries({ queryKey: ['/api/friends'] });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends', currentUserId] });
     }
   });
 
