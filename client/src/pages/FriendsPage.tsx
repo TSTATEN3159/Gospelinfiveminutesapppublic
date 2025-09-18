@@ -19,11 +19,9 @@ type AppUser = {
   joinDate?: string;
 };
 
-type FriendRequest = {
-  id: string;
-  firstName: string;
-  lastName: string;
-  email: string;
+type FriendRequestItem = {
+  friendshipId: string;
+  user: AppUser;
 };
 
 interface FriendsPageProps {
@@ -162,11 +160,12 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
     );
   };
 
-  const renderRequestCard = (user: FriendRequest, type: 'incoming' | 'outgoing') => {
+  const renderRequestCard = (request: FriendRequestItem, type: 'incoming' | 'outgoing') => {
+    const { user, friendshipId } = request;
     const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
     
     return (
-      <Card key={user.id} className="p-4">
+      <Card key={friendshipId} className="p-4">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar>
@@ -184,7 +183,7 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
             <div className="flex gap-2">
               <Button
                 size="sm"
-                onClick={() => acceptRequestMutation.mutate(user.id)}
+                onClick={() => acceptRequestMutation.mutate(friendshipId)}
                 disabled={acceptRequestMutation.isPending}
                 data-testid={`button-accept-request-${user.id}`}
               >
@@ -194,7 +193,7 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
               <Button
                 size="sm"
                 variant="outline"
-                onClick={() => declineRequestMutation.mutate(user.id)}
+                onClick={() => declineRequestMutation.mutate(friendshipId)}
                 disabled={declineRequestMutation.isPending}
                 data-testid={`button-decline-request-${user.id}`}
               >
@@ -341,8 +340,8 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
                     <p className="text-center text-muted-foreground">{t.loading}</p>
                   )}
                   
-                  {requestsData?.incoming?.map((user: FriendRequest) => 
-                    renderRequestCard(user, 'incoming')
+                  {requestsData?.incoming?.map((request: FriendRequestItem) => 
+                    renderRequestCard(request, 'incoming')
                   )}
                   
                   {requestsData?.incoming?.length === 0 && !isLoadingRequests && (
@@ -364,8 +363,8 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {requestsData?.outgoing?.map((user: FriendRequest) => 
-                    renderRequestCard(user, 'outgoing')
+                  {requestsData?.outgoing?.map((request: FriendRequestItem) => 
+                    renderRequestCard(request, 'outgoing')
                   )}
                   
                   {requestsData?.outgoing?.length === 0 && !isLoadingRequests && (
