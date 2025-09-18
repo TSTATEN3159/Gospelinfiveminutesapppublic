@@ -29,6 +29,17 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
           </div>
         </div>
         
+        {/* App Title */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-3" style={{ 
+            fontFamily: 'Dancing Script, Brush Script MT, cursive',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+            color: '#8B4513'
+          }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
+            The Gospel in 5 Minutes™
+          </h2>
+        </div>
+        
         {/* Social Media Buttons and Donate Button - Same line */}
         <div className="flex justify-center items-center gap-3 mb-3">
           <a 
@@ -62,17 +73,6 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
             <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
             Donate
           </Button>
-        </div>
-        
-        {/* App Title */}
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-3" style={{ 
-            fontFamily: 'Dancing Script, Brush Script MT, cursive',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
-            color: '#8B4513'
-          }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
-            The Gospel in 5 Minutes™
-          </h2>
         </div>
       </div>
 
