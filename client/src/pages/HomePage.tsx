@@ -3,6 +3,7 @@ import GreetingHeader from "../components/GreetingHeader";
 import DailyVerseCard from "../components/DailyVerseCard";
 import StreakCounter from "../components/StreakCounter";
 import BibleStudyPlans from "../components/BibleStudyPlans";
+import AskPastor from "../components/AskPastor";
 import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
@@ -37,6 +38,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showStudyPlans, setShowStudyPlans] = useState(false);
+  const [showAskPastor, setShowAskPastor] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
   const [streakDays, setStreakDays] = useState(0);
   const [dailyVerse, setDailyVerse] = useState<DailyVerse | null>(null);
@@ -257,7 +259,11 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
             <p className="text-gray-600 text-sm mb-3">
               Get Biblical guidance and spiritual counsel for your questions.
             </p>
-            <Button className="w-full bg-blue-600" data-testid="button-askPastor">
+            <Button 
+              className="w-full bg-blue-600" 
+              onClick={() => setShowAskPastor(true)}
+              data-testid="button-askPastor"
+            >
               Ask a Question
             </Button>
           </div>
@@ -342,6 +348,15 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto p-0">
           <div className="p-6">
             <BibleStudyPlans />
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Ask Pastor Modal */}
+      <Dialog open={showAskPastor} onOpenChange={setShowAskPastor}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden p-0">
+          <div className="p-6 h-full">
+            <AskPastor onClose={() => setShowAskPastor(false)} />
           </div>
         </DialogContent>
       </Dialog>
