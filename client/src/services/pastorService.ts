@@ -5,6 +5,7 @@ export interface PastorMessage {
   id: string;
   type: 'user' | 'pastor';
   content: string;
+  scriptures?: string[];
   timestamp: Date;
 }
 
@@ -60,6 +61,11 @@ class PastorService {
       "What does it mean to have a personal relationship with Jesus?",
       "How do I handle conflict in a biblical way?"
     ];
+  }
+
+  // Get prayer request template
+  getPrayerRequestTemplate(need: string): string {
+    return `Pastor, I would like prayer for ${need}. Please provide biblical encouragement and a prayer I can use.`;
   }
 }
 
