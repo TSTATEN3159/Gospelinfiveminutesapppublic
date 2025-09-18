@@ -851,14 +851,10 @@ export default function BibleStudyPlans() {
   ];
 
   const generateStudyPlans = () => {
-    // Get saved plans or generate new ones
-    const savedPlans = localStorage.getItem("gospelAppStudyPlans");
-    const savedWeek = localStorage.getItem("gospelAppCurrentWeek");
-    
-    if (savedPlans && savedWeek === currentWeek.toString()) {
-      setStudyPlans(JSON.parse(savedPlans));
-      return;
-    }
+    // Force regenerate to ensure we have full content (temporary for debugging)
+    // Clear old localStorage data that might be missing fields
+    localStorage.removeItem("gospelAppStudyPlans");
+    localStorage.removeItem("gospelAppCurrentWeek");
 
     // Generate random topic for this week
     const randomTopic = studyTopics[Math.floor(Math.random() * studyTopics.length)];
@@ -884,6 +880,10 @@ export default function BibleStudyPlans() {
   const startPlan = (planId: string) => {
     const plan = studyPlans.find(p => p.id === planId);
     if (plan && !plan.completed) {
+      console.log('Selected plan data:', plan);
+      console.log('Has scriptureText:', !!plan.scriptureText);
+      console.log('Has reflectionQuestions:', !!plan.reflectionQuestions);
+      console.log('Has prayer:', !!plan.prayer);
       setSelectedPlan(plan);
       setIsStudyOpen(true);
     }
