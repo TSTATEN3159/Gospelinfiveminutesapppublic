@@ -1,7 +1,7 @@
 import { type User, type InsertUser, type Subscriber, type InsertSubscriber, users, subscribers } from "@shared/schema";
 import { randomUUID } from "crypto";
-import { drizzle } from "drizzle-orm/neon-serverless";
-import { Pool } from "@neondatabase/serverless";
+import { drizzle } from "drizzle-orm/neon-http";
+import { neon } from "@neondatabase/serverless";
 import { eq } from "drizzle-orm";
 
 // Storage interface with user and subscriber management
@@ -27,8 +27,9 @@ export class DatabaseStorage implements IStorage {
       throw new Error("DATABASE_URL environment variable is required");
     }
     
-    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
-    this.db = drizzle(pool);
+    // Use HTTP-based Neon client (no WebSockets required)
+    const sql = neon(process.env.DATABASE_URL);
+    this.db = drizzle(sql);
   }
 
   async getUser(id: string): Promise<User | undefined> {
