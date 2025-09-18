@@ -36,6 +36,7 @@ interface HomePageProps {
 export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageProps) {
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
+  const [showStudyPlans, setShowStudyPlans] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
   const [streakDays, setStreakDays] = useState(0);
   const [dailyVerse, setDailyVerse] = useState<DailyVerse | null>(null);
@@ -219,7 +220,13 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
               Deepen your faith with guided Biblical studies and reflection.
             </p>
             <div className="flex justify-between items-center">
-              <Button variant="ghost" size="sm" className="text-blue-600 p-0 h-auto" data-testid="button-startStudy">
+              <Button 
+                variant="ghost" 
+                size="sm" 
+                className="text-blue-600 p-0 h-auto" 
+                onClick={() => setShowStudyPlans(true)}
+                data-testid="button-startStudy"
+              >
                 Start Study
               </Button>
               <Button variant="ghost" size="sm" className="text-gray-400 p-0 h-auto" data-testid="button-dismissStudy">
@@ -329,6 +336,15 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
         badgeType={badgeData.type}
         streakDays={badgeData.days}
       />
+
+      {/* Bible Study Plans Modal */}
+      <Dialog open={showStudyPlans} onOpenChange={setShowStudyPlans}>
+        <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto p-0">
+          <div className="p-6">
+            <BibleStudyPlans />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

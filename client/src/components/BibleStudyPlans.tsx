@@ -968,6 +968,10 @@ export default function BibleStudyPlans() {
                   <Button 
                     size="sm" 
                     className="mt-1 h-6 text-xs"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      startPlan(plan.id);
+                    }}
                     data-testid={`button-start-day${plan.day}`}
                   >
                     Start
