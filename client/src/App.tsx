@@ -85,7 +85,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string) => {
-    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings"];
+    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "more"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
     }
