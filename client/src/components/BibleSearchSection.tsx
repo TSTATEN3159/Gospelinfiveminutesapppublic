@@ -73,17 +73,48 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     setIsLoading(true);
     setHasSearched(true);
 
-    // todo: remove mock functionality - replace with real Bible API
-    setTimeout(() => {
-      const result = mockSearchResults[query] || {
-        text: "Search results will be displayed here when connected to a Bible API.",
+    try {
+      const response = await fetch('/api/bible-search', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: query,
+          version: selectedVersion
+        }),
+      });
+
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to retrieve Bible text');
+      }
+
+      setSearchResult({
+        text: data.text,
+        reference: data.reference,
+        version: data.version
+      });
+
+    } catch (error) {
+      console.error('Bible search error:', error);
+      
+      // Fallback to a helpful message if API fails
+      setSearchResult({
+        text: `Sorry, I'm having trouble retrieving "${query}" right now. Please try again in a moment, or try a different Bible reference like "John 3:16" or "Psalm 23".`,
         reference: query,
         version: selectedVersion
-      };
+      });
       
-      setSearchResult(result);
+      toast({
+        title: "Search Error",
+        description: "Unable to retrieve Bible text. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   };
 
   const copyVerse = async () => {

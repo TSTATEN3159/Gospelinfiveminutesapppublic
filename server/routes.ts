@@ -16,6 +16,69 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // use storage to perform CRUD operations on the storage interface
   // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
 
+  // Bible Search OpenAI Route - for retrieving Bible chapters and verses
+  const bibleSearchSchema = z.object({
+    query: z.string().min(1).max(100), // e.g. "John 3:16" or "Psalm 23"
+    version: z.string().optional().default("NIV"), // Bible version
+  });
+
+  app.post("/api/bible-search", async (req, res) => {
+    try {
+      const { query, version } = bibleSearchSchema.parse(req.body);
+      console.log("Bible Search - Query:", query, "Version:", version);
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: `You are a Bible scholar providing accurate Bible text. When given a Bible reference:
+            1. Return the EXACT Bible text for the requested reference in the specified version (${version})
+            2. If it's a chapter reference (e.g. "John 3"), return the ENTIRE chapter
+            3. If it's a verse reference (e.g. "John 3:16"), return just that verse
+            4. Always include the complete reference at the beginning
+            5. Use proper formatting with verse numbers for chapters
+            6. Be precise and accurate with the biblical text
+            7. If the reference is unclear or doesn't exist, explain what's wrong and suggest corrections`
+          },
+          {
+            role: "user", 
+            content: `Please provide the Bible text for: ${query} (${version} version)`
+          }
+        ],
+        max_completion_tokens: 2000 // Longer for full chapters
+      });
+
+      const content = response.choices[0].message.content;
+      if (!content) {
+        throw new Error("No response content from OpenAI");
+      }
+
+      res.json({
+        success: true,
+        text: content,
+        reference: query,
+        version: version,
+        query: query
+      });
+
+    } catch (error) {
+      console.error("Bible Search API error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid search query. Please provide a valid Bible reference."
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: "I'm having trouble retrieving the Bible text right now. Please try again in a moment."
+      });
+    }
+  });
+
   // Ask Pastor OpenAI Route
   const askPastorSchema = z.object({
     question: z.string().min(1).max(1000),
