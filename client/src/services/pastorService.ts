@@ -28,11 +28,13 @@ class PastorService {
         body: JSON.stringify({ question }),
       });
 
-      if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+      const data = await response.json();
+
+      // Check if server returned an error (even with 200 status)
+      if (!data.success) {
+        throw new Error(data.error || 'Server returned an error');
       }
 
-      const data = await response.json();
       return {
         message: data.response || "I'm here to help with any spiritual questions you have.",
         scriptures: [
@@ -42,10 +44,7 @@ class PastorService {
       };
     } catch (error) {
       console.error('Pastor service error:', error);
-      return {
-        message: "I apologize, but I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
-        error: error instanceof Error ? error.message : 'Unknown error'
-      };
+      throw error; // Re-throw so AskPastor.tsx can handle it properly
     }
   }
 

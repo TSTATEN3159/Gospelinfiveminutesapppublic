@@ -190,7 +190,11 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
             className="h-auto"
             data-testid="button-send"
           >
-            <Send className="w-4 h-4" />
+            {askPastorMutation.isPending ? (
+              <div className="w-4 h-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+            ) : (
+              <Send className="w-4 h-4" />
+            )}
           </Button>
         </div>
       </CardContent>
