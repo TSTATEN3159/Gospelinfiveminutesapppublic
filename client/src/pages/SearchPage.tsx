@@ -15,8 +15,11 @@ export default function SearchPage({ onNavigate, streakDays = 0 }: SearchPagePro
       <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Bible Search</h1>
-            <p className="text-gray-600 mt-2">Search for any Bible verse by reference</p>
+            <p className="text-lg mt-2" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+              color: '#8B4513'
+            }}>Search for any Bible verse by reference</p>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">

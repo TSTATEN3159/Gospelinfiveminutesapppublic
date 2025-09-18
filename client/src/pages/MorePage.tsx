@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame } from "lucide-react";
+import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface MorePageProps {
@@ -22,17 +22,38 @@ const languages = [
 
 const menuItems = [
   {
+    id: "giving",
+    title: "Giving Impact",
+    description: "See how donations spread God's word",
+    icon: TrendingUp,
+    comingSoon: false
+  },
+  {
+    id: "videos",
+    title: "Faith Videos",
+    description: "Sermons, Gospel tidbits, and Christian advice",
+    icon: Play,
+    comingSoon: false
+  },
+  {
+    id: "blog",
+    title: "Christian Blog",
+    description: "Inspiring articles to grow your faith",
+    icon: BookOpen,
+    comingSoon: false
+  },
+  {
+    id: "settings",
+    title: "Settings",
+    description: "Manage your profile and preferences",
+    icon: Settings,
+    comingSoon: false
+  },
+  {
     id: "friends",
     title: "Friends",
     description: "Connect with fellow believers",
     icon: Users,
-    comingSoon: true
-  },
-  {
-    id: "profile",
-    title: "Profile",
-    description: "Manage your account settings",
-    icon: User,
     comingSoon: true
   },
   {
@@ -61,7 +82,10 @@ const menuItems = [
 export default function MorePage({ language, onLanguageChange, onNavigate, streakDays = 0 }: MorePageProps) {
   const handleMenuClick = (id: string) => {
     console.log(`Menu item clicked: ${id}`);
-    // todo: implement navigation to each section
+    // Navigate to the selected page if it's not coming soon
+    if (!menuItems.find(item => item.id === id)?.comingSoon) {
+      onNavigate?.(id);
+    }
   };
 
   return (
@@ -79,15 +103,64 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             </div>
           </div>
         </div>
-        <div className="text-center mt-4">
+        
+        {/* Social Media Buttons */}
+        <div className="flex justify-center items-center gap-3 mt-4 mb-3">
+          <a 
+            href="https://www.facebook.com/TheGospelIn5Minutes" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-full text-xs hover-elevate ios-tap-target"
+            data-testid="button-facebook-more"
+            aria-label="Follow us on Facebook - Opens in new window"
+          >
+            <Facebook className="w-3 h-3" aria-hidden="true" />
+            <span>Follow</span>
+          </a>
+          <a 
+            href="https://www.instagram.com/thegospelin5minutes" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs hover-elevate ios-tap-target"
+            data-testid="button-instagram-more"
+            aria-label="Follow us on Instagram - Opens in new window"
+          >
+            <Instagram className="w-3 h-3" aria-hidden="true" />
+            <span>Follow</span>
+          </a>
           <Button 
-            className="bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded-full text-sm font-medium shadow-sm"
+            className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
             data-testid="button-donate-more"
             aria-label="Donate to help spread the Gospel"
             onClick={() => onNavigate?.('donate')}
           >
-            <Heart className="w-4 h-4 mr-1" aria-hidden="true" />
+            <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
             Donate
+          </Button>
+        </div>
+        
+        {/* Share Button */}
+        <div className="flex justify-center mt-3">
+          <Button 
+            className="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1 rounded-full text-xs font-medium shadow-sm"
+            data-testid="button-share-more"
+            aria-label="Share The Gospel in 5 Minutes with friends"
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: 'The Gospel in 5 Minutes',
+                  text: 'Discover daily Bible verses and spiritual guidance with The Gospel in 5 Minutes app!',
+                  url: 'https://www.thegospelin5minutes.org'
+                }).catch(console.error);
+              } else {
+                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
+                  console.log('Link copied to clipboard');
+                }).catch(console.error);
+              }
+            }}
+          >
+            <Share className="w-3 h-3 mr-1" aria-hidden="true" />
+            Share The Gospel in 5 Minutes
           </Button>
         </div>
       </div>

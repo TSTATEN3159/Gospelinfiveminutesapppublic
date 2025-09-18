@@ -18,6 +18,10 @@ import PrivacyPolicyPage from "./pages/PrivacyPolicyPage";
 import TermsOfServicePage from "./pages/TermsOfServicePage";
 import SupportPage from "./pages/SupportPage";
 import DonationPage from "./pages/DonationPage";
+import GivingPage from "./pages/GivingPage";
+import VideosPage from "./pages/VideosPage";
+import BlogPage from "./pages/BlogPage";
+import SettingsPage from "./pages/SettingsPage";
 
 interface User {
   firstName: string;
@@ -28,7 +32,7 @@ interface User {
   phone: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate";
+type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate" | "giving" | "videos" | "blog" | "settings";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -81,7 +85,8 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string) => {
-    if (page === "privacy" || page === "terms" || page === "support" || page === "donate") {
+    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings"];
+    if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
     }
   };
@@ -108,6 +113,14 @@ function App() {
         return <SupportPage onBack={handleBackFromLegal} />;
       case "donate":
         return <DonationPage onNavigate={handleNavigateToLegal} />;
+      case "giving":
+        return <GivingPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+      case "videos":
+        return <VideosPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+      case "blog":
+        return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+      case "settings":
+        return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }

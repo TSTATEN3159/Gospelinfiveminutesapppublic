@@ -2,7 +2,7 @@ import AskPastorSection from "../components/AskPastorSection";
 import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
-import { Facebook, Instagram, Heart, Flame } from "lucide-react";
+import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 interface AskPageProps {
@@ -17,8 +17,11 @@ export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
       <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Ask the AI Pastor</h1>
-            <p className="text-gray-600 mt-2">Get AI-powered Scripture-based guidance and biblical wisdom</p>
+            <p className="text-lg mt-2" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+              color: '#8B4513'
+            }}>Get AI-powered Scripture-based guidance and biblical wisdom</p>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
@@ -60,6 +63,31 @@ export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
           >
             <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
             Donate
+          </Button>
+        </div>
+        
+        {/* Share Button */}
+        <div className="flex justify-center mt-3">
+          <Button 
+            className="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1 rounded-full text-xs font-medium shadow-sm"
+            data-testid="button-share-ask"
+            aria-label="Share The Gospel in 5 Minutes with friends"
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: 'The Gospel in 5 Minutes',
+                  text: 'Ask the AI Pastor questions and get Scripture-based guidance!',
+                  url: 'https://www.thegospelin5minutes.org'
+                }).catch(console.error);
+              } else {
+                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
+                  console.log('Link copied to clipboard');
+                }).catch(console.error);
+              }
+            }}
+          >
+            <Share className="w-3 h-3 mr-1" aria-hidden="true" />
+            Share The Gospel in 5 Minutes
           </Button>
         </div>
         

@@ -8,7 +8,7 @@ import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart } from "lucide-react";
+import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share } from "lucide-react";
 
 // Services
 import { bibleService, type DailyVerse } from "../services/bibleService";
@@ -139,6 +139,31 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
           >
             <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
             Donate
+          </Button>
+        </div>
+        
+        {/* Share Button */}
+        <div className="flex justify-center mt-3">
+          <Button 
+            className="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1 rounded-full text-xs font-medium shadow-sm"
+            data-testid="button-share-home"
+            aria-label="Share The Gospel in 5 Minutes with friends"
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: 'The Gospel in 5 Minutes',
+                  text: 'Discover daily Bible verses and spiritual guidance with The Gospel in 5 Minutes app!',
+                  url: 'https://www.thegospelin5minutes.org'
+                }).catch(console.error);
+              } else {
+                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
+                  console.log('Link copied to clipboard');
+                }).catch(console.error);
+              }
+            }}
+          >
+            <Share className="w-3 h-3 mr-1" aria-hidden="true" />
+            Share The Gospel in 5 Minutes
           </Button>
         </div>
       </div>
