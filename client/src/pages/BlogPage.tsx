@@ -1,7 +1,13 @@
+import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, BookOpen, Clock, Eye, Heart } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
+import { apiRequest } from "@/lib/queryClient";
 
 interface BlogPageProps {
   onNavigate?: (page: string) => void;
@@ -21,6 +27,55 @@ interface BlogArticle {
 }
 
 export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) {
+  const { toast } = useToast();
+  const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
+  const [subscribeForm, setSubscribeForm] = useState({ name: '', email: '' });
+  const [isSubscribing, setIsSubscribing] = useState(false);
+
+  const handleSubscribe = async () => {
+    if (!subscribeForm.email) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address to subscribe.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+    try {
+      const response = await apiRequest('POST', '/api/subscribe', {
+        email: subscribeForm.email,
+        name: subscribeForm.name || null
+      });
+      
+      const data = await response.json();
+
+      if (data.success) {
+        toast({
+          title: "Successfully Subscribed!",
+          description: data.message || "Thank you for subscribing to our blog updates.",
+          variant: "default"
+        });
+        
+        // Reset form and close modal
+        setSubscribeForm({ name: '', email: '' });
+        setIsSubscribeModalOpen(false);
+      } else {
+        throw new Error(data.error || 'Subscription failed');
+      }
+    } catch (error) {
+      console.error('Subscription error:', error);
+      toast({
+        title: "Subscription Failed",
+        description: "There was an error processing your subscription. Please try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
+  };
+
   // Initial 5 Christian articles as requested
   const articles: BlogArticle[] = [
     {
@@ -236,9 +291,84 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
             <p className="text-blue-700 text-sm mb-4">
               Get the latest Christian insights and faith-building content delivered to your inbox.
             </p>
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              Subscribe to Updates
-            </Button>
+            <Dialog open={isSubscribeModalOpen} onOpenChange={setIsSubscribeModalOpen}>
+              <DialogTrigger asChild>
+                <Button className="bg-blue-600 hover:bg-blue-700" data-testid="button-subscribe-blog">
+                  <Mail className="w-4 h-4 mr-2" />
+                  Subscribe to Updates
+                </Button>
+              </DialogTrigger>
+              <DialogContent className="sm:max-w-md">
+                <DialogHeader>
+                  <DialogTitle className="text-center" style={{ 
+                    color: '#8B4513',
+                    fontFamily: 'Dancing Script, Brush Script MT, cursive',
+                    textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+                    fontSize: '1.5rem'
+                  }}>
+                    Subscribe to Our Blog
+                  </DialogTitle>
+                </DialogHeader>
+                <div className="space-y-4 py-4">
+                  <p className="text-center text-gray-600 text-sm">
+                    Get bi-weekly Christian insights and faith-building content delivered to your inbox.
+                  </p>
+                  
+                  <div className="space-y-3">
+                    <div>
+                      <Label htmlFor="subscriber-name">Name (Optional)</Label>
+                      <Input
+                        id="subscriber-name"
+                        type="text"
+                        placeholder="Your name"
+                        value={subscribeForm.name}
+                        onChange={(e) => setSubscribeForm(prev => ({ ...prev, name: e.target.value }))}
+                        data-testid="input-subscriber-name"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="subscriber-email">Email Address *</Label>
+                      <Input
+                        id="subscriber-email"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        value={subscribeForm.email}
+                        onChange={(e) => setSubscribeForm(prev => ({ ...prev, email: e.target.value }))}
+                        required
+                        data-testid="input-subscriber-email"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex flex-col gap-2 pt-4">
+                    <Button 
+                      onClick={handleSubscribe}
+                      disabled={!subscribeForm.email || isSubscribing}
+                      className="w-full"
+                      style={{
+                        backgroundColor: '#8B4513',
+                        borderColor: '#8B4513'
+                      }}
+                      data-testid="button-confirm-subscribe"
+                    >
+                      {isSubscribing ? 'Subscribing...' : 'Subscribe to Updates'}
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      onClick={() => setIsSubscribeModalOpen(false)}
+                      className="w-full"
+                      data-testid="button-cancel-subscribe"
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                  
+                  <p className="text-xs text-gray-500 text-center">
+                    We'll send you updates every two weeks. You can unsubscribe at any time.
+                  </p>
+                </div>
+              </DialogContent>
+            </Dialog>
           </CardContent>
         </Card>
       </div>
