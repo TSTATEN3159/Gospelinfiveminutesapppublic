@@ -1008,7 +1008,7 @@ export default function BibleStudyPlans() {
                     {selectedPlan.scripture}
                   </p>
                   <blockquote className="text-lg italic text-primary border-l-4 border-primary pl-4 leading-relaxed">
-                    "{selectedPlan.scriptureText}"
+                    "{selectedPlan.scriptureText || 'Scripture text not available'}"
                   </blockquote>
                 </div>
 
@@ -1016,7 +1016,7 @@ export default function BibleStudyPlans() {
                 <div>
                   <h3 className="font-bold text-lg text-primary mb-2">Study Focus</h3>
                   <p className="text-muted-foreground">
-                    {selectedPlan.description}
+                    {selectedPlan.description || 'Study focus not available'}
                   </p>
                 </div>
 
@@ -1024,14 +1024,14 @@ export default function BibleStudyPlans() {
                 <div>
                   <h3 className="font-bold text-lg text-primary mb-3">Reflection Questions</h3>
                   <div className="space-y-3">
-                    {selectedPlan.reflectionQuestions.map((question, index) => (
+                    {selectedPlan.reflectionQuestions?.map((question, index) => (
                       <div key={index} className="flex gap-3">
                         <span className="flex-shrink-0 w-6 h-6 rounded-full bg-primary text-white text-sm font-bold flex items-center justify-center">
                           {index + 1}
                         </span>
                         <p className="text-muted-foreground">{question}</p>
                       </div>
-                    ))}
+                    )) || <p className="text-muted-foreground">No reflection questions available.</p>}
                   </div>
                 </div>
 
@@ -1039,7 +1039,7 @@ export default function BibleStudyPlans() {
                 <div className="bg-gradient-to-r from-green-50 to-blue-50 p-6 rounded-lg">
                   <h3 className="font-bold text-lg text-primary mb-3">Prayer for Today</h3>
                   <p className="text-muted-foreground italic leading-relaxed">
-                    {selectedPlan.prayer}
+                    {selectedPlan.prayer || 'Prayer not available'}
                   </p>
                 </div>
 
