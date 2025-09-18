@@ -17,8 +17,8 @@ export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
       <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Ask the Pastor</h1>
-            <p className="text-gray-600 mt-2">Get Scripture-based guidance and emotional support</p>
+            <h1 className="text-2xl font-bold text-gray-900">Ask the AI Pastor</h1>
+            <p className="text-gray-600 mt-2">Get AI-powered Scripture-based guidance and biblical wisdom</p>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">

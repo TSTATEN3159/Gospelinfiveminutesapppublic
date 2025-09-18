@@ -254,10 +254,10 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
               <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                 <Cross className="w-4 h-4 text-blue-600" />
               </div>
-              <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-askPastor">Ask the Pastor</h2>
+              <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-askPastor">Ask the AI Pastor</h2>
             </div>
             <p className="text-gray-600 text-sm mb-3">
-              Get Biblical guidance and spiritual counsel for your questions.
+              Get AI-powered biblical guidance and spiritual counsel based on Scripture.
             </p>
             <Button 
               className="w-full bg-blue-600" 

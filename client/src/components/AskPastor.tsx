@@ -92,10 +92,10 @@ export default function AskPastor({ onClose }: AskPastorProps) {
       <DialogHeader className="pb-4">
         <DialogTitle className="text-center text-2xl font-bold text-primary flex items-center justify-center gap-2">
           <Heart className="w-6 h-6" />
-          Ask the Pastor
+          Ask the AI Pastor
         </DialogTitle>
         <p className="text-center text-sm text-muted-foreground">
-          Biblical guidance and spiritual counsel for life's questions
+          AI-powered biblical guidance and spiritual counsel based on Scripture
         </p>
       </DialogHeader>
 

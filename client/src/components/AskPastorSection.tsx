@@ -45,18 +45,37 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
         };
         setMessages(prev => [...prev, pastorMessage]);
       } else {
+        // Show both toast and add message to chat history
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          role: "pastor",
+          content: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, errorMessage]);
+        
         toast({
-          title: "Pastor Unavailable",
-          description: data.error || "Please try asking your question again.",
+          title: "AI Pastor Unavailable",
+          description: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
           variant: "destructive"
         });
       }
     },
     onError: (error) => {
       console.error("Ask Pastor error:", error);
+      
+      // Add error message to chat history
+      const errorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "pastor",
+        content: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
+        timestamp: new Date()
+      };
+      setMessages(prev => [...prev, errorMessage]);
+      
       toast({
-        title: "Connection Issue",
-        description: "Unable to reach the pastor right now. Please try again.",
+        title: "AI Pastor Unavailable",
+        description: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
         variant: "destructive"
       });
     }
@@ -99,10 +118,10 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
       <CardHeader className="relative z-10 flex-shrink-0">
         <CardTitle className="flex items-center gap-2 text-xl">
           <MessageCircle className="w-6 h-6 text-primary" />
-          Ask the Pastor
+          Ask the AI Pastor
         </CardTitle>
         <p className="text-muted-foreground">
-          Ask any question about the Bible and receive Scripture-based guidance
+          Ask any question about the Bible and receive Scripture-based guidance from AI trained on biblical principles
         </p>
       </CardHeader>
 
@@ -147,7 +166,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
                   <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
                   <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">Pastor is praying and thinking...</p>
+                <p className="text-xs text-muted-foreground mt-1">AI Pastor is seeking wisdom in Scripture...</p>
               </div>
             </div>
           )}
