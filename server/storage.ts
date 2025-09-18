@@ -27,9 +27,9 @@ export interface IStorage {
   // Friends methods  
   getFriendship(requesterId: string, addresseeId: string): Promise<Friendship | undefined>;
   createFriendRequest(requesterId: string, addresseeId: string): Promise<Friendship>;
-  updateFriendshipStatus(friendshipId: string, status: string): Promise<Friendship>;
+  updateFriendshipStatus(friendshipId: string, status: 'pending' | 'accepted' | 'declined' | 'blocked'): Promise<Friendship>;
   getFriends(userId: string): Promise<AppUser[]>;
-  getFriendRequests(userId: string): Promise<{incoming: AppUser[], outgoing: AppUser[]}>;
+  getFriendRequests(userId: string): Promise<{incoming: {friendshipId: string, user: AppUser}[], outgoing: {friendshipId: string, user: AppUser}[]}>;
   removeFriend(userId: string, friendId: string): Promise<void>;
 }
 
@@ -151,21 +151,25 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createFriendRequest(requesterId: string, addresseeId: string): Promise<Friendship> {
+    // Ensure canonical ordering for uniqueness while preserving initiator
+    const [sortedRequester, sortedAddressee] = requesterId < addresseeId ? [requesterId, addresseeId] : [addresseeId, requesterId];
+    
     const result = await this.db
       .insert(friendships)
       .values({
-        requesterId,
-        addresseeId,
+        requesterId: sortedRequester,
+        addresseeId: sortedAddressee,
+        initiatorId: requesterId, // Preserve who actually sent the request
         status: "pending"
       })
       .returning();
     return result[0];
   }
 
-  async updateFriendshipStatus(friendshipId: string, status: string): Promise<Friendship> {
+  async updateFriendshipStatus(friendshipId: string, status: 'pending' | 'accepted' | 'declined' | 'blocked'): Promise<Friendship> {
     const result = await this.db
       .update(friendships)
-      .set({ status, updatedAt: new Date() })
+      .set({ status: status as any, updatedAt: new Date() })
       .where(eq(friendships.id, friendshipId))
       .returning();
     return result[0];
@@ -196,11 +200,16 @@ export class DatabaseStorage implements IStorage {
     return result;
   }
 
-  async getFriendRequests(userId: string): Promise<{incoming: AppUser[], outgoing: AppUser[]}> {
-    // Incoming requests (user is the addressee)
-    const incomingResult = await this.db
+  async getFriendRequests(userId: string): Promise<{incoming: {friendshipId: string, user: AppUser}[], outgoing: {friendshipId: string, user: AppUser}[]}> {
+    // Get all pending friendships involving this user
+    const allRequests = await this.db
       .select({
-        id: appUsers.id,
+        friendshipId: friendships.id,
+        initiatorId: friendships.initiatorId,
+        requesterId: friendships.requesterId,
+        addresseeId: friendships.addresseeId,
+        // User data for the other person
+        userId: appUsers.id,
         firstName: appUsers.firstName,
         lastName: appUsers.lastName,
         email: appUsers.email,
@@ -210,31 +219,48 @@ export class DatabaseStorage implements IStorage {
         joinDate: appUsers.joinDate,
         isActive: appUsers.isActive,
       })
-      .from(appUsers)
-      .innerJoin(friendships, eq(appUsers.id, friendships.requesterId))
-      .where(and(eq(friendships.addresseeId, userId), eq(friendships.status, "pending")));
+      .from(friendships)
+      .innerJoin(appUsers, 
+        or(
+          and(eq(friendships.requesterId, userId), eq(appUsers.id, friendships.addresseeId)),
+          and(eq(friendships.addresseeId, userId), eq(appUsers.id, friendships.requesterId))
+        )
+      )
+      .where(and(
+        or(
+          eq(friendships.requesterId, userId),
+          eq(friendships.addresseeId, userId)
+        ),
+        eq(friendships.status, "pending")
+      ));
 
-    // Outgoing requests (user is the requester)
-    const outgoingResult = await this.db
-      .select({
-        id: appUsers.id,
-        firstName: appUsers.firstName,
-        lastName: appUsers.lastName,
-        email: appUsers.email,
-        phone: appUsers.phone,
-        birthMonth: appUsers.birthMonth,
-        birthDay: appUsers.birthDay,
-        joinDate: appUsers.joinDate,
-        isActive: appUsers.isActive,
-      })
-      .from(appUsers)
-      .innerJoin(friendships, eq(appUsers.id, friendships.addresseeId))
-      .where(and(eq(friendships.requesterId, userId), eq(friendships.status, "pending")));
+    const incoming: {friendshipId: string, user: AppUser}[] = [];
+    const outgoing: {friendshipId: string, user: AppUser}[] = [];
 
-    return {
-      incoming: incomingResult,
-      outgoing: outgoingResult
-    };
+    for (const request of allRequests) {
+      const user: AppUser = {
+        id: request.userId,
+        firstName: request.firstName,
+        lastName: request.lastName,
+        email: request.email,
+        phone: request.phone,
+        birthMonth: request.birthMonth,
+        birthDay: request.birthDay,
+        joinDate: request.joinDate,
+        isActive: request.isActive,
+      };
+
+      // Use initiatorId to determine direction (not requesterId/addresseeId due to canonical ordering)
+      if (request.initiatorId === userId) {
+        // User initiated this request -> outgoing
+        outgoing.push({ friendshipId: request.friendshipId, user });
+      } else {
+        // Someone else initiated this request -> incoming
+        incoming.push({ friendshipId: request.friendshipId, user });
+      }
+    }
+
+    return { incoming, outgoing };
   }
 
   async removeFriend(userId: string, friendId: string): Promise<void> {

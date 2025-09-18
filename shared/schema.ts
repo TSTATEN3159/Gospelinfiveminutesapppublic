@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, boolean } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, boolean, pgEnum, unique, uniqueIndex, check } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -16,6 +16,9 @@ export const insertUserSchema = createInsertSchema(users).pick({
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
+
+// Friendship status enum
+export const friendshipStatusEnum = pgEnum('friendship_status', ['pending', 'accepted', 'declined', 'blocked']);
 
 // Blog subscribers table
 export const subscribers = pgTable("subscribers", {
@@ -65,15 +68,24 @@ export const friendships = pgTable("friendships", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   requesterId: varchar("requester_id").notNull().references(() => appUsers.id),
   addresseeId: varchar("addressee_id").notNull().references(() => appUsers.id),
-  status: text("status").notNull().default("pending"), // pending, accepted, declined, blocked
+  initiatorId: varchar("initiator_id").notNull().references(() => appUsers.id),
+  status: friendshipStatusEnum("status").notNull().default("pending"),
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
   updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniqueFriendship: uniqueIndex('friendships_unique').on(table.requesterId, table.addresseeId),
+    canonicalOrder: check('canonical_order', sql`${table.requesterId} < ${table.addresseeId}`),
+    noSelfFriending: check('no_self_friending', sql`${table.requesterId} <> ${table.addresseeId}`),
+  };
 });
 
 export const insertFriendshipSchema = createInsertSchema(friendships).pick({
   requesterId: true,
   addresseeId: true,
-  status: true,
+}).extend({
+  // Optional status, defaults to 'pending' in database
+  status: z.enum(['pending', 'accepted', 'declined', 'blocked']).optional(),
 });
 
 export type InsertFriendship = z.infer<typeof insertFriendshipSchema>;

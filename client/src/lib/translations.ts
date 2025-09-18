@@ -246,7 +246,37 @@ export const translations: Record<string, Translations> = {
     
     // App Info
     appTagline: "Llevando la palabra de Dios al mundo",
-    version: "Versión 1.0.0"
+    version: "Versión 1.0.0",
+    
+    // Friends functionality
+    friendsPageDescription: "Conecta con otros creyentes en tu jornada espiritual",
+    searchFriends: "Buscar Amigos",
+    myFriends: "Mis Amigos",
+    requests: "Solicitudes",
+    findNewFriends: "Encontrar Nuevos Amigos",
+    searchByNameOrEmail: "Buscar por nombre o email",
+    searchPlaceholder: "Nombre o email",
+    addFriend: "Agregar Amigo",
+    remove: "Eliminar",
+    accept: "Aceptar",
+    decline: "Rechazar",
+    pending: "Pendiente",
+    friendsListDescription: "Tus amigos espirituales",
+    noFriendsFound: "No se encontraron amigos",
+    incomingRequests: "Solicitudes Recibidas",
+    outgoingRequests: "Solicitudes Enviadas",
+    startSearching: "Comienza buscando amigos para conectarte",
+    noIncomingRequests: "No hay solicitudes pendientes",
+    noOutgoingRequests: "No hay solicitudes enviadas pendientes",
+    searching: "Buscando...",
+    loading: "Cargando...",
+    success: "Éxito",
+    error: "Error",
+    friendRequestSent: "¡Solicitud de amistad enviada exitosamente!",
+    friendRequestFailed: "Error al enviar solicitud de amistad",
+    friendRequestAccepted: "¡Solicitud de amistad aceptada!",
+    friendRequestDeclined: "Solicitud de amistad rechazada",
+    friendRemoved: "Amigo eliminado exitosamente"
   },
   
   fr: {
@@ -306,7 +336,37 @@ export const translations: Record<string, Translations> = {
     
     // App Info
     appTagline: "Apporter la parole de Dieu au monde",
-    version: "Version 1.0.0"
+    version: "Version 1.0.0",
+    
+    // Friends functionality
+    friendsPageDescription: "Connectez-vous avec d'autres croyants dans votre parcours spirituel",
+    searchFriends: "Rechercher des Amis",
+    myFriends: "Mes Amis",
+    requests: "Demandes",
+    findNewFriends: "Trouver de Nouveaux Amis",
+    searchByNameOrEmail: "Rechercher par nom ou email",
+    searchPlaceholder: "Nom ou email",
+    addFriend: "Ajouter Ami",
+    remove: "Supprimer",
+    accept: "Accepter",
+    decline: "Refuser",
+    pending: "En attente",
+    friendsListDescription: "Vos amis spirituels",
+    noFriendsFound: "Aucun ami trouvé",
+    incomingRequests: "Demandes Reçues",
+    outgoingRequests: "Demandes Envoyées",
+    startSearching: "Commencez en recherchant des amis pour vous connecter",
+    noIncomingRequests: "Aucune demande en attente",
+    noOutgoingRequests: "Aucune demande envoyée en attente",
+    searching: "Recherche...",
+    loading: "Chargement...",
+    success: "Succès",
+    error: "Erreur",
+    friendRequestSent: "Demande d'ami envoyée avec succès !",
+    friendRequestFailed: "Échec de l'envoi de la demande d'ami",
+    friendRequestAccepted: "Demande d'ami acceptée !",
+    friendRequestDeclined: "Demande d'ami refusée",
+    friendRemoved: "Ami supprimé avec succès"
   },
   
   pt: {
@@ -366,7 +426,41 @@ export const translations: Record<string, Translations> = {
     
     // App Info
     appTagline: "Levando a palavra de Deus ao mundo",
-    version: "Versão 1.0.0"
+    version: "Versão 1.0.0",
+    
+    // Friends functionality
+    friendsPageDescription: "Conecte-se com outros crentes em sua jornada espiritual",
+    searchFriends: "Buscar Amigos",
+    myFriends: "Meus Amigos",
+    requests: "Solicitações",
+    findNewFriends: "Encontrar Novos Amigos",
+    searchByNameOrEmail: "Buscar por nome ou email",
+    searchPlaceholder: "Nome ou email",
+    addFriend: "Adicionar Amigo",
+    remove: "Remover",
+    accept: "Aceitar",
+    decline: "Recusar",
+    pending: "Pendente",
+    friendsListDescription: "Seus amigos espirituais",
+    incomingRequests: "Solicitações Recebidas",
+    outgoingRequests: "Solicitações Enviadas",
+    startSearching: "Comece procurando por amigos para se conectar",
+    noIncomingRequests: "Nenhuma solicitação pendente",
+    noOutgoingRequests: "Nenhuma solicitação enviada pendente",
+    searching: "Procurando...",
+    loading: "Carregando...",
+    success: "Sucesso",
+    error: "Erro",
+    friendRequestSent: "Solicitação de amizade enviada com sucesso!",
+    friendRequestFailed: "Falha ao enviar solicitação de amizade",
+    friendRequestAccepted: "Solicitação de amizade aceita!",
+    friendRequestDeclined: "Solicitação de amizade recusada",
+    friendRemoved: "Amigo removido com sucesso",
+    incomingRequestsDescription: "Solicitações de amizade recebidas",
+    outgoingRequestsDescription: "Suas solicitações de amizade enviadas",
+    noUsersFound: "Nenhum usuário encontrado",
+    typeToSearch: "Digite para pesquisar",
+    noFriendsYet: "Você ainda não tem amigos"
   },
   
   // For other languages (zh, ar, hi), we'll use English as fallback for now
@@ -427,7 +521,37 @@ export const translations: Record<string, Translations> = {
     
     // App Info
     appTagline: "将神的话语带向世界",
-    version: "版本 1.0.0"
+    version: "版本 1.0.0",
+    
+    // Friends functionality
+    friendsPageDescription: "在灵性旅程中与其他信徒连接",
+    searchFriends: "搜索朋友",
+    myFriends: "我的朋友",
+    requests: "请求",
+    findNewFriends: "寻找新朋友",
+    searchByNameOrEmail: "按姓名或邮箱搜索",
+    searchPlaceholder: "姓名或邮箱",
+    addFriend: "添加朋友",
+    remove: "删除",
+    accept: "接受",
+    decline: "拒绝",
+    pending: "待定",
+    friendsListDescription: "你的灵性朋友",
+    noFriendsFound: "未找到朋友",
+    incomingRequests: "接收的请求",
+    outgoingRequests: "发送的请求",
+    startSearching: "开始搜索朋友以连接",
+    noIncomingRequests: "没有待定的朋友请求",
+    noOutgoingRequests: "没有待定的发送请求",
+    searching: "搜索中...",
+    loading: "加载中...",
+    success: "成功",
+    error: "错误",
+    friendRequestSent: "朋友请求发送成功！",
+    friendRequestFailed: "发送朋友请求失败",
+    friendRequestAccepted: "朋友请求已接受！",
+    friendRequestDeclined: "朋友请求已拒绝",
+    friendRemoved: "朋友删除成功"
   },
   
   ar: {
@@ -487,7 +611,37 @@ export const translations: Record<string, Translations> = {
     
     // App Info
     appTagline: "جلب كلمة الله إلى العالم",
-    version: "الإصدار 1.0.0"
+    version: "الإصدار 1.0.0",
+    
+    // Friends functionality
+    friendsPageDescription: "تواصل مع المؤمنين الآخرين في رحلتك الروحية",
+    searchFriends: "البحث عن الأصدقاء",
+    myFriends: "أصدقائي",
+    requests: "الطلبات",
+    findNewFriends: "العثور على أصدقاء جدد",
+    searchByNameOrEmail: "البحث بالاسم أو البريد الإلكتروني",
+    searchPlaceholder: "الاسم أو البريد الإلكتروني",
+    addFriend: "إضافة صديق",
+    remove: "إزالة",
+    accept: "قبول",
+    decline: "رفض",
+    pending: "في الانتظار",
+    friendsListDescription: "أصدقاؤك الروحيون",
+    noFriendsFound: "لم يتم العثور على أصدقاء",
+    incomingRequests: "الطلبات الواردة",
+    outgoingRequests: "الطلبات الصادرة",
+    startSearching: "ابدأ بالبحث عن الأصدقاء للتواصل",
+    noIncomingRequests: "لا توجد طلبات صداقة معلقة",
+    noOutgoingRequests: "لا توجد طلبات صادرة معلقة",
+    searching: "البحث...",
+    loading: "جاري التحميل...",
+    success: "نجح",
+    error: "خطأ",
+    friendRequestSent: "تم إرسال طلب الصداقة بنجاح!",
+    friendRequestFailed: "فشل في إرسال طلب الصداقة",
+    friendRequestAccepted: "تم قبول طلب الصداقة!",
+    friendRequestDeclined: "تم رفض طلب الصداقة",
+    friendRemoved: "تم حذف الصديق بنجاح"
   },
   
   hi: {
@@ -547,7 +701,41 @@ export const translations: Record<string, Translations> = {
     
     // App Info
     appTagline: "परमेश्वर के वचन को दुनिया में लाना",
-    version: "संस्करण 1.0.0"
+    version: "संस्करण 1.0.0",
+    
+    // Friends functionality
+    friendsPageDescription: "अपनी आध्यात्मिक यात्रा में अन्य विश्वासियों से जुड़ें",
+    searchFriends: "मित्र खोजें",
+    myFriends: "मेरे मित्र",
+    requests: "अनुरोध",
+    findNewFriends: "नए मित्र खोजें",
+    searchByNameOrEmail: "नाम या ईमेल से खोजें",
+    searchPlaceholder: "नाम या ईमेल",
+    addFriend: "मित्र जोड़ें",
+    remove: "हटाएं",
+    accept: "स्वीकार करें",
+    decline: "अस्वीकार करें",
+    pending: "लंबित",
+    friendsListDescription: "आपके आध्यात्मिक मित्र",
+    incomingRequests: "प्राप्त अनुरोध",
+    outgoingRequests: "भेजे गए अनुरोध",
+    startSearching: "जुड़ने के लिए मित्रों की खोज शुरू करें",
+    noIncomingRequests: "कोई लंबित मित्र अनुरोध नहीं",
+    noOutgoingRequests: "कोई लंबित भेजा गया अनुरोध नहीं",
+    searching: "खोज रहे हैं...",
+    loading: "लोड हो रहा है...",
+    success: "सफल",
+    error: "त्रुटि",
+    friendRequestSent: "मित्र अनुरोध सफलतापूर्वक भेजा गया!",
+    friendRequestFailed: "मित्र अनुरोध भेजने में विफल",
+    friendRequestAccepted: "मित्र अनुरोध स्वीकार किया गया!",
+    friendRequestDeclined: "मित्र अनुरोध अस्वीकार किया गया",
+    friendRemoved: "मित्र सफलतापूर्वक हटाया गया",
+    incomingRequestsDescription: "प्राप्त मित्र अनुरोध",
+    outgoingRequestsDescription: "आपके भेजे गए मित्र अनुरोध",
+    noUsersFound: "कोई उपयोगकर्ता नहीं मिला",
+    typeToSearch: "खोजने के लिए टाइप करें",
+    noFriendsYet: "आपके पास अभी तक कोई मित्र नहीं है"
   }
 };
 
