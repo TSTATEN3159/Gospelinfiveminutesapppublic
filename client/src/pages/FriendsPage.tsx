@@ -10,6 +10,7 @@ import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
+import prayingCommunityImage from '@assets/stock_images/people_praying_toget_e65e5a90.jpg';
 
 type AppUser = {
   id: string;
@@ -215,7 +216,11 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen relative" style={{
+      backgroundImage: `linear-gradient(rgba(139, 69, 19, 0.9), rgba(139, 69, 19, 0.7)), url(${prayingCommunityImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">

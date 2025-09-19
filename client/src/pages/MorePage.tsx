@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
+import mountainSunriseImage from '@assets/stock_images/powerful_majestic_mo_95a68c1b.jpg';
 
 interface MorePageProps {
   language: string;
@@ -93,14 +94,24 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
   };
 
   return (
-    <div className="pb-20 px-4 py-6 bg-background min-h-screen">
+    <div className="pb-20 px-4 py-6 min-h-screen relative" style={{
+      backgroundImage: `linear-gradient(rgba(139, 69, 19, 0.9), rgba(139, 69, 19, 0.8)), url(${mountainSunriseImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
       <div className="mb-8">
         {/* Page Title */}
         <div className="text-center mb-6">
-          <h1 className="text-3xl font-bold text-foreground mb-2" data-testid="text-title-more-features">
+          <h1 className="text-4xl font-bold mb-2" style={{
+            color: 'white',
+            fontFamily: 'Dancing Script, Brush Script MT, cursive',
+            textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+          }} data-testid="text-title-more-features">
             More Features
           </h1>
-          <p className="text-muted-foreground text-lg">{t.settingsDescription}</p>
+          <p className="text-white text-lg" style={{
+            textShadow: '1px 1px 2px rgba(0,0,0,0.7)'
+          }}>{t.settingsDescription}</p>
         </div>
         
         <div className="flex items-center justify-between mb-4">
@@ -108,8 +119,8 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
-              <Flame className="w-6 h-6 text-destructive fill-destructive" />
-              <span className="text-lg font-bold text-destructive" data-testid="text-streak-count">{streakDays}</span>
+              <Flame className="w-6 h-6 text-red-600 fill-red-600" />
+              <span className="text-lg font-bold text-red-600" data-testid="text-streak-count">{streakDays}</span>
             </div>
           </div>
         </div>
@@ -121,17 +132,19 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               href="https://www.facebook.com/TheGospelIn5Minutes" 
               target="_blank" 
               rel="noopener noreferrer"
+              className="bg-blue-600 text-white hover:bg-blue-700"
               aria-label="Follow us on Facebook - Opens in new window"
             >
               <Facebook className="w-3 h-3 mr-1" aria-hidden="true" />
               <span>{t.follow}</span>
             </a>
           </Button>
-          <Button asChild variant="secondary" size="sm" data-testid="button-instagram-more">
+          <Button asChild variant="default" size="sm" data-testid="button-instagram-more">
             <a 
               href="https://www.instagram.com/thegospelin5minutes" 
               target="_blank" 
               rel="noopener noreferrer"
+              className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white"
               aria-label="Follow us on Instagram - Opens in new window"
             >
               <Instagram className="w-3 h-3 mr-1" aria-hidden="true" />
@@ -141,6 +154,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           <Button 
             variant="default"
             size="sm"
+            className="bg-amber-600 text-white"
             data-testid="button-donate-more"
             aria-label="Donate to help spread the Gospel"
             onClick={() => onNavigate?.('donate')}
@@ -153,8 +167,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         {/* Share Button */}
         <div className="flex justify-center mt-3">
           <Button 
-            variant="secondary"
+            variant="default"
             size="sm"
+            className="bg-amber-700 text-white"
             data-testid="button-share-more"
             aria-label="Share The Gospel in 5 Minutes with friends"
             onClick={() => {

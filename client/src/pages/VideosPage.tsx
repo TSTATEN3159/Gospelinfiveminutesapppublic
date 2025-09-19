@@ -6,6 +6,7 @@ import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink
 import { videoService, type VideoItem } from "@/services/videoService";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { useToast } from "@/hooks/use-toast";
+import worshipImage from '@assets/stock_images/church_worship_hands_6ff9edc7.jpg';
 
 interface VideosPageProps {
   onNavigate?: (page: string) => void;
@@ -119,27 +120,37 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
   };
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 relative" style={{
+      backgroundImage: `linear-gradient(rgba(139, 69, 19, 0.9), rgba(139, 69, 19, 0.7)), url(${worshipImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
       {/* Header Section */}
-      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
+      <div className="px-4 py-6 ios-safe-top" style={{
+        backgroundColor: 'rgba(139, 69, 19, 0.95)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+      }}>
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-3"
+            className="mr-3 text-white hover:bg-white/20"
             data-testid="button-back-videos"
             aria-label="Go back to More page"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-primary drop-shadow-sm" style={{ 
-              fontFamily: 'Dancing Script, Brush Script MT, cursive'
+            <h1 className="text-4xl font-bold text-white" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
             }}>
               Faith Videos
             </h1>
-            <p className="text-muted-foreground mt-1">Sermons, Gospel insights, and Christian guidance</p>
+            <p className="text-white mt-1" style={{
+              textShadow: '1px 1px 2px rgba(0,0,0,0.7)'
+            }}>Sermons, Gospel insights, and Christian guidance</p>
           </div>
         </div>
       </div>

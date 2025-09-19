@@ -8,6 +8,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail, AlertCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import bibleGoldenImage from '@assets/stock_images/open_bible_golden_su_6f7daf93.jpg';
 
 interface BlogPageProps {
   onNavigate?: (page: string) => void;
@@ -127,27 +128,37 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
   };
 
   return (
-    <div className="min-h-screen pb-20">
+    <div className="min-h-screen pb-20 relative" style={{
+      backgroundImage: `linear-gradient(rgba(139, 69, 19, 0.9), rgba(139, 69, 19, 0.7)), url(${bibleGoldenImage})`,
+      backgroundSize: 'cover',
+      backgroundPosition: 'center'
+    }}>
       {/* Header Section */}
-      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
+      <div className="px-4 py-6 ios-safe-top" style={{
+        backgroundColor: 'rgba(139, 69, 19, 0.95)',
+        borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
+      }}>
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-3"
+            className="mr-3 text-white hover:bg-white/20"
             data-testid="button-back-blog"
             aria-label="Go back to More page"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold text-primary drop-shadow-sm" style={{ 
-              fontFamily: 'Dancing Script, Brush Script MT, cursive'
+            <h1 className="text-4xl font-bold text-white" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive',
+              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
             }}>
               Christian Blog
             </h1>
-            <p className="text-muted-foreground mt-1">Inspiring articles to grow your faith</p>
+            <p className="text-white mt-1" style={{
+              textShadow: '1px 1px 2px rgba(0,0,0,0.7)'
+            }}>Inspiring articles to grow your faith</p>
           </div>
         </div>
       </div>
