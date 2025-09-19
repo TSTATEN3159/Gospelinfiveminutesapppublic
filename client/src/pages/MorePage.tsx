@@ -12,13 +12,13 @@ interface MorePageProps {
 }
 
 const languages = [
-  { code: "en", name: "English", flag: "🇺🇸" },
-  { code: "es", name: "Español", flag: "🇪🇸" },
-  { code: "fr", name: "Français", flag: "🇫🇷" },
-  { code: "pt", name: "Português", flag: "🇧🇷" },
-  { code: "zh", name: "中文", flag: "🇨🇳" },
-  { code: "ar", name: "العربية", flag: "🇸🇦" },
-  { code: "hi", name: "हिन्दी", flag: "🇮🇳" },
+  { code: "en", name: "English" },
+  { code: "es", name: "Español" },
+  { code: "fr", name: "Français" },
+  { code: "pt", name: "Português" },
+  { code: "zh", name: "中文" },
+  { code: "ar", name: "العربية" },
+  { code: "hi", name: "हिन्दी" },
 ];
 
 const getMenuItems = (t: any) => [
@@ -93,46 +93,54 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
   };
 
   return (
-    <div className="pb-20 px-4 py-6">
-      <div className="mb-6">
-        <div className="flex items-center justify-between mb-2">
+    <div className="pb-20 px-4 py-6 bg-background min-h-screen">
+      <div className="mb-8">
+        {/* Page Title */}
+        <div className="text-center mb-6">
+          <h1 className="text-3xl font-bold text-foreground mb-2" data-testid="text-title-more-features">
+            More Features
+          </h1>
+          <p className="text-muted-foreground text-lg">{t.settingsDescription}</p>
+        </div>
+        
+        <div className="flex items-center justify-between mb-4">
           <div>
-            <p className="text-muted-foreground mt-2">{t.settingsDescription}</p>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
-              <Flame className="w-6 h-6 text-red-600 fill-red-600" />
-              <span className="text-lg font-bold text-red-600">{streakDays}</span>
+              <Flame className="w-6 h-6 text-destructive fill-destructive" />
+              <span className="text-lg font-bold text-destructive" data-testid="text-streak-count">{streakDays}</span>
             </div>
           </div>
         </div>
         
         {/* Social Media Buttons */}
         <div className="flex justify-center items-center gap-3 mt-4 mb-3">
-          <a 
-            href="https://www.facebook.com/TheGospelIn5Minutes" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 bg-blue-600 text-white px-3 py-1 rounded-full text-xs hover-elevate ios-tap-target"
-            data-testid="button-facebook-more"
-            aria-label="Follow us on Facebook - Opens in new window"
-          >
-            <Facebook className="w-3 h-3" aria-hidden="true" />
-            <span>{t.follow}</span>
-          </a>
-          <a 
-            href="https://www.instagram.com/thegospelin5minutes" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="flex items-center gap-1 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs hover-elevate ios-tap-target"
-            data-testid="button-instagram-more"
-            aria-label="Follow us on Instagram - Opens in new window"
-          >
-            <Instagram className="w-3 h-3" aria-hidden="true" />
-            <span>{t.follow}</span>
-          </a>
+          <Button asChild variant="default" size="sm" data-testid="button-facebook-more">
+            <a 
+              href="https://www.facebook.com/TheGospelIn5Minutes" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Follow us on Facebook - Opens in new window"
+            >
+              <Facebook className="w-3 h-3 mr-1" aria-hidden="true" />
+              <span>{t.follow}</span>
+            </a>
+          </Button>
+          <Button asChild variant="secondary" size="sm" data-testid="button-instagram-more">
+            <a 
+              href="https://www.instagram.com/thegospelin5minutes" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              aria-label="Follow us on Instagram - Opens in new window"
+            >
+              <Instagram className="w-3 h-3 mr-1" aria-hidden="true" />
+              <span>{t.follow}</span>
+            </a>
+          </Button>
           <Button 
-            className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
+            variant="default"
+            size="sm"
             data-testid="button-donate-more"
             aria-label="Donate to help spread the Gospel"
             onClick={() => onNavigate?.('donate')}
@@ -145,7 +153,8 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         {/* Share Button */}
         <div className="flex justify-center mt-3">
           <Button 
-            className="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1 rounded-full text-xs font-medium shadow-sm"
+            variant="secondary"
+            size="sm"
             data-testid="button-share-more"
             aria-label="Share The Gospel in 5 Minutes with friends"
             onClick={() => {
@@ -170,11 +179,11 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
 
       <div className="max-w-md mx-auto space-y-4">
         {/* Language Selector */}
-        <Card>
-          <CardContent className="p-4">
-            <div className="flex items-center gap-3 mb-3">
-              <Globe className="w-5 h-5 text-primary" />
-              <h3 className="font-semibold text-primary">{t.language}</h3>
+        <Card className="shadow-lg border-2">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <Globe className="w-6 h-6 text-primary" />
+              <h3 className="font-bold text-xl text-foreground text-center">{t.language}</h3>
             </div>
             <Select value={language} onValueChange={onLanguageChange}>
               <SelectTrigger data-testid="select-language">
@@ -184,7 +193,6 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
                 {languages.map(lang => (
                   <SelectItem key={lang.code} value={lang.code}>
                     <span className="flex items-center gap-2">
-                      <span>{lang.flag}</span>
                       <span>{lang.name}</span>
                     </span>
                   </SelectItem>
@@ -198,79 +206,85 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         {menuItems.map((item) => (
           <Card 
             key={item.id} 
-            className="cursor-pointer hover-elevate" 
+            className="cursor-pointer hover-elevate shadow-lg border-2" 
             onClick={() => item.comingSoon ? null : onNavigate?.(item.id)}
             data-testid={`menu-${item.id}`}
           >
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between min-h-[44px]">
-                <div className="flex items-center gap-3">
-                  <item.icon className="w-5 h-5 text-primary" />
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between min-h-[50px]">
+                <div className="flex items-center gap-4">
+                  <div className="bg-muted p-3 rounded-full">
+                    <item.icon className="w-6 h-6 text-primary" />
+                  </div>
                   <div className="flex-1">
-                    <h3 className="font-semibold text-primary flex items-center gap-2">
+                    <h3 className="font-bold text-lg text-foreground flex items-center gap-2">
                       {item.title}
                       {item.comingSoon && (
-                        <span className="text-xs bg-accent text-accent-foreground px-2 py-1 rounded">
+                        <span className="text-xs bg-muted text-muted-foreground px-3 py-1 rounded-full font-medium">
                           {t.comingSoon}
                         </span>
                       )}
                     </h3>
-                    <p className="text-sm text-muted-foreground">{item.description}</p>
+                    <p className="text-base text-muted-foreground leading-relaxed">{item.description}</p>
                   </div>
                 </div>
-                {!item.comingSoon && <ChevronRight className="w-5 h-5 text-gray-400" />}
+                {!item.comingSoon && <ChevronRight className="w-6 h-6 text-muted-foreground" />}
               </div>
             </CardContent>
           </Card>
         ))}
 
         {/* Legal & Support Section */}
-        <Card>
-          <CardContent className="p-4">
-            <h2 className="font-semibold text-primary mb-4 flex items-center gap-2">
-              <Scale className="w-5 h-5" />
+        <Card className="shadow-lg border-2">
+          <CardContent className="p-6">
+            <h2 className="font-bold text-xl text-foreground mb-6 flex items-center justify-center gap-3">
+              <Scale className="w-6 h-6 text-primary" />
               {t.supportLegal}
             </h2>
-            <div className="space-y-3">
-              <button 
-                className="w-full flex items-center justify-between p-3 rounded-lg hover-elevate transition-all duration-200 min-h-[44px]" 
+            <div className="space-y-4">
+              <Button 
+                variant="secondary"
+                size="lg"
+                className="w-full justify-between"
                 onClick={() => onNavigate?.('support')}
                 data-testid="button-support"
               >
-                <div className="flex items-center gap-3">
-                  <HeadphonesIcon className="w-5 h-5 text-gray-600" />
-                  <span className="text-gray-800">{t.supportPrivacyRights}</span>
+                <div className="flex items-center gap-4">
+                  <div className="bg-muted p-2 rounded-full">
+                    <HeadphonesIcon className="w-5 h-5 text-primary" />
+                  </div>
+                  <span className="font-medium text-foreground text-lg">{t.supportPrivacyRights}</span>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-400" />
-              </button>
+                <ChevronRight className="w-6 h-6 text-muted-foreground" />
+              </Button>
             </div>
           </CardContent>
         </Card>
 
         {/* App Info */}
-        <Card className="mt-8">
-          <CardContent className="p-4 text-center">
-            <h3 className="font-bold text-primary text-lg" style={{ fontFamily: 'var(--font-cursive)' }}>
+        <Card className="mt-8 shadow-lg border-2">
+          <CardContent className="p-8 text-center">
+            <h3 className="font-bold text-2xl text-foreground mb-3">
               The Gospel in 5 Minutes™
             </h3>
-            <p className="text-sm text-muted-foreground mt-1">
+            <p className="text-lg text-muted-foreground leading-relaxed mb-2">
               {t.appTagline}
             </p>
-            <p className="text-xs text-muted-foreground mt-2">
+            <p className="text-sm text-muted-foreground font-medium">
               {t.version}
             </p>
           </CardContent>
         </Card>
         
         {/* Professional Website Footer */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
+        <div className="mt-8 pt-6 border-t border-border">
           <div className="text-center">
-            <p className="text-sm text-gray-500 mb-2">{t.visitWebsite}</p>
+            <p className="text-sm text-muted-foreground mb-2">{t.visitWebsite}</p>
             <a 
               href="https://www.thegospelin5minutes.org" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200"
+              className="text-primary text-sm font-medium transition-colors duration-200"
               data-testid="link-website-footer-more"
               aria-label="Visit The Gospel in 5 Minutes website - Opens in new window"
             >
