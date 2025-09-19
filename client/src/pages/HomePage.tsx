@@ -395,6 +395,68 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
           </div>
         )}
 
+        {/* Donation Tile - Help Secure Bibles */}
+        <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl p-6 shadow-sm border border-amber-100">
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full flex items-center justify-center shadow-lg">
+                <Heart className="w-8 h-8 text-white fill-current" />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2" data-testid="heading-donation">
+                Give the Gift of God's Word
+              </h3>
+              <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                Right now, someone across the world is searching for hope, comfort, and truth. Your $5 gift can help us place a Bible directly into the hands of someone who desperately needs to hear that they are loved, they matter, and they have a purpose. 
+              </p>
+              <p className="text-sm text-amber-800 dark:text-amber-200 font-semibold mb-1">
+                "Faith comes by hearing, and hearing by the word of God" - Romans 10:17
+              </p>
+              <p className="text-xs text-gray-600 dark:text-gray-400 italic">
+                Every dollar goes directly to purchasing and distributing Bibles to those without access.
+              </p>
+            </div>
+            <Button
+              onClick={async () => {
+                try {
+                  // Create Stripe Checkout session for secure donation
+                  const response = await fetch('/api/create-donation-checkout', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  });
+                  
+                  if (!response.ok) {
+                    throw new Error('Failed to create donation checkout');
+                  }
+                  
+                  const { url } = await response.json();
+                  
+                  // Redirect to secure Stripe Checkout with Apple Pay support
+                  window.location.href = url;
+                } catch (error) {
+                  toast({
+                    title: "Unable to Process Donation",
+                    description: "There was an issue setting up your donation. Please try again later.",
+                    variant: "destructive",
+                  });
+                }
+              }}
+              className="flex items-center gap-2 bg-amber-600 text-white px-8 py-3 text-base font-semibold mx-auto"
+              data-testid="button-donate"
+            >
+              <Heart className="w-5 h-5 fill-current" />
+              <span>Give $5 for a Bible</span>
+            </Button>
+            <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
+              <span className="w-2 h-2 bg-green-500 rounded-full"></span>
+              <span>Secure donation powered by Stripe</span>
+            </div>
+          </div>
+        </div>
+
         {/* Facebook & Live Counter Section */}
         <div className="bg-white rounded-2xl p-4 shadow-sm">
           <div className="flex flex-col items-center space-y-4">

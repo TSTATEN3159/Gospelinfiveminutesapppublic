@@ -359,6 +359,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Secure donation checkout for $5 Bible donations
+  app.post("/api/create-donation-checkout", async (req, res) => {
+    try {
+      const stripeClient = getStripeClient();
+      
+      // Create Stripe Checkout session with fixed $5 amount (server-side controlled)
+      const session = await stripeClient.checkout.sessions.create({
+        payment_method_types: ['card'],
+        automatic_payment_methods: {
+          enabled: true,
+        },
+        line_items: [{
+          price_data: {
+            currency: 'usd',
+            product_data: {
+              name: 'Bible for Someone in Need',
+              description: 'Help us place a Bible in the hands of someone who desperately needs to hear God\'s Word',
+              images: ['https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=500&h=500&fit=crop'],
+            },
+            unit_amount: 500, // $5.00 in cents - server-side controlled
+          },
+          quantity: 1,
+        }],
+        mode: 'payment',
+        success_url: `${req.headers.origin || 'https://www.thegospelin5minutes.org'}/?donation=success`,
+        cancel_url: `${req.headers.origin || 'https://www.thegospelin5minutes.org'}/?donation=cancelled`,
+        metadata: {
+          app: 'Gospel in 5 Minutes',
+          type: 'bible_donation',
+          amount: '5.00'
+        },
+        payment_intent_data: {
+          metadata: {
+            purpose: 'Bible distribution for those without access'
+          }
+        }
+      });
+      
+      res.json({ url: session.url });
+    } catch (error: any) {
+      console.error("Stripe checkout creation error:", error);
+      res.status(500).json({ 
+        error: "Unable to create donation checkout session"
+      });
+    }
+  });
+
   // Christian Video Content Routes - Christian Context API + TBN+ integration
   app.get("/api/videos", async (req, res) => {
     try {
