@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Copy, Book } from "lucide-react";
+import { Search, Copy, Book, BookOpen, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import openBibleImage from '@assets/generated_images/Open_used_Bible_pages_5ad97f45.png';
 
@@ -137,21 +137,25 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   };
 
   return (
-    <Card className="relative overflow-hidden min-h-[400px]" data-testid="card-bibleSearch">
+    <Card className="relative overflow-hidden shadow-lg border-0 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20" data-testid="card-bibleSearch">
       {backgroundImage && (
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
+          className="absolute inset-0 bg-cover bg-center opacity-10"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         />
       )}
       
-      <CardHeader className="relative z-10">
-        <CardTitle className="flex items-center gap-2 text-xl">
-          <Book className="w-6 h-6 text-chart-3" />
-          Bible Search
+      <CardHeader className="relative z-10 pb-4">
+        <div className="flex items-center justify-center mb-4">
+          <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full shadow-lg">
+            <BookOpen className="w-8 h-8 text-white" />
+          </div>
+        </div>
+        <CardTitle className="text-center text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+          Scripture Finder
         </CardTitle>
-        <p className="text-muted-foreground">
-          Search for any Bible verse by reference (e.g., "John 3:16")
+        <p className="text-center text-muted-foreground text-sm leading-relaxed">
+          Discover God's Word instantly • Search any verse by reference
         </p>
       </CardHeader>
 
@@ -196,9 +200,16 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
         </div>
 
         {isLoading && (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-            <p className="text-muted-foreground mt-2">Searching Scripture...</p>
+          <div className="text-center py-12">
+            <div className="relative mx-auto w-16 h-16 mb-4">
+              <div className="absolute inset-0 rounded-full border-4 border-blue-100 dark:border-blue-900"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 border-r-purple-500 animate-spin"></div>
+              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/50 dark:to-purple-900/50 flex items-center justify-center">
+                <BookOpen className="w-6 h-6 text-blue-600 animate-pulse" />
+              </div>
+            </div>
+            <p className="text-slate-600 dark:text-slate-300 font-medium">Searching Scripture...</p>
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Finding God's Word for you</p>
           </div>
         )}
 
@@ -228,24 +239,40 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
         )}
 
         {hasSearched && !searchResult && !isLoading && (
-          <div className="text-center py-8 text-muted-foreground">
-            <Book className="w-12 h-12 mx-auto mb-4 opacity-50" />
-            <p>No results found. Please check your verse reference and try again.</p>
+          <div className="text-center py-12">
+            <div className="relative mx-auto w-20 h-20 mb-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-full"></div>
+              <div className="absolute inset-0 flex items-center justify-center">
+                <Book className="w-10 h-10 text-slate-400 dark:text-slate-500" />
+              </div>
+            </div>
+            <h3 className="font-semibold text-slate-700 dark:text-slate-300 mb-2">No Results Found</h3>
+            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
+              Please check your verse reference and try again.<br />
+              <span className="text-blue-600 dark:text-blue-400 font-medium">Try: John 3:16, Psalm 23:1, or Romans 8:28</span>
+            </p>
           </div>
         )}
         
-        {/* Open Bible Image at Bottom */}
-        <div className="mt-6">
-          <div className="relative">
-            <img 
-              src={openBibleImage}
-              alt="Open Bible with worn pages"
-              className="w-full h-32 object-cover rounded-lg shadow-md"
-              style={{ objectPosition: 'center' }}
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent rounded-lg"></div>
+        {/* Enhanced Scripture Image */}
+        {!isLoading && (
+          <div className="mt-8">
+            <div className="relative overflow-hidden rounded-2xl shadow-2xl">
+              <img 
+                src={openBibleImage}
+                alt="Open Bible with worn pages"
+                className="w-full h-40 object-cover transition-transform duration-700 hover:scale-105"
+                style={{ objectPosition: 'center' }}
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+              <div className="absolute bottom-4 left-6 right-6">
+                <p className="text-white font-serif text-sm italic opacity-90 text-center">
+                  "Your word is a lamp for my feet, a light on my path" - Psalm 119:105
+                </p>
+              </div>
+            </div>
           </div>
-        </div>
+        )}
       </CardContent>
     </Card>
   );
