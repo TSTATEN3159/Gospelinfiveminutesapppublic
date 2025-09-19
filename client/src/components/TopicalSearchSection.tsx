@@ -247,30 +247,38 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
                 key={topic.id}
                 className={`
                   relative bg-gradient-to-br ${topic.gradient} 
-                  border-2 ${topic.borderColor} 
+                  border-4 ${topic.borderColor} 
                   hover-elevate cursor-pointer 
                   transition-all duration-300 
                   shadow-lg hover:shadow-xl 
                   before:absolute before:inset-0 before:rounded-lg 
-                  before:bg-gradient-to-br before:from-white/20 before:to-transparent 
+                  before:bg-gradient-to-br before:from-white/30 before:to-transparent 
                   before:pointer-events-none
-                  ring-1 ring-white/50 ring-inset
+                  ring-2 ring-white/40 ring-inset
+                  outline outline-2 outline-gray-400/30 outline-offset-2
+                  backdrop-blur-sm
                   transform hover:scale-[1.02]
                   ${isSearching ? 'opacity-50 pointer-events-none' : ''}
                 `}
                 onClick={() => handleTopicSearch(topic.id)}
                 data-testid={`tile-topic-${topic.id.replace(/\s+/g, '-')}`}
               >
-                <CardContent className="relative p-4 text-center z-10">
+                <CardContent className="relative p-5 text-center z-10">
                   <div className={`
-                    w-10 h-10 ${topic.bgColor} rounded-full 
-                    flex items-center justify-center mx-auto mb-3
-                    shadow-md border border-white/30
-                    bg-gradient-to-br from-current to-transparent
+                    w-14 h-14 bg-white/90 rounded-full 
+                    flex items-center justify-center mx-auto mb-4
+                    shadow-lg border-2 border-white/60
+                    ring-1 ring-gray-200/50
                   `}>
-                    <IconComponent className={`w-5 h-5 ${topic.iconColor} drop-shadow-sm`} aria-hidden="true" />
+                    <IconComponent 
+                      className={`w-7 h-7 ${topic.iconColor} stroke-[1.5]`} 
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="1.5"
+                      aria-hidden="true" 
+                    />
                   </div>
-                  <h4 className="text-sm font-semibold text-gray-800 leading-tight drop-shadow-sm">
+                  <h4 className="text-sm font-semibold text-gray-800 leading-tight">
                     {topic.title}
                   </h4>
                 </CardContent>
