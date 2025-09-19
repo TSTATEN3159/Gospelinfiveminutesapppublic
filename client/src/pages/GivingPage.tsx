@@ -24,7 +24,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
+      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
@@ -37,37 +37,38 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold" style={{ 
-              color: '#8B4513',
+            <h1 className="text-2xl font-bold text-primary" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }}>
               Giving Impact
             </h1>
-            <p className="text-gray-600 mt-1">See how your generosity spreads God's word</p>
+            <p className="text-muted-foreground mt-1">See how your generosity spreads God's word</p>
           </div>
         </div>
       </div>
 
       <div className="px-4 py-6 space-y-6">
         {/* Current Goal Progress */}
-        <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-lg border-2">
+        <Card className="bg-muted/30 border-border shadow-lg border-2">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center justify-center gap-2 text-amber-800 text-center">
-              <Target className="w-5 h-5" />
+            <CardTitle className="text-center text-foreground">
               Current Goal: Spread God's Word
             </CardTitle>
+            <div className="flex justify-center mt-2">
+              <Target className="w-5 h-5 text-primary" />
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="text-center">
-              <div className="text-3xl font-bold text-amber-900 mb-2">
+              <div className="text-3xl font-bold text-foreground mb-2">
                 ${givingStats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </div>
-              <div className="text-sm text-amber-700 mb-4">
+              <div className="text-sm text-muted-foreground mb-4">
                 of ${givingStats.currentGoal.toLocaleString()} goal
               </div>
-              <Progress value={progressPercentage} className="h-3 bg-amber-100" />
-              <div className="text-xs text-amber-600 mt-2">
+              <Progress value={progressPercentage} className="h-3" />
+              <div className="text-xs text-muted-foreground mt-2">
                 {Math.round(progressPercentage)}% Complete
               </div>
             </div>
@@ -78,13 +79,13 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
         <div className="grid grid-cols-2 gap-4">
           <Card className="text-center shadow-lg border-2">
             <CardContent className="p-4">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Book className="w-6 h-6 text-blue-600" />
+              <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-3">
+                <Book className="w-6 h-6 text-primary" />
               </div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">
+              <div className="text-2xl font-bold text-foreground mb-1">
                 {givingStats.biblesPurchased.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-muted-foreground">
                 Bibles Purchased
               </div>
             </CardContent>
@@ -92,13 +93,13 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
 
           <Card className="text-center shadow-lg border-2">
             <CardContent className="p-4">
-              <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                <Users className="w-6 h-6 text-green-600" />
+              <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-3">
+                <Users className="w-6 h-6 text-primary" />
               </div>
-              <div className="text-2xl font-bold text-gray-900 mb-1">
+              <div className="text-2xl font-bold text-foreground mb-1">
                 {givingStats.biblesDistributed.toLocaleString()}
               </div>
-              <div className="text-sm text-gray-600">
+              <div className="text-sm text-muted-foreground">
                 Bibles Distributed
               </div>
             </CardContent>
@@ -108,21 +109,23 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
         {/* Monthly Impact */}
         <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center justify-center gap-2 text-center">
-              <TrendingUp className="w-5 h-5 text-green-600" />
+            <CardTitle className="text-center">
               This Month's Impact
             </CardTitle>
+            <div className="flex justify-center mt-2">
+              <TrendingUp className="w-5 h-5 text-primary" />
+            </div>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Monthly Donations</span>
-              <span className="text-lg font-semibold text-green-600">
+              <span className="text-muted-foreground">Monthly Donations</span>
+              <span className="text-lg font-semibold text-primary">
                 ${givingStats.monthlyDonations.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </span>
             </div>
             <div className="flex justify-between items-center">
-              <span className="text-gray-600">Lives Reached</span>
-              <span className="text-lg font-semibold text-blue-600">
+              <span className="text-muted-foreground">Lives Reached</span>
+              <span className="text-lg font-semibold text-primary">
                 {givingStats.impactReach.toLocaleString()}
               </span>
             </div>
@@ -130,18 +133,20 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
         </Card>
 
         {/* Call to Action */}
-        <Card className="bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg border-2">
+        <Card className="bg-primary text-primary-foreground shadow-lg border-2">
           <CardContent className="p-6 text-center">
-            <Heart className="w-12 h-12 mx-auto mb-4 text-white" />
-            <h3 className="text-lg font-bold mb-2">
+            <Heart className="w-12 h-12 mx-auto mb-4" />
+            <h3 className="text-lg font-bold mb-2 text-center">
               Join Our Mission
             </h3>
-            <p className="text-amber-100 text-sm mb-4 leading-relaxed">
+            <p className="text-primary-foreground/80 text-sm mb-4 leading-relaxed text-center">
               Your donation helps us purchase and distribute Bibles to those who need God's word most. 
               Every contribution brings the Gospel to someone seeking hope and salvation.
             </p>
             <Button 
-              className="bg-white text-amber-600 hover:bg-gray-50 px-6 py-2 rounded-full font-medium"
+              variant="outline"
+              size="lg"
+              className="rounded-full font-medium"
               data-testid="button-donate-giving"
               aria-label="Make a donation to spread the Gospel"
               onClick={() => onNavigate?.('donate')}
@@ -158,11 +163,11 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
             <CardTitle className="text-center">Global Bible Distribution</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="bg-gray-100 rounded-lg p-8 text-center">
-              <div className="text-gray-500 mb-2">
+            <div className="bg-muted rounded-lg p-8 text-center">
+              <div className="text-muted-foreground mb-2">
                 <Users className="w-12 h-12 mx-auto mb-2" />
               </div>
-              <p className="text-gray-600 text-sm">
+              <p className="text-muted-foreground text-sm">
                 Interactive map showing Bible distributions worldwide coming soon!
               </p>
             </div>

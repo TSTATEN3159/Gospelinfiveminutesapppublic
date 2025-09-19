@@ -120,13 +120,16 @@ const PaymentForm = ({
               onClick={onCancel}
               className="flex-1"
               disabled={processing}
+              data-testid="button-cancel-payment"
             >
               Cancel
             </Button>
             <Button
               type="submit"
               disabled={!stripe || processing}
-              className="flex-1 bg-amber-600 hover:bg-amber-700"
+              className="flex-1"
+              variant="default"
+              data-testid="button-submit-payment"
             >
               {processing ? (
                 <div className="flex items-center gap-2">
@@ -313,16 +316,16 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
         {/* Total Donations Impact */}
         <Card className="text-center shadow-lg border-2">
           <CardContent className="p-6">
-            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <DollarSign className="w-6 h-6 text-green-600" aria-hidden="true" />
+            <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+              <DollarSign className="w-6 h-6 text-primary" aria-hidden="true" />
             </div>
-            <div className="text-3xl font-bold text-gray-900 mb-2" data-testid="text-total-donations">
+            <div className="text-3xl font-bold text-foreground mb-2" data-testid="text-total-donations">
               ${(donationStats as any)?.success ? (donationStats as any).stats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className="text-sm text-muted-foreground">
               Total Donations Received
             </div>
-            <div className="text-xs text-gray-500 mt-2">
+            <div className="text-xs text-muted-foreground mt-2">
               {(donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased.toLocaleString() : '0'} Bibles funded for those in need
             </div>
           </CardContent>
@@ -331,15 +334,17 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
         {/* Donation Form */}
         <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center justify-center gap-2 text-center">
-              <DollarSign className="w-5 h-5 text-primary" />
+            <CardTitle className="text-center">
               Choose Your $ Donation Amount
             </CardTitle>
+            <div className="flex justify-center mt-2">
+              <DollarSign className="w-5 h-5 text-primary" />
+            </div>
           </CardHeader>
           <CardContent className="space-y-6">
             {/* Preset Amounts */}
             <div>
-              <Label className="text-sm font-medium text-gray-700 mb-3 block">
+              <Label className="text-sm font-medium text-foreground mb-3 block">
                 Select a preset amount:
               </Label>
               <div className="grid grid-cols-3 gap-3">
@@ -347,11 +352,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                   <Button
                     key={preset.amount}
                     variant={selectedAmount === preset.amount ? "default" : "outline"}
-                    className={`h-12 ${
-                      selectedAmount === preset.amount 
-                        ? "bg-amber-600 hover:bg-amber-700 text-white border-amber-600" 
-                        : "hover:border-amber-300"
-                    }`}
+                    size="lg"
                     onClick={() => handlePresetClick(preset.amount)}
                     data-testid={`button-preset-${preset.amount}`}
                   >
@@ -366,11 +367,11 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
 
             {/* Custom Amount */}
             <div>
-              <Label htmlFor="custom-amount" className="text-sm font-medium text-gray-700 mb-2 block">
+              <Label htmlFor="custom-amount" className="text-sm font-medium text-foreground mb-2 block">
                 Or enter a custom amount:
               </Label>
               <div className="relative">
-                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-gray-400" />
+                <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-muted-foreground" />
                 <Input
                   id="custom-amount"
                   type="number"
@@ -382,13 +383,13 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                   value={customAmount}
                   onChange={(e) => handleCustomAmountChange(e.target.value)}
                   className={`pl-8 ${
-                    isCustom ? "border-amber-300 focus:border-amber-500 focus:ring-amber-500" : ""
+                    isCustom ? "border-primary focus:border-primary focus:ring-primary" : ""
                   }`}
                   data-testid="input-custom-amount"
                 />
               </div>
               {customAmount && (
-                <p className="text-xs text-gray-500 mt-1">
+                <p className="text-xs text-muted-foreground mt-1">
                   Amount: ${parseFloat(customAmount || "0").toFixed(2)}
                 </p>
               )}
@@ -398,7 +399,9 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
             <Button
               onClick={handleDonate}
               disabled={!isValidAmount() || loading}
-              className="w-full bg-amber-600 hover:bg-amber-700 text-white py-3 text-base font-medium"
+              className="w-full"
+              variant="default"
+              size="lg"
               data-testid="button-process-donation"
             >
               {loading ? (
@@ -415,7 +418,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
             </Button>
 
             {/* Legal Disclaimer */}
-            <div className="text-xs text-gray-500 space-y-2 pt-4 border-t">
+            <div className="text-xs text-muted-foreground space-y-2 pt-4 border-t border-border">
               <p>
                 <strong>Important:</strong> Donations are processed securely through Stripe. 
                 No goods or services are provided in exchange for donations.
@@ -427,7 +430,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               <p>
                 By donating, you agree to our{" "}
                 <button 
-                  className="text-blue-600 underline hover:text-blue-700"
+                  className="text-primary underline hover:text-foreground transition-colors"
                   onClick={() => onNavigate?.('terms')}
                   data-testid="link-terms"
                 >
@@ -435,7 +438,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                 </button>{" "}
                 and{" "}
                 <button 
-                  className="text-blue-600 underline hover:text-blue-700"
+                  className="text-primary underline hover:text-foreground transition-colors"
                   onClick={() => onNavigate?.('privacy')}
                   data-testid="link-privacy"
                 >
@@ -466,13 +469,13 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
         </Card>
 
         {/* Our Mission Statement */}
-        <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200 shadow-lg border-2">
+        <Card className="bg-muted/30 border-border shadow-lg border-2">
           <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Heart className="w-6 h-6 text-amber-600" aria-hidden="true" />
+            <div className="w-12 h-12 bg-muted rounded-full flex items-center justify-center mx-auto mb-4">
+              <Heart className="w-6 h-6 text-primary" aria-hidden="true" />
             </div>
-            <h3 className="font-bold text-gray-900 mb-2">Our Mission</h3>
-            <p className="text-sm text-gray-700 leading-relaxed">
+            <h3 className="font-bold text-foreground mb-2 text-center">Our Mission</h3>
+            <p className="text-sm text-muted-foreground leading-relaxed text-center">
               Every donation helps us reach more souls with daily Bible verses, spiritual guidance, 
               and the transformative power of God's word. Your generosity makes eternal impact possible.
             </p>
