@@ -25,6 +25,67 @@ const getStripeClient = (): Stripe => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Stripe webhook endpoint for secure donation recording
+  app.post('/api/stripe-webhook', app.raw({ type: 'application/json' }), async (req, res) => {
+    const sig = req.headers['stripe-signature'] as string;
+    let event: Stripe.Event;
+
+    try {
+      const stripe = getStripeClient();
+      const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
+      
+      if (!webhookSecret) {
+        console.error('Missing STRIPE_WEBHOOK_SECRET environment variable');
+        return res.status(400).json({ error: 'Webhook secret not configured' });
+      }
+
+      // Verify webhook signature
+      event = stripe.webhooks.constructEvent(req.body, sig, webhookSecret);
+    } catch (err) {
+      console.error('Webhook signature verification failed:', err);
+      return res.status(400).json({ error: 'Webhook signature verification failed' });
+    }
+
+    // Handle the event
+    try {
+      if (event.type === 'payment_intent.succeeded') {
+        const paymentIntent = event.data.object as Stripe.PaymentIntent;
+        
+        // Check if we've already recorded this donation
+        const existingDonation = await storage.getDonationByPaymentIntent(paymentIntent.id);
+        if (existingDonation) {
+          console.log('Donation already recorded:', paymentIntent.id);
+          return res.status(200).json({ received: true });
+        }
+
+        // Record the verified donation from Stripe
+        await storage.recordDonation({
+          amountCents: paymentIntent.amount, // Stripe amounts are already in cents
+          currency: paymentIntent.currency.toUpperCase(),
+          paymentIntentId: paymentIntent.id,
+          status: 'succeeded', // Verified by Stripe
+          metadata: JSON.stringify({
+            app: 'Gospel in 5 Minutes',
+            type: 'donation',
+            amount_formatted: `$${(paymentIntent.amount / 100).toFixed(2)}`,
+            stripe_created: paymentIntent.created,
+          })
+        });
+
+        console.log('Donation recorded successfully:', {
+          id: paymentIntent.id,
+          amount: paymentIntent.amount,
+          currency: paymentIntent.currency
+        });
+      }
+
+      res.status(200).json({ received: true });
+    } catch (error) {
+      console.error('Error processing webhook:', error);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  });
+
   // put application routes here
   // prefix all routes with /api
 
