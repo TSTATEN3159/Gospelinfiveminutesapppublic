@@ -316,8 +316,8 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
                   <Play className="w-4 h-4 text-blue-600" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-gospelWords">
-                  The Gospel, In Their Words
+                <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-gospelToday">
+                  The Gospel for Today
                 </h2>
               </div>
               
