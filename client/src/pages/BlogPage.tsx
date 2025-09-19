@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail, AlertCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 
@@ -31,6 +31,10 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
   const [subscribeForm, setSubscribeForm] = useState({ name: '', email: '' });
   const [isSubscribing, setIsSubscribing] = useState(false);
+  const [articles, setArticles] = useState<BlogArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const [selectedArticle, setSelectedArticle] = useState<BlogArticle | null>(null);
 
   const handleSubscribe = async () => {
     if (!subscribeForm.email) {
@@ -76,64 +80,38 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
     }
   };
 
-  // Initial 5 Christian articles as requested
-  const articles: BlogArticle[] = [
-    {
-      id: '1',
-      title: 'Walking by Faith, Not by Sight',
-      excerpt: 'Discover how to trust God\'s plan even when the path ahead seems uncertain. Learn biblical principles for navigating life\'s challenges with unwavering faith.',
-      content: '...',
-      author: 'Pastor David Chen',
-      publishDate: '2024-01-15',
-      readTime: 4,
-      views: 2340,
-      category: 'Faith & Trust'
-    },
-    {
-      id: '2',
-      title: 'The Power of Daily Prayer in Your Christian Walk',
-      excerpt: 'Transform your spiritual life through consistent prayer. Explore practical tips and biblical foundations for developing a meaningful prayer routine.',
-      content: '...',
-      author: 'Sarah Martinez',
-      publishDate: '2024-01-12',
-      readTime: 6,
-      views: 3150,
-      category: 'Prayer & Devotion'
-    },
-    {
-      id: '3',
-      title: 'Finding God\'s Peace in Times of Anxiety',
-      excerpt: 'When worry overwhelms, God offers perfect peace. Learn how to cast your anxieties on Him and experience the calm that surpasses understanding.',
-      content: '...',
-      author: 'Rev. Michael Johnson',
-      publishDate: '2024-01-10',
-      readTime: 5,
-      views: 4520,
-      category: 'Mental Health & Faith'
-    },
-    {
-      id: '4',
-      title: 'Living Out the Great Commission in Your Daily Life',
-      excerpt: 'Every Christian is called to share the Gospel. Discover practical ways to be a witness for Christ in your workplace, community, and relationships.',
-      content: '...',
-      author: 'Jessica Thompson',
-      publishDate: '2024-01-08',
-      readTime: 7,
-      views: 1890,
-      category: 'Evangelism'
-    },
-    {
-      id: '5',
-      title: 'Understanding Grace: God\'s Unmerited Favor',
-      excerpt: 'Grace is at the heart of the Gospel message. Explore the depth of God\'s grace and how it transforms our lives and relationships with others.',
-      content: '...',
-      author: 'Pastor Robert Williams',
-      publishDate: '2024-01-05',
-      readTime: 8,
-      views: 5670,
-      category: 'Theology'
-    }
-  ];
+  // Fetch articles from Christian Context API
+  useEffect(() => {
+    const loadArticles = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        const response = await fetch('/api/blog-articles?limit=5');
+        const data = await response.json();
+        
+        if (data.success && data.articles) {
+          setArticles(data.articles);
+        } else {
+          throw new Error(data.error || 'Failed to load articles');
+        }
+      } catch (err) {
+        console.error('Error loading blog articles:', err);
+        setError('Unable to load articles. Please try again later.');
+        
+        // Fallback to ensure app doesn't break
+        setArticles([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadArticles();
+  }, []);
+
+  const handleArticleClick = (article: BlogArticle) => {
+    setSelectedArticle(article);
+  };
 
   const getCategoryColor = (category: string) => {
     const colors: Record<string, string> = {
