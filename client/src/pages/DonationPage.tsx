@@ -8,7 +8,8 @@ import { useToast } from "@/hooks/use-toast";
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import bibleDistributionImage from '@assets/stock_images/people_distributing__56bd3f84.jpg';
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 
 // Load Stripe with public key
 if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
@@ -41,6 +42,7 @@ const PaymentForm = ({
   const stripe = useStripe();
   const elements = useElements();
   const { toast } = useToast();
+  const queryClient = useQueryClient();
   const [processing, setProcessing] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -64,12 +66,58 @@ const PaymentForm = ({
         variant: "destructive",
       });
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      toast({
-        title: "Thank You!",
-        description: "Your donation was successful. God bless your generous heart!",
-      });
-      onSuccess();
+      try {
+        // Record the donation in the database
+        await apiRequest('/api/record-donation', 'POST', {
+          amount,
+          paymentIntentId: paymentIntent.id,
+          currency: paymentIntent.currency.toUpperCase(),
+          metadata: {
+            app: 'Gospel in 5 Minutes',
+            type: 'donation',
+            amount_formatted: `$${amount.toFixed(2)}`
+          }
+        });
+
+        // Invalidate donation stats to refresh the totals immediately
+        await queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
+
+        toast({
+          title: "Thank You!",
+          description: "Your donation was successful. God bless your generous heart!",
+        });
+        onSuccess();
+      } catch (recordError) {
+        // Even if recording fails, the payment succeeded, so we still show success
+        console.warn('Failed to record donation:', recordError);
+        toast({
+          title: "Thank You!",
+          description: "Your donation was successful. God bless your generous heart!",
+        });
+        onSuccess();
+      }
     } else {
+      // Payment is processing or requires additional action
+      try {
+        // Still try to record as processing if we have payment intent
+        if (paymentIntent) {
+          await apiRequest('/api/record-donation', 'POST', {
+            amount,
+            paymentIntentId: paymentIntent.id,
+            currency: paymentIntent.currency.toUpperCase(),
+            metadata: {
+              app: 'Gospel in 5 Minutes',
+              type: 'donation',
+              amount_formatted: `$${amount.toFixed(2)}`
+            }
+          });
+          
+          await queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
+        }
+      } catch (recordError) {
+        console.warn('Failed to record processing donation:', recordError);
+      }
+      
       toast({
         title: "Payment Processing",
         description: "Your payment is being processed. Thank you!",
