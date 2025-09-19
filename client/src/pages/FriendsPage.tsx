@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2 } from "lucide-react";
+import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -27,9 +27,10 @@ type FriendRequestItem = {
 interface FriendsPageProps {
   currentUserId: string;
   language: string;
+  onNavigate?: (page: string) => void;
 }
 
-export default function FriendsPage({ currentUserId, language }: FriendsPageProps) {
+export default function FriendsPage({ currentUserId, language, onNavigate }: FriendsPageProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const { toast } = useToast();
   const t = useTranslations(language);
@@ -217,14 +218,28 @@ export default function FriendsPage({ currentUserId, language }: FriendsPageProp
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <Heart className="w-8 h-8 text-red-500 mr-3" />
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-              {t.friends}
-            </h1>
+        <div className="mb-8">
+          <div className="flex items-center mb-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onNavigate?.('more')}
+              className="mr-3"
+              data-testid="button-back-friends"
+              aria-label="Go back to More page"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div className="flex-1 text-center">
+              <div className="flex items-center justify-center mb-2">
+                <Heart className="w-8 h-8 text-red-500 mr-3" />
+                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  {t.friends}
+                </h1>
+              </div>
+            </div>
           </div>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-muted-foreground max-w-2xl mx-auto text-center">
             {t.friendsPageDescription}
           </p>
         </div>
