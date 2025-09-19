@@ -122,7 +122,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar>
-              <AvatarFallback className="bg-gradient-to-r from-blue-500 to-purple-600 text-white">
+              <AvatarFallback className="bg-primary text-primary-foreground">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -170,7 +170,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar>
-              <AvatarFallback className="bg-gradient-to-r from-green-500 to-teal-600 text-white">
+              <AvatarFallback className="bg-primary text-primary-foreground">
                 {initials}
               </AvatarFallback>
             </Avatar>
@@ -215,7 +215,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-purple-50 dark:from-gray-900 dark:to-gray-800">
+    <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="mb-8">
@@ -232,8 +232,10 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
             </Button>
             <div className="flex-1 text-center">
               <div className="flex items-center justify-center mb-2">
-                <Heart className="w-8 h-8 text-red-500 mr-3" />
-                <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                <Heart className="w-8 h-8 text-primary mr-3" />
+                <h1 className="text-4xl font-bold text-primary drop-shadow-sm" style={{ 
+                  fontFamily: 'Dancing Script, Brush Script MT, cursive'
+                }}>
                   {t.friends}
                 </h1>
               </div>

@@ -249,7 +249,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
+      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
@@ -262,14 +262,12 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold" style={{ 
-              color: '#8B4513',
-              fontFamily: 'Dancing Script, Brush Script MT, cursive',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            <h1 className="text-2xl font-bold text-primary drop-shadow-sm" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive'
             }}>
               Settings
             </h1>
-            <p className="text-gray-600 mt-1">Manage your profile and preferences</p>
+            <p className="text-muted-foreground mt-1">Manage your profile and preferences</p>
           </div>
         </div>
       </div>
@@ -303,11 +301,11 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   value={profile.firstName}
                   onChange={(e) => setProfile(prev => ({ ...prev, firstName: e.target.value }))}
                   disabled={true}
-                  className="bg-gray-50 dark:bg-gray-800"
+                  className="bg-muted"
                   data-testid="input-first-name"
                   title="Name cannot be changed once set"
                 />
-                <p className="text-xs text-gray-500 mt-1">Name cannot be changed</p>
+                <p className="text-xs text-muted-foreground mt-1">Name cannot be changed</p>
               </div>
               <div>
                 <Label htmlFor="lastName">Last Name</Label>
@@ -316,11 +314,11 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   value={profile.lastName}
                   onChange={(e) => setProfile(prev => ({ ...prev, lastName: e.target.value }))}
                   disabled={true}
-                  className="bg-gray-50 dark:bg-gray-800"
+                  className="bg-muted"
                   data-testid="input-last-name"
                   title="Name cannot be changed once set"
                 />
-                <p className="text-xs text-gray-500 mt-1">Name cannot be changed</p>
+                <p className="text-xs text-muted-foreground mt-1">Name cannot be changed</p>
               </div>
             </div>
 
@@ -391,7 +389,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                 onValueChange={(value) => setProfile(prev => ({ ...prev, timezone: value }))}
                 disabled={true}
               >
-                <SelectTrigger data-testid="select-timezone" className="bg-gray-50 dark:bg-gray-800">
+                <SelectTrigger data-testid="select-timezone" className="bg-muted">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -400,7 +398,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-gray-500 mt-1">Timezone cannot be changed</p>
+              <p className="text-xs text-muted-foreground mt-1">Timezone cannot be changed</p>
             </div>
 
             {isEditing && (
@@ -428,7 +426,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             <div className="flex items-center justify-between">
               <div>
                 <Label htmlFor="dailyReminders" className="font-medium">Daily Reminders</Label>
-                <p className="text-sm text-gray-600">Get reminded to read your daily verse</p>
+                <p className="text-sm text-muted-foreground">Get reminded to read your daily verse</p>
               </div>
               <Switch
                 id="dailyReminders"
@@ -466,7 +464,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             <div className="flex items-center justify-between">
               <div>
                 <Label htmlFor="streakNotifications" className="font-medium">Streak Notifications</Label>
-                <p className="text-sm text-gray-600">Celebrate your reading streaks</p>
+                <p className="text-sm text-muted-foreground">Celebrate your reading streaks</p>
               </div>
               <Switch
                 id="streakNotifications"
@@ -479,7 +477,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             <div className="flex items-center justify-between">
               <div>
                 <Label htmlFor="emailUpdates" className="font-medium">Email Updates</Label>
-                <p className="text-sm text-gray-600">Receive newsletters and updates</p>
+                <p className="text-sm text-muted-foreground">Receive newsletters and updates</p>
               </div>
               <Switch
                 id="emailUpdates"
@@ -503,7 +501,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             <div className="flex items-center justify-between">
               <div>
                 <Label htmlFor="soundEnabled" className="font-medium">Sound Effects</Label>
-                <p className="text-sm text-gray-600">Enable app sounds and notifications</p>
+                <p className="text-sm text-muted-foreground">Enable app sounds and notifications</p>
               </div>
               <Switch
                 id="soundEnabled"
@@ -553,7 +551,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
               <Database className="w-4 h-4 mr-2" />
               Export My Data
             </Button>
-            <Button variant="outline" className="w-full text-red-600 border-red-200">
+            <Button variant="outline" className="w-full text-destructive border-destructive/20">
               Request Data Deletion
             </Button>
           </CardContent>
@@ -562,8 +560,8 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         {/* Account Actions */}
         <Card className="shadow-lg border-2">
           <CardContent className="p-6 text-center">
-            <h3 className="text-lg font-semibold text-gray-900 mb-2">Account Actions</h3>
-            <p className="text-gray-600 text-sm mb-4">
+            <h3 className="text-lg font-semibold text-foreground mb-2 text-center">Account Actions</h3>
+            <p className="text-muted-foreground text-sm mb-4 text-center">
               Need help with your account? Contact our support team.
             </p>
             <Button variant="outline" onClick={() => onNavigate?.('support')}>

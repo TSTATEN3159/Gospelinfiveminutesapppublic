@@ -114,14 +114,8 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
   };
 
   const getCategoryColor = (category: string) => {
-    const colors: Record<string, string> = {
-      'Faith & Trust': 'bg-blue-100 text-blue-800',
-      'Prayer & Devotion': 'bg-purple-100 text-purple-800',
-      'Mental Health & Faith': 'bg-green-100 text-green-800',
-      'Evangelism': 'bg-red-100 text-red-800',
-      'Theology': 'bg-amber-100 text-amber-800'
-    };
-    return colors[category] || 'bg-gray-100 text-gray-800';
+    // Use semantic tokens for unified appearance and dark mode compatibility
+    return 'bg-primary/10 text-primary';
   };
 
   const formatDate = (dateString: string) => {
@@ -135,7 +129,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
+      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
@@ -148,14 +142,12 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold" style={{ 
-              color: '#8B4513',
-              fontFamily: 'Dancing Script, Brush Script MT, cursive',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            <h1 className="text-2xl font-bold text-primary drop-shadow-sm" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive'
             }}>
               Christian Blog
             </h1>
-            <p className="text-gray-600 mt-1">Inspiring articles to grow your faith</p>
+            <p className="text-muted-foreground mt-1">Inspiring articles to grow your faith</p>
           </div>
         </div>
       </div>
@@ -163,9 +155,9 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
       <div className="px-4 py-6 space-y-6">
         {/* Featured Article */}
         {articles.length > 0 && (
-          <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-lg border-2">
+          <Card className="bg-primary/5 border-primary/20 shadow-lg border-2">
             <CardHeader>
-              <CardTitle className="flex items-center justify-center gap-2 text-amber-800 text-center">
+              <CardTitle className="flex items-center justify-center gap-2 text-primary text-center">
                 <BookOpen className="w-5 h-5" />
                 Featured Article
               </CardTitle>
@@ -174,9 +166,9 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
               <Badge className={getCategoryColor(articles[0].category)} variant="secondary">
                 {articles[0].category}
               </Badge>
-              <h3 className="font-bold text-gray-900 mt-3 mb-2 text-lg">{articles[0].title}</h3>
-              <p className="text-gray-700 text-sm mb-4 leading-relaxed">{articles[0].excerpt}</p>
-              <div className="flex items-center justify-between text-xs text-gray-500">
+              <h3 className="font-bold text-foreground mt-3 mb-2 text-lg">{articles[0].title}</h3>
+              <p className="text-muted-foreground text-sm mb-4 leading-relaxed">{articles[0].excerpt}</p>
+              <div className="flex items-center justify-between text-xs text-muted-foreground">
                 <div className="flex items-center gap-4">
                   <span>By {articles[0].author}</span>
                   <span className="flex items-center gap-1">
@@ -189,11 +181,12 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                   </span>
                 </div>
               </div>
-              <div className="text-xs text-gray-500 mt-2">
+              <div className="text-xs text-muted-foreground mt-2">
                 Published {formatDate(articles[0].publishDate)}
               </div>
               <Button 
-                className="mt-4 bg-amber-600 hover:bg-amber-700"
+                className="mt-4"
+                variant="default"
                 size="sm"
                 onClick={() => handleArticleClick(articles[0])}
                 data-testid="button-read-featured"
@@ -206,7 +199,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
         {/* Recent Articles */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Recent Articles</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4 text-center">Recent Articles</h2>
           <div className="space-y-4">
             {articles.slice(1).map((article) => (
               <Card 
@@ -220,15 +213,15 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                     <Badge className={getCategoryColor(article.category)} variant="secondary">
                       {article.category}
                     </Badge>
-                    <div className="text-xs text-gray-500">
+                    <div className="text-xs text-muted-foreground">
                       {formatDate(article.publishDate)}
                     </div>
                   </div>
                   
-                  <h3 className="font-semibold text-gray-900 mb-2">{article.title}</h3>
-                  <p className="text-gray-600 text-sm mb-3 leading-relaxed">{article.excerpt}</p>
+                  <h3 className="font-semibold text-foreground mb-2">{article.title}</h3>
+                  <p className="text-muted-foreground text-sm mb-3 leading-relaxed">{article.excerpt}</p>
                   
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <div className="flex items-center gap-3">
                       <span>By {article.author}</span>
                       <span className="flex items-center gap-1">
@@ -243,7 +236,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                     <Button 
                       variant="ghost" 
                       size="sm" 
-                      className="h-auto p-1 text-blue-600"
+                      className="h-auto p-1 text-primary"
                       onClick={(e) => {
                         e.stopPropagation();
                         handleArticleClick(article);
@@ -261,13 +254,13 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
         {/* Categories Section */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Browse by Topic</h2>
+          <h2 className="text-lg font-semibold text-foreground mb-4 text-center">Browse by Topic</h2>
           <div className="grid grid-cols-2 gap-3">
             {['Faith & Trust', 'Prayer & Devotion', 'Mental Health & Faith', 'Evangelism', 'Theology', 'Christian Living'].map((category) => (
               <Card key={category} className="hover-elevate cursor-pointer shadow-lg border-2">
                 <CardContent className="p-3 text-center">
-                  <div className="text-sm font-medium text-gray-900">{category}</div>
-                  <div className="text-xs text-gray-500 mt-1">
+                  <div className="text-sm font-medium text-foreground">{category}</div>
+                  <div className="text-xs text-muted-foreground mt-1">
                     {articles.filter(a => a.category === category).length || Math.floor(Math.random() * 8) + 3} articles
                   </div>
                 </CardContent>
@@ -277,35 +270,33 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
         </div>
 
         {/* Newsletter Signup */}
-        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 shadow-lg border-2">
+        <Card className="bg-primary/5 border-primary/20 shadow-lg border-2">
           <CardContent className="p-6 text-center">
-            <Heart className="w-12 h-12 mx-auto mb-4 text-blue-600" />
-            <h3 className="text-lg font-bold text-blue-900 mb-2">
+            <Heart className="w-12 h-12 mx-auto mb-4 text-primary" />
+            <h3 className="text-lg font-bold text-foreground mb-2 text-center">
               Never Miss an Article
             </h3>
-            <p className="text-blue-700 text-sm mb-4">
+            <p className="text-muted-foreground text-sm mb-4 text-center">
               Get the latest Christian insights and faith-building content delivered to your inbox.
             </p>
             <Dialog open={isSubscribeModalOpen} onOpenChange={setIsSubscribeModalOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-blue-600 hover:bg-blue-700" data-testid="button-subscribe-blog">
+                <Button variant="default" data-testid="button-subscribe-blog">
                   <Mail className="w-4 h-4 mr-2" />
                   Subscribe to Updates
                 </Button>
               </DialogTrigger>
               <DialogContent className="sm:max-w-md">
                 <DialogHeader>
-                  <DialogTitle className="text-center" style={{ 
-                    color: '#8B4513',
+                  <DialogTitle className="text-center text-primary drop-shadow-sm" style={{ 
                     fontFamily: 'Dancing Script, Brush Script MT, cursive',
-                    textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
                     fontSize: '1.5rem'
                   }}>
                     Subscribe to Our Blog
                   </DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
-                  <p className="text-center text-gray-600 text-sm">
+                  <p className="text-center text-muted-foreground text-sm">
                     Get bi-weekly Christian insights and faith-building content delivered to your inbox.
                   </p>
                   
@@ -340,10 +331,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                       onClick={handleSubscribe}
                       disabled={!subscribeForm.email || isSubscribing}
                       className="w-full"
-                      style={{
-                        backgroundColor: '#8B4513',
-                        borderColor: '#8B4513'
-                      }}
+                      variant="default"
                       data-testid="button-confirm-subscribe"
                     >
                       {isSubscribing ? 'Subscribing...' : 'Subscribe to Updates'}
@@ -358,7 +346,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                     </Button>
                   </div>
                   
-                  <p className="text-xs text-gray-500 text-center">
+                  <p className="text-xs text-muted-foreground text-center">
                     We'll send you updates every two weeks. You can unsubscribe at any time.
                   </p>
                 </div>
@@ -377,7 +365,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                 <DialogTitle className="text-xl font-bold mb-2">
                   {selectedArticle.title}
                 </DialogTitle>
-                <div className="flex items-center gap-4 text-sm text-gray-500">
+                <div className="flex items-center gap-4 text-sm text-muted-foreground">
                   <Badge className={getCategoryColor(selectedArticle.category)} variant="secondary">
                     {selectedArticle.category}
                   </Badge>
@@ -391,14 +379,14 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                     {selectedArticle.views.toLocaleString()} views
                   </span>
                 </div>
-                <div className="text-sm text-gray-500">
+                <div className="text-sm text-muted-foreground">
                   Published {formatDate(selectedArticle.publishDate)}
                 </div>
               </DialogHeader>
               
               <div className="mt-6">
                 <div 
-                  className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
+                  className="prose prose-sm max-w-none text-foreground leading-relaxed"
                   dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
                   data-testid="article-content"
                 />
@@ -410,27 +398,28 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
       {/* Loading State */}
       {loading && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg flex items-center gap-3">
-            <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
-            <span>Loading articles...</span>
+        <div className="fixed inset-0 bg-foreground/50 flex items-center justify-center z-50">
+          <div className="bg-background p-6 rounded-lg flex items-center gap-3">
+            <Loader2 className="w-5 h-5 animate-spin text-primary" />
+            <span className="text-foreground">Loading articles...</span>
           </div>
         </div>
       )}
 
       {/* Error State */}
       {error && (
-        <div className="fixed top-4 right-4 bg-red-50 border border-red-200 p-4 rounded-lg max-w-sm z-50">
+        <div className="fixed top-4 right-4 bg-destructive/10 border border-destructive/20 p-4 rounded-lg max-w-sm z-50">
           <div className="flex items-start gap-3">
-            <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
+            <AlertCircle className="w-5 h-5 text-destructive mt-0.5" />
             <div>
-              <h4 className="font-medium text-red-900">Error Loading Articles</h4>
-              <p className="text-sm text-red-700 mt-1">{error}</p>
+              <h4 className="font-medium text-destructive">Error Loading Articles</h4>
+              <p className="text-sm text-destructive/80 mt-1">{error}</p>
               <Button 
                 variant="outline" 
                 size="sm" 
                 className="mt-2"
                 onClick={() => window.location.reload()}
+                data-testid="button-retry-articles"
               >
                 Retry
               </Button>
