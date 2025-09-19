@@ -10,7 +10,9 @@ import { VideoPlayer } from "../components/VideoPlayer";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { useToast } from "@/hooks/use-toast";
 import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play } from "lucide-react";
+import { Share2 } from "lucide-react";
 
 // Services
 import { bibleService, type DailyVerse } from "../services/bibleService";
@@ -38,6 +40,7 @@ interface HomePageProps {
 }
 
 export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageProps) {
+  const { toast } = useToast();
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showStudyPlans, setShowStudyPlans] = useState(false);
@@ -408,6 +411,58 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
               <Facebook className="w-5 h-5" />
               <span className="font-medium">Follow on Facebook</span>
             </a>
+          </div>
+        </div>
+
+        {/* Help Spread God's Word Section */}
+        <div className="bg-white rounded-2xl p-6 shadow-sm">
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
+                <Share2 className="w-6 h-6 text-amber-600" />
+              </div>
+            </div>
+            <div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Help Spread God's Word</h3>
+              <p className="text-sm text-gray-600 mb-4">
+                Share this app with friends and family to help spread the Gospel message around the world.
+              </p>
+            </div>
+            <Button
+              onClick={async () => {
+                if (navigator.share) {
+                  try {
+                    await navigator.share({
+                      title: 'The Gospel in 5 Minutes',
+                      text: 'Get daily Bible verses and spiritual guidance with this amazing app!',
+                      url: 'https://www.thegospelin5minutes.org'
+                    });
+                  } catch (err) {
+                    // User cancelled sharing or sharing not supported
+                  }
+                } else {
+                  // Fallback for browsers that don't support Web Share API
+                  try {
+                    await navigator.clipboard.writeText('https://www.thegospelin5minutes.org');
+                    toast({
+                      title: "Link copied!",
+                      description: "App link copied to clipboard successfully.",
+                    });
+                  } catch (err) {
+                    toast({
+                      title: "Copy failed",
+                      description: "Unable to copy link. Please try again.",
+                      variant: "destructive",
+                    });
+                  }
+                }
+              }}
+              className="flex items-center gap-2 bg-amber-600 text-white mx-auto"
+              data-testid="button-share-app"
+            >
+              <Share2 className="w-4 h-4" />
+              <span className="font-medium">Share the App</span>
+            </Button>
           </div>
         </div>
         
