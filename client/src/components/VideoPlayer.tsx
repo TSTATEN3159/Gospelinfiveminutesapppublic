@@ -14,25 +14,38 @@ interface VideoPlayerProps {
 export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
   if (!video) return null;
 
-  // Extract YouTube video ID from URL
-  const getYouTubeEmbedUrl = (url: string): string | null => {
-    const patterns = [
+  // Extract embeddable video URL from different sources
+  const getEmbedUrl = (url: string): string | null => {
+    // Handle YouTube URLs
+    const youtubePatterns = [
       /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
       /youtube\.com\/watch\?.*v=([^&\n?#]+)/
     ];
 
-    for (const pattern of patterns) {
+    for (const pattern of youtubePatterns) {
       const match = url.match(pattern);
       if (match) {
         return `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0&modestbranding=1`;
       }
     }
+
+    // Handle SermonAudio embed URLs (already in embed format)
+    if (url.includes('embed.sermonaudio.com')) {
+      return url; // Already an embed URL
+    }
+
+    // Handle regular SermonAudio URLs
+    const sermonAudioMatch = url.match(/sermonaudio\.com\/sermon\/(\w+)/);
+    if (sermonAudioMatch) {
+      return `https://embed.sermonaudio.com/${sermonAudioMatch[1]}`;
+    }
+
     return null;
   };
 
   // Check if this is a playable video (has videoUrl or externalUrl)
   const hasVideo = !!(video.videoUrl || video.externalUrl);
-  const embedUrl = video.videoUrl ? getYouTubeEmbedUrl(video.videoUrl) : null;
+  const embedUrl = video.videoUrl ? getEmbedUrl(video.videoUrl) : null;
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -69,7 +82,7 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
               <div className="text-center p-8">
                 <ExternalLink className="w-16 h-16 mx-auto mb-4 text-blue-600" />
                 <h3 className="text-xl font-bold text-blue-900 mb-2">
-                  {video.source} Content
+                  {video.source} Platform
                 </h3>
                 <p className="text-blue-700 mb-4">
                   This content is available on the {video.source} platform

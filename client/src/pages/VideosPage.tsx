@@ -179,11 +179,11 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                       {featuredVideo.duration}
                     </div>
                   )}
-                  {featuredVideo.source === 'TBN+' && (
+                  {featuredVideo.source === 'SermonAudio' && (
                     <div className="absolute top-2 right-2">
-                      <Badge className="bg-blue-600 text-white">
-                        <ExternalLink className="w-3 h-3 mr-1" />
-                        Free
+                      <Badge className="bg-purple-600 text-white">
+                        <Play className="w-3 h-3 mr-1" />
+                        SermonAudio
                       </Badge>
                     </div>
                   )}
@@ -328,9 +328,9 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                             {video.duration}
                           </div>
                         )}
-                        {video.source === 'TBN+' && (
+                        {video.source === 'SermonAudio' && (
                           <div className="absolute -top-1 -right-1">
-                            <ExternalLink className="w-3 h-3 text-blue-600" />
+                            <Play className="w-3 h-3 text-green-600" />
                           </div>
                         )}
                       </div>
@@ -355,11 +355,11 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                           )}
                           <Badge 
                             className={`text-xs ${
-                              video.source === 'TBN+' ? 'bg-blue-600 text-white' : 'bg-green-600 text-white'
+                              video.source === 'SermonAudio' ? 'bg-purple-600 text-white' : 'bg-green-600 text-white'
                             }`}
                             data-testid={`badge-source-${video.id}`}
                           >
-                            {video.source === 'TBN+' && <ExternalLink className="w-3 h-3 mr-1" />}
+                            {video.source === 'SermonAudio' && <Play className="w-3 h-3 mr-1" />}
                             {video.source}
                           </Badge>
                         </div>

@@ -252,45 +252,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
 
-      // Add TBN+ content recommendations (no synthetic metrics)
-      const tbnCategories = [
+      // Add SermonAudio content recommendations (embeddable in-app videos)
+      const sermonAudioCategories = [
         {
-          id: 'tbn_sermons',
-          title: 'TBN+ Sermon Collection',
-          description: 'Access thousands of sermons from Trinity Broadcasting Network for free.',
+          id: 'sermonaudio_featured',
+          title: 'SermonAudio Featured Sermons',
+          description: 'Access millions of free sermons from conservative churches worldwide.',
           category: 'sermon',
-          views: undefined, // No synthetic metrics for App Store compliance
+          views: undefined,
           duration: undefined,
-          source: 'TBN+',
-          externalUrl: 'https://www.tbnplus.com/sermons',
+          source: 'SermonAudio',
+          // Use SermonAudio's embeddable player for in-app viewing
+          videoUrl: 'https://embed.sermonaudio.com/261601260', // Featured sermon embed
           thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
         },
         {
-          id: 'tbn_documentaries',
-          title: 'Faith-Based Documentaries',
-          description: 'Inspiring Christian documentaries and educational content from TBN+.',
+          id: 'sermonaudio_expository',
+          title: 'Expository Bible Teaching',
+          description: 'Deep verse-by-verse Bible teaching from SermonAudio\'s extensive library.',
           category: 'christian-advice',
-          views: undefined, // No synthetic metrics for App Store compliance
+          views: undefined,
           duration: undefined,
-          source: 'TBN+',
-          externalUrl: 'https://www.tbnplus.com/documentaries',
+          source: 'SermonAudio',
+          // Use SermonAudio's embeddable player for Bible teaching
+          videoUrl: 'https://embed.sermonaudio.com/261501180', // Bible teaching embed
           thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop'
         }
       ];
 
-      // Add TBN+ content to results
+      // Add SermonAudio content to results
       if (!category || category === 'sermon') {
-        videos.push(tbnCategories[0]);
+        videos.push(sermonAudioCategories[0]);
       }
       if (!category || category === 'christian-advice') {
-        videos.push(tbnCategories[1]);
+        videos.push(sermonAudioCategories[1]);
       }
 
       res.json({
         success: true,
         videos: videos,
         total: videos.length,
-        sources: ['Christian Context API', 'TBN+']
+        sources: ['Christian Context API', 'SermonAudio']
       });
 
     } catch (error) {
