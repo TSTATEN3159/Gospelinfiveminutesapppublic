@@ -149,10 +149,12 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
 
       <div className="px-4 py-6 space-y-6">
         {/* Featured Video */}
-        <Card className="bg-primary/5 border-primary/20 shadow-lg border-2">
+        <Card className="bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200 shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center justify-center gap-2 text-primary text-center">
-              <Play className="w-5 h-5" />
+            <CardTitle className="flex items-center justify-center gap-2 text-purple-700 text-center">
+              <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
+                <Play className="w-5 h-5 text-purple-600" />
+              </div>
               Featured This Week
             </CardTitle>
           </CardHeader>
@@ -220,34 +222,34 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
           <h2 className="text-lg font-semibold text-foreground mb-4 text-center">Browse by Category</h2>
           <div className="grid grid-cols-3 gap-3 mb-6">
             <Card 
-              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 ${
-                selectedCategory === 'sermon' ? 'ring-2 ring-primary' : ''
+              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 bg-gradient-to-br from-blue-50 to-indigo-50 ${
+                selectedCategory === 'sermon' ? 'ring-2 ring-blue-400' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'sermon' ? null : 'sermon')}
               data-testid="category-sermon"
             >
               <CardContent className="p-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <BookOpen className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <BookOpen className="w-6 h-6 text-blue-600" />
                 </div>
-                <div className="text-sm font-medium text-foreground">Sermons</div>
-                <div className="text-xs text-muted-foreground">Faith messages</div>
+                <div className="text-sm font-medium text-gray-800">Sermons</div>
+                <div className="text-xs text-gray-600">Faith messages</div>
               </CardContent>
             </Card>
             
             <Card 
-              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 ${
-                selectedCategory === 'gospel-tidbits' ? 'ring-2 ring-primary' : ''
+              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 bg-gradient-to-br from-yellow-50 to-amber-50 ${
+                selectedCategory === 'gospel-tidbits' ? 'ring-2 ring-yellow-400' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'gospel-tidbits' ? null : 'gospel-tidbits')}
               data-testid="category-tidbits"
             >
               <CardContent className="p-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Lightbulb className="w-6 h-6 text-primary" />
+                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                  <Lightbulb className="w-6 h-6 text-yellow-600" />
                 </div>
-                <div className="text-sm font-medium text-foreground">Gospel Tidbits</div>
-                <div className="text-xs text-muted-foreground">Quick insights</div>
+                <div className="text-sm font-medium text-gray-800">Gospel Tidbits</div>
+                <div className="text-xs text-gray-600">Quick insights</div>
               </CardContent>
             </Card>
             
@@ -314,15 +316,17 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
               {videos.filter(video => video.id !== featuredVideo?.id).map((video) => (
                 <Card 
                   key={video.id} 
-                  className="hover-elevate cursor-pointer shadow-lg border-2"
+                  className="hover-elevate cursor-pointer shadow-lg border-2 bg-gradient-to-r from-purple-50/50 to-violet-50/50"
                   onClick={() => handleVideoClick(video)}
                   data-testid={`video-${video.id}`}
                 >
                   <CardContent className="p-4">
                     <div className="flex gap-3">
                       <div className="relative flex-shrink-0">
-                        <div className="w-20 h-14 bg-muted rounded flex items-center justify-center">
-                          <Play className="w-4 h-4 text-muted-foreground" />
+                        <div className="w-20 h-14 bg-gradient-to-br from-purple-100 to-violet-100 rounded flex items-center justify-center">
+                          <div className="w-8 h-8 bg-purple-200 rounded-full flex items-center justify-center">
+                            <Play className="w-4 h-4 text-purple-600" />
+                          </div>
                         </div>
                         {video.duration && (
                           <div className="absolute bottom-1 right-1 bg-foreground/80 text-background text-xs px-1 rounded">
@@ -374,13 +378,15 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
         </div>
 
         {/* Coming Soon Notice */}
-        <Card className="bg-primary/5 border-primary/20 shadow-lg border-2">
+        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-lg border-2">
           <CardContent className="p-6 text-center">
-            <Play className="w-12 h-12 mx-auto mb-4 text-primary" />
-            <h3 className="text-lg font-bold text-foreground mb-2 text-center">
+            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Play className="w-8 h-8 text-green-600" />
+            </div>
+            <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">
               More Videos Coming Soon!
             </h3>
-            <p className="text-muted-foreground text-sm mb-4 text-center">
+            <p className="text-gray-600 text-sm mb-4 text-center">
               We're constantly adding new sermons, Gospel insights, and Christian advice videos. 
               Check back regularly for fresh spiritual content!
             </p>
