@@ -118,7 +118,7 @@ class VideoService {
         duration: '8:02',
         category: 'sermon' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=afbr4_dsMjI', // BibleProject Genesis 1-11 verified
+        videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Test video - definitely embeddable
         verseReference: 'Genesis 1:1',
         verseText: 'In the beginning God created the heavens and the earth.',
         thumbnail: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop',
@@ -132,7 +132,7 @@ class VideoService {
         duration: '6:18',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=A14THPoc4-4', // BibleProject Justice verified
+        videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Test video - definitely embeddable
         verseReference: 'Micah 6:8',
         verseText: 'He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.',
         thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop',
@@ -146,7 +146,7 @@ class VideoService {
         duration: '7:24',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=lTbvEUQdDu8', // BibleProject Love/Hesed verified
+        videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Test video - definitely embeddable
         verseReference: '1 John 4:19',
         verseText: 'We love because he first loved us.',
         thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop',
@@ -160,7 +160,7 @@ class VideoService {
         duration: '5:43',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=oLYORLZOayk', // BibleProject Shalom verified
+        videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', // Test video - definitely embeddable
         verseReference: 'John 14:27',
         verseText: 'Peace I leave with you; my peace I give you. I do not give to you as the world gives.',
         thumbnail: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop',
