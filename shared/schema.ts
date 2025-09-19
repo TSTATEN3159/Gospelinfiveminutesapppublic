@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, boolean, pgEnum, unique, uniqueIndex, check } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, boolean, pgEnum, unique, uniqueIndex, check, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -94,16 +94,16 @@ export type Friendship = typeof friendships.$inferSelect;
 // Donations table - tracks all successful donations for aggregate statistics
 export const donations = pgTable("donations", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
-  amount: text("amount").notNull(), // Store as string to avoid float precision issues
+  amountCents: integer("amount_cents").notNull(), // Store as integer cents for precision
   currency: varchar("currency", { length: 3 }).notNull().default("USD"),
   paymentIntentId: text("payment_intent_id").notNull().unique(), // Stripe payment intent ID
-  status: varchar("status", { length: 20 }).notNull().default("completed"),
+  status: varchar("status", { length: 20 }).notNull().default("succeeded"), // Stripe payment status
   createdAt: timestamp("created_at").notNull().default(sql`now()`),
   metadata: text("metadata"), // JSON string for additional payment details
 });
 
 export const insertDonationSchema = createInsertSchema(donations).pick({
-  amount: true,
+  amountCents: true,
   currency: true,
   paymentIntentId: true,
   status: true,

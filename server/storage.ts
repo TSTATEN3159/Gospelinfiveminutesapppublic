@@ -300,8 +300,9 @@ export class DatabaseStorage implements IStorage {
   }
 
   async getDonationStats(): Promise<{ totalDonations: number; biblesPurchased: number }> {
-    const result = await this.db.select().from(donations);
-    const totalDonations = result.reduce((sum, donation) => sum + donation.amount, 0);
+    const result = await this.db.select().from(donations).where(eq(donations.status, 'succeeded'));
+    const totalCents = result.reduce((sum, donation) => sum + donation.amountCents, 0);
+    const totalDonations = totalCents / 100; // Convert cents to dollars
     
     // Each Bible costs $5 (matching Giving Impact), so calculate how many can be funded
     const biblesPurchased = Math.floor(totalDonations / 5);
@@ -525,10 +526,10 @@ export class MemStorage implements IStorage {
     const id = randomUUID();
     const donation: Donation = {
       id,
-      amount: insertDonation.amount,
+      amountCents: insertDonation.amountCents,
       currency: insertDonation.currency || "USD",
       paymentIntentId: insertDonation.paymentIntentId,
-      status: insertDonation.status || "completed",
+      status: insertDonation.status || "succeeded",
       createdAt: new Date(),
       metadata: insertDonation.metadata || null,
     };
@@ -549,8 +550,9 @@ export class MemStorage implements IStorage {
   }
 
   async getDonationStats(): Promise<{ totalDonations: number; biblesPurchased: number }> {
-    const donations = Array.from(this.donationsMap.values());
-    const totalDonations = donations.reduce((sum, donation) => sum + donation.amount, 0);
+    const donations = Array.from(this.donationsMap.values()).filter(d => d.status === 'succeeded');
+    const totalCents = donations.reduce((sum, donation) => sum + donation.amountCents, 0);
+    const totalDonations = totalCents / 100; // Convert cents to dollars
     
     // Each Bible costs $5 (matching Giving Impact), so calculate how many can be funded
     const biblesPurchased = Math.floor(totalDonations / 5);
