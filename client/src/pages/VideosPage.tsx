@@ -148,9 +148,9 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
 
       <div className="px-4 py-6 space-y-6">
         {/* Featured Video */}
-        <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50">
+        <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-amber-800">
+            <CardTitle className="flex items-center justify-center gap-2 text-amber-800 text-center">
               <Play className="w-5 h-5" />
               Featured This Week
             </CardTitle>
@@ -216,10 +216,10 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
 
         {/* Video Categories */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Browse by Category</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Browse by Category</h2>
           <div className="grid grid-cols-3 gap-3 mb-6">
             <Card 
-              className={`text-center hover-elevate cursor-pointer ${
+              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 ${
                 selectedCategory === 'sermon' ? 'ring-2 ring-blue-500' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'sermon' ? null : 'sermon')}
@@ -235,7 +235,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
             </Card>
             
             <Card 
-              className={`text-center hover-elevate cursor-pointer ${
+              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 ${
                 selectedCategory === 'gospel-tidbits' ? 'ring-2 ring-amber-500' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'gospel-tidbits' ? null : 'gospel-tidbits')}
@@ -251,7 +251,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
             </Card>
             
             <Card 
-              className={`text-center hover-elevate cursor-pointer ${
+              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 ${
                 selectedCategory === 'christian-advice' ? 'ring-2 ring-green-500' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'christian-advice' ? null : 'christian-advice')}
@@ -271,7 +271,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
         {/* Video List */}
         <div>
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-gray-900">
+            <h2 className="text-lg font-semibold text-gray-900 text-center flex-1">
               {selectedCategory ? `${getCategoryName(selectedCategory)} Videos` : 'Recent Videos'}
             </h2>
             {selectedCategory && (
@@ -289,7 +289,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
           {loading ? (
             <div className="space-y-4">
               {[1, 2, 3].map((i) => (
-                <Card key={i} className="animate-pulse">
+                <Card key={i} className="animate-pulse shadow-lg border-2">
                   <CardContent className="p-4">
                     <div className="flex gap-3">
                       <div className="w-20 h-14 bg-gray-300 rounded"></div>
@@ -313,7 +313,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
               {videos.filter(video => video.id !== featuredVideo?.id).map((video) => (
                 <Card 
                   key={video.id} 
-                  className="hover-elevate cursor-pointer"
+                  className="hover-elevate cursor-pointer shadow-lg border-2"
                   onClick={() => handleVideoClick(video)}
                   data-testid={`video-${video.id}`}
                 >
@@ -373,7 +373,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
         </div>
 
         {/* Coming Soon Notice */}
-        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 shadow-lg border-2">
           <CardContent className="p-6 text-center">
             <Play className="w-12 h-12 mx-auto mb-4 text-blue-600" />
             <h3 className="text-lg font-bold text-blue-900 mb-2">

@@ -54,15 +54,15 @@ export default function SupportPage({ onBack }: SupportPageProps) {
           <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page">
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-xl font-bold text-gray-900">Support & Privacy</h1>
+          <h1 className="text-xl font-bold text-gray-900 text-center flex-1">Support & Privacy</h1>
         </div>
       </div>
 
       <div className="px-4 py-6 space-y-6">
         {/* Contact Support */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardContent className="p-6">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-4">
               <MessageCircle className="w-6 h-6 text-blue-600" />
               <h2 className="text-lg font-semibold text-gray-900">Contact Support</h2>
             </div>
@@ -93,9 +93,9 @@ export default function SupportPage({ onBack }: SupportPageProps) {
         </Card>
 
         {/* Privacy Controls */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardContent className="p-6">
-            <div className="flex items-center gap-3 mb-4">
+            <div className="flex items-center justify-center gap-3 mb-4">
               <Shield className="w-6 h-6 text-green-600" />
               <h2 className="text-lg font-semibold text-gray-900">Your Privacy Rights</h2>
             </div>
@@ -168,9 +168,9 @@ export default function SupportPage({ onBack }: SupportPageProps) {
         </Card>
 
         {/* App Information */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4">App Information</h2>
+            <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">App Information</h2>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
                 <span className="text-gray-600">Version</span>
@@ -189,9 +189,9 @@ export default function SupportPage({ onBack }: SupportPageProps) {
         </Card>
 
         {/* Emergency Resources */}
-        <Card className="border-orange-200 bg-orange-50">
+        <Card className="border-orange-200 bg-orange-50 shadow-lg border-2">
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-orange-900 mb-2">Crisis Resources</h2>
+            <h2 className="text-lg font-semibold text-orange-900 mb-2 text-center">Crisis Resources</h2>
             <p className="text-sm text-orange-800 mb-4">
               If you're experiencing a mental health crisis or having thoughts of self-harm, 
               please reach out for immediate professional help:

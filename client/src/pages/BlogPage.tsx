@@ -163,9 +163,9 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
       <div className="px-4 py-6 space-y-6">
         {/* Featured Article */}
         {articles.length > 0 && (
-          <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50">
+          <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-lg border-2">
             <CardHeader>
-              <CardTitle className="flex items-center gap-2 text-amber-800">
+              <CardTitle className="flex items-center justify-center gap-2 text-amber-800 text-center">
                 <BookOpen className="w-5 h-5" />
                 Featured Article
               </CardTitle>
@@ -206,12 +206,12 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
         {/* Recent Articles */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Articles</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Recent Articles</h2>
           <div className="space-y-4">
             {articles.slice(1).map((article) => (
               <Card 
                 key={article.id} 
-                className="hover-elevate cursor-pointer"
+                className="hover-elevate cursor-pointer shadow-lg border-2"
                 onClick={() => handleArticleClick(article)}
                 data-testid={`card-article-${article.id}`}
               >
@@ -261,10 +261,10 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
         {/* Categories Section */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Browse by Topic</h2>
+          <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">Browse by Topic</h2>
           <div className="grid grid-cols-2 gap-3">
             {['Faith & Trust', 'Prayer & Devotion', 'Mental Health & Faith', 'Evangelism', 'Theology', 'Christian Living'].map((category) => (
-              <Card key={category} className="hover-elevate cursor-pointer">
+              <Card key={category} className="hover-elevate cursor-pointer shadow-lg border-2">
                 <CardContent className="p-3 text-center">
                   <div className="text-sm font-medium text-gray-900">{category}</div>
                   <div className="text-xs text-gray-500 mt-1">
@@ -277,7 +277,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
         </div>
 
         {/* Newsletter Signup */}
-        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200">
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-blue-200 shadow-lg border-2">
           <CardContent className="p-6 text-center">
             <Heart className="w-12 h-12 mx-auto mb-4 text-blue-600" />
             <h3 className="text-lg font-bold text-blue-900 mb-2">

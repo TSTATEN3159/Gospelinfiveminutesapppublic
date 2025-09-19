@@ -276,10 +276,10 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
 
       <div className="px-4 py-6 space-y-6">
         {/* Profile Section */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center justify-center gap-2 flex-1 text-center">
                 <User className="w-5 h-5" />
                 Profile Information
               </div>
@@ -417,9 +417,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         </Card>
 
         {/* Notification Settings */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center justify-center gap-2 text-center">
               <Bell className="w-5 h-5" />
               Notifications
             </CardTitle>
@@ -492,9 +492,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         </Card>
 
         {/* App Settings */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center justify-center gap-2 text-center">
               <Smartphone className="w-5 h-5" />
               App Settings
             </CardTitle>
@@ -538,9 +538,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         </Card>
 
         {/* Data & Privacy */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center justify-center gap-2 text-center">
               <Shield className="w-5 h-5" />
               Data & Privacy
             </CardTitle>
@@ -560,7 +560,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         </Card>
 
         {/* Account Actions */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardContent className="p-6 text-center">
             <h3 className="text-lg font-semibold text-gray-900 mb-2">Account Actions</h3>
             <p className="text-gray-600 text-sm mb-4">

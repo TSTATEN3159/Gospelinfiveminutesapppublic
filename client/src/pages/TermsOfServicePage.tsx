@@ -14,12 +14,12 @@ export default function TermsOfServicePage({ onBack }: TermsOfServicePageProps) 
           <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page">
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-xl font-bold text-gray-900">Terms of Service</h1>
+          <h1 className="text-xl font-bold text-gray-900 text-center flex-1">Terms of Service</h1>
         </div>
       </div>
 
       <div className="px-4 py-6 max-w-3xl mx-auto">
-        <div className="bg-white rounded-lg p-6 shadow-sm space-y-6 text-sm">
+        <div className="bg-white rounded-lg p-6 shadow-lg border-2 space-y-6 text-sm">
           <div>
             <p className="text-gray-600 mb-4">
               <strong>Effective Date:</strong> {new Date().toLocaleDateString()}

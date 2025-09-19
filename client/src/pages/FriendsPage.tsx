@@ -118,7 +118,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
     const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
     
     return (
-      <Card key={user.id} className="p-4">
+      <Card key={user.id} className="p-4 shadow-lg border-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar>
@@ -166,7 +166,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
     const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
     
     return (
-      <Card key={friendshipId} className="p-4">
+      <Card key={friendshipId} className="p-4 shadow-lg border-2">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">
             <Avatar>
@@ -262,9 +262,9 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
           {/* Search Friends Tab */}
           <TabsContent value="search" className="space-y-6">
-            <Card>
+            <Card className="shadow-lg border-2">
               <CardHeader>
-                <CardTitle>{t.findNewFriends}</CardTitle>
+                <CardTitle className="text-center">{t.findNewFriends}</CardTitle>
                 <CardDescription>
                   {t.searchByNameOrEmail}
                 </CardDescription>
@@ -308,9 +308,9 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
           {/* My Friends Tab */}
           <TabsContent value="friends" className="space-y-6">
-            <Card>
+            <Card className="shadow-lg border-2">
               <CardHeader>
-                <CardTitle>{t.myFriends}</CardTitle>
+                <CardTitle className="text-center">{t.myFriends}</CardTitle>
                 <CardDescription>
                   {t.friendsListDescription}
                 </CardDescription>
@@ -342,9 +342,9 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           {/* Friend Requests Tab */}
           <TabsContent value="requests" className="space-y-6">
             {/* Incoming Requests */}
-            <Card>
+            <Card className="shadow-lg border-2">
               <CardHeader>
-                <CardTitle>{t.incomingRequests}</CardTitle>
+                <CardTitle className="text-center">{t.incomingRequests}</CardTitle>
                 <CardDescription>
                   {t.incomingRequestsDescription}
                 </CardDescription>
@@ -369,9 +369,9 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
             </Card>
 
             {/* Outgoing Requests */}
-            <Card>
+            <Card className="shadow-lg border-2">
               <CardHeader>
-                <CardTitle>{t.outgoingRequests}</CardTitle>
+                <CardTitle className="text-center">{t.outgoingRequests}</CardTitle>
                 <CardDescription>
                   {t.outgoingRequestsDescription}
                 </CardDescription>
