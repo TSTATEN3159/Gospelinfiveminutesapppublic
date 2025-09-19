@@ -184,41 +184,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
       "1CO.4.20", "COL.1.13", "MAT.5.3", "MAT.13.31"
     ],
     "salvation": [
-      "ROM.10.9", "EPH.2.8-9", "JHN.3.16", "ACT.4.12", "ROM.6.23",
-      "TIT.3.5", "2CO.5.17", "1JN.5.13", "ROM.1.16"
+      "ROM.10.9", "EPH.2.8", "EPH.2.9", "JHN.3.16", "ACT.4.12", "ROM.6.23",
+      "TIT.3.5", "2CO.5.17", "1JN.5.13", "ROM.1.16", "JHN.14.6", "ROM.5.8", "1PE.1.23"
     ],
     "faith": [
       "HEB.11.1", "ROM.10.17", "EPH.2.8", "HEB.11.6", "2CO.5.7",
       "MAT.17.20", "MRK.11.22", "GAL.2.20", "ROM.1.17"
     ],
     "prayer": [
-      "MAT.6.9-13", "1TH.5.17", "PHP.4.6-7", "JHN.14.13-14", "1JN.5.14-15",
-      "JAM.5.16", "LUK.11.9-10", "MAR.11.24", "COL.4.2"
+      "MAT.6.9", "MAT.6.11", "1TH.5.17", "PHP.4.6", "PHP.4.7", "JHN.14.13", "JHN.14.14", "1JN.5.14",
+      "JAM.5.16", "LUK.11.9", "MRK.11.24", "COL.4.2", "EPH.6.18", "ROM.8.26", "MAT.7.7"
     ],
     "giving": [
-      "2CO.9.7", "MAL.3.10", "LUK.6.38", "ACT.20.35", "1TI.6.17-19",
-      "PRO.11.25", "MAT.6.19-21", "2CO.8.9", "HEB.13.16"
+      "2CO.9.7", "MAL.3.10", "LUK.6.38", "ACT.20.35", "1TI.6.17", "1TI.6.18",
+      "PRO.11.25", "MAT.6.19", "MAT.6.20", "2CO.8.9", "HEB.13.16", "PRO.19.17", "LUK.14.13"
     ],
     "kingdom character": [
-      "MAT.5.3-12", "GAL.5.22-23", "1CO.13.4-7", "PHP.4.8", "COL.3.12-14",
-      "2PE.1.5-7", "1TI.6.11", "TIT.2.11-12", "ROM.12.9-21"
+      "MAT.5.3", "MAT.5.4", "MAT.5.9", "GAL.5.22", "GAL.5.23", "1CO.13.4", "1CO.13.5", "PHP.4.8", "COL.3.12",
+      "2PE.1.5", "2PE.1.6", "1TI.6.11", "TIT.2.11", "ROM.12.9", "ROM.12.10", "EPH.4.32", "MIC.6.8"
     ],
     // Biblical figures
     "moses": [
-      "EXO.3.4", "EXO.14.13-14", "DEU.34.10", "HEB.11.24-26", "NUM.12.3"
+      "EXO.3.4", "EXO.14.13", "EXO.14.14", "DEU.34.10", "HEB.11.24", "HEB.11.25", "NUM.12.3",
+      "EXO.33.11", "DEU.18.18", "EXO.7.1", "NUM.20.12", "DEU.34.5"
     ],
     "david": [
       "1SA.16.7", "PSA.23.1", "2SA.7.28", "1SA.17.45", "PSA.51.10"
     ],
     "paul": [
-      "ACT.9.15", "PHP.3.13-14", "2TI.4.7-8", "GAL.2.20", "1CO.15.10"
+      "ACT.9.15", "PHP.3.13", "PHP.3.14", "2TI.4.7", "2TI.4.8", "GAL.2.20", "1CO.15.10",
+      "ACT.13.9", "ROM.1.1", "1CO.9.16", "EPH.3.8", "1TI.1.15", "ROM.15.20"
     ],
     "peter": [
-      "MAT.16.16", "JHN.21.15-17", "ACT.2.14", "1PE.5.8", "2PE.3.18"
+      "MAT.16.16", "JHN.21.15", "JHN.21.16", "JHN.21.17", "ACT.2.14", "1PE.5.8", "2PE.3.18",
+      "MAT.14.29", "ACT.10.34", "1PE.2.9", "ACT.4.13", "GAL.2.7"
     ],
     "jesus": [
       "JHN.14.6", "JHN.8.12", "JHN.10.11", "MAT.11.28", "JHN.1.1",
-      "PHP.2.5-8", "HEB.4.15", "REV.1.8"
+      "PHP.2.5", "PHP.2.6", "PHP.2.7", "HEB.4.15", "REV.1.8", "JHN.3.16", "MAT.28.18", "LUK.19.10"
     ],
     "adam": [
       "GEN.1.27", "GEN.2.7", "ROM.5.12", "1CO.15.22", "GEN.3.19"
@@ -321,26 +324,39 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Fetch the actual verses from API.Bible - Get 3 key verses with full text
       const verses = [];
       const allReferences = [...verseRefs]; // Keep all references for clickable links
+      let successfulFetches = 0;
       
-      for (const verseRef of verseRefs.slice(0, 3)) { // Get 3 key verses with full text
+      for (const verseRef of verseRefs.slice(0, 5)) { // Try up to 5 verses to get at least 3 successful ones
+        if (successfulFetches >= 3) break; // Stop once we have 3 successful verses
+        
         try {
           const verse = await getApiBibleVerse(versionInfo.id, verseRef);
           
-          const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
-          const cleanText = verse.content.replace(/<[^>]*>/g, '').trim();
-          
-          verses.push({
-            text: cleanText,
-            reference: verse.reference,
-            book: refParts ? refParts[1] : 'Unknown',
-            chapter: refParts ? refParts[2] : '1',
-            verse: refParts ? refParts[3] : '1',
-            translation: version.toUpperCase()
-          });
+          if (verse && verse.content && verse.reference) {
+            const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+            const cleanText = verse.content.replace(/<[^>]*>/g, '').trim();
+            
+            if (cleanText.length > 0) { // Only add non-empty verses
+              verses.push({
+                text: cleanText,
+                reference: verse.reference,
+                book: refParts ? refParts[1] : 'Unknown',
+                chapter: refParts ? refParts[2] : '1',
+                verse: refParts ? refParts[3] : '1',
+                translation: version.toUpperCase()
+              });
+              successfulFetches++;
+            }
+          }
         } catch (error) {
           console.error(`Error fetching verse ${verseRef}:`, error);
           // Continue with other verses even if one fails
         }
+      }
+      
+      // If we couldn't fetch any verses from API, provide fallback content
+      if (verses.length === 0 && explanation) {
+        console.log(`No verses fetched for ${normalizedTopic}, providing topic information only`);
       }
 
       // Prepare 10+ references for clickable navigation
