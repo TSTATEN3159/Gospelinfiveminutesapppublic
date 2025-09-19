@@ -5,6 +5,14 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Heart, DollarSign, ArrowLeft, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { loadStripe } from '@stripe/stripe-js';
+import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
+
+// Load Stripe with public key
+if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
+}
+const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 interface DonationPageProps {
   onNavigate?: (page: string) => void;
@@ -18,11 +26,100 @@ const presetAmounts = [
   { amount: 1000, label: "$1000" },
 ];
 
+// Payment Form Component
+const PaymentForm = ({ 
+  amount, 
+  onSuccess, 
+  onCancel 
+}: { 
+  amount: number; 
+  onSuccess: () => void; 
+  onCancel: () => void;
+}) => {
+  const stripe = useStripe();
+  const elements = useElements();
+  const { toast } = useToast();
+  const [processing, setProcessing] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!stripe || !elements) {
+      return;
+    }
+
+    setProcessing(true);
+
+    const { error } = await stripe.confirmPayment({
+      elements,
+      confirmParams: {
+        return_url: window.location.origin + '?donation=success',
+      },
+    });
+
+    if (error) {
+      toast({
+        title: "Payment Failed",
+        description: error.message,
+        variant: "destructive",
+      });
+    } else {
+      toast({
+        title: "Thank You!",
+        description: "Your donation was successful. God bless your generous heart!",
+      });
+      onSuccess();
+    }
+
+    setProcessing(false);
+  };
+
+  return (
+    <Card className="max-w-md mx-auto">
+      <CardHeader>
+        <CardTitle>Complete Your ${amount.toFixed(2)} Donation</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <PaymentElement />
+          <div className="flex gap-3">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onCancel}
+              className="flex-1"
+              disabled={processing}
+            >
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              disabled={!stripe || processing}
+              className="flex-1 bg-amber-600 hover:bg-amber-700"
+            >
+              {processing ? (
+                <div className="flex items-center gap-2">
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  Processing...
+                </div>
+              ) : (
+                `Donate $${amount.toFixed(2)}`
+              )}
+            </Button>
+          </div>
+        </form>
+      </CardContent>
+    </Card>
+  );
+};
+
 export default function DonationPage({ onNavigate }: DonationPageProps) {
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState("");
   const [isCustom, setIsCustom] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [clientSecret, setClientSecret] = useState("");
+  const [showPaymentForm, setShowPaymentForm] = useState(false);
   const { toast } = useToast();
 
   const handlePresetClick = (amount: number) => {
@@ -77,19 +174,29 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
     setLoading(true);
     
     try {
-      // TODO: Implement Stripe integration
-      await new Promise(resolve => setTimeout(resolve, 1000)); // Simulate API call
+      const amount = getDonationAmount();
       
-      toast({
-        title: "Thank You!",
-        description: "Your donation is being processed. God bless your generous heart!",
+      // Create payment intent
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount }),
       });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create payment intent');
+      }
+
+      // Set client secret and show payment form
+      setClientSecret(data.clientSecret);
+      setShowPaymentForm(true);
       
-      // Reset form
-      setSelectedAmount(null);
-      setCustomAmount("");
-      setIsCustom(false);
     } catch (error) {
+      console.error('Donation error:', error);
       toast({
         title: "Error",
         description: "Unable to process your donation. Please try again.",
@@ -99,6 +206,49 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
       setLoading(false);
     }
   };
+
+  const handlePaymentSuccess = () => {
+    setClientSecret("");
+    setShowPaymentForm(false);
+    setSelectedAmount(null);
+    setCustomAmount("");
+    setIsCustom(false);
+  };
+
+  const handlePaymentCancel = () => {
+    setClientSecret("");
+    setShowPaymentForm(false);
+  };
+
+  // Show payment form if we have a client secret
+  if (showPaymentForm && clientSecret) {
+    return (
+      <Elements stripe={stripePromise} options={{ clientSecret }}>
+        <div className="pb-20 px-4 py-6">
+          <div className="mb-6">
+            <div className="flex items-center gap-3 mb-4">
+              <Button
+                variant="ghost"
+                size="icon"
+                onClick={handlePaymentCancel}
+                className="ios-tap-target"
+                data-testid="button-back-payment"
+                aria-label="Cancel payment"
+              >
+                <ArrowLeft className="w-5 h-5" />
+              </Button>
+              <h1 className="text-2xl font-bold text-primary">Complete Donation</h1>
+            </div>
+          </div>
+          <PaymentForm 
+            amount={getDonationAmount()}
+            onSuccess={handlePaymentSuccess}
+            onCancel={handlePaymentCancel}
+          />
+        </div>
+      </Elements>
+    );
+  }
 
   return (
     <div className="pb-20 px-4 py-6">

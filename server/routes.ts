@@ -2,12 +2,21 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { z } from "zod";
 import OpenAI from "openai";
+import Stripe from "stripe";
 import { storage } from "./storage";
 import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// Initialize Stripe with live keys
+if (!process.env.STRIPE_SECRET_KEY) {
+  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+}
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+  apiVersion: "2023-10-16",
+});
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // put application routes here
@@ -139,6 +148,36 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         error: "I'm having trouble connecting right now. Please try again in a moment."
+      });
+    }
+  });
+
+  // Stripe donation route for one-time payments
+  app.post("/api/create-payment-intent", async (req, res) => {
+    try {
+      const { amount } = req.body;
+      
+      // Validate amount
+      if (!amount || typeof amount !== 'number' || amount < 1 || amount > 10000) {
+        return res.status(400).json({ 
+          error: "Invalid amount. Must be between $1 and $10,000." 
+        });
+      }
+
+      const paymentIntent = await stripe.paymentIntents.create({
+        amount: Math.round(amount * 100), // Convert to cents
+        currency: "usd",
+        metadata: {
+          app: "Gospel in 5 Minutes",
+          type: "donation"
+        }
+      });
+      
+      res.json({ clientSecret: paymentIntent.client_secret });
+    } catch (error: any) {
+      console.error("Stripe payment intent error:", error);
+      res.status(500).json({ 
+        error: "Error creating payment intent: " + error.message 
       });
     }
   });
