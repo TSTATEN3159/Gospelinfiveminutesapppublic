@@ -51,9 +51,9 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
 
       <div className="px-4 py-6 space-y-6">
         {/* Current Goal Progress */}
-        <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50">
+        <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50 shadow-lg border-2">
           <CardHeader className="pb-3">
-            <CardTitle className="flex items-center gap-2 text-amber-800">
+            <CardTitle className="flex items-center justify-center gap-2 text-amber-800 text-center">
               <Target className="w-5 h-5" />
               Current Goal: Spread God's Word
             </CardTitle>
@@ -76,7 +76,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
 
         {/* Impact Statistics */}
         <div className="grid grid-cols-2 gap-4">
-          <Card className="text-center">
+          <Card className="text-center shadow-lg border-2">
             <CardContent className="p-4">
               <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Book className="w-6 h-6 text-blue-600" />
@@ -90,7 +90,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
             </CardContent>
           </Card>
 
-          <Card className="text-center">
+          <Card className="text-center shadow-lg border-2">
             <CardContent className="p-4">
               <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3">
                 <Users className="w-6 h-6 text-green-600" />
@@ -106,9 +106,9 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
         </div>
 
         {/* Monthly Impact */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center justify-center gap-2 text-center">
               <TrendingUp className="w-5 h-5 text-green-600" />
               This Month's Impact
             </CardTitle>
@@ -130,7 +130,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
         </Card>
 
         {/* Call to Action */}
-        <Card className="bg-gradient-to-r from-amber-500 to-orange-500 text-white">
+        <Card className="bg-gradient-to-r from-amber-500 to-orange-500 text-white shadow-lg border-2">
           <CardContent className="p-6 text-center">
             <Heart className="w-12 h-12 mx-auto mb-4 text-white" />
             <h3 className="text-lg font-bold mb-2">
@@ -153,9 +153,9 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
         </Card>
 
         {/* Bible Distribution Map placeholder */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle>Global Bible Distribution</CardTitle>
+            <CardTitle className="text-center">Global Bible Distribution</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="bg-gray-100 rounded-lg p-8 text-center">
