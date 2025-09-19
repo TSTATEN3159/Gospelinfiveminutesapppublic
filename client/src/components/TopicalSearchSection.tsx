@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Search, Book, Crown, Heart, HandHeart, Gift, Users } from 'lucide-react';
+import { Search, Book, Crown, Heart, HandHeart, Gift, Users, ArrowLeft, ExternalLink } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 
 // Types for topical search results
@@ -85,25 +85,38 @@ const presetTopics = [
   }
 ];
 
-export function TopicalSearchSection() {
+interface TopicalSearchSectionProps {
+  onNavigateToScripture?: (reference: string) => void;
+}
+
+export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSectionProps = {}) {
   const [selectedResult, setSelectedResult] = useState<TopicalSearchResult | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [customSearch, setCustomSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   // Handle preset topic search
   const handleTopicSearch = async (topicId: string) => {
     setIsSearching(true);
+    setError(null);
     try {
       const result = await apiRequest('POST', '/api/topical-search', { 
         topic: topicId, 
         version: 'NIV' 
-      }) as TopicalSearchResult;
+      }) as any;
       
-      setSelectedResult(result);
-      setIsModalOpen(true);
+      console.log('Topical search result:', result);
+      
+      if (result && result.success && result.explanation) {
+        setSelectedResult(result);
+        setIsModalOpen(true);
+      } else {
+        setError('Failed to load topical information. Please try again.');
+      }
     } catch (error) {
       console.error('Topical search failed:', error);
+      setError('Failed to connect to Bible database. Please check your connection and try again.');
     } finally {
       setIsSearching(false);
     }
@@ -115,19 +128,47 @@ export function TopicalSearchSection() {
     if (!customSearch.trim()) return;
     
     setIsSearching(true);
+    setError(null);
     try {
       const result = await apiRequest('POST', '/api/topical-search', { 
         topic: customSearch.trim(), 
         version: 'NIV' 
-      }) as TopicalSearchResult;
+      }) as any;
       
-      setSelectedResult(result);
-      setIsModalOpen(true);
+      console.log('Custom search result:', result);
+      
+      if (result && result.success && result.explanation) {
+        setSelectedResult(result);
+        setIsModalOpen(true);
+      } else {
+        setError('Topic not found. Please try one of the preset topics or search for a biblical figure like Moses, David, or Paul.');
+      }
     } catch (error) {
       console.error('Custom topical search failed:', error);
+      setError('Failed to connect to Bible database. Please check your connection and try again.');
     } finally {
       setIsSearching(false);
     }
+  };
+
+  // Handle Scripture reference navigation
+  const handleScriptureClick = (reference: string) => {
+    if (onNavigateToScripture) {
+      // Use the provided navigation callback
+      onNavigateToScripture(reference);
+    } else {
+      // Fallback to opening Bible Gateway in a new window for real Scripture access
+      const cleanRef = reference.replace(/\s+/g, '+');
+      const url = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(cleanRef)}&version=NIV`;
+      window.open(url, '_blank', 'noopener,noreferrer');
+    }
+  };
+
+  // Close modal and reset state
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setSelectedResult(null);
+    setError(null);
   };
 
   return (
@@ -146,6 +187,13 @@ export function TopicalSearchSection() {
           </p>
         </div>
 
+        {/* Error Message */}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-center">
+            <p className="text-sm">{error}</p>
+          </div>
+        )}
+
         {/* Preset Topic Tiles Grid */}
         <div className="grid grid-cols-2 gap-3 mb-6">
           {presetTopics.map((topic) => {
@@ -153,7 +201,7 @@ export function TopicalSearchSection() {
             return (
               <Card
                 key={topic.id}
-                className={`bg-gradient-to-br ${topic.gradient} ${topic.borderColor} border-2 hover-elevate cursor-pointer transition-all duration-200 shadow-sm`}
+                className={`bg-gradient-to-br ${topic.gradient} ${topic.borderColor} border-2 hover-elevate cursor-pointer transition-all duration-200 shadow-sm ${isSearching ? 'opacity-50 pointer-events-none' : ''}`}
                 onClick={() => handleTopicSearch(topic.id)}
                 data-testid={`tile-topic-${topic.id.replace(/\s+/g, '-')}`}
               >
@@ -193,31 +241,41 @@ export function TopicalSearchSection() {
             data-testid="button-custom-topical-search"
             aria-label="Search for custom biblical topic"
           >
-            {isSearching ? 'Searching...' : 'Search Biblical Topic'}
+            {isSearching ? 'Searching Bible...' : 'Search Biblical Topic'}
           </Button>
         </form>
       </div>
 
       {/* Results Modal */}
-      <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
-          <DialogHeader>
-            <DialogTitle className="text-2xl font-bold text-amber-800 mb-2">
-              {selectedResult?.explanation.title}
+      <Dialog open={isModalOpen} onOpenChange={closeModal}>
+        <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader className="relative">
+            <Button
+              onClick={closeModal}
+              variant="outline"
+              size="sm"
+              className="absolute -top-2 -left-2 mb-4"
+              data-testid="button-back-to-topics"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to Topics
+            </Button>
+            <DialogTitle className="text-2xl font-bold text-amber-800 mb-2 mt-8">
+              {selectedResult?.explanation?.title || 'Biblical Information'}
             </DialogTitle>
           </DialogHeader>
           
           {selectedResult && (
             <div className="space-y-6">
               {/* Topic Explanation */}
-              <div className="bg-amber-50 p-4 rounded-lg border border-amber-200">
-                <p className="text-gray-800 leading-relaxed mb-4">
-                  {selectedResult.explanation.description}
+              <div className="bg-amber-50 p-6 rounded-lg border border-amber-200">
+                <p className="text-gray-800 leading-relaxed mb-4 text-base">
+                  {selectedResult.explanation?.description || 'Biblical information about this topic.'}
                 </p>
                 
-                {selectedResult.explanation.keyThemes.length > 0 && (
+                {selectedResult.explanation?.keyThemes && selectedResult.explanation.keyThemes.length > 0 && (
                   <div>
-                    <h4 className="font-semibold text-amber-800 mb-2">Key Themes:</h4>
+                    <h4 className="font-semibold text-amber-800 mb-3">Key Biblical Themes:</h4>
                     <div className="flex flex-wrap gap-2">
                       {selectedResult.explanation.keyThemes.map((theme, index) => (
                         <span 
@@ -232,38 +290,77 @@ export function TopicalSearchSection() {
                 )}
               </div>
 
-              {/* Scripture Verses */}
-              {selectedResult.verses.length > 0 && (
+              {/* Main Scripture Verses */}
+              {selectedResult.verses && selectedResult.verses.length > 0 && (
                 <div>
-                  <h4 className="text-lg font-semibold text-gray-800 mb-4">
-                    Supporting Scripture ({selectedResult.version}):
+                  <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                    Key Scripture Passages ({selectedResult.version || 'NIV'}):
                   </h4>
                   <div className="space-y-4">
                     {selectedResult.verses.map((verse, index) => (
                       <div 
                         key={index}
-                        className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm"
+                        className="bg-white p-5 rounded-lg border border-gray-200 shadow-sm hover:shadow-md transition-shadow"
                       >
-                        <p className="text-gray-800 mb-2 leading-relaxed italic">
+                        <p className="text-gray-800 mb-3 leading-relaxed text-lg italic">
                           "{verse.text}"
                         </p>
-                        <p className="text-amber-700 font-semibold text-sm">
-                          — {verse.reference} ({verse.translation})
-                        </p>
+                        <div className="flex items-center justify-between">
+                          <p className="text-amber-700 font-semibold">
+                            — {verse.reference} ({verse.translation})
+                          </p>
+                          <Button
+                            onClick={() => handleScriptureClick(verse.reference)}
+                            variant="outline"
+                            size="sm"
+                            className="text-amber-700 border-amber-300 hover:bg-amber-50"
+                          >
+                            <ExternalLink className="w-3 h-3 mr-1" />
+                            Read Full
+                          </Button>
+                        </div>
                       </div>
                     ))}
                   </div>
                 </div>
               )}
 
+              {/* Additional Scripture References */}
+              {selectedResult.references && selectedResult.references.length > 0 && (
+                <div>
+                  <h4 className="text-xl font-semibold text-gray-800 mb-4">
+                    Additional Scripture References:
+                  </h4>
+                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
+                    {selectedResult.references.map((reference, index) => (
+                      <Button
+                        key={index}
+                        onClick={() => handleScriptureClick(reference)}
+                        variant="outline"
+                        className="text-blue-700 border-blue-200 hover:bg-blue-50 justify-between p-3 h-auto"
+                        data-testid={`link-scripture-${reference.replace(/[\s:]/g, '-')}`}
+                      >
+                        <span className="text-sm font-medium">{reference}</span>
+                        <ExternalLink className="w-3 h-3 ml-2 flex-shrink-0" />
+                      </Button>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* No results message */}
-              {selectedResult.verses.length === 0 && (
-                <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 text-center">
+              {(!selectedResult.verses || selectedResult.verses.length === 0) && (
+                <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200 text-center">
                   <p className="text-gray-700">
-                    This topic was not found in our database. Try searching for one of the preset topics above, or search for a specific Bible verse reference instead.
+                    This topic was not found in our biblical database. Try searching for one of the preset topics above, or search for a specific biblical figure like Moses, David, Paul, or Jesus.
                   </p>
                 </div>
               )}
+
+              {/* Footer with instruction */}
+              <div className="text-center text-sm text-gray-500 pt-4 border-t border-gray-200">
+                <p>Click on any Scripture reference to explore the full biblical context</p>
+              </div>
             </div>
           )}
         </DialogContent>

@@ -14,6 +14,14 @@ interface SearchPageProps {
 }
 
 export default function SearchPage({ onNavigate, streakDays = 0, language = "en", initialSearchQuery, onSearchUsed }: SearchPageProps) {
+  
+  // Handle Scripture navigation from topical search
+  const handleScriptureNavigation = (reference: string) => {
+    // Navigate to search with the Scripture reference pre-filled
+    if (onNavigate) {
+      onNavigate('search', reference);
+    }
+  };
   const t = useTranslations(language);
   return (
     <div className="min-h-screen pb-20">
@@ -115,9 +123,6 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             onSearchUsed={onSearchUsed}
           />
           
-          {/* Topical Search Section */}
-          <TopicalSearchSection />
-          
           {/* Donation Appeal Section */}
           <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200 shadow-sm">
             <div className="text-center">
@@ -141,6 +146,9 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
               </Button>
             </div>
           </div>
+          
+          {/* Topical Search Section - AFTER Help Spread God's Word */}
+          <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} />
         </div>
         
         {/* Professional Website Footer */}
