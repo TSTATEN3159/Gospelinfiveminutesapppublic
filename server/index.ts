@@ -4,7 +4,14 @@ import { setupVite, serveStatic, log } from "./vite";
 import { BlogUpdateScheduler } from "./scheduler";
 
 const app = express();
-app.use(express.json());
+// Apply JSON parsing to all routes EXCEPT Stripe webhook which needs raw body
+app.use((req, res, next) => {
+  if (req.path === '/api/stripe-webhook') {
+    // Skip JSON parsing for Stripe webhook - it needs raw body for signature verification
+    return next();
+  }
+  express.json()(req, res, next);
+});
 app.use(express.urlencoded({ extended: false }));
 
 app.use((req, res, next) => {

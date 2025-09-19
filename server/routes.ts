@@ -1,4 +1,4 @@
-import type { Express } from "express";
+import express, { type Express } from "express";
 import { createServer, type Server } from "http";
 import { z } from "zod";
 import OpenAI from "openai";
@@ -26,7 +26,7 @@ const getStripeClient = (): Stripe => {
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Stripe webhook endpoint for secure donation recording
-  app.post('/api/stripe-webhook', app.raw({ type: 'application/json' }), async (req, res) => {
+  app.post('/api/stripe-webhook', express.raw({ type: 'application/json' }), async (req, res) => {
     const sig = req.headers['stripe-signature'] as string;
     let event: Stripe.Event;
 
@@ -753,47 +753,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Record a successful donation
-  app.post("/api/record-donation", async (req, res) => {
-    try {
-      const { amount, paymentIntentId, currency = "USD", metadata } = req.body;
-      
-      if (!amount || !paymentIntentId) {
-        return res.status(400).json({ 
-          success: false, 
-          error: "Amount and payment intent ID are required" 
-        });
-      }
-
-      const donation = await storage.recordDonation({
-        amount: amount.toString(),
-        currency,
-        paymentIntentId,
-        status: "completed",
-        metadata: metadata ? JSON.stringify(metadata) : undefined
-      });
-
-      res.json({ 
-        success: true, 
-        donation: donation 
-      });
-    } catch (error: any) {
-      console.error("Record donation error:", error);
-      
-      // Handle duplicate payment intent (donation already recorded)
-      if (error.message?.includes("duplicate") || error.message?.includes("unique")) {
-        return res.status(200).json({ 
-          success: true, 
-          message: "Donation already recorded" 
-        });
-      }
-      
-      res.status(500).json({ 
-        success: false, 
-        error: "Failed to record donation" 
-      });
-    }
-  });
 
   // Christian Video Content Routes - Christian Context API + TBN+ integration
   app.get("/api/videos", async (req, res) => {
