@@ -213,11 +213,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           if (response.ok) {
             const data = await response.json();
+            // API working correctly - debug logging removed
             
-            // Ensure completeness of Bible data with fallbacks
+            // Ensure completeness of Bible data with fallbacks - using correct field names
             const verseReference = data.verse_reference || null;
-            const verseText = data.verse_text || (verseReference ? `"Bible verse from ${verseReference}"` : null);
-            const commentary = data.commentary || (verseReference ? `Explore the spiritual wisdom in ${verseReference}` : null);
+            const verseText = data.verse_content || (verseReference ? `"Bible verse from ${verseReference}"` : null);
+            const commentary = data.commentary_content || (verseReference ? `Explore the spiritual wisdom in ${verseReference}` : null);
             
             return {
               id: `context_${Date.now()}_${i}`,
@@ -227,7 +228,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
               category: category || 'sermon',
               views: data.views || undefined, // Only use real view count from API
               thumbnail: `https://images.unsplash.com/photo-${1507003211169 + i}?w=300&h=200&fit=crop`,
-              videoUrl: data.sermon_video_url || null,
+              videoUrl: data.sermon_url || null,
               verseReference,
               verseText,
               commentary,
@@ -236,7 +237,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
           return null;
         } catch (apiError) {
-          console.error(`Error fetching ${theme} from Christian Context API:`, apiError);
+          console.error(`ERROR fetching ${theme}:`, apiError.message);
           return null;
         }
       });
