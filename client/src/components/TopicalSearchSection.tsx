@@ -101,10 +101,11 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
     setIsSearching(true);
     setError(null);
     try {
-      const result = await apiRequest('POST', '/api/topical-search', { 
+      const response = await apiRequest('POST', '/api/topical-search', { 
         topic: topicId, 
         version: 'NIV' 
-      }) as any;
+      });
+      const result = await response.json();
       
       console.log('Topical search result:', result);
       
@@ -130,10 +131,11 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
     setIsSearching(true);
     setError(null);
     try {
-      const result = await apiRequest('POST', '/api/topical-search', { 
+      const response = await apiRequest('POST', '/api/topical-search', { 
         topic: customSearch.trim(), 
         version: 'NIV' 
-      }) as any;
+      });
+      const result = await response.json();
       
       console.log('Custom search result:', result);
       
