@@ -108,14 +108,8 @@ export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
       <div className="px-4 py-4 space-y-6 ios-safe-bottom">
         <div className="max-w-md mx-auto space-y-6">
           {/* Ask Pastor Section */}
-          <div className="relative bg-card rounded-lg p-4 border shadow-lg border-2">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-30 rounded-lg"
-              style={{ backgroundImage: `url(${shepherdImage})` }}
-            />
-            <div className="relative z-10">
-              <AskPastorSection backgroundImage={shepherdImage} />
-            </div>
+          <div className="relative">
+            <AskPastorSection backgroundImage={shepherdImage} />
           </div>
 
           {/* Feelings & Scripture Section */}

@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
-import { Send, MessageCircle, Book } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Send, MessageSquare, Book, BookOpenCheck, ShieldCheck, Copy, Trash2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -106,31 +108,84 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
     }
   };
 
+  const quickPrompts = [
+    "How can I grow stronger in my faith?",
+    "What does the Bible say about anxiety?",
+    "How do I know God's will for my life?"
+  ];
+
+  const clearChat = () => {
+    setMessages([]);
+  };
+
   return (
-    <Card className="relative overflow-hidden min-h-[500px] flex flex-col" data-testid="card-askPastor">
+    <Card className="relative overflow-hidden h-[600px] flex flex-col shadow-lg border-2" data-testid="card-askPastor">
       {backgroundImage && (
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        />
+        <>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/20 to-black/80" />
+        </>
       )}
       
-      <CardHeader className="relative z-10 flex-shrink-0">
-        <CardTitle className="flex items-center gap-2 text-xl">
-          <MessageCircle className="w-6 h-6 text-primary" />
-          Ask the AI Pastor
-        </CardTitle>
-        <p className="text-muted-foreground">
-          Ask any question about the Bible and receive Scripture-based guidance from AI trained on biblical principles
-        </p>
+      <CardHeader className="relative z-10 flex-shrink-0 bg-gradient-to-r from-primary/10 to-transparent border-b">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-12 w-12 border-2 border-primary/20">
+            <AvatarFallback className="bg-primary/10 text-primary">
+              <BookOpenCheck className="w-6 h-6" />
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <CardTitle className="flex items-center gap-2 text-xl text-white">
+              <MessageSquare className="w-5 h-5" />
+              AI Pastor
+            </CardTitle>
+            <p className="text-white/90 text-sm">
+              Scripture-based guidance powered by biblical wisdom
+            </p>
+          </div>
+          {messages.length > 0 && (
+            <Button 
+              onClick={clearChat}
+              size="icon"
+              variant="ghost"
+              className="text-white/80 hover:text-white hover:bg-white/10"
+              data-testid="button-clear-chat"
+              aria-label="Clear conversation"
+            >
+              <Trash2 className="w-4 h-4" />
+            </Button>
+          )}
+        </div>
       </CardHeader>
 
-      <CardContent className="relative z-10 flex-1 flex flex-col space-y-4">
-        <div className="flex-1 space-y-3 min-h-[250px] max-h-[300px] overflow-y-auto" data-testid="messages-container">
+      <CardContent className="relative z-10 flex-1 flex flex-col p-6 space-y-4">
+        <div className="flex-1 space-y-3 overflow-y-auto" data-testid="messages-container" aria-live="polite">
           {messages.length === 0 && (
-            <div className="text-center text-muted-foreground py-8">
-              <MessageCircle className="w-12 h-12 mx-auto mb-4 opacity-50" />
-              <p>Ask me anything about God's word, and I'll help you find answers in Scripture.</p>
+            <div className="text-center py-8">
+              <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mx-4">
+                <MessageSquare className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <h3 className="font-semibold text-gray-900 mb-2">Welcome! I'm here to help</h3>
+                <p className="text-gray-700 text-sm mb-4">Ask me anything about God's word, and I'll help you find answers in Scripture.</p>
+                <div className="space-y-2">
+                  <p className="text-xs text-gray-600 font-medium">Try these questions:</p>
+                  <div className="flex flex-wrap gap-2 justify-center">
+                    {quickPrompts.map((prompt, index) => (
+                      <Badge 
+                        key={index}
+                        variant="secondary" 
+                        className="cursor-pointer hover-elevate text-xs"
+                        onClick={() => setCurrentMessage(prompt)}
+                        data-testid={`prompt-${index}`}
+                      >
+                        {prompt}
+                      </Badge>
+                    ))}
+                  </div>
+                </div>
+              </div>
             </div>
           )}
           
@@ -141,61 +196,92 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
               data-testid={`message-${message.role}`}
             >
               <div
-                className={`max-w-[80%] p-3 rounded-lg ${
+                className={`max-w-[85%] p-4 rounded-xl shadow-sm ${
                   message.role === "user"
                     ? "bg-primary text-primary-foreground"
-                    : "bg-secondary text-secondary-foreground"
+                    : "bg-white/95 backdrop-blur-sm text-gray-900 border border-gray-200"
                 }`}
               >
-                <p className="text-sm leading-relaxed">{message.content}</p>
-                {message.scriptureRef && (
-                  <div className="flex items-center gap-1 mt-2">
-                    <Book className="w-3 h-3 opacity-80" />
-                    <p className="text-xs opacity-80 font-medium">{message.scriptureRef}</p>
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <p className="text-sm leading-relaxed flex-1">{message.content}</p>
+                  <Button 
+                    size="icon"
+                    variant="ghost"
+                    className="h-6 w-6 opacity-60 hover:opacity-100 flex-shrink-0"
+                    onClick={() => navigator.clipboard.writeText(message.content)}
+                    data-testid={`copy-message-${message.id}`}
+                    aria-label="Copy message"
+                  >
+                    <Copy className="w-3 h-3" />
+                  </Button>
+                </div>
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2">
+                    {message.scriptureRef && (
+                      <Badge variant="outline" className="text-xs bg-blue-50 border-blue-200">
+                        <Book className="w-3 h-3 mr-1" />
+                        {message.scriptureRef}
+                      </Badge>
+                    )}
                   </div>
-                )}
+                  <time className="text-xs opacity-60">
+                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </time>
+                </div>
               </div>
             </div>
           ))}
           
           {askPastorMutation.isPending && (
             <div className="flex justify-start" data-testid="loading-pastor">
-              <div className="bg-secondary p-3 rounded-lg">
-                <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+              <div className="bg-white/95 backdrop-blur-sm p-4 rounded-xl shadow-sm border border-gray-200">
+                <div className="flex space-x-1 mb-2">
+                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce"></div>
+                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
+                  <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
                 </div>
-                <p className="text-xs text-muted-foreground mt-1">AI Pastor is seeking wisdom in Scripture...</p>
+                <p className="text-xs text-gray-600">AI Pastor is seeking wisdom in Scripture...</p>
               </div>
             </div>
           )}
         </div>
 
-        <div className="flex gap-2">
-          <Textarea
-            value={currentMessage}
-            onChange={(e) => setCurrentMessage(e.target.value)}
-            onKeyPress={handleKeyPress}
-            placeholder="Ask your Bible question here..."
-            rows={2}
-            className="resize-none"
-            disabled={askPastorMutation.isPending}
-            data-testid="textarea-question"
-          />
-          <Button
-            onClick={handleSendMessage}
-            disabled={!currentMessage.trim() || askPastorMutation.isPending}
-            size="icon"
-            className="h-auto"
-            data-testid="button-send"
-          >
-            {askPastorMutation.isPending ? (
-              <div className="w-4 h-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
-            ) : (
-              <Send className="w-4 h-4" />
-            )}
-          </Button>
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 border border-gray-200">
+          <div className="flex gap-3 mb-3">
+            <Textarea
+              value={currentMessage}
+              onChange={(e) => setCurrentMessage(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Ask your Bible question here..."
+              rows={2}
+              className="resize-none bg-transparent border-gray-300"
+              disabled={askPastorMutation.isPending}
+              data-testid="textarea-question"
+              aria-label="Ask your Bible question"
+              maxLength={500}
+            />
+            <Button
+              onClick={handleSendMessage}
+              disabled={!currentMessage.trim() || askPastorMutation.isPending}
+              size="icon"
+              className="h-auto"
+              data-testid="button-send"
+              aria-label="Send question"
+            >
+              {askPastorMutation.isPending ? (
+                <div className="w-4 h-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+              ) : (
+                <Send className="w-4 h-4" />
+              )}
+            </Button>
+          </div>
+          <div className="flex items-center justify-between text-xs">
+            <div className="flex items-center gap-2 text-gray-600">
+              <ShieldCheck className="w-3 h-3" />
+              <span>Biblically guided AI responses</span>
+            </div>
+            <span className="text-gray-500">{currentMessage.length}/500</span>
+          </div>
         </div>
       </CardContent>
     </Card>
