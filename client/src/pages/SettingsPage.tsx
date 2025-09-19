@@ -157,9 +157,12 @@ export default function SettingsPage({ onNavigate, streakDays = 0 }: SettingsPag
                   id="firstName"
                   value={profile.firstName}
                   onChange={(e) => setProfile(prev => ({ ...prev, firstName: e.target.value }))}
-                  disabled={!isEditing}
+                  disabled={true}
+                  className="bg-gray-50 dark:bg-gray-800"
                   data-testid="input-first-name"
+                  title="Name cannot be changed once set"
                 />
+                <p className="text-xs text-gray-500 mt-1">Name cannot be changed</p>
               </div>
               <div>
                 <Label htmlFor="lastName">Last Name</Label>
@@ -167,9 +170,12 @@ export default function SettingsPage({ onNavigate, streakDays = 0 }: SettingsPag
                   id="lastName"
                   value={profile.lastName}
                   onChange={(e) => setProfile(prev => ({ ...prev, lastName: e.target.value }))}
-                  disabled={!isEditing}
+                  disabled={true}
+                  className="bg-gray-50 dark:bg-gray-800"
                   data-testid="input-last-name"
+                  title="Name cannot be changed once set"
                 />
+                <p className="text-xs text-gray-500 mt-1">Name cannot be changed</p>
               </div>
             </div>
 
@@ -238,9 +244,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0 }: SettingsPag
               <Select
                 value={profile.timezone}
                 onValueChange={(value) => setProfile(prev => ({ ...prev, timezone: value }))}
-                disabled={!isEditing}
+                disabled={true}
               >
-                <SelectTrigger data-testid="select-timezone">
+                <SelectTrigger data-testid="select-timezone" className="bg-gray-50 dark:bg-gray-800">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -249,6 +255,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0 }: SettingsPag
                   ))}
                 </SelectContent>
               </Select>
+              <p className="text-xs text-gray-500 mt-1">Timezone cannot be changed</p>
             </div>
 
             {isEditing && (
