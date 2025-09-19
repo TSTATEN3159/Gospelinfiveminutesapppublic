@@ -182,6 +182,106 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Christian Video Content Routes - Christian Context API + TBN+ integration
+  app.get("/api/videos", async (req, res) => {
+    try {
+      const { category, limit = 10 } = req.query;
+
+      // Define themes for different categories
+      const themes = {
+        sermon: ['Faith', 'Grace', 'God\'s Love', 'Salvation', 'Hope'],
+        'gospel-tidbits': ['Wisdom', 'Encouragement', 'Peace', 'Joy', 'Strength'],
+        'christian-advice': ['Guidance', 'Purpose', 'Relationships', 'Trust', 'Forgiveness']
+      };
+
+      const videos = [];
+      const categoryThemes = themes[category as string] || themes.sermon;
+      const numVideos = Math.min(parseInt(limit as string), 10);
+
+      // Fetch videos from Christian Context API
+      for (let i = 0; i < numVideos && i < categoryThemes.length; i++) {
+        try {
+          const theme = categoryThemes[i];
+          const apiUrl = `https://getcontext.xyz/api/api.php?query=${encodeURIComponent(theme)}`;
+          const response = await fetch(apiUrl);
+          
+          if (response.ok) {
+            const data = await response.json();
+            
+            // Transform API data to our video format
+            const video = {
+              id: `context_${Date.now()}_${i}`,
+              title: data.verse_reference ? `${theme}: ${data.verse_reference}` : `${theme} - Christian Wisdom`,
+              description: data.verse_text || `Explore biblical wisdom on ${theme.toLowerCase()} through Scripture and sermon insights.`,
+              duration: "8:30", // Default duration
+              category: category || 'sermon',
+              views: Math.floor(Math.random() * 10000) + 1000,
+              thumbnail: `https://images.unsplash.com/photo-${1507003211169 + i}?w=300&h=200&fit=crop`,
+              videoUrl: data.sermon_video_url || null,
+              verseReference: data.verse_reference || null,
+              verseText: data.verse_text || null,
+              commentary: data.commentary || null,
+              source: 'Christian Context API'
+            };
+            videos.push(video);
+          }
+        } catch (apiError) {
+          console.error(`Error fetching ${categoryThemes[i]} from Christian Context API:`, apiError);
+          // Continue with next theme
+        }
+      }
+
+      // Add TBN+ content recommendations
+      const tbnCategories = [
+        {
+          id: 'tbn_sermons',
+          title: 'TBN+ Sermon Collection',
+          description: 'Access thousands of sermons from Trinity Broadcasting Network for free.',
+          category: 'sermon',
+          views: 50000,
+          duration: 'Various',
+          source: 'TBN+',
+          externalUrl: 'https://www.tbnplus.com/sermons',
+          thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
+        },
+        {
+          id: 'tbn_documentaries',
+          title: 'Faith-Based Documentaries',
+          description: 'Inspiring Christian documentaries and educational content from TBN+.',
+          category: 'christian-advice',
+          views: 25000,
+          duration: 'Various',
+          source: 'TBN+',
+          externalUrl: 'https://www.tbnplus.com/documentaries',
+          thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop'
+        }
+      ];
+
+      // Add TBN+ content to results
+      if (!category || category === 'sermon') {
+        videos.push(tbnCategories[0]);
+      }
+      if (!category || category === 'christian-advice') {
+        videos.push(tbnCategories[1]);
+      }
+
+      res.json({
+        success: true,
+        videos: videos,
+        total: videos.length,
+        sources: ['Christian Context API', 'TBN+']
+      });
+
+    } catch (error) {
+      console.error("Video content API error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Unable to fetch video content. Please try again.",
+        videos: []
+      });
+    }
+  });
+
   // Blog Subscription Routes
   app.post("/api/subscribe", async (req, res) => {
     try {

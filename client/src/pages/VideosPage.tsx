@@ -1,26 +1,82 @@
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen } from "lucide-react";
+import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink } from "lucide-react";
+import { videoService, type VideoItem } from "@/services/videoService";
+import { useToast } from "@/hooks/use-toast";
 
 interface VideosPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
 }
 
-interface VideoItem {
-  id: string;
-  title: string;
-  description: string;
-  duration: string;
-  category: 'sermon' | 'gospel-tidbits' | 'christian-advice';
-  views: number;
-  thumbnail: string;
-}
+// VideoItem interface is now imported from videoService
 
 export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPageProps) {
-  // Mock video data - can be replaced with real API data
-  const videos: VideoItem[] = [
+  const [videos, setVideos] = useState<VideoItem[]>([]);
+  const [featuredVideo, setFeaturedVideo] = useState<VideoItem | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [selectedCategory, setSelectedCategory] = useState<VideoItem['category'] | null>(null);
+  const { toast } = useToast();
+
+  // Load videos on component mount
+  useEffect(() => {
+    loadVideos();
+  }, []);
+
+  const loadVideos = async () => {
+    setLoading(true);
+    try {
+      // Load featured video and all videos in parallel
+      const [featured, allVideos] = await Promise.all([
+        videoService.getFeaturedVideo(),
+        videoService.getVideos(undefined, 20)
+      ]);
+
+      setFeaturedVideo(featured);
+      setVideos(allVideos);
+    } catch (error) {
+      console.error('Error loading videos:', error);
+      toast({
+        title: "Loading Error",
+        description: "Some video content may not be available right now.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCategoryFilter = async (category: VideoItem['category'] | null) => {
+    setSelectedCategory(category);
+    setLoading(true);
+    
+    try {
+      const categoryVideos = category 
+        ? await videoService.getVideosByCategory(category)
+        : await videoService.getVideos(undefined, 20);
+      setVideos(categoryVideos);
+    } catch (error) {
+      console.error('Error filtering videos:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVideoClick = (video: VideoItem) => {
+    if (video.externalUrl || video.videoUrl) {
+      videoService.openExternalVideo(video);
+    } else {
+      toast({
+        title: "Coming Soon",
+        description: "This video will be available soon!",
+      });
+    }
+  };
+
+  // Use fallback videos during loading
+  const displayVideos = videos.length > 0 ? videos : [
     {
       id: '1',
       title: 'Finding Peace in God\'s Promises',
@@ -154,28 +210,57 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
             </CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="relative mb-3">
-              <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
-                <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center">
-                  <Play className="w-6 h-6 text-white ml-1" />
+            {loading ? (
+              <div className="animate-pulse space-y-3">
+                <div className="aspect-video bg-gray-300 rounded-lg"></div>
+                <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                <div className="h-3 bg-gray-300 rounded w-full"></div>
+              </div>
+            ) : featuredVideo ? (
+              <div 
+                className="cursor-pointer" 
+                onClick={() => handleVideoClick(featuredVideo)}
+                data-testid="featured-video"
+              >
+                <div className="relative mb-3">
+                  <div className="aspect-video bg-gray-200 rounded-lg flex items-center justify-center">
+                    <div className="w-16 h-16 bg-amber-600 rounded-full flex items-center justify-center hover-elevate">
+                      <Play className="w-6 h-6 text-white ml-1" />
+                    </div>
+                  </div>
+                  <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                    {featuredVideo.duration}
+                  </div>
+                  {featuredVideo.source === 'TBN+' && (
+                    <div className="absolute top-2 right-2">
+                      <Badge className="bg-blue-600 text-white">
+                        <ExternalLink className="w-3 h-3 mr-1" />
+                        Free
+                      </Badge>
+                    </div>
+                  )}
+                </div>
+                <h3 className="font-semibold text-gray-900 mb-2">{featuredVideo.title}</h3>
+                <p className="text-gray-600 text-sm mb-3">{featuredVideo.description}</p>
+                <div className="flex items-center gap-2">
+                  <Badge className={getCategoryColor(featuredVideo.category)}>
+                    {getCategoryIcon(featuredVideo.category)}
+                    <span className="ml-1">{getCategoryName(featuredVideo.category)}</span>
+                  </Badge>
+                  <span className="text-xs text-gray-500 flex items-center gap-1">
+                    <Users className="w-3 h-3" />
+                    {featuredVideo.views.toLocaleString()} views
+                  </span>
+                  <span className="text-xs text-blue-600 font-medium">
+                    {featuredVideo.source}
+                  </span>
                 </div>
               </div>
-              <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
-                {videos[0].duration}
+            ) : (
+              <div className="text-center py-8">
+                <p className="text-gray-500">No featured video available</p>
               </div>
-            </div>
-            <h3 className="font-semibold text-gray-900 mb-2">{videos[0].title}</h3>
-            <p className="text-gray-600 text-sm mb-3">{videos[0].description}</p>
-            <div className="flex items-center gap-2">
-              <Badge className={getCategoryColor(videos[0].category)}>
-                {getCategoryIcon(videos[0].category)}
-                <span className="ml-1">{getCategoryName(videos[0].category)}</span>
-              </Badge>
-              <span className="text-xs text-gray-500 flex items-center gap-1">
-                <Users className="w-3 h-3" />
-                {videos[0].views.toLocaleString()} views
-              </span>
-            </div>
+            )}
           </CardContent>
         </Card>
 
@@ -183,17 +268,29 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
         <div>
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Browse by Category</h2>
           <div className="grid grid-cols-3 gap-3 mb-6">
-            <Card className="text-center hover-elevate cursor-pointer">
+            <Card 
+              className={`text-center hover-elevate cursor-pointer ${
+                selectedCategory === 'sermon' ? 'ring-2 ring-blue-500' : ''
+              }`}
+              onClick={() => handleCategoryFilter(selectedCategory === 'sermon' ? null : 'sermon')}
+              data-testid="category-sermon"
+            >
               <CardContent className="p-4">
                 <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <BookOpen className="w-6 h-6 text-blue-600" />
                 </div>
                 <div className="text-sm font-medium text-gray-900">Sermons</div>
-                <div className="text-xs text-gray-500">Weekly messages</div>
+                <div className="text-xs text-gray-500">Faith messages</div>
               </CardContent>
             </Card>
             
-            <Card className="text-center hover-elevate cursor-pointer">
+            <Card 
+              className={`text-center hover-elevate cursor-pointer ${
+                selectedCategory === 'gospel-tidbits' ? 'ring-2 ring-amber-500' : ''
+              }`}
+              onClick={() => handleCategoryFilter(selectedCategory === 'gospel-tidbits' ? null : 'gospel-tidbits')}
+              data-testid="category-tidbits"
+            >
               <CardContent className="p-4">
                 <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <Lightbulb className="w-6 h-6 text-amber-600" />
@@ -203,7 +300,13 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
               </CardContent>
             </Card>
             
-            <Card className="text-center hover-elevate cursor-pointer">
+            <Card 
+              className={`text-center hover-elevate cursor-pointer ${
+                selectedCategory === 'christian-advice' ? 'ring-2 ring-green-500' : ''
+              }`}
+              onClick={() => handleCategoryFilter(selectedCategory === 'christian-advice' ? null : 'christian-advice')}
+              data-testid="category-advice"
+            >
               <CardContent className="p-4">
                 <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-2">
                   <Heart className="w-6 h-6 text-green-600" />
@@ -217,44 +320,91 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
 
         {/* Video List */}
         <div>
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Videos</h2>
-          <div className="space-y-4">
-            {videos.slice(1).map((video) => (
-              <Card key={video.id} className="hover-elevate cursor-pointer">
-                <CardContent className="p-4">
-                  <div className="flex gap-3">
-                    <div className="relative flex-shrink-0">
-                      <div className="w-20 h-14 bg-gray-200 rounded flex items-center justify-center">
-                        <Play className="w-4 h-4 text-gray-600" />
-                      </div>
-                      <div className="absolute bottom-1 right-1 bg-black bg-opacity-75 text-white text-xs px-1 rounded">
-                        {video.duration}
-                      </div>
-                    </div>
-                    
-                    <div className="flex-1 min-w-0">
-                      <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2">
-                        {video.title}
-                      </h3>
-                      <p className="text-gray-600 text-xs mb-2 line-clamp-2">
-                        {video.description}
-                      </p>
-                      <div className="flex items-center gap-2">
-                        <Badge className={`text-xs ${getCategoryColor(video.category)}`}>
-                          {getCategoryIcon(video.category)}
-                          <span className="ml-1">{getCategoryName(video.category)}</span>
-                        </Badge>
-                        <span className="text-xs text-gray-500 flex items-center gap-1">
-                          <Users className="w-3 h-3" />
-                          {video.views.toLocaleString()}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-gray-900">
+              {selectedCategory ? `${getCategoryName(selectedCategory)} Videos` : 'Recent Videos'}
+            </h2>
+            {selectedCategory && (
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => handleCategoryFilter(null)}
+                data-testid="button-clear-filter"
+              >
+                Show All
+              </Button>
+            )}
           </div>
+          
+          {loading ? (
+            <div className="space-y-4">
+              {[1, 2, 3].map((i) => (
+                <Card key={i} className="animate-pulse">
+                  <CardContent className="p-4">
+                    <div className="flex gap-3">
+                      <div className="w-20 h-14 bg-gray-300 rounded"></div>
+                      <div className="flex-1 space-y-2">
+                        <div className="h-4 bg-gray-300 rounded w-3/4"></div>
+                        <div className="h-3 bg-gray-300 rounded w-full"></div>
+                        <div className="h-3 bg-gray-300 rounded w-1/2"></div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {displayVideos.filter(video => video.id !== featuredVideo?.id).map((video) => (
+                <Card 
+                  key={video.id} 
+                  className="hover-elevate cursor-pointer"
+                  onClick={() => handleVideoClick(video)}
+                  data-testid={`video-${video.id}`}
+                >
+                  <CardContent className="p-4">
+                    <div className="flex gap-3">
+                      <div className="relative flex-shrink-0">
+                        <div className="w-20 h-14 bg-gray-200 rounded flex items-center justify-center">
+                          <Play className="w-4 h-4 text-gray-600" />
+                        </div>
+                        <div className="absolute bottom-1 right-1 bg-black bg-opacity-75 text-white text-xs px-1 rounded">
+                          {video.duration}
+                        </div>
+                        {video.source === 'TBN+' && (
+                          <div className="absolute -top-1 -right-1">
+                            <ExternalLink className="w-3 h-3 text-blue-600" />
+                          </div>
+                        )}
+                      </div>
+                      
+                      <div className="flex-1 min-w-0">
+                        <h3 className="font-medium text-gray-900 text-sm mb-1 line-clamp-2">
+                          {video.title}
+                        </h3>
+                        <p className="text-gray-600 text-xs mb-2 line-clamp-2">
+                          {video.description}
+                        </p>
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <Badge className={`text-xs ${getCategoryColor(video.category)}`}>
+                            {getCategoryIcon(video.category)}
+                            <span className="ml-1">{getCategoryName(video.category)}</span>
+                          </Badge>
+                          <span className="text-xs text-gray-500 flex items-center gap-1">
+                            <Users className="w-3 h-3" />
+                            {video.views.toLocaleString()}
+                          </span>
+                          <span className="text-xs text-blue-600 font-medium">
+                            {video.source}
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* Coming Soon Notice */}
