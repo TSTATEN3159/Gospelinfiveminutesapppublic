@@ -36,6 +36,7 @@ export interface IStorage {
   recordDonation(donation: InsertDonation): Promise<Donation>;
   getAllDonations(): Promise<Donation[]>;
   getDonationByPaymentIntent(paymentIntentId: string): Promise<Donation | undefined>;
+  getDonationStats(): Promise<{ totalDonations: number; biblesPurchased: number }>;
 }
 
 // Database storage implementation
@@ -297,6 +298,19 @@ export class DatabaseStorage implements IStorage {
       .where(eq(donations.paymentIntentId, paymentIntentId));
     return result[0];
   }
+
+  async getDonationStats(): Promise<{ totalDonations: number; biblesPurchased: number }> {
+    const result = await this.db.select().from(donations);
+    const totalDonations = result.reduce((sum, donation) => sum + donation.amount, 0);
+    
+    // Each Bible costs $5 (matching Giving Impact), so calculate how many can be funded
+    const biblesPurchased = Math.floor(totalDonations / 5);
+    
+    return {
+      totalDonations,
+      biblesPurchased
+    };
+  }
 }
 
 // Fallback memory storage for development
@@ -532,6 +546,19 @@ export class MemStorage implements IStorage {
     return Array.from(this.donationsMap.values()).find(
       donation => donation.paymentIntentId === paymentIntentId
     );
+  }
+
+  async getDonationStats(): Promise<{ totalDonations: number; biblesPurchased: number }> {
+    const donations = Array.from(this.donationsMap.values());
+    const totalDonations = donations.reduce((sum, donation) => sum + donation.amount, 0);
+    
+    // Each Bible costs $5 (matching Giving Impact), so calculate how many can be funded
+    const biblesPurchased = Math.floor(totalDonations / 5);
+    
+    return {
+      totalDonations,
+      biblesPurchased
+    };
   }
 }
 
