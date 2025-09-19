@@ -224,7 +224,7 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
             <Search className="w-8 h-8 text-amber-700" aria-hidden="true" />
           </div>
           <h3 className="text-xl font-bold text-amber-800 mb-2" style={{ fontFamily: 'Dancing Script, cursive' }}>
-            Scripture Finder
+            Topical Bible Search
           </h3>
           <p className="text-amber-700 text-sm leading-relaxed max-w-sm mx-auto">
             Explore key Biblical topics or search for specific people, places, and concepts
