@@ -310,22 +310,8 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
       </div>
 
       <div className="max-w-md mx-auto space-y-6">
-        {/* Mission Statement Card */}
-        <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200">
-          <CardContent className="p-6 text-center">
-            <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Heart className="w-6 h-6 text-amber-600" aria-hidden="true" />
-            </div>
-            <h3 className="font-bold text-gray-900 mb-2">Our Mission</h3>
-            <p className="text-sm text-gray-700 leading-relaxed">
-              Every donation helps us reach more souls with daily Bible verses, spiritual guidance, 
-              and the transformative power of God's word. Your generosity makes eternal impact possible.
-            </p>
-          </CardContent>
-        </Card>
-
         {/* Total Donations Impact */}
-        <Card className="text-center">
+        <Card className="text-center shadow-lg border-2">
           <CardContent className="p-6">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
               <DollarSign className="w-6 h-6 text-green-600" aria-hidden="true" />
@@ -343,7 +329,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
         </Card>
 
         {/* Donation Form */}
-        <Card>
+        <Card className="shadow-lg border-2">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <DollarSign className="w-5 h-5 text-primary" />
@@ -461,7 +447,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
         </Card>
 
         {/* Bible Distribution Impact Card */}
-        <Card className="overflow-hidden">
+        <Card className="overflow-hidden shadow-lg border-2">
           <div className="relative">
             <img 
               src={bibleDistributionImage} 
@@ -477,6 +463,20 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               </p>
             </div>
           </div>
+        </Card>
+
+        {/* Our Mission Statement */}
+        <Card className="bg-gradient-to-r from-amber-50 to-orange-50 border-amber-200 shadow-lg border-2">
+          <CardContent className="p-6 text-center">
+            <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <Heart className="w-6 h-6 text-amber-600" aria-hidden="true" />
+            </div>
+            <h3 className="font-bold text-gray-900 mb-2">Our Mission</h3>
+            <p className="text-sm text-gray-700 leading-relaxed">
+              Every donation helps us reach more souls with daily Bible verses, spiritual guidance, 
+              and the transformative power of God's word. Your generosity makes eternal impact possible.
+            </p>
+          </CardContent>
         </Card>
       </div>
     </div>
