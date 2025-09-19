@@ -155,15 +155,10 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
 
   // Handle Scripture reference navigation
   const handleScriptureClick = (reference: string) => {
-    if (onNavigateToScripture) {
-      // Use the provided navigation callback
-      onNavigateToScripture(reference);
-    } else {
-      // Fallback to opening Bible Gateway in a new window for real Scripture access
-      const cleanRef = reference.replace(/\s+/g, '+');
-      const url = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(cleanRef)}&version=NIV`;
-      window.open(url, '_blank', 'noopener,noreferrer');
-    }
+    // Always open Scripture references in BibleGateway.com for reliable access to full biblical text
+    const cleanRef = reference.replace(/\s+/g, '+');
+    const url = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(cleanRef)}&version=NIV`;
+    window.open(url, '_blank', 'noopener,noreferrer');
   };
 
   // Close modal and reset state
