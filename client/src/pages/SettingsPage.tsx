@@ -1,12 +1,13 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3 } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, TestTube } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { notificationService } from "../services/notificationService";
 
 interface SettingsPageProps {
   onNavigate?: (page: string) => void;
@@ -70,6 +71,24 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
 
   const [isEditing, setIsEditing] = useState(false);
 
+  // Load preferences from localStorage and restore notifications on mount
+  useEffect(() => {
+    const savedPreferences = localStorage.getItem("gospelAppPreferences");
+    if (savedPreferences) {
+      try {
+        const prefs = JSON.parse(savedPreferences);
+        setPreferences(prefs);
+        
+        // Restore scheduled notifications if enabled
+        if (prefs.dailyReminders) {
+          notificationService.restoreScheduledReminders(prefs);
+        }
+      } catch (error) {
+        console.error("Error loading preferences:", error);
+      }
+    }
+  }, []);
+
   const months = [
     'January', 'February', 'March', 'April', 'May', 'June',
     'July', 'August', 'September', 'October', 'November', 'December'
@@ -125,13 +144,61 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
     }
   };
 
-  const handlePreferenceChange = (key: keyof AppPreferences, value: any) => {
-    setPreferences(prev => ({ ...prev, [key]: value }));
-    // Auto-save preferences
-    toast({
-      title: "Settings Updated",
-      description: "Your preferences have been saved.",
-    });
+  const handlePreferenceChange = async (key: keyof AppPreferences, value: any) => {
+    // Handle daily reminders specifically with permission check first
+    if (key === 'dailyReminders') {
+      if (value) {
+        const permission = await notificationService.requestPermission();
+        if (permission === 'granted') {
+          const newPreferences = { ...preferences, [key]: value };
+          setPreferences(newPreferences);
+          localStorage.setItem("gospelAppPreferences", JSON.stringify(newPreferences));
+          
+          notificationService.scheduleDailyReminders(newPreferences);
+          toast({
+            title: "Daily Reminders Enabled",
+            description: `You'll receive daily verse reminders at ${newPreferences.reminderTime}.`,
+          });
+        } else {
+          // Keep the setting as false and don't save to localStorage
+          toast({
+            title: "Permission Required",
+            description: "Please allow notifications to receive daily verse reminders.",
+            variant: "destructive",
+          });
+          return; // Don't update preferences or localStorage
+        }
+      } else {
+        const newPreferences = { ...preferences, [key]: value };
+        setPreferences(newPreferences);
+        localStorage.setItem("gospelAppPreferences", JSON.stringify(newPreferences));
+        
+        notificationService.clearScheduledReminders();
+        toast({
+          title: "Daily Reminders Disabled",
+          description: "You will no longer receive daily verse reminders.",
+        });
+      }
+    } else {
+      // Handle all other preference changes normally
+      const newPreferences = { ...preferences, [key]: value };
+      setPreferences(newPreferences);
+      localStorage.setItem("gospelAppPreferences", JSON.stringify(newPreferences));
+      
+      if (key === 'reminderTime' && newPreferences.dailyReminders) {
+        // Reschedule with new time
+        notificationService.scheduleDailyReminders(newPreferences);
+        toast({
+          title: "Reminder Time Updated",
+          description: `Daily reminders will now be sent at ${value}.`,
+        });
+      } else {
+        toast({
+          title: "Settings Updated",
+          description: "Your preferences have been saved.",
+        });
+      }
+    }
   };
 
   return (
@@ -327,15 +394,27 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             </div>
 
             {preferences.dailyReminders && (
-              <div>
-                <Label htmlFor="reminderTime">Reminder Time</Label>
-                <Input
-                  id="reminderTime"
-                  type="time"
-                  value={preferences.reminderTime}
-                  onChange={(e) => handlePreferenceChange('reminderTime', e.target.value)}
-                  data-testid="input-reminder-time"
-                />
+              <div className="space-y-3">
+                <div>
+                  <Label htmlFor="reminderTime">Reminder Time</Label>
+                  <Input
+                    id="reminderTime"
+                    type="time"
+                    value={preferences.reminderTime}
+                    onChange={(e) => handlePreferenceChange('reminderTime', e.target.value)}
+                    data-testid="input-reminder-time"
+                  />
+                </div>
+                <Button
+                  variant="outline"
+                  size="sm"
+                  onClick={() => notificationService.testNotification()}
+                  className="w-full"
+                  data-testid="button-test-notification"
+                >
+                  <TestTube className="w-4 h-4 mr-2" />
+                  Test Notification
+                </Button>
               </div>
             )}
 
