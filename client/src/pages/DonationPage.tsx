@@ -50,11 +50,9 @@ const PaymentForm = ({
 
     setProcessing(true);
 
-    const { error } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        return_url: window.location.origin + '?donation=success',
-      },
+      redirect: 'if_required',
     });
 
     if (error) {
@@ -63,10 +61,16 @@ const PaymentForm = ({
         description: error.message,
         variant: "destructive",
       });
-    } else {
+    } else if (paymentIntent && paymentIntent.status === 'succeeded') {
       toast({
         title: "Thank You!",
         description: "Your donation was successful. God bless your generous heart!",
+      });
+      onSuccess();
+    } else {
+      toast({
+        title: "Payment Processing",
+        description: "Your payment is being processed. Thank you!",
       });
       onSuccess();
     }
