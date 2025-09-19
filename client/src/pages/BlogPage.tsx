@@ -194,6 +194,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
             <Button 
               className="mt-4 bg-amber-600 hover:bg-amber-700"
               size="sm"
+              onClick={() => articles.length > 0 && handleArticleClick(articles[0])}
               data-testid="button-read-featured"
             >
               Read Full Article
@@ -206,7 +207,12 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
           <h2 className="text-lg font-semibold text-gray-900 mb-4">Recent Articles</h2>
           <div className="space-y-4">
             {articles.slice(1).map((article) => (
-              <Card key={article.id} className="hover-elevate cursor-pointer">
+              <Card 
+                key={article.id} 
+                className="hover-elevate cursor-pointer"
+                onClick={() => handleArticleClick(article)}
+                data-testid={`card-article-${article.id}`}
+              >
                 <CardContent className="p-4">
                   <div className="flex justify-between items-start mb-2">
                     <Badge className={getCategoryColor(article.category)} variant="secondary">
@@ -232,7 +238,16 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                         {article.views.toLocaleString()}
                       </span>
                     </div>
-                    <Button variant="ghost" size="sm" className="h-auto p-1 text-blue-600">
+                    <Button 
+                      variant="ghost" 
+                      size="sm" 
+                      className="h-auto p-1 text-blue-600"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleArticleClick(article);
+                      }}
+                      data-testid={`button-read-more-${article.id}`}
+                    >
                       Read More
                     </Button>
                   </div>
@@ -350,6 +365,77 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
           </CardContent>
         </Card>
       </div>
+
+      {/* Article Detail Modal */}
+      <Dialog open={!!selectedArticle} onOpenChange={() => setSelectedArticle(null)}>
+        <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
+          {selectedArticle && (
+            <>
+              <DialogHeader>
+                <DialogTitle className="text-xl font-bold mb-2">
+                  {selectedArticle.title}
+                </DialogTitle>
+                <div className="flex items-center gap-4 text-sm text-gray-500">
+                  <Badge className={getCategoryColor(selectedArticle.category)} variant="secondary">
+                    {selectedArticle.category}
+                  </Badge>
+                  <span>By {selectedArticle.author}</span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {selectedArticle.readTime} min read
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Eye className="w-3 h-3" />
+                    {selectedArticle.views.toLocaleString()} views
+                  </span>
+                </div>
+                <div className="text-sm text-gray-500">
+                  Published {formatDate(selectedArticle.publishDate)}
+                </div>
+              </DialogHeader>
+              
+              <div className="mt-6">
+                <div 
+                  className="prose prose-sm max-w-none text-gray-700 leading-relaxed"
+                  dangerouslySetInnerHTML={{ __html: selectedArticle.content }}
+                  data-testid="article-content"
+                />
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Loading State */}
+      {loading && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-6 rounded-lg flex items-center gap-3">
+            <Loader2 className="w-5 h-5 animate-spin text-blue-600" />
+            <span>Loading articles...</span>
+          </div>
+        </div>
+      )}
+
+      {/* Error State */}
+      {error && (
+        <div className="fixed top-4 right-4 bg-red-50 border border-red-200 p-4 rounded-lg max-w-sm z-50">
+          <div className="flex items-start gap-3">
+            <AlertCircle className="w-5 h-5 text-red-600 mt-0.5" />
+            <div>
+              <h4 className="font-medium text-red-900">Error Loading Articles</h4>
+              <p className="text-sm text-red-700 mt-1">{error}</p>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                className="mt-2"
+                onClick={() => window.location.reload()}
+              >
+                Retry
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
