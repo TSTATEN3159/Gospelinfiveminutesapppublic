@@ -1,6 +1,7 @@
 import BibleSearchSection from "../components/BibleSearchSection";
 import { TopicalSearchSection } from "../components/TopicalSearchSection";
 import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
+import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
@@ -148,7 +149,7 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
           </div>
           
           {/* Topical Search Section - AFTER Help Spread God's Word */}
-          <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} />
+          <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} backgroundImage={shepherdImage} />
         </div>
         
         {/* Professional Website Footer */}

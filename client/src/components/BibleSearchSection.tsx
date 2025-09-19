@@ -3,7 +3,9 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Copy, Book, BookOpen, Sparkles } from "lucide-react";
+import { Search, Copy, Book, BookOpen, Sparkles, ScrollText } from "lucide-react";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 
@@ -137,36 +139,44 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   };
 
   return (
-    <Card className="relative overflow-hidden shadow-lg border-0 bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-blue-900/20" data-testid="card-bibleSearch">
+    <Card className="relative overflow-hidden min-h-[400px] shadow-lg border-2" data-testid="card-bibleSearch">
       {backgroundImage && (
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-10"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        />
+        <>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-green-700/60 via-green-500/20 to-green-900/80" />
+        </>
       )}
       
-      <CardHeader className="relative z-10 pb-4">
-        <div className="flex items-center justify-center mb-4">
-          <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full shadow-lg">
-            <BookOpen className="w-8 h-8 text-white" />
+      <CardHeader className={cn("relative z-10 border-b", backgroundImage ? "bg-gradient-to-r from-green-500/10 to-transparent" : "bg-green-700")}>
+        <div className="flex items-center gap-4">
+          <Avatar className="h-12 w-12 border-2 border-green-200">
+            <AvatarFallback className="bg-green-100 text-green-600">
+              <ScrollText className="w-6 h-6" />
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
+              <Search className="w-5 h-5" />
+              Scripture Finder
+            </CardTitle>
+            <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-green-100")}>
+              Discover God's Word instantly by reference
+            </p>
           </div>
         </div>
-        <CardTitle className="text-center text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-          Scripture Finder
-        </CardTitle>
-        <p className="text-center text-muted-foreground text-sm leading-relaxed">
-          Discover God's Word instantly • Search any verse by reference
-        </p>
       </CardHeader>
 
-      <CardContent className="relative z-10 space-y-6">
-        <div className="space-y-4">
+      <CardContent className="relative z-10 space-y-6 p-6">
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-sm space-y-4">
           <div>
-            <label className="text-sm font-medium mb-2 block">
+            <label htmlFor="version-select" className="text-sm font-medium mb-2 block text-gray-900">
               Bible Version
             </label>
             <Select value={selectedVersion} onValueChange={setSelectedVersion}>
-              <SelectTrigger data-testid="select-version">
+              <SelectTrigger id="version-select" data-testid="select-version">
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
@@ -191,6 +201,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
             <Button 
               onClick={() => handleSearch()} 
               disabled={!searchQuery.trim() || isLoading}
+              className="bg-green-600 text-white"
               data-testid="button-search"
             >
               <Search className="w-4 h-4 mr-2" />
@@ -200,56 +211,59 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
         </div>
 
         {isLoading && (
-          <div className="text-center py-12">
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 text-center">
             <div className="relative mx-auto w-16 h-16 mb-4">
-              <div className="absolute inset-0 rounded-full border-4 border-blue-100 dark:border-blue-900"></div>
-              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-blue-500 border-r-purple-500 animate-spin"></div>
-              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-blue-50 to-purple-50 dark:from-blue-900/50 dark:to-purple-900/50 flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-blue-600 animate-pulse" />
+              <div className="absolute inset-0 rounded-full border-4 border-green-100"></div>
+              <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-green-500 animate-spin"></div>
+              <div className="absolute inset-2 rounded-full bg-gradient-to-br from-green-50 to-emerald-50 flex items-center justify-center">
+                <BookOpen className="w-6 h-6 text-green-600 animate-pulse" />
               </div>
             </div>
-            <p className="text-slate-600 dark:text-slate-300 font-medium">Searching Scripture...</p>
-            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">Finding God's Word for you</p>
+            <p className="text-gray-800 font-medium">Searching Scripture...</p>
+            <p className="text-xs text-gray-600 mt-1">Finding God's Word for you</p>
           </div>
         )}
 
         {searchResult && !isLoading && (
-          <div className="space-y-4 p-6 bg-card rounded-lg border" data-testid="search-result">
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-sm space-y-4" data-testid="search-result">
             <div className="flex justify-between items-start">
-              <h3 className="font-semibold text-lg">{searchResult.reference}</h3>
-              <span className="text-sm text-muted-foreground bg-secondary px-2 py-1 rounded">
+              <h3 className="font-semibold text-lg text-gray-900">{searchResult.reference}</h3>
+              <span className="text-sm text-green-700 bg-green-100 px-3 py-1 rounded-full font-medium">
                 {searchResult.version}
               </span>
             </div>
             
-            <blockquote className="text-lg leading-relaxed font-serif italic border-l-4 border-primary pl-4">
-              "{searchResult.text}"
-            </blockquote>
+            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
+              <blockquote className="text-lg leading-relaxed font-serif italic text-gray-800">
+                "{searchResult.text}"
+              </blockquote>
+            </div>
 
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={copyVerse}
-              data-testid="button-copyVerse"
-            >
-              <Copy className="w-4 h-4 mr-2" />
-              Copy Verse
-            </Button>
+            <div className="flex justify-center">
+              <Button 
+                onClick={copyVerse}
+                className="bg-green-600 text-white"
+                data-testid="button-copyVerse"
+              >
+                <Copy className="w-4 h-4 mr-2" />
+                Copy Verse
+              </Button>
+            </div>
           </div>
         )}
 
         {hasSearched && !searchResult && !isLoading && (
-          <div className="text-center py-12">
-            <div className="relative mx-auto w-20 h-20 mb-6">
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-100 to-slate-200 dark:from-slate-700 dark:to-slate-800 rounded-full"></div>
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 text-center">
+            <div className="relative mx-auto w-16 h-16 mb-6">
+              <div className="absolute inset-0 bg-gradient-to-br from-green-100 to-emerald-100 rounded-full"></div>
               <div className="absolute inset-0 flex items-center justify-center">
-                <Book className="w-10 h-10 text-slate-400 dark:text-slate-500" />
+                <Book className="w-8 h-8 text-green-600" />
               </div>
             </div>
-            <h3 className="font-semibold text-slate-700 dark:text-slate-300 mb-2">No Results Found</h3>
-            <p className="text-slate-500 dark:text-slate-400 text-sm leading-relaxed max-w-md mx-auto">
+            <h3 className="font-semibold text-gray-900 mb-2">No Results Found</h3>
+            <p className="text-gray-600 text-sm leading-relaxed max-w-md mx-auto">
               Please check your verse reference and try again.<br />
-              <span className="text-blue-600 dark:text-blue-400 font-medium">Try: John 3:16, Psalm 23:1, or Romans 8:28</span>
+              <span className="text-green-600 font-medium">Try: John 3:16, Psalm 23:1, or Romans 8:28</span>
             </p>
           </div>
         )}

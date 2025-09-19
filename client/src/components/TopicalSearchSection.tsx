@@ -1,9 +1,11 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Search, Book, Crown, Heart, HandHeart, Gift, Users, ArrowLeft, ExternalLink, X } from 'lucide-react';
+import { Search, Book, Crown, Heart, HandHeart, Gift, Users, ArrowLeft, ExternalLink, X, Compass, Lightbulb } from 'lucide-react';
+import { cn } from '@/lib/utils';
 import { apiRequest } from '@/lib/queryClient';
 
 // Types for topical search results
@@ -87,9 +89,10 @@ const presetTopics = [
 
 interface TopicalSearchSectionProps {
   onNavigateToScripture?: (reference: string) => void;
+  backgroundImage?: string;
 }
 
-export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSectionProps = {}) {
+export function TopicalSearchSection({ onNavigateToScripture, backgroundImage }: TopicalSearchSectionProps = {}) {
   const [selectedResult, setSelectedResult] = useState<TopicalSearchResult | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [customSearch, setCustomSearch] = useState('');
@@ -218,28 +221,52 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
   return (
     <>
       {/* Topical Search Section */}
-      <div className="bg-gradient-to-r from-amber-50 via-yellow-50 to-orange-50 rounded-2xl p-6 border border-amber-200 shadow-lg">
-        <div className="text-center mb-6">
-          <div className="w-16 h-16 bg-gradient-to-r from-amber-100 to-yellow-100 rounded-full flex items-center justify-center mx-auto mb-4">
-            <Search className="w-8 h-8 text-amber-700" aria-hidden="true" />
-          </div>
-          <h3 className="text-4xl font-bold text-amber-800 mb-4" style={{ fontFamily: 'Dancing Script, cursive' }}>
-            Topical Bible Search
-          </h3>
-          <p className="text-amber-700 text-sm leading-relaxed max-w-sm mx-auto">
-            Explore key Biblical topics or search for specific people, places, and concepts
-          </p>
-        </div>
-
-        {/* Error Message */}
-        {error && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6 text-center">
-            <p className="text-sm">{error}</p>
-          </div>
+      <Card className="relative overflow-hidden min-h-[400px] shadow-lg border-2" data-testid="card-topicalSearch">
+        {backgroundImage && (
+          <>
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-amber-700/60 via-amber-500/20 to-amber-900/80" />
+          </>
         )}
+        
+        <CardHeader className={cn("relative z-10 border-b", backgroundImage ? "bg-gradient-to-r from-amber-500/10 to-transparent" : "bg-amber-700")}>
+          <div className="flex items-center gap-4">
+            <Avatar className="h-12 w-12 border-2 border-amber-200">
+              <AvatarFallback className="bg-amber-100 text-amber-600">
+                <Lightbulb className="w-6 h-6" />
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
+                <Compass className="w-5 h-5" />
+                Topical Bible Search
+              </CardTitle>
+              <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-amber-100")}>
+                Explore key Biblical topics and discover God's wisdom
+              </p>
+            </div>
+          </div>
+        </CardHeader>
 
-        {/* Preset Topic Tiles Grid */}
-        <div className="grid grid-cols-2 gap-3 mb-6">
+        <CardContent className="relative z-10 p-6 space-y-6">
+
+          {/* Error Message */}
+          {error && (
+            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
+              <p className="text-sm">{error}</p>
+            </div>
+          )}
+
+          {/* Preset Topic Tiles Grid */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-sm space-y-4">
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Popular Biblical Topics</h3>
+              <p className="text-gray-600 text-sm">Explore key themes in Scripture</p>
+            </div>
+            <div className="grid grid-cols-2 gap-3">
           {presetTopics.map((topic) => {
             const IconComponent = topic.icon;
             return (
@@ -285,35 +312,43 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
               </Card>
             );
           })}
-        </div>
+            </div>
+          </div>
 
-        {/* Custom Search Bar */}
-        <form onSubmit={handleCustomSearch} className="space-y-4">
+          {/* Custom Search Bar */}
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-sm">
+            <div className="text-center mb-4">
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Custom Search</h3>
+              <p className="text-gray-600 text-sm">Search for specific biblical figures or topics</p>
+            </div>
+            <form onSubmit={handleCustomSearch} className="space-y-4">
           <div className="relative">
             <Input
               type="text"
               placeholder="Search for Moses, Adam, Paul, or any biblical topic..."
               value={customSearch}
               onChange={(e) => setCustomSearch(e.target.value)}
-              className="pr-12 bg-white/80 border-amber-300 focus:border-amber-500 focus:ring-amber-500 placeholder:text-amber-600/60"
+              className="pr-12"
               data-testid="input-custom-topical-search"
               aria-label="Custom topical search input"
               disabled={isSearching}
             />
-            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-amber-600" />
+            <Search className="absolute right-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
           </div>
           
-          <Button 
-            type="submit" 
-            disabled={isSearching || !customSearch.trim()}
-            className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white font-medium shadow-md"
-            data-testid="button-custom-topical-search"
-            aria-label="Search for custom biblical topic"
-          >
-            {isSearching ? 'Searching Bible...' : 'Search Biblical Topic'}
-          </Button>
-        </form>
-      </div>
+              <Button 
+                type="submit" 
+                disabled={isSearching || !customSearch.trim()}
+                className="w-full bg-amber-600 text-white"
+                data-testid="button-custom-topical-search"
+                aria-label="Search for custom biblical topic"
+              >
+                {isSearching ? 'Searching Bible...' : 'Search Biblical Topic'}
+              </Button>
+            </form>
+          </div>
+        </CardContent>
+      </Card>
 
       {/* Results Modal */}
       <Dialog open={isModalOpen} onOpenChange={closeModal}>

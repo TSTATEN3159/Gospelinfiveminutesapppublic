@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Heart, Copy, Sparkles, Compass } from "lucide-react";
+import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
 interface ScriptureResponse {
@@ -81,30 +82,30 @@ export default function EmotionScriptureSection({ backgroundImage }: EmotionScri
   const popularEmotions = ["Anxious", "Joyful", "Peaceful", "Grateful", "Worried", "Hopeful"];
 
   return (
-    <Card className="relative overflow-hidden h-[500px] flex flex-col shadow-lg border-2" data-testid="card-emotionScripture">
+    <Card className="relative overflow-hidden min-h-[350px] flex flex-col shadow-lg border-2" data-testid="card-emotionScripture">
       {backgroundImage && (
         <>
           <div 
             className="absolute inset-0 bg-cover bg-center"
             style={{ backgroundImage: `url(${backgroundImage})` }}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-purple/60 via-purple/20 to-purple/80" />
+          <div className="absolute inset-0 bg-gradient-to-b from-purple-700/60 via-purple-500/20 to-purple-900/80" />
         </>
       )}
       
-      <CardHeader className="relative z-10 flex-shrink-0 bg-gradient-to-r from-purple/10 to-transparent border-b">
+      <CardHeader className={cn("relative z-10 flex-shrink-0 border-b", backgroundImage ? "bg-gradient-to-r from-purple-500/10 to-transparent" : "bg-purple-700")}>
         <div className="flex items-center gap-4">
-          <Avatar className="h-12 w-12 border-2 border-purple/20">
-            <AvatarFallback className="bg-purple/10 text-purple-600">
+          <Avatar className="h-12 w-12 border-2 border-purple-200">
+            <AvatarFallback className="bg-purple-100 text-purple-600">
               <Heart className="w-6 h-6" />
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <CardTitle className="flex items-center gap-2 text-xl text-white">
+            <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
               <Compass className="w-5 h-5" />
               Feelings & Scripture
             </CardTitle>
-            <p className="text-white/90 text-sm">
+            <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-purple-100")}>
               Find God's word for your heart today
             </p>
           </div>

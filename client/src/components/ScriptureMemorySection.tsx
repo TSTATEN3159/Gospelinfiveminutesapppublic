@@ -6,6 +6,7 @@ import { Progress } from '@/components/ui/progress';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Brain, RotateCcw, CheckCircle, Pause, Volume2, Flame, BookText, Trophy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
+import { cn } from '@/lib/utils';
 
 interface MemoryVerse {
   id: string;
@@ -223,29 +224,29 @@ export default function ScriptureMemorySection({ backgroundImage }: ScriptureMem
 
   return (
     <div className="space-y-4">
-      <Card className="relative overflow-hidden shadow-lg border-2">
+      <Card className="relative overflow-hidden min-h-[400px] shadow-lg border-2">
         {backgroundImage && (
           <>
             <div 
               className="absolute inset-0 bg-cover bg-center"
               style={{ backgroundImage: `url(${backgroundImage})` }}
             />
-            <div className="absolute inset-0 bg-gradient-to-b from-blue/60 via-blue/20 to-blue/80" />
+            <div className="absolute inset-0 bg-gradient-to-b from-blue-700/60 via-blue-500/20 to-blue-900/80" />
           </>
         )}
-        <CardHeader className="relative z-10 bg-gradient-to-r from-blue/10 to-transparent border-b">
+        <CardHeader className={cn("relative z-10 border-b", backgroundImage ? "bg-gradient-to-r from-blue-500/10 to-transparent" : "bg-blue-700")}>
           <div className="flex items-center gap-4">
-            <Avatar className="h-12 w-12 border-2 border-blue/20">
-              <AvatarFallback className="bg-blue/10 text-blue-600">
+            <Avatar className="h-12 w-12 border-2 border-blue-200">
+              <AvatarFallback className="bg-blue-100 text-blue-600">
                 <BookText className="w-6 h-6" />
               </AvatarFallback>
             </Avatar>
             <div className="flex-1">
-              <CardTitle className="flex items-center gap-2 text-xl text-white">
+              <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
                 <Brain className="w-5 h-5" />
                 Scripture Memory Helper
               </CardTitle>
-              <p className="text-white/90 text-sm">
+              <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-blue-100")}>
                 Build your faith through memorizing God's Word
               </p>
             </div>

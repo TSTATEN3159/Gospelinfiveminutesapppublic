@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Send, MessageSquare, Book, BookOpenCheck, ShieldCheck, Copy, Trash2 } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
+import { cn } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 
@@ -119,7 +120,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
   };
 
   return (
-    <Card className="relative overflow-hidden h-[600px] flex flex-col shadow-lg border-2" data-testid="card-askPastor">
+    <Card className="relative overflow-hidden min-h-[400px] flex flex-col shadow-lg border-2" data-testid="card-askPastor">
       {backgroundImage && (
         <>
           <div 
@@ -130,19 +131,19 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
         </>
       )}
       
-      <CardHeader className="relative z-10 flex-shrink-0 bg-gradient-to-r from-primary/10 to-transparent border-b">
+      <CardHeader className={cn("relative z-10 flex-shrink-0 border-b", backgroundImage ? "bg-gradient-to-r from-gray-500/10 to-transparent" : "bg-gray-700")}>
         <div className="flex items-center gap-4">
-          <Avatar className="h-12 w-12 border-2 border-primary/20">
-            <AvatarFallback className="bg-primary/10 text-primary">
+          <Avatar className="h-12 w-12 border-2 border-gray-200">
+            <AvatarFallback className="bg-gray-100 text-gray-600">
               <BookOpenCheck className="w-6 h-6" />
             </AvatarFallback>
           </Avatar>
           <div className="flex-1">
-            <CardTitle className="flex items-center gap-2 text-xl text-white">
+            <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
               <MessageSquare className="w-5 h-5" />
               AI Pastor
             </CardTitle>
-            <p className="text-white/90 text-sm">
+            <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-gray-100")}>
               Scripture-based guidance powered by biblical wisdom
             </p>
           </div>
@@ -161,7 +162,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
         </div>
       </CardHeader>
 
-      <CardContent className="relative z-10 flex-1 flex flex-col p-6 space-y-4">
+      <CardContent className="relative z-10 flex-1 flex flex-col p-6 space-y-4 min-h-0">
         <div className="flex-1 space-y-3 overflow-y-auto" data-testid="messages-container" aria-live="polite">
           {messages.length === 0 && (
             <div className="text-center py-8">
