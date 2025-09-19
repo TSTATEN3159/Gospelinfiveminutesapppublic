@@ -128,37 +128,29 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
   };
 
   return (
-    <div className="min-h-screen pb-20 relative" style={{
-      backgroundImage: `linear-gradient(rgba(139, 69, 19, 0.9), rgba(139, 69, 19, 0.7)), url(${bibleGoldenImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }}>
-      {/* Header Section */}
-      <div className="px-4 py-6 ios-safe-top" style={{
-        backgroundColor: 'rgba(139, 69, 19, 0.95)',
-        borderBottom: '1px solid rgba(255, 255, 255, 0.2)'
-      }}>
+    <div className="min-h-screen pb-20">
+      {/* Header Section - Same style as HomePage */}
+      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-3 text-white hover:bg-white/20"
+            className="mr-3"
             data-testid="button-back-blog"
             aria-label="Go back to More page"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-4xl font-bold text-white" style={{ 
+            <h1 className="text-2xl font-bold" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
-              textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+              color: '#8B4513'
             }}>
               Christian Blog
             </h1>
-            <p className="text-white mt-1" style={{
-              textShadow: '1px 1px 2px rgba(0,0,0,0.7)'
-            }}>Inspiring articles to grow your faith</p>
+            <p className="text-gray-600 mt-1">Inspiring articles to grow your faith</p>
           </div>
         </div>
       </div>

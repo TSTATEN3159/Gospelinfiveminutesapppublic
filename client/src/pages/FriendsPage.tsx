@@ -216,42 +216,36 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   };
 
   return (
-    <div className="min-h-screen relative" style={{
-      backgroundImage: `linear-gradient(rgba(139, 69, 19, 0.9), rgba(139, 69, 19, 0.7)), url(${prayingCommunityImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }}>
-      <div className="container mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center mb-4">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={() => onNavigate?.('more')}
-              className="mr-3"
-              data-testid="button-back-friends"
-              aria-label="Go back to More page"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            <div className="flex-1 text-center">
-              <div className="flex items-center justify-center mb-2">
-                <Heart className="w-8 h-8 text-primary mr-3" />
-                <h1 className="text-4xl font-bold text-primary drop-shadow-sm" style={{ 
-                  fontFamily: 'Dancing Script, Brush Script MT, cursive'
-                }}>
-                  {t.friends}
-                </h1>
-              </div>
-            </div>
+    <div className="min-h-screen pb-20">
+      {/* Header Section - Same style as HomePage */}
+      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
+        <div className="flex items-center mb-4">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onNavigate?.('more')}
+            className="mr-3"
+            data-testid="button-back-friends"
+            aria-label="Go back to More page"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <div className="flex-1">
+            <h1 className="text-2xl font-bold" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+              color: '#8B4513'
+            }}>
+              {t.friends}
+            </h1>
+            <p className="text-gray-600 mt-1">{t.friendsPageDescription}</p>
           </div>
-          <p className="text-muted-foreground max-w-2xl mx-auto text-center">
-            {t.friendsPageDescription}
-          </p>
         </div>
+      </div>
 
-        <Tabs defaultValue="search" className="w-full max-w-4xl mx-auto">
+      <div className="px-4 py-6 space-y-6">
+
+        <Tabs defaultValue="search" className="w-full max-w-md mx-auto">
           <TabsList className="grid w-full grid-cols-3">
             <TabsTrigger value="search" data-testid="tab-search-friends">
               <Search className="w-4 h-4 mr-2" />

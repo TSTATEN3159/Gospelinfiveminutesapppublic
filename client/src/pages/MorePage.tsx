@@ -94,28 +94,18 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
   };
 
   return (
-    <div className="pb-20 px-4 py-6 min-h-screen relative" style={{
-      backgroundImage: `linear-gradient(rgba(139, 69, 19, 0.9), rgba(139, 69, 19, 0.8)), url(${mountainSunriseImage})`,
-      backgroundSize: 'cover',
-      backgroundPosition: 'center'
-    }}>
-      <div className="mb-8">
-        {/* Page Title */}
-        <div className="text-center mb-6">
-          <h1 className="text-4xl font-bold mb-2" style={{
-            color: 'white',
-            fontFamily: 'Dancing Script, Brush Script MT, cursive',
-            textShadow: '2px 2px 4px rgba(0,0,0,0.8)'
-          }} data-testid="text-title-more-features">
-            More Features
-          </h1>
-          <p className="text-white text-lg" style={{
-            textShadow: '1px 1px 2px rgba(0,0,0,0.7)'
-          }}>{t.settingsDescription}</p>
-        </div>
-        
+    <div className="min-h-screen pb-20">
+      {/* Header Section - Same style as HomePage */}
+      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
         <div className="flex items-center justify-between mb-4">
           <div>
+            <h1 className="text-2xl font-bold" style={{ 
+              color: '#8B4513',
+              fontFamily: 'Dancing Script, Brush Script MT, cursive',
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
+            }} data-testid="text-title-more-features">
+              More Features
+            </h1>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
@@ -123,6 +113,17 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               <span className="text-lg font-bold text-red-600" data-testid="text-streak-count">{streakDays}</span>
             </div>
           </div>
+        </div>
+        
+        {/* App Title */}
+        <div className="text-center">
+          <h2 className="text-3xl font-bold mb-3" style={{ 
+            fontFamily: 'Dancing Script, Brush Script MT, cursive',
+            textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
+            color: '#8B4513'
+          }}>
+            The Gospel in 5 Minutes™
+          </h2>
         </div>
         
         {/* Social Media Buttons */}
