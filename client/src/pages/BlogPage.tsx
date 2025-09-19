@@ -162,45 +162,47 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
       <div className="px-4 py-6 space-y-6">
         {/* Featured Article */}
-        <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2 text-amber-800">
-              <BookOpen className="w-5 h-5" />
-              Featured Article
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <Badge className={getCategoryColor(articles[0].category)} variant="secondary">
-              {articles[0].category}
-            </Badge>
-            <h3 className="font-bold text-gray-900 mt-3 mb-2 text-lg">{articles[0].title}</h3>
-            <p className="text-gray-700 text-sm mb-4 leading-relaxed">{articles[0].excerpt}</p>
-            <div className="flex items-center justify-between text-xs text-gray-500">
-              <div className="flex items-center gap-4">
-                <span>By {articles[0].author}</span>
-                <span className="flex items-center gap-1">
-                  <Clock className="w-3 h-3" />
-                  {articles[0].readTime} min read
-                </span>
-                <span className="flex items-center gap-1">
-                  <Eye className="w-3 h-3" />
-                  {articles[0].views.toLocaleString()} views
-                </span>
+        {articles.length > 0 && (
+          <Card className="border-amber-200 bg-gradient-to-br from-amber-50 to-orange-50">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2 text-amber-800">
+                <BookOpen className="w-5 h-5" />
+                Featured Article
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <Badge className={getCategoryColor(articles[0].category)} variant="secondary">
+                {articles[0].category}
+              </Badge>
+              <h3 className="font-bold text-gray-900 mt-3 mb-2 text-lg">{articles[0].title}</h3>
+              <p className="text-gray-700 text-sm mb-4 leading-relaxed">{articles[0].excerpt}</p>
+              <div className="flex items-center justify-between text-xs text-gray-500">
+                <div className="flex items-center gap-4">
+                  <span>By {articles[0].author}</span>
+                  <span className="flex items-center gap-1">
+                    <Clock className="w-3 h-3" />
+                    {articles[0].readTime} min read
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Eye className="w-3 h-3" />
+                    {articles[0].views.toLocaleString()} views
+                  </span>
+                </div>
               </div>
-            </div>
-            <div className="text-xs text-gray-500 mt-2">
-              Published {formatDate(articles[0].publishDate)}
-            </div>
-            <Button 
-              className="mt-4 bg-amber-600 hover:bg-amber-700"
-              size="sm"
-              onClick={() => articles.length > 0 && handleArticleClick(articles[0])}
-              data-testid="button-read-featured"
-            >
-              Read Full Article
-            </Button>
-          </CardContent>
-        </Card>
+              <div className="text-xs text-gray-500 mt-2">
+                Published {formatDate(articles[0].publishDate)}
+              </div>
+              <Button 
+                className="mt-4 bg-amber-600 hover:bg-amber-700"
+                size="sm"
+                onClick={() => handleArticleClick(articles[0])}
+                data-testid="button-read-featured"
+              >
+                Read Full Article
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Recent Articles */}
         <div>
