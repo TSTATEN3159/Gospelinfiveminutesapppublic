@@ -47,7 +47,9 @@ The app is now fully compliant with Apple App Store requirements and ready for s
 - **Homepage**: Welcome header with streak counter and Facebook link
 - **Daily Scripture**: Card with verse text and mountain lake imagery
 - **3-Day Study Plans**: Card with forest path imagery
-- **Ask the Pastor**: Card with ocean cliff imagery  
+- **Ask the Pastor**: Professional AI chat with premium UI polish
+- **Feelings & Scripture**: Emotion-based guidance with quick-start chips and modern design
+- **Scripture Memory Helper**: Interactive memorization with progress tracking and professional polish
 - **More Page**: Language selection, legal pages, support access
 - **User Registration**: Modal with personal info collection
 - **Streak Tracking**: Consecutive days counter with localStorage persistence
