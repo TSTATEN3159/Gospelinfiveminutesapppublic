@@ -59,8 +59,8 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
         const verse = await bibleService.getDailyVerse();
         setDailyVerse(verse);
         
-        // Get daily BibleProject video
-        const video = videoService.getDailyBibleProjectVideo();
+        // Get daily Gospel video using Christian Context API
+        const video = await videoService.getDailyGospelVideo();
         setDailyVideo(video);
       } catch (err) {
         setError('Unable to load today\'s content. Please check your connection.');
