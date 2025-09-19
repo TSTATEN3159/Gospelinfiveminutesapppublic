@@ -113,26 +113,13 @@ export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
           </div>
 
           {/* Feelings & Scripture Section */}
-          <div className="relative bg-card rounded-lg p-4 border shadow-lg border-2">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-30 rounded-lg"
-              style={{ backgroundImage: `url(${handsImage})` }}
-            />
-            <div className="relative z-10">
-              <h2 className="text-lg font-semibold text-primary mb-4">Feelings & Scripture</h2>
-              <EmotionScriptureSection backgroundImage={handsImage} />
-            </div>
+          <div className="relative">
+            <EmotionScriptureSection backgroundImage={handsImage} />
           </div>
 
           {/* Scripture Memory Helper Section */}
-          <div className="relative bg-card rounded-lg p-4 border shadow-lg border-2">
-            <div 
-              className="absolute inset-0 bg-cover bg-center opacity-20 rounded-lg"
-              style={{ backgroundImage: `url(${bibleMemoryImage})` }}
-            />
-            <div className="relative z-10">
-              <ScriptureMemorySection />
-            </div>
+          <div className="relative">
+            <ScriptureMemorySection backgroundImage={bibleMemoryImage} />
           </div>
         </div>
         

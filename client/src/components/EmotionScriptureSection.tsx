@@ -2,7 +2,9 @@ import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Heart, Copy } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Heart, Copy, Sparkles, Compass } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface ScriptureResponse {
@@ -76,33 +78,72 @@ export default function EmotionScriptureSection({ backgroundImage }: EmotionScri
     }
   };
 
+  const popularEmotions = ["Anxious", "Joyful", "Peaceful", "Grateful", "Worried", "Hopeful"];
+
   return (
-    <Card className="relative overflow-hidden min-h-[400px]" data-testid="card-emotionScripture">
+    <Card className="relative overflow-hidden h-[500px] flex flex-col shadow-lg border-2" data-testid="card-emotionScripture">
       {backgroundImage && (
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{ backgroundImage: `url(${backgroundImage})` }}
-        />
+        <>
+          <div 
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: `url(${backgroundImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-b from-purple/60 via-purple/20 to-purple/80" />
+        </>
       )}
       
-      <CardHeader className="relative z-10">
-        <CardTitle className="flex items-center gap-2 text-xl">
-          <Heart className="w-6 h-6 text-accent" />
-          Feelings & Scripture
-        </CardTitle>
-        <p className="text-muted-foreground">
-          Share how you're feeling today and find God's word for your heart
-        </p>
+      <CardHeader className="relative z-10 flex-shrink-0 bg-gradient-to-r from-purple/10 to-transparent border-b">
+        <div className="flex items-center gap-4">
+          <Avatar className="h-12 w-12 border-2 border-purple/20">
+            <AvatarFallback className="bg-purple/10 text-purple-600">
+              <Heart className="w-6 h-6" />
+            </AvatarFallback>
+          </Avatar>
+          <div className="flex-1">
+            <CardTitle className="flex items-center gap-2 text-xl text-white">
+              <Compass className="w-5 h-5" />
+              Feelings & Scripture
+            </CardTitle>
+            <p className="text-white/90 text-sm">
+              Find God's word for your heart today
+            </p>
+          </div>
+        </div>
       </CardHeader>
 
-      <CardContent className="relative z-10 space-y-6">
-        <div>
-          <label className="text-sm font-medium mb-2 block">
-            How are you feeling today?
+      <CardContent className="relative z-10 flex-1 flex flex-col p-6 space-y-4">
+        {!selectedEmotion && (
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 text-center space-y-4">
+            <div className="flex items-center justify-center">
+              <Sparkles className="w-8 h-8 text-purple-600 mb-2" />
+            </div>
+            <div>
+              <h3 className="font-semibold text-gray-900 mb-2">How are you feeling today?</h3>
+              <p className="text-gray-600 text-sm mb-4">Choose an emotion and discover God's comfort for your heart</p>
+              <div className="grid grid-cols-2 gap-2 mb-4">
+                {popularEmotions.map((emotion) => (
+                  <Badge 
+                    key={emotion}
+                    variant="secondary" 
+                    className="cursor-pointer hover-elevate p-2 justify-center"
+                    onClick={() => handleEmotionSelect(emotion)}
+                    data-testid={`emotion-${emotion.toLowerCase()}`}
+                  >
+                    {emotion}
+                  </Badge>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+        
+        <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4">
+          <label className="text-sm font-medium mb-3 block text-gray-800" htmlFor="emotion-select">
+            Search all emotions
           </label>
           <Select value={selectedEmotion} onValueChange={handleEmotionSelect}>
-            <SelectTrigger data-testid="select-emotion">
-              <SelectValue placeholder="Choose your emotion..." />
+            <SelectTrigger data-testid="select-emotion" className="border-gray-300" id="emotion-select">
+              <SelectValue placeholder="Or search from 40+ emotions..." />
             </SelectTrigger>
             <SelectContent className="max-h-60">
               {emotions.map(emotion => (
@@ -115,32 +156,69 @@ export default function EmotionScriptureSection({ backgroundImage }: EmotionScri
         </div>
 
         {isLoading && (
-          <div className="text-center py-8">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto"></div>
-            <p className="text-muted-foreground mt-2">Finding God's word for you...</p>
+          <div className="flex-1 flex items-center justify-center">
+            <div className="bg-white/90 backdrop-blur-sm rounded-xl p-8 text-center">
+              <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-600 mx-auto mb-4"></div>
+              <p className="text-gray-700 font-medium">Finding God's word for you...</p>
+              <p className="text-gray-500 text-sm mt-1">Searching Scripture for comfort</p>
+            </div>
           </div>
         )}
 
         {scriptureResponse && !isLoading && (
-          <div className="space-y-4 p-6 bg-secondary/50 rounded-lg" data-testid="scripture-response">
-            <blockquote className="text-lg italic font-serif leading-relaxed">
-              "{scriptureResponse.verse}"
-            </blockquote>
-            <cite className="text-sm font-semibold">- {scriptureResponse.reference}</cite>
-            
-            <p className="text-muted-foreground bg-white/80 p-3 rounded">
-              💝 {scriptureResponse.encouragement}
-            </p>
+          <div className="flex-1 flex flex-col space-y-4">
+            <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200" data-testid="scripture-response">
+              <div className="text-center space-y-4">
+                <div className="bg-purple-50 rounded-lg p-4">
+                  <blockquote className="text-lg italic font-serif leading-relaxed text-gray-800 mb-3">
+                    "{scriptureResponse.verse}"
+                  </blockquote>
+                  <cite className="text-sm font-semibold text-purple-700">— {scriptureResponse.reference}</cite>
+                </div>
+                
+                <div className="bg-gradient-to-r from-amber-50 to-yellow-50 p-4 rounded-lg border border-amber-200">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Heart className="w-4 h-4 text-amber-600" />
+                    <span className="text-sm font-medium text-amber-800">Personal Encouragement</span>
+                  </div>
+                  <p className="text-amber-800 text-sm leading-relaxed">
+                    {scriptureResponse.encouragement}
+                  </p>
+                </div>
 
-            <Button 
-              variant="outline" 
-              size="sm" 
-              onClick={copyScripture}
-              data-testid="button-copyScripture"
-            >
-              <Copy className="w-4 h-4 mr-2" />
-              Copy Scripture
-            </Button>
+                <div className="flex gap-2 justify-center pt-2">
+                  <Button 
+                    onClick={copyScripture}
+                    className="bg-purple-600 text-white"
+                    data-testid="button-copyScripture"
+                  >
+                    <Copy className="w-4 h-4 mr-2" />
+                    Copy Scripture
+                  </Button>
+                  <Button 
+                    variant="outline"
+                    onClick={() => {
+                      setSelectedEmotion("");
+                      setScriptureResponse(null);
+                    }}
+                    data-testid="button-try-another"
+                  >
+                    Try Another
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+        
+        {/* Show selected emotion when scripture is displayed */}
+        {selectedEmotion && scriptureResponse && (
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-3">
+            <div className="flex items-center justify-center gap-2">
+              <Badge className="bg-purple-100 text-purple-800 border-purple-200">
+                Currently exploring: {selectedEmotion}
+              </Badge>
+            </div>
           </div>
         )}
       </CardContent>

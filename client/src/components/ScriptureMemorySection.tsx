@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Card, CardContent } from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Progress } from '@/components/ui/progress';
-import { Brain, RotateCcw, CheckCircle, Pause, Volume2, Flame } from 'lucide-react';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Brain, RotateCcw, CheckCircle, Pause, Volume2, Flame, BookText, Trophy } from 'lucide-react';
 import { useToast } from '@/hooks/use-toast';
 
 interface MemoryVerse {
@@ -60,7 +61,11 @@ const MEMORY_VERSES: MemoryVerse[] = [
   }
 ];
 
-export default function ScriptureMemorySection() {
+interface ScriptureMemorySectionProps {
+  backgroundImage?: string;
+}
+
+export default function ScriptureMemorySection({ backgroundImage }: ScriptureMemorySectionProps = {}) {
   const { toast } = useToast();
   const [currentVerse, setCurrentVerse] = useState<MemoryVerse>(MEMORY_VERSES[0]);
   const [memoryMode, setMemoryMode] = useState<'full' | 'partial' | 'test'>('full');
@@ -218,145 +223,195 @@ export default function ScriptureMemorySection() {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <Brain className="w-5 h-5 text-purple-600" />
-          <h3 className="text-lg font-semibold text-foreground">Scripture Memory Helper</h3>
-        </div>
-        <div className="flex items-center gap-2 text-sm">
-          <span className="flex items-center gap-1" data-testid="text-completed">
-            <CheckCircle className="w-4 h-4 text-green-600" />
-            {completedVerses.size} memorized
-          </span>
-          <span className="flex items-center gap-1 text-purple-600 font-semibold" data-testid="text-streak">
-            <Flame className="w-4 h-4 fill-current" />
-            {currentStreak} streak
-          </span>
-        </div>
-      </div>
-
-      <Card>
-        <CardContent className="p-4 space-y-4">
-          {/* Verse Display */}
-          <div className="text-center space-y-3">
-            <div className="flex items-center justify-center gap-2 flex-wrap">
-              <Badge className={getDifficultyColor(currentVerse.difficulty)} data-testid="badge-difficulty">
-                {currentVerse.difficulty}
-              </Badge>
-              <Badge variant="outline" className="bg-blue-50 text-blue-700" data-testid="badge-theme">
-                {currentVerse.theme}
-              </Badge>
-              {completedVerses.has(currentVerse.id) && (
-                <Badge className="bg-green-100 text-green-800" data-testid="badge-memorized">
-                  <CheckCircle className="w-3 h-3 mr-1" />
-                  Memorized
-                </Badge>
-              )}
+      <Card className="relative overflow-hidden shadow-lg border-2">
+        {backgroundImage && (
+          <>
+            <div 
+              className="absolute inset-0 bg-cover bg-center"
+              style={{ backgroundImage: `url(${backgroundImage})` }}
+            />
+            <div className="absolute inset-0 bg-gradient-to-b from-blue/60 via-blue/20 to-blue/80" />
+          </>
+        )}
+        <CardHeader className="relative z-10 bg-gradient-to-r from-blue/10 to-transparent border-b">
+          <div className="flex items-center gap-4">
+            <Avatar className="h-12 w-12 border-2 border-blue/20">
+              <AvatarFallback className="bg-blue/10 text-blue-600">
+                <BookText className="w-6 h-6" />
+              </AvatarFallback>
+            </Avatar>
+            <div className="flex-1">
+              <CardTitle className="flex items-center gap-2 text-xl text-white">
+                <Brain className="w-5 h-5" />
+                Scripture Memory Helper
+              </CardTitle>
+              <p className="text-white/90 text-sm">
+                Build your faith through memorizing God's Word
+              </p>
             </div>
+            <div className="flex items-center gap-3 text-sm">
+              <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                <span className="flex items-center gap-1 font-medium" data-testid="text-completed">
+                  <CheckCircle className="w-4 h-4 text-green-600" />
+                  <span className="text-green-800">{completedVerses.size}</span>
+                </span>
+              </div>
+              <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
+                <span className="flex items-center gap-1 font-semibold" data-testid="text-streak">
+                  <Flame className="w-4 h-4 text-purple-600 fill-current" />
+                  <span className="text-purple-700">{currentStreak}</span>
+                </span>
+              </div>
+            </div>
+          </div>
+        </CardHeader>
 
-            <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 min-h-[120px] flex flex-col justify-center">
-              {memoryMode === 'test' ? (
-                <div className="text-center">
-                  <p className="text-gray-500 text-sm mb-2">Try reciting from memory:</p>
-                  <p className="font-semibold text-lg text-purple-700">{currentVerse.reference}</p>
-                  <Button
-                    variant="outline"
-                    className="mt-3"
-                    onClick={() => setMemoryMode('full')}
-                    data-testid="button-show-verse"
-                  >
-                    Show Verse
-                  </Button>
-                </div>
-              ) : (
-                <>
-                  <p className="text-sm md:text-base leading-relaxed text-gray-800 mb-2">
-                    "{getDisplayText()}"
-                  </p>
-                  <p className="font-semibold text-purple-700">
-                    — {currentVerse.reference}
-                  </p>
-                </>
-              )}
+        <CardContent className="relative z-10 p-6 space-y-6">
+          {/* Verse Display */}
+          <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-sm border border-gray-200">
+            <div className="text-center space-y-4">
+              <div className="flex items-center justify-center gap-2 flex-wrap">
+                <Badge className={getDifficultyColor(currentVerse.difficulty)} data-testid="badge-difficulty">
+                  {currentVerse.difficulty}
+                </Badge>
+                <Badge variant="outline" className="bg-blue-50 text-blue-700 border-blue-200" data-testid="badge-theme">
+                  <Trophy className="w-3 h-3 mr-1" />
+                  {currentVerse.theme}
+                </Badge>
+                {completedVerses.has(currentVerse.id) && (
+                  <Badge className="bg-green-100 text-green-800 border-green-200" data-testid="badge-memorized">
+                    <CheckCircle className="w-3 h-3 mr-1" />
+                    Memorized
+                  </Badge>
+                )}
+              </div>
+
+              <div className="bg-gradient-to-r from-blue-50 via-purple-50 to-indigo-50 rounded-xl p-6 min-h-[140px] flex flex-col justify-center border border-blue-200">
+                {memoryMode === 'test' ? (
+                  <div className="text-center space-y-4">
+                    <div className="bg-blue-100 rounded-lg p-4">
+                      <p className="text-blue-700 text-sm font-medium mb-2">Memory Challenge</p>
+                      <p className="font-semibold text-lg text-blue-800">{currentVerse.reference}</p>
+                    </div>
+                    <Button
+                      className="bg-blue-600 text-white hover:bg-blue-700"
+                      onClick={() => setMemoryMode('full')}
+                      data-testid="button-show-verse"
+                    >
+                      <BookText className="w-4 h-4 mr-2" />
+                      Reveal Verse
+                    </Button>
+                  </div>
+                ) : (
+                  <div className="space-y-3">
+                    <blockquote className="text-base md:text-lg leading-relaxed text-gray-800 font-serif italic">
+                      "{getDisplayText()}"
+                    </blockquote>
+                    <cite className="font-semibold text-blue-700 not-italic">
+                      — {currentVerse.reference}
+                    </cite>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
 
           {/* Controls */}
-          <div className="flex flex-wrap gap-2 justify-center">
-            <Button 
-              variant="outline"
-              onClick={() => setMemoryMode(memoryMode === 'full' ? 'partial' : 'full')}
-              disabled={memoryMode === 'test'}
-              data-testid="button-mode-toggle"
-            >
-              {memoryMode === 'full' ? 'Practice Mode' : 'Show Full'}
-            </Button>
-            
-            <Button 
-              variant="outline"
-              onClick={() => setMemoryMode(memoryMode === 'test' ? 'full' : 'test')}
-              data-testid="button-test-toggle"
-            >
-              {memoryMode === 'test' ? 'Stop Test' : 'Test Yourself'}
-            </Button>
+          <div className="bg-white/90 backdrop-blur-sm rounded-xl p-4 space-y-4">
+            <div className="flex flex-wrap gap-2 justify-center">
+              <Button 
+                variant={memoryMode === 'partial' ? 'default' : 'outline'}
+                onClick={() => setMemoryMode(memoryMode === 'full' ? 'partial' : 'full')}
+                disabled={memoryMode === 'test'}
+                data-testid="button-mode-toggle"
+                className={memoryMode === 'partial' ? 'bg-blue-600 text-white' : ''}
+              >
+                <Brain className="w-4 h-4 mr-2" />
+                {memoryMode === 'full' ? 'Practice Mode' : 'Show Full'}
+              </Button>
+              
+              <Button 
+                variant={memoryMode === 'test' ? 'default' : 'outline'}
+                onClick={() => setMemoryMode(memoryMode === 'test' ? 'full' : 'test')}
+                data-testid="button-test-toggle"
+                className={memoryMode === 'test' ? 'bg-purple-600 text-white' : ''}
+              >
+                <CheckCircle className="w-4 h-4 mr-2" />
+                {memoryMode === 'test' ? 'Stop Test' : 'Test Yourself'}
+              </Button>
 
-            <Button 
-              variant="outline"
-              onClick={speakVerse}
-              className="flex items-center gap-1"
-              data-testid="button-speak"
-            >
-              {isPlaying ? <Pause className="w-3 h-3" /> : <Volume2 className="w-3 h-3" />}
-              {isPlaying ? 'Stop' : 'Listen'}
-            </Button>
-          </div>
+              <Button 
+                variant="outline"
+                onClick={speakVerse}
+                className="flex items-center gap-2"
+                data-testid="button-speak"
+              >
+                {isPlaying ? <Pause className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
+                {isPlaying ? 'Stop' : 'Listen'}
+              </Button>
+            </div>
 
-          <div className="flex flex-wrap gap-2 justify-center pt-2 border-t">
-            <Button 
-              onClick={markAsMemorized}
-              className="bg-green-600 text-white"
-              disabled={completedVerses.has(currentVerse.id)}
-              data-testid="button-mark-memorized"
-            >
-              <CheckCircle className="w-3 h-3 mr-1" />
-              {completedVerses.has(currentVerse.id) ? 'Already Memorized' : 'Mark as Memorized'}
-            </Button>
-            
-            <Button 
-              variant="outline"
-              onClick={selectNewVerse}
-              data-testid="button-new-verse"
-            >
-              <RotateCcw className="w-3 h-3 mr-1" />
-              New Verse
-            </Button>
+            <div className="flex flex-wrap gap-3 justify-center pt-4 border-t border-gray-200">
+              <Button 
+                onClick={markAsMemorized}
+                className="bg-green-600 text-white px-6"
+                disabled={completedVerses.has(currentVerse.id)}
+                data-testid="button-mark-memorized"
+              >
+                <CheckCircle className="w-4 h-4 mr-2" />
+                {completedVerses.has(currentVerse.id) ? 'Already Memorized' : 'Mark as Memorized'}
+              </Button>
+              
+              <Button 
+                variant="outline"
+                onClick={selectNewVerse}
+                data-testid="button-new-verse"
+                className="border-blue-200 text-blue-700"
+              >
+                <RotateCcw className="w-4 h-4 mr-2" />
+                New Verse
+              </Button>
+            </div>
           </div>
         </CardContent>
       </Card>
 
       {/* Progress Section */}
       {completedVerses.size > 0 && (
-        <div className="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-3">
-          <div className="flex items-center justify-between text-sm">
-            <span className="font-medium text-green-800">Memory Progress</span>
-            <Button 
-              variant="ghost"
-              onClick={resetProgress}
-              className="text-xs text-gray-500"
-              data-testid="button-reset-progress"
-            >
-              Reset
-            </Button>
-          </div>
-          <Progress 
-            value={(completedVerses.size / MEMORY_VERSES.length) * 100} 
-            className="mt-2 h-2"
-            data-testid="progress-memory"
-          />
-          <p className="text-xs text-green-700 mt-1">
-            {completedVerses.size} of {MEMORY_VERSES.length} verses memorized
-          </p>
-        </div>
+        <Card className="shadow-lg border-2">
+          <CardContent className="p-4">
+            <div className="bg-gradient-to-r from-green-50 via-blue-50 to-purple-50 rounded-xl p-4 border border-green-200">
+              <div className="flex items-center justify-between text-sm mb-3">
+                <div className="flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-green-600" />
+                  <span className="font-semibold text-green-800">Memory Progress</span>
+                </div>
+                <Button 
+                  variant="ghost"
+                  onClick={resetProgress}
+                  className="text-xs text-gray-600 hover:text-gray-800"
+                  data-testid="button-reset-progress"
+                >
+                  Reset
+                </Button>
+              </div>
+              <Progress 
+                value={(completedVerses.size / MEMORY_VERSES.length) * 100} 
+                className="mt-3 h-3"
+                data-testid="progress-memory"
+              />
+              <div className="flex items-center justify-between mt-3">
+                <p className="text-sm text-green-700 font-medium">
+                  {completedVerses.size} of {MEMORY_VERSES.length} verses memorized
+                </p>
+                <div className="flex items-center gap-1">
+                  <Flame className="w-4 h-4 text-orange-500" />
+                  <span className="text-sm font-bold text-orange-600">{Math.round((completedVerses.size / MEMORY_VERSES.length) * 100)}%</span>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       )}
     </div>
   );

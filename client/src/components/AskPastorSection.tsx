@@ -151,7 +151,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
               onClick={clearChat}
               size="icon"
               variant="ghost"
-              className="text-white/80 hover:text-white hover:bg-white/10"
+              className="text-white/80"
               data-testid="button-clear-chat"
               aria-label="Clear conversation"
             >
@@ -207,7 +207,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
                   <Button 
                     size="icon"
                     variant="ghost"
-                    className="h-6 w-6 opacity-60 hover:opacity-100 flex-shrink-0"
+                    className="h-6 w-6 opacity-60 flex-shrink-0"
                     onClick={() => navigator.clipboard.writeText(message.content)}
                     data-testid={`copy-message-${message.id}`}
                     aria-label="Copy message"
