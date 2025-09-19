@@ -31,6 +31,7 @@ interface User {
   birthMonth: string;
   birthDay: string;
   phone: string;
+  appUserId?: string;
 }
 
 type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate" | "giving" | "videos" | "blog" | "settings" | "friends";
@@ -158,9 +159,9 @@ function App() {
       case "blog":
         return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "settings":
-        return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+        return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} user={user || undefined} />;
       case "friends":
-        return <FriendsPage currentUserId={user?.appUserId || "demo-user-123"} language={language} />;
+        return <FriendsPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }

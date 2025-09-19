@@ -11,6 +11,15 @@ import { useToast } from "@/hooks/use-toast";
 interface SettingsPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
+  user?: {
+    firstName: string;
+    lastName: string;
+    email: string;
+    birthMonth: string;
+    birthDay: string;
+    phone: string;
+    appUserId?: string;
+  };
 }
 
 interface UserProfile {
@@ -34,18 +43,18 @@ interface AppPreferences {
   language: string;
 }
 
-export default function SettingsPage({ onNavigate, streakDays = 0 }: SettingsPageProps) {
+export default function SettingsPage({ onNavigate, streakDays = 0, user }: SettingsPageProps) {
   const { toast } = useToast();
   
-  // Mock user profile data - would come from user context/API
+  // Initialize profile data from user prop or defaults
   const [profile, setProfile] = useState<UserProfile>({
-    firstName: 'John',
-    lastName: 'Smith',
-    email: 'john.smith@email.com',
-    phone: '+1 (555) 123-4567',
-    birthMonth: 'March',
-    birthDay: '15',
-    preferredName: 'John',
+    firstName: user?.firstName || 'John',
+    lastName: user?.lastName || 'Smith',
+    email: user?.email || 'john.smith@email.com',
+    phone: user?.phone || '+1 (555) 123-4567',
+    birthMonth: user?.birthMonth || 'March',
+    birthDay: user?.birthDay || '15',
+    preferredName: user?.firstName || 'John',
     timezone: 'America/New_York'
   });
 
@@ -84,12 +93,36 @@ export default function SettingsPage({ onNavigate, streakDays = 0 }: SettingsPag
   ];
 
   const handleSaveProfile = () => {
-    // Here you would typically save to API
-    setIsEditing(false);
-    toast({
-      title: "Profile Updated",
-      description: "Your profile information has been saved successfully.",
-    });
+    try {
+      // Save to localStorage to persist changes
+      const existingUserData = localStorage.getItem("gospelAppUser");
+      if (existingUserData) {
+        const userData = JSON.parse(existingUserData);
+        const updatedUserData = {
+          ...userData,
+          firstName: profile.firstName,
+          lastName: profile.lastName,
+          email: profile.email,
+          phone: profile.phone,
+          birthMonth: profile.birthMonth,
+          birthDay: profile.birthDay,
+        };
+        localStorage.setItem("gospelAppUser", JSON.stringify(updatedUserData));
+      }
+      
+      setIsEditing(false);
+      toast({
+        title: "Profile Updated",
+        description: "Your profile information has been saved successfully.",
+      });
+    } catch (error) {
+      console.error("Error saving profile:", error);
+      toast({
+        title: "Error",
+        description: "Failed to save profile changes. Please try again.",
+        variant: "destructive",
+      });
+    }
   };
 
   const handlePreferenceChange = (key: keyof AppPreferences, value: any) => {
