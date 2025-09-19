@@ -331,9 +331,9 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
         {/* Donation Form */}
         <Card className="shadow-lg border-2">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center justify-center gap-2 text-center">
               <DollarSign className="w-5 h-5 text-primary" />
-              Choose Your Donation Amount
+              Choose Your $ Donation Amount
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-6">
@@ -455,7 +455,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               className="w-full h-48 object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20"></div>
-            <div className="absolute bottom-0 left-0 right-0 p-4">
+            <div className="absolute bottom-0 left-0 right-0 p-4 text-center">
               <h3 className="font-bold text-white text-lg mb-1">Your Impact</h3>
               <p className="text-white text-sm leading-relaxed">
                 Every donation helps us distribute Bibles and share God's word with those who need it most. 
