@@ -47,14 +47,14 @@ export default function SupportPage({ onBack }: SupportPageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-20">
+    <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 sticky top-0 z-10">
+      <div className="bg-background px-4 py-6 border-b border-border sticky top-0 z-10">
         <div className="flex items-center gap-3">
           <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page">
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-xl font-bold text-gray-900 text-center flex-1">Support & Privacy</h1>
+          <h1 className="text-xl font-bold text-foreground text-center flex-1">Support & Privacy</h1>
         </div>
       </div>
 
@@ -62,17 +62,17 @@ export default function SupportPage({ onBack }: SupportPageProps) {
         {/* Contact Support */}
         <Card className="shadow-lg border-2">
           <CardContent className="p-6">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <MessageCircle className="w-6 h-6 text-blue-600" />
-              <h2 className="text-lg font-semibold text-gray-900">Contact Support</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-4 text-center">Contact Support</h2>
+            <div className="flex justify-center mb-4">
+              <MessageCircle className="w-6 h-6 text-primary" />
             </div>
-            <p className="text-gray-600 mb-4">
+            <p className="text-muted-foreground mb-4 text-center">
               Need help? Have questions? We're here to support your spiritual journey.
             </p>
             <div className="space-y-3">
               <a 
                 href="mailto:support@thegospelin5minutes.com"
-                className="flex items-center gap-2 text-blue-600"
+                className="flex items-center gap-2 text-primary hover:text-foreground transition-colors"
                 data-testid="link-email-support"
               >
                 <Mail className="w-4 h-4" />
@@ -82,7 +82,7 @@ export default function SupportPage({ onBack }: SupportPageProps) {
                 href="https://www.facebook.com/TheGospelIn5Minutes"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 text-blue-600"
+                className="flex items-center gap-2 text-primary hover:text-foreground transition-colors"
                 data-testid="link-facebook-support"
               >
                 <MessageCircle className="w-4 h-4" />
@@ -95,11 +95,11 @@ export default function SupportPage({ onBack }: SupportPageProps) {
         {/* Privacy Controls */}
         <Card className="shadow-lg border-2">
           <CardContent className="p-6">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <Shield className="w-6 h-6 text-green-600" />
-              <h2 className="text-lg font-semibold text-gray-900">Your Privacy Rights</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-4 text-center">Your Privacy Rights</h2>
+            <div className="flex justify-center mb-4">
+              <Shield className="w-6 h-6 text-primary" />
             </div>
-            <p className="text-gray-600 mb-4">
+            <p className="text-muted-foreground mb-4 text-center">
               Manage your personal data and privacy settings.
             </p>
             
@@ -107,8 +107,8 @@ export default function SupportPage({ onBack }: SupportPageProps) {
               {/* Export Data */}
               <div className="flex items-center justify-between">
                 <div>
-                  <h3 className="font-medium text-gray-900">Export My Data</h3>
-                  <p className="text-sm text-gray-600">Download a copy of your personal data</p>
+                  <h3 className="font-medium text-foreground">Export My Data</h3>
+                  <p className="text-sm text-muted-foreground">Download a copy of your personal data</p>
                 </div>
                 <Button 
                   variant="outline" 
@@ -122,10 +122,10 @@ export default function SupportPage({ onBack }: SupportPageProps) {
               </div>
 
               {/* Delete Data */}
-              <div className="flex items-center justify-between pt-4 border-t border-gray-200">
+              <div className="flex items-center justify-between pt-4 border-t border-border">
                 <div>
-                  <h3 className="font-medium text-gray-900">Delete My Data</h3>
-                  <p className="text-sm text-gray-600">Permanently remove all your personal information</p>
+                  <h3 className="font-medium text-foreground">Delete My Data</h3>
+                  <p className="text-sm text-muted-foreground">Permanently remove all your personal information</p>
                 </div>
                 <Button 
                   variant={showDeleteConfirm ? "destructive" : "outline"}
@@ -139,9 +139,9 @@ export default function SupportPage({ onBack }: SupportPageProps) {
               </div>
 
               {showDeleteConfirm && (
-                <div className="bg-red-50 border border-red-200 rounded-lg p-4">
-                  <p className="text-sm text-red-800 font-medium mb-2">Are you sure?</p>
-                  <p className="text-sm text-red-700 mb-3">
+                <div className="bg-destructive/10 border border-destructive/20 rounded-lg p-4">
+                  <p className="text-sm text-destructive font-medium mb-2">Are you sure?</p>
+                  <p className="text-sm text-destructive mb-3">
                     This will permanently delete all your data including your profile, streak count, 
                     preferences, and settings. This action cannot be undone.
                   </p>
@@ -170,40 +170,40 @@ export default function SupportPage({ onBack }: SupportPageProps) {
         {/* App Information */}
         <Card className="shadow-lg border-2">
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-gray-900 mb-4 text-center">App Information</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-4 text-center">App Information</h2>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-600">Version</span>
-                <span className="text-gray-900">1.0.0</span>
+                <span className="text-muted-foreground">Version</span>
+                <span className="text-foreground" data-testid="text-app-version">1.0.0</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Build</span>
-                <span className="text-gray-900">2025.01.01</span>
+                <span className="text-muted-foreground">Build</span>
+                <span className="text-foreground" data-testid="text-app-build">2025.01.01</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-600">Platform</span>
-                <span className="text-gray-900">iOS</span>
+                <span className="text-muted-foreground">Platform</span>
+                <span className="text-foreground" data-testid="text-app-platform">iOS</span>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Emergency Resources */}
-        <Card className="border-orange-200 bg-orange-50 shadow-lg border-2">
+        <Card className="border-destructive/20 bg-destructive/5 shadow-lg border-2">
           <CardContent className="p-6">
-            <h2 className="text-lg font-semibold text-orange-900 mb-2 text-center">Crisis Resources</h2>
-            <p className="text-sm text-orange-800 mb-4">
+            <h2 className="text-lg font-semibold text-destructive mb-2 text-center">Crisis Resources</h2>
+            <p className="text-sm text-destructive mb-4">
               If you're experiencing a mental health crisis or having thoughts of self-harm, 
               please reach out for immediate professional help:
             </p>
             <div className="space-y-2 text-sm">
-              <p className="text-orange-900 font-medium">
-                National Suicide Prevention Lifeline: <a href="tel:988" className="underline">988</a>
+              <p className="text-destructive font-medium">
+                National Suicide Prevention Lifeline: <a href="tel:988" className="underline hover:text-foreground transition-colors" data-testid="link-suicide-prevention">988</a>
               </p>
-              <p className="text-orange-900 font-medium">
-                Crisis Text Line: Text HOME to <a href="sms:741741" className="underline">741741</a>
+              <p className="text-destructive font-medium">
+                Crisis Text Line: Text HOME to <a href="sms:741741" className="underline hover:text-foreground transition-colors" data-testid="link-crisis-text">741741</a>
               </p>
-              <p className="text-orange-800">
+              <p className="text-destructive">
                 Remember: This app is for spiritual encouragement, not crisis intervention.
               </p>
             </div>
