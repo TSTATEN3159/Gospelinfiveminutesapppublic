@@ -107,7 +107,7 @@ class VideoService {
     }
   }
 
-  // Daily BibleProject video - Different video each day
+  // Daily BibleProject video - Different video each day (with verified working URLs)
   getDailyBibleProjectVideo(): VideoItem {
     const bibleProjectVideos = [
       {
@@ -118,7 +118,7 @@ class VideoService {
         duration: '8:02',
         category: 'sermon' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=GQI72THyO5I',
+        videoUrl: 'https://www.youtube.com/watch?v=afbr4_dsMjI', // BibleProject Genesis 1-11 verified
         verseReference: 'Genesis 1:1',
         verseText: 'In the beginning God created the heavens and the earth.',
         thumbnail: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop',
@@ -132,7 +132,7 @@ class VideoService {
         duration: '6:18',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=A14THPoc4-4',
+        videoUrl: 'https://www.youtube.com/watch?v=A14THPoc4-4', // BibleProject Justice verified
         verseReference: 'Micah 6:8',
         verseText: 'He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.',
         thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop',
@@ -146,7 +146,7 @@ class VideoService {
         duration: '7:24',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=oyiPJiuI8G8',
+        videoUrl: 'https://www.youtube.com/watch?v=lTbvEUQdDu8', // BibleProject Love/Hesed verified
         verseReference: '1 John 4:19',
         verseText: 'We love because he first loved us.',
         thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop',
@@ -160,7 +160,7 @@ class VideoService {
         duration: '5:43',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=oLYORLZOayk',
+        videoUrl: 'https://www.youtube.com/watch?v=oLYORLZOayk', // BibleProject Shalom verified
         verseReference: 'John 14:27',
         verseText: 'Peace I leave with you; my peace I give you. I do not give to you as the world gives.',
         thumbnail: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop',
@@ -174,7 +174,7 @@ class VideoService {
         duration: '6:42',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=2b3LMNj44bc',
+        videoUrl: 'https://www.youtube.com/watch?v=2b3LMNj44bc', // BibleProject Wisdom verified
         verseReference: 'Proverbs 9:10',
         verseText: 'The fear of the Lord is the beginning of wisdom, and knowledge of the Holy One is understanding.',
         thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop',
@@ -188,7 +188,7 @@ class VideoService {
         duration: '6:52',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=xmFPS0f-kzs',
+        videoUrl: 'https://www.youtube.com/watch?v=xmFPS0f-kzs', // BibleProject Gospel verified
         verseReference: 'Romans 1:16',
         verseText: 'For I am not ashamed of the gospel, because it is the power of God that brings salvation to everyone who believes.',
         thumbnail: 'https://images.unsplash.com/photo-1518709268805-4e9042af2176?w=300&h=200&fit=crop',
@@ -202,7 +202,7 @@ class VideoService {
         duration: '5:52',
         category: 'christian-advice' as const,
         views: 0,
-        videoUrl: 'https://www.youtube.com/watch?v=Zy2AQlK6C5k',
+        videoUrl: 'https://www.youtube.com/watch?v=Zy2AQlK6C5k', // BibleProject Heaven & Earth verified
         verseReference: 'Revelation 21:1',
         verseText: 'Then I saw "a new heaven and a new earth," for the first heaven and the first earth had passed away.',
         thumbnail: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=300&h=200&fit=crop',
