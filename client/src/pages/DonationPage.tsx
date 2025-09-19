@@ -7,6 +7,7 @@ import { Heart, DollarSign, ArrowLeft, Check } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
+import bibleDistributionImage from '@assets/stock_images/people_distributing__56bd3f84.jpg';
 
 // Load Stripe with public key
 if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
@@ -407,6 +408,25 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               </p>
             </div>
           </CardContent>
+        </Card>
+
+        {/* Bible Distribution Impact Card */}
+        <Card className="overflow-hidden">
+          <div className="relative">
+            <img 
+              src={bibleDistributionImage} 
+              alt="People distributing Bibles to community members" 
+              className="w-full h-48 object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-black/20"></div>
+            <div className="absolute bottom-0 left-0 right-0 p-4">
+              <h3 className="font-bold text-white text-lg mb-1">Your Impact</h3>
+              <p className="text-white text-sm leading-relaxed">
+                Every donation helps us distribute Bibles and share God's word with those who need it most. 
+                Together, we're bringing hope and salvation to communities worldwide.
+              </p>
+            </div>
+          </div>
         </Card>
       </div>
     </div>
