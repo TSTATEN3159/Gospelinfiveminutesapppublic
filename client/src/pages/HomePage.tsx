@@ -197,7 +197,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
       <div className="px-4 py-4 space-y-4 ios-safe-bottom">
         {/* Daily Verse Card with Image */}
         <div 
-          className="bg-white rounded-2xl overflow-hidden shadow-sm cursor-pointer hover-elevate"
+          className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 cursor-pointer hover-elevate"
           onClick={() => setShowVerseModal(true)}
           data-testid="card-dailyVerse"
           role="button"
@@ -256,7 +256,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
         </div>
 
         {/* Bible Study Section */}
-        <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
           <div className="relative h-40">
             <img 
               src={forestPathImage}
@@ -291,7 +291,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
 
 
         {/* Ask Pastor Section */}
-        <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
           <div className="relative h-40">
             <img 
               src={oceanCliffImage}
@@ -327,7 +327,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
 
         {/* The Gospel, In Their Words Section */}
         {dailyVideo && (
-          <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+          <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
             <div className="p-4">
               <div className="flex items-center mb-3">
                 <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
@@ -397,7 +397,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
         )}
 
         {/* Donation Tile - Help Secure Bibles */}
-        <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl p-6 shadow-sm border border-amber-100">
+        <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl p-6 shadow-lg border-2 border-amber-200">
           <div className="text-center space-y-4">
             <div className="flex justify-center">
               <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full flex items-center justify-center shadow-lg">
@@ -436,7 +436,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
         </div>
 
         {/* Facebook & Live Counter Section */}
-        <div className="bg-white rounded-2xl p-4 shadow-sm">
+        <div className="bg-white rounded-2xl p-4 shadow-lg border-2">
           <div className="flex flex-col items-center space-y-4">
             <div className="text-center">
               <LiveInstallCounter />
@@ -455,7 +455,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
         </div>
 
         {/* Help Spread God's Word Section - Professional Design */}
-        <div className="relative overflow-hidden rounded-3xl shadow-2xl border-0 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
+        <div className="relative overflow-hidden rounded-3xl shadow-lg border-2 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
           {/* Background Image */}
           <div 
             className="absolute inset-0 bg-cover bg-center opacity-30"
