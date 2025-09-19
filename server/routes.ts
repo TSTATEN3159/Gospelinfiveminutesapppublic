@@ -155,6 +155,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Temporary admin endpoint to find recent payment intents
+  app.get("/api/find-recent-payments", async (req, res) => {
+    try {
+      const stripe = getStripeClient();
+      
+      // Get recent payment intents from Stripe
+      const paymentIntents = await stripe.paymentIntents.list({
+        limit: 10,
+        created: {
+          gte: Math.floor(Date.now() / 1000) - (24 * 60 * 60), // Last 24 hours
+        }
+      });
+
+      const payments = paymentIntents.data.map(pi => ({
+        id: pi.id,
+        amount: pi.amount,
+        currency: pi.currency,
+        status: pi.status,
+        created: new Date(pi.created * 1000).toISOString()
+      }));
+
+      res.json({ 
+        success: true, 
+        payments 
+      });
+    } catch (error: any) {
+      console.error("Error finding recent payments:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to find recent payments" 
+      });
+    }
+  });
+
   // put application routes here
   // prefix all routes with /api
 
@@ -784,7 +818,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const donations = await storage.getAllDonations();
       
       const totalDonations = donations.reduce((sum, donation) => {
-        return sum + parseFloat(donation.amount);
+        return sum + (donation.amountCents / 100); // Convert cents to dollars
       }, 0);
       
       const monthlyDonations = donations
@@ -795,7 +829,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                  donationDate.getFullYear() === now.getFullYear();
         })
         .reduce((sum, donation) => {
-          return sum + parseFloat(donation.amount);
+          return sum + (donation.amountCents / 100); // Convert cents to dollars
         }, 0);
       
       const donationCount = donations.length;
