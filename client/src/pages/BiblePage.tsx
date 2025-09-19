@@ -1,7 +1,9 @@
 import AskPastorSection from "../components/AskPastorSection";
 import EmotionScriptureSection from "../components/EmotionScriptureSection";
+import ScriptureMemorySection from "../components/ScriptureMemorySection";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
+import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_background_2b3bbc13.png';
 import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -125,6 +127,17 @@ export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
             <div className="relative z-10">
               <h2 className="text-lg font-semibold text-primary mb-4">Feelings & Scripture</h2>
               <EmotionScriptureSection backgroundImage={handsImage} />
+            </div>
+          </div>
+
+          {/* Scripture Memory Helper Section */}
+          <div className="relative bg-card rounded-lg p-4 border shadow-sm">
+            <div 
+              className="absolute inset-0 bg-cover bg-center opacity-20 rounded-lg"
+              style={{ backgroundImage: `url(${bibleMemoryImage})` }}
+            />
+            <div className="relative z-10">
+              <ScriptureMemorySection />
             </div>
           </div>
         </div>
