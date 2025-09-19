@@ -29,15 +29,11 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
       }
     }
 
-    // Handle SermonAudio embed URLs (already in embed format)
-    if (url.includes('embed.sermonaudio.com')) {
-      return url; // Already an embed URL
-    }
-
-    // Handle regular SermonAudio URLs
-    const sermonAudioMatch = url.match(/sermonaudio\.com\/sermon\/(\w+)/);
-    if (sermonAudioMatch) {
-      return `https://embed.sermonaudio.com/${sermonAudioMatch[1]}`;
+    // Handle BibleProject URLs (via YouTube)
+    if (url.includes('bibleproject.com/videos/')) {
+      // BibleProject videos are hosted on YouTube, so we'd need to extract the YouTube ID
+      // For now, return null and handle BibleProject URLs as external links
+      return null;
     }
 
     return null;

@@ -252,47 +252,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
 
-      // Add SermonAudio content recommendations (embeddable in-app videos)
-      const sermonAudioCategories = [
+      // Add BibleProject content recommendations (embeddable animated Bible videos)
+      const bibleProjectCategories = [
         {
-          id: 'sermonaudio_featured',
-          title: 'SermonAudio Featured Sermons',
-          description: 'Access millions of free sermons from conservative churches worldwide.',
+          id: 'bibleproject_overview',
+          title: 'BibleProject: Book Overviews',
+          description: 'Beautiful animated videos explaining every book of the Bible in 5-10 minutes.',
           category: 'sermon',
           views: undefined,
           duration: undefined,
-          source: 'SermonAudio',
-          // Use SermonAudio's embeddable player for in-app viewing
-          videoUrl: 'https://embed.sermonaudio.com/261601260', // Featured sermon embed
+          source: 'BibleProject',
+          // Use YouTube embed for BibleProject videos (they allow embedding)
+          videoUrl: 'https://www.youtube.com/watch?v=GQI72THyO5I', // Genesis Overview
+          verseReference: 'Genesis 1:1',
+          verseText: 'In the beginning God created the heavens and the earth.',
+          commentary: 'Explore the foundational themes of the Bible through BibleProject\'s animated overviews.',
           thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
         },
         {
-          id: 'sermonaudio_expository',
-          title: 'Expository Bible Teaching',
-          description: 'Deep verse-by-verse Bible teaching from SermonAudio\'s extensive library.',
+          id: 'bibleproject_themes',
+          title: 'BibleProject: Biblical Themes',
+          description: 'Deep dives into biblical themes like justice, love, and redemption through animation.',
           category: 'christian-advice',
           views: undefined,
           duration: undefined,
-          source: 'SermonAudio',
-          // Use SermonAudio's embeddable player for Bible teaching
-          videoUrl: 'https://embed.sermonaudio.com/261501180', // Bible teaching embed
+          source: 'BibleProject',
+          // Use YouTube embed for BibleProject theme videos
+          videoUrl: 'https://www.youtube.com/watch?v=A14THPoc4-4', // Justice video
+          verseReference: 'Micah 6:8',
+          verseText: 'He has shown you, O mortal, what is good. And what does the Lord require of you? To act justly and to love mercy and to walk humbly with your God.',
+          commentary: 'Understanding biblical justice and how it applies to our lives today.',
           thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop'
         }
       ];
 
-      // Add SermonAudio content to results
+      // Add BibleProject content to results
       if (!category || category === 'sermon') {
-        videos.push(sermonAudioCategories[0]);
+        videos.push(bibleProjectCategories[0]);
       }
       if (!category || category === 'christian-advice') {
-        videos.push(sermonAudioCategories[1]);
+        videos.push(bibleProjectCategories[1]);
       }
 
       res.json({
         success: true,
         videos: videos,
         total: videos.length,
-        sources: ['Christian Context API', 'SermonAudio']
+        sources: ['Christian Context API', 'BibleProject']
       });
 
     } catch (error) {
