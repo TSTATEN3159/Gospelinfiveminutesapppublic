@@ -93,19 +93,19 @@ export default function EmotionScriptureSection({ backgroundImage }: EmotionScri
         </>
       )}
       
-      <CardHeader className={cn("relative z-10 flex-shrink-0 border-b", backgroundImage ? "bg-gradient-to-r from-purple-500/10 to-transparent" : "bg-purple-700")}>
-        <div className="flex items-center gap-4">
-          <Avatar className="h-12 w-12 border-2 border-purple-200">
+      <CardHeader className={cn("relative z-10 flex-shrink-0 border-b py-4 px-6", backgroundImage ? "bg-gradient-to-r from-purple-500/10 to-transparent" : "bg-purple-700")}>
+        <div className="flex items-center gap-5">
+          <Avatar className="h-14 w-14 border-2 border-purple-200">
             <AvatarFallback className="bg-purple-100 text-purple-600">
-              <Heart className="w-6 h-6" />
+              <Heart className="w-7 h-7" />
             </AvatarFallback>
           </Avatar>
-          <div className="flex-1">
-            <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
-              <Compass className="w-5 h-5" />
+          <div className="flex-1 space-y-1">
+            <CardTitle className={cn("flex items-center gap-3 text-2xl font-semibold tracking-tight", backgroundImage ? "text-white" : "text-white")}>
+              <Compass className="w-6 h-6" />
               Feelings & Scripture
             </CardTitle>
-            <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-purple-100")}>
+            <p className={cn("text-base leading-relaxed", backgroundImage ? "text-white/90" : "text-purple-100")}>
               Find God's word for your heart today
             </p>
           </div>

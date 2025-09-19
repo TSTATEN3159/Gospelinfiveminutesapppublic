@@ -131,19 +131,19 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
         </>
       )}
       
-      <CardHeader className={cn("relative z-10 flex-shrink-0 border-b", backgroundImage ? "bg-gradient-to-r from-gray-500/10 to-transparent" : "bg-gray-700")}>
-        <div className="flex items-center gap-4">
-          <Avatar className="h-12 w-12 border-2 border-gray-200">
+      <CardHeader className={cn("relative z-10 flex-shrink-0 border-b py-4 px-6", backgroundImage ? "bg-gradient-to-r from-gray-500/10 to-transparent" : "bg-gray-700")}>
+        <div className="flex items-center gap-5">
+          <Avatar className="h-14 w-14 border-2 border-gray-200">
             <AvatarFallback className="bg-gray-100 text-gray-600">
-              <BookOpenCheck className="w-6 h-6" />
+              <BookOpenCheck className="w-7 h-7" />
             </AvatarFallback>
           </Avatar>
-          <div className="flex-1">
-            <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
-              <MessageSquare className="w-5 h-5" />
+          <div className="flex-1 space-y-1">
+            <CardTitle className={cn("flex items-center gap-3 text-2xl font-semibold tracking-tight", backgroundImage ? "text-white" : "text-white")}>
+              <MessageSquare className="w-6 h-6" />
               AI Pastor
             </CardTitle>
-            <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-gray-100")}>
+            <p className={cn("text-base leading-relaxed", backgroundImage ? "text-white/90" : "text-gray-100")}>
               Scripture-based guidance powered by biblical wisdom
             </p>
           </div>
@@ -152,11 +152,11 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
               onClick={clearChat}
               size="icon"
               variant="ghost"
-              className="text-white/80"
+              className="text-white/80 ml-3"
               data-testid="button-clear-chat"
               aria-label="Clear conversation"
             >
-              <Trash2 className="w-4 h-4" />
+              <Trash2 className="w-5 h-5" />
             </Button>
           )}
         </div>

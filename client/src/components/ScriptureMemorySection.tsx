@@ -234,23 +234,23 @@ export default function ScriptureMemorySection({ backgroundImage }: ScriptureMem
             <div className="absolute inset-0 bg-gradient-to-b from-blue-700/60 via-blue-500/20 to-blue-900/80" />
           </>
         )}
-        <CardHeader className={cn("relative z-10 border-b", backgroundImage ? "bg-gradient-to-r from-blue-500/10 to-transparent" : "bg-blue-700")}>
-          <div className="flex items-center gap-4">
-            <Avatar className="h-12 w-12 border-2 border-blue-200">
+        <CardHeader className={cn("relative z-10 border-b py-4 px-6", backgroundImage ? "bg-gradient-to-r from-blue-500/10 to-transparent" : "bg-blue-700")}>
+          <div className="flex items-center gap-5">
+            <Avatar className="h-14 w-14 border-2 border-blue-200">
               <AvatarFallback className="bg-blue-100 text-blue-600">
-                <BookText className="w-6 h-6" />
+                <BookText className="w-7 h-7" />
               </AvatarFallback>
             </Avatar>
-            <div className="flex-1">
-              <CardTitle className={cn("flex items-center gap-2 text-xl", backgroundImage ? "text-white" : "text-white")}>
-                <Brain className="w-5 h-5" />
+            <div className="flex-1 space-y-1">
+              <CardTitle className={cn("flex items-center gap-3 text-2xl font-semibold tracking-tight", backgroundImage ? "text-white" : "text-white")}>
+                <Brain className="w-6 h-6" />
                 Scripture Memory Helper
               </CardTitle>
-              <p className={cn("text-sm", backgroundImage ? "text-white/90" : "text-blue-100")}>
+              <p className={cn("text-base leading-relaxed", backgroundImage ? "text-white/90" : "text-blue-100")}>
                 Build your faith through memorizing God's Word
               </p>
             </div>
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-3 text-sm ml-4">
               <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1">
                 <span className="flex items-center gap-1 font-medium" data-testid="text-completed">
                   <CheckCircle className="w-4 h-4 text-green-600" />
