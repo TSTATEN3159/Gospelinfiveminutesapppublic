@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink } from "lucide-react";
 import { videoService, type VideoItem } from "@/services/videoService";
+import { VideoPlayer } from "@/components/VideoPlayer";
 import { useToast } from "@/hooks/use-toast";
 
 interface VideosPageProps {
@@ -18,6 +19,8 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
   const [featuredVideo, setFeaturedVideo] = useState<VideoItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [selectedCategory, setSelectedCategory] = useState<VideoItem['category'] | null>(null);
+  const [currentVideo, setCurrentVideo] = useState<VideoItem | null>(null);
+  const [isPlayerOpen, setIsPlayerOpen] = useState(false);
   const { toast } = useToast();
 
   // Load videos on component mount
@@ -65,14 +68,13 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
   };
 
   const handleVideoClick = (video: VideoItem) => {
-    if (video.externalUrl || video.videoUrl) {
-      videoService.openExternalVideo(video);
-    } else {
-      toast({
-        title: "Coming Soon",
-        description: "This video will be available soon!",
-      });
-    }
+    setCurrentVideo(video);
+    setIsPlayerOpen(true);
+  };
+
+  const handleClosePlayer = () => {
+    setIsPlayerOpen(false);
+    setCurrentVideo(null);
   };
 
   // App Store compliance: Only show legitimate API content - no mock/fallback data
@@ -383,6 +385,13 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
             </p>
           </CardContent>
         </Card>
+
+        {/* Video Player Modal */}
+        <VideoPlayer
+          video={currentVideo}
+          isOpen={isPlayerOpen}
+          onClose={handleClosePlayer}
+        />
       </div>
     </div>
   );
