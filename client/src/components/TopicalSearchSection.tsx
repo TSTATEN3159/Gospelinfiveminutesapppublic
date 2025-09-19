@@ -245,15 +245,32 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
             return (
               <Card
                 key={topic.id}
-                className={`bg-gradient-to-br ${topic.gradient} ${topic.borderColor} border-2 hover-elevate cursor-pointer transition-all duration-200 shadow-sm ${isSearching ? 'opacity-50 pointer-events-none' : ''}`}
+                className={`
+                  relative bg-gradient-to-br ${topic.gradient} 
+                  border-2 ${topic.borderColor} 
+                  hover-elevate cursor-pointer 
+                  transition-all duration-300 
+                  shadow-lg hover:shadow-xl 
+                  before:absolute before:inset-0 before:rounded-lg 
+                  before:bg-gradient-to-br before:from-white/20 before:to-transparent 
+                  before:pointer-events-none
+                  ring-1 ring-white/50 ring-inset
+                  transform hover:scale-[1.02]
+                  ${isSearching ? 'opacity-50 pointer-events-none' : ''}
+                `}
                 onClick={() => handleTopicSearch(topic.id)}
                 data-testid={`tile-topic-${topic.id.replace(/\s+/g, '-')}`}
               >
-                <CardContent className="p-4 text-center">
-                  <div className={`w-10 h-10 ${topic.bgColor} rounded-full flex items-center justify-center mx-auto mb-3`}>
-                    <IconComponent className={`w-5 h-5 ${topic.iconColor}`} aria-hidden="true" />
+                <CardContent className="relative p-4 text-center z-10">
+                  <div className={`
+                    w-10 h-10 ${topic.bgColor} rounded-full 
+                    flex items-center justify-center mx-auto mb-3
+                    shadow-md border border-white/30
+                    bg-gradient-to-br from-current to-transparent
+                  `}>
+                    <IconComponent className={`w-5 h-5 ${topic.iconColor} drop-shadow-sm`} aria-hidden="true" />
                   </div>
-                  <h4 className="text-sm font-semibold text-gray-800 leading-tight">
+                  <h4 className="text-sm font-semibold text-gray-800 leading-tight drop-shadow-sm">
                     {topic.title}
                   </h4>
                 </CardContent>
