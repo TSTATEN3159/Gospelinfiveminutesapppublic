@@ -66,58 +66,20 @@ const PaymentForm = ({
         variant: "destructive",
       });
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      try {
-        // Record the donation in the database
-        await apiRequest('/api/record-donation', 'POST', {
-          amount,
-          paymentIntentId: paymentIntent.id,
-          currency: paymentIntent.currency.toUpperCase(),
-          metadata: {
-            app: 'Gospel in 5 Minutes',
-            type: 'donation',
-            amount_formatted: `$${amount.toFixed(2)}`
-          }
-        });
+      // Payment succeeded! Webhook will automatically record the donation
+      // Refresh donation stats after a short delay to allow webhook processing
+      setTimeout(() => {
+        queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
+      }, 2000);
 
-        // Invalidate donation stats to refresh the totals immediately
-        await queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
-
-        toast({
-          title: "Thank You!",
-          description: "Your donation was successful. God bless your generous heart!",
-        });
-        onSuccess();
-      } catch (recordError) {
-        // Even if recording fails, the payment succeeded, so we still show success
-        console.warn('Failed to record donation:', recordError);
-        toast({
-          title: "Thank You!",
-          description: "Your donation was successful. God bless your generous heart!",
-        });
-        onSuccess();
-      }
+      toast({
+        title: "Thank You!",
+        description: "Your donation was successful. God bless your generous heart!",
+      });
+      onSuccess();
     } else {
       // Payment is processing or requires additional action
-      try {
-        // Still try to record as processing if we have payment intent
-        if (paymentIntent) {
-          await apiRequest('/api/record-donation', 'POST', {
-            amount,
-            paymentIntentId: paymentIntent.id,
-            currency: paymentIntent.currency.toUpperCase(),
-            metadata: {
-              app: 'Gospel in 5 Minutes',
-              type: 'donation',
-              amount_formatted: `$${amount.toFixed(2)}`
-            }
-          });
-          
-          await queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
-        }
-      } catch (recordError) {
-        console.warn('Failed to record processing donation:', recordError);
-      }
-      
+      // Webhook will handle recording when the payment eventually succeeds
       toast({
         title: "Payment Processing",
         description: "Your payment is being processed. Thank you!",
