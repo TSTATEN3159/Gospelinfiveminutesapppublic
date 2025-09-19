@@ -6,12 +6,15 @@ import BibleStudyPlans from "../components/BibleStudyPlans";
 import AskPastor from "../components/AskPastor";
 import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
+import VideoPlayer from "../components/VideoPlayer";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
+import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play } from "lucide-react";
 
 // Services
 import { bibleService, type DailyVerse } from "../services/bibleService";
+import { videoService, type VideoItem } from "../services/videoService";
 
 // Images
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
@@ -39,29 +42,35 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showStudyPlans, setShowStudyPlans] = useState(false);
   const [showAskPastor, setShowAskPastor] = useState(false);
+  const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
   const [streakDays, setStreakDays] = useState(0);
   const [dailyVerse, setDailyVerse] = useState<DailyVerse | null>(null);
+  const [dailyVideo, setDailyVideo] = useState<VideoItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
-  // Load daily verse from Bible API
+  // Load daily verse from Bible API and daily video
   useEffect(() => {
-    const loadDailyVerse = async () => {
+    const loadDailyContent = async () => {
       try {
         setLoading(true);
         setError(null);
         const verse = await bibleService.getDailyVerse();
         setDailyVerse(verse);
+        
+        // Get daily BibleProject video
+        const video = videoService.getDailyBibleProjectVideo();
+        setDailyVideo(video);
       } catch (err) {
-        setError('Unable to load today\'s verse. Please check your connection.');
-        console.error('Failed to load daily verse:', err);
+        setError('Unable to load today\'s content. Please check your connection.');
+        console.error('Failed to load daily content:', err);
       } finally {
         setLoading(false);
       }
     };
 
-    loadDailyVerse();
+    loadDailyContent();
   }, []);
 
   const handleBadgeEarned = (badgeType: string, streakDays: number) => {
@@ -299,6 +308,77 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
           <StreakCounter onBadgeEarned={handleBadgeEarned} onStreakUpdate={handleStreakUpdate} />
         </div>
 
+        {/* The Gospel, In Their Words Section */}
+        {dailyVideo && (
+          <div className="bg-white rounded-2xl overflow-hidden shadow-sm">
+            <div className="p-4">
+              <div className="flex items-center mb-3">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
+                  <Play className="w-4 h-4 text-blue-600" />
+                </div>
+                <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-gospelWords">
+                  The Gospel, In Their Words
+                </h2>
+              </div>
+              
+              <div 
+                className="flex items-center p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl cursor-pointer hover-elevate mb-3"
+                onClick={() => setShowVideoPlayer(true)}
+                data-testid="card-dailyVideo"
+                role="button"
+                tabIndex={0}
+                aria-label={`Today's video: ${dailyVideo.title} - Click to watch`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    setShowVideoPlayer(true);
+                  }
+                }}
+              >
+                <div className="flex-1 pr-4">
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge className="bg-blue-600 text-white text-xs">
+                      <Play className="w-3 h-3 mr-1" />
+                      BibleProject
+                    </Badge>
+                    <span className="text-xs text-gray-500">{dailyVideo.duration}</span>
+                  </div>
+                  <h3 className="font-semibold text-gray-900 text-sm mb-1">
+                    {dailyVideo.title}
+                  </h3>
+                  {dailyVideo.subject && (
+                    <p className="text-sm text-blue-700 font-medium mb-1">
+                      Today's Focus: {dailyVideo.subject}
+                    </p>
+                  )}
+                  <p className="text-xs text-gray-600 line-clamp-2">
+                    {dailyVideo.description}
+                  </p>
+                  {dailyVideo.verseReference && (
+                    <p className="text-xs text-gray-500 mt-1 font-medium">
+                      {dailyVideo.verseReference}
+                    </p>
+                  )}
+                </div>
+                <div className="w-16 h-16 rounded-lg overflow-hidden flex-shrink-0 relative">
+                  <img 
+                    src={dailyVideo.thumbnail}
+                    alt={dailyVideo.title}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-black bg-opacity-20 flex items-center justify-center">
+                    <Play className="w-6 h-6 text-white drop-shadow-lg" />
+                  </div>
+                </div>
+              </div>
+              
+              <p className="text-gray-600 text-xs text-center">
+                Tap to watch today's animated Bible teaching from BibleProject
+              </p>
+            </div>
+          </div>
+        )}
+
         {/* Facebook & Live Counter Section */}
         <div className="bg-white rounded-2xl p-4 shadow-sm">
           <div className="flex flex-col items-center space-y-4">
@@ -392,6 +472,15 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Video Player Modal */}
+      {dailyVideo && (
+        <VideoPlayer 
+          video={dailyVideo}
+          isOpen={showVideoPlayer}
+          onClose={() => setShowVideoPlayer(false)}
+        />
+      )}
     </div>
   );
 }
