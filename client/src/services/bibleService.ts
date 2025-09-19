@@ -7,6 +7,25 @@ export interface BibleVerse {
   translation?: string;
 }
 
+export interface BibleVersion {
+  id: string;
+  name: string;
+  abbreviation: string;
+  language: string;
+  description?: string;
+}
+
+export interface ApiBibleVerse {
+  id: string;
+  orgId: string;
+  bookId: string;
+  chapterId: string;
+  content: string;
+  reference: string;
+  verseCount: number;
+  copyright: string;
+}
+
 export interface DailyVerse extends BibleVerse {
   date: string;
   meaning?: string;
@@ -15,6 +34,9 @@ export interface DailyVerse extends BibleVerse {
 
 class BibleService {
   private cache = new Map<string, DailyVerse>();
+  private versionsCache = new Map<string, BibleVersion[]>();
+  private readonly API_BIBLE_BASE_URL = 'https://api.scripture.api.bible/v1';
+  private readonly API_KEY = import.meta.env.VITE_API_BIBLE_KEY;
   
   // Get today's date as cache key
   private getTodayKey(): string {
@@ -112,28 +134,117 @@ class BibleService {
     throw new Error('All Bible APIs failed');
   }
 
-  // Get daily verse with caching
-  async getDailyVerse(): Promise<DailyVerse> {
-    const todayKey = this.getTodayKey();
+  // Fetch verse from backend API (which calls API.Bible)
+  private async fetchFromBackendApi(version: string = 'NIV'): Promise<BibleVerse> {
+    const response = await fetch(`/api/daily-verse?version=${encodeURIComponent(version)}`);
+    
+    if (!response.ok) {
+      throw new Error(`Backend API request failed: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    if (!data.success) {
+      throw new Error('Backend API returned error');
+    }
+    
+    return data.verse;
+  }
+
+  // Get available Bible versions from backend
+  async getBibleVersions(): Promise<BibleVersion[]> {
+    const cacheKey = 'bible_versions';
+    
+    if (this.versionsCache.has(cacheKey)) {
+      return this.versionsCache.get(cacheKey)!;
+    }
+
+    try {
+      const response = await fetch('/api/bible-versions');
+      
+      if (!response.ok) {
+        throw new Error(`Failed to fetch Bible versions: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      if (!data.success) {
+        throw new Error('Backend API returned error');
+      }
+      
+      this.versionsCache.set(cacheKey, data.versions);
+      return data.versions;
+    } catch (error) {
+      console.error('Error fetching Bible versions:', error);
+      // Return default versions on error
+      const defaultVersions: BibleVersion[] = [
+        { id: 'NIV', name: 'New International Version', abbreviation: 'NIV', language: 'English' },
+        { id: 'KJV', name: 'King James Version', abbreviation: 'KJV', language: 'English' }
+      ];
+      this.versionsCache.set(cacheKey, defaultVersions);
+      return defaultVersions;
+    }
+  }
+
+  // Get daily verse with caching and API.Bible integration
+  async getDailyVerse(translation: string = 'NIV'): Promise<DailyVerse> {
+    const todayKey = `${this.getTodayKey()}_${translation}`;
     
     // Check cache first
     if (this.cache.has(todayKey)) {
       return this.cache.get(todayKey)!;
     }
 
-    // For App Store compliance, provide meaningful content without external API calls
-    // This prevents CORS errors while still delivering real spiritual content
-    const dailyVerse: DailyVerse = {
-      text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
-      reference: "Proverbs 3:5-6",
-      book: "Proverbs", 
-      chapter: "3",
-      verse: "5-6",
-      translation: "NIV",
-      date: todayKey,
-      meaning: "This verse teaches us about complete trust in God rather than relying solely on our own wisdom and understanding.",
-      application: "In daily life, this means bringing our decisions, concerns, and plans to God in prayer, seeking His guidance rather than acting purely on our own judgment."
-    };
+    let dailyVerse: DailyVerse;
+    
+    try {
+      // Try to get verse from backend API (which calls API.Bible)
+      const verse = await this.fetchFromBackendApi(translation);
+      
+      dailyVerse = {
+        ...verse,
+        date: this.getTodayKey(),
+        meaning: this.generateMeaning(verse),
+        application: this.generateApplication(verse)
+      };
+    } catch (error) {
+      console.error('Backend API failed, using fallback verse:', error);
+      
+      // Fallback to inspirational verses if API fails
+      const fallbackVerses = [
+        {
+          text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+          reference: "Proverbs 3:5-6",
+          book: "Proverbs",
+          chapter: "3",
+          verse: "5-6",
+          translation: "NIV"
+        },
+        {
+          text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, to give you hope and a future.",
+          reference: "Jeremiah 29:11",
+          book: "Jeremiah",
+          chapter: "29",
+          verse: "11",
+          translation: "NIV"
+        },
+        {
+          text: "I can do all this through him who gives me strength.",
+          reference: "Philippians 4:13",
+          book: "Philippians",
+          chapter: "4",
+          verse: "13",
+          translation: "NIV"
+        }
+      ];
+      
+      const randomVerse = fallbackVerses[Math.floor(Math.random() * fallbackVerses.length)];
+      
+      dailyVerse = {
+        ...randomVerse,
+        date: this.getTodayKey(),
+        meaning: this.generateMeaning(randomVerse),
+        application: this.generateApplication(randomVerse)
+      };
+    }
 
     // Cache for today
     this.cache.set(todayKey, dailyVerse);
@@ -190,12 +301,98 @@ class BibleService {
     return 'Reflect on this verse throughout your day. Consider how God might be speaking to you through these words and how you can apply them to your current circumstances.';
   }
 
-  // Search for specific verses (for future features)
-  async searchVerses(query: string): Promise<BibleVerse[]> {
-    // This would integrate with Bible search APIs in the future
-    // For now, return empty array
-    return [];
+  // Search for specific verses using API.Bible
+  async searchVerses(query: string, bibleId: string = 'de4e12af7f28f599-02'): Promise<BibleVerse[]> {
+    if (!this.API_KEY || query.length < 3) {
+      return [];
+    }
+    
+    try {
+      const response = await fetch(`${this.API_BIBLE_BASE_URL}/bibles/${bibleId}/search?query=${encodeURIComponent(query)}&limit=10`, {
+        headers: {
+          'api-key': this.API_KEY
+        }
+      });
+      
+      if (!response.ok) {
+        throw new Error(`Search failed: ${response.status}`);
+      }
+      
+      const data = await response.json();
+      
+      return data.data.verses.map((verse: any) => {
+        const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+        
+        return {
+          text: verse.text.replace(/<[^>]*>/g, '').trim(),
+          reference: verse.reference,
+          book: refParts ? refParts[1] : 'Unknown',
+          chapter: refParts ? refParts[2] : '1',
+          verse: refParts ? refParts[3] : '1',
+          translation: bibleId === 'de4e12af7f28f599-02' ? 'NIV' : 'KJV'
+        };
+      });
+    } catch (error) {
+      console.error('Bible search failed:', error);
+      return [];
+    }
+  }
+
+  // Get specific verse by reference
+  async getVerse(reference: string, bibleId: string = 'de4e12af7f28f599-02'): Promise<BibleVerse | null> {
+    if (!this.API_KEY) {
+      return null;
+    }
+    
+    try {
+      // For now, return null since we're focusing on daily verses from backend
+      return null;
+    } catch (error) {
+      console.error('Failed to fetch specific verse:', error);
+      return null;
+    }
+  }
+  
+  // Helper to format reference for API.Bible
+  private formatReferenceForApi(reference: string): string {
+    // This is a simplified version - in a full implementation,
+    // you'd want a complete book name to abbreviation mapping
+    const bookMappings: { [key: string]: string } = {
+      'john': 'JHN',
+      'genesis': 'GEN',
+      'psalms': 'PSA',
+      'proverbs': 'PRO',
+      'matthew': 'MAT',
+      'romans': 'ROM',
+      'philippians': 'PHP',
+      'jeremiah': 'JER'
+    };
+    
+    const parts = reference.toLowerCase().match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+    if (!parts) return 'JHN.3.16'; // Default fallback
+    
+    const book = bookMappings[parts[1]] || 'JHN';
+    return `${book}.${parts[2]}.${parts[3]}`;
   }
 }
 
 export const bibleService = new BibleService();
+
+// For notifications service to access verses with version preference
+export const getBibleVerse = (version?: string) => {
+  // Get user's preferred version from localStorage if not provided
+  if (!version) {
+    const savedPreferences = localStorage.getItem("gospelAppPreferences");
+    if (savedPreferences) {
+      try {
+        const prefs = JSON.parse(savedPreferences);
+        version = prefs.bibleVersion || 'NIV';
+      } catch (e) {
+        version = 'NIV';
+      }
+    } else {
+      version = 'NIV';
+    }
+  }
+  return bibleService.getDailyVerse(version);
+};

@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -8,6 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, TestTube } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { notificationService } from "../services/notificationService";
+import { bibleService } from "../services/bibleService";
 
 interface SettingsPageProps {
   onNavigate?: (page: string) => void;
@@ -42,6 +44,7 @@ interface AppPreferences {
   soundEnabled: boolean;
   darkMode: boolean;
   language: string;
+  bibleVersion: string;
 }
 
 export default function SettingsPage({ onNavigate, streakDays = 0, user }: SettingsPageProps) {
@@ -66,10 +69,52 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
     emailUpdates: false,
     soundEnabled: true,
     darkMode: false,
-    language: 'en'
+    language: 'en',
+    bibleVersion: 'NIV'
   });
 
   const [isEditing, setIsEditing] = useState(false);
+
+  // Bible Version Selector Component
+  const BibleVersionSelector = ({ value, onChange }: { value: string, onChange: (value: string) => void }) => {
+    const { data: bibleVersions, isLoading } = useQuery({
+      queryKey: ['/api/bible-versions'],
+      queryFn: () => fetch('/api/bible-versions').then(r => r.json())
+    });
+
+    if (isLoading) {
+      return (
+        <div>
+          <Label htmlFor="bibleVersion">Bible Version</Label>
+          <Select disabled>
+            <SelectTrigger data-testid="select-bible-version">
+              <SelectValue placeholder="Loading versions..." />
+            </SelectTrigger>
+          </Select>
+        </div>
+      );
+    }
+
+    const versions = bibleVersions?.success ? bibleVersions.versions : [];
+
+    return (
+      <div>
+        <Label htmlFor="bibleVersion">Bible Version</Label>
+        <Select value={value} onValueChange={onChange}>
+          <SelectTrigger data-testid="select-bible-version">
+            <SelectValue />
+          </SelectTrigger>
+          <SelectContent>
+            {versions.map((version: any) => (
+              <SelectItem key={version.abbreviation} value={version.abbreviation}>
+                {version.name} ({version.abbreviation})
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+    );
+  };
 
   // Load preferences from localStorage and restore notifications on mount
   useEffect(() => {
@@ -484,6 +529,11 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                 </SelectContent>
               </Select>
             </div>
+
+            <BibleVersionSelector 
+              value={preferences.bibleVersion}
+              onChange={(value) => handlePreferenceChange('bibleVersion', value)}
+            />
           </CardContent>
         </Card>
 

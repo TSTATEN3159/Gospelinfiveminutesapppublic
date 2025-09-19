@@ -1,4 +1,4 @@
-import { bibleService } from './bibleService';
+import { getBibleVerse } from './bibleService';
 
 interface NotificationPreferences {
   dailyReminders: boolean;
@@ -45,7 +45,7 @@ class NotificationService {
       }
 
       // Get today's verse
-      const dailyVerse = await bibleService.getDailyVerse();
+      const dailyVerse = await getBibleVerse();
       
       const notification = new Notification('Your Daily Verse', {
         body: `${dailyVerse.reference}: "${dailyVerse.text}"`,

@@ -31,6 +31,140 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // use storage to perform CRUD operations on the storage interface
   // e.g. storage.insertUser(user) or storage.getUserByUsername(username)
 
+  // API.Bible integration for multiple Bible versions
+  const getApiBibleVerse = async (bibleId: string = 'de4e12af7f28f599-02', verseId?: string) => {
+    const API_KEY = process.env.API_BIBLE_KEY;
+    if (!API_KEY) {
+      throw new Error('API_BIBLE_KEY not configured');
+    }
+
+    const endpoint = verseId 
+      ? `/bibles/${bibleId}/verses/${verseId}` 
+      : `/bibles/${bibleId}/verses/JHN.3.16`; // Default to John 3:16
+    
+    const response = await fetch(`https://api.scripture.api.bible/v1${endpoint}`, {
+      headers: {
+        'api-key': API_KEY
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`API.Bible request failed: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data.data;
+  };
+
+  // Bible version mapping - maps abbreviations to API.Bible IDs
+  const bibleVersionMapping: { [key: string]: { id: string, name: string } } = {
+    'NIV': { id: 'de4e12af7f28f599-02', name: 'New International Version' },
+    'KJV': { id: 'de4e12af7f28f599-01', name: 'King James Version' },
+    'ESV': { id: '01b29f4e-0790-11e9-8515-23df8c4a3ba3', name: 'English Standard Version' },
+    'NLT': { id: '01b29f4e-0790-11e9-8b69-5ba9a4dbc48e', name: 'New Living Translation' },
+    'MSG': { id: '01b29f4e-0790-11e9-8c1b-4b8a3ba3f8d8', name: 'The Message' }
+  };
+
+  // Daily verse selection based on day of year for consistency
+  const getDailyVerseReference = (): string => {
+    const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
+    const verses = [
+      'JHN.3.16', 'PSA.23.1', 'PRO.3.5-6', 'JER.29.11', 'PHP.4.13',
+      'ROM.8.28', 'ISA.41.10', 'JHN.14.6', 'PSA.119.105', 'MAT.28.20',
+      'HEB.11.1', 'ROM.10.9', 'EPH.2.8-9', 'PSA.46.10', 'JHN.15.13',
+      'ROM.5.8', 'PSA.121.1-2', 'JHN.10.10', 'PHP.4.19', 'MAT.11.28',
+      'PSA.34.18', 'ROM.12.2', 'JHN.1.1', 'PSA.91.2', 'EPH.6.10',
+      'JOS.1.9', 'PSA.27.1', 'ROM.15.13', 'JHN.16.33', 'PSA.18.2'
+    ];
+    return verses[dayOfYear % verses.length];
+  };
+
+  // Get daily verse from API.Bible
+  app.get("/api/daily-verse", async (req, res) => {
+    try {
+      const version = req.query.version as string || 'NIV';
+      const versionInfo = bibleVersionMapping[version.toUpperCase()];
+      
+      if (!versionInfo) {
+        return res.status(400).json({ 
+          success: false, 
+          error: `Unsupported Bible version: ${version}. Supported versions: ${Object.keys(bibleVersionMapping).join(', ')}` 
+        });
+      }
+      
+      const dailyReference = getDailyVerseReference();
+      const verse = await getApiBibleVerse(versionInfo.id, dailyReference);
+      
+      // Parse reference to extract components
+      const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+      
+      const result = {
+        text: verse.content.replace(/<[^>]*>/g, '').trim(), // Remove HTML tags
+        reference: verse.reference,
+        book: refParts ? refParts[1] : 'Unknown',
+        chapter: refParts ? refParts[2] : '1',
+        verse: refParts ? refParts[3] : '1',
+        translation: version.toUpperCase(),
+        translationName: versionInfo.name,
+        date: new Date().toDateString()
+      };
+      
+      res.json({ success: true, verse: result });
+    } catch (error) {
+      console.error('Error fetching daily verse:', error);
+      
+      // Fallback to inspirational verses with requested translation noted
+      const requestedVersion = req.query.version as string || 'NIV';
+      const fallbackVerses = [
+        {
+          text: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+          reference: "Proverbs 3:5-6",
+          book: "Proverbs",
+          chapter: "3",
+          verse: "5-6",
+          translation: "NIV",
+          translationName: "New International Version (Fallback)",
+          date: new Date().toDateString()
+        },
+        {
+          text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, to give you hope and a future.",
+          reference: "Jeremiah 29:11",
+          book: "Jeremiah",
+          chapter: "29",
+          verse: "11",
+          translation: "NIV",
+          translationName: "New International Version (Fallback)",
+          date: new Date().toDateString()
+        }
+      ];
+      
+      const randomVerse = fallbackVerses[Math.floor(Math.random() * fallbackVerses.length)];
+      res.json({ 
+        success: true, 
+        verse: randomVerse, 
+        fallback: true,
+        requestedVersion 
+      });
+    }
+  });
+
+  // Get available Bible versions (using our supported mapping)
+  app.get("/api/bible-versions", async (req, res) => {
+    try {
+      const versions = Object.entries(bibleVersionMapping).map(([abbrev, info]) => ({
+        id: info.id,
+        abbreviation: abbrev,
+        name: info.name,
+        language: 'English'
+      }));
+      
+      res.json({ success: true, versions });
+    } catch (error) {
+      console.error('Error returning Bible versions:', error);
+      res.status(500).json({ success: false, error: 'Failed to get Bible versions' });
+    }
+  });
+
   // Bible Search OpenAI Route - for retrieving Bible chapters and verses
   const bibleSearchSchema = z.object({
     query: z.string().min(1).max(100), // e.g. "John 3:16" or "Psalm 23"
@@ -42,6 +176,42 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { query, version } = bibleSearchSchema.parse(req.body);
       console.log("Bible Search - Query:", query, "Version:", version);
 
+      // Try API.Bible first, fallback to OpenAI if needed
+      try {
+        const API_KEY = process.env.API_BIBLE_KEY;
+        if (API_KEY && query.length >= 3) {
+          const bibleId = version === 'NIV' ? 'de4e12af7f28f599-02' : 'de4e12af7f28f599-01';
+          const searchResponse = await fetch(`https://api.scripture.api.bible/v1/bibles/${bibleId}/search?query=${encodeURIComponent(query)}&limit=10`, {
+            headers: {
+              'api-key': API_KEY
+            }
+          });
+          
+          if (searchResponse.ok) {
+            const searchData = await searchResponse.json();
+            const verses = searchData.data.verses.map((verse: any) => {
+              const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+              
+              return {
+                text: verse.text.replace(/<[^>]*>/g, '').trim(),
+                reference: verse.reference,
+                book: refParts ? refParts[1] : 'Unknown',
+                chapter: refParts ? refParts[2] : '1',
+                verse: refParts ? refParts[3] : '1',
+                translation: version
+              };
+            });
+            
+            if (verses.length > 0) {
+              return res.json({ success: true, verses, source: 'api.bible' });
+            }
+          }
+        }
+      } catch (apiBibleError) {
+        console.log('API.Bible search failed, falling back to OpenAI:', apiBibleError);
+      }
+
+      // Fallback to OpenAI for search
       const response = await openai.chat.completions.create({
         model: "gpt-4o-mini",
         messages: [

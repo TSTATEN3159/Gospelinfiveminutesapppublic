@@ -56,7 +56,20 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
       try {
         setLoading(true);
         setError(null);
-        const verse = await bibleService.getDailyVerse();
+        
+        // Get user's preferred Bible version from localStorage
+        const savedPreferences = localStorage.getItem("gospelAppPreferences");
+        let bibleVersion = 'NIV'; // Default
+        if (savedPreferences) {
+          try {
+            const prefs = JSON.parse(savedPreferences);
+            bibleVersion = prefs.bibleVersion || 'NIV';
+          } catch (e) {
+            console.warn('Could not parse saved preferences');
+          }
+        }
+        
+        const verse = await bibleService.getDailyVerse(bibleVersion);
         setDailyVerse(verse);
         
         // Get daily Gospel video using Christian Context API
