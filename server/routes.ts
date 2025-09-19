@@ -311,6 +311,96 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Blog articles endpoint using Christian Context API
+  app.get("/api/blog-articles", async (req, res) => {
+    try {
+      const { limit = 5 } = req.query;
+
+      // Christian blog themes for diverse content
+      const blogThemes = [
+        'Faith', 'Prayer', 'Grace', 'Hope', 'Peace', 
+        'Wisdom', 'Trust', 'Love', 'Strength', 'Forgiveness',
+        'Salvation', 'Joy', 'Guidance', 'Purpose', 'Relationships'
+      ];
+
+      const articles = [];
+      const numArticles = Math.min(parseInt(limit as string), 10);
+
+      // Fetch articles from Christian Context API in parallel
+      const themePromises = blogThemes.slice(0, numArticles).map(async (theme: string, i: number) => {
+        try {
+          const apiUrl = `https://getcontext.xyz/api/api.php?query=${encodeURIComponent(theme)}`;
+          const response = await fetch(apiUrl);
+          
+          if (response.ok) {
+            const data = await response.json();
+            
+            // Transform API data to blog article format
+            const verseReference = data.verse_reference || null;
+            const verseText = data.verse_content || null;
+            const commentary = data.commentary_content || null;
+            
+            // Create full article content from API data
+            const fullContent = `
+              ${verseReference ? `<h3>Scripture Focus: ${verseReference}</h3>` : ''}
+              ${verseText ? `<blockquote class="bible-verse">"${verseText}"</blockquote>` : ''}
+              ${commentary ? `<div class="commentary">${commentary}</div>` : ''}
+              <p>This article explores the biblical theme of ${theme.toLowerCase()} through Scripture and practical application for Christian living.</p>
+              <p>As believers, we are called to grow in our understanding of God's character and apply His teachings to our daily lives. The theme of ${theme.toLowerCase()} is woven throughout Scripture and offers us guidance for walking faithfully with Christ.</p>
+              ${verseReference ? `<p>Take time to meditate on ${verseReference} today and consider how God's Word speaks to your current circumstances.</p>` : ''}
+              <p><strong>Prayer:</strong> Lord, help us to grow in our understanding of ${theme.toLowerCase()} and to live out Your truth in our daily lives. Guide us by Your Spirit and help us to trust in Your perfect plan. Amen.</p>
+            `;
+
+            return {
+              id: `article_${Date.now()}_${i}`,
+              title: verseReference ? `${theme}: Reflections on ${verseReference}` : `Walking in ${theme}: A Christian Perspective`,
+              excerpt: verseText ? `"${verseText}" - Explore this powerful Scripture and discover how it applies to your Christian walk.` : `Discover biblical insights on ${theme.toLowerCase()} and how to apply God's truth to your daily life.`,
+              content: fullContent,
+              author: `Christian Context Ministry`,
+              publishDate: new Date().toISOString().split('T')[0], // Today's date
+              readTime: Math.floor(Math.random() * 4) + 3, // 3-6 minutes
+              views: Math.floor(Math.random() * 5000) + 1000, // 1000-6000 views
+              category: theme === 'Prayer' ? 'Prayer & Devotion' : 
+                       theme === 'Faith' || theme === 'Trust' ? 'Faith & Trust' :
+                       theme === 'Peace' || theme === 'Hope' ? 'Mental Health & Faith' :
+                       theme === 'Grace' || theme === 'Salvation' ? 'Theology' :
+                       'Christian Living',
+              verseReference,
+              verseText,
+              source: 'Christian Context API'
+            };
+          }
+          return null;
+        } catch (apiError: any) {
+          console.error(`ERROR fetching blog content for ${theme}:`, apiError.message);
+          return null;
+        }
+      });
+
+      // Wait for all API calls to complete
+      const apiResults = await Promise.allSettled(themePromises);
+      
+      // Add successful results to articles array
+      apiResults.forEach((result: any) => {
+        if (result.status === 'fulfilled' && result.value) {
+          articles.push(result.value);
+        }
+      });
+
+      res.json({
+        success: true,
+        articles: articles
+      });
+
+    } catch (error) {
+      console.error('Blog articles API error:', error);
+      return res.status(500).json({ 
+        success: false, 
+        error: "Unable to load blog articles at this time" 
+      });
+    }
+  });
+
   // Blog Subscription Routes
   app.post("/api/subscribe", async (req, res) => {
     try {
