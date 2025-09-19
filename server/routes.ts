@@ -340,15 +340,55 @@ export async function registerRoutes(app: Express): Promise<Server> {
             const verseText = data.verse_content || null;
             const commentary = data.commentary_content || null;
             
-            // Create full article content from API data
+            // Create comprehensive article content from API data
             const fullContent = `
-              ${verseReference ? `<h3>Scripture Focus: ${verseReference}</h3>` : ''}
+              ${verseReference ? `<h3>Scripture Focus: ${verseReference}</h3>` : `<h3>Exploring ${theme} in Christian Life</h3>`}
               ${verseText ? `<blockquote class="bible-verse">"${verseText}"</blockquote>` : ''}
               ${commentary ? `<div class="commentary">${commentary}</div>` : ''}
-              <p>This article explores the biblical theme of ${theme.toLowerCase()} through Scripture and practical application for Christian living.</p>
-              <p>As believers, we are called to grow in our understanding of God's character and apply His teachings to our daily lives. The theme of ${theme.toLowerCase()} is woven throughout Scripture and offers us guidance for walking faithfully with Christ.</p>
-              ${verseReference ? `<p>Take time to meditate on ${verseReference} today and consider how God's Word speaks to your current circumstances.</p>` : ''}
-              <p><strong>Prayer:</strong> Lord, help us to grow in our understanding of ${theme.toLowerCase()} and to live out Your truth in our daily lives. Guide us by Your Spirit and help us to trust in Your perfect plan. Amen.</p>
+              
+              <h4>Introduction</h4>
+              <p>The biblical theme of ${theme.toLowerCase()} stands as one of the most profound and transformative aspects of our Christian faith. Throughout Scripture, we see countless examples of how God calls His people to embrace and embody this essential characteristic. As we dive deeper into understanding ${theme.toLowerCase()}, we discover that it's not merely a concept to comprehend, but a living reality meant to shape every aspect of our daily walk with Christ.</p>
+              
+              <p>In our modern world, filled with challenges and uncertainties, the biblical understanding of ${theme.toLowerCase()} offers us both comfort and direction. It serves as an anchor for our souls and a compass for our decisions. When we truly grasp what God's Word teaches about ${theme.toLowerCase()}, we find ourselves equipped to navigate life's complexities with wisdom and grace.</p>
+              
+              <h4>Biblical Foundation</h4>
+              <p>The foundation of ${theme.toLowerCase()} in Scripture runs deep, woven throughout both the Old and New Testaments. From the earliest pages of Genesis to the final chapters of Revelation, we see this theme consistently presented as central to God's character and His desires for His people. The Hebrew and Greek words used to describe ${theme.toLowerCase()} carry rich meanings that go far beyond our modern understanding.</p>
+              
+              <p>In the Old Testament, we witness the patriarchs, kings, and prophets grappling with questions of ${theme.toLowerCase()}. Their stories serve as powerful examples of both triumph and failure, showing us the consequences of embracing or rejecting God's call to live out this principle. These narratives aren't merely historical accounts; they're timeless lessons that speak directly to our contemporary situations.</p>
+              
+              <p>The New Testament further develops our understanding through the teachings and example of Jesus Christ. He perfectly embodied ${theme.toLowerCase()} in His earthly ministry, demonstrating what it looks like when this biblical principle is lived out in human form. The apostles then took these teachings and applied them to the early church, giving us practical guidance for community life and personal growth.</p>
+              
+              <h4>Practical Application</h4>
+              <p>Understanding ${theme.toLowerCase()} intellectually is only the beginning; the real transformation comes when we begin to apply these truths to our everyday lives. This application doesn't happen overnight but is a gradual process of spiritual growth and character development. It requires intentionality, prayer, and often the support of fellow believers who can encourage us along the way.</p>
+              
+              <p>In our relationships with family, friends, and colleagues, ${theme.toLowerCase()} manifests in countless ways. It influences how we communicate, how we handle conflict, how we show love and support, and how we respond to hurt or disappointment. When we allow biblical principles to guide these interactions, we become living testimonies of God's transforming power.</p>
+              
+              <p>Our professional lives also provide numerous opportunities to demonstrate ${theme.toLowerCase()}. Whether we're dealing with difficult customers, challenging deadlines, ethical dilemmas, or workplace conflicts, our response can either reflect Christ's character or fall short of His calling. The marketplace becomes a mission field where our integrity and character speak volumes about our faith.</p>
+              
+              <h4>Overcoming Challenges</h4>
+              <p>Living out ${theme.toLowerCase()} in a fallen world isn't always easy. We face internal struggles with our own sinful nature, external pressures from a culture that often opposes biblical values, and spiritual warfare that seeks to undermine our faith. Recognizing these challenges is the first step toward overcoming them with God's help.</p>
+              
+              <p>When we fail to exemplify ${theme.toLowerCase()} as we should, God's grace provides both forgiveness and the power to start fresh. The Christian life isn't about perfection but about progress, and every failure becomes an opportunity to experience God's mercy anew and to grow in our understanding of His love.</p>
+              
+              <h4>Growing in Understanding</h4>
+              <p>Our journey toward a deeper understanding of ${theme.toLowerCase()} continues throughout our lifetime. Through regular Bible study, prayer, fellowship with other believers, and the guidance of the Holy Spirit, we gradually mature in our faith and become more like Christ. This growth often comes through both joyful experiences and difficult trials that test and refine our character.</p>
+              
+              ${verseReference ? `<p>As we meditate on ${verseReference} today, let us consider how God's Word speaks directly to our current circumstances. This verse isn't merely ancient text but living truth that has the power to transform our perspective and guide our actions.</p>` : ''}
+              
+              <h4>Conclusion</h4>
+              <p>The biblical theme of ${theme.toLowerCase()} challenges us to live differently than the world around us. It calls us to a higher standard, a deeper love, and a more authentic faith. As we continue to grow in our understanding and application of these truths, we become instruments of God's grace in a world that desperately needs to see His love in action.</p>
+              
+              <p>May we be people who not only understand ${theme.toLowerCase()} but who embody it in such a way that others are drawn to the source of our hope and strength. In doing so, we fulfill our calling as salt and light in this world, bringing glory to God and blessing to those around us.</p>
+              
+              <h4>Reflection Questions</h4>
+              <ul>
+              <li>How has your understanding of ${theme.toLowerCase()} grown over the past year?</li>
+              <li>What specific areas of your life need more of this biblical principle?</li>
+              <li>How can you encourage others in their journey toward greater ${theme.toLowerCase()}?</li>
+              <li>What practical steps will you take this week to apply these truths?</li>
+              </ul>
+              
+              <p><strong>Prayer:</strong> Heavenly Father, thank You for revealing Yourself to us through Your Word and for showing us what it means to live with authentic ${theme.toLowerCase()}. Help us to grow in our understanding of this vital aspect of Christian character. Transform our hearts and minds so that we might reflect Your nature more clearly to those around us. Give us strength to overcome the challenges we face and wisdom to apply Your truth in practical ways. Guide us by Your Spirit and help us to trust in Your perfect plan for our lives. May our lives be a testimony to Your goodness and grace. In Jesus' name, Amen.</p>
             `;
 
             return {
