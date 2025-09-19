@@ -407,6 +407,7 @@ export class MemStorage implements IStorage {
       id,
       requesterId,
       addresseeId,
+      initiatorId: requesterId,
       status: "pending",
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -415,7 +416,7 @@ export class MemStorage implements IStorage {
     return friendship;
   }
 
-  async updateFriendshipStatus(friendshipId: string, status: string): Promise<Friendship> {
+  async updateFriendshipStatus(friendshipId: string, status: 'pending' | 'accepted' | 'declined' | 'blocked'): Promise<Friendship> {
     const friendship = this.friendshipsMap.get(friendshipId);
     if (!friendship) {
       throw new Error(`Friendship with id ${friendshipId} not found`);
@@ -440,29 +441,35 @@ export class MemStorage implements IStorage {
       .filter(user => friendIds.includes(user.id));
   }
 
-  async getFriendRequests(userId: string): Promise<{incoming: AppUser[], outgoing: AppUser[]}> {
+  async getFriendRequests(userId: string): Promise<{incoming: {friendshipId: string, user: AppUser}[], outgoing: {friendshipId: string, user: AppUser}[]}> {
     const pendingFriendships = Array.from(this.friendshipsMap.values())
       .filter(friendship => friendship.status === "pending");
 
-    const incomingRequestIds = pendingFriendships
-      .filter(friendship => friendship.addresseeId === userId)
-      .map(friendship => friendship.requesterId);
+    const incoming: {friendshipId: string, user: AppUser}[] = [];
+    const outgoing: {friendshipId: string, user: AppUser}[] = [];
 
-    const outgoingRequestIds = pendingFriendships
-      .filter(friendship => friendship.requesterId === userId)
-      .map(friendship => friendship.addresseeId);
-
-    const incoming = Array.from(this.appUsersMap.values())
-      .filter(user => incomingRequestIds.includes(user.id));
-
-    const outgoing = Array.from(this.appUsersMap.values())
-      .filter(user => outgoingRequestIds.includes(user.id));
+    for (const friendship of pendingFriendships) {
+      if (friendship.initiatorId === userId) {
+        // User initiated this request -> outgoing
+        const user = this.appUsersMap.get(friendship.addresseeId);
+        if (user) {
+          outgoing.push({ friendshipId: friendship.id, user });
+        }
+      } else if (friendship.requesterId === userId || friendship.addresseeId === userId) {
+        // Someone else initiated this request -> incoming
+        const otherUserId = friendship.requesterId === userId ? friendship.addresseeId : friendship.requesterId;
+        const user = this.appUsersMap.get(otherUserId);
+        if (user) {
+          incoming.push({ friendshipId: friendship.id, user });
+        }
+      }
+    }
 
     return { incoming, outgoing };
   }
 
   async removeFriend(userId: string, friendId: string): Promise<void> {
-    for (const [id, friendship] of this.friendshipsMap.entries()) {
+    for (const [id, friendship] of Array.from(this.friendshipsMap.entries())) {
       if (
         (friendship.requesterId === userId && friendship.addresseeId === friendId) ||
         (friendship.requesterId === friendId && friendship.addresseeId === userId)

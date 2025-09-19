@@ -18,7 +18,7 @@ const getStripeClient = (): Stripe => {
       throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
     }
     stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-      apiVersion: "2023-10-16",
+      apiVersion: "2023-10-16" as any,
     });
   }
   return stripe;
@@ -202,11 +202,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
       };
 
       const videos = [];
-      const categoryThemes = themes[category as string] || themes.sermon;
+      const categoryThemes = themes[category as keyof typeof themes] || themes.sermon;
       const numVideos = Math.min(parseInt(limit as string), 10);
 
       // Fetch videos from Christian Context API in parallel for better performance
-      const themePromises = categoryThemes.slice(0, numVideos).map(async (theme, i) => {
+      const themePromises = categoryThemes.slice(0, numVideos).map(async (theme: string, i: number) => {
         try {
           const apiUrl = `https://getcontext.xyz/api/api.php?query=${encodeURIComponent(theme)}`;
           const response = await fetch(apiUrl);
@@ -236,7 +236,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             };
           }
           return null;
-        } catch (apiError) {
+        } catch (apiError: any) {
           console.error(`ERROR fetching ${theme}:`, apiError.message);
           return null;
         }
@@ -246,7 +246,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const apiResults = await Promise.allSettled(themePromises);
       
       // Add successful results to videos array
-      apiResults.forEach((result) => {
+      apiResults.forEach((result: any) => {
         if (result.status === 'fulfilled' && result.value) {
           videos.push(result.value);
         }
@@ -323,7 +323,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         'Salvation', 'Joy', 'Guidance', 'Purpose', 'Relationships'
       ];
 
-      const articles = [];
+      const articles: any[] = [];
       const numArticles = Math.min(parseInt(limit as string), 10);
 
       // Fetch articles from Christian Context API in parallel
@@ -429,7 +429,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json({
         success: true,
-        articles: articles
+        articles: articles as any[]
       });
 
     } catch (error) {
@@ -825,17 +825,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({
         success: true,
-        incoming: requests.incoming.map(user => ({
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email
+        incoming: requests.incoming.map(request => ({
+          id: request.user.id,
+          firstName: request.user.firstName,
+          lastName: request.user.lastName,
+          email: request.user.email
         })),
-        outgoing: requests.outgoing.map(user => ({
-          id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
-          email: user.email
+        outgoing: requests.outgoing.map(request => ({
+          id: request.user.id,
+          firstName: request.user.firstName,
+          lastName: request.user.lastName,
+          email: request.user.email
         }))
       });
     } catch (error) {
