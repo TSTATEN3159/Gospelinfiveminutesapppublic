@@ -86,6 +86,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Payment verification endpoint - verifies payment with Stripe and records donation
+  app.post("/api/verify-payment", async (req, res) => {
+    try {
+      const { paymentIntentId } = req.body;
+      
+      if (!paymentIntentId) {
+        return res.status(400).json({
+          success: false,
+          error: "Payment intent ID is required"
+        });
+      }
+
+      const stripe = getStripeClient();
+      
+      // Check if we've already recorded this donation
+      const existingDonation = await storage.getDonationByPaymentIntent(paymentIntentId);
+      if (existingDonation) {
+        return res.json({ 
+          success: true, 
+          message: "Donation already recorded",
+          donation: existingDonation 
+        });
+      }
+
+      // Retrieve payment intent from Stripe to verify
+      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      
+      if (paymentIntent.status === 'succeeded') {
+        // Record the verified donation
+        const donation = await storage.recordDonation({
+          amountCents: paymentIntent.amount,
+          currency: paymentIntent.currency.toUpperCase(),
+          paymentIntentId: paymentIntent.id,
+          status: 'succeeded',
+          metadata: JSON.stringify({
+            app: 'Gospel in 5 Minutes',
+            type: 'donation',
+            amount_formatted: `$${(paymentIntent.amount / 100).toFixed(2)}`,
+            stripe_created: paymentIntent.created,
+            verified_at: new Date().toISOString()
+          })
+        });
+
+        console.log('Payment verified and donation recorded:', {
+          id: paymentIntent.id,
+          amount: paymentIntent.amount,
+          currency: paymentIntent.currency
+        });
+
+        return res.json({ 
+          success: true, 
+          donation,
+          message: "Payment verified and donation recorded"
+        });
+      } else {
+        return res.status(400).json({
+          success: false,
+          error: `Payment not successful. Status: ${paymentIntent.status}`
+        });
+      }
+    } catch (error: any) {
+      console.error("Payment verification error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to verify payment" 
+      });
+    }
+  });
+
   // put application routes here
   // prefix all routes with /api
 

@@ -66,16 +66,31 @@ const PaymentForm = ({
         variant: "destructive",
       });
     } else if (paymentIntent && paymentIntent.status === 'succeeded') {
-      // Payment succeeded! Webhook will automatically record the donation
-      // Refresh donation stats after a short delay to allow webhook processing
-      setTimeout(() => {
-        queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
-      }, 2000);
+      // Payment succeeded! Verify and record the donation
+      try {
+        await apiRequest('/api/verify-payment', 'POST', {
+          paymentIntentId: paymentIntent.id
+        });
 
-      toast({
-        title: "Thank You!",
-        description: "Your donation was successful. God bless your generous heart!",
-      });
+        // Refresh donation stats immediately after recording
+        await queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
+
+        toast({
+          title: "Thank You!",
+          description: "Your donation was successful. God bless your generous heart!",
+        });
+      } catch (verifyError) {
+        console.warn('Failed to verify donation, but payment succeeded:', verifyError);
+        
+        // Still show success since payment went through
+        toast({
+          title: "Thank You!",
+          description: "Your donation was successful. God bless your generous heart!",
+        });
+        
+        // Refresh stats anyway in case verification worked
+        queryClient.invalidateQueries({ queryKey: ['/api/donation-stats'] });
+      }
       onSuccess();
     } else {
       // Payment is processing or requires additional action
