@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
-import { Search, Book, Crown, Heart, HandHeart, Gift, Users, ArrowLeft, ExternalLink } from 'lucide-react';
+import { Search, Book, Crown, Heart, HandHeart, Gift, Users, ArrowLeft, ExternalLink, X } from 'lucide-react';
 import { apiRequest } from '@/lib/queryClient';
 
 // Types for topical search results
@@ -95,6 +95,12 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
   const [customSearch, setCustomSearch] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  
+  // Scripture viewer modal state
+  const [scriptureViewerOpen, setScriptureViewerOpen] = useState(false);
+  const [selectedScripture, setSelectedScripture] = useState<any>(null);
+  const [loadingScripture, setLoadingScripture] = useState(false);
+  const [scriptureError, setScriptureError] = useState<string | null>(null);
 
   // Handle preset topic search
   const handleTopicSearch = async (topicId: string) => {
@@ -153,12 +159,46 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
     }
   };
 
-  // Handle Scripture reference navigation
-  const handleScriptureClick = (reference: string) => {
-    // Always open Scripture references in BibleGateway.com for reliable access to full biblical text
-    const cleanRef = reference.replace(/\s+/g, '+');
-    const url = `https://www.biblegateway.com/passage/?search=${encodeURIComponent(cleanRef)}&version=NIV`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+  // Handle Scripture reference navigation - show in-app modal
+  const handleScriptureClick = async (reference: string) => {
+    setLoadingScripture(true);
+    setScriptureError(null);
+    setScriptureViewerOpen(true);
+    
+    try {
+      const response = await apiRequest('POST', '/api/bible-search', {
+        query: reference,
+        version: 'NIV'
+      });
+      const result = await response.json();
+      
+      if (result && result.success) {
+        if (result.verses && result.verses.length > 0) {
+          // Use structured verse data if available
+          setSelectedScripture({
+            reference: reference,
+            verses: result.verses,
+            source: 'api'
+          });
+        } else if (result.text) {
+          // Use text-based result from OpenAI fallback
+          setSelectedScripture({
+            reference: reference,
+            text: result.text,
+            source: 'openai'
+          });
+        } else {
+          setScriptureError('Scripture content not available.');
+        }
+      } else {
+        setScriptureError('Failed to load Scripture content.');
+      }
+    } catch (error) {
+      console.error('Failed to fetch Scripture:', error);
+      setScriptureError('Failed to connect to Bible database.');
+    } finally {
+      setLoadingScripture(false);
+    }
   };
 
   // Close modal and reset state
@@ -166,6 +206,13 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
     setIsModalOpen(false);
     setSelectedResult(null);
     setError(null);
+  };
+  
+  // Close Scripture viewer modal
+  const closeScriptureViewer = () => {
+    setScriptureViewerOpen(false);
+    setSelectedScripture(null);
+    setScriptureError(null);
   };
 
   return (
@@ -357,6 +404,73 @@ export function TopicalSearchSection({ onNavigateToScripture }: TopicalSearchSec
               {/* Footer with instruction */}
               <div className="text-center text-sm text-gray-500 pt-4 border-t border-gray-200">
                 <p>Click on any Scripture reference to explore the full biblical context</p>
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Scripture Viewer Modal */}
+      <Dialog open={scriptureViewerOpen} onOpenChange={setScriptureViewerOpen}>
+        <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+          <DialogHeader className="flex flex-row items-center justify-between">
+            <DialogTitle className="text-2xl font-bold text-amber-800 pr-8">
+              {selectedScripture?.reference || 'Scripture Passage'}
+            </DialogTitle>
+            <Button
+              onClick={closeScriptureViewer}
+              variant="ghost" 
+              size="sm"
+              className="text-gray-500 hover:text-gray-700"
+              data-testid="button-close-scripture"
+            >
+              <X className="w-5 h-5" />
+            </Button>
+          </DialogHeader>
+          
+          {loadingScripture && (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <div className="w-8 h-8 border-4 border-amber-200 border-t-amber-600 rounded-full animate-spin mx-auto mb-4"></div>
+                <p className="text-gray-600">Loading Scripture...</p>
+              </div>
+            </div>
+          )}
+          
+          {scriptureError && (
+            <div className="bg-red-50 p-4 rounded-lg border border-red-200">
+              <p className="text-red-700">{scriptureError}</p>
+            </div>
+          )}
+          
+          {selectedScripture && !loadingScripture && !scriptureError && (
+            <div className="space-y-6">
+              {selectedScripture.source === 'api' && selectedScripture.verses && (
+                <div className="space-y-4">
+                  {selectedScripture.verses.map((verse: any, index: number) => (
+                    <div key={index} className="bg-amber-50 p-6 rounded-lg border border-amber-200">
+                      <p className="text-gray-800 text-lg leading-relaxed mb-3">
+                        {verse.text}
+                      </p>
+                      <p className="text-amber-700 font-semibold">
+                        — {verse.reference} ({verse.translation})
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+              
+              {selectedScripture.source === 'openai' && selectedScripture.text && (
+                <div className="bg-amber-50 p-6 rounded-lg border border-amber-200">
+                  <div 
+                    className="text-gray-800 text-lg leading-relaxed prose max-w-none"
+                    dangerouslySetInnerHTML={{ __html: selectedScripture.text.replace(/\*\*/g, '') }}
+                  />
+                </div>
+              )}
+              
+              <div className="text-center text-sm text-gray-500 pt-4 border-t border-gray-200">
+                <p>Scripture content from the Holy Bible</p>
               </div>
             </div>
           )}
