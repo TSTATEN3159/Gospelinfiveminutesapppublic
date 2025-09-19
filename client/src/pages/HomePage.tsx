@@ -6,7 +6,7 @@ import BibleStudyPlans from "../components/BibleStudyPlans";
 import AskPastor from "../components/AskPastor";
 import LiveInstallCounter from "../components/LiveInstallCounter";
 import BadgeNotification from "../components/BadgeNotification";
-import VideoPlayer from "../components/VideoPlayer";
+import { VideoPlayer } from "../components/VideoPlayer";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
