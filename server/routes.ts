@@ -648,6 +648,92 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Donation statistics endpoints
+  app.get("/api/donation-stats", async (req, res) => {
+    try {
+      const donations = await storage.getAllDonations();
+      
+      const totalDonations = donations.reduce((sum, donation) => {
+        return sum + parseFloat(donation.amount);
+      }, 0);
+      
+      const monthlyDonations = donations
+        .filter(donation => {
+          const donationDate = new Date(donation.createdAt);
+          const now = new Date();
+          return donationDate.getMonth() === now.getMonth() && 
+                 donationDate.getFullYear() === now.getFullYear();
+        })
+        .reduce((sum, donation) => {
+          return sum + parseFloat(donation.amount);
+        }, 0);
+      
+      const donationCount = donations.length;
+      const biblesPurchased = Math.floor(totalDonations / 5); // Assuming $5 per Bible
+      const biblesDistributed = Math.floor(biblesPurchased * 0.95); // 95% distribution rate
+
+      res.json({
+        success: true,
+        stats: {
+          totalDonations,
+          monthlyDonations,
+          donationCount,
+          biblesPurchased,
+          biblesDistributed,
+          impactReach: biblesDistributed * 3 // Estimate 3 people reached per Bible
+        }
+      });
+    } catch (error) {
+      console.error("Get donation stats error:", error);
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to get donation statistics" 
+      });
+    }
+  });
+
+  // Record a successful donation
+  app.post("/api/record-donation", async (req, res) => {
+    try {
+      const { amount, paymentIntentId, currency = "USD", metadata } = req.body;
+      
+      if (!amount || !paymentIntentId) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "Amount and payment intent ID are required" 
+        });
+      }
+
+      const donation = await storage.recordDonation({
+        amount: amount.toString(),
+        currency,
+        paymentIntentId,
+        status: "completed",
+        metadata: metadata ? JSON.stringify(metadata) : undefined
+      });
+
+      res.json({ 
+        success: true, 
+        donation: donation 
+      });
+    } catch (error: any) {
+      console.error("Record donation error:", error);
+      
+      // Handle duplicate payment intent (donation already recorded)
+      if (error.message?.includes("duplicate") || error.message?.includes("unique")) {
+        return res.status(200).json({ 
+          success: true, 
+          message: "Donation already recorded" 
+        });
+      }
+      
+      res.status(500).json({ 
+        success: false, 
+        error: "Failed to record donation" 
+      });
+    }
+  });
+
   // Christian Video Content Routes - Christian Context API + TBN+ integration
   app.get("/api/videos", async (req, res) => {
     try {

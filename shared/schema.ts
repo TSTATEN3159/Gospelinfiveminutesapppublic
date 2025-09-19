@@ -90,3 +90,25 @@ export const insertFriendshipSchema = createInsertSchema(friendships).pick({
 
 export type InsertFriendship = z.infer<typeof insertFriendshipSchema>;
 export type Friendship = typeof friendships.$inferSelect;
+
+// Donations table - tracks all successful donations for aggregate statistics
+export const donations = pgTable("donations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  amount: text("amount").notNull(), // Store as string to avoid float precision issues
+  currency: varchar("currency", { length: 3 }).notNull().default("USD"),
+  paymentIntentId: text("payment_intent_id").notNull().unique(), // Stripe payment intent ID
+  status: varchar("status", { length: 20 }).notNull().default("completed"),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  metadata: text("metadata"), // JSON string for additional payment details
+});
+
+export const insertDonationSchema = createInsertSchema(donations).pick({
+  amount: true,
+  currency: true,
+  paymentIntentId: true,
+  status: true,
+  metadata: true,
+});
+
+export type InsertDonation = z.infer<typeof insertDonationSchema>;
+export type Donation = typeof donations.$inferSelect;

@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, users, subscribers, appUsers, friendships } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, users, subscribers, appUsers, friendships, donations } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -31,6 +31,11 @@ export interface IStorage {
   getFriends(userId: string): Promise<AppUser[]>;
   getFriendRequests(userId: string): Promise<{incoming: {friendshipId: string, user: AppUser}[], outgoing: {friendshipId: string, user: AppUser}[]}>;
   removeFriend(userId: string, friendId: string): Promise<void>;
+  
+  // Donation methods
+  recordDonation(donation: InsertDonation): Promise<Donation>;
+  getAllDonations(): Promise<Donation[]>;
+  getDonationByPaymentIntent(paymentIntentId: string): Promise<Donation | undefined>;
 }
 
 // Database storage implementation
@@ -273,6 +278,25 @@ export class DatabaseStorage implements IStorage {
         )
       );
   }
+
+  // Donation methods
+  async recordDonation(donation: InsertDonation): Promise<Donation> {
+    const result = await this.db.insert(donations).values(donation).returning();
+    return result[0];
+  }
+
+  async getAllDonations(): Promise<Donation[]> {
+    const result = await this.db.select().from(donations).orderBy(donations.createdAt);
+    return result;
+  }
+
+  async getDonationByPaymentIntent(paymentIntentId: string): Promise<Donation | undefined> {
+    const result = await this.db
+      .select()
+      .from(donations)
+      .where(eq(donations.paymentIntentId, paymentIntentId));
+    return result[0];
+  }
 }
 
 // Fallback memory storage for development
@@ -281,12 +305,14 @@ export class MemStorage implements IStorage {
   private subscribersMap: Map<string, Subscriber>;
   private appUsersMap: Map<string, AppUser>;
   private friendshipsMap: Map<string, Friendship>;
+  private donationsMap: Map<string, Donation>;
 
   constructor() {
     this.users = new Map();
     this.subscribersMap = new Map();
     this.appUsersMap = new Map();
     this.friendshipsMap = new Map();
+    this.donationsMap = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -478,6 +504,34 @@ export class MemStorage implements IStorage {
         return;
       }
     }
+  }
+
+  // Donation methods
+  async recordDonation(insertDonation: InsertDonation): Promise<Donation> {
+    const id = randomUUID();
+    const donation: Donation = {
+      id,
+      amount: insertDonation.amount,
+      currency: insertDonation.currency || "USD",
+      paymentIntentId: insertDonation.paymentIntentId,
+      status: insertDonation.status || "completed",
+      createdAt: new Date(),
+      metadata: insertDonation.metadata || null,
+    };
+    this.donationsMap.set(id, donation);
+    return donation;
+  }
+
+  async getAllDonations(): Promise<Donation[]> {
+    return Array.from(this.donationsMap.values()).sort((a, b) => 
+      a.createdAt.getTime() - b.createdAt.getTime()
+    );
+  }
+
+  async getDonationByPaymentIntent(paymentIntentId: string): Promise<Donation | undefined> {
+    return Array.from(this.donationsMap.values()).find(
+      donation => donation.paymentIntentId === paymentIntentId
+    );
   }
 }
 
