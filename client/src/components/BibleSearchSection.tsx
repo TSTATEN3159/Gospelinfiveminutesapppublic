@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Copy, Book, BookOpen, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import openBibleImage from '@assets/generated_images/Open_used_Bible_pages_5ad97f45.png';
+import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 
 interface SearchResult {
   text: string;
@@ -259,14 +259,14 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
           <div className="mt-8">
             <div className="relative overflow-hidden rounded-2xl shadow-2xl">
               <img 
-                src={openBibleImage}
-                alt="Open Bible with worn pages"
+                src={bibleStudyImage}
+                alt="Two people studying the Bible together"
                 className="w-full h-40 object-cover transition-transform duration-700 hover:scale-105"
                 style={{ objectPosition: 'center' }}
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-black/10 to-transparent"></div>
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-black/20 to-transparent"></div>
               <div className="absolute bottom-4 left-6 right-6">
-                <p className="text-white font-serif text-sm italic opacity-90 text-center">
+                <p className="text-white font-serif text-sm italic opacity-95 text-center font-medium">
                   "Your word is a lamp for my feet, a light on my path" - Psalm 119:105
                 </p>
               </div>

@@ -23,6 +23,7 @@ import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_
 import mountainLakeImage from '@assets/generated_images/Mountain_lake_sunrise_scripture_98ce5cc4.png';
 import forestPathImage from '@assets/generated_images/Forest_path_study_plans_fab1c678.png';
 import oceanCliffImage from '@assets/generated_images/Ocean_cliff_pastor_counseling_10177ffd.png';
+import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
 
 interface User {
   firstName: string;
@@ -453,55 +454,88 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
           </div>
         </div>
 
-        {/* Help Spread God's Word Section */}
-        <div className="bg-white rounded-2xl p-6 shadow-sm">
-          <div className="text-center space-y-4">
-            <div className="flex justify-center">
-              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center">
-                <Share2 className="w-6 h-6 text-amber-600" />
+        {/* Help Spread God's Word Section - Professional Design */}
+        <div className="relative overflow-hidden rounded-3xl shadow-2xl border-0 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
+          {/* Background Image */}
+          <div 
+            className="absolute inset-0 bg-cover bg-center opacity-30"
+            style={{ backgroundImage: `url(${spreadWordImage})` }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-purple-900/70 to-indigo-900/80"></div>
+          
+          {/* Content */}
+          <div className="relative z-10 p-8">
+            <div className="text-center space-y-6">
+              {/* Icon and Title */}
+              <div className="flex flex-col items-center space-y-4">
+                <div className="p-4 bg-white/20 backdrop-blur-sm rounded-full border border-white/30 shadow-2xl">
+                  <Share2 className="w-8 h-8 text-white" />
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-2 tracking-wide">
+                    Help Spread God's Word
+                  </h3>
+                  <div className="w-20 h-1 bg-gradient-to-r from-yellow-400 to-orange-400 rounded-full mx-auto"></div>
+                </div>
+              </div>
+              
+              {/* Description */}
+              <div className="space-y-4">
+                <p className="text-white/90 text-base leading-relaxed max-w-sm mx-auto font-medium">
+                  Share this app with friends and family to help spread the Gospel message around the world.
+                </p>
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                  <p className="text-white/95 text-sm italic font-medium">
+                    "Go into all the world and preach the gospel to all creation." - Mark 16:15
+                  </p>
+                </div>
+              </div>
+              
+              {/* CTA Button */}
+              <div className="pt-2">
+                <Button
+                  onClick={async () => {
+                    if (navigator.share) {
+                      try {
+                        await navigator.share({
+                          title: 'The Gospel in 5 Minutes',
+                          text: 'Get daily Bible verses and spiritual guidance with this amazing app!',
+                          url: 'https://www.thegospelin5minutes.org'
+                        });
+                      } catch (err) {
+                        // User cancelled sharing or sharing not supported
+                      }
+                    } else {
+                      // Fallback for browsers that don't support Web Share API
+                      try {
+                        await navigator.clipboard.writeText('https://www.thegospelin5minutes.org');
+                        toast({
+                          title: "Link copied!",
+                          description: "App link copied to clipboard successfully.",
+                        });
+                      } catch (err) {
+                        toast({
+                          title: "Copy failed",
+                          description: "Unable to copy link. Please try again.",
+                          variant: "destructive",
+                        });
+                      }
+                    }
+                  }}
+                  className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold px-8 py-4 text-base shadow-2xl hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+                  data-testid="button-share-app"
+                >
+                  <Share2 className="w-5 h-5 mr-2" />
+                  <span>Share the Gospel</span>
+                </Button>
+              </div>
+              
+              {/* Impact Stats */}
+              <div className="flex justify-center items-center gap-2 text-white/80 text-xs">
+                <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+                <span>Join thousands spreading God's Word worldwide</span>
               </div>
             </div>
-            <div>
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Help Spread God's Word</h3>
-              <p className="text-sm text-gray-600 mb-4">
-                Share this app with friends and family to help spread the Gospel message around the world.
-              </p>
-            </div>
-            <Button
-              onClick={async () => {
-                if (navigator.share) {
-                  try {
-                    await navigator.share({
-                      title: 'The Gospel in 5 Minutes',
-                      text: 'Get daily Bible verses and spiritual guidance with this amazing app!',
-                      url: 'https://www.thegospelin5minutes.org'
-                    });
-                  } catch (err) {
-                    // User cancelled sharing or sharing not supported
-                  }
-                } else {
-                  // Fallback for browsers that don't support Web Share API
-                  try {
-                    await navigator.clipboard.writeText('https://www.thegospelin5minutes.org');
-                    toast({
-                      title: "Link copied!",
-                      description: "App link copied to clipboard successfully.",
-                    });
-                  } catch (err) {
-                    toast({
-                      title: "Copy failed",
-                      description: "Unable to copy link. Please try again.",
-                      variant: "destructive",
-                    });
-                  }
-                }
-              }}
-              className="flex items-center gap-2 bg-amber-600 text-white mx-auto"
-              data-testid="button-share-app"
-            >
-              <Share2 className="w-4 h-4" />
-              <span className="font-medium">Share the App</span>
-            </Button>
           </div>
         </div>
         
