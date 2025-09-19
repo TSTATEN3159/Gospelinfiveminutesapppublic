@@ -171,6 +171,202 @@ export async function registerRoutes(app: Express): Promise<Server> {
     version: z.string().optional().default("NIV"), // Bible version
   });
 
+  // Topical Bible Search - for finding verses related to specific topics
+  const topicalSearchSchema = z.object({
+    topic: z.string().min(1).max(50), // e.g. "salvation", "faith", "moses", "paul"
+    version: z.string().optional().default("NIV"), // Bible version
+  });
+
+  // Predefined topical searches with carefully selected verses
+  const topicalVerseDatabase = {
+    "kingdom of god": [
+      "MAT.6.33", "MRK.1.15", "LUK.17.21", "JHN.3.3", "ROM.14.17", 
+      "1CO.4.20", "COL.1.13", "MAT.5.3", "MAT.13.31"
+    ],
+    "salvation": [
+      "ROM.10.9", "EPH.2.8-9", "JHN.3.16", "ACT.4.12", "ROM.6.23",
+      "TIT.3.5", "2CO.5.17", "1JN.5.13", "ROM.1.16"
+    ],
+    "faith": [
+      "HEB.11.1", "ROM.10.17", "EPH.2.8", "HEB.11.6", "2CO.5.7",
+      "MAT.17.20", "MRK.11.22", "GAL.2.20", "ROM.1.17"
+    ],
+    "prayer": [
+      "MAT.6.9-13", "1TH.5.17", "PHP.4.6-7", "JHN.14.13-14", "1JN.5.14-15",
+      "JAM.5.16", "LUK.11.9-10", "MAR.11.24", "COL.4.2"
+    ],
+    "giving": [
+      "2CO.9.7", "MAL.3.10", "LUK.6.38", "ACT.20.35", "1TI.6.17-19",
+      "PRO.11.25", "MAT.6.19-21", "2CO.8.9", "HEB.13.16"
+    ],
+    "kingdom character": [
+      "MAT.5.3-12", "GAL.5.22-23", "1CO.13.4-7", "PHP.4.8", "COL.3.12-14",
+      "2PE.1.5-7", "1TI.6.11", "TIT.2.11-12", "ROM.12.9-21"
+    ],
+    // Biblical figures
+    "moses": [
+      "EXO.3.4", "EXO.14.13-14", "DEU.34.10", "HEB.11.24-26", "NUM.12.3"
+    ],
+    "david": [
+      "1SA.16.7", "PSA.23.1", "2SA.7.28", "1SA.17.45", "PSA.51.10"
+    ],
+    "paul": [
+      "ACT.9.15", "PHP.3.13-14", "2TI.4.7-8", "GAL.2.20", "1CO.15.10"
+    ],
+    "peter": [
+      "MAT.16.16", "JHN.21.15-17", "ACT.2.14", "1PE.5.8", "2PE.3.18"
+    ],
+    "jesus": [
+      "JHN.14.6", "JHN.8.12", "JHN.10.11", "MAT.11.28", "JHN.1.1",
+      "PHP.2.5-8", "HEB.4.15", "REV.1.8"
+    ],
+    "adam": [
+      "GEN.1.27", "GEN.2.7", "ROM.5.12", "1CO.15.22", "GEN.3.19"
+    ]
+  };
+
+  // Topic explanations based on Biblical knowledge
+  const topicalExplanations = {
+    "kingdom of god": {
+      title: "The Kingdom of God",
+      description: "The Kingdom of God refers to God's sovereign rule and reign, both in heaven and on earth. It represents God's divine authority, His righteous government, and the realm where His will is perfectly done. Jesus taught extensively about this kingdom, describing it as both a present reality in the hearts of believers and a future hope when Christ returns.",
+      keyThemes: ["God's sovereignty", "Righteousness and justice", "Present and future reality", "Spiritual transformation"]
+    },
+    "salvation": {
+      title: "Salvation",
+      description: "Salvation is God's gracious deliverance of humanity from sin and its consequences. It is a free gift from God, received by faith in Jesus Christ, not by human works or merit. Salvation includes forgiveness of sins, reconciliation with God, and eternal life.",
+      keyThemes: ["Grace through faith", "Freedom from sin", "Eternal life", "Reconciliation with God"]
+    },
+    "faith": {
+      title: "Faith",
+      description: "Faith is confident trust and belief in God and His promises, even when we cannot see the full picture. It is both a gift from God and a choice we make to trust Him. Biblical faith involves believing God's word, depending on His character, and acting on that belief.",
+      keyThemes: ["Trust in God", "Believing His promises", "Acting on belief", "Confidence in the unseen"]
+    },
+    "prayer": {
+      title: "Prayer",
+      description: "Prayer is communication with God - both speaking to Him and listening for His voice. It includes worship, confession, thanksgiving, and making requests. Prayer is the means by which believers maintain fellowship with God and participate in His work on earth.",
+      keyThemes: ["Communication with God", "Fellowship and intimacy", "Intercession and petition", "Worship and thanksgiving"]
+    },
+    "giving": {
+      title: "Giving",
+      description: "Biblical giving reflects God's generous nature and acknowledges that everything we have belongs to Him. It includes financial giving, time, talents, and resources. Generous giving demonstrates trust in God's provision and love for others.",
+      keyThemes: ["Generosity reflects God's nature", "Stewardship of resources", "Trust in God's provision", "Love in action"]
+    },
+    "kingdom character": {
+      title: "Kingdom Character",
+      description: "Kingdom character refers to the moral and spiritual qualities that should characterize those who belong to God's kingdom. These traits reflect God's own character and are developed through the Holy Spirit's work in a believer's life.",
+      keyThemes: ["Christ-like character", "Fruit of the Spirit", "Moral transformation", "Reflecting God's nature"]
+    },
+    "moses": {
+      title: "Moses",
+      description: "Moses was the great prophet and lawgiver whom God used to deliver the Israelites from slavery in Egypt. He received the Ten Commandments and the Law at Mount Sinai and led God's people through 40 years in the wilderness toward the Promised Land.",
+      keyThemes: ["Deliverer of Israel", "Prophet and lawgiver", "Faithful servant", "Intercession for the people"]
+    },
+    "david": {
+      title: "King David",
+      description: "David was Israel's greatest king, described as 'a man after God's own heart.' He was a shepherd, warrior, poet, and king who wrote many of the Psalms. Despite his failures, David's heart consistently turned back to God in repentance and worship.",
+      keyThemes: ["Man after God's heart", "Worship and praise", "Repentance and forgiveness", "Messianic lineage"]
+    },
+    "paul": {
+      title: "The Apostle Paul",
+      description: "Paul, formerly known as Saul, was dramatically converted from a persecutor of Christians to become the greatest missionary and theologian of the early church. He wrote much of the New Testament and planted churches throughout the Roman Empire.",
+      keyThemes: ["Dramatic conversion", "Missionary to the Gentiles", "Grace and justification", "Perseverance in ministry"]
+    },
+    "peter": {
+      title: "The Apostle Peter",
+      description: "Peter was one of Jesus' closest disciples and became a key leader in the early church. Though he denied Jesus during the crucifixion, he was restored and became a bold preacher of the Gospel, eventually martyred for his faith.",
+      keyThemes: ["Impulsive but devoted disciple", "Restoration after failure", "Bold preaching", "Church leadership"]
+    },
+    "jesus": {
+      title: "Jesus Christ",
+      description: "Jesus Christ is the Son of God, fully God and fully man, who came to earth to save humanity from sin. He lived a perfect life, died on the cross for our sins, and rose again, proving His victory over sin and death.",
+      keyThemes: ["Son of God", "Savior of the world", "Perfect sacrifice", "Resurrection and eternal life"]
+    },
+    "adam": {
+      title: "Adam",
+      description: "Adam was the first human being, created by God in His own image. He lived in perfect fellowship with God in the Garden of Eden until he disobeyed God's command, bringing sin and death into the world.",
+      keyThemes: ["First human", "Made in God's image", "The Fall", "Representative of humanity"]
+    }
+  };
+
+  app.post("/api/topical-search", async (req, res) => {
+    try {
+      const { topic, version } = topicalSearchSchema.parse(req.body);
+      console.log("Topical Search - Topic:", topic, "Version:", version);
+      
+      const normalizedTopic = topic.toLowerCase().trim();
+      
+      // Check if we have predefined verses for this topic
+      const verseRefs = topicalVerseDatabase[normalizedTopic] || topicalVerseDatabase[normalizedTopic.replace(/[^a-z\s]/g, '')] || [];
+      const explanation = topicalExplanations[normalizedTopic] || topicalExplanations[normalizedTopic.replace(/[^a-z\s]/g, '')];
+      
+      if (verseRefs.length === 0 && !explanation) {
+        // Topic not found in our database, search using generic approach
+        return res.json({
+          success: true,
+          topic: topic,
+          explanation: {
+            title: topic.charAt(0).toUpperCase() + topic.slice(1),
+            description: `Information about "${topic}" not found in our topical database. Please try one of the preset topics or search for a specific Bible verse reference instead.`,
+            keyThemes: ["Please try a specific verse reference", "Or use one of the preset topics"]
+          },
+          verses: [],
+          references: []
+        });
+      }
+      
+      // Get the Bible version info
+      const versionInfo = bibleVersionMapping[version.toUpperCase()] || bibleVersionMapping['NIV'];
+      
+      // Fetch the actual verses from API.Bible
+      const verses = [];
+      const references = [];
+      
+      for (const verseRef of verseRefs.slice(0, 5)) { // Limit to 5 key verses
+        try {
+          const verse = await getApiBibleVerse(versionInfo.id, verseRef);
+          
+          const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+          const cleanText = verse.content.replace(/<[^>]*>/g, '').trim();
+          
+          verses.push({
+            text: cleanText,
+            reference: verse.reference,
+            book: refParts ? refParts[1] : 'Unknown',
+            chapter: refParts ? refParts[2] : '1',
+            verse: refParts ? refParts[3] : '1',
+            translation: version.toUpperCase()
+          });
+          
+          references.push(verse.reference);
+        } catch (error) {
+          console.error(`Error fetching verse ${verseRef}:`, error);
+          // Continue with other verses even if one fails
+        }
+      }
+      
+      res.json({
+        success: true,
+        topic: explanation?.title || topic,
+        explanation: explanation || {
+          title: topic.charAt(0).toUpperCase() + topic.slice(1),
+          description: `Biblical information about ${topic}`,
+          keyThemes: ["Related biblical themes"]
+        },
+        verses,
+        references,
+        version: version.toUpperCase()
+      });
+      
+    } catch (error) {
+      console.error('Topical search error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to retrieve topical information. Please try again.' 
+      });
+    }
+  });
+
   app.post("/api/bible-search", async (req, res) => {
     try {
       const { query, version } = bibleSearchSchema.parse(req.body);
