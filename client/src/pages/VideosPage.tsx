@@ -75,63 +75,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
     }
   };
 
-  // Use fallback videos during loading
-  const displayVideos = videos.length > 0 ? videos : [
-    {
-      id: '1',
-      title: 'Finding Peace in God\'s Promises',
-      description: 'Discover how God\'s promises can bring peace to your anxious heart in times of trouble.',
-      duration: '12:35',
-      category: 'sermon',
-      views: 3420,
-      thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
-    },
-    {
-      id: '2', 
-      title: 'The Power of Prayer in 3 Minutes',
-      description: 'Quick wisdom on how prayer transforms our daily walk with Christ.',
-      duration: '3:12',
-      category: 'gospel-tidbits',
-      views: 8750,
-      thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop'
-    },
-    {
-      id: '3',
-      title: 'Overcoming Fear with Faith',
-      description: 'Biblical guidance on conquering fear and anxiety through trusting in God\'s plan.',
-      duration: '8:45',
-      category: 'christian-advice',
-      views: 5670,
-      thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=200&fit=crop'
-    },
-    {
-      id: '4',
-      title: 'Jesus\' Love - The Ultimate Gospel',
-      description: 'A powerful 15-minute sermon on the depth of Christ\'s love for humanity.',
-      duration: '15:20',
-      category: 'sermon',
-      views: 12300,
-      thumbnail: 'https://images.unsplash.com/photo-1518102594912-28d7669f7dd7?w=300&h=200&fit=crop'
-    },
-    {
-      id: '5',
-      title: 'Why We Forgive: Gospel Truth',
-      description: 'Understanding forgiveness through Christ\'s example in just 4 minutes.',
-      duration: '4:08',
-      category: 'gospel-tidbits',
-      views: 6890,
-      thumbnail: 'https://images.unsplash.com/photo-1488998527040-85054a85150e?w=300&h=200&fit=crop'
-    },
-    {
-      id: '6',
-      title: 'Building Stronger Christian Relationships',
-      description: 'Practical advice for nurturing relationships that honor God and build His kingdom.',
-      duration: '11:22',
-      category: 'christian-advice',
-      views: 4210,
-      thumbnail: 'https://images.unsplash.com/photo-1529390079861-591de354faf5?w=300&h=200&fit=crop'
-    }
-  ];
+  // App Store compliance: Only show legitimate API content - no mock/fallback data
 
   const getCategoryIcon = (category: VideoItem['category']) => {
     switch (category) {
@@ -228,9 +172,11 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                       <Play className="w-6 h-6 text-white ml-1" />
                     </div>
                   </div>
-                  <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
-                    {featuredVideo.duration}
-                  </div>
+                  {featuredVideo.duration && (
+                    <div className="absolute bottom-2 right-2 bg-black bg-opacity-75 text-white text-xs px-2 py-1 rounded">
+                      {featuredVideo.duration}
+                    </div>
+                  )}
                   {featuredVideo.source === 'TBN+' && (
                     <div className="absolute top-2 right-2">
                       <Badge className="bg-blue-600 text-white">
@@ -247,10 +193,12 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                     {getCategoryIcon(featuredVideo.category)}
                     <span className="ml-1">{getCategoryName(featuredVideo.category)}</span>
                   </Badge>
-                  <span className="text-xs text-gray-500 flex items-center gap-1">
-                    <Users className="w-3 h-3" />
-                    {featuredVideo.views.toLocaleString()} views
-                  </span>
+                  {featuredVideo.views && (
+                    <span className="text-xs text-gray-500 flex items-center gap-1">
+                      <Users className="w-3 h-3" />
+                      {featuredVideo.views.toLocaleString()} views
+                    </span>
+                  )}
                   <span className="text-xs text-blue-600 font-medium">
                     {featuredVideo.source}
                   </span>
@@ -353,9 +301,14 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                 </Card>
               ))}
             </div>
+          ) : videos.length === 0 ? (
+            <div className="text-center py-8">
+              <p className="text-gray-500 mb-4">No videos available</p>
+              <p className="text-gray-400 text-sm">Please check your internet connection and try again</p>
+            </div>
           ) : (
             <div className="space-y-4">
-              {displayVideos.filter(video => video.id !== featuredVideo?.id).map((video) => (
+              {videos.filter(video => video.id !== featuredVideo?.id).map((video) => (
                 <Card 
                   key={video.id} 
                   className="hover-elevate cursor-pointer"
@@ -368,9 +321,11 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                         <div className="w-20 h-14 bg-gray-200 rounded flex items-center justify-center">
                           <Play className="w-4 h-4 text-gray-600" />
                         </div>
-                        <div className="absolute bottom-1 right-1 bg-black bg-opacity-75 text-white text-xs px-1 rounded">
-                          {video.duration}
-                        </div>
+                        {video.duration && (
+                          <div className="absolute bottom-1 right-1 bg-black bg-opacity-75 text-white text-xs px-1 rounded">
+                            {video.duration}
+                          </div>
+                        )}
                         {video.source === 'TBN+' && (
                           <div className="absolute -top-1 -right-1">
                             <ExternalLink className="w-3 h-3 text-blue-600" />
@@ -390,13 +345,21 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                             {getCategoryIcon(video.category)}
                             <span className="ml-1">{getCategoryName(video.category)}</span>
                           </Badge>
-                          <span className="text-xs text-gray-500 flex items-center gap-1">
-                            <Users className="w-3 h-3" />
-                            {video.views.toLocaleString()}
-                          </span>
-                          <span className="text-xs text-blue-600 font-medium">
+                          {video.views && (
+                            <span className="text-xs text-gray-500 flex items-center gap-1">
+                              <Users className="w-3 h-3" />
+                              {video.views.toLocaleString()}
+                            </span>
+                          )}
+                          <Badge 
+                            className={`text-xs ${
+                              video.source === 'TBN+' ? 'bg-blue-600 text-white' : 'bg-green-600 text-white'
+                            }`}
+                            data-testid={`badge-source-${video.id}`}
+                          >
+                            {video.source === 'TBN+' && <ExternalLink className="w-3 h-3 mr-1" />}
                             {video.source}
-                          </span>
+                          </Badge>
                         </div>
                       </div>
                     </div>

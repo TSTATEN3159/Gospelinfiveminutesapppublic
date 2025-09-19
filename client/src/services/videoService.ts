@@ -68,8 +68,8 @@ class VideoService {
     } catch (error) {
       console.error('Video service error:', error);
       
-      // Return fallback content if API fails
-      return this.getFallbackVideos(category);
+      // App Store compliance: Return empty array instead of mock content
+      return [];
     }
   }
 
@@ -106,46 +106,7 @@ class VideoService {
     }
   }
 
-  // Fallback videos if API fails
-  private getFallbackVideos(category?: string): VideoItem[] {
-    const fallbackVideos: VideoItem[] = [
-      {
-        id: 'fallback_1',
-        title: 'Finding Peace in God\'s Promises',
-        description: 'Discover how God\'s promises can bring peace to your anxious heart in times of trouble.',
-        duration: '12:35',
-        category: 'sermon',
-        views: 3420,
-        thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop',
-        source: 'Local'
-      },
-      {
-        id: 'fallback_2',
-        title: 'The Power of Prayer in 3 Minutes',
-        description: 'Quick wisdom on how prayer transforms our daily walk with Christ.',
-        duration: '3:12',
-        category: 'gospel-tidbits',
-        views: 8750,
-        thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop',
-        source: 'Local'
-      },
-      {
-        id: 'fallback_3',
-        title: 'Overcoming Fear with Faith',
-        description: 'Biblical guidance on conquering fear and anxiety through trusting in God\'s plan.',
-        duration: '8:45',
-        category: 'christian-advice',
-        views: 5670,
-        thumbnail: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=300&h=200&fit=crop',
-        source: 'Local'
-      }
-    ];
-
-    if (category) {
-      return fallbackVideos.filter(video => video.category === category);
-    }
-    return fallbackVideos;
-  }
+  // App Store compliance: No fallback/mock content allowed
 
   // Open external video links
   openExternalVideo(video: VideoItem): void {

@@ -10,13 +10,19 @@ import { sendBlogUpdateEmails } from "./email-service";
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 
-// Initialize Stripe with live keys
-if (!process.env.STRIPE_SECRET_KEY) {
-  throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
-}
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: "2023-10-16",
-});
+// Lazy initialize Stripe only when needed for donations
+let stripe: Stripe | null = null;
+const getStripeClient = (): Stripe => {
+  if (!stripe) {
+    if (!process.env.STRIPE_SECRET_KEY) {
+      throw new Error('Missing required Stripe secret: STRIPE_SECRET_KEY');
+    }
+    stripe = new Stripe(process.env.STRIPE_SECRET_KEY, {
+      apiVersion: "2023-10-16",
+    });
+  }
+  return stripe;
+};
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // put application routes here
@@ -164,7 +170,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const paymentIntent = await stripe.paymentIntents.create({
+      const stripeClient = getStripeClient();
+    const paymentIntent = await stripeClient.paymentIntents.create({
         amount: Math.round(amount * 100), // Convert to cents
         currency: "usd",
         metadata: {
@@ -198,48 +205,61 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const categoryThemes = themes[category as string] || themes.sermon;
       const numVideos = Math.min(parseInt(limit as string), 10);
 
-      // Fetch videos from Christian Context API
-      for (let i = 0; i < numVideos && i < categoryThemes.length; i++) {
+      // Fetch videos from Christian Context API in parallel for better performance
+      const themePromises = categoryThemes.slice(0, numVideos).map(async (theme, i) => {
         try {
-          const theme = categoryThemes[i];
           const apiUrl = `https://getcontext.xyz/api/api.php?query=${encodeURIComponent(theme)}`;
           const response = await fetch(apiUrl);
           
           if (response.ok) {
             const data = await response.json();
             
-            // Transform API data to our video format
-            const video = {
+            // Ensure completeness of Bible data with fallbacks
+            const verseReference = data.verse_reference || null;
+            const verseText = data.verse_text || (verseReference ? `"Bible verse from ${verseReference}"` : null);
+            const commentary = data.commentary || (verseReference ? `Explore the spiritual wisdom in ${verseReference}` : null);
+            
+            return {
               id: `context_${Date.now()}_${i}`,
-              title: data.verse_reference ? `${theme}: ${data.verse_reference}` : `${theme} - Christian Wisdom`,
-              description: data.verse_text || `Explore biblical wisdom on ${theme.toLowerCase()} through Scripture and sermon insights.`,
-              duration: "8:30", // Default duration
+              title: verseReference ? `${theme}: ${verseReference}` : `${theme} - Christian Wisdom`,
+              description: verseText || `Explore biblical wisdom on ${theme.toLowerCase()} through Scripture and sermon insights.`,
+              duration: data.duration || undefined, // Only use real duration from API
               category: category || 'sermon',
-              views: Math.floor(Math.random() * 10000) + 1000,
+              views: data.views || undefined, // Only use real view count from API
               thumbnail: `https://images.unsplash.com/photo-${1507003211169 + i}?w=300&h=200&fit=crop`,
               videoUrl: data.sermon_video_url || null,
-              verseReference: data.verse_reference || null,
-              verseText: data.verse_text || null,
-              commentary: data.commentary || null,
+              verseReference,
+              verseText,
+              commentary,
               source: 'Christian Context API'
             };
-            videos.push(video);
           }
+          return null;
         } catch (apiError) {
-          console.error(`Error fetching ${categoryThemes[i]} from Christian Context API:`, apiError);
-          // Continue with next theme
+          console.error(`Error fetching ${theme} from Christian Context API:`, apiError);
+          return null;
         }
-      }
+      });
 
-      // Add TBN+ content recommendations
+      // Wait for all API calls to complete
+      const apiResults = await Promise.allSettled(themePromises);
+      
+      // Add successful results to videos array
+      apiResults.forEach((result) => {
+        if (result.status === 'fulfilled' && result.value) {
+          videos.push(result.value);
+        }
+      });
+
+      // Add TBN+ content recommendations (no synthetic metrics)
       const tbnCategories = [
         {
           id: 'tbn_sermons',
           title: 'TBN+ Sermon Collection',
           description: 'Access thousands of sermons from Trinity Broadcasting Network for free.',
           category: 'sermon',
-          views: 50000,
-          duration: 'Various',
+          views: undefined, // No synthetic metrics for App Store compliance
+          duration: undefined,
           source: 'TBN+',
           externalUrl: 'https://www.tbnplus.com/sermons',
           thumbnail: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&h=200&fit=crop'
@@ -249,8 +269,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           title: 'Faith-Based Documentaries',
           description: 'Inspiring Christian documentaries and educational content from TBN+.',
           category: 'christian-advice',
-          views: 25000,
-          duration: 'Various',
+          views: undefined, // No synthetic metrics for App Store compliance
+          duration: undefined,
           source: 'TBN+',
           externalUrl: 'https://www.tbnplus.com/documentaries',
           thumbnail: 'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?w=300&h=200&fit=crop'
