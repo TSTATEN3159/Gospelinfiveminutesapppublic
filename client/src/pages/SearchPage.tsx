@@ -1,4 +1,5 @@
 import BibleSearchSection from "../components/BibleSearchSection";
+import { TopicalSearchSection } from "../components/TopicalSearchSection";
 import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
 import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -113,6 +114,9 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             initialSearchQuery={initialSearchQuery}
             onSearchUsed={onSearchUsed}
           />
+          
+          {/* Topical Search Section */}
+          <TopicalSearchSection />
           
           {/* Donation Appeal Section */}
           <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200 shadow-sm">
