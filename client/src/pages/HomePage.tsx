@@ -418,31 +418,8 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
               </p>
             </div>
             <Button
-              onClick={async () => {
-                try {
-                  // Create Stripe Checkout session for secure donation
-                  const response = await fetch('/api/create-donation-checkout', {
-                    method: 'POST',
-                    headers: {
-                      'Content-Type': 'application/json',
-                    },
-                  });
-                  
-                  if (!response.ok) {
-                    throw new Error('Failed to create donation checkout');
-                  }
-                  
-                  const { url } = await response.json();
-                  
-                  // Redirect to secure Stripe Checkout with Apple Pay support
-                  window.location.href = url;
-                } catch (error) {
-                  toast({
-                    title: "Unable to Process Donation",
-                    description: "There was an issue setting up your donation. Please try again later.",
-                    variant: "destructive",
-                  });
-                }
+              onClick={() => {
+                onNavigate?.('donate');
               }}
               className="flex items-center gap-2 bg-amber-600 text-white px-8 py-3 text-base font-semibold mx-auto"
               data-testid="button-donate"
