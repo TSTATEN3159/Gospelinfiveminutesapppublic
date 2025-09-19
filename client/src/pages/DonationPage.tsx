@@ -8,6 +8,7 @@ import { useToast } from "@/hooks/use-toast";
 import { loadStripe } from '@stripe/stripe-js';
 import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import bibleDistributionImage from '@assets/stock_images/people_distributing__56bd3f84.jpg';
+import { useQuery } from "@tanstack/react-query";
 
 // Load Stripe with public key
 if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
@@ -126,6 +127,12 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
   const [clientSecret, setClientSecret] = useState("");
   const [showPaymentForm, setShowPaymentForm] = useState(false);
   const { toast } = useToast();
+
+  // Fetch donation statistics
+  const { data: donationStats } = useQuery({
+    queryKey: ["/api/donation-stats"],
+    staleTime: 30000, // Refetch every 30 seconds
+  });
 
   const handlePresetClick = (amount: number) => {
     setSelectedAmount(amount);
@@ -289,6 +296,24 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               Every donation helps us reach more souls with daily Bible verses, spiritual guidance, 
               and the transformative power of God's word. Your generosity makes eternal impact possible.
             </p>
+          </CardContent>
+        </Card>
+
+        {/* Total Donations Impact */}
+        <Card className="text-center">
+          <CardContent className="p-6">
+            <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+              <DollarSign className="w-6 h-6 text-green-600" aria-hidden="true" />
+            </div>
+            <div className="text-3xl font-bold text-gray-900 mb-2" data-testid="text-total-donations">
+              ${(donationStats as any)?.success ? (donationStats as any).stats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
+            </div>
+            <div className="text-sm text-gray-600">
+              Total Donations Received
+            </div>
+            <div className="text-xs text-gray-500 mt-2">
+              {(donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased.toLocaleString() : '0'} Bibles funded for those in need
+            </div>
           </CardContent>
         </Card>
 
