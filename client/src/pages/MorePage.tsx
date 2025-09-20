@@ -3,13 +3,12 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
-import mountainSunriseImage from '@assets/stock_images/powerful_majestic_mo_95a68c1b.jpg';
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
-import languageUnityImage from '@assets/generated_images/Global_languages_cultural_unity_10601631.png';
-import faithVideoImage from '@assets/generated_images/Faith_video_production_spiritual_994019b0.png';
+import mountainTopImage from '@assets/generated_images/Vibrant_mountain_top_vista_d60cfc2f.png';
+import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
-import settingsConfigImage from '@assets/generated_images/Spiritual_settings_configuration_peaceful_259360d6.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
+import donateImage from '@assets/generated_images/Peaceful_donation_charitable_giving_84a34ad2.png';
 
 interface MorePageProps {
   language: string;
@@ -28,7 +27,14 @@ const languages = [
   { code: "hi", name: "हिन्दी" },
 ];
 
-const getMenuItems = (t: any) => [
+const getMainMenuItems = (t: any) => [
+  {
+    id: "donate",
+    title: t.donate,
+    description: t.donateDesc,
+    icon: Heart,
+    comingSoon: false
+  },
   {
     id: "giving",
     title: t.givingImpact,
@@ -51,17 +57,20 @@ const getMenuItems = (t: any) => [
     comingSoon: false
   },
   {
-    id: "settings",
-    title: t.settings,
-    description: t.settingsDesc,
-    icon: Settings,
-    comingSoon: false
-  },
-  {
     id: "friends",
     title: t.friends,
     description: t.friendsDesc,
     icon: Users,
+    comingSoon: false
+  }
+];
+
+const getSettingsMenuItems = (t: any) => [
+  {
+    id: "settings",
+    title: t.settings,
+    description: t.settingsDesc,
+    icon: Settings,
     comingSoon: false
   },
   {
@@ -77,24 +86,19 @@ const getMenuItems = (t: any) => [
     description: t.endUserAgreementDesc,
     icon: FileText,
     comingSoon: false
-  },
-  {
-    id: "donate",
-    title: t.donate,
-    description: t.donateDesc,
-    icon: DollarSign,
-    comingSoon: false
   }
 ];
 
 export default function MorePage({ language, onLanguageChange, onNavigate, streakDays = 0 }: MorePageProps) {
   const t = useTranslations(language);
-  const menuItems = getMenuItems(t);
+  const mainMenuItems = getMainMenuItems(t);
+  const settingsMenuItems = getSettingsMenuItems(t);
   
   const handleMenuClick = (id: string) => {
     console.log(`Menu item clicked: ${id}`);
     // Navigate to the selected page if it's not coming soon
-    if (!menuItems.find(item => item.id === id)?.comingSoon) {
+    const allItems = [...mainMenuItems, ...settingsMenuItems];
+    if (!allItems.find(item => item.id === id)?.comingSoon) {
       onNavigate?.(id);
     }
   };
@@ -204,7 +208,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         <Card className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-blue-200 transition-all duration-300 hover:shadow-xl">
           <div className="relative h-24">
             <img 
-              src={languageUnityImage}
+              src={mountainTopImage}
               alt="Language Selection"
               className="w-full h-full object-cover"
             />
@@ -234,8 +238,8 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           </CardContent>
         </Card>
 
-        {/* Menu Items */}
-        {menuItems.map((item) => {
+        {/* Main Menu Items */}
+        {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {
             switch(id) {
               case 'giving': return {
@@ -281,9 +285,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           const getTileImage = (id: string) => {
             switch(id) {
               case 'giving': return { image: givingHandsImage, overlay: 'from-stone-900/70 via-stone-600/20', border: 'border-stone-200', iconBg: 'bg-stone-100', iconBorder: 'border-stone-200/60', iconRing: 'ring-stone-300/50', iconColor: 'text-stone-700' };
-              case 'videos': return { image: faithVideoImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
+              case 'videos': return { image: holyBibleImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
               case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
-              case 'settings': return { image: settingsConfigImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
+              case 'donate': return { image: donateImage, overlay: 'from-amber-900/70 via-amber-600/20', border: 'border-amber-200', iconBg: 'bg-amber-100', iconBorder: 'border-amber-200/60', iconRing: 'ring-amber-300/50', iconColor: 'text-amber-700' };
               case 'friends': return { image: friendsFellowship, overlay: 'from-pink-900/70 via-pink-600/20', border: 'border-pink-200', iconBg: 'bg-pink-100', iconBorder: 'border-pink-200/60', iconRing: 'ring-pink-300/50', iconColor: 'text-pink-700' };
               default: return null;
             }
@@ -297,7 +301,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               <Card 
                 key={item.id}
                 className={`bg-white rounded-2xl overflow-hidden shadow-lg border-2 ${tileImage.border} cursor-pointer transition-all duration-300 hover:shadow-xl`}
-                onClick={() => item.comingSoon ? null : onNavigate?.(item.id)}
+                onClick={() => item.comingSoon ? null : handleMenuClick(item.id)}
                 data-testid={`menu-${item.id}`}
               >
                 <div className="relative h-24">
