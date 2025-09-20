@@ -4,6 +4,7 @@ import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRig
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import mountainSunriseImage from '@assets/stock_images/powerful_majestic_mo_95a68c1b.jpg';
+import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 
 interface MorePageProps {
   language: string;
@@ -236,9 +237,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           const getItemColors = (id: string) => {
             switch(id) {
               case 'giving': return {
-                gradient: 'from-green-50 to-emerald-50',
-                borderColor: 'border-green-200',
-                iconColor: 'text-green-600'
+                gradient: 'from-stone-50 to-amber-50',
+                borderColor: 'border-stone-200',
+                iconColor: 'text-stone-600'
               };
               case 'videos': return {
                 gradient: 'from-purple-50 to-violet-50',
@@ -274,6 +275,49 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           };
           const colors = getItemColors(item.id);
           
+          // Special layout for giving tile with background image
+          if (item.id === 'giving') {
+            return (
+              <Card 
+                key={item.id}
+                className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-stone-200 cursor-pointer transition-all duration-300 hover:shadow-xl"
+                onClick={() => item.comingSoon ? null : onNavigate?.(item.id)}
+                data-testid={`menu-${item.id}`}
+              >
+                <div className="relative h-32">
+                  <img 
+                    src={givingHandsImage}
+                    alt="Giving Impact"
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-600/20 to-transparent" />
+                </div>
+                <CardContent className="p-4">
+                  <div className="flex items-center justify-between min-h-[40px]">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center shadow-lg border-2 border-stone-200/60 ring-1 ring-stone-300/50">
+                        <item.icon className="w-5 h-5 text-stone-700 stroke-[1.5]" />
+                      </div>
+                      <div className="flex-1">
+                        <h3 className="font-bold text-base text-gray-800 flex items-center gap-2">
+                          {item.title}
+                          {item.comingSoon && (
+                            <span className="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded-full font-medium shadow-sm">
+                              {t.comingSoon}
+                            </span>
+                          )}
+                        </h3>
+                        <p className="text-sm text-gray-700 leading-relaxed">{item.description}</p>
+                      </div>
+                    </div>
+                    {!item.comingSoon && <ChevronRight className="w-5 h-5 text-gray-500" />}
+                  </div>
+                </CardContent>
+              </Card>
+            );
+          }
+          
+          // Regular tile layout for other items
           return (
             <Card 
               key={item.id} 
