@@ -207,12 +207,12 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           outline outline-2 outline-gray-400/30 outline-offset-2
           backdrop-blur-sm
         `}>
-          <CardContent className="relative p-6 z-10">
-            <div className="flex items-center justify-center gap-3 mb-4">
-              <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
-                <Globe className="w-7 h-7 text-blue-600 stroke-[1.5]" />
+          <CardContent className="relative p-4 z-10">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
+                <Globe className="w-5 h-5 text-blue-600 stroke-[1.5]" />
               </div>
-              <h3 className="font-bold text-xl text-gray-800 text-center">{t.language}</h3>
+              <h3 className="font-bold text-lg text-gray-800 text-center">{t.language}</h3>
             </div>
             <Select value={language} onValueChange={onLanguageChange}>
               <SelectTrigger data-testid="select-language">
@@ -260,6 +260,11 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
                 borderColor: 'border-pink-200',
                 iconColor: 'text-pink-600'
               };
+              case 'donate': return {
+                gradient: 'from-amber-50 to-orange-50',
+                borderColor: 'border-amber-200',
+                iconColor: 'text-amber-600'
+              };
               default: return {
                 gradient: 'from-indigo-50 to-blue-50',
                 borderColor: 'border-indigo-200',
@@ -290,25 +295,25 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               onClick={() => item.comingSoon ? null : onNavigate?.(item.id)}
               data-testid={`menu-${item.id}`}
             >
-              <CardContent className="relative p-6 z-10">
-                <div className="flex items-center justify-between min-h-[50px]">
-                  <div className="flex items-center gap-4">
-                    <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
-                      <item.icon className={`w-7 h-7 ${colors.iconColor} stroke-[1.5]`} />
+              <CardContent className="relative p-4 z-10">
+                <div className="flex items-center justify-between min-h-[40px]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
+                      <item.icon className={`w-5 h-5 ${colors.iconColor} stroke-[1.5]`} />
                     </div>
                     <div className="flex-1">
-                      <h3 className="font-bold text-lg text-gray-800 flex items-center gap-2">
+                      <h3 className="font-bold text-base text-gray-800 flex items-center gap-2">
                         {item.title}
                         {item.comingSoon && (
-                          <span className="text-xs bg-white/90 text-gray-600 px-3 py-1 rounded-full font-medium shadow-sm">
+                          <span className="text-xs bg-white/90 text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm">
                             {t.comingSoon}
                           </span>
                         )}
                       </h3>
-                      <p className="text-base text-gray-700 leading-relaxed">{item.description}</p>
+                      <p className="text-sm text-gray-700 leading-relaxed">{item.description}</p>
                     </div>
                   </div>
-                  {!item.comingSoon && <ChevronRight className="w-6 h-6 text-gray-500" />}
+                  {!item.comingSoon && <ChevronRight className="w-5 h-5 text-gray-500" />}
                 </div>
               </CardContent>
             </Card>
@@ -328,28 +333,28 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           outline outline-2 outline-gray-400/30 outline-offset-2
           backdrop-blur-sm
         `}>
-          <CardContent className="relative p-6 z-10">
-            <h2 className="font-bold text-xl text-gray-800 mb-6 flex items-center justify-center gap-3">
-              <div className="w-14 h-14 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
-                <Scale className="w-7 h-7 text-indigo-600 stroke-[1.5]" />
+          <CardContent className="relative p-4 z-10">
+            <h2 className="font-bold text-lg text-gray-800 mb-4 flex items-center justify-center gap-2">
+              <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
+                <Scale className="w-5 h-5 text-indigo-600 stroke-[1.5]" />
               </div>
               {t.supportLegal}
             </h2>
             <div className="space-y-4">
               <Button 
                 variant="secondary"
-                size="lg"
+                size="default"
                 className="w-full justify-between bg-white/80 hover:bg-white text-gray-800 border-white/50"
                 onClick={() => onNavigate?.('support')}
                 data-testid="button-support"
               >
-                <div className="flex items-center gap-4">
+                <div className="flex items-center gap-3">
                   <div className="bg-indigo-100 p-2 rounded-full">
                     <HeadphonesIcon className="w-5 h-5 text-indigo-600" />
                   </div>
-                  <span className="font-medium text-gray-800 text-lg">{t.supportPrivacyRights}</span>
+                  <span className="font-medium text-gray-800 text-base">{t.supportPrivacyRights}</span>
                 </div>
-                <ChevronRight className="w-6 h-6 text-gray-400" />
+                <ChevronRight className="w-5 h-5 text-gray-400" />
               </Button>
             </div>
           </CardContent>
@@ -368,17 +373,17 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           outline outline-2 outline-gray-400/30 outline-offset-2
           backdrop-blur-sm
         `}>
-          <CardContent className="relative p-8 text-center z-10">
-            <div className="w-20 h-20 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
-              <Heart className="w-10 h-10 text-amber-600 stroke-[1.5]" />
+          <CardContent className="relative p-5 text-center z-10">
+            <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
+              <Heart className="w-6 h-6 text-amber-600 stroke-[1.5]" />
             </div>
-            <h3 className="font-bold text-2xl text-gray-800 mb-3">
+            <h3 className="font-bold text-lg text-gray-800 mb-2">
               The Gospel in 5 Minutes™
             </h3>
-            <p className="text-lg text-gray-700 leading-relaxed mb-2">
+            <p className="text-sm text-gray-700 leading-relaxed mb-1">
               {t.appTagline}
             </p>
-            <p className="text-sm text-gray-600 font-medium">
+            <p className="text-xs text-gray-600 font-medium">
               {t.version}
             </p>
           </CardContent>
