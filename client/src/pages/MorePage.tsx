@@ -5,6 +5,11 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import mountainSunriseImage from '@assets/stock_images/powerful_majestic_mo_95a68c1b.jpg';
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
+import languageUnityImage from '@assets/generated_images/Global_languages_cultural_unity_10601631.png';
+import faithVideoImage from '@assets/generated_images/Faith_video_production_spiritual_994019b0.png';
+import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
+import settingsConfigImage from '@assets/generated_images/Spiritual_settings_configuration_peaceful_259360d6.png';
+import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
 
 interface MorePageProps {
   language: string;
@@ -194,26 +199,23 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         </div>
       </div>
 
-      <div className="max-w-md mx-auto space-y-4">
+      <div className="max-w-sm mx-auto space-y-3 px-4">
         {/* Language Selector */}
-        <Card className={`
-          relative bg-gradient-to-br from-blue-50 to-indigo-50 
-          border-4 border-blue-200 
-          transition-all duration-300 
-          shadow-lg hover:shadow-xl 
-          before:absolute before:inset-0 before:rounded-lg 
-          before:bg-gradient-to-br before:from-white/30 before:to-transparent 
-          before:pointer-events-none
-          ring-2 ring-white/40 ring-inset
-          outline outline-2 outline-gray-400/30 outline-offset-2
-          backdrop-blur-sm
-        `}>
-          <CardContent className="relative p-4 z-10">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
-                <Globe className="w-5 h-5 text-blue-600 stroke-[1.5]" />
+        <Card className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-blue-200 transition-all duration-300 hover:shadow-xl">
+          <div className="relative h-24">
+            <img 
+              src={languageUnityImage}
+              alt="Language Selection"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 via-blue-600/20 to-transparent" />
+          </div>
+          <CardContent className="p-3">
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shadow-lg border-2 border-blue-200/60 ring-1 ring-blue-300/50">
+                <Globe className="w-4 h-4 text-blue-700 stroke-[1.5]" />
               </div>
-              <h3 className="font-bold text-lg text-gray-800 text-center">{t.language}</h3>
+              <h3 className="font-bold text-base text-gray-800 text-center">{t.language}</h3>
             </div>
             <Select value={language} onValueChange={onLanguageChange}>
               <SelectTrigger data-testid="select-language">
@@ -275,42 +277,56 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           };
           const colors = getItemColors(item.id);
           
-          // Special layout for giving tile with background image
-          if (item.id === 'giving') {
+          // Get background image and overlay colors for each tile
+          const getTileImage = (id: string) => {
+            switch(id) {
+              case 'giving': return { image: givingHandsImage, overlay: 'from-stone-900/70 via-stone-600/20', border: 'border-stone-200', iconBg: 'bg-stone-100', iconBorder: 'border-stone-200/60', iconRing: 'ring-stone-300/50', iconColor: 'text-stone-700' };
+              case 'videos': return { image: faithVideoImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
+              case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
+              case 'settings': return { image: settingsConfigImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
+              case 'friends': return { image: friendsFellowship, overlay: 'from-pink-900/70 via-pink-600/20', border: 'border-pink-200', iconBg: 'bg-pink-100', iconBorder: 'border-pink-200/60', iconRing: 'ring-pink-300/50', iconColor: 'text-pink-700' };
+              default: return null;
+            }
+          };
+          
+          const tileImage = getTileImage(item.id);
+          
+          // Special layout for tiles with background images
+          if (tileImage) {
             return (
               <Card 
                 key={item.id}
-                className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-stone-200 cursor-pointer transition-all duration-300 hover:shadow-xl"
+                className={`bg-white rounded-2xl overflow-hidden shadow-lg border-2 ${tileImage.border} cursor-pointer transition-all duration-300 hover:shadow-xl`}
                 onClick={() => item.comingSoon ? null : onNavigate?.(item.id)}
                 data-testid={`menu-${item.id}`}
               >
-                <div className="relative h-32">
+                <div className="relative h-24">
                   <img 
-                    src={givingHandsImage}
-                    alt="Giving Impact"
+                    src={tileImage.image}
+                    alt={item.title}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-stone-900/70 via-stone-600/20 to-transparent" />
+                  <div className={`absolute inset-0 bg-gradient-to-t ${tileImage.overlay} to-transparent`} />
                 </div>
-                <CardContent className="p-4">
-                  <div className="flex items-center justify-between min-h-[40px]">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-stone-100 rounded-full flex items-center justify-center shadow-lg border-2 border-stone-200/60 ring-1 ring-stone-300/50">
-                        <item.icon className="w-5 h-5 text-stone-700 stroke-[1.5]" />
+                <CardContent className="p-3">
+                  <div className="flex items-center justify-between min-h-[32px]">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-8 h-8 ${tileImage.iconBg} rounded-full flex items-center justify-center shadow-lg border-2 ${tileImage.iconBorder} ring-1 ${tileImage.iconRing}`}>
+                        <item.icon className={`w-4 h-4 ${tileImage.iconColor} stroke-[1.5]`} />
                       </div>
                       <div className="flex-1">
-                        <h3 className="font-bold text-base text-gray-800 flex items-center gap-2">
+                        <h3 className="font-bold text-sm text-gray-800 flex items-center gap-1">
                           {item.title}
                           {item.comingSoon && (
-                            <span className="text-xs bg-stone-100 text-stone-600 px-2 py-1 rounded-full font-medium shadow-sm">
+                            <span className={`text-xs ${tileImage.iconBg} text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm`}>
                               {t.comingSoon}
                             </span>
                           )}
                         </h3>
-                        <p className="text-sm text-gray-700 leading-relaxed">{item.description}</p>
+                        <p className="text-xs text-gray-700 leading-relaxed">{item.description}</p>
                       </div>
                     </div>
-                    {!item.comingSoon && <ChevronRight className="w-5 h-5 text-gray-500" />}
+                    {!item.comingSoon && <ChevronRight className="w-4 h-4 text-gray-500" />}
                   </div>
                 </CardContent>
               </Card>
@@ -377,10 +393,10 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           outline outline-2 outline-gray-400/30 outline-offset-2
           backdrop-blur-sm
         `}>
-          <CardContent className="relative p-4 z-10">
-            <h2 className="font-bold text-lg text-gray-800 mb-4 flex items-center justify-center gap-2">
-              <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
-                <Scale className="w-5 h-5 text-indigo-600 stroke-[1.5]" />
+          <CardContent className="relative p-3 z-10">
+            <h2 className="font-bold text-base text-gray-800 mb-3 flex items-center justify-center gap-2">
+              <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
+                <Scale className="w-4 h-4 text-indigo-600 stroke-[1.5]" />
               </div>
               {t.supportLegal}
             </h2>
@@ -406,7 +422,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
 
         {/* App Info */}
         <Card className={`
-          mt-8 relative bg-gradient-to-br from-amber-50 to-orange-50 
+          mt-6 relative bg-gradient-to-br from-amber-50 to-orange-50 
           border-4 border-amber-200 
           transition-all duration-300 
           shadow-lg hover:shadow-xl 
@@ -417,14 +433,14 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           outline outline-2 outline-gray-400/30 outline-offset-2
           backdrop-blur-sm
         `}>
-          <CardContent className="relative p-5 text-center z-10">
-            <div className="w-12 h-12 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-3 shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
-              <Heart className="w-6 h-6 text-amber-600 stroke-[1.5]" />
+          <CardContent className="relative p-4 text-center z-10">
+            <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
+              <Heart className="w-5 h-5 text-amber-600 stroke-[1.5]" />
             </div>
-            <h3 className="font-bold text-lg text-gray-800 mb-2">
+            <h3 className="font-bold text-base text-gray-800 mb-1">
               The Gospel in 5 Minutes™
             </h3>
-            <p className="text-sm text-gray-700 leading-relaxed mb-1">
+            <p className="text-xs text-gray-700 leading-relaxed mb-1">
               {t.appTagline}
             </p>
             <p className="text-xs text-gray-600 font-medium">
