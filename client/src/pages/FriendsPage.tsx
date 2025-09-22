@@ -479,7 +479,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
           {/* Info Tiles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-share-verses">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Share className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
@@ -491,7 +491,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('search')} data-testid="tile-find-friends">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-900/40 dark:to-purple-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Users className="w-8 h-8 text-violet-600 dark:text-violet-400" />
@@ -503,7 +503,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-grow-together">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <MessageCircle className="w-8 h-8 text-sky-600 dark:text-sky-400" />
@@ -515,7 +515,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('more')} data-testid="tile-safe-private">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Shield className="w-8 h-8 text-amber-600 dark:text-amber-400" />
@@ -527,7 +527,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('home')} data-testid="tile-daily-inspiration">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-900/40 dark:to-pink-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Sparkles className="w-8 h-8 text-rose-600 dark:text-rose-400" />
@@ -539,7 +539,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-global-community">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-cyan-100 to-teal-100 dark:from-cyan-900/40 dark:to-teal-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Globe className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
@@ -562,17 +562,17 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center">
+                <div className="text-center cursor-pointer hover-elevate p-4 rounded-lg transition-all" onClick={() => setActiveTab('contacts')} data-testid="step-import-contacts">
                   <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">1</div>
                   <h4 className="font-semibold text-foreground mb-2">Import Contacts</h4>
                   <p className="text-muted-foreground text-sm">Allow access to your contacts to find friends who use the app</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center cursor-pointer hover-elevate p-4 rounded-lg transition-all" onClick={() => setActiveTab('search')} data-testid="step-send-requests">
                   <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">2</div>
                   <h4 className="font-semibold text-foreground mb-2">Send Friend Requests</h4>
                   <p className="text-muted-foreground text-sm">Connect with discovered friends or search for new ones</p>
                 </div>
-                <div className="text-center">
+                <div className="text-center cursor-pointer hover-elevate p-4 rounded-lg transition-all" onClick={() => setActiveTab('friends')} data-testid="step-share-grow">
                   <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">3</div>
                   <h4 className="font-semibold text-foreground mb-2">Share & Grow</h4>
                   <p className="text-muted-foreground text-sm">Start sharing Bible verses and growing together in faith</p>
