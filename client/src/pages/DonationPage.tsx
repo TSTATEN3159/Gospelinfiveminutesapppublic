@@ -313,126 +313,158 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-stone-50 via-neutral-50 to-amber-50 dark:from-stone-950 dark:via-neutral-950 dark:to-amber-950">
-      {/* Beige Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-stone-100/20 via-transparent to-neutral-100/20 pointer-events-none" />
+    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-amber-950 dark:via-orange-950 dark:to-yellow-950">
+      {/* Warm Beige Background Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-100/30 via-orange-100/20 to-yellow-100/30 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-transparent pointer-events-none" />
       
       <div className="relative pb-20 px-4 py-6">
-        {/* Professional Header */}
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-6">
+        {/* Warm Professional Header */}
+        <div className="mb-10">
+          <div className="flex items-center gap-4 mb-8">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => onNavigate?.('more')}
-              className="ios-tap-target hover:bg-stone-100 dark:hover:bg-stone-900 transition-colors"
+              className="ios-tap-target hover:bg-amber-100/80 dark:hover:bg-amber-900/50 transition-all duration-300 rounded-full"
               data-testid="button-back-donation"
               aria-label="Go back to More page"
             >
-              <ArrowLeft className="w-5 h-5 text-stone-700 dark:text-stone-300" />
+              <ArrowLeft className="w-5 h-5 text-amber-700 dark:text-amber-300" />
             </Button>
             <div className="flex-1 text-center">
-              <h1 className="text-3xl font-bold bg-gradient-to-r from-stone-700 via-neutral-600 to-amber-600 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-2">
                 Make a Donation
               </h1>
-              <div className="h-1 w-24 bg-gradient-to-r from-stone-500 to-neutral-500 rounded-full mt-2 mx-auto" />
+              <div className="h-1.5 w-32 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 rounded-full mx-auto shadow-sm" />
+              <p className="text-amber-600 dark:text-amber-400 font-medium mt-3 text-lg">
+                Share God's Love Through Your Generosity
+              </p>
             </div>
           </div>
-          <div className="bg-white/70 dark:bg-gray-800/70 backdrop-blur-sm rounded-xl p-4 border border-stone-200 dark:border-stone-800">
-            <p className="text-gray-700 dark:text-gray-300 text-center font-medium">
-              Support our mission to spread God's word around the world through{' '}
-              <span className="text-stone-700 dark:text-stone-300 font-semibold">The Gospel in 5 Minutes™</span>
+          <div className="bg-gradient-to-r from-white/80 via-amber-50/90 to-white/80 dark:from-gray-800/80 dark:via-amber-900/40 dark:to-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-amber-200/60 dark:border-amber-800/60 shadow-lg">
+            <p className="text-center font-medium text-gray-700 dark:text-gray-300 leading-relaxed">
+              🙏 Support our mission to spread God's word around the world through{' '}
+              <span className="text-amber-700 dark:text-amber-300 font-bold">The Gospel in 5 Minutes™</span>
+            </p>
+            <p className="text-center text-amber-600 dark:text-amber-400 mt-2 font-medium">
+              Every donation brings hope and salvation to someone in need
             </p>
           </div>
         </div>
 
         <div className="max-w-lg mx-auto space-y-8">
-          {/* Enhanced Total Donations Impact */}
-          <Card className="text-center shadow-2xl border-0 bg-gradient-to-br from-stone-100 via-neutral-50 to-amber-50 dark:from-stone-900 dark:via-neutral-900 dark:to-amber-900 overflow-hidden">
-            {/* Decorative top border */}
-            <div className="h-2 bg-gradient-to-r from-stone-500 via-neutral-500 to-amber-500" />
-            <CardContent className="p-8 relative">
-              {/* Background decoration */}
-              <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-stone-200/30 to-neutral-200/30 rounded-full blur-xl" />
-              <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-amber-200/30 to-stone-200/30 rounded-full blur-xl" />
+          {/* Warm Impact Story Card */}
+          <Card className="text-center shadow-2xl border-0 bg-gradient-to-br from-amber-100/80 via-orange-50/90 to-yellow-100/80 dark:from-amber-900/60 dark:via-orange-900/60 dark:to-yellow-900/60 overflow-hidden">
+            {/* Warm decorative top border */}
+            <div className="h-3 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 shadow-sm" />
+            <CardContent className="p-10 relative">
+              {/* Warm background decoration */}
+              <div className="absolute top-6 right-6 w-24 h-24 bg-gradient-to-br from-amber-300/40 to-orange-300/40 rounded-full blur-2xl" />
+              <div className="absolute bottom-6 left-6 w-20 h-20 bg-gradient-to-br from-yellow-300/40 to-amber-300/40 rounded-full blur-2xl" />
               
-              {/* Icon with beige gradient background */}
-              <div className="relative w-16 h-16 bg-gradient-to-br from-stone-500 to-neutral-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                <DollarSign className="w-8 h-8 text-white" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
+              {/* Warm icon with loving design */}
+              <div className="relative w-20 h-20 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
+                <Heart className="w-10 h-10 text-white" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
+                <div className="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-full blur-lg" />
               </div>
               
-              <div className="text-4xl font-bold bg-gradient-to-r from-stone-700 via-neutral-600 to-amber-600 bg-clip-text text-transparent mb-3" data-testid="text-total-donations">
+              <div className="text-5xl font-bold bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-4" data-testid="text-total-donations">
                 ${(donationStats as any)?.success ? (donationStats as any).stats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
               </div>
-              <div className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-2">
-                Total Donations Received
+              <div className="text-xl font-bold text-amber-800 dark:text-amber-200 mb-4">
+                💝 Total Love Shared Through Donations
               </div>
-              <div className="bg-white/50 dark:bg-gray-800/50 rounded-lg p-3 backdrop-blur-sm border border-stone-200 dark:border-stone-700">
-                <div className="text-sm font-medium text-stone-700 dark:text-stone-300">
-                  {(donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased.toLocaleString() : '0'} Bibles funded for those in need
+              <div className="bg-gradient-to-r from-white/70 via-amber-50/80 to-white/70 dark:from-gray-800/70 dark:via-amber-900/30 dark:to-gray-800/70 rounded-xl p-4 backdrop-blur-sm border border-amber-300/50 dark:border-amber-700/50 shadow-lg">
+                <div className="text-base font-semibold text-amber-700 dark:text-amber-300">
+                  🙏 {(donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased.toLocaleString() : '0'} Souls Touched with God's Word
                 </div>
+                <p className="text-sm text-amber-600 dark:text-amber-400 mt-2 font-medium">
+                  Every Bible brings hope, healing, and eternal transformation
+                </p>
               </div>
             </CardContent>
           </Card>
 
-          {/* Enhanced Donation Form */}
-          <Card className="shadow-2xl border-0 bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm overflow-hidden">
-            {/* Decorative header */}
-            <div className="bg-gradient-to-r from-stone-500 via-neutral-500 to-amber-500 p-1">
-              <div className="bg-white dark:bg-gray-800 rounded-t-lg">
-                <CardHeader className="text-center pb-4">
-                  <div className="flex justify-center mb-3">
-                    <div className="w-12 h-12 bg-gradient-to-br from-stone-500 to-neutral-500 rounded-full flex items-center justify-center shadow-lg">
-                      <Heart className="w-6 h-6 text-white" />
+          {/* Warm Giving Form */}
+          <Card className="shadow-2xl border-0 bg-gradient-to-br from-white/90 via-amber-50/80 to-white/90 dark:from-gray-800/90 dark:via-amber-900/30 dark:to-gray-800/90 backdrop-blur-sm overflow-hidden">
+            {/* Warm decorative header */}
+            <div className="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 p-1.5 shadow-lg">
+              <div className="bg-gradient-to-br from-white dark:from-gray-800 to-amber-50/50 dark:to-amber-900/20 rounded-t-lg">
+                <CardHeader className="text-center pb-6 pt-8">
+                  <div className="flex justify-center mb-4">
+                    <div className="w-16 h-16 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-full flex items-center justify-center shadow-xl">
+                      <Heart className="w-8 h-8 text-white" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
                     </div>
                   </div>
-                  <CardTitle className="text-2xl font-bold bg-gradient-to-r from-stone-700 via-neutral-600 to-amber-600 bg-clip-text text-transparent">
-                    Choose Your Donation
+                  <CardTitle className="text-3xl font-bold bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-3">
+                    Choose Your Gift of Love
                   </CardTitle>
-                  <p className="text-stone-600 dark:text-stone-400 font-medium mt-2">
-                    Every gift makes a difference
+                  <p className="text-amber-600 dark:text-amber-400 font-semibold text-lg">
+                    💝 Every gift plants seeds of eternal hope
+                  </p>
+                  <p className="text-amber-500 dark:text-amber-500 font-medium mt-2">
+                    Join thousands spreading God's love worldwide
                   </p>
                 </CardHeader>
               </div>
             </div>
             
-            <CardContent className="space-y-8 p-6">
-              {/* Enhanced Preset Amounts */}
+            <CardContent className="space-y-10 p-8">
+              {/* Warm Giving Options */}
               <div>
-                <Label className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-4 block text-center">
-                  Select a preset amount:
+                <Label className="text-xl font-bold text-amber-800 dark:text-amber-200 mb-6 block text-center">
+                  💝 Choose Your Gift Amount
                 </Label>
-                <div className="grid grid-cols-3 gap-3">
+                <p className="text-center text-amber-600 dark:text-amber-400 mb-6 font-medium">
+                  Select the amount that speaks to your heart
+                </p>
+                <div className="grid grid-cols-3 gap-4">
                   {presetAmounts.map((preset) => (
                     <Button
                       key={preset.amount}
                       variant={selectedAmount === preset.amount ? "default" : "outline"}
                       size="lg"
                       onClick={() => handlePresetClick(preset.amount)}
-                      className={`relative overflow-hidden transition-all duration-300 ${
+                      className={`relative overflow-hidden transition-all duration-500 h-16 text-lg font-bold rounded-xl ${
                         selectedAmount === preset.amount 
-                          ? "bg-gradient-to-r from-stone-500 to-neutral-500 text-white shadow-lg scale-105" 
-                          : "border-stone-200 dark:border-stone-700 hover:border-stone-400 hover:bg-stone-50 dark:hover:bg-stone-900"
+                          ? "bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 text-white shadow-2xl scale-110 border-0" 
+                          : "border-2 border-amber-200 dark:border-amber-700 hover:border-amber-400 hover:bg-gradient-to-br hover:from-amber-50 hover:to-orange-50 dark:hover:from-amber-900 dark:hover:to-orange-900 hover:scale-105 hover:shadow-lg text-amber-700 dark:text-amber-300"
                       }`}
                       data-testid={`button-preset-${preset.amount}`}
                     >
                       {selectedAmount === preset.amount && (
-                        <Check className="w-4 h-4 mr-1" aria-hidden="true" />
+                        <>
+                          <Heart className="w-5 h-5 mr-2" aria-hidden="true" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl" />
+                        </>
                       )}
                       {preset.label}
+                      {selectedAmount !== preset.amount && (
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-100/10 to-orange-100/10 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                      )}
                     </Button>
                   ))}
                 </div>
+                <p className="text-center text-amber-500 dark:text-amber-500 mt-4 text-sm font-medium">
+                  ✨ Popular amounts chosen by our loving community
+                </p>
               </div>
 
-              {/* Enhanced Custom Amount */}
-              <div>
-                <Label htmlFor="custom-amount" className="text-lg font-semibold text-stone-800 dark:text-stone-200 mb-3 block text-center">
-                  Or enter a custom amount:
+              {/* Warm Custom Amount */}
+              <div className="bg-gradient-to-br from-amber-50/80 to-orange-50/80 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border border-amber-200/60 dark:border-amber-700/60">
+                <Label htmlFor="custom-amount" className="text-xl font-bold text-amber-800 dark:text-amber-200 mb-4 block text-center">
+                  💖 Or Enter Your Heart's Desire
                 </Label>
+                <p className="text-center text-amber-600 dark:text-amber-400 mb-6 font-medium">
+                  Every amount, no matter the size, makes a difference
+                </p>
                 <div className="relative">
-                  <DollarSign className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-stone-500" />
+                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full flex items-center justify-center">
+                    <DollarSign className="w-4 h-4 text-white" />
+                  </div>
                   <Input
                     id="custom-amount"
                     type="number"
@@ -440,19 +472,22 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                     step="0.01"
                     min="1"
                     max="10000"
-                    placeholder="Enter amount (min $1, max $10,000)"
+                    placeholder="Enter your loving gift amount..."
                     value={customAmount}
                     onChange={(e) => handleCustomAmountChange(e.target.value)}
-                    className={`pl-12 text-lg border-2 rounded-xl bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm ${
-                      isCustom ? "border-stone-400 focus:border-stone-500 focus:ring-stone-500" : "border-stone-200 dark:border-stone-700"
+                    className={`pl-14 pr-4 h-16 text-xl font-semibold border-3 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm transition-all duration-300 ${
+                      isCustom ? "border-amber-400 focus:border-amber-500 focus:ring-amber-500 shadow-lg" : "border-amber-200 dark:border-amber-700 focus:border-amber-400"
                     }`}
                     data-testid="input-custom-amount"
                   />
                 </div>
                 {customAmount && (
-                  <div className="mt-3 p-3 bg-stone-50 dark:bg-stone-900/30 rounded-lg border border-stone-200 dark:border-stone-700">
-                    <p className="text-stone-700 dark:text-stone-300 font-medium text-center">
-                      Amount: ${parseFloat(customAmount || "0").toFixed(2)}
+                  <div className="mt-4 p-4 bg-gradient-to-r from-amber-100 via-orange-100 to-yellow-100 dark:from-amber-900/40 dark:via-orange-900/40 dark:to-yellow-900/40 rounded-xl border border-amber-300/60 dark:border-amber-600/60 shadow-lg">
+                    <p className="text-amber-800 dark:text-amber-200 font-bold text-center text-lg">
+                      🙏 Your Gift: ${parseFloat(customAmount || "0").toFixed(2)}
+                    </p>
+                    <p className="text-amber-600 dark:text-amber-400 text-center mt-2 font-medium">
+                      Thank you for your generous heart!
                     </p>
                   </div>
                 )}
