@@ -242,7 +242,7 @@ export default function ScriptureMemorySection({ backgroundImage }: ScriptureMem
               </AvatarFallback>
             </Avatar>
             <div className="flex-1 space-y-1">
-              <CardTitle className={cn("flex items-center gap-3 text-2xl font-semibold tracking-tight", backgroundImage ? "text-white" : "text-white")}>
+              <CardTitle className={cn("flex items-center justify-center gap-3 text-2xl font-semibold tracking-tight whitespace-nowrap", backgroundImage ? "text-white" : "text-white")}>
                 <Brain className="w-6 h-6" />
                 Scripture Memory Helper
               </CardTitle>
