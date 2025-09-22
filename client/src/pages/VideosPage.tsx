@@ -120,45 +120,56 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
   };
 
   return (
-    <div className="min-h-screen pb-20">
-      {/* Header Section - Same style as HomePage */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
-        <div className="flex items-center mb-4">
+    <div className="min-h-screen bg-white dark:bg-gray-900 pb-20">
+      {/* Professional Header Section */}
+      <div className="bg-white dark:bg-gray-900 px-6 py-8 border-b border-slate-200 dark:border-slate-800 ios-safe-top">
+        <div className="flex items-center mb-8">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-3"
+            className="mr-4 h-11 w-11 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105"
             data-testid="button-back-videos"
             aria-label="Go back to More page"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-5 h-5 text-slate-700 dark:text-slate-300" />
           </Button>
-          <div className="flex-1">
-            <h1 className="text-2xl font-bold" style={{ 
+          <div className="flex-1 text-center">
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-slate-800 via-blue-800 to-indigo-800 bg-clip-text text-transparent mb-3" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
-              color: '#8B4513'
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }}>
               Faith Videos
             </h1>
-            <p className="text-gray-600 mt-1">Sermons, Gospel insights, and Christian guidance</p>
+            <div className="h-1.5 w-32 bg-gradient-to-r from-slate-500 via-blue-500 to-indigo-500 rounded-full mx-auto shadow-sm mb-4" />
+            <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">Sermons, Gospel insights, and Christian guidance</p>
           </div>
         </div>
       </div>
 
       <div className="px-4 py-6 space-y-6">
-        {/* Featured Video */}
-        <Card className="bg-gradient-to-br from-purple-50 to-violet-50 border-purple-200 shadow-lg border-2">
-          <CardHeader>
-            <CardTitle className="flex items-center justify-center gap-2 text-purple-700 text-center">
-              <div className="w-8 h-8 bg-purple-100 rounded-full flex items-center justify-center">
-                <Play className="w-5 h-5 text-purple-600" />
-              </div>
-              Featured This Week
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
+        <div className="max-w-4xl mx-auto space-y-6">
+        {/* Professional Featured Video */}
+        <Card className="overflow-hidden shadow-2xl border-0 bg-gradient-to-br from-slate-100/90 via-blue-50/95 to-indigo-100/90 dark:from-slate-900/70 dark:via-blue-900/70 dark:to-indigo-900/70 transform hover:scale-[1.02] transition-all duration-500">
+          <div className="bg-gradient-to-r from-slate-600 via-blue-600 to-indigo-600 p-1.5 shadow-xl">
+            <div className="bg-gradient-to-br from-white dark:from-gray-800 to-slate-50/60 dark:to-slate-900/30 rounded-t-lg">
+              <CardHeader className="text-center pb-6 pt-8">
+                <div className="flex justify-center mb-4">
+                  <div className="w-16 h-16 bg-gradient-to-br from-slate-600 via-blue-600 to-indigo-600 rounded-full flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform duration-300">
+                    <Play className="w-8 h-8 text-white" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
+                  </div>
+                </div>
+                <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent text-center">
+                  Featured This Week
+                </CardTitle>
+                <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg text-center mt-3">
+                  Handpicked spiritual content for your growth
+                </p>
+              </CardHeader>
+            </div>
+          </div>
+          <CardContent className="p-6 bg-gradient-to-br from-white/95 via-slate-50/90 to-blue-50/95 dark:from-gray-800/95 dark:via-slate-900/30 dark:to-blue-900/30">
             {loading ? (
               <div className="animate-pulse space-y-3">
                 <div className="aspect-video bg-muted rounded-lg"></div>
@@ -217,64 +228,68 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
           </CardContent>
         </Card>
 
-        {/* Video Categories */}
+        {/* Professional Video Categories */}
         <div>
-          <h2 className="text-lg font-semibold text-foreground mb-4 text-center">Browse by Category</h2>
-          <div className="grid grid-cols-3 gap-3 mb-6">
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">Browse by Category</h2>
+          <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">Discover content tailored to your spiritual journey</p>
+          <div className="grid grid-cols-3 gap-4 mb-6">
             <Card 
-              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 bg-gradient-to-br from-blue-50 to-indigo-50 ${
-                selectedCategory === 'sermon' ? 'ring-2 ring-blue-400' : ''
+              className={`text-center cursor-pointer shadow-2xl border-0 bg-gradient-to-br from-blue-100/90 to-indigo-100/90 dark:from-blue-900/60 dark:to-indigo-900/60 transform hover:scale-105 transition-all duration-500 ${
+                selectedCategory === 'sermon' ? 'ring-4 ring-blue-400/60 scale-105' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'sermon' ? null : 'sermon')}
               data-testid="category-sermon"
             >
-              <CardContent className="p-4">
-                <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <BookOpen className="w-6 h-6 text-blue-600" />
+              <CardContent className="p-5">
+                <div className="w-14 h-14 bg-gradient-to-br from-blue-500 to-indigo-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-xl transform hover:scale-110 transition-transform duration-300">
+                  <BookOpen className="w-7 h-7 text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
                 </div>
-                <div className="text-sm font-medium text-gray-800">Sermons</div>
-                <div className="text-xs text-gray-600">Faith messages</div>
+                <div className="text-base font-bold text-slate-800 dark:text-slate-200">Sermons</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">Faith messages</div>
               </CardContent>
             </Card>
             
             <Card 
-              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 bg-gradient-to-br from-yellow-50 to-amber-50 ${
-                selectedCategory === 'gospel-tidbits' ? 'ring-2 ring-yellow-400' : ''
+              className={`text-center cursor-pointer shadow-2xl border-0 bg-gradient-to-br from-amber-100/90 to-yellow-100/90 dark:from-amber-900/60 dark:to-yellow-900/60 transform hover:scale-105 transition-all duration-500 ${
+                selectedCategory === 'gospel-tidbits' ? 'ring-4 ring-amber-400/60 scale-105' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'gospel-tidbits' ? null : 'gospel-tidbits')}
               data-testid="category-tidbits"
             >
-              <CardContent className="p-4">
-                <div className="w-12 h-12 bg-yellow-100 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Lightbulb className="w-6 h-6 text-yellow-600" />
+              <CardContent className="p-5">
+                <div className="w-14 h-14 bg-gradient-to-br from-amber-500 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-xl transform hover:scale-110 transition-transform duration-300">
+                  <Lightbulb className="w-7 h-7 text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
                 </div>
-                <div className="text-sm font-medium text-gray-800">Gospel Tidbits</div>
-                <div className="text-xs text-gray-600">Quick insights</div>
+                <div className="text-base font-bold text-slate-800 dark:text-slate-200">Gospel Tidbits</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">Quick insights</div>
               </CardContent>
             </Card>
             
             <Card 
-              className={`text-center hover-elevate cursor-pointer shadow-lg border-2 ${
-                selectedCategory === 'christian-advice' ? 'ring-2 ring-primary' : ''
+              className={`text-center cursor-pointer shadow-2xl border-0 bg-gradient-to-br from-rose-100/90 to-pink-100/90 dark:from-rose-900/60 dark:to-pink-900/60 transform hover:scale-105 transition-all duration-500 ${
+                selectedCategory === 'christian-advice' ? 'ring-4 ring-rose-400/60 scale-105' : ''
               }`}
               onClick={() => handleCategoryFilter(selectedCategory === 'christian-advice' ? null : 'christian-advice')}
               data-testid="category-advice"
             >
-              <CardContent className="p-4">
-                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-2">
-                  <Heart className="w-6 h-6 text-primary" />
+              <CardContent className="p-5">
+                <div className="w-14 h-14 bg-gradient-to-br from-rose-500 to-pink-500 rounded-full flex items-center justify-center mx-auto mb-3 shadow-xl transform hover:scale-110 transition-transform duration-300">
+                  <Heart className="w-7 h-7 text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
                 </div>
-                <div className="text-sm font-medium text-foreground">Christian Advice</div>
-                <div className="text-xs text-muted-foreground">Life guidance</div>
+                <div className="text-base font-bold text-slate-800 dark:text-slate-200">Christian Advice</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">Life guidance</div>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* Video List */}
+        {/* Professional Video List */}
         <div>
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground text-center flex-1">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent text-center flex-1">
               {selectedCategory ? `${getCategoryName(selectedCategory)} Videos` : 'Recent Videos'}
             </h2>
             {selectedCategory && (
@@ -282,6 +297,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                 variant="outline" 
                 size="sm" 
                 onClick={() => handleCategoryFilter(null)}
+                className="bg-gradient-to-r from-slate-100 to-blue-100 border-slate-300 hover:from-slate-200 hover:to-blue-200 text-slate-700 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                 data-testid="button-clear-filter"
               >
                 Show All
@@ -316,16 +332,16 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
               {videos.filter(video => video.id !== featuredVideo?.id).map((video) => (
                 <Card 
                   key={video.id} 
-                  className="hover-elevate cursor-pointer shadow-lg border-2 bg-gradient-to-r from-purple-50/50 to-violet-50/50"
+                  className="cursor-pointer shadow-lg border-0 bg-gradient-to-r from-slate-50/90 via-blue-50/90 to-indigo-50/90 dark:from-slate-900/60 dark:via-blue-900/60 dark:to-indigo-900/60 transform hover:scale-[1.02] transition-all duration-300 hover:shadow-2xl"
                   onClick={() => handleVideoClick(video)}
                   data-testid={`video-${video.id}`}
                 >
                   <CardContent className="p-4">
                     <div className="flex gap-3">
                       <div className="relative flex-shrink-0">
-                        <div className="w-20 h-14 bg-gradient-to-br from-purple-100 to-violet-100 rounded flex items-center justify-center">
-                          <div className="w-8 h-8 bg-purple-200 rounded-full flex items-center justify-center">
-                            <Play className="w-4 h-4 text-purple-600" />
+                        <div className="w-20 h-14 bg-gradient-to-br from-slate-200 via-blue-200 to-indigo-200 dark:from-slate-700 dark:via-blue-700 dark:to-indigo-700 rounded-lg flex items-center justify-center shadow-lg">
+                          <div className="w-8 h-8 bg-gradient-to-br from-slate-500 to-blue-500 rounded-full flex items-center justify-center">
+                            <Play className="w-4 h-4 text-white" />
                           </div>
                         </div>
                         {video.duration && (
@@ -377,20 +393,25 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
           )}
         </div>
 
-        {/* Coming Soon Notice */}
-        <Card className="bg-gradient-to-br from-green-50 to-emerald-50 border-green-200 shadow-lg border-2">
-          <CardContent className="p-6 text-center">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-              <Play className="w-8 h-8 text-green-600" />
+        {/* Professional Coming Soon Notice */}
+        <Card className="shadow-2xl border-0 bg-gradient-to-br from-emerald-100/90 via-teal-100/90 to-green-100/90 dark:from-emerald-900/60 dark:via-teal-900/60 dark:to-green-900/60 overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
+          <div className="bg-gradient-to-r from-emerald-600 via-teal-600 to-green-600 p-1.5 shadow-xl">
+            <div className="bg-gradient-to-br from-white dark:from-gray-800 to-emerald-50/60 dark:to-emerald-900/30 rounded-t-lg">
+              <CardContent className="p-8 text-center">
+                <div className="w-20 h-20 bg-gradient-to-br from-emerald-500 via-teal-500 to-green-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-2xl transform hover:scale-110 transition-transform duration-300">
+                  <Play className="w-10 h-10 text-white" />
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
+                </div>
+                <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-800 via-teal-700 to-green-800 bg-clip-text text-transparent mb-4 text-center">
+                  More Videos Coming Soon!
+                </h3>
+                <p className="text-slate-600 dark:text-slate-400 text-base font-medium mb-4 text-center leading-relaxed">
+                  We're constantly adding new sermons, Gospel insights, and Christian advice videos. 
+                  Check back regularly for fresh spiritual content!
+                </p>
+              </CardContent>
             </div>
-            <h3 className="text-lg font-bold text-gray-800 mb-2 text-center">
-              More Videos Coming Soon!
-            </h3>
-            <p className="text-gray-600 text-sm mb-4 text-center">
-              We're constantly adding new sermons, Gospel insights, and Christian advice videos. 
-              Check back regularly for fresh spiritual content!
-            </p>
-          </CardContent>
+          </div>
         </Card>
 
         {/* Video Player Modal */}
@@ -399,6 +420,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
           isOpen={isPlayerOpen}
           onClose={handleClosePlayer}
         />
+        </div>
       </div>
     </div>
   );
