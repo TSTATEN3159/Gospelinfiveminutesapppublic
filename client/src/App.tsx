@@ -152,9 +152,9 @@ function App() {
   const renderCurrentPage = () => {
     switch (currentPage) {
       case "home":
-        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
+        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
       case "ask":
-        return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+        return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "search":
         return <SearchPage 
           onNavigate={handleNavigateToLegal} 
@@ -166,27 +166,27 @@ function App() {
       case "more":
         return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "privacy":
-        return <PrivacyPolicyPage onBack={handleBackFromLegal} />;
+        return <PrivacyPolicyPage onBack={handleBackFromLegal} language={language} />;
       case "terms":
-        return <TermsOfServicePage onBack={handleBackFromLegal} />;
+        return <TermsOfServicePage onBack={handleBackFromLegal} language={language} />;
       case "support":
-        return <SupportPage onBack={handleBackFromLegal} />;
+        return <SupportPage onNavigate={handleNavigateToLegal} language={language} />;
       case "donate":
-        return <DonationPage onNavigate={handleNavigateToLegal} />;
+        return <DonationPage onNavigate={handleNavigateToLegal} language={language} />;
       case "giving":
-        return <GivingPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+        return <GivingPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "videos":
-        return <VideosPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+        return <VideosPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "blog":
-        return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+        return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "settings":
-        return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} user={user || undefined} />;
+        return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} user={user || undefined} language={language} />;
       case "friends":
         return <FriendsPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
       case "biblestudies":
         return <BibleStudiesPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
       case "bibletrivia":
-        return <BibleTriviaPage onNavigate={handleNavigateToLegal} />;
+        return <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }

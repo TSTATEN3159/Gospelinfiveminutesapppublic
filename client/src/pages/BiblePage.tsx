@@ -11,9 +11,10 @@ import { Capacitor } from '@capacitor/core';
 interface AskPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
+  language?: string;
 }
 
-export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
+export default function AskPage({ onNavigate, streakDays = 0, language = "en" }: AskPageProps) {
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
   

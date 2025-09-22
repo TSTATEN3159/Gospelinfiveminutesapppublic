@@ -18,6 +18,7 @@ import { Capacitor } from '@capacitor/core';
 // Services
 import { bibleService, type DailyVerse } from "../services/bibleService";
 import { videoService, type VideoItem } from "../services/videoService";
+import { useTranslations } from "../lib/translations";
 
 // Images
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
@@ -39,10 +40,12 @@ interface HomePageProps {
   user?: User;
   onNavigate?: (page: string, searchQuery?: string) => void;
   onStreakUpdate?: (days: number) => void;
+  language?: string;
 }
 
-export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageProps) {
+export default function HomePage({ user, onNavigate, onStreakUpdate, language = "en" }: HomePageProps) {
   const { toast } = useToast();
+  const t = useTranslations(language);
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showStudyPlans, setShowStudyPlans] = useState(false);
@@ -115,7 +118,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }} aria-label="Welcome to The Gospel in 5 Minutes">
-              Welcome!
+              {t.welcome}
             </h1>
           </div>
           <div className="flex items-center space-x-2">
@@ -220,11 +223,11 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
                 <div className="w-6 h-6 bg-black rounded-full flex items-center justify-center text-white mr-2">
                   <Book className="w-3 h-3" />
                 </div>
-                <span className="text-sm font-medium text-gray-700">Daily Verse Experience</span>
+                <span className="text-sm font-medium text-gray-700">{t.dailyVerse}</span>
               </div>
               <div className="flex items-center gap-2 mb-2">
                 <h2 className="text-lg font-bold text-gray-900">
-                  Today's Scripture
+                  {t.dailyVerse}
                 </h2>
                 <FileText className="w-4 h-4 text-gray-600" />
               </div>
