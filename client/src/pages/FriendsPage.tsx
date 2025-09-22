@@ -553,29 +553,29 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           </div>
 
           {/* Getting Started Guide */}
-          <Card className="bg-white shadow-lg border-0">
+          <Card className="bg-card shadow-lg border-0">
             <CardHeader className="pb-4">
-              <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
-                <BookOpen className="w-6 h-6 mr-3 text-blue-600" />
+              <CardTitle className="text-xl font-bold text-foreground flex items-center">
+                <BookOpen className="w-6 h-6 mr-3 text-sky-600 dark:text-sky-400" />
                 Getting Started with Friends & Community
               </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center">
-                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">1</div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Import Contacts</h4>
-                  <p className="text-gray-600 text-sm">Allow access to your contacts to find friends who use the app</p>
+                  <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">1</div>
+                  <h4 className="font-semibold text-foreground mb-2">Import Contacts</h4>
+                  <p className="text-muted-foreground text-sm">Allow access to your contacts to find friends who use the app</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">2</div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Send Friend Requests</h4>
-                  <p className="text-gray-600 text-sm">Connect with discovered friends or search for new ones</p>
+                  <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">2</div>
+                  <h4 className="font-semibold text-foreground mb-2">Send Friend Requests</h4>
+                  <p className="text-muted-foreground text-sm">Connect with discovered friends or search for new ones</p>
                 </div>
                 <div className="text-center">
-                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">3</div>
-                  <h4 className="font-semibold text-gray-900 mb-2">Share & Grow</h4>
-                  <p className="text-gray-600 text-sm">Start sharing Bible verses and growing together in faith</p>
+                  <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">3</div>
+                  <h4 className="font-semibold text-foreground mb-2">Share & Grow</h4>
+                  <p className="text-muted-foreground text-sm">Start sharing Bible verses and growing together in faith</p>
                 </div>
               </div>
             </CardContent>
@@ -610,10 +610,13 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
           {/* Search Friends Tab */}
           <TabsContent value="search" className="space-y-6">
-            <Card className="shadow-lg border bg-white">
+            <Card className="shadow-lg border bg-card">
               <CardHeader className="text-center">
-                <CardTitle className="text-xl font-bold text-gray-900">Find New Friends</CardTitle>
-                <CardDescription className="text-gray-600">
+                <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <Users className="w-8 h-8 text-sky-600 dark:text-sky-400" />
+                </div>
+                <CardTitle className="text-xl font-bold text-foreground">Find New Friends</CardTitle>
+                <CardDescription className="text-muted-foreground">
                   Search for friends by name or email to connect with them
                 </CardDescription>
               </CardHeader>
