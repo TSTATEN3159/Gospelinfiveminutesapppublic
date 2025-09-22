@@ -441,11 +441,10 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           {/* Welcome Banner */}
           <Card className="bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-800 dark:to-indigo-900 text-white shadow-xl border-0">
             <CardContent className="p-6">
-              <div className="flex items-center justify-between">
-                <div className="flex-1">
-                  <h2 className="text-2xl font-bold mb-2">Welcome to our Faith Community</h2>
-                  <p className="text-blue-100 dark:text-blue-200 text-lg mb-4">Connect with fellow believers and grow in faith together</p>
-                  <div className="flex gap-3">
+              <div className="text-center">
+                <h2 className="text-2xl font-bold mb-2">Welcome to our Faith Community</h2>
+                <p className="text-blue-100 dark:text-blue-200 text-lg mb-4">Connect with fellow believers and grow in faith together</p>
+                <div className="flex gap-3 justify-center">
                     <Button 
                       variant="outline" 
                       className="border-white/30 bg-white/10 text-white"
@@ -465,12 +464,11 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
                       Find Friends
                     </Button>
                   </div>
-                </div>
-                <div className="hidden md:block">
+                <div className="hidden md:block mt-4">
                   <img 
                     src={prayingCommunityImage} 
                     alt="Community praying together" 
-                    className="w-24 h-24 rounded-full object-cover border-4 border-white/30"
+                    className="w-24 h-24 rounded-full object-cover border-4 border-white/30 mx-auto"
                   />
                 </div>
               </div>
@@ -553,7 +551,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           </div>
 
           {/* Getting Started Guide */}
-          <Card className="bg-card shadow-lg border-0">
+          <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0">
             <CardHeader className="pb-4">
               <CardTitle className="text-xl font-bold text-foreground flex items-center">
                 <BookOpen className="w-6 h-6 mr-3 text-sky-600 dark:text-sky-400" />
