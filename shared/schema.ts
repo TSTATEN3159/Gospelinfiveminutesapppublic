@@ -112,3 +112,59 @@ export const insertDonationSchema = createInsertSchema(donations).pick({
 
 export type InsertDonation = z.infer<typeof insertDonationSchema>;
 export type Donation = typeof donations.$inferSelect;
+
+// Contacts table - stores imported contacts from device
+export const contacts = pgTable("contacts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  ownerId: varchar("owner_id").notNull().references(() => appUsers.id), // User who imported this contact
+  contactId: text("contact_id"), // Device contact ID for updates/deletes
+  firstName: text("first_name"),
+  lastName: text("last_name"), 
+  displayName: text("display_name"),
+  email: text("email"),
+  phone: text("phone"),
+  isAppUser: boolean("is_app_user").notNull().default(false), // Whether this contact is also an app user
+  appUserId: varchar("app_user_id").references(() => appUsers.id), // Reference to app user if they exist
+  importedAt: timestamp("imported_at").notNull().default(sql`now()`),
+  lastSyncedAt: timestamp("last_synced_at").notNull().default(sql`now()`),
+});
+
+export const insertContactSchema = createInsertSchema(contacts).pick({
+  ownerId: true,
+  contactId: true,
+  firstName: true,
+  lastName: true,
+  displayName: true,
+  email: true,
+  phone: true,
+  isAppUser: true,
+  appUserId: true,
+});
+
+export type InsertContact = z.infer<typeof insertContactSchema>;
+export type Contact = typeof contacts.$inferSelect;
+
+// Bible verse shares table - tracks verse sharing between friends
+export const verseShares = pgTable("verse_shares", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  senderId: varchar("sender_id").notNull().references(() => appUsers.id),
+  receiverId: varchar("receiver_id").notNull().references(() => appUsers.id),
+  verseText: text("verse_text").notNull(),
+  verseReference: text("verse_reference").notNull(),
+  imageUrl: text("image_url"), // URL to generated verse image
+  message: text("message"), // Optional personal message from sender
+  isRead: boolean("is_read").notNull().default(false),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+export const insertVerseShareSchema = createInsertSchema(verseShares).pick({
+  senderId: true,
+  receiverId: true,
+  verseText: true,
+  verseReference: true,
+  imageUrl: true,
+  message: true,
+});
+
+export type InsertVerseShare = z.infer<typeof insertVerseShareSchema>;
+export type VerseShare = typeof verseShares.$inferSelect;

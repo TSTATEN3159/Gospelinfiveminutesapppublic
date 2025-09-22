@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, users, subscribers, appUsers, friendships, donations } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, users, subscribers, appUsers, friendships, donations, contacts, verseShares } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -38,6 +38,20 @@ export interface IStorage {
   getAllDonations(): Promise<Donation[]>;
   getDonationByPaymentIntent(paymentIntentId: string): Promise<Donation | undefined>;
   getDonationStats(): Promise<{ totalDonations: number; biblesPurchased: number }>;
+  
+  // Contact methods
+  importContacts(ownerId: string, contacts: InsertContact[]): Promise<Contact[]>;
+  getContacts(ownerId: string): Promise<Contact[]>;
+  findAppUsersFromContacts(ownerId: string): Promise<Contact[]>;
+  updateContactAppUser(contactId: string, appUserId: string): Promise<Contact | undefined>;
+  syncContacts(ownerId: string, deviceContacts: InsertContact[]): Promise<Contact[]>;
+  
+  // Verse sharing methods
+  shareVerse(verseShare: InsertVerseShare): Promise<VerseShare>;
+  getReceivedVerses(userId: string): Promise<VerseShare[]>;
+  getSentVerses(userId: string): Promise<VerseShare[]>;
+  markVerseAsRead(verseShareId: string): Promise<VerseShare | undefined>;
+  deleteVerseShare(verseShareId: string): Promise<boolean>;
 }
 
 // Database storage implementation
@@ -338,6 +352,102 @@ export class DatabaseStorage implements IStorage {
       biblesPurchased
     };
   }
+
+  // Contact methods
+  async importContacts(ownerId: string, contactsData: InsertContact[]): Promise<Contact[]> {
+    const results = await this.db.insert(contacts).values(contactsData).returning();
+    return results;
+  }
+
+  async getContacts(ownerId: string): Promise<Contact[]> {
+    const result = await this.db.select().from(contacts).where(eq(contacts.ownerId, ownerId));
+    return result;
+  }
+
+  async findAppUsersFromContacts(ownerId: string): Promise<Contact[]> {
+    // Find contacts that match app users by email or phone
+    const userContacts = await this.db.select().from(contacts).where(eq(contacts.ownerId, ownerId));
+    const foundContacts: Contact[] = [];
+
+    for (const contact of userContacts) {
+      if (contact.email || contact.phone) {
+        const matchingUser = await this.db
+          .select()
+          .from(appUsers)
+          .where(
+            or(
+              contact.email ? eq(appUsers.email, contact.email) : sql`false`,
+              contact.phone ? eq(appUsers.phone, contact.phone) : sql`false`
+            )
+          );
+
+        if (matchingUser.length > 0) {
+          const updatedContact = await this.updateContactAppUser(contact.id, matchingUser[0].id);
+          if (updatedContact) {
+            foundContacts.push(updatedContact);
+          }
+        }
+      }
+    }
+
+    return foundContacts;
+  }
+
+  async updateContactAppUser(contactId: string, appUserId: string): Promise<Contact | undefined> {
+    const result = await this.db
+      .update(contacts)
+      .set({ isAppUser: true, appUserId, lastSyncedAt: new Date() })
+      .where(eq(contacts.id, contactId))
+      .returning();
+    return result[0];
+  }
+
+  async syncContacts(ownerId: string, deviceContacts: InsertContact[]): Promise<Contact[]> {
+    // Clear existing contacts for this user and re-import
+    await this.db.delete(contacts).where(eq(contacts.ownerId, ownerId));
+    return this.importContacts(ownerId, deviceContacts);
+  }
+
+  // Verse sharing methods
+  async shareVerse(verseShare: InsertVerseShare): Promise<VerseShare> {
+    const result = await this.db.insert(verseShares).values(verseShare).returning();
+    return result[0];
+  }
+
+  async getReceivedVerses(userId: string): Promise<VerseShare[]> {
+    const result = await this.db
+      .select()
+      .from(verseShares)
+      .where(eq(verseShares.receiverId, userId))
+      .orderBy(sql`${verseShares.createdAt} DESC`);
+    return result;
+  }
+
+  async getSentVerses(userId: string): Promise<VerseShare[]> {
+    const result = await this.db
+      .select()
+      .from(verseShares)
+      .where(eq(verseShares.senderId, userId))
+      .orderBy(sql`${verseShares.createdAt} DESC`);
+    return result;
+  }
+
+  async markVerseAsRead(verseShareId: string): Promise<VerseShare | undefined> {
+    const result = await this.db
+      .update(verseShares)
+      .set({ isRead: true })
+      .where(eq(verseShares.id, verseShareId))
+      .returning();
+    return result[0];
+  }
+
+  async deleteVerseShare(verseShareId: string): Promise<boolean> {
+    const result = await this.db
+      .delete(verseShares)
+      .where(eq(verseShares.id, verseShareId))
+      .returning();
+    return result.length > 0;
+  }
 }
 
 // Fallback memory storage for development
@@ -607,6 +717,126 @@ export class MemStorage implements IStorage {
       totalDonations,
       biblesPurchased
     };
+  }
+
+  // Contact methods (simplified in-memory implementation)
+  private contactsMap: Map<string, Contact> = new Map();
+  private verseSharesMap: Map<string, VerseShare> = new Map();
+
+  async importContacts(ownerId: string, contactsData: InsertContact[]): Promise<Contact[]> {
+    const results: Contact[] = [];
+    for (const contactData of contactsData) {
+      const id = randomUUID();
+      const contact: Contact = {
+        id,
+        ownerId,
+        contactId: contactData.contactId || null,
+        firstName: contactData.firstName || null,
+        lastName: contactData.lastName || null,
+        displayName: contactData.displayName || null,
+        email: contactData.email || null,
+        phone: contactData.phone || null,
+        isAppUser: contactData.isAppUser || false,
+        appUserId: contactData.appUserId || null,
+        importedAt: new Date(),
+        lastSyncedAt: new Date(),
+      };
+      this.contactsMap.set(id, contact);
+      results.push(contact);
+    }
+    return results;
+  }
+
+  async getContacts(ownerId: string): Promise<Contact[]> {
+    return Array.from(this.contactsMap.values()).filter(contact => contact.ownerId === ownerId);
+  }
+
+  async findAppUsersFromContacts(ownerId: string): Promise<Contact[]> {
+    const userContacts = await this.getContacts(ownerId);
+    const foundContacts: Contact[] = [];
+
+    for (const contact of userContacts) {
+      if (contact.email || contact.phone) {
+        const matchingUser = Array.from(this.appUsersMap.values()).find(user =>
+          (contact.email && user.email === contact.email) ||
+          (contact.phone && user.phone === contact.phone)
+        );
+
+        if (matchingUser) {
+          const updatedContact = await this.updateContactAppUser(contact.id, matchingUser.id);
+          if (updatedContact) {
+            foundContacts.push(updatedContact);
+          }
+        }
+      }
+    }
+
+    return foundContacts;
+  }
+
+  async updateContactAppUser(contactId: string, appUserId: string): Promise<Contact | undefined> {
+    const contact = this.contactsMap.get(contactId);
+    if (contact) {
+      contact.isAppUser = true;
+      contact.appUserId = appUserId;
+      contact.lastSyncedAt = new Date();
+      return contact;
+    }
+    return undefined;
+  }
+
+  async syncContacts(ownerId: string, deviceContacts: InsertContact[]): Promise<Contact[]> {
+    // Clear existing contacts for this user
+    for (const [id, contact] of Array.from(this.contactsMap.entries())) {
+      if (contact.ownerId === ownerId) {
+        this.contactsMap.delete(id);
+      }
+    }
+    // Re-import contacts
+    return this.importContacts(ownerId, deviceContacts);
+  }
+
+  // Verse sharing methods
+  async shareVerse(verseShare: InsertVerseShare): Promise<VerseShare> {
+    const id = randomUUID();
+    const verse: VerseShare = {
+      id,
+      senderId: verseShare.senderId,
+      receiverId: verseShare.receiverId,
+      verseText: verseShare.verseText,
+      verseReference: verseShare.verseReference,
+      imageUrl: verseShare.imageUrl || null,
+      message: verseShare.message || null,
+      isRead: false,
+      createdAt: new Date(),
+    };
+    this.verseSharesMap.set(id, verse);
+    return verse;
+  }
+
+  async getReceivedVerses(userId: string): Promise<VerseShare[]> {
+    return Array.from(this.verseSharesMap.values())
+      .filter(verse => verse.receiverId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async getSentVerses(userId: string): Promise<VerseShare[]> {
+    return Array.from(this.verseSharesMap.values())
+      .filter(verse => verse.senderId === userId)
+      .sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+  }
+
+  async markVerseAsRead(verseShareId: string): Promise<VerseShare | undefined> {
+    const verse = this.verseSharesMap.get(verseShareId);
+    if (verse) {
+      verse.isRead = true;
+      return verse;
+    }
+    return undefined;
+  }
+
+  async deleteVerseShare(verseShareId: string): Promise<boolean> {
+    return this.verseSharesMap.delete(verseShareId);
   }
 }
 
