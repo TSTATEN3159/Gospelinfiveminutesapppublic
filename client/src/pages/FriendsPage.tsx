@@ -481,8 +481,8 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
               <CardContent className="p-6 text-center">
-                <div className="bg-green-100 dark:bg-green-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Share className="w-8 h-8 text-green-600 dark:text-green-400" />
+                <div className="bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <Share className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
                 </div>
                 <h3 className="font-bold text-foreground mb-2">Share Bible Verses</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -493,8 +493,8 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
             <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
               <CardContent className="p-6 text-center">
-                <div className="bg-purple-100 dark:bg-purple-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Users className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                <div className="bg-gradient-to-br from-violet-100 to-purple-100 dark:from-violet-900/40 dark:to-purple-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <Users className="w-8 h-8 text-violet-600 dark:text-violet-400" />
                 </div>
                 <h3 className="font-bold text-foreground mb-2">Find Friends</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -505,8 +505,8 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
             <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
               <CardContent className="p-6 text-center">
-                <div className="bg-blue-100 dark:bg-blue-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <MessageCircle className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <MessageCircle className="w-8 h-8 text-sky-600 dark:text-sky-400" />
                 </div>
                 <h3 className="font-bold text-foreground mb-2">Grow Together</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -517,8 +517,8 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
             <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
               <CardContent className="p-6 text-center">
-                <div className="bg-orange-100 dark:bg-orange-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Shield className="w-8 h-8 text-orange-600 dark:text-orange-400" />
+                <div className="bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <Shield className="w-8 h-8 text-amber-600 dark:text-amber-400" />
                 </div>
                 <h3 className="font-bold text-foreground mb-2">Safe & Private</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -529,8 +529,8 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
             <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
               <CardContent className="p-6 text-center">
-                <div className="bg-indigo-100 dark:bg-indigo-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Sparkles className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+                <div className="bg-gradient-to-br from-rose-100 to-pink-100 dark:from-rose-900/40 dark:to-pink-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <Sparkles className="w-8 h-8 text-rose-600 dark:text-rose-400" />
                 </div>
                 <h3 className="font-bold text-foreground mb-2">Daily Inspiration</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
@@ -541,8 +541,8 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
             <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
               <CardContent className="p-6 text-center">
-                <div className="bg-teal-100 dark:bg-teal-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Globe className="w-8 h-8 text-teal-600 dark:text-teal-400" />
+                <div className="bg-gradient-to-br from-cyan-100 to-teal-100 dark:from-cyan-900/40 dark:to-teal-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <Globe className="w-8 h-8 text-cyan-600 dark:text-cyan-400" />
                 </div>
                 <h3 className="font-bold text-foreground mb-2">Global Community</h3>
                 <p className="text-muted-foreground text-sm leading-relaxed">
