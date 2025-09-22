@@ -313,157 +313,166 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 dark:from-amber-950 dark:via-orange-950 dark:to-yellow-950">
-      {/* Warm Beige Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-100/30 via-orange-100/20 to-yellow-100/30 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/10 to-transparent pointer-events-none" />
+    <div className="min-h-screen bg-gradient-to-br from-amber-100 via-yellow-100 to-orange-100 dark:from-amber-950 dark:via-yellow-950 dark:to-orange-950">
+      {/* Light Brown Background Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-amber-200/40 via-yellow-200/30 to-orange-200/40 pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/15 to-transparent pointer-events-none" />
+      <div className="absolute inset-0 bg-gradient-to-r from-amber-100/20 via-transparent to-orange-100/20 pointer-events-none" />
       
       <div className="relative pb-20 px-4 py-6">
-        {/* Warm Professional Header */}
-        <div className="mb-10">
-          <div className="flex items-center gap-4 mb-8">
+        {/* Light Brown Professional Header */}
+        <div className="mb-12">
+          <div className="flex items-center gap-4 mb-10">
             <Button
               variant="ghost"
               size="icon"
               onClick={() => onNavigate?.('more')}
-              className="ios-tap-target hover:bg-amber-100/80 dark:hover:bg-amber-900/50 transition-all duration-300 rounded-full"
+              className="ios-tap-target hover:bg-amber-200/60 dark:hover:bg-amber-800/50 transition-all duration-300 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105"
               data-testid="button-back-donation"
               aria-label="Go back to More page"
             >
-              <ArrowLeft className="w-5 h-5 text-amber-700 dark:text-amber-300" />
+              <ArrowLeft className="w-5 h-5 text-amber-800 dark:text-amber-200" />
             </Button>
             <div className="flex-1 text-center">
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-2">
+              <h1 className="text-5xl font-bold bg-gradient-to-r from-amber-800 via-yellow-700 to-orange-700 bg-clip-text text-transparent mb-3">
                 Make a Donation
               </h1>
-              <div className="h-1.5 w-32 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 rounded-full mx-auto shadow-sm" />
-              <p className="text-amber-600 dark:text-amber-400 font-medium mt-3 text-lg">
+              <div className="h-2 w-40 bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 rounded-full mx-auto shadow-lg" />
+              <p className="text-amber-700 dark:text-amber-300 font-semibold mt-4 text-xl">
                 Share God's Love Through Your Generosity
               </p>
             </div>
           </div>
-          <div className="bg-gradient-to-r from-white/80 via-amber-50/90 to-white/80 dark:from-gray-800/80 dark:via-amber-900/40 dark:to-gray-800/80 backdrop-blur-sm rounded-2xl p-6 border border-amber-200/60 dark:border-amber-800/60 shadow-lg">
-            <p className="text-center font-medium text-gray-700 dark:text-gray-300 leading-relaxed">
+          <div className="bg-gradient-to-br from-white/90 via-amber-50/95 to-orange-50/90 dark:from-gray-800/90 dark:via-amber-900/50 dark:to-orange-900/50 backdrop-blur-sm rounded-3xl p-8 border-2 border-amber-300/50 dark:border-amber-700/50 shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
+            <p className="text-center font-bold text-lg text-gray-800 dark:text-gray-200 leading-relaxed mb-3">
               🙏 Support our mission to spread God's word around the world through{' '}
-              <span className="text-amber-700 dark:text-amber-300 font-bold">The Gospel in 5 Minutes™</span>
+              <span className="text-amber-800 dark:text-amber-200 font-black">The Gospel in 5 Minutes™</span>
             </p>
-            <p className="text-center text-amber-600 dark:text-amber-400 mt-2 font-medium">
+            <p className="text-center text-amber-700 dark:text-amber-300 mt-3 font-semibold text-lg">
               Every donation brings hope and salvation to someone in need
             </p>
           </div>
         </div>
 
         <div className="max-w-lg mx-auto space-y-8">
-          {/* Warm Impact Story Card */}
-          <Card className="text-center shadow-2xl border-0 bg-gradient-to-br from-amber-100/80 via-orange-50/90 to-yellow-100/80 dark:from-amber-900/60 dark:via-orange-900/60 dark:to-yellow-900/60 overflow-hidden">
-            {/* Warm decorative top border */}
-            <div className="h-3 bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 shadow-sm" />
-            <CardContent className="p-10 relative">
-              {/* Warm background decoration */}
-              <div className="absolute top-6 right-6 w-24 h-24 bg-gradient-to-br from-amber-300/40 to-orange-300/40 rounded-full blur-2xl" />
-              <div className="absolute bottom-6 left-6 w-20 h-20 bg-gradient-to-br from-yellow-300/40 to-amber-300/40 rounded-full blur-2xl" />
+          {/* Light Brown Impact Story Card */}
+          <Card className="text-center shadow-2xl border-0 bg-gradient-to-br from-amber-200/90 via-yellow-200/95 to-orange-200/90 dark:from-amber-900/70 dark:via-yellow-900/70 dark:to-orange-900/70 overflow-hidden transform hover:scale-[1.02] transition-all duration-500">
+            {/* Light brown decorative top border with depth */}
+            <div className="h-4 bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 shadow-xl" />
+            <CardContent className="p-12 relative">
+              {/* Light brown background decoration with enhanced depth */}
+              <div className="absolute top-8 right-8 w-28 h-28 bg-gradient-to-br from-amber-400/50 to-orange-400/50 rounded-full blur-3xl" />
+              <div className="absolute bottom-8 left-8 w-24 h-24 bg-gradient-to-br from-yellow-400/50 to-amber-400/50 rounded-full blur-3xl" />
+              <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-gradient-to-br from-orange-300/30 to-yellow-300/30 rounded-full blur-3xl" />
               
-              {/* Warm icon with loving design */}
-              <div className="relative w-20 h-20 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl">
-                <Heart className="w-10 h-10 text-white" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
-                <div className="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-full blur-lg" />
+              {/* Enhanced icon with deep shadow and light brown gradient */}
+              <div className="relative w-24 h-24 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-10 shadow-2xl transform hover:scale-110 transition-transform duration-300">
+                <Heart className="w-12 h-12 text-white" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/40 to-transparent rounded-full" />
+                <div className="absolute -inset-3 bg-gradient-to-br from-amber-500/30 to-orange-500/30 rounded-full blur-xl" />
+                <div className="absolute -inset-6 bg-gradient-to-br from-yellow-400/20 to-amber-400/20 rounded-full blur-2xl" />
               </div>
               
-              <div className="text-5xl font-bold bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-4" data-testid="text-total-donations">
-                ${(donationStats as any)?.success ? (donationStats as any).stats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
-              </div>
-              <div className="text-xl font-bold text-amber-800 dark:text-amber-200 mb-4">
-                💝 Total Love Shared Through Donations
-              </div>
-              <div className="bg-gradient-to-r from-white/70 via-amber-50/80 to-white/70 dark:from-gray-800/70 dark:via-amber-900/30 dark:to-gray-800/70 rounded-xl p-4 backdrop-blur-sm border border-amber-300/50 dark:border-amber-700/50 shadow-lg">
-                <div className="text-base font-semibold text-amber-700 dark:text-amber-300">
-                  🙏 {(donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased.toLocaleString() : '0'} Souls Touched with God's Word
+              <div className="text-center mb-6">
+                <div className="text-6xl font-black bg-gradient-to-r from-amber-800 via-yellow-700 to-orange-800 bg-clip-text text-transparent mb-4" data-testid="text-total-donations">
+                  ${(donationStats as any)?.success ? (donationStats as any).stats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
                 </div>
-                <p className="text-sm text-amber-600 dark:text-amber-400 mt-2 font-medium">
-                  Every Bible brings hope, healing, and eternal transformation
-                </p>
+                <div className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-6">
+                  💝 Total Love Shared Through Donations
+                </div>
+              </div>
+              <div className="bg-gradient-to-br from-white/80 via-amber-100/90 to-orange-100/80 dark:from-gray-800/80 dark:via-amber-900/40 dark:to-orange-900/40 rounded-2xl p-6 backdrop-blur-sm border-2 border-amber-400/60 dark:border-amber-600/60 shadow-2xl transform hover:scale-105 transition-all duration-300">
+                <div className="text-center">
+                  <div className="text-xl font-black text-amber-900 dark:text-amber-100">
+                    🙏 {(donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased.toLocaleString() : '0'} Souls Touched with God's Word
+                  </div>
+                  <p className="text-lg text-amber-800 dark:text-amber-200 mt-3 font-bold">
+                    Every Bible brings hope, healing, and eternal transformation
+                  </p>
+                </div>
               </div>
             </CardContent>
           </Card>
 
-          {/* Warm Giving Form */}
-          <Card className="shadow-2xl border-0 bg-gradient-to-br from-white/90 via-amber-50/80 to-white/90 dark:from-gray-800/90 dark:via-amber-900/30 dark:to-gray-800/90 backdrop-blur-sm overflow-hidden">
-            {/* Warm decorative header */}
-            <div className="bg-gradient-to-r from-amber-400 via-orange-400 to-yellow-400 p-1.5 shadow-lg">
-              <div className="bg-gradient-to-br from-white dark:from-gray-800 to-amber-50/50 dark:to-amber-900/20 rounded-t-lg">
-                <CardHeader className="text-center pb-6 pt-8">
-                  <div className="flex justify-center mb-4">
-                    <div className="w-16 h-16 bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 rounded-full flex items-center justify-center shadow-xl">
-                      <Heart className="w-8 h-8 text-white" />
-                      <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
+          {/* Light Brown Giving Form */}
+          <Card className="shadow-2xl border-0 bg-gradient-to-br from-white/95 via-amber-100/90 to-orange-100/95 dark:from-gray-800/95 dark:via-amber-900/40 dark:to-orange-900/40 backdrop-blur-sm overflow-hidden transform hover:scale-[1.01] transition-all duration-500">
+            {/* Light brown decorative header with enhanced depth */}
+            <div className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 p-2 shadow-2xl">
+              <div className="bg-gradient-to-br from-white dark:from-gray-800 to-amber-100/60 dark:to-amber-900/30 rounded-t-2xl">
+                <CardHeader className="text-center pb-8 pt-10">
+                  <div className="flex justify-center mb-6">
+                    <div className="w-20 h-20 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-600 rounded-full flex items-center justify-center shadow-2xl transform hover:scale-110 transition-transform duration-300">
+                      <Heart className="w-10 h-10 text-white" />
+                      <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
+                      <div className="absolute -inset-2 bg-gradient-to-br from-amber-500/20 to-orange-500/20 rounded-full blur-lg" />
                     </div>
                   </div>
-                  <CardTitle className="text-3xl font-bold bg-gradient-to-r from-amber-700 via-orange-600 to-yellow-600 bg-clip-text text-transparent mb-3">
+                  <CardTitle className="text-4xl font-black bg-gradient-to-r from-amber-800 via-yellow-700 to-orange-800 bg-clip-text text-transparent mb-4 text-center">
                     Choose Your Gift of Love
                   </CardTitle>
-                  <p className="text-amber-600 dark:text-amber-400 font-semibold text-lg">
+                  <p className="text-amber-700 dark:text-amber-300 font-bold text-xl text-center">
                     💝 Every gift plants seeds of eternal hope
                   </p>
-                  <p className="text-amber-500 dark:text-amber-500 font-medium mt-2">
+                  <p className="text-amber-600 dark:text-amber-400 font-semibold mt-3 text-lg text-center">
                     Join thousands spreading God's love worldwide
                   </p>
                 </CardHeader>
               </div>
             </div>
             
-            <CardContent className="space-y-10 p-8">
-              {/* Warm Giving Options */}
+            <CardContent className="space-y-12 p-10">
+              {/* Light Brown Giving Options */}
               <div>
-                <Label className="text-xl font-bold text-amber-800 dark:text-amber-200 mb-6 block text-center">
+                <Label className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-8 block text-center">
                   💝 Choose Your Gift Amount
                 </Label>
-                <p className="text-center text-amber-600 dark:text-amber-400 mb-6 font-medium">
+                <p className="text-center text-amber-700 dark:text-amber-300 mb-8 font-bold text-lg">
                   Select the amount that speaks to your heart
                 </p>
-                <div className="grid grid-cols-3 gap-4">
+                <div className="grid grid-cols-3 gap-6">
                   {presetAmounts.map((preset) => (
                     <Button
                       key={preset.amount}
                       variant={selectedAmount === preset.amount ? "default" : "outline"}
                       size="lg"
                       onClick={() => handlePresetClick(preset.amount)}
-                      className={`relative overflow-hidden transition-all duration-500 h-16 text-lg font-bold rounded-xl ${
+                      className={`relative overflow-hidden transition-all duration-500 h-20 text-xl font-black rounded-2xl shadow-lg ${
                         selectedAmount === preset.amount 
-                          ? "bg-gradient-to-br from-amber-500 via-orange-500 to-yellow-500 text-white shadow-2xl scale-110 border-0" 
-                          : "border-2 border-amber-200 dark:border-amber-700 hover:border-amber-400 hover:bg-gradient-to-br hover:from-amber-50 hover:to-orange-50 dark:hover:from-amber-900 dark:hover:to-orange-900 hover:scale-105 hover:shadow-lg text-amber-700 dark:text-amber-300"
+                          ? "bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-600 text-white shadow-2xl scale-110 border-0 transform hover:scale-115" 
+                          : "border-3 border-amber-300 dark:border-amber-600 hover:border-amber-500 hover:bg-gradient-to-br hover:from-amber-100 hover:to-orange-100 dark:hover:from-amber-800 dark:hover:to-orange-800 hover:scale-110 hover:shadow-2xl text-amber-800 dark:text-amber-200 bg-gradient-to-br from-white/90 to-amber-50/90 dark:from-gray-800/90 dark:to-amber-900/30"
                       }`}
                       data-testid={`button-preset-${preset.amount}`}
                     >
                       {selectedAmount === preset.amount && (
                         <>
-                          <Heart className="w-5 h-5 mr-2" aria-hidden="true" />
-                          <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-xl" />
+                          <Heart className="w-6 h-6 mr-2" aria-hidden="true" />
+                          <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-2xl" />
+                          <div className="absolute -inset-1 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-2xl blur-lg" />
                         </>
                       )}
                       {preset.label}
                       {selectedAmount !== preset.amount && (
-                        <div className="absolute inset-0 bg-gradient-to-br from-amber-100/10 to-orange-100/10 rounded-xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-amber-200/20 to-orange-200/20 rounded-2xl opacity-0 hover:opacity-100 transition-opacity duration-300" />
                       )}
                     </Button>
                   ))}
                 </div>
-                <p className="text-center text-amber-500 dark:text-amber-500 mt-4 text-sm font-medium">
+                <p className="text-center text-amber-600 dark:text-amber-400 mt-6 text-base font-bold">
                   ✨ Popular amounts chosen by our loving community
                 </p>
               </div>
 
-              {/* Warm Custom Amount */}
-              <div className="bg-gradient-to-br from-amber-50/80 to-orange-50/80 dark:from-amber-900/20 dark:to-orange-900/20 rounded-2xl p-6 border border-amber-200/60 dark:border-amber-700/60">
-                <Label htmlFor="custom-amount" className="text-xl font-bold text-amber-800 dark:text-amber-200 mb-4 block text-center">
+              {/* Light Brown Custom Amount */}
+              <div className="bg-gradient-to-br from-amber-100/90 to-orange-100/90 dark:from-amber-900/30 dark:to-orange-900/30 rounded-3xl p-8 border-3 border-amber-300/60 dark:border-amber-600/60 shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
+                <Label htmlFor="custom-amount" className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-6 block text-center">
                   💖 Or Enter Your Heart's Desire
                 </Label>
-                <p className="text-center text-amber-600 dark:text-amber-400 mb-6 font-medium">
+                <p className="text-center text-amber-700 dark:text-amber-300 mb-8 font-bold text-lg">
                   Every amount, no matter the size, makes a difference
                 </p>
                 <div className="relative">
-                  <div className="absolute left-4 top-1/2 transform -translate-y-1/2 w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full flex items-center justify-center">
-                    <DollarSign className="w-4 h-4 text-white" />
+                  <div className="absolute left-5 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-gradient-to-br from-amber-600 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
+                    <DollarSign className="w-5 h-5 text-white" />
                   </div>
                   <Input
                     id="custom-amount"
@@ -475,29 +484,29 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                     placeholder="Enter your loving gift amount..."
                     value={customAmount}
                     onChange={(e) => handleCustomAmountChange(e.target.value)}
-                    className={`pl-14 pr-4 h-16 text-xl font-semibold border-3 rounded-2xl bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm transition-all duration-300 ${
-                      isCustom ? "border-amber-400 focus:border-amber-500 focus:ring-amber-500 shadow-lg" : "border-amber-200 dark:border-amber-700 focus:border-amber-400"
+                    className={`pl-16 pr-6 h-20 text-2xl font-bold border-4 rounded-3xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm transition-all duration-300 shadow-lg ${
+                      isCustom ? "border-amber-500 focus:border-amber-600 focus:ring-amber-600 shadow-2xl scale-105" : "border-amber-300 dark:border-amber-600 focus:border-amber-500 hover:scale-105"
                     }`}
                     data-testid="input-custom-amount"
                   />
                 </div>
                 {customAmount && (
-                  <div className="mt-4 p-4 bg-gradient-to-r from-amber-100 via-orange-100 to-yellow-100 dark:from-amber-900/40 dark:via-orange-900/40 dark:to-yellow-900/40 rounded-xl border border-amber-300/60 dark:border-amber-600/60 shadow-lg">
-                    <p className="text-amber-800 dark:text-amber-200 font-bold text-center text-lg">
+                  <div className="mt-6 p-6 bg-gradient-to-br from-amber-200 via-yellow-200 to-orange-200 dark:from-amber-800/50 dark:via-yellow-800/50 dark:to-orange-800/50 rounded-2xl border-2 border-amber-400/60 dark:border-amber-500/60 shadow-2xl transform hover:scale-105 transition-all duration-300">
+                    <p className="text-amber-900 dark:text-amber-100 font-black text-center text-2xl">
                       🙏 Your Gift: ${parseFloat(customAmount || "0").toFixed(2)}
                     </p>
-                    <p className="text-amber-600 dark:text-amber-400 text-center mt-2 font-medium">
+                    <p className="text-amber-800 dark:text-amber-200 text-center mt-3 font-bold text-lg">
                       Thank you for your generous heart!
                     </p>
                   </div>
                 )}
               </div>
 
-              {/* Enhanced Donate Button */}
+              {/* Light Brown Donate Button */}
               <Button
                 onClick={handleDonate}
                 disabled={!isValidAmount() || loading}
-                className="w-full h-14 text-lg font-semibold bg-gradient-to-r from-stone-500 via-neutral-500 to-amber-500 hover:from-stone-600 hover:via-neutral-600 hover:to-amber-600 text-white shadow-xl border-0 rounded-xl transition-all duration-300 transform hover:scale-105"
+                className="w-full h-20 text-2xl font-black bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-600 hover:from-amber-700 hover:via-yellow-700 hover:to-orange-700 text-white shadow-2xl border-0 rounded-3xl transition-all duration-500 transform hover:scale-110 hover:shadow-3xl"
                 size="lg"
                 data-testid="button-process-donation"
               >
@@ -514,21 +523,26 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                 )}
               </Button>
 
-              {/* Enhanced Legal Disclaimer */}
-              <div className="bg-stone-50/50 dark:bg-stone-900/20 rounded-lg p-4 border border-stone-200 dark:border-stone-700">
-                <div className="text-sm text-stone-800 dark:text-stone-200 space-y-3">
-                  <p className="font-medium">
+              {/* Light Brown Legal Disclaimer */}
+              <div className="bg-gradient-to-br from-amber-100/80 to-orange-100/80 dark:from-amber-900/30 dark:to-orange-900/30 rounded-2xl p-6 border-2 border-amber-300/60 dark:border-amber-600/60 shadow-xl transform hover:scale-[1.01] transition-all duration-300">
+                <div className="text-center">
+                  <h3 className="text-lg font-black text-amber-900 dark:text-amber-100 mb-4">
+                    Important Information
+                  </h3>
+                </div>
+                <div className="text-base text-amber-800 dark:text-amber-200 space-y-4">
+                  <p className="font-bold text-center">
                     <strong>Important:</strong> Donations are processed securely through Stripe. 
                     No goods or services are provided in exchange for donations.
                   </p>
-                  <p>
+                  <p className="text-center font-semibold">
                     Please consult your tax advisor regarding the deductibility of donations. 
                     For questions about donations or refunds, please contact our support team.
                   </p>
-                  <p>
+                  <p className="text-center font-semibold">
                     By donating, you agree to our{" "}
                     <button 
-                      className="text-stone-600 dark:text-stone-400 underline hover:text-stone-800 dark:hover:text-stone-200 transition-colors font-medium"
+                      className="text-amber-700 dark:text-amber-300 underline hover:text-amber-900 dark:hover:text-amber-100 transition-colors font-black"
                       onClick={() => onNavigate?.('terms')}
                       data-testid="link-terms"
                     >
@@ -536,7 +550,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                     </button>{" "}
                     and{" "}
                     <button 
-                      className="text-stone-600 dark:text-stone-400 underline hover:text-stone-800 dark:hover:text-stone-200 transition-colors font-medium"
+                      className="text-amber-700 dark:text-amber-300 underline hover:text-amber-900 dark:hover:text-amber-100 transition-colors font-black"
                       onClick={() => onNavigate?.('privacy')}
                       data-testid="link-privacy"
                     >
@@ -548,18 +562,19 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
             </CardContent>
           </Card>
 
-          {/* Enhanced Bible Distribution Impact Card */}
-          <Card className="overflow-hidden shadow-2xl border-0 bg-gradient-to-br from-stone-100 to-neutral-100 dark:from-stone-900 dark:to-neutral-900">
+          {/* Light Brown Bible Distribution Impact Card */}
+          <Card className="overflow-hidden shadow-2xl border-0 bg-gradient-to-br from-amber-200 to-orange-200 dark:from-amber-900 dark:to-orange-900 transform hover:scale-[1.02] transition-all duration-500">
             <div className="relative">
               <img 
                 src={bibleDistributionImage} 
                 alt="People distributing Bibles to community members" 
-                className="w-full h-48 object-cover"
+                className="w-full h-56 object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-stone-900/80 via-stone-600/40 to-transparent"></div>
-              <div className="absolute bottom-0 left-0 right-0 p-6 text-center">
-                <h3 className="font-bold text-white text-xl mb-3">Your Impact</h3>
-                <p className="text-white text-sm leading-relaxed">
+              <div className="absolute inset-0 bg-gradient-to-t from-amber-900/90 via-orange-700/50 to-transparent"></div>
+              <div className="absolute -inset-1 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-lg blur-lg"></div>
+              <div className="absolute bottom-0 left-0 right-0 p-8 text-center">
+                <h3 className="font-black text-white text-2xl mb-4 text-center">Your Impact</h3>
+                <p className="text-white text-lg leading-relaxed font-bold text-center">
                   Every donation helps us distribute Bibles and share God's word with those who need it most. 
                   Together, we're bringing hope and salvation to communities worldwide.
                 </p>
@@ -567,15 +582,16 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
             </div>
           </Card>
 
-          {/* Enhanced Mission Statement */}
-          <Card className="bg-gradient-to-br from-white/70 to-stone-50/70 dark:from-gray-800/70 dark:to-stone-900/30 backdrop-blur-sm border border-stone-200 dark:border-stone-700 shadow-2xl">
-            <CardContent className="p-8 text-center">
-              <div className="w-16 h-16 bg-gradient-to-br from-stone-500 to-neutral-500 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                <Heart className="w-8 h-8 text-white" aria-hidden="true" />
-                <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
+          {/* Light Brown Mission Statement */}
+          <Card className="bg-gradient-to-br from-white/80 to-amber-100/80 dark:from-gray-800/80 dark:to-amber-900/40 backdrop-blur-sm border-3 border-amber-300 dark:border-amber-600 shadow-2xl transform hover:scale-[1.02] transition-all duration-500">
+            <CardContent className="p-10 text-center">
+              <div className="w-20 h-20 bg-gradient-to-br from-amber-600 to-orange-600 rounded-full flex items-center justify-center mx-auto mb-8 shadow-2xl transform hover:scale-110 transition-transform duration-300">
+                <Heart className="w-10 h-10 text-white" aria-hidden="true" />
+                <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
+                <div className="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-full blur-lg" />
               </div>
-              <h3 className="text-xl font-bold text-stone-800 dark:text-stone-200 mb-4">Our Mission</h3>
-              <p className="text-stone-700 dark:text-stone-300 leading-relaxed">
+              <h3 className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-6 text-center">Our Mission</h3>
+              <p className="text-amber-800 dark:text-amber-200 leading-relaxed text-lg font-bold text-center">
                 Every donation helps us reach more souls with daily Bible verses, spiritual guidance, 
                 and the transformative power of God's word. Your generosity makes eternal impact possible.
               </p>
