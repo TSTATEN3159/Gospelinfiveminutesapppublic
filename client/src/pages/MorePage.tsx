@@ -138,12 +138,12 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         
         {/* Social Media Buttons */}
         <div className="flex justify-center items-center gap-3 mt-4 mb-3">
-          <Button asChild variant="default" size="sm" data-testid="button-facebook-more">
+          <Button asChild variant="ghost" size="sm" data-testid="button-facebook-more">
             <a 
               href="https://www.facebook.com/TheGospelIn5Minutes" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-blue-600 text-white hover:bg-blue-700"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-2 rounded-md transition-colors duration-200 flex items-center"
               aria-label="Follow us on Facebook - Opens in new window"
             >
               <Facebook className="w-3 h-3 mr-1" aria-hidden="true" />
