@@ -477,73 +477,73 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
           {/* Info Tiles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-share-verses">
+            <Card className="bg-gradient-to-br from-green-700 to-emerald-700 dark:from-green-800 dark:to-emerald-800 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-share-verses">
               <CardContent className="p-6 text-center">
                 <div className="bg-white/20 dark:bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md backdrop-blur-sm">
                   <Share className="w-8 h-8 text-white dark:text-white" />
                 </div>
-                <h3 className="font-bold text-foreground mb-2">Share Bible Verses</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="font-bold text-white mb-2">Share Bible Verses</h3>
+                <p className="text-green-100 text-sm leading-relaxed">
                   Send meaningful scriptures to friends with personal messages and beautiful verse cards
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('search')} data-testid="tile-find-friends">
+            <Card className="bg-gradient-to-br from-green-700 to-emerald-700 dark:from-green-800 dark:to-emerald-800 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('search')} data-testid="tile-find-friends">
               <CardContent className="p-6 text-center">
                 <div className="bg-white/20 dark:bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md backdrop-blur-sm">
                   <Users className="w-8 h-8 text-white dark:text-white" />
                 </div>
-                <h3 className="font-bold text-foreground mb-2">Find Friends</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="font-bold text-white mb-2">Find Friends</h3>
+                <p className="text-green-100 text-sm leading-relaxed">
                   Connect with friends from your contacts who also use the Gospel app
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-grow-together">
+            <Card className="bg-gradient-to-br from-green-700 to-emerald-700 dark:from-green-800 dark:to-emerald-800 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-grow-together">
               <CardContent className="p-6 text-center">
                 <div className="bg-white/20 dark:bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md backdrop-blur-sm">
                   <MessageCircle className="w-8 h-8 text-white dark:text-white" />
                 </div>
-                <h3 className="font-bold text-foreground mb-2">Grow Together</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="font-bold text-white mb-2">Grow Together</h3>
+                <p className="text-green-100 text-sm leading-relaxed">
                   Build a supportive community where faith grows through shared experiences
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('more')} data-testid="tile-safe-private">
+            <Card className="bg-gradient-to-br from-green-700 to-emerald-700 dark:from-green-800 dark:to-emerald-800 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('more')} data-testid="tile-safe-private">
               <CardContent className="p-6 text-center">
                 <div className="bg-white/20 dark:bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md backdrop-blur-sm">
                   <Shield className="w-8 h-8 text-white dark:text-white" />
                 </div>
-                <h3 className="font-bold text-foreground mb-2">Safe & Private</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="font-bold text-white mb-2">Safe & Private</h3>
+                <p className="text-green-100 text-sm leading-relaxed">
                   Your data is protected with industry-standard security and privacy controls
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('home')} data-testid="tile-daily-inspiration">
+            <Card className="bg-gradient-to-br from-green-700 to-emerald-700 dark:from-green-800 dark:to-emerald-800 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('home')} data-testid="tile-daily-inspiration">
               <CardContent className="p-6 text-center">
                 <div className="bg-white/20 dark:bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md backdrop-blur-sm">
                   <Sparkles className="w-8 h-8 text-white dark:text-white" />
                 </div>
-                <h3 className="font-bold text-foreground mb-2">Daily Inspiration</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="font-bold text-white mb-2">Daily Inspiration</h3>
+                <p className="text-green-100 text-sm leading-relaxed">
                   Share daily verses and inspirational content to uplift and encourage each other
                 </p>
               </CardContent>
             </Card>
 
-            <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-global-community">
+            <Card className="bg-gradient-to-br from-green-700 to-emerald-700 dark:from-green-800 dark:to-emerald-800 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-global-community">
               <CardContent className="p-6 text-center">
                 <div className="bg-white/20 dark:bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md backdrop-blur-sm">
                   <Globe className="w-8 h-8 text-white dark:text-white" />
                 </div>
-                <h3 className="font-bold text-foreground mb-2">Global Community</h3>
-                <p className="text-muted-foreground text-sm leading-relaxed">
+                <h3 className="font-bold text-white mb-2">Global Community</h3>
+                <p className="text-green-100 text-sm leading-relaxed">
                   Join believers worldwide in a community centered on God's love and truth
                 </p>
               </CardContent>
@@ -551,10 +551,10 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           </div>
 
           {/* Getting Started Guide */}
-          <Card className="bg-gradient-to-br from-green-200 to-emerald-200 dark:from-green-800/40 dark:to-emerald-800/40 shadow-lg border-0">
+          <Card className="bg-gradient-to-br from-green-700 to-emerald-700 dark:from-green-800 dark:to-emerald-800 shadow-lg border-0">
             <CardHeader className="pb-4">
-              <CardTitle className="text-xl font-bold text-foreground flex items-center">
-                <BookOpen className="w-6 h-6 mr-3 text-sky-600 dark:text-sky-400" />
+              <CardTitle className="text-xl font-bold text-white flex items-center">
+                <BookOpen className="w-6 h-6 mr-3 text-white" />
                 Getting Started with Friends & Community
               </CardTitle>
             </CardHeader>
@@ -562,18 +562,18 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <div className="text-center cursor-pointer hover-elevate p-4 rounded-lg transition-all" onClick={() => setActiveTab('contacts')} data-testid="step-import-contacts">
                   <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">1</div>
-                  <h4 className="font-semibold text-foreground mb-2">Import Contacts</h4>
-                  <p className="text-muted-foreground text-sm">Allow access to your contacts to find friends who use the app</p>
+                  <h4 className="font-semibold text-white mb-2">Import Contacts</h4>
+                  <p className="text-green-100 text-sm">Allow access to your contacts to find friends who use the app</p>
                 </div>
                 <div className="text-center cursor-pointer hover-elevate p-4 rounded-lg transition-all" onClick={() => setActiveTab('search')} data-testid="step-send-requests">
                   <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">2</div>
-                  <h4 className="font-semibold text-foreground mb-2">Send Friend Requests</h4>
-                  <p className="text-muted-foreground text-sm">Connect with discovered friends or search for new ones</p>
+                  <h4 className="font-semibold text-white mb-2">Send Friend Requests</h4>
+                  <p className="text-green-100 text-sm">Connect with discovered friends or search for new ones</p>
                 </div>
                 <div className="text-center cursor-pointer hover-elevate p-4 rounded-lg transition-all" onClick={() => setActiveTab('friends')} data-testid="step-share-grow">
                   <div className="bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/40 dark:to-blue-900/40 text-sky-600 dark:text-sky-400 w-10 h-10 rounded-full flex items-center justify-center mx-auto mb-3 font-bold shadow-md">3</div>
-                  <h4 className="font-semibold text-foreground mb-2">Share & Grow</h4>
-                  <p className="text-muted-foreground text-sm">Start sharing Bible verses and growing together in faith</p>
+                  <h4 className="font-semibold text-white mb-2">Share & Grow</h4>
+                  <p className="text-green-100 text-sm">Start sharing Bible verses and growing together in faith</p>
                 </div>
               </div>
             </CardContent>
