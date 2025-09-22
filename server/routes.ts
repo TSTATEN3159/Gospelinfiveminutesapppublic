@@ -6,6 +6,7 @@ import Stripe from "stripe";
 import { storage } from "./storage";
 import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
+import { appMonitor } from "./services/appMonitor";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -2069,6 +2070,98 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         error: "Failed to mark verse as read."
+      });
+    }
+  });
+
+  // Apple-Compliant Application Health Monitoring Endpoints
+  // Transparent health checks for auto-recovery system
+  app.get("/api/health", async (req, res) => {
+    try {
+      const healthStatus = appMonitor.getHealthStatus();
+      res.json({
+        success: true,
+        ...healthStatus
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: "Health check failed"
+      });
+    }
+  });
+
+  // Database health check
+  app.get("/api/health/db", async (req, res) => {
+    try {
+      // Test database connection
+      const testResult = await storage.getAllUsers();
+      res.json({
+        success: true,
+        service: "database",
+        status: "healthy",
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      res.status(503).json({
+        success: false,
+        service: "database",
+        status: "down",
+        error: "Database connection failed",
+        timestamp: new Date().toISOString()
+      });
+    }
+  });
+
+  // Bible API health check
+  app.get("/api/health/bible", async (req, res) => {
+    try {
+      const apiKey = process.env.API_BIBLE_KEY;
+      if (!apiKey) {
+        throw new Error("Bible API key not configured");
+      }
+
+      // Test Bible API connection
+      const response = await fetch('https://api.scripture.api.bible/v1/bibles', {
+        headers: {
+          'api-key': apiKey
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Bible API responded with status ${response.status}`);
+      }
+
+      res.json({
+        success: true,
+        service: "bible-api",
+        status: "healthy",
+        timestamp: new Date().toISOString()
+      });
+    } catch (error) {
+      res.status(503).json({
+        success: false,
+        service: "bible-api",
+        status: "down",
+        error: error instanceof Error ? error.message : "Bible API check failed",
+        timestamp: new Date().toISOString()
+      });
+    }
+  });
+
+  // Force health check endpoint for immediate monitoring
+  app.post("/api/health/check", async (req, res) => {
+    try {
+      const healthStatus = await appMonitor.forceHealthCheck();
+      res.json({
+        success: true,
+        message: "Health check completed",
+        ...healthStatus
+      });
+    } catch (error) {
+      res.status(500).json({
+        success: false,
+        error: "Failed to perform health check"
       });
     }
   });
