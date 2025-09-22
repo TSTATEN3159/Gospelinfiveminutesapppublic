@@ -11,7 +11,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play } from "lucide-react";
+import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 
@@ -293,6 +293,35 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
           </div>
         </div>
 
+        {/* Bible Trivia Section */}
+        <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
+          <div className="relative h-40">
+            <img 
+              src={mountainLakeImage}
+              alt="Bible Trivia"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          </div>
+          <div className="p-4">
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-3">
+                <BookOpen className="w-4 h-4 text-amber-600" />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-bibleTrivia">Bible Trivia</h2>
+            </div>
+            <p className="text-gray-600 text-sm mb-3">
+              Test your biblical knowledge with challenging questions from Scripture.
+            </p>
+            <Button 
+              className="w-full bg-amber-600 hover:bg-amber-700" 
+              onClick={() => onNavigate?.('bibletrivia')}
+              data-testid="button-bibleTrivia"
+            >
+              Start Trivia
+            </Button>
+          </div>
+        </div>
 
         {/* Ask Pastor Section */}
         <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">

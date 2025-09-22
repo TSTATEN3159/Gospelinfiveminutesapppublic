@@ -734,6 +734,116 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bible Trivia Generation Route
+  const bibleTriviaSchema = z.object({
+    difficulty: z.enum(['easy', 'medium', 'difficult']),
+    count: z.number().min(1).max(20).default(10)
+  });
+
+  app.post("/api/bible-trivia", async (req, res) => {
+    try {
+      const { difficulty, count } = bibleTriviaSchema.parse(req.body);
+      console.log("Bible Trivia - Difficulty:", difficulty, "Count:", count);
+
+      const difficultyPrompts = {
+        easy: "Generate questions about well-known Bible stories, characters, and basic Christian teachings. Focus on stories like Noah's Ark, David and Goliath, Jesus' birth, the Ten Commandments, etc.",
+        medium: "Generate questions about biblical history, specific events, parables, and intermediate biblical knowledge. Include questions about the apostles, minor prophets, specific miracles, etc.",
+        difficult: "Generate challenging questions about biblical theology, historical context, original languages, lesser-known characters, specific verse references, and advanced biblical scholarship."
+      };
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: `You are a Bible scholar creating trivia questions. Create EXACTLY ${count} multiple choice questions about the Bible. 
+
+            Guidelines:
+            1. Questions should be ${difficulty} level
+            2. ${difficultyPrompts[difficulty]}
+            3. Each question must have exactly 4 answer options (A, B, C, D)
+            4. Only ONE answer should be correct
+            5. Include the correct answer index (0-3)
+            6. Optionally include a relevant Bible verse reference
+            7. Questions should be accurate and factual
+            8. Avoid overly obscure or controversial topics
+
+            Return your response as a JSON object with this EXACT structure:
+            {
+              "questions": [
+                {
+                  "id": 1,
+                  "question": "Question text here?",
+                  "options": ["Option A", "Option B", "Option C", "Option D"],
+                  "correctAnswer": 0,
+                  "verse": "John 3:16",
+                  "difficulty": "${difficulty}"
+                }
+              ]
+            }
+
+            Make sure the JSON is valid and properly formatted.`
+          },
+          {
+            role: "user",
+            content: `Create ${count} ${difficulty} level Bible trivia questions with multiple choice answers.`
+          }
+        ],
+        max_completion_tokens: 2000
+      });
+
+      const content = response.choices[0].message.content;
+      if (!content) {
+        throw new Error("No response content from OpenAI");
+      }
+
+      try {
+        // Parse the JSON response
+        const triviaData = JSON.parse(content);
+        
+        // Validate the structure
+        if (!triviaData.questions || !Array.isArray(triviaData.questions)) {
+          throw new Error("Invalid response structure");
+        }
+
+        // Validate each question
+        const validatedQuestions = triviaData.questions.map((q: any, index: number) => ({
+          id: index + 1,
+          question: q.question || `Question ${index + 1}`,
+          options: Array.isArray(q.options) && q.options.length === 4 ? q.options : ["Option A", "Option B", "Option C", "Option D"],
+          correctAnswer: typeof q.correctAnswer === 'number' && q.correctAnswer >= 0 && q.correctAnswer <= 3 ? q.correctAnswer : 0,
+          verse: q.verse || null,
+          difficulty: difficulty
+        }));
+
+        res.json({
+          success: true,
+          questions: validatedQuestions.slice(0, count) // Ensure we return exactly the requested count
+        });
+
+      } catch (parseError) {
+        console.error("Error parsing OpenAI trivia response:", parseError);
+        console.log("Raw OpenAI response:", content);
+        throw new Error("Failed to parse trivia questions from AI response");
+      }
+
+    } catch (error) {
+      console.error("Bible Trivia API error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request format. Please specify difficulty and count."
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: "I'm having trouble generating trivia questions right now. Please try again in a moment."
+      });
+    }
+  });
+
   // Stripe donation route for one-time payments
   app.post("/api/create-payment-intent", async (req, res) => {
     try {
