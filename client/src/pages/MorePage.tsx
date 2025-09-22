@@ -143,19 +143,19 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               href="https://www.facebook.com/TheGospelIn5Minutes" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-2 rounded-md transition-colors duration-200 flex items-center"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-blue-300/50 hover:ring-blue-400/70"
               aria-label="Follow us on Facebook - Opens in new window"
             >
               <Facebook className="w-3 h-3 mr-1" aria-hidden="true" />
               <span>{t.follow}</span>
             </a>
           </Button>
-          <Button asChild variant="default" size="sm" data-testid="button-instagram-more">
+          <Button asChild variant="ghost" size="sm" data-testid="button-instagram-more">
             <a 
               href="https://www.instagram.com/thegospelin5minutes" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white"
+              className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-purple-300/50 hover:ring-purple-400/70"
               aria-label="Follow us on Instagram - Opens in new window"
             >
               <Instagram className="w-3 h-3 mr-1" aria-hidden="true" />
@@ -163,9 +163,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             </a>
           </Button>
           <Button 
-            variant="default"
+            variant="ghost"
             size="sm"
-            className="bg-amber-600 text-white"
+            className="bg-amber-600 hover:bg-amber-700 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-amber-300/50 hover:ring-amber-400/70"
             data-testid="button-donate-more"
             aria-label="Donate to help spread the Gospel"
             onClick={() => onNavigate?.('donate')}
@@ -178,9 +178,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         {/* Share Button */}
         <div className="flex justify-center mt-3">
           <Button 
-            variant="default"
+            variant="ghost"
             size="sm"
-            className="bg-amber-700 text-white"
+            className="bg-amber-700 hover:bg-amber-800 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-amber-400/50 hover:ring-amber-500/70"
             data-testid="button-share-more"
             aria-label="Share The Gospel in 5 Minutes with friends"
             onClick={() => {
@@ -205,7 +205,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
 
       <div className="max-w-sm mx-auto space-y-3 px-4">
         {/* Language Selector */}
-        <Card className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-blue-200 transition-all duration-300 hover:shadow-xl">
+        <Card className="bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-blue-200 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 ring-4 ring-blue-100/50 hover:ring-blue-200/70 backdrop-blur-sm">
           <div className="relative h-24">
             <img 
               src={mountainTopImage}
@@ -300,7 +300,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             return (
               <Card 
                 key={item.id}
-                className={`bg-white rounded-2xl overflow-hidden shadow-lg border-2 ${tileImage.border} cursor-pointer transition-all duration-300 hover:shadow-xl`}
+                className={`bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 ${tileImage.border} cursor-pointer transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 ring-4 ring-white/50 hover:ring-white/70 backdrop-blur-sm`}
                 onClick={() => item.comingSoon ? null : handleMenuClick(item.id)}
                 data-testid={`menu-${item.id}`}
               >
@@ -389,13 +389,13 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           relative bg-gradient-to-br from-indigo-50 to-blue-50 
           border-4 border-indigo-200 
           transition-all duration-300 
-          shadow-lg hover:shadow-xl 
+          shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] 
           before:absolute before:inset-0 before:rounded-lg 
           before:bg-gradient-to-br before:from-white/30 before:to-transparent 
           before:pointer-events-none
-          ring-2 ring-white/40 ring-inset
+          ring-4 ring-white/40 ring-inset hover:ring-white/60
           outline outline-2 outline-gray-400/30 outline-offset-2
-          backdrop-blur-sm
+          backdrop-blur-sm transform hover:scale-[1.01] hover:-translate-y-0.5
         `}>
           <CardContent className="relative p-3 z-10">
             <h2 className="font-bold text-base text-gray-800 mb-3 flex items-center justify-center gap-2">
@@ -406,9 +406,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             </h2>
             <div className="space-y-4">
               <Button 
-                variant="secondary"
+                variant="ghost"
                 size="default"
-                className="w-full justify-between bg-white/80 hover:bg-white text-gray-800 border-white/50"
+                className="w-full justify-between bg-white/80 hover:bg-white text-gray-800 border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 ring-2 ring-indigo-200/50 hover:ring-indigo-300/70"
                 onClick={() => onNavigate?.('support')}
                 data-testid="button-support"
               >
@@ -429,13 +429,13 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           mt-6 relative bg-gradient-to-br from-amber-50 to-orange-50 
           border-4 border-amber-200 
           transition-all duration-300 
-          shadow-lg hover:shadow-xl 
+          shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] 
           before:absolute before:inset-0 before:rounded-lg 
           before:bg-gradient-to-br before:from-white/30 before:to-transparent 
           before:pointer-events-none
-          ring-2 ring-white/40 ring-inset
+          ring-4 ring-white/40 ring-inset hover:ring-white/60
           outline outline-2 outline-gray-400/30 outline-offset-2
-          backdrop-blur-sm
+          backdrop-blur-sm transform hover:scale-[1.01] hover:-translate-y-0.5
         `}>
           <CardContent className="relative p-4 text-center z-10">
             <div className="w-10 h-10 bg-white/90 rounded-full flex items-center justify-center mx-auto mb-2 shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
