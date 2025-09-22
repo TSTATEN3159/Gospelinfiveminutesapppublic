@@ -313,11 +313,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-100 via-yellow-100 to-orange-100 dark:from-amber-950 dark:via-yellow-950 dark:to-orange-950">
-      {/* Light Brown Background Overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-amber-200/40 via-yellow-200/30 to-orange-200/40 pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/15 to-transparent pointer-events-none" />
-      <div className="absolute inset-0 bg-gradient-to-r from-amber-100/20 via-transparent to-orange-100/20 pointer-events-none" />
+    <div className="min-h-screen bg-white dark:bg-gray-900">
       
       <div className="relative pb-20 px-4 py-6">
         {/* Light Brown Professional Header */}
