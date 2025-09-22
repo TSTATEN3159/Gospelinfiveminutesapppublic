@@ -235,12 +235,12 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               <h3 className="font-bold text-base text-gray-800 text-center">{t.language}</h3>
             </div>
             <Select value={language} onValueChange={onLanguageChange}>
-              <SelectTrigger data-testid="select-language">
-                <SelectValue />
+              <SelectTrigger data-testid="select-language" className="border-gray-300 focus:border-blue-500">
+                <SelectValue placeholder="Select language" />
               </SelectTrigger>
-              <SelectContent>
+              <SelectContent className="max-h-[200px] overflow-y-auto">
                 {languages.map(lang => (
-                  <SelectItem key={lang.code} value={lang.code}>
+                  <SelectItem key={lang.code} value={lang.code} className="cursor-pointer">
                     <span className="flex items-center gap-2">
                       <span>{lang.name}</span>
                     </span>
