@@ -1582,6 +1582,207 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Contact management routes
+  app.post("/api/contacts/:userId/import", async (req, res) => {
+    try {
+      const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
+      const { contacts } = z.object({
+        contacts: z.array(z.object({
+          contactId: z.string().nullable(),
+          firstName: z.string().nullable(),
+          lastName: z.string().nullable(),
+          displayName: z.string().nullable(),
+          email: z.string().nullable(),
+          phone: z.string().nullable()
+        }))
+      }).parse(req.body);
+
+      // Import contacts and find app users
+      const importedContacts = await storage.importContacts(userId, contacts.map(c => ({
+        ownerId: userId,
+        contactId: c.contactId,
+        firstName: c.firstName,
+        lastName: c.lastName,
+        displayName: c.displayName,
+        email: c.email,
+        phone: c.phone
+      })));
+
+      // Find which contacts are app users
+      const appUserContacts = await storage.findAppUsersFromContacts(userId);
+
+      res.json({
+        success: true,
+        message: `${importedContacts.length} contacts imported, ${appUserContacts.length} app users found`,
+        totalImported: importedContacts.length,
+        appUsersFound: appUserContacts.length
+      });
+    } catch (error) {
+      console.error("Import contacts error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to import contacts."
+      });
+    }
+  });
+
+  app.get("/api/contacts/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
+
+      const allContacts = await storage.getContacts(userId);
+      const appUserContacts = allContacts.filter(contact => contact.isAppUser);
+
+      res.json({
+        success: true,
+        allContacts: allContacts.map(contact => ({
+          id: contact.id,
+          firstName: contact.firstName,
+          lastName: contact.lastName,
+          displayName: contact.displayName,
+          email: contact.email,
+          phone: contact.phone,
+          isAppUser: contact.isAppUser
+        })),
+        appUsers: appUserContacts.map(contact => ({
+          id: contact.id,
+          firstName: contact.firstName,
+          lastName: contact.lastName,
+          displayName: contact.displayName,
+          email: contact.email,
+          phone: contact.phone,
+          isAppUser: contact.isAppUser,
+          appUserId: contact.appUserId
+        }))
+      });
+    } catch (error) {
+      console.error("Get contacts error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get contacts."
+      });
+    }
+  });
+
+  // Bible verse sharing routes
+  app.post("/api/verses/share", async (req, res) => {
+    try {
+      const { senderId, receiverId, verseText, verseReference, message } = z.object({
+        senderId: z.string().min(1),
+        receiverId: z.string().min(1),
+        verseText: z.string().min(1),
+        verseReference: z.string().min(1),
+        message: z.string().optional()
+      }).parse(req.body);
+
+      const verseShare = await storage.shareVerse({
+        senderId,
+        receiverId,
+        verseText,
+        verseReference,
+        message
+      });
+
+      res.json({
+        success: true,
+        message: "Bible verse shared successfully",
+        verseShare: {
+          id: verseShare.id,
+          verseReference: verseShare.verseReference,
+          verseText: verseShare.verseText,
+          message: verseShare.message,
+          createdAt: verseShare.createdAt
+        }
+      });
+    } catch (error) {
+      console.error("Share verse error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to share Bible verse."
+      });
+    }
+  });
+
+  app.get("/api/verses/received/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
+
+      const receivedVerses = await storage.getReceivedVerses(userId);
+
+      // Get sender names for each verse
+      const versesWithSenderNames = await Promise.all(
+        receivedVerses.map(async (verse) => {
+          try {
+            const sender = await storage.getAppUser(verse.senderId);
+            return {
+              id: verse.id,
+              verseText: verse.verseText,
+              verseReference: verse.verseReference,
+              imageUrl: verse.imageUrl,
+              message: verse.message,
+              senderName: sender ? `${sender.firstName} ${sender.lastName}` : 'Unknown User',
+              isRead: verse.isRead,
+              createdAt: verse.createdAt
+            };
+          } catch (error) {
+            console.error(`Error getting sender for verse ${verse.id}:`, error);
+            return {
+              id: verse.id,
+              verseText: verse.verseText,
+              verseReference: verse.verseReference,
+              imageUrl: verse.imageUrl,
+              message: verse.message,
+              senderName: 'Unknown User',
+              isRead: verse.isRead,
+              createdAt: verse.createdAt
+            };
+          }
+        })
+      );
+
+      res.json({
+        success: true,
+        verses: versesWithSenderNames
+      });
+    } catch (error) {
+      console.error("Get received verses error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get received verses."
+      });
+    }
+  });
+
+  app.put("/api/verses/:verseId/read", async (req, res) => {
+    try {
+      const { verseId } = z.object({ verseId: z.string().min(1) }).parse(req.params);
+
+      const updatedVerse = await storage.markVerseAsRead(verseId);
+
+      if (!updatedVerse) {
+        return res.status(404).json({
+          success: false,
+          error: "Verse not found."
+        });
+      }
+
+      res.json({
+        success: true,
+        message: "Verse marked as read",
+        verse: {
+          id: updatedVerse.id,
+          isRead: updatedVerse.isRead
+        }
+      });
+    } catch (error) {
+      console.error("Mark verse as read error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to mark verse as read."
+      });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;
