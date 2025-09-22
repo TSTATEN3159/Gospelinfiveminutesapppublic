@@ -264,27 +264,27 @@ export default function HomePage({ user, onNavigate, onStreakUpdate }: HomePageP
           <div className="relative h-40">
             <img 
               src={forestPathImage}
-              alt="3-Day Study Plans"
+              alt="Bible Studies"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>
           <div className="p-4">
             <h2 className="text-lg font-bold text-gray-900 mb-2">
-              3-Day Study Plans
+              Bible Studies
             </h2>
             <p className="text-gray-600 text-sm mb-3">
-              Deepen your faith with guided Biblical studies and reflection.
+              Explore comprehensive Bible studies with guided reflections and spiritual growth.
             </p>
             <div className="flex justify-between items-center">
               <Button 
                 variant="ghost" 
                 size="sm" 
                 className="text-blue-600 p-0 h-auto" 
-                onClick={() => setShowStudyPlans(true)}
-                data-testid="button-startStudy"
+                onClick={() => onNavigate?.('biblestudies')}
+                data-testid="button-browseBibleStudies"
               >
-                Start Study
+                Browse Studies
               </Button>
               <Button variant="ghost" size="sm" className="text-gray-400 p-0 h-auto" data-testid="button-dismissStudy">
                 Dismiss
