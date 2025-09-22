@@ -218,7 +218,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
 
       <div className="max-w-sm mx-auto space-y-3 px-4">
         {/* Language Selector */}
-        <Card className="bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 border-blue-200 transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 ring-4 ring-blue-100/50 hover:ring-blue-200/70 backdrop-blur-sm">
+        <Card className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-blue-200 hover-elevate">
           <div className="relative h-24">
             <img 
               src={mountainTopImage}
@@ -227,23 +227,21 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
             />
             <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 via-blue-600/20 to-transparent" />
           </div>
-          <CardContent className="p-3">
-            <div className="flex items-center justify-center gap-2 mb-2">
-              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shadow-lg border-2 border-blue-200/60 ring-1 ring-blue-300/50">
-                <Globe className="w-4 h-4 text-blue-700 stroke-[1.5]" />
+          <CardContent className="p-4">
+            <div className="flex items-center justify-center gap-2 mb-3">
+              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shadow-md border-2 border-blue-200/60">
+                <Globe className="w-4 h-4 text-blue-700" />
               </div>
-              <h3 className="font-bold text-base text-gray-800 text-center">{t.language}</h3>
+              <h3 className="font-bold text-base text-gray-800">{t.language}</h3>
             </div>
             <Select value={language} onValueChange={onLanguageChange}>
-              <SelectTrigger data-testid="select-language" className="border-gray-300 focus:border-blue-500">
+              <SelectTrigger data-testid="select-language">
                 <SelectValue placeholder="Select language" />
               </SelectTrigger>
-              <SelectContent className="max-h-[200px] overflow-y-auto">
+              <SelectContent>
                 {languages.map(lang => (
-                  <SelectItem key={lang.code} value={lang.code} className="cursor-pointer">
-                    <span className="flex items-center gap-2">
-                      <span>{lang.name}</span>
-                    </span>
+                  <SelectItem key={lang.code} value={lang.code}>
+                    {lang.name}
                   </SelectItem>
                 ))}
               </SelectContent>
