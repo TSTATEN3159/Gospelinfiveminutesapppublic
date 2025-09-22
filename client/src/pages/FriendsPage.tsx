@@ -479,7 +479,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
           {/* Info Tiles Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-share-verses">
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-share-verses">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Share className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
@@ -491,7 +491,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('search')} data-testid="tile-find-friends">
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('search')} data-testid="tile-find-friends">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-green-100 to-emerald-100 dark:from-green-900/40 dark:to-emerald-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Users className="w-8 h-8 text-green-600 dark:text-green-400" />
@@ -503,7 +503,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-grow-together">
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-grow-together">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-emerald-100 to-teal-100 dark:from-emerald-900/40 dark:to-teal-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <MessageCircle className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
@@ -515,7 +515,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('more')} data-testid="tile-safe-private">
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('more')} data-testid="tile-safe-private">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-teal-100 to-green-100 dark:from-teal-900/40 dark:to-green-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Shield className="w-8 h-8 text-teal-600 dark:text-teal-400" />
@@ -527,7 +527,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('home')} data-testid="tile-daily-inspiration">
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => onNavigate?.('home')} data-testid="tile-daily-inspiration">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-green-100 to-lime-100 dark:from-green-900/40 dark:to-lime-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Sparkles className="w-8 h-8 text-green-600 dark:text-green-400" />
@@ -539,7 +539,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               </CardContent>
             </Card>
 
-            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-global-community">
+            <Card className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-900/20 dark:to-emerald-900/20 shadow-lg border-0 hover-elevate transition-all duration-300 cursor-pointer" onClick={() => setActiveTab('friends')} data-testid="tile-global-community">
               <CardContent className="p-6 text-center">
                 <div className="bg-gradient-to-br from-emerald-100 to-green-100 dark:from-emerald-900/40 dark:to-green-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
                   <Globe className="w-8 h-8 text-emerald-600 dark:text-emerald-400" />
