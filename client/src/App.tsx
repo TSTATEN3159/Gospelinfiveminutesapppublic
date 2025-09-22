@@ -12,6 +12,10 @@ import OfflineIndicator from "./components/OfflineIndicator";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NetworkStatus from "./components/NetworkStatus";
 
+// Initialize auto-recovery services
+import { silentLogger } from "./services/silentLogger";
+import { performanceMonitor } from "./services/performanceMonitor";
+
 // Pages
 import HomePage from "./pages/HomePage";
 import AskPage from "./pages/BiblePage";

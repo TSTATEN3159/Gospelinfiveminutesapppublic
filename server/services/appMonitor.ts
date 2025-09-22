@@ -25,9 +25,7 @@ class AppMonitor {
   private readonly MAX_RETRY_ATTEMPTS = 3;
   private readonly services = [
     { name: 'database', endpoint: '/api/health/db' },
-    { name: 'bible-api', endpoint: '/api/health/bible' },
-    { name: 'daily-verse', endpoint: '/api/daily-verse' },
-    { name: 'videos', endpoint: '/api/videos' }
+    { name: 'bible-api', endpoint: '/api/health/bible' }
   ];
 
   constructor() {
@@ -68,13 +66,25 @@ class AppMonitor {
         const result = await this.checkService(service.name, service.endpoint);
         const responseTime = Date.now() - startTime;
         
-        healthResults.push({
-          service: service.name,
-          status: result ? 'healthy' : 'degraded',
-          lastCheck: new Date(),
-          responseTime,
-          error: result ? undefined : 'Service check failed'
-        });
+        if (result) {
+          healthResults.push({
+            service: service.name,
+            status: 'healthy',
+            lastCheck: new Date(),
+            responseTime
+          });
+        } else {
+          healthResults.push({
+            service: service.name,
+            status: 'degraded',
+            lastCheck: new Date(),
+            responseTime,
+            error: 'Service check failed'
+          });
+          
+          // Attempt auto-recovery for degraded services
+          await this.attemptAutoRecovery(service.name, new Error('Service check failed'));
+        }
       } catch (error) {
         healthResults.push({
           service: service.name,

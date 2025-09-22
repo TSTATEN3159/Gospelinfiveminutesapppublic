@@ -117,25 +117,47 @@ export default function NetworkStatus({ onRetry, showOfflineMessage = true }: Ne
    * Smart retry mechanism with exponential backoff
    */
   const handleRetry = async (): Promise<void> => {
-    setStatus(prev => ({
-      ...prev,
-      isRetrying: true,
-      retryAttempts: prev.retryAttempts + 1
-    }));
-
-    const isConnected = await performConnectionTest();
-    
-    if (isConnected) {
-      onRetry?.();
-    } else {
-      // Exponential backoff for failed retries
-      const delay = Math.min(1000 * Math.pow(2, status.retryAttempts), 10000);
-      setTimeout(() => {
-        if (status.retryAttempts < 5) {
-          handleRetry();
+    setStatus(prev => {
+      if (prev.retryAttempts >= 5) {
+        // Max retries reached, don't retry
+        return { ...prev, isRetrying: false };
+      }
+      
+      const newAttempts = prev.retryAttempts + 1;
+      
+      // Perform connection test
+      performConnectionTest().then(isConnected => {
+        if (isConnected) {
+          onRetry?.();
+          setStatus(current => ({
+            ...current,
+            retryAttempts: 0,
+            isRetrying: false
+          }));
+        } else if (newAttempts < 5) {
+          // Exponential backoff for failed retries
+          const delay = Math.min(1000 * Math.pow(2, newAttempts), 10000);
+          setTimeout(() => {
+            // Only retry if component is still mounted and in retry mode
+            setStatus(current => {
+              if (current.retryAttempts < 5 && !current.isOnline) {
+                handleRetry();
+              }
+              return current;
+            });
+          }, delay);
+        } else {
+          // Max retries reached
+          setStatus(current => ({ ...current, isRetrying: false }));
         }
-      }, delay);
-    }
+      });
+      
+      return {
+        ...prev,
+        isRetrying: true,
+        retryAttempts: newAttempts
+      };
+    });
   };
 
   // Auto-recovery when network comes back
