@@ -2094,13 +2094,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Database health check
   app.get("/api/health/db", async (req, res) => {
     try {
-      // Test database connection
-      const testResult = await storage.getAllUsers();
+      // Test database connection with existing method
+      const testResult = await storage.getAllActiveSubscribers();
       res.json({
         success: true,
         service: "database",
         status: "healthy",
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        recordCount: testResult.length
       });
     } catch (error) {
       res.status(503).json({

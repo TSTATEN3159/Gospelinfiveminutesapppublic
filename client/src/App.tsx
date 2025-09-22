@@ -9,6 +9,8 @@ import UserRegistrationModal from "./components/UserRegistrationModal";
 import ImportFriendsDialog from "./components/ImportFriendsDialog";
 import BottomNavigation from "./components/BottomNavigation";
 import OfflineIndicator from "./components/OfflineIndicator";
+import ErrorBoundary from "./components/ErrorBoundary";
+import NetworkStatus from "./components/NetworkStatus";
 
 // Pages
 import HomePage from "./pages/HomePage";
@@ -187,43 +189,48 @@ function App() {
   };
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <div className="min-h-screen bg-gray-50">
-          {/* Current Page Content */}
-          <main className="min-h-screen bg-gray-50">
-            {renderCurrentPage()}
-          </main>
+    <ErrorBoundary>
+      <QueryClientProvider client={queryClient}>
+        <TooltipProvider>
+          <div className="min-h-screen bg-gray-50">
+            {/* Network Status - Apple-compliant auto-recovery */}
+            <NetworkStatus onRetry={() => window.location.reload()} />
+            
+            {/* Current Page Content */}
+            <main className="min-h-screen bg-gray-50">
+              {renderCurrentPage()}
+            </main>
 
-          {/* Bottom Navigation - Hide on legal pages and friends page */}
-          {!["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia"].includes(currentPage) && (
-            <BottomNavigation 
-              currentPage={currentPage as "home" | "ask" | "search" | "more"} 
-              onPageChange={(page) => setCurrentPage(page as AppPage)} 
+            {/* Bottom Navigation - Hide on legal pages and friends page */}
+            {!["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia"].includes(currentPage) && (
+              <BottomNavigation 
+                currentPage={currentPage as "home" | "ask" | "search" | "more"} 
+                onPageChange={(page) => setCurrentPage(page as AppPage)} 
+              />
+            )}
+
+            {/* Registration Modal */}
+            <UserRegistrationModal 
+              isOpen={showRegistration} 
+              onClose={handleRegistrationComplete} 
             />
-          )}
 
-          {/* Registration Modal */}
-          <UserRegistrationModal 
-            isOpen={showRegistration} 
-            onClose={handleRegistrationComplete} 
-          />
+            {/* Import Friends Dialog */}
+            {user?.appUserId && (
+              <ImportFriendsDialog 
+                isOpen={showImportFriends}
+                onClose={handleImportFriendsClose}
+                appUserId={user.appUserId}
+                onNavigateToFriends={handleNavigateToFriends}
+              />
+            )}
+          </div>
 
-          {/* Import Friends Dialog */}
-          {user?.appUserId && (
-            <ImportFriendsDialog 
-              isOpen={showImportFriends}
-              onClose={handleImportFriendsClose}
-              appUserId={user.appUserId}
-              onNavigateToFriends={handleNavigateToFriends}
-            />
-          )}
-        </div>
-
-        <Toaster />
-        <OfflineIndicator />
-      </TooltipProvider>
-    </QueryClientProvider>
+          <Toaster />
+          <OfflineIndicator />
+        </TooltipProvider>
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 }
 
