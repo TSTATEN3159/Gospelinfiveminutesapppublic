@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play } from "lucide-react";
+import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft } from "lucide-react";
 
 interface BibleStudyProps {
   currentUserId: string;
@@ -23,6 +23,16 @@ interface BibleStudy {
   lessons: number;
   imageUrl?: string;
   featured?: boolean;
+}
+
+interface StudyLesson {
+  id: number;
+  title: string;
+  content: string;
+  verse: string;
+  verseText: string;
+  reflection: string[];
+  prayer: string;
 }
 
 const sampleStudies: BibleStudy[] = [
@@ -89,11 +99,56 @@ const sampleStudies: BibleStudy[] = [
   }
 ];
 
+// Sample lesson content for the featured study
+const sampleLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Beginning Your Journey with Jesus",
+    content: "Welcome to this transformative 30-day journey with Jesus Christ. Today we begin by understanding what it truly means to walk with our Savior daily. Walking with Jesus isn't just about Sunday worship; it's about inviting Him into every moment of our lives, allowing His love and wisdom to guide our decisions, relationships, and purpose.",
+    verse: "Matthew 11:28-30",
+    verseText: "Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls. For my yoke is easy and my burden is light.",
+    reflection: [
+      "What does it mean to you personally to 'come to Jesus'?",
+      "How have you experienced rest or peace in Christ before?",
+      "What burdens are you carrying that you need to surrender to Him?"
+    ],
+    prayer: "Lord Jesus, thank You for Your invitation to come to You with all my burdens. Help me to trust You completely and walk closely with You each day. Show me how to find true rest in Your presence. Amen."
+  },
+  {
+    id: 2,
+    title: "Learning to Trust His Plan",
+    content: "Trust is foundational to any relationship, especially our relationship with God. Today we explore how to develop deeper trust in God's perfect plan for our lives, even when we can't see the full picture. His ways are higher than our ways, and His timing is always perfect.",
+    verse: "Proverbs 3:5-6",
+    verseText: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
+    reflection: [
+      "In what areas of your life do you struggle to trust God?",
+      "How has God shown His faithfulness to you in the past?",
+      "What does it mean to 'lean not on your own understanding'?"
+    ],
+    prayer: "Heavenly Father, I choose to trust You with my whole heart. Help me to surrender my need to understand everything and instead rest in Your perfect wisdom and timing. Guide my steps today. Amen."
+  },
+  {
+    id: 3,
+    title: "Finding Joy in His Presence",
+    content: "Joy is one of the most beautiful gifts of walking with Jesus. Unlike happiness, which depends on circumstances, joy comes from knowing we are deeply loved by God and that nothing can separate us from His love. Today we discover how to cultivate lasting joy through His presence.",
+    verse: "Nehemiah 8:10",
+    verseText: "Do not grieve, for the joy of the Lord is your strength.",
+    reflection: [
+      "What brings you the deepest joy in life?",
+      "How is the joy of the Lord different from worldly happiness?",
+      "How can you tap into God's joy during difficult times?"
+    ],
+    prayer: "Lord, fill my heart with Your joy that transcends all circumstances. Help me to find my strength in You and to be a source of joy to others. Thank You for the privilege of walking with You. Amen."
+  }
+];
+
 export default function BibleStudiesPage({ currentUserId, language, onNavigate }: BibleStudyProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedStudy, setSelectedStudy] = useState<BibleStudy | null>(null);
   const [showStudyDetail, setShowStudyDetail] = useState(false);
+  const [showStudyLesson, setShowStudyLesson] = useState(false);
+  const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
 
   const categories = ["All", "Discipleship", "Encouragement", "Character", "Prayer", "Prophecy", "Love"];
 
@@ -390,7 +445,8 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                     className="flex-1 bg-amber-600 hover:bg-amber-700 text-white"
                     onClick={() => {
                       setShowStudyDetail(false);
-                      // Here you would navigate to the actual study content
+                      setCurrentLessonIndex(0);
+                      setShowStudyLesson(true);
                       console.log(`Starting study: ${selectedStudy.title}`);
                     }}
                     data-testid={`button-start-study-detail-${selectedStudy.id}`}
@@ -404,6 +460,150 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                     data-testid="button-close-study-detail"
                   >
                     Close
+                  </Button>
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
+      {/* Study Lesson Modal */}
+      <Dialog open={showStudyLesson} onOpenChange={setShowStudyLesson}>
+        <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
+          {selectedStudy && sampleLessons[currentLessonIndex] && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center justify-between mb-4">
+                  <div className="flex items-center gap-3">
+                    <Button
+                      variant="ghost"
+                      size="icon"
+                      onClick={() => setShowStudyLesson(false)}
+                      data-testid="button-close-lesson"
+                    >
+                      <ArrowLeft className="w-4 h-4" />
+                    </Button>
+                    <div>
+                      <DialogTitle className="text-xl font-bold">{selectedStudy.title}</DialogTitle>
+                      <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                        Lesson {currentLessonIndex + 1} of {sampleLessons.length}
+                      </p>
+                    </div>
+                  </div>
+                  <Badge variant="outline" className="text-xs">
+                    Day {currentLessonIndex + 1}
+                  </Badge>
+                </div>
+              </DialogHeader>
+              
+              <div className="space-y-6">
+                {/* Lesson Title */}
+                <div className="text-center">
+                  <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground">
+                    {sampleLessons[currentLessonIndex].title}
+                  </h2>
+                </div>
+
+                {/* Main Content */}
+                <div className="prose prose-lg max-w-none dark:prose-invert">
+                  <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
+                    {sampleLessons[currentLessonIndex].content}
+                  </p>
+                </div>
+
+                {/* Bible Verse */}
+                <Card className="bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+                  <CardContent className="p-6">
+                    <div className="text-center space-y-3">
+                      <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100">
+                        Today's Scripture
+                      </h3>
+                      <div className="bg-white dark:bg-blue-950/50 rounded-lg p-4">
+                        <p className="text-blue-800 dark:text-blue-200 italic leading-relaxed mb-3">
+                          "{sampleLessons[currentLessonIndex].verseText}"
+                        </p>
+                        <p className="text-blue-600 dark:text-blue-300 font-medium">
+                          — {sampleLessons[currentLessonIndex].verse}
+                        </p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Reflection Questions */}
+                <Card>
+                  <CardHeader>
+                    <CardTitle className="text-lg text-gray-900 dark:text-foreground">
+                      Reflection Questions
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <ul className="space-y-3">
+                      {sampleLessons[currentLessonIndex].reflection.map((question, idx) => (
+                        <li key={idx} className="flex gap-3">
+                          <span className="flex-shrink-0 w-6 h-6 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full flex items-center justify-center text-sm font-medium">
+                            {idx + 1}
+                          </span>
+                          <span className="text-gray-700 dark:text-gray-300">{question}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+
+                {/* Prayer */}
+                <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
+                  <CardHeader>
+                    <CardTitle className="text-lg text-green-900 dark:text-green-100">
+                      Prayer for Today
+                    </CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <p className="text-green-800 dark:text-green-200 italic leading-relaxed">
+                      {sampleLessons[currentLessonIndex].prayer}
+                    </p>
+                  </CardContent>
+                </Card>
+
+                {/* Navigation */}
+                <div className="flex justify-between items-center pt-4 border-t">
+                  <Button
+                    variant="outline"
+                    onClick={() => setCurrentLessonIndex(Math.max(0, currentLessonIndex - 1))}
+                    disabled={currentLessonIndex === 0}
+                    data-testid="button-previous-lesson"
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-2" />
+                    Previous
+                  </Button>
+                  
+                  <div className="text-center">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Progress: {currentLessonIndex + 1} / {sampleLessons.length}
+                    </p>
+                    <div className="w-32 h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-1">
+                      <div 
+                        className="h-2 bg-amber-600 rounded-full transition-all duration-300"
+                        style={{ width: `${((currentLessonIndex + 1) / sampleLessons.length) * 100}%` }}
+                      ></div>
+                    </div>
+                  </div>
+
+                  <Button
+                    onClick={() => {
+                      if (currentLessonIndex < sampleLessons.length - 1) {
+                        setCurrentLessonIndex(currentLessonIndex + 1);
+                      } else {
+                        // Study completed
+                        setShowStudyLesson(false);
+                        alert("Congratulations! You've completed this study. Keep growing in your faith!");
+                      }
+                    }}
+                    data-testid="button-next-lesson"
+                  >
+                    {currentLessonIndex < sampleLessons.length - 1 ? "Next" : "Complete"}
+                    <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
               </div>
