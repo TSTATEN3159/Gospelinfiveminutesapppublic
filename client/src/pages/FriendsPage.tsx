@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft, Contact, Download, Share, BookOpen, Smartphone } from "lucide-react";
+import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft, Contact, Download, Share, BookOpen, Smartphone, Shield, MessageCircle, Sparkles, Globe } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
@@ -62,6 +62,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   const [isImportingContacts, setIsImportingContacts] = useState(false);
   const [selectedFriend, setSelectedFriend] = useState<AppUser | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState("search");
   const { toast } = useToast();
   const t = useTranslations(language);
 
@@ -252,7 +253,6 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               onClick={() => sendRequestMutation.mutate(user.id)}
               disabled={sendRequestMutation.isPending}
               data-testid={`button-add-friend-${user.id}`}
-              className="bg-blue-600 hover:bg-blue-700"
             >
               <UserPlus className="w-4 h-4 mr-2" />
               {t.addFriend}
@@ -264,7 +264,6 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               <Button
                 size="sm"
                 onClick={() => handleShareVerse(user)}
-                className="bg-green-600 hover:bg-green-700"
                 data-testid={`button-share-verse-${user.id}`}
               >
                 <Share className="w-4 h-4 mr-2" />
@@ -350,7 +349,6 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
                 onClick={() => acceptRequestMutation.mutate(friendshipId)}
                 disabled={acceptRequestMutation.isPending}
                 data-testid={`button-accept-request-${user.id}`}
-                className="bg-green-600 hover:bg-green-700"
               >
                 <UserCheck className="w-4 h-4 mr-2" />
                 {t.accept}
@@ -414,52 +412,197 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top shadow-sm">
+      <div className="bg-white dark:bg-background px-4 py-6 border-b border-gray-100 dark:border-border ios-safe-top shadow-sm">
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-3 hover:bg-gray-100"
+            className="mr-3"
             data-testid="button-back-friends"
             aria-label="Go back to More page"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1 text-center">
-            <h1 className="text-2xl font-bold" style={{ 
-              fontFamily: 'Dancing Script, Brush Script MT, cursive',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
-              color: '#8B4513'
+            <h1 className="text-2xl font-bold text-amber-800 dark:text-amber-300" style={{ 
+              fontFamily: 'Dancing Script, Brush Script MT, cursive'
             }}>
               Friends & Community
             </h1>
-            <p className="text-gray-600 mt-1">Connect, share, and grow together in faith</p>
+            <p className="text-gray-600 dark:text-gray-300 mt-1">Connect, share, and grow together in faith</p>
           </div>
         </div>
       </div>
 
-      <div className="px-4 py-6 space-y-6">
+      {/* Informational Tiles Section */}
+      <div className="bg-gradient-to-b from-white to-blue-50 dark:from-background dark:to-muted/20 px-4 py-8">
+        <div className="max-w-4xl mx-auto space-y-6">
+          {/* Welcome Banner */}
+          <Card className="bg-gradient-to-r from-blue-600 to-indigo-700 dark:from-blue-800 dark:to-indigo-900 text-white shadow-xl border-0">
+            <CardContent className="p-6">
+              <div className="flex items-center justify-between">
+                <div className="flex-1">
+                  <h2 className="text-2xl font-bold mb-2">Welcome to our Faith Community</h2>
+                  <p className="text-blue-100 dark:text-blue-200 text-lg mb-4">Connect with fellow believers and grow in faith together</p>
+                  <div className="flex gap-3">
+                    <Button 
+                      variant="outline" 
+                      className="border-white/30 bg-white/10 text-white"
+                      onClick={() => setActiveTab("contacts")}
+                      data-testid="button-banner-import-contacts"
+                    >
+                      <Smartphone className="w-4 h-4 mr-2" />
+                      Import Contacts
+                    </Button>
+                    <Button 
+                      variant="outline" 
+                      className="border-white/30 bg-white/10 text-white"
+                      onClick={() => setActiveTab("search")}
+                      data-testid="button-banner-find-friends"
+                    >
+                      <Users className="w-4 h-4 mr-2" />
+                      Find Friends
+                    </Button>
+                  </div>
+                </div>
+                <div className="hidden md:block">
+                  <img 
+                    src={prayingCommunityImage} 
+                    alt="Community praying together" 
+                    className="w-24 h-24 rounded-full object-cover border-4 border-white/30"
+                  />
+                </div>
+              </div>
+            </CardContent>
+          </Card>
 
-        <Tabs defaultValue="search" className="w-full max-w-4xl mx-auto">
-          <TabsList className="grid w-full grid-cols-5 bg-white shadow-sm border">
-            <TabsTrigger value="search" data-testid="tab-search-friends" className="data-[state=active]:bg-blue-50 data-[state=active]:text-blue-700">
+          {/* Info Tiles Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-green-100 dark:bg-green-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Share className="w-8 h-8 text-green-600 dark:text-green-400" />
+                </div>
+                <h3 className="font-bold text-foreground mb-2">Share Bible Verses</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Send meaningful scriptures to friends with personal messages and beautiful verse cards
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-purple-100 dark:bg-purple-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Users className="w-8 h-8 text-purple-600 dark:text-purple-400" />
+                </div>
+                <h3 className="font-bold text-foreground mb-2">Find Friends</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Connect with friends from your contacts who also use the Gospel app
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-blue-100 dark:bg-blue-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <MessageCircle className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+                </div>
+                <h3 className="font-bold text-foreground mb-2">Grow Together</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Build a supportive community where faith grows through shared experiences
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-orange-100 dark:bg-orange-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Shield className="w-8 h-8 text-orange-600 dark:text-orange-400" />
+                </div>
+                <h3 className="font-bold text-foreground mb-2">Safe & Private</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Your data is protected with industry-standard security and privacy controls
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-indigo-100 dark:bg-indigo-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Sparkles className="w-8 h-8 text-indigo-600 dark:text-indigo-400" />
+                </div>
+                <h3 className="font-bold text-foreground mb-2">Daily Inspiration</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Share daily verses and inspirational content to uplift and encourage each other
+                </p>
+              </CardContent>
+            </Card>
+
+            <Card className="bg-card shadow-lg border-0 hover-elevate transition-all duration-300">
+              <CardContent className="p-6 text-center">
+                <div className="bg-teal-100 dark:bg-teal-900/30 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Globe className="w-8 h-8 text-teal-600 dark:text-teal-400" />
+                </div>
+                <h3 className="font-bold text-foreground mb-2">Global Community</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">
+                  Join believers worldwide in a community centered on God's love and truth
+                </p>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Getting Started Guide */}
+          <Card className="bg-white shadow-lg border-0">
+            <CardHeader className="pb-4">
+              <CardTitle className="text-xl font-bold text-gray-900 flex items-center">
+                <BookOpen className="w-6 h-6 mr-3 text-blue-600" />
+                Getting Started with Friends & Community
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">1</div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Import Contacts</h4>
+                  <p className="text-gray-600 text-sm">Allow access to your contacts to find friends who use the app</p>
+                </div>
+                <div className="text-center">
+                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">2</div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Send Friend Requests</h4>
+                  <p className="text-gray-600 text-sm">Connect with discovered friends or search for new ones</p>
+                </div>
+                <div className="text-center">
+                  <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center mx-auto mb-3 font-bold">3</div>
+                  <h4 className="font-semibold text-gray-900 mb-2">Share & Grow</h4>
+                  <p className="text-gray-600 text-sm">Start sharing Bible verses and growing together in faith</p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+
+      <div className="px-4 py-6 space-y-6 bg-white">
+        <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-4xl mx-auto">
+          <TabsList className="grid w-full grid-cols-5 bg-white dark:bg-card shadow-sm border dark:border-border">
+            <TabsTrigger value="search" data-testid="tab-search-friends" className="data-[state=active]:bg-blue-50 dark:data-[state=active]:bg-blue-900/20 data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300">
               <Search className="w-4 h-4 mr-1" />
               Search
             </TabsTrigger>
-            <TabsTrigger value="contacts" data-testid="tab-contacts" className="data-[state=active]:bg-green-50 data-[state=active]:text-green-700">
+            <TabsTrigger value="contacts" data-testid="tab-contacts" className="data-[state=active]:bg-green-50 dark:data-[state=active]:bg-green-900/20 data-[state=active]:text-green-700 dark:data-[state=active]:text-green-300">
               <Contact className="w-4 h-4 mr-1" />
               Contacts
             </TabsTrigger>
-            <TabsTrigger value="friends" data-testid="tab-my-friends" className="data-[state=active]:bg-purple-50 data-[state=active]:text-purple-700">
+            <TabsTrigger value="friends" data-testid="tab-my-friends" className="data-[state=active]:bg-purple-50 dark:data-[state=active]:bg-purple-900/20 data-[state=active]:text-purple-700 dark:data-[state=active]:text-purple-300">
               <Users className="w-4 h-4 mr-1" />
               Friends {friendsData?.friends && `(${friendsData.friends.length})`}
             </TabsTrigger>
-            <TabsTrigger value="requests" data-testid="tab-friend-requests" className="data-[state=active]:bg-orange-50 data-[state=active]:text-orange-700">
+            <TabsTrigger value="requests" data-testid="tab-friend-requests" className="data-[state=active]:bg-orange-50 dark:data-[state=active]:bg-orange-900/20 data-[state=active]:text-orange-700 dark:data-[state=active]:text-orange-300">
               <UserPlus className="w-4 h-4 mr-1" />
               Requests {requestsData?.incoming && requestsData.incoming.length > 0 && `(${requestsData.incoming.length})`}
             </TabsTrigger>
-            <TabsTrigger value="verses" data-testid="tab-received-verses" className="data-[state=active]:bg-indigo-50 data-[state=active]:text-indigo-700">
+            <TabsTrigger value="verses" data-testid="tab-received-verses" className="data-[state=active]:bg-indigo-50 dark:data-[state=active]:bg-indigo-900/20 data-[state=active]:text-indigo-700 dark:data-[state=active]:text-indigo-300">
               <BookOpen className="w-4 h-4 mr-1" />
               Verses
             </TabsTrigger>
@@ -525,7 +668,6 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
                   <Button
                     onClick={handleImportContacts}
                     disabled={isImportingContacts || importContactsMutation.isPending}
-                    className="bg-green-600 hover:bg-green-700"
                     data-testid="button-import-contacts"
                   >
                     <Smartphone className="w-4 h-4 mr-2" />
