@@ -1586,7 +1586,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/contacts/:userId/import", async (req, res) => {
     try {
       const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
-      const { contacts } = z.object({
+      const fromSignup = req.query.fromSignup === 'true';
+      
+      const bodySchema = z.object({
         contacts: z.array(z.object({
           contactId: z.string().nullable(),
           firstName: z.string().nullable(),
@@ -1594,11 +1596,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
           displayName: z.string().nullable(),
           email: z.string().nullable(),
           phone: z.string().nullable()
-        }))
-      }).parse(req.body);
+        })).max(fromSignup ? 50 : 1000) // Enforce 50 limit during signup
+      });
+      
+      const { contacts } = bodySchema.parse(req.body);
+
+      // Check if this is first-time import during signup
+      if (fromSignup) {
+        const existingContacts = await storage.getContacts(userId);
+        if (existingContacts.length > 0) {
+          return res.status(400).json({
+            success: false,
+            error: "Signup import only allowed for new users with no existing contacts."
+          });
+        }
+      }
+
+      // Limit to 50 contacts for signup imports
+      const contactsToImport = fromSignup ? contacts.slice(0, 50) : contacts;
 
       // Import contacts and find app users
-      const importedContacts = await storage.importContacts(userId, contacts.map(c => ({
+      const importedContacts = await storage.importContacts(userId, contactsToImport.map(c => ({
         ownerId: userId,
         contactId: c.contactId,
         firstName: c.firstName,
@@ -1615,10 +1633,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
         success: true,
         message: `${importedContacts.length} contacts imported, ${appUserContacts.length} app users found`,
         totalImported: importedContacts.length,
-        appUsersFound: appUserContacts.length
+        appUsersFound: appUserContacts.length,
+        fromSignup
       });
     } catch (error) {
       console.error("Import contacts error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request data. Contact limit exceeded for signup import."
+        });
+      }
+      
       res.status(500).json({
         success: false,
         error: "Failed to import contacts."

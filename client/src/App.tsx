@@ -6,6 +6,7 @@ import { queryClient } from "./lib/queryClient";
 
 // Components
 import UserRegistrationModal from "./components/UserRegistrationModal";
+import ImportFriendsDialog from "./components/ImportFriendsDialog";
 import BottomNavigation from "./components/BottomNavigation";
 import OfflineIndicator from "./components/OfflineIndicator";
 
@@ -39,6 +40,7 @@ type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "suppo
 function App() {
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
+  const [showImportFriends, setShowImportFriends] = useState(false);
   const [currentPage, setCurrentPage] = useState<AppPage>("home");
   const [language, setLanguage] = useState("en");
   const [streakDays, setStreakDays] = useState(0);
@@ -92,6 +94,8 @@ function App() {
           const userWithId = { ...userData, appUserId: result.user.id };
           setUser(userWithId);
           localStorage.setItem("gospelAppUser", JSON.stringify(userWithId));
+          // Show friend import dialog after successful registration
+          setShowImportFriends(true);
         } else {
           console.error("Failed to create app user:", result.error);
           // Still save locally but without appUserId
@@ -126,6 +130,15 @@ function App() {
 
   const handleBackFromLegal = () => {
     setCurrentPage("more");
+  };
+
+  const handleImportFriendsClose = () => {
+    setShowImportFriends(false);
+  };
+
+  const handleNavigateToFriends = () => {
+    setShowImportFriends(false);
+    setCurrentPage("friends");
   };
 
   const renderCurrentPage = () => {
@@ -189,6 +202,16 @@ function App() {
             isOpen={showRegistration} 
             onClose={handleRegistrationComplete} 
           />
+
+          {/* Import Friends Dialog */}
+          {user?.appUserId && (
+            <ImportFriendsDialog 
+              isOpen={showImportFriends}
+              onClose={handleImportFriendsClose}
+              appUserId={user.appUserId}
+              onNavigateToFriends={handleNavigateToFriends}
+            />
+          )}
         </div>
 
         <Toaster />
