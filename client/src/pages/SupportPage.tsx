@@ -9,17 +9,64 @@ interface SupportPageProps {
 
 export default function SupportPage({ onBack }: SupportPageProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
+  const [isDeleting, setIsDeleting] = useState(false);
 
-  const handleDeleteData = () => {
+  const handleDeleteData = async () => {
     if (showDeleteConfirm) {
-      // Clear all local storage
-      localStorage.clear();
+      setIsDeleting(true);
       
-      // Show confirmation
-      alert("Your data has been deleted successfully. The app will now restart.");
-      
-      // Reload the app to reset state
-      window.location.reload();
+      try {
+        // Get user data to extract appUserId
+        const userData = localStorage.getItem("gospelAppUser");
+        
+        if (userData) {
+          const user = JSON.parse(userData);
+          
+          if (user.appUserId) {
+            // Make API call to delete user account from server
+            const response = await fetch(`/api/users/${user.appUserId}`, {
+              method: 'DELETE',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            });
+            
+            const result = await response.json();
+            
+            if (result.success) {
+              // Server deletion successful, now clear local storage
+              localStorage.clear();
+              
+              // Show confirmation
+              alert("Your account and all associated data have been permanently deleted from our servers. The app will now restart.");
+              
+              // Reload the app to reset state
+              window.location.reload();
+            } else {
+              // Server deletion failed
+              console.error("Server deletion failed:", result.error);
+              alert("Failed to delete your account from our servers. Please contact support for assistance.");
+              setIsDeleting(false);
+              setShowDeleteConfirm(false);
+            }
+          } else {
+            // No server account exists, just clear local data
+            localStorage.clear();
+            alert("Your local data has been deleted successfully. The app will now restart.");
+            window.location.reload();
+          }
+        } else {
+          // No user data exists
+          localStorage.clear();
+          alert("No user data found. The app will now restart.");
+          window.location.reload();
+        }
+      } catch (error) {
+        console.error("Error deleting user account:", error);
+        alert("An error occurred while deleting your account. Please contact support for assistance.");
+        setIsDeleting(false);
+        setShowDeleteConfirm(false);
+      }
     } else {
       setShowDeleteConfirm(true);
     }
@@ -131,10 +178,11 @@ export default function SupportPage({ onBack }: SupportPageProps) {
                   variant={showDeleteConfirm ? "destructive" : "outline"}
                   size="sm" 
                   onClick={handleDeleteData}
+                  disabled={isDeleting}
                   data-testid="button-delete-data"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  {showDeleteConfirm ? "Confirm Delete" : "Delete Data"}
+                  {isDeleting ? "Deleting..." : showDeleteConfirm ? "Confirm Delete" : "Delete Data"}
                 </Button>
               </div>
 

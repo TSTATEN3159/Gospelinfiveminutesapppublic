@@ -2,6 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Heart, Book, Users, DollarSign, ArrowLeft, Target, TrendingUp } from "lucide-react";
+import { Capacitor } from '@capacitor/core';
 
 interface GivingPageProps {
   onNavigate?: (page: string) => void;
@@ -9,6 +10,9 @@ interface GivingPageProps {
 }
 
 export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPageProps) {
+  // iOS platform detection for Apple Store compliance
+  const isIOS = Capacitor.getPlatform() === 'ios';
+  
   // Mock data for giving statistics - can be replaced with real API data
   const givingStats = {
     totalDonations: 47523.50,
@@ -132,30 +136,32 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
           </CardContent>
         </Card>
 
-        {/* Call to Action */}
-        <Card className="bg-primary text-primary-foreground shadow-lg border-2">
-          <CardContent className="p-6 text-center">
-            <Heart className="w-12 h-12 mx-auto mb-4" />
-            <h3 className="text-lg font-bold mb-2 text-center">
-              Join Our Mission
-            </h3>
-            <p className="text-primary-foreground/80 text-sm mb-4 leading-relaxed text-center">
-              Your donation helps us purchase and distribute Bibles to those who need God's word most. 
-              Every contribution brings the Gospel to someone seeking hope and salvation.
-            </p>
-            <Button 
-              variant="outline"
-              size="lg"
-              className="rounded-full font-medium"
-              data-testid="button-donate-giving"
-              aria-label="Make a donation to spread the Gospel"
-              onClick={() => onNavigate?.('donate')}
-            >
-              <Heart className="w-4 h-4 mr-2" />
-              Make a Donation
-            </Button>
-          </CardContent>
-        </Card>
+        {/* Call to Action (Hidden on iOS for App Store compliance) */}
+        {!isIOS && (
+          <Card className="bg-primary text-primary-foreground shadow-lg border-2">
+            <CardContent className="p-6 text-center">
+              <Heart className="w-12 h-12 mx-auto mb-4" />
+              <h3 className="text-lg font-bold mb-2 text-center">
+                Join Our Mission
+              </h3>
+              <p className="text-primary-foreground/80 text-sm mb-4 leading-relaxed text-center">
+                Your donation helps us purchase and distribute Bibles to those who need God's word most. 
+                Every contribution brings the Gospel to someone seeking hope and salvation.
+              </p>
+              <Button 
+                variant="outline"
+                size="lg"
+                className="rounded-full font-medium"
+                data-testid="button-donate-giving"
+                aria-label="Make a donation to spread the Gospel"
+                onClick={() => onNavigate?.('donate')}
+              >
+                <Heart className="w-4 h-4 mr-2" />
+                Make a Donation
+              </Button>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Bible Distribution Map placeholder */}
         <Card className="shadow-lg border-2">

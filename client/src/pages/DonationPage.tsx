@@ -10,12 +10,16 @@ import { Elements, useStripe, useElements, PaymentElement } from '@stripe/react-
 import bibleDistributionImage from '@assets/stock_images/people_distributing__56bd3f84.jpg';
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
+import { Capacitor } from '@capacitor/core';
 
-// Load Stripe with public key
-if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
-  throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
+// Load Stripe with public key (only on non-iOS platforms for App Store compliance)
+let stripePromise: any = null;
+if (Capacitor.getPlatform() !== 'ios') {
+  if (!import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+    throw new Error('Missing required Stripe key: VITE_STRIPE_PUBLIC_KEY');
+  }
+  stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 }
-const stripePromise = loadStripe(import.meta.env.VITE_STRIPE_PUBLIC_KEY);
 
 interface DonationPageProps {
   onNavigate?: (page: string) => void;
@@ -148,6 +152,31 @@ const PaymentForm = ({
 };
 
 export default function DonationPage({ onNavigate }: DonationPageProps) {
+  // iOS platform detection for Apple Store compliance
+  const isIOS = Capacitor.getPlatform() === 'ios';
+  
+  // Redirect iOS users away from donation page for App Store compliance
+  if (isIOS) {
+    return (
+      <div className="min-h-screen flex items-center justify-center p-4">
+        <Card className="max-w-md mx-auto text-center">
+          <CardContent className="p-6">
+            <Heart className="w-12 h-12 text-primary mx-auto mb-4" />
+            <h2 className="text-xl font-bold mb-3">Thank You for Your Heart to Give</h2>
+            <p className="text-muted-foreground mb-4">
+              Donation features are currently not available on iOS. 
+              Please visit our website to support our ministry.
+            </p>
+            <Button onClick={() => onNavigate?.('more')} className="w-full">
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back to More Features
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+  
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState("");
   const [isCustom, setIsCustom] = useState(false);

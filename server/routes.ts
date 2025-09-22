@@ -1364,6 +1364,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Delete user account - Apple Store compliance requirement
+  app.delete("/api/users/:id", async (req, res) => {
+    try {
+      const { id } = z.object({ id: z.string().min(1) }).parse(req.params);
+      
+      // Check if user exists
+      const user = await storage.getAppUser(id);
+      if (!user) {
+        return res.status(404).json({
+          success: false,
+          error: "User not found."
+        });
+      }
+      
+      // Delete the user account and all related data
+      const deleted = await storage.deleteAppUser(id);
+      
+      if (deleted) {
+        res.json({
+          success: true,
+          message: "User account and all associated data have been permanently deleted."
+        });
+      } else {
+        res.status(500).json({
+          success: false,
+          error: "Failed to delete user account."
+        });
+      }
+    } catch (error) {
+      console.error("Delete user error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid user ID."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "Failed to delete user account."
+      });
+    }
+  });
+
   // Friends Routes
   app.post("/api/friends/request", async (req, res) => {
     try {

@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
+import { Capacitor } from '@capacitor/core';
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 import mountainTopImage from '@assets/generated_images/Vibrant_mountain_top_vista_d60cfc2f.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
@@ -27,14 +28,15 @@ const languages = [
   { code: "hi", name: "हिन्दी" },
 ];
 
-const getMainMenuItems = (t: any) => [
-  {
-    id: "donate",
-    title: t.donate,
-    description: t.donateDesc,
-    icon: Heart,
-    comingSoon: false
-  },
+const getMainMenuItems = (t: any, isIOS = false) => {
+  const items = [
+    {
+      id: "donate",
+      title: t.donate,
+      description: t.donateDesc,
+      icon: Heart,
+      comingSoon: false
+    },
   {
     id: "giving",
     title: t.givingImpact,
@@ -55,15 +57,19 @@ const getMainMenuItems = (t: any) => [
     description: t.christianBlogDesc,
     icon: BookOpen,
     comingSoon: false
-  },
-  {
-    id: "friends",
-    title: t.friends,
-    description: t.friendsDesc,
-    icon: Users,
-    comingSoon: false
-  }
-];
+    },
+    {
+      id: "friends",
+      title: t.friends,
+      description: t.friendsDesc,
+      icon: Users,
+      comingSoon: false
+    }
+  ];
+  
+  // Filter out donate item on iOS for App Store compliance
+  return isIOS ? items.filter(item => item.id !== 'donate') : items;
+};
 
 const getSettingsMenuItems = (t: any) => [
   {
@@ -91,7 +97,11 @@ const getSettingsMenuItems = (t: any) => [
 
 export default function MorePage({ language, onLanguageChange, onNavigate, streakDays = 0 }: MorePageProps) {
   const t = useTranslations(language);
-  const mainMenuItems = getMainMenuItems(t);
+  
+  // iOS platform detection for Apple Store compliance
+  const isIOS = Capacitor.getPlatform() === 'ios';
+  
+  const mainMenuItems = getMainMenuItems(t, isIOS);
   const settingsMenuItems = getSettingsMenuItems(t);
   
   const handleMenuClick = (id: string) => {
@@ -162,17 +172,20 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               <span>{t.follow}</span>
             </a>
           </Button>
-          <Button 
-            variant="ghost"
-            size="sm"
-            className="bg-amber-600 hover:bg-amber-700 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-amber-300/50 hover:ring-amber-400/70"
-            data-testid="button-donate-more"
-            aria-label="Donate to help spread the Gospel"
-            onClick={() => onNavigate?.('donate')}
-          >
-            <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
-            Donate
-          </Button>
+          {/* Donate Button (Hidden on iOS for App Store compliance) */}
+          {!isIOS && (
+            <Button 
+              variant="ghost"
+              size="sm"
+              className="bg-amber-600 hover:bg-amber-700 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-amber-300/50 hover:ring-amber-400/70"
+              data-testid="button-donate-more"
+              aria-label="Donate to help spread the Gospel"
+              onClick={() => onNavigate?.('donate')}
+            >
+              <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
+              Donate
+            </Button>
+          )}
         </div>
         
         {/* Share Button */}

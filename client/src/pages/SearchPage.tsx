@@ -5,6 +5,7 @@ import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_s
 import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
+import { Capacitor } from '@capacitor/core';
 
 interface SearchPageProps {
   onNavigate?: (page: string, searchQuery?: string) => void;
@@ -15,6 +16,9 @@ interface SearchPageProps {
 }
 
 export default function SearchPage({ onNavigate, streakDays = 0, language = "en", initialSearchQuery, onSearchUsed }: SearchPageProps) {
+  
+  // iOS platform detection for Apple Store compliance
+  const isIOS = Capacitor.getPlatform() === 'ios';
   
   // Handle Scripture navigation from topical search
   const handleScriptureNavigation = (reference: string) => {
@@ -79,15 +83,18 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             <Instagram className="w-3 h-3" aria-hidden="true" />
             <span>{t.follow}</span>
           </a>
-          <Button 
-            className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
-            data-testid="button-donate-search"
-            aria-label="Donate to help spread the Gospel"
-            onClick={() => onNavigate?.('donate')}
-          >
-            <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
-            Donate
-          </Button>
+          {/* Donate Button (Hidden on iOS for App Store compliance) */}
+          {!isIOS && (
+            <Button 
+              className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
+              data-testid="button-donate-search"
+              aria-label="Donate to help spread the Gospel"
+              onClick={() => onNavigate?.('donate')}
+            >
+              <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
+              Donate
+            </Button>
+          )}
         </div>
         
         {/* Share Button */}
@@ -124,29 +131,31 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             onSearchUsed={onSearchUsed}
           />
           
-          {/* Donation Appeal Section */}
-          <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200 shadow-sm">
-            <div className="text-center">
-              <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                <Heart className="w-6 h-6 text-amber-600" aria-hidden="true" />
+          {/* Donation Appeal Section (Hidden on iOS for App Store compliance) */}
+          {!isIOS && (
+            <div className="bg-gradient-to-r from-amber-50 to-orange-50 rounded-2xl p-6 border border-amber-200 shadow-sm">
+              <div className="text-center">
+                <div className="w-12 h-12 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                  <Heart className="w-6 h-6 text-amber-600" aria-hidden="true" />
+                </div>
+                <h3 className="text-lg font-bold text-red-600 mb-2">
+                  {t.helpSpreadGodsWord}
+                </h3>
+                <p className="text-gray-700 text-sm mb-4 leading-relaxed">
+                  {t.donationAppealText}
+                </p>
+                <Button 
+                  className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-full font-medium shadow-sm"
+                  data-testid="button-donate-appeal"
+                  aria-label="Donate to help spread the Gospel worldwide"
+                  onClick={() => onNavigate?.('donate')}
+                >
+                  <Heart className="w-4 h-4 mr-2" aria-hidden="true" />
+                  {t.makeADonation}
+                </Button>
               </div>
-              <h3 className="text-lg font-bold text-red-600 mb-2">
-                {t.helpSpreadGodsWord}
-              </h3>
-              <p className="text-gray-700 text-sm mb-4 leading-relaxed">
-                {t.donationAppealText}
-              </p>
-              <Button 
-                className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-2 rounded-full font-medium shadow-sm"
-                data-testid="button-donate-appeal"
-                aria-label="Donate to help spread the Gospel worldwide"
-                onClick={() => onNavigate?.('donate')}
-              >
-                <Heart className="w-4 h-4 mr-2" aria-hidden="true" />
-                {t.makeADonation}
-              </Button>
             </div>
-          </div>
+          )}
           
           {/* Topical Search Section - AFTER Help Spread God's Word */}
           <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} backgroundImage={shepherdImage} />

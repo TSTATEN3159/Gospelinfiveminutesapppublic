@@ -23,6 +23,7 @@ export interface IStorage {
   createAppUser(data: InsertAppUser): Promise<AppUser>;
   updateAppUser(id: string, data: Partial<InsertAppUser>): Promise<AppUser>;
   searchAppUsers(query: string): Promise<AppUser[]>;
+  deleteAppUser(id: string): Promise<boolean>;
   
   // Friends methods  
   getFriendship(requesterId: string, addresseeId: string): Promise<Friendship | undefined>;
@@ -140,6 +141,31 @@ export class DatabaseStorage implements IStorage {
       )
       .limit(20);
     return result;
+  }
+
+  async deleteAppUser(id: string): Promise<boolean> {
+    try {
+      // Delete related friendships first to maintain referential integrity
+      await this.db
+        .delete(friendships)
+        .where(
+          or(
+            eq(friendships.requesterId, id),
+            eq(friendships.addresseeId, id)
+          )
+        );
+      
+      // Delete the user account
+      const result = await this.db
+        .delete(appUsers)
+        .where(eq(appUsers.id, id))
+        .returning();
+      
+      return result.length > 0;
+    } catch (error) {
+      console.error('Error deleting app user:', error);
+      return false;
+    }
   }
 
   // Friends methods
@@ -432,6 +458,26 @@ export class MemStorage implements IStorage {
         user.email.toLowerCase().includes(searchTerm)
       )
       .slice(0, 20);
+  }
+
+  async deleteAppUser(id: string): Promise<boolean> {
+    try {
+      // Delete related friendships first
+      const friendshipsToDelete = Array.from(this.friendshipsMap.entries())
+        .filter(([_, friendship]) => 
+          friendship.requesterId === id || friendship.addresseeId === id
+        );
+      
+      for (const [friendshipId, _] of friendshipsToDelete) {
+        this.friendshipsMap.delete(friendshipId);
+      }
+      
+      // Delete the user account
+      return this.appUsersMap.delete(id);
+    } catch (error) {
+      console.error('Error deleting app user:', error);
+      return false;
+    }
   }
 
   // Friends methods

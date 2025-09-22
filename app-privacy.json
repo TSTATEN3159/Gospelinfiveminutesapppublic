@@ -46,6 +46,19 @@
         ]
       },
       {
+        "category": "Demographic Info",
+        "types": [
+          {
+            "dataType": "Date of Birth",
+            "description": "Birth month and day (without year) for birthday celebrations and personalized content",
+            "purposes": ["App Functionality", "Product Personalization"],
+            "linkedToUser": true,
+            "usedForTracking": false,
+            "dataSource": "User"
+          }
+        ]
+      },
+      {
         "category": "Usage Data",
         "types": [
           {

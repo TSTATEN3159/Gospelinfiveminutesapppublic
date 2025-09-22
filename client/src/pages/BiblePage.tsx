@@ -6,6 +6,7 @@ import handsImage from '@assets/generated_images/Caring_hands_emotional_support_
 import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_background_2b3bbc13.png';
 import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Capacitor } from '@capacitor/core';
 
 interface AskPageProps {
   onNavigate?: (page: string) => void;
@@ -13,6 +14,9 @@ interface AskPageProps {
 }
 
 export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
+  // iOS platform detection for Apple Store compliance
+  const isIOS = Capacitor.getPlatform() === 'ios';
+  
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
@@ -68,15 +72,18 @@ export default function AskPage({ onNavigate, streakDays = 0 }: AskPageProps) {
             <Instagram className="w-3 h-3" aria-hidden="true" />
             <span>Follow</span>
           </a>
-          <Button 
-            className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
-            data-testid="button-donate-ask"
-            aria-label="Donate to help spread the Gospel"
-            onClick={() => onNavigate?.('donate')}
-          >
-            <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
-            Donate
-          </Button>
+          {/* Donate Button (Hidden on iOS for App Store compliance) */}
+          {!isIOS && (
+            <Button 
+              className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
+              data-testid="button-donate-ask"
+              aria-label="Donate to help spread the Gospel"
+              onClick={() => onNavigate?.('donate')}
+            >
+              <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
+              Donate
+            </Button>
+          )}
         </div>
         
         {/* Share Button */}
