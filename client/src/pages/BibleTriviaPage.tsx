@@ -11,6 +11,7 @@ interface TriviaQuestion {
   options: string[];
   correctAnswer: number;
   verse?: string;
+  verseText?: string;
   difficulty: 'easy' | 'medium' | 'difficult';
 }
 
@@ -323,9 +324,14 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
               
               {currentQuestion.verse && (
                 <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <p className="text-sm text-blue-800 dark:text-blue-200 italic">
-                    Related: {currentQuestion.verse}
+                  <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">
+                    {currentQuestion.verse}
                   </p>
+                  {currentQuestion.verseText && (
+                    <p className="text-sm text-blue-800 dark:text-blue-200 italic">
+                      "{currentQuestion.verseText}"
+                    </p>
+                  )}
                 </div>
               )}
             </CardContent>

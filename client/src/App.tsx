@@ -121,7 +121,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "more", "search"];
+    const validPages = ["home", "privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "more", "search"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {

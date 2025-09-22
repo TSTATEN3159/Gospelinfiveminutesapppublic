@@ -734,98 +734,251 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Bible Trivia Generation Route
+  // Bible Trivia Route - Using curated questions with Bible API verses
   const bibleTriviaSchema = z.object({
     difficulty: z.enum(['easy', 'medium', 'difficult']),
-    count: z.number().min(1).max(20).default(10)
+    count: z.number().min(1).max(10).default(10)
   });
+
+  // Curated Bible trivia questions organized by difficulty
+  const triviaQuestions = {
+    easy: [
+      {
+        question: "Who built the ark to survive the great flood?",
+        options: ["Moses", "Noah", "Abraham", "David"],
+        correctAnswer: 1,
+        verse: "GEN.6.19"
+      },
+      {
+        question: "What did God create on the first day?",
+        options: ["Animals", "Light", "Plants", "Humans"],
+        correctAnswer: 1,
+        verse: "GEN.1.3"
+      },
+      {
+        question: "Who was swallowed by a great fish?",
+        options: ["Jonah", "Job", "Joshua", "Jeremiah"],
+        correctAnswer: 0,
+        verse: "JON.1.17"
+      },
+      {
+        question: "How many disciples did Jesus choose?",
+        options: ["10", "11", "12", "13"],
+        correctAnswer: 2,
+        verse: "MAT.10.1"
+      },
+      {
+        question: "What did Jesus turn water into at the wedding?",
+        options: ["Bread", "Wine", "Oil", "Honey"],
+        correctAnswer: 1,
+        verse: "JHN.2.9"
+      },
+      {
+        question: "Who betrayed Jesus with a kiss?",
+        options: ["Peter", "John", "Judas", "Thomas"],
+        correctAnswer: 2,
+        verse: "MAT.26.49"
+      },
+      {
+        question: "What were the names of Adam and Eve's first two sons?",
+        options: ["Cain and Abel", "Jacob and Esau", "Isaac and Ishmael", "Peter and Andrew"],
+        correctAnswer: 0,
+        verse: "GEN.4.1"
+      },
+      {
+        question: "How many days and nights did it rain during the flood?",
+        options: ["30", "40", "50", "60"],
+        correctAnswer: 1,
+        verse: "GEN.7.12"
+      },
+      {
+        question: "What did Moses part to help the Israelites escape Egypt?",
+        options: ["The Jordan River", "The Red Sea", "The Dead Sea", "The Mediterranean Sea"],
+        correctAnswer: 1,
+        verse: "EXO.14.21"
+      },
+      {
+        question: "Who was the strongest man in the Bible?",
+        options: ["David", "Goliath", "Samson", "Solomon"],
+        correctAnswer: 2,
+        verse: "JDG.16.17"
+      }
+    ],
+    medium: [
+      {
+        question: "Which king of Israel was known for his wisdom?",
+        options: ["David", "Solomon", "Saul", "Hezekiah"],
+        correctAnswer: 1,
+        verse: "1KI.3.12"
+      },
+      {
+        question: "What was Paul's name before his conversion?",
+        options: ["Silas", "Saul", "Simon", "Stephen"],
+        correctAnswer: 1,
+        verse: "ACT.13.9"
+      },
+      {
+        question: "How many plagues did God send upon Egypt?",
+        options: ["7", "8", "9", "10"],
+        correctAnswer: 3,
+        verse: "EXO.7.14"
+      },
+      {
+        question: "Which prophet was taken up to heaven in a whirlwind?",
+        options: ["Elijah", "Elisha", "Isaiah", "Ezekiel"],
+        correctAnswer: 0,
+        verse: "2KI.2.11"
+      },
+      {
+        question: "Who interpreted Pharaoh's dreams about seven fat and seven lean cows?",
+        options: ["Daniel", "Joseph", "Moses", "Aaron"],
+        correctAnswer: 1,
+        verse: "GEN.41.25"
+      },
+      {
+        question: "What was the name of the garden where Adam and Eve lived?",
+        options: ["Eden", "Gethsemane", "Olive", "Paradise"],
+        correctAnswer: 0,
+        verse: "GEN.2.8"
+      },
+      {
+        question: "How many years did the Israelites wander in the wilderness?",
+        options: ["30", "40", "50", "70"],
+        correctAnswer: 1,
+        verse: "NUM.14.33"
+      },
+      {
+        question: "Which Gospel was written by a tax collector?",
+        options: ["Matthew", "Mark", "Luke", "John"],
+        correctAnswer: 0,
+        verse: "MAT.9.9"
+      },
+      {
+        question: "What did Jesus say is the greatest commandment?",
+        options: ["Do not steal", "Honor your parents", "Love the Lord your God", "Do not murder"],
+        correctAnswer: 2,
+        verse: "MAT.22.37"
+      },
+      {
+        question: "Who was the first martyr of the Christian church?",
+        options: ["James", "Stephen", "Peter", "Paul"],
+        correctAnswer: 1,
+        verse: "ACT.7.59"
+      }
+    ],
+    difficult: [
+      {
+        question: "Which prophet saw a vision of a valley of dry bones?",
+        options: ["Isaiah", "Jeremiah", "Ezekiel", "Daniel"],
+        correctAnswer: 2,
+        verse: "EZK.37.1"
+      },
+      {
+        question: "How many books are in the Protestant Old Testament?",
+        options: ["37", "38", "39", "40"],
+        correctAnswer: 2,
+        verse: null
+      },
+      {
+        question: "Which king of Babylon saw the writing on the wall?",
+        options: ["Nebuchadnezzar", "Belshazzar", "Darius", "Cyrus"],
+        correctAnswer: 1,
+        verse: "DAN.5.5"
+      },
+      {
+        question: "What was the name of Abraham's nephew who was saved from Sodom?",
+        options: ["Isaac", "Ishmael", "Lot", "Laban"],
+        correctAnswer: 2,
+        verse: "GEN.19.16"
+      },
+      {
+        question: "Which apostle replaced Judas Iscariot?",
+        options: ["Matthias", "Mark", "Luke", "Barnabas"],
+        correctAnswer: 0,
+        verse: "ACT.1.26"
+      },
+      {
+        question: "How many years did Methuselah live?",
+        options: ["929", "949", "959", "969"],
+        correctAnswer: 3,
+        verse: "GEN.5.27"
+      },
+      {
+        question: "Which judge of Israel made a foolish vow concerning his daughter?",
+        options: ["Gideon", "Jephthah", "Samson", "Samuel"],
+        correctAnswer: 1,
+        verse: "JDG.11.30"
+      },
+      {
+        question: "What was the original language of most of the Old Testament?",
+        options: ["Greek", "Latin", "Hebrew", "Aramaic"],
+        correctAnswer: 2,
+        verse: null
+      },
+      {
+        question: "Which city was Jonah told to go to preach?",
+        options: ["Babylon", "Nineveh", "Damascus", "Tyre"],
+        correctAnswer: 1,
+        verse: "JON.1.2"
+      },
+      {
+        question: "How many silver pieces did Judas receive for betraying Jesus?",
+        options: ["20", "25", "30", "35"],
+        correctAnswer: 2,
+        verse: "MAT.26.15"
+      }
+    ]
+  };
 
   app.post("/api/bible-trivia", async (req, res) => {
     try {
       const { difficulty, count } = bibleTriviaSchema.parse(req.body);
       console.log("Bible Trivia - Difficulty:", difficulty, "Count:", count);
 
-      const difficultyPrompts = {
-        easy: "Generate questions about well-known Bible stories, characters, and basic Christian teachings. Focus on stories like Noah's Ark, David and Goliath, Jesus' birth, the Ten Commandments, etc.",
-        medium: "Generate questions about biblical history, specific events, parables, and intermediate biblical knowledge. Include questions about the apostles, minor prophets, specific miracles, etc.",
-        difficult: "Generate challenging questions about biblical theology, historical context, original languages, lesser-known characters, specific verse references, and advanced biblical scholarship."
-      };
+      // Get questions for the specified difficulty
+      const questionPool = triviaQuestions[difficulty];
+      
+      // Shuffle and select the requested number of questions
+      const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
+      const selectedQuestions = shuffled.slice(0, Math.min(count, questionPool.length));
 
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: `You are a Bible scholar creating trivia questions. Create EXACTLY ${count} multiple choice questions about the Bible. 
-
-            Guidelines:
-            1. Questions should be ${difficulty} level
-            2. ${difficultyPrompts[difficulty]}
-            3. Each question must have exactly 4 answer options (A, B, C, D)
-            4. Only ONE answer should be correct
-            5. Include the correct answer index (0-3)
-            6. Optionally include a relevant Bible verse reference
-            7. Questions should be accurate and factual
-            8. Avoid overly obscure or controversial topics
-
-            Return your response as a JSON object with this EXACT structure:
-            {
-              "questions": [
-                {
-                  "id": 1,
-                  "question": "Question text here?",
-                  "options": ["Option A", "Option B", "Option C", "Option D"],
-                  "correctAnswer": 0,
-                  "verse": "John 3:16",
-                  "difficulty": "${difficulty}"
-                }
-              ]
+      // Fetch actual verse text from Bible API for questions that have verse references
+      const questionsWithVerses = await Promise.all(
+        selectedQuestions.map(async (q, index) => {
+          let verseReference = null;
+          let verseText = null;
+          
+          if (q.verse) {
+            try {
+              const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
+              if (verseData) {
+                verseReference = verseData.reference;
+                // Clean the HTML tags from the verse content
+                verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
+              }
+            } catch (error) {
+              console.log(`Could not fetch verse ${q.verse} from Bible API:`, error);
+              // Fallback to verse ID
+              verseReference = q.verse;
             }
-
-            Make sure the JSON is valid and properly formatted.`
-          },
-          {
-            role: "user",
-            content: `Create ${count} ${difficulty} level Bible trivia questions with multiple choice answers.`
           }
-        ],
-        max_completion_tokens: 2000
+
+          return {
+            id: index + 1,
+            question: q.question,
+            options: q.options,
+            correctAnswer: q.correctAnswer,
+            verse: verseReference || q.verse,
+            verseText: verseText,
+            difficulty: difficulty
+          };
+        })
+      );
+
+      res.json({
+        success: true,
+        questions: questionsWithVerses
       });
-
-      const content = response.choices[0].message.content;
-      if (!content) {
-        throw new Error("No response content from OpenAI");
-      }
-
-      try {
-        // Parse the JSON response
-        const triviaData = JSON.parse(content);
-        
-        // Validate the structure
-        if (!triviaData.questions || !Array.isArray(triviaData.questions)) {
-          throw new Error("Invalid response structure");
-        }
-
-        // Validate each question
-        const validatedQuestions = triviaData.questions.map((q: any, index: number) => ({
-          id: index + 1,
-          question: q.question || `Question ${index + 1}`,
-          options: Array.isArray(q.options) && q.options.length === 4 ? q.options : ["Option A", "Option B", "Option C", "Option D"],
-          correctAnswer: typeof q.correctAnswer === 'number' && q.correctAnswer >= 0 && q.correctAnswer <= 3 ? q.correctAnswer : 0,
-          verse: q.verse || null,
-          difficulty: difficulty
-        }));
-
-        res.json({
-          success: true,
-          questions: validatedQuestions.slice(0, count) // Ensure we return exactly the requested count
-        });
-
-      } catch (parseError) {
-        console.error("Error parsing OpenAI trivia response:", parseError);
-        console.log("Raw OpenAI response:", content);
-        throw new Error("Failed to parse trivia questions from AI response");
-      }
 
     } catch (error) {
       console.error("Bible Trivia API error:", error);
@@ -839,7 +992,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.status(500).json({
         success: false,
-        error: "I'm having trouble generating trivia questions right now. Please try again in a moment."
+        error: "I'm having trouble loading trivia questions right now. Please try again in a moment."
       });
     }
   });
