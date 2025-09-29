@@ -1,0 +1,852 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible Trivia Game - Test Your Biblical Knowledge</title>
+    <meta name="description" content="Test your biblical knowledge with our engaging Bible trivia game. Choose from easy, medium, or difficult questions with timer and score tracking.">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            color: #667eea;
+            font-size: 2rem;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        
+        .subtitle {
+            color: #666;
+            text-align: center;
+            margin-bottom: 25px;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .stat-label {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .difficulty-btn {
+            width: 100%;
+            padding: 20px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s;
+        }
+        
+        .difficulty-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .difficulty-btn.active {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+        
+        .difficulty-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        .difficulty-desc {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+        
+        .btn-primary {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn-primary:hover {
+            transform: scale(1.02);
+        }
+        
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        
+        .btn-secondary {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+        
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .timer {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .timer.warning {
+            color: #dc3545;
+            animation: pulse 1s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        .progress-bar {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            transition: width 0.3s;
+        }
+        
+        .question-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .badge-easy { background: #d4edda; color: #155724; }
+        .badge-medium { background: #fff3cd; color: #856404; }
+        .badge-difficult { background: #f8d7da; color: #721c24; }
+        
+        .question-text {
+            font-size: 1.3rem;
+            color: #333;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+        
+        .answer-btn {
+            width: 100%;
+            padding: 18px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            text-align: left;
+            font-size: 1rem;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+        }
+        
+        .answer-btn:hover {
+            background: #f8f9fa;
+            border-color: #667eea;
+        }
+        
+        .answer-btn.selected {
+            background: #667eea;
+            border-color: #667eea;
+            color: white;
+        }
+        
+        .answer-letter {
+            font-weight: bold;
+            margin-right: 12px;
+            font-size: 1.1rem;
+        }
+        
+        .verse-box {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .verse-reference {
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 5px;
+        }
+        
+        .verse-text {
+            font-style: italic;
+            color: #555;
+        }
+        
+        .results-icon {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        
+        .results-title {
+            text-align: center;
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 15px;
+        }
+        
+        .results-score {
+            text-align: center;
+            font-size: 3.5rem;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+        
+        .scoring-guide {
+            margin-top: 20px;
+        }
+        
+        .scoring-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .scoring-item:last-child {
+            border-bottom: none;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        @media (max-width: 600px) {
+            .card {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5rem;
+            }
+            
+            .question-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Setup Screen -->
+        <div id="setupScreen" class="card">
+            <h1>📖 Bible Trivia</h1>
+            <p class="subtitle">Test your biblical knowledge</p>
+            
+            <div id="statsDisplay" class="stats-grid hidden">
+                <div class="stat-box">
+                    <div class="stat-number" id="gamesPlayed">0</div>
+                    <div class="stat-label">Games Played</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="bestScore">0/10</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+            </div>
+            
+            <div style="margin-bottom: 25px;">
+                <h3 style="margin-bottom: 15px; color: #333;">Choose Difficulty Level</h3>
+                <button class="difficulty-btn active" data-difficulty="easy">
+                    <div class="difficulty-title">Easy</div>
+                    <div class="difficulty-desc">Basic Bible knowledge and well-known stories</div>
+                </button>
+                <button class="difficulty-btn" data-difficulty="medium">
+                    <div class="difficulty-title">Medium</div>
+                    <div class="difficulty-desc">Intermediate biblical facts and characters</div>
+                </button>
+                <button class="difficulty-btn" data-difficulty="difficult">
+                    <div class="difficulty-title">Difficult</div>
+                    <div class="difficulty-desc">Advanced theology and lesser-known details</div>
+                </button>
+            </div>
+            
+            <div class="card" style="background: #f8f9fa; padding: 20px;">
+                <h3 style="margin-bottom: 15px; color: #333;">🏆 Scoring Guide</h3>
+                <div class="scoring-guide">
+                    <div class="scoring-item">
+                        <span><strong>🏆 Bible Expert</strong></span>
+                        <span>9-10 correct</span>
+                    </div>
+                    <div class="scoring-item">
+                        <span><strong>⭐ Bible Scholar</strong></span>
+                        <span>7-8 correct</span>
+                    </div>
+                    <div class="scoring-item">
+                        <span><strong>📖 Bible Student</strong></span>
+                        <span>5-6 correct</span>
+                    </div>
+                    <div class="scoring-item">
+                        <span><strong>🧠 Keep Studying!</strong></span>
+                        <span>1-4 correct</span>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="btn-primary" onclick="startTrivia()">Start Trivia (10 Questions)</button>
+        </div>
+        
+        <!-- Playing Screen -->
+        <div id="playingScreen" class="card hidden">
+            <div class="header">
+                <div>
+                    <h2 style="color: #667eea;">Question <span id="currentQ">1</span> of 10</h2>
+                    <div style="color: #666; font-size: 0.9rem;">Score: <span id="currentScore">0</span>/10</div>
+                </div>
+                <div class="timer" id="timer">30s</div>
+            </div>
+            
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+            
+            <div class="question-header">
+                <span class="badge" id="difficultyBadge">Easy</span>
+            </div>
+            
+            <div class="question-text" id="questionText"></div>
+            
+            <div id="answersContainer"></div>
+            
+            <div id="verseBox" class="verse-box hidden">
+                <div class="verse-reference" id="verseReference"></div>
+                <div class="verse-text" id="verseText"></div>
+            </div>
+            
+            <button class="btn-primary" onclick="nextQuestion()" id="nextBtn" disabled>Next Question</button>
+        </div>
+        
+        <!-- Results Screen -->
+        <div id="resultsScreen" class="card hidden">
+            <div class="results-icon" id="resultsIcon">🏆</div>
+            <div class="results-title" id="resultsLevel">Bible Expert</div>
+            <div class="results-score" id="finalScore">10/10</div>
+            <div style="text-align: center; margin-bottom: 30px;">
+                <span class="badge" id="resultsDifficulty">Easy Level</span>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-number" id="resultsGamesPlayed">1</div>
+                    <div class="stat-label">Games Played</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-number" id="resultsBestScore">10/10</div>
+                    <div class="stat-label">Best Score</div>
+                </div>
+            </div>
+            
+            <button class="btn-primary" onclick="resetGame()">🔄 Play Again</button>
+            <button class="btn-secondary" onclick="goHome()">Back to Home</button>
+        </div>
+    </div>
+    
+    <script>
+        // Trivia questions database
+        const triviaQuestions = {
+            easy: [
+                {
+                    question: "Who built the ark to survive the great flood?",
+                    options: ["Moses", "Noah", "Abraham", "David"],
+                    correctAnswer: 1,
+                    verse: "Genesis 6:19"
+                },
+                {
+                    question: "What did God create on the first day?",
+                    options: ["Animals", "Light", "Plants", "Humans"],
+                    correctAnswer: 1,
+                    verse: "Genesis 1:3"
+                },
+                {
+                    question: "Who was swallowed by a great fish?",
+                    options: ["Jonah", "Job", "Joshua", "Jeremiah"],
+                    correctAnswer: 0,
+                    verse: "Jonah 1:17"
+                },
+                {
+                    question: "How many disciples did Jesus choose?",
+                    options: ["10", "11", "12", "13"],
+                    correctAnswer: 2,
+                    verse: "Matthew 10:1"
+                },
+                {
+                    question: "What did Jesus turn water into at the wedding?",
+                    options: ["Bread", "Wine", "Oil", "Honey"],
+                    correctAnswer: 1,
+                    verse: "John 2:9"
+                },
+                {
+                    question: "Who betrayed Jesus with a kiss?",
+                    options: ["Peter", "John", "Judas", "Thomas"],
+                    correctAnswer: 2,
+                    verse: "Matthew 26:49"
+                },
+                {
+                    question: "What were the names of Adam and Eve's first two sons?",
+                    options: ["Cain and Abel", "Jacob and Esau", "Isaac and Ishmael", "Peter and Andrew"],
+                    correctAnswer: 0,
+                    verse: "Genesis 4:1"
+                },
+                {
+                    question: "How many days and nights did it rain during the flood?",
+                    options: ["30", "40", "50", "60"],
+                    correctAnswer: 1,
+                    verse: "Genesis 7:12"
+                },
+                {
+                    question: "What did Moses part to help the Israelites escape Egypt?",
+                    options: ["The Jordan River", "The Red Sea", "The Dead Sea", "The Mediterranean Sea"],
+                    correctAnswer: 1,
+                    verse: "Exodus 14:21"
+                },
+                {
+                    question: "Who was the strongest man in the Bible?",
+                    options: ["David", "Goliath", "Samson", "Solomon"],
+                    correctAnswer: 2,
+                    verse: "Judges 16:17"
+                }
+            ],
+            medium: [
+                {
+                    question: "Which king of Israel was known for his wisdom?",
+                    options: ["David", "Solomon", "Saul", "Hezekiah"],
+                    correctAnswer: 1,
+                    verse: "1 Kings 3:12"
+                },
+                {
+                    question: "What was Paul's name before his conversion?",
+                    options: ["Silas", "Saul", "Simon", "Stephen"],
+                    correctAnswer: 1,
+                    verse: "Acts 13:9"
+                },
+                {
+                    question: "How many plagues did God send upon Egypt?",
+                    options: ["7", "8", "9", "10"],
+                    correctAnswer: 3,
+                    verse: "Exodus 7:14"
+                },
+                {
+                    question: "Which prophet was taken up to heaven in a whirlwind?",
+                    options: ["Elijah", "Elisha", "Isaiah", "Ezekiel"],
+                    correctAnswer: 0,
+                    verse: "2 Kings 2:11"
+                },
+                {
+                    question: "Who interpreted Pharaoh's dreams about seven fat and seven lean cows?",
+                    options: ["Daniel", "Joseph", "Moses", "Aaron"],
+                    correctAnswer: 1,
+                    verse: "Genesis 41:25"
+                },
+                {
+                    question: "What was the name of the garden where Adam and Eve lived?",
+                    options: ["Eden", "Gethsemane", "Olive", "Paradise"],
+                    correctAnswer: 0,
+                    verse: "Genesis 2:8"
+                },
+                {
+                    question: "How many years did the Israelites wander in the wilderness?",
+                    options: ["30", "40", "50", "70"],
+                    correctAnswer: 1,
+                    verse: "Numbers 14:33"
+                },
+                {
+                    question: "Which Gospel was written by a tax collector?",
+                    options: ["Matthew", "Mark", "Luke", "John"],
+                    correctAnswer: 0,
+                    verse: "Matthew 9:9"
+                },
+                {
+                    question: "What did Jesus say is the greatest commandment?",
+                    options: ["Do not steal", "Honor your parents", "Love the Lord your God", "Do not murder"],
+                    correctAnswer: 2,
+                    verse: "Matthew 22:37"
+                },
+                {
+                    question: "Who was the first martyr of the Christian church?",
+                    options: ["James", "Stephen", "Peter", "Paul"],
+                    correctAnswer: 1,
+                    verse: "Acts 7:59"
+                }
+            ],
+            difficult: [
+                {
+                    question: "Which prophet saw a vision of a valley of dry bones?",
+                    options: ["Isaiah", "Jeremiah", "Ezekiel", "Daniel"],
+                    correctAnswer: 2,
+                    verse: "Ezekiel 37:1"
+                },
+                {
+                    question: "How many books are in the Protestant Old Testament?",
+                    options: ["37", "38", "39", "40"],
+                    correctAnswer: 2,
+                    verse: null
+                },
+                {
+                    question: "Which king of Babylon saw the writing on the wall?",
+                    options: ["Nebuchadnezzar", "Belshazzar", "Darius", "Cyrus"],
+                    correctAnswer: 1,
+                    verse: "Daniel 5:5"
+                },
+                {
+                    question: "What was the name of Abraham's nephew who was saved from Sodom?",
+                    options: ["Isaac", "Ishmael", "Lot", "Laban"],
+                    correctAnswer: 2,
+                    verse: "Genesis 19:16"
+                },
+                {
+                    question: "Which apostle replaced Judas Iscariot?",
+                    options: ["Matthias", "Mark", "Luke", "Barnabas"],
+                    correctAnswer: 0,
+                    verse: "Acts 1:26"
+                },
+                {
+                    question: "How many years did Methuselah live?",
+                    options: ["929", "949", "959", "969"],
+                    correctAnswer: 3,
+                    verse: "Genesis 5:27"
+                },
+                {
+                    question: "Which judge of Israel made a foolish vow concerning his daughter?",
+                    options: ["Gideon", "Jephthah", "Samson", "Samuel"],
+                    correctAnswer: 1,
+                    verse: "Judges 11:30"
+                },
+                {
+                    question: "What was the original language of most of the Old Testament?",
+                    options: ["Greek", "Latin", "Hebrew", "Aramaic"],
+                    correctAnswer: 2,
+                    verse: null
+                },
+                {
+                    question: "Which city was Jonah told to go to preach?",
+                    options: ["Babylon", "Nineveh", "Damascus", "Tyre"],
+                    correctAnswer: 1,
+                    verse: "Jonah 1:2"
+                },
+                {
+                    question: "How many silver pieces did Judas receive for betraying Jesus?",
+                    options: ["20", "25", "30", "35"],
+                    correctAnswer: 2,
+                    verse: "Matthew 26:15"
+                }
+            ]
+        };
+        
+        // Game state
+        let currentDifficulty = 'easy';
+        let gameQuestions = [];
+        let currentQuestionIndex = 0;
+        let selectedAnswer = null;
+        let answers = [];
+        let timeLeft = 30;
+        let timerInterval = null;
+        let stats = {
+            gamesPlayed: 0,
+            lastScore: 0,
+            lastLevel: "",
+            bestScore: 0,
+            bestLevel: ""
+        };
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            loadStats();
+            setupDifficultyButtons();
+        });
+        
+        function loadStats() {
+            const saved = localStorage.getItem('bibleTriviaStats');
+            if (saved) {
+                stats = JSON.parse(saved);
+                updateStatsDisplay();
+            }
+        }
+        
+        function saveStats() {
+            localStorage.setItem('bibleTriviaStats', JSON.stringify(stats));
+        }
+        
+        function updateStatsDisplay() {
+            if (stats.gamesPlayed > 0) {
+                document.getElementById('statsDisplay').classList.remove('hidden');
+                document.getElementById('gamesPlayed').textContent = stats.gamesPlayed;
+                document.getElementById('bestScore').textContent = stats.bestScore + '/10';
+            }
+        }
+        
+        function setupDifficultyButtons() {
+            document.querySelectorAll('.difficulty-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    document.querySelectorAll('.difficulty-btn').forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    currentDifficulty = btn.dataset.difficulty;
+                });
+            });
+        }
+        
+        function startTrivia() {
+            // Get questions for selected difficulty and shuffle
+            const questionPool = [...triviaQuestions[currentDifficulty]];
+            gameQuestions = questionPool.sort(() => Math.random() - 0.5).slice(0, 10);
+            
+            // Reset game state
+            currentQuestionIndex = 0;
+            answers = [];
+            selectedAnswer = null;
+            
+            // Show playing screen
+            document.getElementById('setupScreen').classList.add('hidden');
+            document.getElementById('playingScreen').classList.remove('hidden');
+            
+            // Load first question
+            loadQuestion();
+            startTimer();
+        }
+        
+        function loadQuestion() {
+            const question = gameQuestions[currentQuestionIndex];
+            
+            // Update header
+            document.getElementById('currentQ').textContent = currentQuestionIndex + 1;
+            document.getElementById('currentScore').textContent = calculateScore();
+            
+            // Update difficulty badge
+            const badge = document.getElementById('difficultyBadge');
+            badge.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1);
+            badge.className = 'badge badge-' + currentDifficulty;
+            
+            // Update progress bar
+            const progress = ((currentQuestionIndex + 1) / 10) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Load question
+            document.getElementById('questionText').textContent = question.question;
+            
+            // Load answers
+            const container = document.getElementById('answersContainer');
+            container.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'answer-btn';
+                btn.innerHTML = `<span class="answer-letter">${String.fromCharCode(65 + index)}.</span>${option}`;
+                btn.onclick = () => selectAnswer(index, btn);
+                container.appendChild(btn);
+            });
+            
+            // Show verse if available
+            if (question.verse) {
+                document.getElementById('verseBox').classList.remove('hidden');
+                document.getElementById('verseReference').textContent = question.verse;
+                document.getElementById('verseText').textContent = '';
+            } else {
+                document.getElementById('verseBox').classList.add('hidden');
+            }
+            
+            // Reset selection
+            selectedAnswer = null;
+            document.getElementById('nextBtn').disabled = true;
+        }
+        
+        function selectAnswer(index, btn) {
+            // Remove previous selection
+            document.querySelectorAll('.answer-btn').forEach(b => b.classList.remove('selected'));
+            
+            // Mark new selection
+            btn.classList.add('selected');
+            selectedAnswer = index;
+            document.getElementById('nextBtn').disabled = false;
+        }
+        
+        function nextQuestion() {
+            // Save answer
+            answers.push(selectedAnswer !== null ? selectedAnswer : -1);
+            
+            // Check if game is finished
+            if (currentQuestionIndex >= 9) {
+                finishGame();
+            } else {
+                currentQuestionIndex++;
+                loadQuestion();
+                resetTimer();
+            }
+        }
+        
+        function startTimer() {
+            timeLeft = 30;
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                if (timeLeft <= 0) {
+                    nextQuestion();
+                }
+            }, 1000);
+        }
+        
+        function resetTimer() {
+            clearInterval(timerInterval);
+            startTimer();
+        }
+        
+        function updateTimerDisplay() {
+            const timerEl = document.getElementById('timer');
+            timerEl.textContent = timeLeft + 's';
+            timerEl.className = timeLeft <= 10 ? 'timer warning' : 'timer';
+        }
+        
+        function calculateScore() {
+            return answers.reduce((total, answer, index) => {
+                return total + (answer === gameQuestions[index]?.correctAnswer ? 1 : 0);
+            }, 0);
+        }
+        
+        function getScoreLevel(score) {
+            if (score >= 9) return "Bible Expert";
+            if (score >= 7) return "Bible Scholar";
+            if (score >= 5) return "Bible Student";
+            return "Keep Studying!";
+        }
+        
+        function getLevelIcon(level) {
+            switch (level) {
+                case "Bible Expert": return "🏆";
+                case "Bible Scholar": return "⭐";
+                case "Bible Student": return "📖";
+                default: return "🧠";
+            }
+        }
+        
+        function finishGame() {
+            clearInterval(timerInterval);
+            
+            const score = calculateScore();
+            const level = getScoreLevel(score);
+            
+            // Update stats
+            stats.gamesPlayed++;
+            stats.lastScore = score;
+            stats.lastLevel = level;
+            if (score > stats.bestScore) {
+                stats.bestScore = score;
+                stats.bestLevel = level;
+            }
+            saveStats();
+            
+            // Show results
+            document.getElementById('playingScreen').classList.add('hidden');
+            document.getElementById('resultsScreen').classList.remove('hidden');
+            
+            document.getElementById('resultsIcon').textContent = getLevelIcon(level);
+            document.getElementById('resultsLevel').textContent = level;
+            document.getElementById('finalScore').textContent = score + '/10';
+            
+            const diffBadge = document.getElementById('resultsDifficulty');
+            diffBadge.textContent = currentDifficulty.charAt(0).toUpperCase() + currentDifficulty.slice(1) + ' Level';
+            diffBadge.className = 'badge badge-' + currentDifficulty;
+            
+            document.getElementById('resultsGamesPlayed').textContent = stats.gamesPlayed;
+            document.getElementById('resultsBestScore').textContent = stats.bestScore + '/10';
+        }
+        
+        function resetGame() {
+            document.getElementById('resultsScreen').classList.add('hidden');
+            document.getElementById('setupScreen').classList.remove('hidden');
+            updateStatsDisplay();
+        }
+        
+        function goHome() {
+            // For standalone version, just reset
+            resetGame();
+        }
+    </script>
+</body>
+</html>
