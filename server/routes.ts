@@ -161,6 +161,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Verse lookup proxy
   app.get("/api/bible-proxy/verse/:bibleId/:verseId", async (req, res) => {
+    // Enable CORS for UENI website
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    
     try {
       const { bibleId, verseId } = req.params;
       const API_KEY = process.env.API_BIBLE_KEY;
@@ -210,6 +215,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
   
   // Keyword/passage search proxy
   app.get("/api/bible-proxy/search", async (req, res) => {
+    // Enable CORS for UENI website
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+    
     try {
       const { bibleId, query, limit, books } = req.query;
       
