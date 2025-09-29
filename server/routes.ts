@@ -156,6 +156,118 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bible API CORS Proxy Endpoints (for UENI website integration)
+  // These endpoints bypass CORS restrictions by proxying requests server-side
+  
+  // Verse lookup proxy
+  app.get("/api/bible-proxy/verse/:bibleId/:verseId", async (req, res) => {
+    try {
+      const { bibleId, verseId } = req.params;
+      const API_KEY = process.env.API_BIBLE_KEY;
+      
+      if (!API_KEY) {
+        return res.status(500).json({ success: false, error: 'API key not configured' });
+      }
+      
+      const response = await fetch(
+        `https://api.scripture.api.bible/v1/bibles/${bibleId}/verses/${verseId}`,
+        {
+          headers: {
+            'api-key': API_KEY
+          }
+        }
+      );
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        return res.status(response.status).json({ 
+          success: false, 
+          error: `API.Bible error: ${response.status}`,
+          details: errorText
+        });
+      }
+      
+      const data = await response.json();
+      
+      // Return formatted response
+      res.json({
+        success: true,
+        verse: {
+          reference: data.data.reference,
+          content: data.data.content.replace(/<[^>]*>/g, '') // Strip HTML tags
+        }
+      });
+      
+    } catch (error: any) {
+      console.error('Bible verse proxy error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to fetch verse',
+        details: error.message
+      });
+    }
+  });
+  
+  // Keyword/passage search proxy
+  app.get("/api/bible-proxy/search", async (req, res) => {
+    try {
+      const { bibleId, query, limit, books } = req.query;
+      
+      if (!bibleId || !query) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Missing required parameters: bibleId and query' 
+        });
+      }
+      
+      const API_KEY = process.env.API_BIBLE_KEY;
+      
+      if (!API_KEY) {
+        return res.status(500).json({ success: false, error: 'API key not configured' });
+      }
+      
+      // Build query string
+      let url = `https://api.scripture.api.bible/v1/bibles/${bibleId}/search?query=${encodeURIComponent(query as string)}`;
+      if (limit) url += `&limit=${limit}`;
+      if (books) url += `&books=${books}`;
+      
+      const response = await fetch(url, {
+        headers: {
+          'api-key': API_KEY
+        }
+      });
+      
+      if (!response.ok) {
+        const errorText = await response.text();
+        return res.status(response.status).json({ 
+          success: false, 
+          error: `API.Bible error: ${response.status}`,
+          details: errorText
+        });
+      }
+      
+      const data = await response.json();
+      
+      // Return formatted response
+      res.json({
+        success: true,
+        verses: data.data.verses.map((v: any) => ({
+          reference: v.reference,
+          content: v.text.replace(/<[^>]*>/g, '') // Strip HTML tags
+        })),
+        total: data.data.total
+      });
+      
+    } catch (error: any) {
+      console.error('Bible search proxy error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to search Bible',
+        details: error.message
+      });
+    }
+  });
+
   // Temporary admin endpoint to find recent payment intents
   app.get("/api/find-recent-payments", async (req, res) => {
     try {
