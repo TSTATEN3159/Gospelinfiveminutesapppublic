@@ -45,7 +45,7 @@ The app is now fully compliant with Apple App Store requirements and ready for s
 
 ### ✅ Core Functionality (Current State)
 - **Homepage**: Welcome header with streak counter and Facebook link
-- **Daily Scripture**: Card with verse text and mountain lake imagery
+- **Daily Scripture**: Card with verse text and mountain lake imagery with bookmark and notes
 - **3-Day Study Plans**: Card with forest path imagery
 - **Ask the Pastor**: Professional AI chat with premium UI polish
 - **Feelings & Scripture**: Emotion-based guidance with quick-start chips and modern design
@@ -53,6 +53,25 @@ The app is now fully compliant with Apple App Store requirements and ready for s
 - **More Page**: Language selection, legal pages, support access
 - **User Registration**: Modal with personal info collection
 - **Streak Tracking**: Consecutive days counter with localStorage persistence
+
+### ✅ Offline & Data Management Features
+- **Bookmarks**: Save favorite verses with persistent localStorage storage
+  - Toggle bookmark button on DailyVerseCard
+  - Bookmarks persist across sessions
+  - Managed via appStore.js utility
+- **Personal Notes**: Add reflections and prayers for any verse
+  - Dialog-based note entry with textarea
+  - Notes stored with verse reference and timestamp
+  - Full CRUD operations via appStore.js
+- **Data Export**: Download all user data as JSON file
+  - Includes profile, preferences, bookmarks, notes, and streak data
+  - Export available in Settings → Data & Privacy
+  - Timestamped export files for backup
+- **Account Deletion**: Complete data removal with confirmation
+  - Alert dialog with detailed deletion warning
+  - Clears all localStorage keys comprehensively
+  - Persists empty state to prevent data repopulation
+  - Navigates to home after successful deletion
 
 ### 📋 Implementation Status
 - **Frontend**: React/TypeScript with Tailwind CSS and shadcn/ui components
@@ -83,6 +102,12 @@ The app is now fully compliant with Apple App Store requirements and ready for s
 - **Schema**: Basic user authentication schema with extensible design for spiritual content
 - **Migrations**: Database migrations managed through drizzle-kit
 - **Local Storage**: Client-side storage for user preferences, streak tracking, and offline functionality
+- **appStore.js**: Centralized localStorage utility managing:
+  - Today's reading with offline access
+  - Bookmarks (verse references array)
+  - Personal notes (with reference, text, and timestamp)
+  - User profile data (name, email, birthdate)
+  - Consistent key naming convention (dg_* prefix)
 
 ### Authentication and Authorization
 - **User Registration**: Modal-based registration collecting personal information for personalized experience
