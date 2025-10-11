@@ -1,9 +1,19 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Share2, Book, Lightbulb, Heart } from "lucide-react";
+import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { store } from "@/lib/appStore";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Textarea } from "@/components/ui/textarea";
 
 interface Verse {
   text: string;
@@ -23,6 +33,14 @@ interface DailyVerseCardProps {
 export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: DailyVerseCardProps) {
   const { toast } = useToast();
   const [isSharing, setIsSharing] = useState(false);
+  const [isBookmarked, setIsBookmarked] = useState(false);
+  const [noteText, setNoteText] = useState("");
+  const [isNoteDialogOpen, setIsNoteDialogOpen] = useState(false);
+
+  useEffect(() => {
+    const bookmarks = store.getBookmarks();
+    setIsBookmarked(bookmarks.includes(verse.reference));
+  }, [verse.reference]);
 
   const copyToClipboard = async () => {
     try {
@@ -81,6 +99,43 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
         variant: "destructive",
       });
     }
+  };
+
+  const toggleBookmark = () => {
+    if (isBookmarked) {
+      store.removeBookmark(verse.reference);
+      setIsBookmarked(false);
+      toast({
+        title: "Bookmark Removed",
+        description: "Verse removed from bookmarks.",
+      });
+    } else {
+      store.addBookmark(verse.reference);
+      setIsBookmarked(true);
+      toast({
+        title: "Verse Bookmarked!",
+        description: "You can find this verse in your saved bookmarks.",
+      });
+    }
+  };
+
+  const saveNote = () => {
+    if (!noteText.trim()) {
+      toast({
+        title: "Note is empty",
+        description: "Please write a note before saving.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
+    store.addNote(verse.reference, noteText.trim());
+    setNoteText("");
+    setIsNoteDialogOpen(false);
+    toast({
+      title: "Note Saved!",
+      description: "Your note has been saved with this verse.",
+    });
   };
 
   // todo: Replace with API call to get meaning and application
@@ -146,6 +201,56 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
 
         {/* Action Buttons */}
         <div className="flex flex-wrap justify-center gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={toggleBookmark}
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            data-testid="button-bookmark"
+          >
+            {isBookmarked ? <BookmarkCheck className="w-4 h-4 mr-2" /> : <Bookmark className="w-4 h-4 mr-2" />}
+            {isBookmarked ? "Saved" : "Bookmark"}
+          </Button>
+
+          <Dialog open={isNoteDialogOpen} onOpenChange={setIsNoteDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+                data-testid="button-add-note"
+              >
+                <StickyNote className="w-4 h-4 mr-2" />
+                Add Note
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Add Note</DialogTitle>
+                <DialogDescription>
+                  Write a personal note or reflection for {verse.reference}
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <Textarea
+                  placeholder="Write your thoughts, reflections, or prayers..."
+                  value={noteText}
+                  onChange={(e) => setNoteText(e.target.value)}
+                  className="min-h-[120px]"
+                  data-testid="textarea-note"
+                />
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button variant="outline" onClick={() => setIsNoteDialogOpen(false)} data-testid="button-cancel-note">
+                  Cancel
+                </Button>
+                <Button onClick={saveNote} data-testid="button-save-note">
+                  Save Note
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
+          
           <Button
             variant="outline"
             size="sm"
