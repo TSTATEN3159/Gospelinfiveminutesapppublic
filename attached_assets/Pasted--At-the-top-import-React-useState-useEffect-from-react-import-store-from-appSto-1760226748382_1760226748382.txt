@@ -1,0 +1,143 @@
+// At the top:
+import React, { useState, useEffect } from 'react';
+import { store } from './appStore';
+
+// (Optional) if you want native sharing via Capacitor:
+import { Share } from '@capacitor/share';
+
+export default function App() {
+  // Example: "today's reading" text
+  const [today, setToday] = useState(store.loadToday() || "John 1:1-5 — In the beginning was the Word...");
+  const [bookmarkRef, setBookmarkRef] = useState("John 1:1");
+  const [noteText, setNoteText] = useState("");
+  const [profile, setProfile] = useState(store.loadProfile());
+
+  useEffect(() => {
+    // Save today's reading offline (simple demo)
+    store.saveToday(today);
+  }, [today]);
+
+  const handleShare = async () => {
+    try {
+      await Share.share({
+        title: 'Share Verse',
+        text: today,
+      });
+    } catch {
+      // fallback: copy to clipboard if needed
+      navigator.clipboard.writeText(today);
+      alert('Copied to clipboard!');
+    }
+  };
+
+  const saveProfile = () => {
+    store.saveProfile(profile);
+    alert('Profile saved');
+  };
+
+  const deleteAccount = () => {
+    // simple in-app deletion: remove profile + bookmarks + notes
+    store.deleteProfile();
+    localStorage.removeItem('dg_bookmarks');
+    localStorage.removeItem('dg_notes');
+    alert('Your account data on this device has been deleted.');
+    setProfile({ name: '', email: '', birthdate: '' });
+  };
+
+  return (
+    <div style={{ padding: 16, maxWidth: 600, margin: '0 auto', fontSize: 18 }}>
+      <h1>Daily Gospel</h1>
+
+      {/* TODAY'S READING (Offline) */}
+      <section style={{ marginBottom: 24 }}>
+        <h2>Today’s Reading</h2>
+        <textarea
+          value={today}
+          onChange={e => setToday(e.target.value)}
+          rows={6}
+          style={{ width: '100%' }}
+        />
+        <div style={{ marginTop: 8 }}>
+          <button onClick={handleShare}>Share Verse</button>
+        </div>
+      </section>
+
+      {/* BOOKMARKS */}
+      <section style={{ marginBottom: 24 }}>
+        <h2>Bookmarks</h2>
+        <input
+          value={bookmarkRef}
+          onChange={e => setBookmarkRef(e.target.value)}
+          placeholder="e.g., John 3:16"
+          style={{ marginRight: 8 }}
+        />
+        <button onClick={() => { store.addBookmark(bookmarkRef); alert('Bookmarked!'); }}>
+          Add Bookmark
+        </button>
+        <ul>
+          {store.getBookmarks().map((b, i) => (
+            <li key={i}>
+              {b} <button onClick={() => { store.removeBookmark(b); }}>Remove</button>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      {/* NOTES */}
+      <section style={{ marginBottom: 24 }}>
+        <h2>Notes</h2>
+        <textarea
+          value={noteText}
+          onChange={e => setNoteText(e.target.value)}
+          rows={3}
+          style={{ width: '100%' }}
+          placeholder="Write a note…"
+        />
+        <div style={{ marginTop: 8 }}>
+          <button onClick={() => { store.addNote('Today', noteText); setNoteText(''); }}>
+            Save Note
+          </button>
+        </div>
+        <ol>
+          {store.getNotes().map((n, i) => (
+            <li key={i}>
+              {n.text} <button onClick={() => store.deleteNote(i)}>Delete</button>
+            </li>
+          ))}
+        </ol>
+      </section>
+
+      {/* PROFILE (Name, Email, Birthdate) */}
+      <section style={{ marginBottom: 24 }}>
+        <h2>My Profile</h2>
+        <input
+          placeholder="Name"
+          value={profile.name}
+          onChange={e => setProfile({ ...profile, name: e.target.value })}
+          style={{ display: 'block', marginBottom: 8, width: '100%' }}
+        />
+        <input
+          placeholder="Email"
+          value={profile.email}
+          onChange={e => setProfile({ ...profile, email: e.target.value })}
+          style={{ display: 'block', marginBottom: 8, width: '100%' }}
+        />
+        <input
+          placeholder="Birthdate (YYYY-MM-DD)"
+          value={profile.birthdate}
+          onChange={e => setProfile({ ...profile, birthdate: e.target.value })}
+          style={{ display: 'block', marginBottom: 8, width: '100%' }}
+        />
+        <button onClick={saveProfile} style={{ marginRight: 8 }}>Save Profile</button>
+        <button onClick={deleteAccount}>Delete Account (on this device)</button>
+      </section>
+
+      {/* PRIVACY POLICY LINK */}
+      <section style={{ marginBottom: 24 }}>
+        <a href="https://YOUR-DOMAIN.com/privacy" target="_blank" rel="noreferrer">
+          Privacy Policy
+        </a>
+      </section>
+    </div>
+  );
+}

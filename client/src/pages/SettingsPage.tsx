@@ -6,10 +6,22 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, TestTube } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, TestTube, Download, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { notificationService } from "../services/notificationService";
 import { bibleService } from "../services/bibleService";
+import { store } from "@/lib/appStore";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog";
 import forestPathImage from '@assets/stock_images/peaceful_forest_path_c4eefddd.jpg';
 
 interface SettingsPageProps {
@@ -159,7 +171,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
 
   const handleSaveProfile = () => {
     try {
-      // Save to localStorage to persist changes
+      // Save to both gospelAppUser (for compatibility) and store (for consistency)
       const existingUserData = localStorage.getItem("gospelAppUser");
       if (existingUserData) {
         const userData = JSON.parse(existingUserData);
@@ -174,6 +186,13 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         };
         localStorage.setItem("gospelAppUser", JSON.stringify(updatedUserData));
       }
+
+      // Also save to store for consistency
+      store.saveProfile({
+        name: `${profile.firstName} ${profile.lastName}`,
+        email: profile.email,
+        birthdate: `${profile.birthMonth} ${profile.birthDay}`
+      });
       
       setIsEditing(false);
       toast({
@@ -185,6 +204,125 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
       toast({
         title: "Error",
         description: "Failed to save profile changes. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleExportData = () => {
+    try {
+      // Export all user data from all storage sources
+      const userData = {
+        // Profile data from both sources
+        profile: JSON.parse(localStorage.getItem("gospelAppUser") || "{}"),
+        storeProfile: store.loadProfile(),
+        
+        // Preferences
+        preferences: preferences,
+        
+        // Offline reading data
+        bookmarks: store.getBookmarks(),
+        notes: store.getNotes(),
+        todayReading: store.loadToday(),
+        
+        // Streak data
+        streakData: JSON.parse(localStorage.getItem("gospelAppStreakData") || "{}"),
+        
+        // Export metadata
+        exportDate: new Date().toISOString(),
+        appVersion: "1.0.0"
+      };
+
+      const dataStr = JSON.stringify(userData, null, 2);
+      const dataBlob = new Blob([dataStr], { type: 'application/json' });
+      const url = URL.createObjectURL(dataBlob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `gospel-app-data-${new Date().toISOString().split('T')[0]}.json`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+
+      toast({
+        title: "Data Exported",
+        description: "Your data has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error("Error exporting data:", error);
+      toast({
+        title: "Export Failed",
+        description: "Failed to export your data. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteAccount = () => {
+    try {
+      // Clear ALL app data from localStorage - comprehensive cleanup
+      const keysToRemove = [
+        // Store keys (from appStore.js)
+        'dg_todayReading',
+        'dg_bookmarks', 
+        'dg_notes',
+        'dg_profile',
+        // App keys
+        'gospel5min_bookmarks',
+        'gospel5min_notes',
+        'gospelAppUser',
+        'gospelAppPreferences',
+        'gospelAppStreakData'
+      ];
+
+      keysToRemove.forEach(key => localStorage.removeItem(key));
+
+      // Reset local state
+      const emptyProfile = {
+        firstName: '',
+        lastName: '',
+        email: '',
+        phone: '',
+        birthMonth: 'January',
+        birthDay: '1',
+        preferredName: '',
+        timezone: 'America/New_York'
+      };
+
+      const emptyPreferences = {
+        dailyReminders: false,
+        reminderTime: '08:00',
+        streakNotifications: false,
+        emailUpdates: false,
+        soundEnabled: true,
+        darkMode: false,
+        language: 'en',
+        bibleVersion: 'NIV'
+      };
+
+      setProfile(emptyProfile);
+      setPreferences(emptyPreferences);
+
+      // Persist the empty state to prevent repopulation on reload
+      localStorage.setItem('gospelAppUser', JSON.stringify(emptyProfile));
+      localStorage.setItem('gospelAppPreferences', JSON.stringify(emptyPreferences));
+      localStorage.setItem('gospelAppStreakData', JSON.stringify({ streak: 0, lastVisit: null }));
+
+      // Clear notifications
+      notificationService.clearScheduledReminders();
+
+      toast({
+        title: "Account Data Deleted",
+        description: "All your local data has been removed from this device.",
+      });
+
+      // Navigate back to home
+      setTimeout(() => onNavigate?.('home'), 2000);
+    } catch (error) {
+      console.error("Error deleting account:", error);
+      toast({
+        title: "Deletion Failed",
+        description: "Failed to delete account data. Please try again.",
         variant: "destructive",
       });
     }
@@ -547,16 +685,63 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <Button variant="outline" className="w-full" onClick={() => onNavigate?.('privacy')}>
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              onClick={() => onNavigate?.('privacy')}
+              data-testid="button-view-privacy"
+            >
+              <Shield className="w-4 h-4 mr-2" />
               View Privacy Policy
             </Button>
-            <Button variant="outline" className="w-full">
-              <Database className="w-4 h-4 mr-2" />
+            <Button 
+              variant="outline" 
+              className="w-full" 
+              onClick={handleExportData}
+              data-testid="button-export-data"
+            >
+              <Download className="w-4 h-4 mr-2" />
               Export My Data
             </Button>
-            <Button variant="outline" className="w-full text-destructive border-destructive/20">
-              Request Data Deletion
-            </Button>
+            
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button 
+                  variant="outline" 
+                  className="w-full text-destructive border-destructive/20 hover:bg-destructive/10"
+                  data-testid="button-delete-account"
+                >
+                  <Trash2 className="w-4 h-4 mr-2" />
+                  Delete Account Data
+                </Button>
+              </AlertDialogTrigger>
+              <AlertDialogContent>
+                <AlertDialogHeader>
+                  <AlertDialogTitle>Delete All Account Data?</AlertDialogTitle>
+                  <AlertDialogDescription>
+                    This will permanently delete all your data from this device, including:
+                    <ul className="list-disc list-inside mt-2 space-y-1">
+                      <li>Profile information</li>
+                      <li>Bookmarks and saved verses</li>
+                      <li>Personal notes</li>
+                      <li>App preferences</li>
+                      <li>Reading streak data</li>
+                    </ul>
+                    <p className="mt-3 font-semibold">This action cannot be undone.</p>
+                  </AlertDialogDescription>
+                </AlertDialogHeader>
+                <AlertDialogFooter>
+                  <AlertDialogCancel data-testid="button-cancel-delete">Cancel</AlertDialogCancel>
+                  <AlertDialogAction 
+                    onClick={handleDeleteAccount}
+                    className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+                    data-testid="button-confirm-delete"
+                  >
+                    Delete All Data
+                  </AlertDialogAction>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialog>
           </CardContent>
         </Card>
 
