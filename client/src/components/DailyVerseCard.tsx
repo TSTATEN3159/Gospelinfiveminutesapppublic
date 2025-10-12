@@ -36,11 +36,30 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [noteText, setNoteText] = useState("");
   const [isNoteDialogOpen, setIsNoteDialogOpen] = useState(false);
+  const [hasExistingNote, setHasExistingNote] = useState(false);
 
   useEffect(() => {
     const bookmarks = store.getBookmarks();
     setIsBookmarked(bookmarks.includes(verse.reference));
+    
+    // Check if note exists for this verse
+    const notes = store.getNotes();
+    const existingNote = notes.find((note: any) => note.ref === verse.reference);
+    setHasExistingNote(!!existingNote);
   }, [verse.reference]);
+
+  // Load existing note when dialog opens
+  useEffect(() => {
+    if (isNoteDialogOpen) {
+      const notes = store.getNotes();
+      const existingNote = notes.find((note: any) => note.ref === verse.reference);
+      if (existingNote) {
+        setNoteText(existingNote.text);
+      } else {
+        setNoteText("");
+      }
+    }
+  }, [isNoteDialogOpen, verse.reference]);
 
   const copyToClipboard = async () => {
     try {
@@ -221,12 +240,12 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
                 data-testid="button-add-note"
               >
                 <StickyNote className="w-4 h-4 mr-2" />
-                Add Note
+                {hasExistingNote ? "Edit Note" : "Add Note"}
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
               <DialogHeader>
-                <DialogTitle>Add Note</DialogTitle>
+                <DialogTitle>{hasExistingNote ? "Edit Note" : "Add Note"}</DialogTitle>
                 <DialogDescription>
                   Write a personal note or reflection for {verse.reference}
                 </DialogDescription>
