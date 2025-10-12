@@ -171,7 +171,7 @@ function App() {
       case "terms":
         return <TermsOfServicePage onBack={handleBackFromLegal} language={language} />;
       case "support":
-        return <SupportPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} />;
+        return <SupportPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} language={language} />;
       case "donate":
         return <DonationPage onNavigate={handleNavigateToLegal} language={language} />;
       case "giving":
@@ -189,7 +189,7 @@ function App() {
       case "bibletrivia":
         return <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />;
       case "savedverses":
-        return <SavedVersesPage onBack={handleBackFromLegal} />;
+        return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }
