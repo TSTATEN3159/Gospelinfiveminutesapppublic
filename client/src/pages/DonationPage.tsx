@@ -11,6 +11,7 @@ import bibleDistributionImage from '@assets/stock_images/people_distributing__56
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Capacitor } from '@capacitor/core';
+import { Stripe as StripeCapacitor, ApplePayEventsEnum } from '@capacitor-community/stripe';
 
 // Load Stripe with public key (only on non-iOS platforms for App Store compliance)
 let stripePromise: any = null;
@@ -149,28 +150,6 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
   
-  // Redirect iOS users away from donation page for App Store compliance
-  if (isIOS) {
-    return (
-      <div className="min-h-screen flex items-center justify-center p-4">
-        <Card className="max-w-md mx-auto text-center">
-          <CardContent className="p-6">
-            <Heart className="w-12 h-12 text-primary mx-auto mb-4" />
-            <h2 className="text-xl font-bold mb-3">Thank You for Your Heart to Give</h2>
-            <p className="text-muted-foreground mb-4">
-              Donation features are currently not available on iOS. 
-              Please visit our website to support our ministry.
-            </p>
-            <Button onClick={() => onNavigate?.('more')} className="w-full">
-              <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to More Features
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
-  }
-  
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState("");
   const [isCustom, setIsCustom] = useState(false);
@@ -224,7 +203,134 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
     return amount >= 1 && amount <= 10000;
   };
 
+  const handleApplePayDonate = async () => {
+    if (!isValidAmount()) {
+      toast({
+        title: "Invalid Amount",
+        description: "Please enter an amount between $1 and $10,000.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setLoading(true);
+    
+    try {
+      const amount = getDonationAmount();
+      
+      // Initialize Stripe for Apple Pay
+      if (import.meta.env.VITE_STRIPE_PUBLIC_KEY) {
+        await StripeCapacitor.initialize({
+          publishableKey: import.meta.env.VITE_STRIPE_PUBLIC_KEY,
+        });
+      }
+      
+      // Check if Apple Pay is available - returns void on success, rejects on failure
+      try {
+        await StripeCapacitor.isApplePayAvailable();
+      } catch (error) {
+        toast({
+          title: "Apple Pay Not Available",
+          description: "Please add a card to Apple Wallet to use Apple Pay.",
+          variant: "destructive",
+        });
+        setLoading(false);
+        return;
+      }
+      
+      // Create payment intent
+      const response = await fetch('/api/create-payment-intent', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ amount }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || 'Failed to create payment intent');
+      }
+
+      // Create and present Apple Pay
+      // Note: merchantIdentifier must match your Apple Developer Merchant ID
+      // You need to register this in Apple Developer Portal and add to Xcode capabilities
+      await StripeCapacitor.createApplePay({
+        paymentIntentClientSecret: data.clientSecret,
+        paymentSummaryItems: [{
+          label: 'The Gospel in 5 Minutes Donation',
+          amount: amount
+        }],
+        merchantIdentifier: import.meta.env.VITE_APPLE_MERCHANT_ID || 'merchant.com.thegospelin5minutes',
+        countryCode: 'US',
+        currency: 'USD',
+      });
+
+      const result = await StripeCapacitor.presentApplePay();
+      
+      // Handle payment result
+      if (result.paymentResult === ApplePayEventsEnum.Completed) {
+        // Verify payment with backend to ensure it was confirmed
+        try {
+          const paymentIntentId = data.clientSecret.split('_secret_')[0];
+          const verifyResponse = await fetch('/api/verify-payment', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ paymentIntentId }),
+          });
+          
+          const verifyData = await verifyResponse.json();
+          
+          if (verifyData.success) {
+            toast({
+              title: "Donation Successful!",
+              description: `Thank you for your $${amount.toFixed(2)} donation to spread God's word.`,
+            });
+            // Reset form
+            setSelectedAmount(null);
+            setCustomAmount("");
+            setIsCustom(false);
+          } else {
+            throw new Error('Payment verification failed');
+          }
+        } catch (verifyError) {
+          console.error('Payment verification error:', verifyError);
+          toast({
+            title: "Verification Failed",
+            description: 'Payment may still be processing. Please check back later.',
+            variant: "destructive",
+          });
+        }
+      } else if (result.paymentResult === ApplePayEventsEnum.Failed) {
+        toast({
+          title: "Payment Failed",
+          description: 'Your donation could not be processed. Please try again.',
+          variant: "destructive",
+        });
+      }
+      // Canceled is handled silently - user dismissed the sheet
+      
+    } catch (error) {
+      console.error('Apple Pay error:', error);
+      toast({
+        title: "Payment Setup Failed",
+        description: error instanceof Error ? error.message : 'Failed to setup Apple Pay. Please try again.',
+        variant: "destructive",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleDonate = async () => {
+    // Use Apple Pay on iOS, regular Stripe on web/Android
+    if (isIOS) {
+      return handleApplePayDonate();
+    }
+    
     if (!isValidAmount()) {
       toast({
         title: "Invalid Amount",

@@ -33,7 +33,7 @@ const getMainMenuItems = (t: any, isIOS = false) => {
     {
       id: "donate",
       title: t.donate,
-      description: t.donateDesc,
+      description: isIOS ? t.donateDescApplePay || "Support our mission via Apple Pay" : t.donateDesc,
       icon: Heart,
       comingSoon: false
     },
@@ -67,8 +67,8 @@ const getMainMenuItems = (t: any, isIOS = false) => {
     }
   ];
   
-  // Filter out donate item on iOS for App Store compliance
-  return isIOS ? items.filter(item => item.id !== 'donate') : items;
+  // Apple Pay now enabled - all items available on iOS
+  return items;
 };
 
 const getSettingsMenuItems = (t: any) => [

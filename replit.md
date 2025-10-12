@@ -53,6 +53,10 @@ The app is now fully compliant with Apple App Store requirements and ready for s
 - **More Page**: Language selection, legal pages, support access
 - **User Registration**: Modal with personal info collection
 - **Streak Tracking**: Consecutive days counter with localStorage persistence
+- **Donations**: Platform-specific payment processing
+  - **iOS**: Apple Pay integration via @capacitor-community/stripe (0% Apple fees for nonprofits)
+  - **Web/Android**: Stripe payment forms with card processing
+  - Automatic platform detection and routing
 
 ### ✅ Offline & Data Management Features
 - **Bookmarks**: Save favorite verses with persistent localStorage storage

@@ -112,7 +112,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Retrieve payment intent from Stripe to verify
-      const paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      let paymentIntent = await stripe.paymentIntents.retrieve(paymentIntentId);
+      
+      // If payment requires confirmation (Apple Pay flow), confirm it now
+      if (paymentIntent.status === 'requires_confirmation') {
+        console.log('Payment requires confirmation, confirming now:', paymentIntentId);
+        paymentIntent = await stripe.paymentIntents.confirm(paymentIntentId);
+      }
       
       if (paymentIntent.status === 'succeeded') {
         // Record the verified donation
@@ -1136,6 +1142,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     const paymentIntent = await stripeClient.paymentIntents.create({
         amount: Math.round(amount * 100), // Convert to cents
         currency: "usd",
+        automatic_payment_methods: {
+          enabled: true,
+          allow_redirects: 'never',
+        },
         metadata: {
           app: "Gospel in 5 Minutes",
           type: "donation"
