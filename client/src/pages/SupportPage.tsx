@@ -6,9 +6,10 @@ import { useState } from "react";
 interface SupportPageProps {
   onBack: () => void;
   onNavigate?: (page: string) => void;
+  language?: string;
 }
 
-export default function SupportPage({ onBack, onNavigate }: SupportPageProps) {
+export default function SupportPage({ onBack, onNavigate, language = "en" }: SupportPageProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 

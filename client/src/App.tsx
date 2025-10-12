@@ -191,7 +191,7 @@ function App() {
       case "savedverses":
         return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
       default:
-        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
+        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
   };
 
