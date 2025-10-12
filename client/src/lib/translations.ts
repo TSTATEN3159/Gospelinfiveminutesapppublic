@@ -108,6 +108,44 @@ export interface Translations {
   scripture: string;
   bibleVerse: string;
   noVerseContentAvailable: string;
+  
+  // Support Page
+  supportAndPrivacy: string;
+  contactSupport: string;
+  contactSupportDesc: string;
+  messageOnFacebook: string;
+  legalDocuments: string;
+  viewLegalPolicies: string;
+  privacyPolicy: string;
+  howWeProtectData: string;
+  termsOfService: string;
+  ourTermsAndConditions: string;
+  yourPrivacyRights: string;
+  managePersonalData: string;
+  exportMyData: string;
+  downloadCopyOfData: string;
+  export: string;
+  deleteMyData: string;
+  permanentlyRemoveInfo: string;
+  deleteData: string;
+  confirmDelete: string;
+  deleting: string;
+  areYouSure: string;
+  deleteWarning: string;
+  cancel: string;
+  crisisResources: string;
+  crisisResourcesDesc: string;
+  nationalSuicidePrevention: string;
+  crisisTextLine: string;
+  emergencyServices: string;
+  accountDeletedSuccess: string;
+  failedToDeleteAccount: string;
+  localDataDeleted: string;
+  noUserDataFound: string;
+  errorDeletingAccount: string;
+  appInformation: string;
+  build: string;
+  platform: string;
 }
 
 export const translations: Record<string, Translations> = {
@@ -211,6 +249,7 @@ export const translations: Record<string, Translations> = {
     saved: "saved",
     noSavedVersesYet: "No Saved Verses Yet",
     bookmarkVersesMessage: "When you bookmark verses, they'll appear here for easy access.",
+    tapToViewVerseInContext: "Tap to view this verse in context",
     read: "Read",
     bookmarkRemoved: "Bookmark Removed",
     removedFromSavedVerses: "removed from saved verses.",
@@ -218,7 +257,45 @@ export const translations: Record<string, Translations> = {
     couldNotLoadVerse: "Could not load the verse content. Please try again.",
     scripture: "Scripture",
     bibleVerse: "Bible Verse",
-    noVerseContentAvailable: "No verse content available"
+    noVerseContentAvailable: "No verse content available",
+    
+    // Support Page
+    supportAndPrivacy: "Support & Privacy",
+    contactSupport: "Contact Support",
+    contactSupportDesc: "Need help? Have questions? We're here to support your spiritual journey.",
+    messageOnFacebook: "Message us on Facebook",
+    legalDocuments: "Legal Documents",
+    viewLegalPolicies: "View our legal policies and terms",
+    privacyPolicy: "Privacy Policy",
+    howWeProtectData: "How we protect your data",
+    termsOfService: "Terms of Service",
+    ourTermsAndConditions: "Our terms and conditions",
+    yourPrivacyRights: "Your Privacy Rights",
+    managePersonalData: "Manage your personal data and privacy settings.",
+    exportMyData: "Export My Data",
+    downloadCopyOfData: "Download a copy of your personal data",
+    export: "Export",
+    deleteMyData: "Delete My Data",
+    permanentlyRemoveInfo: "Permanently remove all your personal information",
+    deleteData: "Delete Data",
+    confirmDelete: "Confirm Delete",
+    deleting: "Deleting...",
+    areYouSure: "Are you sure?",
+    deleteWarning: "This will permanently delete all your data including your profile, streak count, preferences, and settings. This action cannot be undone.",
+    cancel: "Cancel",
+    crisisResources: "Crisis Resources",
+    crisisResourcesDesc: "If you're in crisis, please reach out to these resources",
+    nationalSuicidePrevention: "National Suicide Prevention Lifeline",
+    crisisTextLine: "Crisis Text Line",
+    emergencyServices: "Emergency Services",
+    accountDeletedSuccess: "Your account and all associated data have been permanently deleted from our servers. The app will now restart.",
+    failedToDeleteAccount: "Failed to delete your account from our servers. Please contact support for assistance.",
+    localDataDeleted: "Your local data has been deleted successfully. The app will now restart.",
+    noUserDataFound: "No user data found. The app will now restart.",
+    errorDeletingAccount: "An error occurred while deleting your account. Please contact support for assistance.",
+    appInformation: "App Information",
+    build: "Build",
+    platform: "Platform"
   },
   
   es: {
@@ -317,6 +394,7 @@ export const translations: Record<string, Translations> = {
     saved: "guardados",
     noSavedVersesYet: "Aún No Hay Versículos Guardados",
     bookmarkVersesMessage: "Cuando guardes versículos, aparecerán aquí para fácil acceso.",
+    tapToViewVerseInContext: "Toca para ver este versículo en contexto",
     read: "Leer",
     bookmarkRemoved: "Marcador Eliminado",
     removedFromSavedVerses: "eliminado de versículos guardados.",
@@ -324,7 +402,45 @@ export const translations: Record<string, Translations> = {
     couldNotLoadVerse: "No se pudo cargar el contenido del versículo. Por favor, inténtalo de nuevo.",
     scripture: "Escritura",
     bibleVerse: "Versículo Bíblico",
-    noVerseContentAvailable: "No hay contenido del versículo disponible"
+    noVerseContentAvailable: "No hay contenido del versículo disponible",
+    
+    // Support Page
+    supportAndPrivacy: "Soporte y Privacidad",
+    contactSupport: "Contactar Soporte",
+    contactSupportDesc: "¿Necesitas ayuda? ¿Tienes preguntas? Estamos aquí para apoyar tu viaje espiritual.",
+    messageOnFacebook: "Envíanos un mensaje en Facebook",
+    legalDocuments: "Documentos Legales",
+    viewLegalPolicies: "Ver nuestras políticas legales y términos",
+    privacyPolicy: "Política de Privacidad",
+    howWeProtectData: "Cómo protegemos tus datos",
+    termsOfService: "Términos de Servicio",
+    ourTermsAndConditions: "Nuestros términos y condiciones",
+    yourPrivacyRights: "Tus Derechos de Privacidad",
+    managePersonalData: "Administra tus datos personales y configuración de privacidad.",
+    exportMyData: "Exportar Mis Datos",
+    downloadCopyOfData: "Descarga una copia de tus datos personales",
+    export: "Exportar",
+    deleteMyData: "Eliminar Mis Datos",
+    permanentlyRemoveInfo: "Eliminar permanentemente toda tu información personal",
+    deleteData: "Eliminar Datos",
+    confirmDelete: "Confirmar Eliminación",
+    deleting: "Eliminando...",
+    areYouSure: "¿Estás seguro?",
+    deleteWarning: "Esto eliminará permanentemente todos tus datos incluyendo tu perfil, contador de rachas, preferencias y configuraciones. Esta acción no se puede deshacer.",
+    cancel: "Cancelar",
+    crisisResources: "Recursos de Crisis",
+    crisisResourcesDesc: "Si estás en crisis, por favor contacta estos recursos",
+    nationalSuicidePrevention: "Línea Nacional de Prevención del Suicidio",
+    crisisTextLine: "Línea de Texto de Crisis",
+    emergencyServices: "Servicios de Emergencia",
+    accountDeletedSuccess: "Tu cuenta y todos los datos asociados han sido eliminados permanentemente de nuestros servidores. La aplicación se reiniciará ahora.",
+    failedToDeleteAccount: "No se pudo eliminar tu cuenta de nuestros servidores. Por favor contacta al soporte para asistencia.",
+    localDataDeleted: "Tus datos locales han sido eliminados exitosamente. La aplicación se reiniciará ahora.",
+    noUserDataFound: "No se encontraron datos de usuario. La aplicación se reiniciará ahora.",
+    errorDeletingAccount: "Ocurrió un error al eliminar tu cuenta. Por favor contacta al soporte para asistencia.",
+    appInformation: "Información de la Aplicación",
+    build: "Compilación",
+    platform: "Plataforma"
   },
   
   fr: {
@@ -423,6 +539,7 @@ export const translations: Record<string, Translations> = {
     saved: "sauvegardés",
     noSavedVersesYet: "Aucun Verset Sauvegardé",
     bookmarkVersesMessage: "Lorsque vous ajoutez des versets aux favoris, ils apparaîtront ici.",
+    tapToViewVerseInContext: "Appuyez pour voir ce verset dans son contexte",
     read: "Lire",
     bookmarkRemoved: "Favori Supprimé",
     removedFromSavedVerses: "supprimé des versets sauvegardés.",
@@ -430,7 +547,45 @@ export const translations: Record<string, Translations> = {
     couldNotLoadVerse: "Impossible de charger le contenu du verset. Veuillez réessayer.",
     scripture: "Écriture",
     bibleVerse: "Verset Biblique",
-    noVerseContentAvailable: "Aucun contenu de verset disponible"
+    noVerseContentAvailable: "Aucun contenu de verset disponible",
+    
+    // Support Page
+    supportAndPrivacy: "Support et Confidentialité",
+    contactSupport: "Contacter le Support",
+    contactSupportDesc: "Besoin d'aide ? Des questions ? Nous sommes là pour soutenir votre parcours spirituel.",
+    messageOnFacebook: "Envoyez-nous un message sur Facebook",
+    legalDocuments: "Documents Légaux",
+    viewLegalPolicies: "Consultez nos politiques légales et nos conditions",
+    privacyPolicy: "Politique de Confidentialité",
+    howWeProtectData: "Comment nous protégeons vos données",
+    termsOfService: "Conditions de Service",
+    ourTermsAndConditions: "Nos conditions générales",
+    yourPrivacyRights: "Vos Droits de Confidentialité",
+    managePersonalData: "Gérez vos données personnelles et paramètres de confidentialité.",
+    exportMyData: "Exporter Mes Données",
+    downloadCopyOfData: "Télécharger une copie de vos données personnelles",
+    export: "Exporter",
+    deleteMyData: "Supprimer Mes Données",
+    permanentlyRemoveInfo: "Supprimer définitivement toutes vos informations personnelles",
+    deleteData: "Supprimer les Données",
+    confirmDelete: "Confirmer la Suppression",
+    deleting: "Suppression...",
+    areYouSure: "Êtes-vous sûr ?",
+    deleteWarning: "Cela supprimera définitivement toutes vos données, y compris votre profil, votre compteur de séries, vos préférences et vos paramètres. Cette action est irréversible.",
+    cancel: "Annuler",
+    crisisResources: "Ressources de Crise",
+    crisisResourcesDesc: "Si vous êtes en crise, veuillez contacter ces ressources",
+    nationalSuicidePrevention: "Ligne Nationale de Prévention du Suicide",
+    crisisTextLine: "Ligne de Texte de Crise",
+    emergencyServices: "Services d'Urgence",
+    accountDeletedSuccess: "Votre compte et toutes les données associées ont été définitivement supprimés de nos serveurs. L'application va redémarrer.",
+    failedToDeleteAccount: "Échec de la suppression de votre compte de nos serveurs. Veuillez contacter le support pour obtenir de l'aide.",
+    localDataDeleted: "Vos données locales ont été supprimées avec succès. L'application va redémarrer.",
+    noUserDataFound: "Aucune donnée utilisateur trouvée. L'application va redémarrer.",
+    errorDeletingAccount: "Une erreur s'est produite lors de la suppression de votre compte. Veuillez contacter le support pour obtenir de l'aide.",
+    appInformation: "Informations de l'Application",
+    build: "Version",
+    platform: "Plateforme"
   },
   
   pt: {
@@ -533,6 +688,7 @@ export const translations: Record<string, Translations> = {
     saved: "salvos",
     noSavedVersesYet: "Nenhum Versículo Salvo",
     bookmarkVersesMessage: "Quando você favoritar versículos, eles aparecerão aqui.",
+    tapToViewVerseInContext: "Toque para ver este versículo no contexto",
     read: "Ler",
     bookmarkRemoved: "Favorito Removido",
     removedFromSavedVerses: "removido dos versículos salvos.",
@@ -540,7 +696,45 @@ export const translations: Record<string, Translations> = {
     couldNotLoadVerse: "Não foi possível carregar o conteúdo do versículo. Tente novamente.",
     scripture: "Escritura",
     bibleVerse: "Versículo Bíblico",
-    noVerseContentAvailable: "Nenhum conteúdo de versículo disponível"
+    noVerseContentAvailable: "Nenhum conteúdo de versículo disponível",
+    
+    // Support Page
+    supportAndPrivacy: "Suporte e Privacidade",
+    contactSupport: "Contatar Suporte",
+    contactSupportDesc: "Precisa de ajuda? Tem perguntas? Estamos aqui para apoiar sua jornada espiritual.",
+    messageOnFacebook: "Envie-nos uma mensagem no Facebook",
+    legalDocuments: "Documentos Legais",
+    viewLegalPolicies: "Veja nossas políticas legais e termos",
+    privacyPolicy: "Política de Privacidade",
+    howWeProtectData: "Como protegemos seus dados",
+    termsOfService: "Termos de Serviço",
+    ourTermsAndConditions: "Nossos termos e condições",
+    yourPrivacyRights: "Seus Direitos de Privacidade",
+    managePersonalData: "Gerencie seus dados pessoais e configurações de privacidade.",
+    exportMyData: "Exportar Meus Dados",
+    downloadCopyOfData: "Baixe uma cópia dos seus dados pessoais",
+    export: "Exportar",
+    deleteMyData: "Excluir Meus Dados",
+    permanentlyRemoveInfo: "Remover permanentemente todas as suas informações pessoais",
+    deleteData: "Excluir Dados",
+    confirmDelete: "Confirmar Exclusão",
+    deleting: "Excluindo...",
+    areYouSure: "Você tem certeza?",
+    deleteWarning: "Isso excluirá permanentemente todos os seus dados, incluindo seu perfil, contagem de sequência, preferências e configurações. Esta ação não pode ser desfeita.",
+    cancel: "Cancelar",
+    crisisResources: "Recursos de Crise",
+    crisisResourcesDesc: "Se você está em crise, entre em contato com estes recursos",
+    nationalSuicidePrevention: "Linha Nacional de Prevenção ao Suicídio",
+    crisisTextLine: "Linha de Texto de Crise",
+    emergencyServices: "Serviços de Emergência",
+    accountDeletedSuccess: "Sua conta e todos os dados associados foram permanentemente excluídos de nossos servidores. O aplicativo será reiniciado agora.",
+    failedToDeleteAccount: "Falha ao excluir sua conta de nossos servidores. Entre em contato com o suporte para obter assistência.",
+    localDataDeleted: "Seus dados locais foram excluídos com sucesso. O aplicativo será reiniciado agora.",
+    noUserDataFound: "Nenhum dado de usuário encontrado. O aplicativo será reiniciado agora.",
+    errorDeletingAccount: "Ocorreu um erro ao excluir sua conta. Entre em contato com o suporte para obter assistência.",
+    appInformation: "Informações do Aplicativo",
+    build: "Versão",
+    platform: "Plataforma"
   },
   
   // For other languages (zh, ar, hi), we'll use English as fallback for now
@@ -640,6 +834,7 @@ export const translations: Record<string, Translations> = {
     saved: "已保存",
     noSavedVersesYet: "尚无保存的经文",
     bookmarkVersesMessage: "当你收藏经文时，它们会出现在这里。",
+    tapToViewVerseInContext: "点击查看此经文的上下文",
     read: "阅读",
     bookmarkRemoved: "书签已删除",
     removedFromSavedVerses: "已从保存的经文中删除。",
@@ -647,7 +842,45 @@ export const translations: Record<string, Translations> = {
     couldNotLoadVerse: "无法加载经文内容。请重试。",
     scripture: "经文",
     bibleVerse: "圣经经文",
-    noVerseContentAvailable: "无可用的经文内容"
+    noVerseContentAvailable: "无可用的经文内容",
+    
+    // Support Page
+    supportAndPrivacy: "支持与隐私",
+    contactSupport: "联系支持",
+    contactSupportDesc: "需要帮助？有疑问？我们在这里支持您的灵性旅程。",
+    messageOnFacebook: "在Facebook上给我们留言",
+    legalDocuments: "法律文件",
+    viewLegalPolicies: "查看我们的法律政策和条款",
+    privacyPolicy: "隐私政策",
+    howWeProtectData: "我们如何保护您的数据",
+    termsOfService: "服务条款",
+    ourTermsAndConditions: "我们的条款和条件",
+    yourPrivacyRights: "您的隐私权",
+    managePersonalData: "管理您的个人数据和隐私设置。",
+    exportMyData: "导出我的数据",
+    downloadCopyOfData: "下载您的个人数据副本",
+    export: "导出",
+    deleteMyData: "删除我的数据",
+    permanentlyRemoveInfo: "永久删除您的所有个人信息",
+    deleteData: "删除数据",
+    confirmDelete: "确认删除",
+    deleting: "正在删除...",
+    areYouSure: "您确定吗？",
+    deleteWarning: "这将永久删除您的所有数据，包括您的个人资料、连续记录、偏好和设置。此操作无法撤销。",
+    cancel: "取消",
+    crisisResources: "危机资源",
+    crisisResourcesDesc: "如果您处于危机中，请联系这些资源",
+    nationalSuicidePrevention: "全国自杀预防生命线",
+    crisisTextLine: "危机短信热线",
+    emergencyServices: "紧急服务",
+    accountDeletedSuccess: "您的账户和所有相关数据已从我们的服务器中永久删除。应用程序现在将重新启动。",
+    failedToDeleteAccount: "无法从我们的服务器中删除您的账户。请联系支持以获取帮助。",
+    localDataDeleted: "您的本地数据已成功删除。应用程序现在将重新启动。",
+    noUserDataFound: "未找到用户数据。应用程序现在将重新启动。",
+    errorDeletingAccount: "删除您的账户时发生错误。请联系支持以获取帮助。",
+    appInformation: "应用信息",
+    build: "版本号",
+    platform: "平台"
   },
   
   ar: {
@@ -746,6 +979,7 @@ export const translations: Record<string, Translations> = {
     saved: "محفوظة",
     noSavedVersesYet: "لا توجد آيات محفوظة بعد",
     bookmarkVersesMessage: "عندما تحفظ آيات، ستظهر هنا للوصول السريع.",
+    tapToViewVerseInContext: "اضغط لرؤية هذه الآية في السياق",
     read: "اقرأ",
     bookmarkRemoved: "تم حذف الإشارة المرجعية",
     removedFromSavedVerses: "تمت الإزالة من الآيات المحفوظة.",
@@ -753,7 +987,45 @@ export const translations: Record<string, Translations> = {
     couldNotLoadVerse: "تعذر تحميل محتوى الآية. الرجاء المحاولة مرة أخرى.",
     scripture: "كتاب مقدس",
     bibleVerse: "آية من الكتاب المقدس",
-    noVerseContentAvailable: "لا يوجد محتوى آية متاح"
+    noVerseContentAvailable: "لا يوجد محتوى آية متاح",
+    
+    // Support Page
+    supportAndPrivacy: "الدعم والخصوصية",
+    contactSupport: "اتصل بالدعم",
+    contactSupportDesc: "هل تحتاج إلى مساعدة؟ لديك أسئلة؟ نحن هنا لدعم رحلتك الروحية.",
+    messageOnFacebook: "أرسل لنا رسالة على فيسبوك",
+    legalDocuments: "المستندات القانونية",
+    viewLegalPolicies: "اطلع على سياساتنا القانونية وشروطنا",
+    privacyPolicy: "سياسة الخصوصية",
+    howWeProtectData: "كيف نحمي بياناتك",
+    termsOfService: "شروط الخدمة",
+    ourTermsAndConditions: "الشروط والأحكام الخاصة بنا",
+    yourPrivacyRights: "حقوق الخصوصية الخاصة بك",
+    managePersonalData: "إدارة بياناتك الشخصية وإعدادات الخصوصية.",
+    exportMyData: "تصدير بياناتي",
+    downloadCopyOfData: "قم بتنزيل نسخة من بياناتك الشخصية",
+    export: "تصدير",
+    deleteMyData: "حذف بياناتي",
+    permanentlyRemoveInfo: "حذف جميع معلوماتك الشخصية نهائيًا",
+    deleteData: "حذف البيانات",
+    confirmDelete: "تأكيد الحذف",
+    deleting: "جارٍ الحذف...",
+    areYouSure: "هل أنت متأكد؟",
+    deleteWarning: "سيؤدي هذا إلى حذف جميع بياناتك نهائيًا بما في ذلك ملفك الشخصي وعدد السلاسل والتفضيلات والإعدادات. لا يمكن التراجع عن هذا الإجراء.",
+    cancel: "إلغاء",
+    crisisResources: "موارد الأزمات",
+    crisisResourcesDesc: "إذا كنت في أزمة، يرجى التواصل مع هذه الموارد",
+    nationalSuicidePrevention: "خط المساعدة الوطني للوقاية من الانتحار",
+    crisisTextLine: "خط الرسائل النصية للأزمات",
+    emergencyServices: "خدمات الطوارئ",
+    accountDeletedSuccess: "تم حذف حسابك وجميع البيانات المرتبطة به نهائيًا من خوادمنا. سيتم إعادة تشغيل التطبيق الآن.",
+    failedToDeleteAccount: "فشل حذف حسابك من خوادمنا. يرجى الاتصال بالدعم للحصول على المساعدة.",
+    localDataDeleted: "تم حذف بياناتك المحلية بنجاح. سيتم إعادة تشغيل التطبيق الآن.",
+    noUserDataFound: "لم يتم العثور على بيانات المستخدم. سيتم إعادة تشغيل التطبيق الآن.",
+    errorDeletingAccount: "حدث خطأ أثناء حذف حسابك. يرجى الاتصال بالدعم للحصول على المساعدة.",
+    appInformation: "معلومات التطبيق",
+    build: "الإصدار",
+    platform: "المنصة"
   },
   
   hi: {
@@ -856,6 +1128,7 @@ export const translations: Record<string, Translations> = {
     saved: "सहेजे गए",
     noSavedVersesYet: "अभी तक कोई श्लोक सहेजा नहीं गया",
     bookmarkVersesMessage: "जब आप श्लोक बुकमार्क करेंगे, तो वे यहां दिखाई देंगे।",
+    tapToViewVerseInContext: "इस श्लोक को संदर्भ में देखने के लिए टैप करें",
     read: "पढ़ें",
     bookmarkRemoved: "बुकमार्क हटाया गया",
     removedFromSavedVerses: "सहेजे गए श्लोकों से हटाया गया।",
@@ -863,7 +1136,45 @@ export const translations: Record<string, Translations> = {
     couldNotLoadVerse: "श्लोक सामग्री लोड नहीं की जा सकी। कृपया पुनः प्रयास करें।",
     scripture: "धर्मग्रंथ",
     bibleVerse: "बाइबल श्लोक",
-    noVerseContentAvailable: "कोई श्लोक सामग्री उपलब्ध नहीं"
+    noVerseContentAvailable: "कोई श्लोक सामग्री उपलब्ध नहीं",
+    
+    // Support Page
+    supportAndPrivacy: "सहायता और गोपनीयता",
+    contactSupport: "सहायता से संपर्क करें",
+    contactSupportDesc: "मदद चाहिए? प्रश्न हैं? हम आपकी आध्यात्मिक यात्रा का समर्थन करने के लिए यहां हैं।",
+    messageOnFacebook: "फेसबुक पर हमें संदेश भेजें",
+    legalDocuments: "कानूनी दस्तावेज़",
+    viewLegalPolicies: "हमारी कानूनी नीतियां और शर्तें देखें",
+    privacyPolicy: "गोपनीयता नीति",
+    howWeProtectData: "हम आपके डेटा की सुरक्षा कैसे करते हैं",
+    termsOfService: "सेवा की शर्तें",
+    ourTermsAndConditions: "हमारे नियम और शर्तें",
+    yourPrivacyRights: "आपके गोपनीयता अधिकार",
+    managePersonalData: "अपने व्यक्तिगत डेटा और गोपनीयता सेटिंग्स का प्रबंधन करें।",
+    exportMyData: "मेरा डेटा निर्यात करें",
+    downloadCopyOfData: "अपने व्यक्तिगत डेटा की एक प्रति डाउनलोड करें",
+    export: "निर्यात करें",
+    deleteMyData: "मेरा डेटा हटाएं",
+    permanentlyRemoveInfo: "अपनी सभी व्यक्तिगत जानकारी को स्थायी रूप से हटाएं",
+    deleteData: "डेटा हटाएं",
+    confirmDelete: "हटाने की पुष्टि करें",
+    deleting: "हटाया जा रहा है...",
+    areYouSure: "क्या आप सुनिश्चित हैं?",
+    deleteWarning: "यह आपके प्रोफ़ाइल, स्ट्रीक काउंट, प्राथमिकताओं और सेटिंग्स सहित आपके सभी डेटा को स्थायी रूप से हटा देगा। यह कार्रवाई पूर्ववत नहीं की जा सकती।",
+    cancel: "रद्द करें",
+    crisisResources: "संकट संसाधन",
+    crisisResourcesDesc: "यदि आप संकट में हैं, तो कृपया इन संसाधनों से संपर्क करें",
+    nationalSuicidePrevention: "राष्ट्रीय आत्महत्या रोकथाम हेल्पलाइन",
+    crisisTextLine: "संकट टेक्स्ट लाइन",
+    emergencyServices: "आपातकालीन सेवाएं",
+    accountDeletedSuccess: "आपका खाता और सभी संबद्ध डेटा हमारे सर्वर से स्थायी रूप से हटा दिया गया है। ऐप अब पुनः आरंभ होगा।",
+    failedToDeleteAccount: "हमारे सर्वर से आपका खाता हटाने में विफल। कृपया सहायता के लिए समर्थन से संपर्क करें।",
+    localDataDeleted: "आपका स्थानीय डेटा सफलतापूर्वक हटा दिया गया है। ऐप अब पुनः आरंभ होगा।",
+    noUserDataFound: "कोई उपयोगकर्ता डेटा नहीं मिला। ऐप अब पुनः आरंभ होगा।",
+    errorDeletingAccount: "आपका खाता हटाते समय एक त्रुटि हुई। कृपया सहायता के लिए समर्थन से संपर्क करें।",
+    appInformation: "ऐप जानकारी",
+    build: "बिल्ड",
+    platform: "प्लेटफॉर्म"
   }
 };
 

@@ -148,7 +148,7 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
                         </h3>
                       </div>
                       <p className="text-sm text-gray-600 mb-3">
-                        Tap to view this verse in context
+                        {t.tapToViewVerseInContext}
                       </p>
                       <div className="flex gap-2">
                         <Button
