@@ -14,6 +14,7 @@ import {
 
 interface SavedVersesPageProps {
   onBack?: () => void;
+  language?: string;
 }
 
 interface VerseContent {
@@ -21,7 +22,7 @@ interface VerseContent {
   reference: string;
 }
 
-export default function SavedVersesPage({ onBack }: SavedVersesPageProps) {
+export default function SavedVersesPage({ onBack, language = "en" }: SavedVersesPageProps) {
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [selectedVerse, setSelectedVerse] = useState<VerseContent | null>(null);
   const [isLoading, setIsLoading] = useState(false);
