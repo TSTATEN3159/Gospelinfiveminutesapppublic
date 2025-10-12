@@ -1,13 +1,14 @@
-import { ArrowLeft, Mail, MessageCircle, Trash2, Download, Shield } from "lucide-react";
+import { ArrowLeft, Mail, MessageCircle, Trash2, Download, Shield, FileText, Scale } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 
 interface SupportPageProps {
   onBack: () => void;
+  onNavigate?: (page: string) => void;
 }
 
-export default function SupportPage({ onBack }: SupportPageProps) {
+export default function SupportPage({ onBack, onNavigate }: SupportPageProps) {
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -135,6 +136,50 @@ export default function SupportPage({ onBack }: SupportPageProps) {
                 <MessageCircle className="w-4 h-4" />
                 Message us on Facebook
               </a>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Legal Documents */}
+        <Card className="shadow-lg border-2">
+          <CardContent className="p-6">
+            <h2 className="text-lg font-semibold text-foreground mb-4 text-center">Legal Documents</h2>
+            <div className="flex justify-center mb-4">
+              <Scale className="w-6 h-6 text-primary" />
+            </div>
+            <p className="text-muted-foreground mb-4 text-center">
+              View our legal policies and terms
+            </p>
+            <div className="space-y-3">
+              <Button
+                variant="outline"
+                className="w-full justify-start h-auto p-4"
+                onClick={() => onNavigate?.('privacy')}
+                data-testid="button-privacy-policy"
+              >
+                <div className="flex items-center gap-3 w-full">
+                  <Shield className="w-5 h-5 text-primary" />
+                  <div className="text-left flex-1">
+                    <div className="font-medium">Privacy Policy</div>
+                    <div className="text-sm text-muted-foreground">How we protect your data</div>
+                  </div>
+                </div>
+              </Button>
+              
+              <Button
+                variant="outline"
+                className="w-full justify-start h-auto p-4"
+                onClick={() => onNavigate?.('terms')}
+                data-testid="button-terms-of-service"
+              >
+                <div className="flex items-center gap-3 w-full">
+                  <FileText className="w-5 h-5 text-primary" />
+                  <div className="text-left flex-1">
+                    <div className="font-medium">Terms of Service</div>
+                    <div className="text-sm text-muted-foreground">Our terms and conditions</div>
+                  </div>
+                </div>
+              </Button>
             </div>
           </CardContent>
         </Card>

@@ -170,7 +170,7 @@ function App() {
       case "terms":
         return <TermsOfServicePage onBack={handleBackFromLegal} language={language} />;
       case "support":
-        return <SupportPage onNavigate={handleNavigateToLegal} language={language} />;
+        return <SupportPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} />;
       case "donate":
         return <DonationPage onNavigate={handleNavigateToLegal} language={language} />;
       case "giving":
