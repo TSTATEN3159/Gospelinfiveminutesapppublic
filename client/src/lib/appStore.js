@@ -32,7 +32,20 @@ export const store = {
   // NOTES
   addNote(ref, text) {
     const notes = store.getNotes();
-    notes.push({ ref, text, createdAt: Date.now() });
+    const existingIndex = notes.findIndex(note => note.ref === ref);
+    
+    if (existingIndex >= 0) {
+      // Update existing note, preserve original createdAt
+      notes[existingIndex] = { 
+        ...notes[existingIndex],
+        text, 
+        updatedAt: Date.now() 
+      };
+    } else {
+      // Add new note
+      notes.push({ ref, text, createdAt: Date.now() });
+    }
+    
     localStorage.setItem(KEY_NOTES, JSON.stringify(notes));
   },
   getNotes() {

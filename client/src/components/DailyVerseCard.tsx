@@ -149,6 +149,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
     }
     
     store.addNote(verse.reference, noteText.trim());
+    setHasExistingNote(true); // Update button state immediately
     setNoteText("");
     setIsNoteDialogOpen(false);
     toast({
