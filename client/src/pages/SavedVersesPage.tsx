@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { BookmarkCheck, BookmarkX, ChevronLeft, Book, Loader2 } from "lucide-react";
 import { store } from "@/lib/appStore";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "@/lib/translations";
 import {
   Dialog,
   DialogContent,
@@ -28,6 +29,7 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
   const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
+  const t = useTranslations(language);
 
   useEffect(() => {
     // Load bookmarks when page opens
@@ -39,8 +41,8 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
     store.removeBookmark(ref);
     setBookmarks(store.getBookmarks());
     toast({
-      title: "Bookmark Removed",
-      description: `${ref} removed from saved verses.`,
+      title: t.bookmarkRemoved,
+      description: `${ref} ${t.removedFromSavedVerses}`,
     });
   };
 
@@ -79,8 +81,8 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
     } catch (error) {
       console.error('Error fetching verse:', error);
       toast({
-        title: "Error Loading Verse",
-        description: "Could not load the verse content. Please try again.",
+        title: t.errorLoadingVerse,
+        description: t.couldNotLoadVerse,
         variant: "destructive",
       });
       setIsDialogOpen(false);
@@ -104,9 +106,9 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
             <ChevronLeft className="w-6 h-6" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Saved Verses</h1>
+            <h1 className="text-2xl font-bold text-gray-900">{t.savedVerses}</h1>
             <p className="text-sm text-gray-600">
-              {bookmarks.length} {bookmarks.length === 1 ? 'verse' : 'verses'} saved
+              {bookmarks.length} {bookmarks.length === 1 ? t.verse : t.verses} {t.saved}
             </p>
           </div>
         </div>
@@ -121,10 +123,10 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
                 <BookmarkCheck className="w-8 h-8 text-gray-400" />
               </div>
               <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                No Saved Verses Yet
+                {t.noSavedVersesYet}
               </h3>
               <p className="text-gray-600">
-                When you bookmark verses, they'll appear here for easy access.
+                {t.bookmarkVersesMessage}
               </p>
             </CardContent>
           </Card>
@@ -157,7 +159,7 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
                           className="text-red-600 hover:text-red-700 hover:bg-red-50"
                         >
                           <BookmarkX className="w-4 h-4 mr-1" />
-                          Remove
+                          {t.remove}
                         </Button>
                         <Button
                           variant="outline"
@@ -166,7 +168,7 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
                           data-testid={`button-read-verse-${index}`}
                         >
                           <Book className="w-4 h-4 mr-1" />
-                          Read
+                          {t.read}
                         </Button>
                       </div>
                     </div>
@@ -183,10 +185,10 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
         <DialogContent className="sm:max-w-[500px]">
           <DialogHeader>
             <DialogTitle>
-              {selectedVerse?.reference || "Scripture"}
+              {selectedVerse?.reference || t.scripture}
             </DialogTitle>
             <DialogDescription>
-              Bible Verse
+              {t.bibleVerse}
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
@@ -205,7 +207,7 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
               </div>
             ) : (
               <p className="text-gray-500 text-center py-4">
-                No verse content available
+                {t.noVerseContentAvailable}
               </p>
             )}
           </div>

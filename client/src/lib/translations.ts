@@ -92,6 +92,22 @@ export interface Translations {
   friendRequestAccepted: string;
   friendRequestDeclined: string;
   friendRemoved: string;
+  
+  // Saved Verses
+  savedVerses: string;
+  verse: string;
+  verses: string;
+  saved: string;
+  noSavedVersesYet: string;
+  bookmarkVersesMessage: string;
+  read: string;
+  bookmarkRemoved: string;
+  removedFromSavedVerses: string;
+  errorLoadingVerse: string;
+  couldNotLoadVerse: string;
+  scripture: string;
+  bibleVerse: string;
+  noVerseContentAvailable: string;
 }
 
 export const translations: Record<string, Translations> = {
@@ -186,7 +202,23 @@ export const translations: Record<string, Translations> = {
     friendRequestFailed: "Failed to send friend request",
     friendRequestAccepted: "Friend request accepted!",
     friendRequestDeclined: "Friend request declined",
-    friendRemoved: "Friend removed successfully"
+    friendRemoved: "Friend removed successfully",
+    
+    // Saved Verses
+    savedVerses: "Saved Verses",
+    verse: "verse",
+    verses: "verses",
+    saved: "saved",
+    noSavedVersesYet: "No Saved Verses Yet",
+    bookmarkVersesMessage: "When you bookmark verses, they'll appear here for easy access.",
+    read: "Read",
+    bookmarkRemoved: "Bookmark Removed",
+    removedFromSavedVerses: "removed from saved verses.",
+    errorLoadingVerse: "Error Loading Verse",
+    couldNotLoadVerse: "Could not load the verse content. Please try again.",
+    scripture: "Scripture",
+    bibleVerse: "Bible Verse",
+    noVerseContentAvailable: "No verse content available"
   },
   
   es: {
@@ -276,7 +308,23 @@ export const translations: Record<string, Translations> = {
     friendRequestFailed: "Error al enviar solicitud de amistad",
     friendRequestAccepted: "¡Solicitud de amistad aceptada!",
     friendRequestDeclined: "Solicitud de amistad rechazada",
-    friendRemoved: "Amigo eliminado exitosamente"
+    friendRemoved: "Amigo eliminado exitosamente",
+    
+    // Saved Verses
+    savedVerses: "Versículos Guardados",
+    verse: "versículo",
+    verses: "versículos",
+    saved: "guardados",
+    noSavedVersesYet: "Aún No Hay Versículos Guardados",
+    bookmarkVersesMessage: "Cuando guardes versículos, aparecerán aquí para fácil acceso.",
+    read: "Leer",
+    bookmarkRemoved: "Marcador Eliminado",
+    removedFromSavedVerses: "eliminado de versículos guardados.",
+    errorLoadingVerse: "Error al Cargar Versículo",
+    couldNotLoadVerse: "No se pudo cargar el contenido del versículo. Por favor, inténtalo de nuevo.",
+    scripture: "Escritura",
+    bibleVerse: "Versículo Bíblico",
+    noVerseContentAvailable: "No hay contenido del versículo disponible"
   },
   
   fr: {
@@ -366,7 +414,23 @@ export const translations: Record<string, Translations> = {
     friendRequestFailed: "Échec de l'envoi de la demande d'ami",
     friendRequestAccepted: "Demande d'ami acceptée !",
     friendRequestDeclined: "Demande d'ami refusée",
-    friendRemoved: "Ami supprimé avec succès"
+    friendRemoved: "Ami supprimé avec succès",
+    
+    // Saved Verses
+    savedVerses: "Versets Sauvegardés",
+    verse: "verset",
+    verses: "versets",
+    saved: "sauvegardés",
+    noSavedVersesYet: "Aucun Verset Sauvegardé",
+    bookmarkVersesMessage: "Lorsque vous ajoutez des versets aux favoris, ils apparaîtront ici.",
+    read: "Lire",
+    bookmarkRemoved: "Favori Supprimé",
+    removedFromSavedVerses: "supprimé des versets sauvegardés.",
+    errorLoadingVerse: "Erreur de Chargement",
+    couldNotLoadVerse: "Impossible de charger le contenu du verset. Veuillez réessayer.",
+    scripture: "Écriture",
+    bibleVerse: "Verset Biblique",
+    noVerseContentAvailable: "Aucun contenu de verset disponible"
   },
   
   pt: {
@@ -460,7 +524,23 @@ export const translations: Record<string, Translations> = {
     outgoingRequestsDescription: "Suas solicitações de amizade enviadas",
     noUsersFound: "Nenhum usuário encontrado",
     typeToSearch: "Digite para pesquisar",
-    noFriendsYet: "Você ainda não tem amigos"
+    noFriendsYet: "Você ainda não tem amigos",
+    
+    // Saved Verses
+    savedVerses: "Versículos Salvos",
+    verse: "versículo",
+    verses: "versículos",
+    saved: "salvos",
+    noSavedVersesYet: "Nenhum Versículo Salvo",
+    bookmarkVersesMessage: "Quando você favoritar versículos, eles aparecerão aqui.",
+    read: "Ler",
+    bookmarkRemoved: "Favorito Removido",
+    removedFromSavedVerses: "removido dos versículos salvos.",
+    errorLoadingVerse: "Erro ao Carregar",
+    couldNotLoadVerse: "Não foi possível carregar o conteúdo do versículo. Tente novamente.",
+    scripture: "Escritura",
+    bibleVerse: "Versículo Bíblico",
+    noVerseContentAvailable: "Nenhum conteúdo de versículo disponível"
   },
   
   // For other languages (zh, ar, hi), we'll use English as fallback for now
@@ -551,7 +631,23 @@ export const translations: Record<string, Translations> = {
     friendRequestFailed: "发送朋友请求失败",
     friendRequestAccepted: "朋友请求已接受！",
     friendRequestDeclined: "朋友请求已拒绝",
-    friendRemoved: "朋友删除成功"
+    friendRemoved: "朋友删除成功",
+    
+    // Saved Verses
+    savedVerses: "保存的经文",
+    verse: "经文",
+    verses: "经文",
+    saved: "已保存",
+    noSavedVersesYet: "尚无保存的经文",
+    bookmarkVersesMessage: "当你收藏经文时，它们会出现在这里。",
+    read: "阅读",
+    bookmarkRemoved: "书签已删除",
+    removedFromSavedVerses: "已从保存的经文中删除。",
+    errorLoadingVerse: "加载错误",
+    couldNotLoadVerse: "无法加载经文内容。请重试。",
+    scripture: "经文",
+    bibleVerse: "圣经经文",
+    noVerseContentAvailable: "无可用的经文内容"
   },
   
   ar: {
@@ -641,7 +737,23 @@ export const translations: Record<string, Translations> = {
     friendRequestFailed: "فشل في إرسال طلب الصداقة",
     friendRequestAccepted: "تم قبول طلب الصداقة!",
     friendRequestDeclined: "تم رفض طلب الصداقة",
-    friendRemoved: "تم حذف الصديق بنجاح"
+    friendRemoved: "تم حذف الصديق بنجاح",
+    
+    // Saved Verses
+    savedVerses: "الآيات المحفوظة",
+    verse: "آية",
+    verses: "آيات",
+    saved: "محفوظة",
+    noSavedVersesYet: "لا توجد آيات محفوظة بعد",
+    bookmarkVersesMessage: "عندما تحفظ آيات، ستظهر هنا للوصول السريع.",
+    read: "اقرأ",
+    bookmarkRemoved: "تم حذف الإشارة المرجعية",
+    removedFromSavedVerses: "تمت الإزالة من الآيات المحفوظة.",
+    errorLoadingVerse: "خطأ في التحميل",
+    couldNotLoadVerse: "تعذر تحميل محتوى الآية. الرجاء المحاولة مرة أخرى.",
+    scripture: "كتاب مقدس",
+    bibleVerse: "آية من الكتاب المقدس",
+    noVerseContentAvailable: "لا يوجد محتوى آية متاح"
   },
   
   hi: {
@@ -735,7 +847,23 @@ export const translations: Record<string, Translations> = {
     outgoingRequestsDescription: "आपके भेजे गए मित्र अनुरोध",
     noUsersFound: "कोई उपयोगकर्ता नहीं मिला",
     typeToSearch: "खोजने के लिए टाइप करें",
-    noFriendsYet: "आपके पास अभी तक कोई मित्र नहीं है"
+    noFriendsYet: "आपके पास अभी तक कोई मित्र नहीं है",
+    
+    // Saved Verses
+    savedVerses: "सहेजे गए श्लोक",
+    verse: "श्लोक",
+    verses: "श्लोक",
+    saved: "सहेजे गए",
+    noSavedVersesYet: "अभी तक कोई श्लोक सहेजा नहीं गया",
+    bookmarkVersesMessage: "जब आप श्लोक बुकमार्क करेंगे, तो वे यहां दिखाई देंगे।",
+    read: "पढ़ें",
+    bookmarkRemoved: "बुकमार्क हटाया गया",
+    removedFromSavedVerses: "सहेजे गए श्लोकों से हटाया गया।",
+    errorLoadingVerse: "लोड करने में त्रुटि",
+    couldNotLoadVerse: "श्लोक सामग्री लोड नहीं की जा सकी। कृपया पुनः प्रयास करें।",
+    scripture: "धर्मग्रंथ",
+    bibleVerse: "बाइबल श्लोक",
+    noVerseContentAvailable: "कोई श्लोक सामग्री उपलब्ध नहीं"
   }
 };
 
