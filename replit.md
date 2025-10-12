@@ -12,6 +12,36 @@ Preferred communication style: Simple, everyday language.
 
 ## 📅 Recent Changes (Latest Session)
 
+### Saved Verses Feature Added - October 2025 ✅
+**Complete Bookmark Retrieval Experience**
+
+1. **Saved Verses Page** ✅
+   - New dedicated page to view all bookmarked verses
+   - Accessible from More → Saved Verses menu
+   - Shows count of saved verses
+   - Clean card-based layout with Holy Bible imagery
+   - Empty state when no bookmarks exist
+
+2. **Read Verse Functionality** ✅
+   - "Read" button fetches full verse content via /api/bible-search
+   - Opens dialog with verse text and reference
+   - Supports both API.Bible and OpenAI fallback
+   - Loading state with spinner during fetch
+   - Error handling with user-friendly toasts
+
+3. **Bookmark Management** ✅
+   - Remove bookmark functionality per verse
+   - Instant UI update when bookmark removed
+   - Toast confirmation for user feedback
+   - Persistent storage via appStore.js
+
+4. **Navigation & Routing** ✅
+   - Added 'savedverses' to AppPage type
+   - New route in App.tsx renderCurrentPage
+   - Menu tile in MorePage with BookmarkCheck icon
+   - Blue theme with Holy Bible background image
+   - Hidden bottom nav for focused reading
+
 ### Critical Bugs Fixed - October 2025
 **App Store Compliance & Data Integrity Fixes**
 
@@ -106,6 +136,11 @@ The app is now fully compliant with Apple App Store requirements and ready for s
   - Toggle bookmark button on DailyVerseCard
   - Bookmarks persist across sessions
   - Managed via appStore.js utility
+  - **Saved Verses Page**: Dedicated page to view all bookmarks (More → Saved Verses)
+    - Displays count of saved verses
+    - Read button fetches and displays full verse content via API
+    - Remove bookmark functionality with instant UI updates
+    - Supports API.Bible and OpenAI fallback for verse retrieval
 - **Personal Notes**: Add reflections and prayers for any verse
   - Dialog-based note entry with textarea
   - Notes stored with verse reference and timestamp
