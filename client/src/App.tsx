@@ -32,6 +32,7 @@ import SettingsPage from "./pages/SettingsPage";
 import FriendsPage from "./pages/FriendsPage";
 import BibleStudiesPage from "./pages/BibleStudiesPage";
 import BibleTriviaPage from "./pages/BibleTriviaPage";
+import SavedVersesPage from "./pages/SavedVersesPage";
 
 interface User {
   firstName: string;
@@ -43,7 +44,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate" | "giving" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia";
+type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "donate" | "giving" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -127,7 +128,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "more", "search"];
+    const validPages = ["home", "privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "more", "search"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -187,6 +188,8 @@ function App() {
         return <BibleStudiesPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
       case "bibletrivia":
         return <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />;
+      case "savedverses":
+        return <SavedVersesPage onBack={handleBackFromLegal} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} />;
     }
@@ -206,7 +209,7 @@ function App() {
             </main>
 
             {/* Bottom Navigation - Hide on legal pages and friends page */}
-            {!["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia"].includes(currentPage) && (
+            {!["privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses"].includes(currentPage) && (
               <BottomNavigation 
                 currentPage={currentPage as "home" | "ask" | "search" | "more"} 
                 onPageChange={(page) => setCurrentPage(page as AppPage)} 

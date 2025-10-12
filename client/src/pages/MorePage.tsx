@@ -1,6 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross } from "lucide-react";
+import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
@@ -30,6 +30,13 @@ const languages = [
 
 const getMainMenuItems = (t: any, isIOS = false) => {
   const items = [
+    {
+      id: "savedverses",
+      title: "Saved Verses",
+      description: "View your bookmarked scripture passages",
+      icon: BookmarkCheck,
+      comingSoon: false
+    },
     {
       id: "donate",
       title: t.donate,
@@ -295,6 +302,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           // Get background image and overlay colors for each tile
           const getTileImage = (id: string) => {
             switch(id) {
+              case 'savedverses': return { image: holyBibleImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
               case 'giving': return { image: givingHandsImage, overlay: 'from-stone-900/70 via-stone-600/20', border: 'border-stone-200', iconBg: 'bg-stone-100', iconBorder: 'border-stone-200/60', iconRing: 'ring-stone-300/50', iconColor: 'text-stone-700' };
               case 'videos': return { image: holyBibleImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
               case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
