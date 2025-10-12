@@ -10,6 +10,49 @@ The application features a clean, card-based interface with soft gradients and s
 
 Preferred communication style: Simple, everyday language.
 
+## 📅 Recent Changes (Latest Session)
+
+### Critical Bugs Fixed - October 2025
+**App Store Compliance & Data Integrity Fixes**
+
+1. **Privacy Policy & Terms of Service Links Fixed** ✅
+   - Added Legal Documents section to Support page
+   - Links now accessible: More → Support & Legal → Privacy Policy / Terms
+   - Fixed navigation props in App.tsx to support legal page routing
+   - App Store review compliance requirement resolved
+
+2. **Notes Persistence Bug Fixed** ✅ (Critical)
+   - **Bug**: Notes dialog didn't load existing notes when reopening
+   - **Fix**: Added useEffect hook to load notes when dialog opens
+   - **Impact**: Users can now edit their saved notes reliably
+   - **Enhancement**: Button text now shows "Edit Note" when note exists
+
+3. **Notes Update Duplication Bug Fixed** ✅ (Critical)
+   - **Bug**: Updating a note created duplicates instead of updating
+   - **Fix**: Modified store.addNote() to check for existing notes before adding
+   - **Impact**: Notes now update correctly, preserving createdAt timestamp
+   - **Enhancement**: Added updatedAt timestamp when editing notes
+
+4. **API.Bible Search Crash Fixed** ✅
+   - **Bug**: TypeError: Cannot read properties of undefined (reading 'map')
+   - **Fix**: Added null checking for searchData.data.verses before mapping
+   - **Impact**: Bible search gracefully falls back to OpenAI when API.Bible fails
+   - **Location**: server/routes.ts line 732
+
+### Testing Completed
+- ✅ Homepage features (streak counter, Facebook link)
+- ✅ Daily Scripture card (bookmarks, notes, share, copy)
+- ✅ Ask the Pastor AI chat (full functionality verified)
+- ✅ Legal pages accessibility (all pages accessible)
+- ✅ Offline persistence (bookmarks and notes persist across refreshes)
+
+### Files Modified
+- `client/src/pages/SupportPage.tsx` - Added Legal Documents section
+- `client/src/App.tsx` - Fixed props passing for legal navigation
+- `client/src/components/DailyVerseCard.tsx` - Fixed notes loading and state
+- `client/src/lib/appStore.js` - Fixed addNote() update logic
+- `server/routes.ts` - Added defensive null checking for API responses
+
 ## 🎉 MILESTONE: Apple App Store Ready (January 2025)
 
 **STABLE CHECKPOINT - DO NOT LOSE THIS STATE**

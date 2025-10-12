@@ -724,21 +724,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           if (searchResponse.ok) {
             const searchData = await searchResponse.json();
-            const verses = searchData.data.verses.map((verse: any) => {
-              const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
-              
-              return {
-                text: verse.text.replace(/<[^>]*>/g, '').trim(),
-                reference: verse.reference,
-                book: refParts ? refParts[1] : 'Unknown',
-                chapter: refParts ? refParts[2] : '1',
-                verse: refParts ? refParts[3] : '1',
-                translation: version
-              };
-            });
             
-            if (verses.length > 0) {
-              return res.json({ success: true, verses, source: 'api.bible' });
+            // Check if verses array exists and has items
+            if (searchData?.data?.verses && Array.isArray(searchData.data.verses)) {
+              const verses = searchData.data.verses.map((verse: any) => {
+                const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+                
+                return {
+                  text: verse.text.replace(/<[^>]*>/g, '').trim(),
+                  reference: verse.reference,
+                  book: refParts ? refParts[1] : 'Unknown',
+                  chapter: refParts ? refParts[2] : '1',
+                  verse: refParts ? refParts[3] : '1',
+                  translation: version
+                };
+              });
+              
+              if (verses.length > 0) {
+                return res.json({ success: true, verses, source: 'api.bible' });
+              }
             }
           }
         }
