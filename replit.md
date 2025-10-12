@@ -2,224 +2,70 @@
 
 ## Overview
 
-"The Gospel in 5 Minutes" is a mobile-first spiritual wellness application that provides daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. The app combines the peaceful aesthetic of wellness apps like Headspace with the functionality of Bible apps like YouVersion, focusing on delivering meaningful spiritual content in digestible 5-minute sessions.
-
-The application features a clean, card-based interface with soft gradients and spiritual imagery, designed to create a calming user experience. Core functionality includes daily verse delivery, emotion-based scripture recommendations, AI pastor chat, Bible search capabilities, and gamified streak tracking with achievement badges.
+"The Gospel in 5 Minutes" is a mobile-first spiritual wellness application designed to deliver daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. It aims to combine the peaceful aesthetic of wellness apps with the functionality of Bible apps, offering meaningful spiritual content in digestible 5-minute sessions. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, and gamified streak tracking. The project's ambition is to provide a calming, intuitive spiritual experience accessible to a global audience.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
 
-## 📅 Recent Changes (Latest Session)
-
-### Saved Verses Feature Added - October 2025 ✅
-**Complete Bookmark Retrieval Experience**
-
-1. **Saved Verses Page** ✅
-   - New dedicated page to view all bookmarked verses
-   - Accessible from More → Saved Verses menu
-   - Shows count of saved verses
-   - Clean card-based layout with Holy Bible imagery
-   - Empty state when no bookmarks exist
-
-2. **Read Verse Functionality** ✅
-   - "Read" button fetches full verse content via /api/bible-search
-   - Opens dialog with verse text and reference
-   - Supports both API.Bible and OpenAI fallback
-   - Loading state with spinner during fetch
-   - Error handling with user-friendly toasts
-
-3. **Bookmark Management** ✅
-   - Remove bookmark functionality per verse
-   - Instant UI update when bookmark removed
-   - Toast confirmation for user feedback
-   - Persistent storage via appStore.js
-
-4. **Navigation & Routing** ✅
-   - Added 'savedverses' to AppPage type
-   - New route in App.tsx renderCurrentPage
-   - Menu tile in MorePage with BookmarkCheck icon
-   - Blue theme with Holy Bible background image
-   - Hidden bottom nav for focused reading
-
-### Critical Bugs Fixed - October 2025
-**App Store Compliance & Data Integrity Fixes**
-
-1. **Privacy Policy & Terms of Service Links Fixed** ✅
-   - Added Legal Documents section to Support page
-   - Links now accessible: More → Support & Legal → Privacy Policy / Terms
-   - Fixed navigation props in App.tsx to support legal page routing
-   - App Store review compliance requirement resolved
-
-2. **Notes Persistence Bug Fixed** ✅ (Critical)
-   - **Bug**: Notes dialog didn't load existing notes when reopening
-   - **Fix**: Added useEffect hook to load notes when dialog opens
-   - **Impact**: Users can now edit their saved notes reliably
-   - **Enhancement**: Button text now shows "Edit Note" when note exists
-
-3. **Notes Update Duplication Bug Fixed** ✅ (Critical)
-   - **Bug**: Updating a note created duplicates instead of updating
-   - **Fix**: Modified store.addNote() to check for existing notes before adding
-   - **Impact**: Notes now update correctly, preserving createdAt timestamp
-   - **Enhancement**: Added updatedAt timestamp when editing notes
-
-4. **API.Bible Search Crash Fixed** ✅
-   - **Bug**: TypeError: Cannot read properties of undefined (reading 'map')
-   - **Fix**: Added null checking for searchData.data.verses before mapping
-   - **Impact**: Bible search gracefully falls back to OpenAI when API.Bible fails
-   - **Location**: server/routes.ts line 732
-
-### Testing Completed
-- ✅ Homepage features (streak counter, Facebook link)
-- ✅ Daily Scripture card (bookmarks, notes, share, copy)
-- ✅ Ask the Pastor AI chat (full functionality verified)
-- ✅ Legal pages accessibility (all pages accessible)
-- ✅ Offline persistence (bookmarks and notes persist across refreshes)
-
-### Files Modified
-- `client/src/pages/SupportPage.tsx` - Added Legal Documents section
-- `client/src/App.tsx` - Fixed props passing for legal navigation
-- `client/src/components/DailyVerseCard.tsx` - Fixed notes loading and state
-- `client/src/lib/appStore.js` - Fixed addNote() update logic
-- `server/routes.ts` - Added defensive null checking for API responses
-
-## 🎉 MILESTONE: Apple App Store Ready (January 2025)
-
-**STABLE CHECKPOINT - DO NOT LOSE THIS STATE**
-
-### Current Status: ✅ COMPLETE APP STORE COMPLIANCE
-The app is now fully compliant with Apple App Store requirements and ready for submission. This represents a stable, production-ready version with:
-
-### ✅ Legal & Privacy Compliance
-- **Privacy Policy**: Complete in-app page with data collection disclosure, OpenAI processing details, user rights
-- **Terms of Service**: Comprehensive terms covering AI disclaimers, acceptable use, IP rights
-- **Support Page**: In-app data deletion, data export, privacy controls, crisis resources
-- **Navigation**: All legal pages accessible through More → Support & Legal
-- **App Privacy Mapping**: Complete JSON mapping for App Store Connect submission
-
-### ✅ iOS Technical Compliance  
-- **44pt Tap Targets**: Enforced globally via CSS for all interactive elements
-- **Safe Area Support**: Full iPhone notch/Dynamic Island compatibility using CSS env() variables
-- **VoiceOver Accessibility**: ARIA labels, keyboard navigation, screen reader support
-- **High Contrast & Reduced Motion**: Automatic adaptation for accessibility preferences
-- **Offline Functionality**: Network status indicator with graceful error handling
-
-### ✅ Design & User Experience
-- **Clean White Design**: Beautiful nature imagery (mountain lake, forest path, ocean cliff)
-- **Cursive App Title**: "The Gospel in 5 Minutes" in Dancing Script font
-- **Consecutive Days Counter**: Infinity symbol (∞) with numeric streak tracking
-- **Facebook Integration**: Small button linking to https://www.facebook.com/TheGospelIn5Minutes
-- **Responsive Layout**: Perfect mobile-first design with proper spacing and typography
-
-### ✅ App Store Assets
-- **App Icon**: Professional Christian design ready for 1024×1024 submission
-- **Screenshots**: Homepage, Scripture detail, AI Pastor chat mockups
-- **Metadata**: Complete App Store descriptions, keywords, age rating documentation
-
-### ✅ Core Functionality (Current State)
-- **Homepage**: Welcome header with streak counter and Facebook link
-- **Daily Scripture**: Card with verse text and mountain lake imagery with bookmark and notes
-- **3-Day Study Plans**: Card with forest path imagery
-- **Ask the Pastor**: Professional AI chat with premium UI polish
-- **Feelings & Scripture**: Emotion-based guidance with quick-start chips and modern design
-- **Scripture Memory Helper**: Interactive memorization with progress tracking and professional polish
-- **More Page**: Language selection, legal pages, support access
-- **User Registration**: Modal with personal info collection
-- **Streak Tracking**: Consecutive days counter with localStorage persistence
-- **Donations**: Platform-specific payment processing
-  - **iOS**: Apple Pay integration via @capacitor-community/stripe (0% Apple fees for nonprofits)
-  - **Web/Android**: Stripe payment forms with card processing
-  - Automatic platform detection and routing
-
-### ✅ Offline & Data Management Features
-- **Bookmarks**: Save favorite verses with persistent localStorage storage
-  - Toggle bookmark button on DailyVerseCard
-  - Bookmarks persist across sessions
-  - Managed via appStore.js utility
-  - **Saved Verses Page**: Dedicated page to view all bookmarks (More → Saved Verses)
-    - Displays count of saved verses
-    - Read button fetches and displays full verse content via API
-    - Remove bookmark functionality with instant UI updates
-    - Supports API.Bible and OpenAI fallback for verse retrieval
-- **Personal Notes**: Add reflections and prayers for any verse
-  - Dialog-based note entry with textarea
-  - Notes stored with verse reference and timestamp
-  - Full CRUD operations via appStore.js
-- **Data Export**: Download all user data as JSON file
-  - Includes profile, preferences, bookmarks, notes, and streak data
-  - Export available in Settings → Data & Privacy
-  - Timestamped export files for backup
-- **Account Deletion**: Complete data removal with confirmation
-  - Alert dialog with detailed deletion warning
-  - Clears all localStorage keys comprehensively
-  - Persists empty state to prevent data repopulation
-  - Navigates to home after successful deletion
-
-### 📋 Implementation Status
-- **Frontend**: React/TypeScript with Tailwind CSS and shadcn/ui components
-- **State**: LocalStorage for user data, preferences, and streak tracking
-- **Navigation**: Bottom nav between Home, Ask, Search, More pages
-- **Legal Pages**: Complete Privacy Policy, Terms of Service, Support pages
-- **Accessibility**: Full VoiceOver support, keyboard navigation, ARIA labels
-
-**This checkpoint represents a fully App Store compliant version. All future development should preserve this compliance and legal framework.**
-
 ## System Architecture
 
 ### Frontend Architecture
-- **Framework**: React 18 with TypeScript, built using Vite for fast development and optimized bundling
-- **UI Framework**: Tailwind CSS with shadcn/ui component library for consistent, accessible design components
-- **Design System**: Custom color palette with spiritual themes (soft blues, warm golds, gentle greens) and typography using Inter and Crimson Text fonts
-- **State Management**: React hooks for local state, TanStack Query for server state and API caching
-- **Navigation**: Custom bottom navigation with four main sections (Home, Ask, Search, More)
+- **Framework**: React 18 with TypeScript, built using Vite.
+- **UI Framework**: Tailwind CSS with shadcn/ui and Radix UI for consistent, accessible design.
+- **Design System**: Custom color palette (soft blues, warm golds, gentle greens) and typography (Inter, Crimson Text).
+- **State Management**: React hooks for local state, TanStack Query for server state and caching.
+- **Navigation**: Custom bottom navigation (Home, Ask, Search, More).
+- **Mobile-First Design**: Responsive layout optimized for mobile, gesture-friendly interfaces, PWA-ready, and performance-optimized.
+- **Accessibility**: Full iOS compliance including 44pt tap targets, safe area support, VoiceOver, high contrast, and reduced motion adaptations.
 
 ### Backend Architecture
-- **Server**: Express.js with TypeScript running in ESM mode
-- **API Design**: RESTful endpoints with `/api` prefix, structured route registration system
-- **Storage Layer**: Abstracted storage interface with in-memory implementation for development, designed to easily swap to database-backed storage
-- **Session Management**: Prepared for session-based authentication using connect-pg-simple
+- **Server**: Express.js with TypeScript in ESM mode.
+- **API Design**: RESTful endpoints (`/api`), structured route registration.
+- **Storage Layer**: Abstracted storage interface, with in-memory for development, designed for database-backed integration.
+- **Session Management**: Prepared for session-based authentication.
 
 ### Data Storage Solutions
-- **Database ORM**: Drizzle ORM configured for PostgreSQL with Neon serverless database
-- **Schema**: Basic user authentication schema with extensible design for spiritual content
-- **Migrations**: Database migrations managed through drizzle-kit
-- **Local Storage**: Client-side storage for user preferences, streak tracking, and offline functionality
-- **appStore.js**: Centralized localStorage utility managing:
-  - Today's reading with offline access
-  - Bookmarks (verse references array)
-  - Personal notes (with reference, text, and timestamp)
-  - User profile data (name, email, birthdate)
-  - Consistent key naming convention (dg_* prefix)
+- **Database ORM**: Drizzle ORM for PostgreSQL (Neon serverless database).
+- **Schema**: Extensible user authentication and spiritual content schema.
+- **Migrations**: Managed by drizzle-kit.
+- **Local Storage**: Client-side `appStore.js` utility for user preferences, streak tracking, offline content, bookmarks, and personal notes.
 
 ### Authentication and Authorization
-- **User Registration**: Modal-based registration collecting personal information for personalized experience
-- **Session Management**: Backend prepared for session-based auth with PostgreSQL session store
-- **User Preferences**: Language selection and personalization settings stored locally and server-side
+- **User Registration**: Modal-based registration for personalized experiences.
+- **Session Management**: Backend prepared for session-based authentication.
 
-### Mobile-First Design Approach
-- **Responsive Layout**: Tailwind breakpoints optimized for mobile devices with desktop fallbacks
-- **Touch Interactions**: Gesture-friendly interface with appropriate tap targets and hover states
-- **Progressive Web App**: Prepared for PWA capabilities with offline functionality
-- **Performance**: Optimized images, lazy loading, and efficient bundle splitting for mobile networks
+### Core Features & Implementation
+- **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, and copying.
+- **AI Pastor Chat**: Professional UI for AI-powered Q&A.
+- **Feelings & Scripture**: Emotion-based guidance.
+- **Scripture Memory Helper**: Interactive memorization.
+- **Saved Verses Page**: Dedicated page for bookmarked verses with read and remove functionality, supporting API.Bible and OpenAI for content.
+- **Notes Feature**: CRUD operations for personal reflections on verses.
+- **Language Selection**: Multi-language support with full internationalization across all pages.
+- **Streak Tracking**: Consecutive days counter with localStorage persistence.
+- **Donations**: Platform-specific payment processing (Apple Pay for iOS, Stripe for Web/Android).
+- **Offline Functionality**: Network status indicator, bookmarks, and notes persistence.
+- **Data Management**: User data export (JSON) and full account deletion capabilities.
 
 ## External Dependencies
 
 ### Third-Party UI Libraries
-- **Radix UI**: Comprehensive set of accessible, unstyled UI primitives for complex components
-- **Lucide React**: Consistent icon system with spiritual and general-purpose icons
-- **class-variance-authority**: Type-safe component variant management for design system consistency
+- **Radix UI**: Accessible UI primitives.
+- **Lucide React**: Consistent icon system.
+- **class-variance-authority**: Type-safe component variant management.
 
 ### Backend Services
-- **Neon Database**: Serverless PostgreSQL database for production data storage
-- **WebSocket Support**: Real-time capabilities for chat features using ws library
+- **Neon Database**: Serverless PostgreSQL for production.
+- **ws library**: WebSocket support for real-time features.
 
-### Planned External APIs
-- **Bible API Integration**: For fetching verses, cross-references, and multiple translations
-- **OpenAI API**: AI-powered pastor responses and biblical question answering
-- **Translation Services**: Multi-language support for global spiritual community
+### External APIs
+- **Bible API Integration**: For verses, cross-references, and translations.
+- **OpenAI API**: AI-powered pastor responses and Q&A.
+- **Translation Services**: For multi-language support.
 
 ### Development Tools
-- **Vite**: Fast development server with hot module replacement and optimized production builds
-- **ESBuild**: High-performance bundling for server-side code
-- **TypeScript**: Full type safety across client and server with shared schema types
-- **TanStack Query**: Robust data fetching, caching, and synchronization for API interactions
+- **Vite**: Fast development server and optimized builds.
+- **ESBuild**: High-performance server-side bundling.
+- **TypeScript**: Full type safety.
+- **TanStack Query**: Robust data fetching and caching.
