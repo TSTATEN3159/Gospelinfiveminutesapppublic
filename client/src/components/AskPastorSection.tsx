@@ -9,6 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "@/lib/translations";
 
 interface Message {
   id: string;
@@ -20,12 +21,14 @@ interface Message {
 
 interface AskPastorSectionProps {
   backgroundImage?: string;
+  language?: string;
 }
 
-export default function AskPastorSection({ backgroundImage }: AskPastorSectionProps) {
+export default function AskPastorSection({ backgroundImage, language = "en" }: AskPastorSectionProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [currentMessage, setCurrentMessage] = useState("");
   const { toast } = useToast();
+  const t = useTranslations(language);
 
   // OpenAI Pastor API Integration  
   const askPastorMutation = useMutation({
@@ -52,14 +55,14 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
         const errorMessage: Message = {
           id: (Date.now() + 1).toString(),
           role: "pastor",
-          content: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
+          content: t.connectionTrouble,
           timestamp: new Date()
         };
         setMessages(prev => [...prev, errorMessage]);
         
         toast({
-          title: "AI Pastor Unavailable",
-          description: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
+          title: t.aiPastorUnavailable,
+          description: t.connectionTrouble,
           variant: "destructive"
         });
       }
@@ -71,14 +74,14 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: "pastor",
-        content: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
+        content: t.connectionTrouble,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
       
       toast({
-        title: "AI Pastor Unavailable",
-        description: "I'm having trouble connecting right now. Please try again in a moment, and I'll be here to help with your spiritual question.",
+        title: t.aiPastorUnavailable,
+        description: t.connectionTrouble,
         variant: "destructive"
       });
     }
@@ -110,9 +113,9 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
   };
 
   const quickPrompts = [
-    "How can I grow stronger in my faith?",
-    "What does the Bible say about anxiety?",
-    "How do I know God's will for my life?"
+    t.growStrongerFaith,
+    t.bibleSayAnxiety,
+    t.knowGodsWill
   ];
 
   const clearChat = () => {
@@ -141,10 +144,10 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
           <div className="flex-1 space-y-1">
             <CardTitle className={cn("flex items-center gap-3 text-2xl font-semibold tracking-tight", backgroundImage ? "text-white" : "text-white")}>
               <MessageSquare className="w-6 h-6" />
-              AI Pastor
+              {t.aiPastor}
             </CardTitle>
             <p className={cn("text-base leading-relaxed", backgroundImage ? "text-white/90" : "text-gray-100")}>
-              Scripture-based guidance powered by biblical wisdom
+              {t.scriptureGuidance}
             </p>
           </div>
           {messages.length > 0 && (
@@ -168,10 +171,10 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
             <div className="text-center py-8">
               <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 mx-4">
                 <MessageSquare className="w-12 h-12 mx-auto mb-4 text-primary" />
-                <h3 className="font-semibold text-gray-900 mb-2">Welcome! I'm here to help</h3>
-                <p className="text-gray-700 text-sm mb-4">Ask me anything about God's word, and I'll help you find answers in Scripture.</p>
+                <h3 className="font-semibold text-gray-900 mb-2">{t.welcomeHelp}</h3>
+                <p className="text-gray-700 text-sm mb-4">{t.askAnythingGodsWord}</p>
                 <div className="space-y-2">
-                  <p className="text-xs text-gray-600 font-medium">Try these questions:</p>
+                  <p className="text-xs text-gray-600 font-medium">{t.tryTheseQuestions}</p>
                   <div className="flex flex-wrap gap-2 justify-center">
                     {quickPrompts.map((prompt, index) => (
                       <Badge 
@@ -241,7 +244,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
                   <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0.1s" }}></div>
                   <div className="w-2 h-2 bg-primary rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
                 </div>
-                <p className="text-xs text-gray-600">AI Pastor is seeking wisdom in Scripture...</p>
+                <p className="text-xs text-gray-600">{t.seekingWisdomScripture}</p>
               </div>
             </div>
           )}
@@ -253,7 +256,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
               value={currentMessage}
               onChange={(e) => setCurrentMessage(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask your Bible question here..."
+              placeholder={t.askBibleQuestion}
               rows={2}
               className="resize-none bg-transparent border-gray-300"
               disabled={askPastorMutation.isPending}
@@ -279,7 +282,7 @@ export default function AskPastorSection({ backgroundImage }: AskPastorSectionPr
           <div className="flex items-center justify-between text-xs">
             <div className="flex items-center gap-2 text-gray-600">
               <ShieldCheck className="w-3 h-3" />
-              <span>Biblically guided AI responses</span>
+              <span>{t.biblicallyGuidedResponses}</span>
             </div>
             <span className="text-gray-500">{currentMessage.length}/500</span>
           </div>

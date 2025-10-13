@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { Heart, Book, Users, DollarSign, ArrowLeft, Target, TrendingUp, Globe, Gift } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
+import { useTranslations } from '@/lib/translations';
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
@@ -11,9 +12,11 @@ import mountainLakeImage from '@assets/generated_images/Mountain_lake_sunrise_sc
 interface GivingPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
+  language?: string;
 }
 
-export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPageProps) {
+export default function GivingPage({ onNavigate, streakDays = 0, language = "en" }: GivingPageProps) {
+  const t = useTranslations(language);
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
   
@@ -49,10 +52,10 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }}>
-              Giving Impact
+              {t.givingPageTitle}
             </h1>
             <div className="h-1 w-24 bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 rounded-full mx-auto shadow-sm mb-3" />
-            <p className="text-amber-700 dark:text-amber-300 font-semibold text-lg">See how your generosity spreads God's word worldwide</p>
+            <p className="text-amber-700 dark:text-amber-300 font-semibold text-lg">{t.givingPageSubtitle}</p>
           </div>
         </div>
       </div>
@@ -70,7 +73,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
             <div className="absolute inset-0 bg-gradient-to-t from-amber-900/80 via-amber-700/40 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-3">
               <CardTitle className="text-center text-white text-lg font-bold mb-1">
-                Current Goal: Spread God's Word
+                {t.currentGoalSpreadGodsWord}
               </CardTitle>
               <div className="flex justify-center">
                 <div className="w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full flex items-center justify-center">
@@ -85,11 +88,11 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
                 ${givingStats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 })}
               </div>
               <div className="text-sm font-semibold text-amber-700 dark:text-amber-300 mb-3">
-                of ${givingStats.currentGoal.toLocaleString()} goal
+                {t.of} ${givingStats.currentGoal.toLocaleString()} {t.goal}
               </div>
               <Progress value={progressPercentage} className="h-3 mb-2" />
               <div className="text-xs font-bold text-amber-800 dark:text-amber-200">
-                {Math.round(progressPercentage)}% Complete
+                {Math.round(progressPercentage)}{t.percentComplete}
               </div>
             </div>
           </CardContent>
@@ -116,7 +119,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
                 {givingStats.biblesPurchased.toLocaleString()}
               </div>
               <div className="text-sm font-semibold text-amber-700 dark:text-amber-300">
-                Bibles Purchased
+                {t.biblesPurchased}
               </div>
             </CardContent>
           </Card>
@@ -140,7 +143,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
                 {givingStats.biblesDistributed.toLocaleString()}
               </div>
               <div className="text-sm font-semibold text-amber-700 dark:text-amber-300">
-                Bibles Distributed
+                {t.biblesDistributed}
               </div>
             </CardContent>
           </Card>
@@ -157,7 +160,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
             <div className="absolute inset-0 bg-gradient-to-t from-amber-900/80 via-amber-700/40 to-transparent"></div>
             <div className="absolute bottom-0 left-0 right-0 p-3">
               <CardTitle className="text-center text-white text-lg font-bold mb-1">
-                This Month's Impact
+                {t.thisMonthsImpact}
               </CardTitle>
               <div className="flex justify-center">
                 <div className="w-6 h-6 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full flex items-center justify-center">
@@ -169,13 +172,13 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
           <CardContent className="p-4 bg-gradient-to-br from-white/95 via-amber-50/90 to-orange-50/95 dark:from-gray-800/95 dark:via-amber-900/30 dark:to-orange-900/30">
             <div className="space-y-4">
               <div className="flex justify-between items-center">
-                <span className="text-sm font-semibold text-amber-700 dark:text-amber-300">Monthly Donations</span>
+                <span className="text-sm font-semibold text-amber-700 dark:text-amber-300">{t.monthlyDonations}</span>
                 <span className="text-lg font-bold bg-gradient-to-r from-amber-800 to-orange-800 bg-clip-text text-transparent">
                   ${givingStats.monthlyDonations.toLocaleString('en-US', { minimumFractionDigits: 2 })}
                 </span>
               </div>
               <div className="flex justify-between items-center">
-                <span className="text-sm font-semibold text-amber-700 dark:text-amber-300">Lives Reached</span>
+                <span className="text-sm font-semibold text-amber-700 dark:text-amber-300">{t.livesReached}</span>
                 <span className="text-lg font-bold bg-gradient-to-r from-amber-800 to-orange-800 bg-clip-text text-transparent">
                   {givingStats.impactReach.toLocaleString()}
                 </span>
@@ -192,11 +195,10 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
                 <Heart className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-bold mb-2 text-center">
-                Join Our Mission
+                {t.joinOurMission}
               </h3>
               <p className="text-white/90 text-sm mb-4 leading-relaxed text-center">
-                Your donation helps us purchase and distribute Bibles to those who need God's word most. 
-                Every contribution brings the Gospel to someone seeking hope and salvation.
+                {t.givingPageCTADescription}
               </p>
               <Button 
                 variant="outline"
@@ -207,7 +209,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
                 onClick={() => onNavigate?.('donate')}
               >
                 <Heart className="w-4 h-4 mr-2" />
-                Make a Donation
+                {t.makeADonation}
               </Button>
             </CardContent>
           </Card>
@@ -217,7 +219,7 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
         <Card className="shadow-lg border-0 bg-gradient-to-br from-amber-100/90 to-orange-100/90 dark:from-amber-900/60 dark:to-orange-900/60 overflow-hidden transform hover:scale-[1.01] transition-all duration-300">
           <CardHeader className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 p-4">
             <CardTitle className="text-center text-white text-lg font-bold">
-              Global Bible Distribution
+              {t.globalBibleDistribution}
             </CardTitle>
             <div className="flex justify-center mt-2">
               <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
@@ -231,11 +233,10 @@ export default function GivingPage({ onNavigate, streakDays = 0 }: GivingPagePro
                 <Users className="w-6 h-6 text-white" />
               </div>
               <h3 className="text-lg font-bold text-amber-800 dark:text-amber-200 mb-2">
-                Worldwide Impact Coming Soon!
+                {t.worldwideImpactComingSoon}
               </h3>
               <p className="text-amber-700 dark:text-amber-300 text-sm font-medium leading-relaxed">
-                Interactive map showing Bible distributions worldwide will be available soon. 
-                Track how your donations reach every corner of the globe!
+                {t.worldwideImpactDescription}
               </p>
             </div>
           </CardContent>

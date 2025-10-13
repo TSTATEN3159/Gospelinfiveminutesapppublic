@@ -8,11 +8,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail, AlertCircle, Loader2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
+import { useTranslations } from '@/lib/translations';
 import bibleGoldenImage from '@assets/stock_images/open_bible_golden_su_6f7daf93.jpg';
 
 interface BlogPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
+  language?: string;
 }
 
 interface BlogArticle {
@@ -27,7 +29,8 @@ interface BlogArticle {
   category: string;
 }
 
-export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) {
+export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }: BlogPageProps) {
+  const t = useTranslations(language);
   const { toast } = useToast();
   const [isSubscribeModalOpen, setIsSubscribeModalOpen] = useState(false);
   const [subscribeForm, setSubscribeForm] = useState({ name: '', email: '' });
@@ -40,8 +43,8 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
   const handleSubscribe = async () => {
     if (!subscribeForm.email) {
       toast({
-        title: "Email Required",
-        description: "Please enter your email address to subscribe.",
+        title: t.emailRequired,
+        description: t.enterEmailToSubscribe,
         variant: "destructive"
       });
       return;
@@ -58,8 +61,8 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
       if (data.success) {
         toast({
-          title: "Successfully Subscribed!",
-          description: data.message || "Thank you for subscribing to our blog updates.",
+          title: t.successfullySubscribed,
+          description: data.message || t.thankYouSubscribing,
           variant: "default"
         });
         
@@ -72,8 +75,8 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
     } catch (error) {
       console.error('Subscription error:', error);
       toast({
-        title: "Subscription Failed",
-        description: "There was an error processing your subscription. Please try again.",
+        title: t.subscriptionFailed,
+        description: t.subscriptionError,
         variant: "destructive"
       });
     } finally {
@@ -98,7 +101,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
         }
       } catch (err) {
         console.error('Error loading blog articles:', err);
-        setError('Unable to load articles. Please try again later.');
+        setError(t.unableToLoadArticles);
         
         // Fallback to ensure app doesn't break
         setArticles([]);
@@ -147,9 +150,9 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }}>
-              Christian Blog
+              {t.blogPageTitle}
             </h1>
-            <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">Inspiring articles to grow your faith</p>
+            <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">{t.blogPageSubtitle}</p>
             <div className="w-24 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-indigo-500 mx-auto mt-3 rounded-full shadow-lg"></div>
           </div>
         </div>
@@ -169,10 +172,10 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                     </div>
                   </div>
                   <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent text-center">
-                    Featured Article
+                    {t.featuredArticle}
                   </CardTitle>
                   <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg text-center mt-3">
-                    Today's highlighted Christian insight
+                    {t.todaysHighlightedInsight}
                   </p>
                 </CardHeader>
               </div>
@@ -186,18 +189,18 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
               <h3 className="font-bold text-slate-800 dark:text-slate-200 mt-4 mb-4 text-2xl text-center leading-tight">{articles[0].title}</h3>
               <p className="text-slate-600 dark:text-slate-400 text-base mb-6 leading-relaxed text-center font-medium">{articles[0].excerpt}</p>
               <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-600 dark:text-slate-400 font-medium mb-4">
-                <span className="bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">By {articles[0].author}</span>
+                <span className="bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">{t.by} {articles[0].author}</span>
                 <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
                   <Clock className="w-4 h-4" />
-                  {articles[0].readTime} min read
+                  {articles[0].readTime} {t.minRead}
                 </span>
                 <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
                   <Eye className="w-4 h-4" />
-                  {articles[0].views.toLocaleString()} views
+                  {articles[0].views.toLocaleString()} {t.views}
                 </span>
               </div>
               <div className="text-sm text-slate-500 dark:text-slate-500 text-center mb-6 font-medium">
-                Published {formatDate(articles[0].publishDate)}
+                {t.published} {formatDate(articles[0].publishDate)}
               </div>
               <div className="text-center">
                 <Button 
@@ -205,7 +208,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                   onClick={() => handleArticleClick(articles[0])}
                   data-testid="button-read-featured"
                 >
-                  Read Full Article
+                  {t.readFullArticle}
                 </Button>
               </div>
             </CardContent>
@@ -214,8 +217,8 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
         {/* Professional Recent Articles */}
         <div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">Recent Articles</h2>
-          <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">Latest insights to strengthen your faith journey</p>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">{t.recentArticles}</h2>
+          <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">{t.latestInsightsToStrengthen}</p>
           <div className="space-y-6">
             {articles.slice(1).map((article) => (
               <Card 
@@ -239,10 +242,10 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                   
                   <div className="flex flex-wrap items-center justify-between gap-3">
                     <div className="flex flex-wrap items-center gap-3 text-sm text-slate-600 dark:text-slate-400 font-medium">
-                      <span className="bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">By {article.author}</span>
+                      <span className="bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">{t.by} {article.author}</span>
                       <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
                         <Clock className="w-4 h-4" />
-                        {article.readTime} min
+                        {article.readTime} {t.min}
                       </span>
                       <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
                         <Eye className="w-4 h-4" />
@@ -257,7 +260,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                       }}
                       data-testid={`button-read-more-${article.id}`}
                     >
-                      Read More
+                      {t.readMore}
                     </Button>
                   </div>
                 </CardContent>
@@ -268,15 +271,15 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
 
         {/* Professional Categories Section */}
         <div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">Browse by Topic</h2>
-          <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">Explore content organized by spiritual themes</p>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">{t.browseByTopic}</h2>
+          <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">{t.exploreContentByThemes}</p>
           <div className="grid grid-cols-2 gap-4">
             {['Faith & Trust', 'Prayer & Devotion', 'Mental Health & Faith', 'Evangelism', 'Theology', 'Christian Living'].map((category) => (
               <Card key={category} className="cursor-pointer shadow-2xl border-0 bg-white dark:bg-gray-800 hover-elevate">
                 <CardContent className="p-5 text-center bg-white dark:bg-gray-800">
                   <div className="text-base font-bold text-slate-800 dark:text-slate-200 mb-2">{category}</div>
                   <div className="text-sm text-slate-600 dark:text-slate-400 font-medium bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full inline-block">
-                    {articles.filter(a => a.category === category).length || Math.floor(Math.random() * 8) + 3} articles
+                    {articles.filter(a => a.category === category).length || Math.floor(Math.random() * 8) + 3} {t.articles}
                   </div>
                 </CardContent>
               </Card>
@@ -294,10 +297,10 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                   <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
                 </div>
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-4 text-center">
-                  Never Miss an Article
+                  {t.neverMissAnArticle}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 text-base font-medium mb-6 text-center leading-relaxed">
-                  Get the latest Christian insights and faith-building content delivered to your inbox.
+                  {t.latestChristianInsights}
                 </p>
                 <Dialog open={isSubscribeModalOpen} onOpenChange={setIsSubscribeModalOpen}>
                   <DialogTrigger asChild>
@@ -306,7 +309,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                       data-testid="button-subscribe-blog"
                     >
                       <Mail className="w-5 h-5 mr-2" />
-                      Subscribe to Updates
+                      {t.subscribeToUpdates}
                     </Button>
                   </DialogTrigger>
               <DialogContent className="sm:max-w-md">
@@ -315,35 +318,35 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                     fontFamily: 'Dancing Script, Brush Script MT, cursive',
                     fontSize: '1.5rem'
                   }}>
-                    Subscribe to Our Blog
+                    {t.subscribeToBlog}
                   </DialogTitle>
                   <DialogDescription className="text-center text-muted-foreground text-sm">
-                    Join our community and receive bi-weekly Christian insights and faith-building content delivered to your inbox.
+                    {t.joinCommunityBiweekly}
                   </DialogDescription>
                 </DialogHeader>
                 <div className="space-y-4 py-4">
                   <p className="text-center text-muted-foreground text-sm">
-                    Get bi-weekly Christian insights and faith-building content delivered to your inbox.
+                    {t.biweeklyInsightsInbox}
                   </p>
                   
                   <div className="space-y-3">
                     <div>
-                      <Label htmlFor="subscriber-name">Name (Optional)</Label>
+                      <Label htmlFor="subscriber-name">{t.nameOptional}</Label>
                       <Input
                         id="subscriber-name"
                         type="text"
-                        placeholder="Your name"
+                        placeholder={t.yourName}
                         value={subscribeForm.name}
                         onChange={(e) => setSubscribeForm(prev => ({ ...prev, name: e.target.value }))}
                         data-testid="input-subscriber-name"
                       />
                     </div>
                     <div>
-                      <Label htmlFor="subscriber-email">Email Address *</Label>
+                      <Label htmlFor="subscriber-email">{t.emailAddressRequired}</Label>
                       <Input
                         id="subscriber-email"
                         type="email"
-                        placeholder="your.email@example.com"
+                        placeholder={t.emailPlaceholder}
                         value={subscribeForm.email}
                         onChange={(e) => setSubscribeForm(prev => ({ ...prev, email: e.target.value }))}
                         required
@@ -360,7 +363,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                       variant="default"
                       data-testid="button-confirm-subscribe"
                     >
-                      {isSubscribing ? 'Subscribing...' : 'Subscribe to Updates'}
+                      {isSubscribing ? t.subscribing : t.subscribeToUpdates}
                     </Button>
                     <Button 
                       variant="outline" 
@@ -373,7 +376,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                   </div>
                   
                   <p className="text-xs text-muted-foreground text-center">
-                    We'll send you updates every two weeks. You can unsubscribe at any time.
+                    {t.biweeklyEmailDisclaimer}
                   </p>
                 </div>
               </DialogContent>
@@ -400,15 +403,15 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                   <span>By {selectedArticle.author}</span>
                   <span className="flex items-center gap-1">
                     <Clock className="w-3 h-3" />
-                    {selectedArticle.readTime} min read
+                    {selectedArticle.readTime} {t.minRead}
                   </span>
                   <span className="flex items-center gap-1">
                     <Eye className="w-3 h-3" />
-                    {selectedArticle.views.toLocaleString()} views
+                    {selectedArticle.views.toLocaleString()} {t.views}
                   </span>
                 </div>
                 <div className="text-sm text-muted-foreground">
-                  Published {formatDate(selectedArticle.publishDate)}
+                  {t.published} {formatDate(selectedArticle.publishDate)}
                 </div>
               </DialogHeader>
               
@@ -429,7 +432,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
         <div className="fixed inset-0 bg-foreground/50 flex items-center justify-center z-50">
           <div className="bg-background p-6 rounded-lg flex items-center gap-3">
             <Loader2 className="w-5 h-5 animate-spin text-primary" />
-            <span className="text-foreground">Loading articles...</span>
+            <span className="text-foreground">{t.loadingArticles}</span>
           </div>
         </div>
       )}
@@ -440,7 +443,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
           <div className="flex items-start gap-3">
             <AlertCircle className="w-5 h-5 text-destructive mt-0.5" />
             <div>
-              <h4 className="font-medium text-destructive">Error Loading Articles</h4>
+              <h4 className="font-medium text-destructive">{t.errorLoadingArticles}</h4>
               <p className="text-sm text-destructive/80 mt-1">{error}</p>
               <Button 
                 variant="outline" 
@@ -449,7 +452,7 @@ export default function BlogPage({ onNavigate, streakDays = 0 }: BlogPageProps) 
                 onClick={() => window.location.reload()}
                 data-testid="button-retry-articles"
               >
-                Retry
+                {t.retry}
               </Button>
             </div>
           </div>

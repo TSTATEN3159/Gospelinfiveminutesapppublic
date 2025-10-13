@@ -23,10 +23,12 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import forestPathImage from '@assets/stock_images/peaceful_forest_path_c4eefddd.jpg';
+import { useTranslations } from "@/lib/translations";
 
 interface SettingsPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
+  language?: string;
   user?: {
     firstName: string;
     lastName: string;
@@ -60,8 +62,9 @@ interface AppPreferences {
   bibleVersion: string;
 }
 
-export default function SettingsPage({ onNavigate, streakDays = 0, user }: SettingsPageProps) {
+export default function SettingsPage({ onNavigate, streakDays = 0, language = "en", user }: SettingsPageProps) {
   const { toast } = useToast();
+  const t = useTranslations(language);
   
   // Initialize profile data from user prop or defaults
   const [profile, setProfile] = useState<UserProfile>({
@@ -98,10 +101,10 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
     if (isLoading) {
       return (
         <div>
-          <Label htmlFor="bibleVersion">Bible Version</Label>
+          <Label htmlFor="bibleVersion">{t.bibleVersion}</Label>
           <Select disabled>
             <SelectTrigger data-testid="select-bible-version">
-              <SelectValue placeholder="Loading versions..." />
+              <SelectValue placeholder={t.loadingVersions} />
             </SelectTrigger>
           </Select>
         </div>
@@ -112,7 +115,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
 
     return (
       <div>
-        <Label htmlFor="bibleVersion">Bible Version</Label>
+        <Label htmlFor="bibleVersion">{t.bibleVersion}</Label>
         <Select value={value} onValueChange={onChange}>
           <SelectTrigger data-testid="select-bible-version">
             <SelectValue />
@@ -148,18 +151,18 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
   }, []);
 
   const months = [
-    'January', 'February', 'March', 'April', 'May', 'June',
-    'July', 'August', 'September', 'October', 'November', 'December'
+    t.january, t.february, t.march, t.april, t.may, t.june,
+    t.july, t.august, t.september, t.october, t.november, t.december
   ];
 
   const days = Array.from({ length: 31 }, (_, i) => (i + 1).toString());
 
   const timezones = [
-    { value: 'America/New_York', label: 'Eastern Time (EST)' },
-    { value: 'America/Chicago', label: 'Central Time (CST)' },
-    { value: 'America/Denver', label: 'Mountain Time (MST)' },
-    { value: 'America/Los_Angeles', label: 'Pacific Time (PST)' },
-    { value: 'UTC', label: 'UTC' }
+    { value: 'America/New_York', label: t.easternTime },
+    { value: 'America/Chicago', label: t.centralTime },
+    { value: 'America/Denver', label: t.mountainTime },
+    { value: 'America/Los_Angeles', label: t.pacificTime },
+    { value: 'UTC', label: t.utc }
   ];
 
   const languages = [
@@ -196,14 +199,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
       
       setIsEditing(false);
       toast({
-        title: "Profile Updated",
-        description: "Your profile information has been saved successfully.",
+        title: t.profileUpdated,
+        description: t.profileSavedSuccessfully,
       });
     } catch (error) {
       console.error("Error saving profile:", error);
       toast({
         title: "Error",
-        description: "Failed to save profile changes. Please try again.",
+        description: t.failedToSaveProfile,
         variant: "destructive",
       });
     }
@@ -245,14 +248,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
       URL.revokeObjectURL(url);
 
       toast({
-        title: "Data Exported",
-        description: "Your data has been downloaded successfully.",
+        title: t.dataExported,
+        description: t.dataDownloadedSuccessfully,
       });
     } catch (error) {
       console.error("Error exporting data:", error);
       toast({
-        title: "Export Failed",
-        description: "Failed to export your data. Please try again.",
+        title: t.exportFailed,
+        description: t.failedToExportData,
         variant: "destructive",
       });
     }
@@ -312,8 +315,8 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
       notificationService.clearScheduledReminders();
 
       toast({
-        title: "Account Data Deleted",
-        description: "All your local data has been removed from this device.",
+        title: t.accountDataDeleted,
+        description: t.allDataRemovedFromDevice,
       });
 
       // Navigate back to home
@@ -321,8 +324,8 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
     } catch (error) {
       console.error("Error deleting account:", error);
       toast({
-        title: "Deletion Failed",
-        description: "Failed to delete account data. Please try again.",
+        title: t.deletionFailed,
+        description: t.failedToDeleteAccountData,
         variant: "destructive",
       });
     }
@@ -340,14 +343,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
           
           notificationService.scheduleDailyReminders(newPreferences);
           toast({
-            title: "Daily Reminders Enabled",
-            description: `You'll receive daily verse reminders at ${newPreferences.reminderTime}.`,
+            title: t.dailyRemindersEnabled,
+            description: `${t.dailyReminderConfirmation} ${newPreferences.reminderTime}.`,
           });
         } else {
           // Keep the setting as false and don't save to localStorage
           toast({
-            title: "Permission Required",
-            description: "Please allow notifications to receive daily verse reminders.",
+            title: t.permissionRequired,
+            description: t.notificationPermissionMessage,
             variant: "destructive",
           });
           return; // Don't update preferences or localStorage
@@ -359,8 +362,8 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         
         notificationService.clearScheduledReminders();
         toast({
-          title: "Daily Reminders Disabled",
-          description: "You will no longer receive daily verse reminders.",
+          title: t.dailyRemindersDisabled,
+          description: t.noMoreDailyReminders,
         });
       }
     } else {
@@ -373,13 +376,13 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         // Reschedule with new time
         notificationService.scheduleDailyReminders(newPreferences);
         toast({
-          title: "Reminder Time Updated",
-          description: `Daily reminders will now be sent at ${value}.`,
+          title: t.reminderTimeUpdated,
+          description: `${t.reminderTimeConfirmation} ${value}.`,
         });
       } else {
         toast({
-          title: "Settings Updated",
-          description: "Your preferences have been saved.",
+          title: t.settingsUpdated,
+          description: t.preferencesSaved,
         });
       }
     }
@@ -396,7 +399,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             onClick={() => onNavigate?.('more')}
             className="mr-3"
             data-testid="button-back-settings"
-            aria-label="Go back to More page"
+            aria-label={t.goBackToMorePage}
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
@@ -406,9 +409,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
               color: '#8B4513'
             }}>
-              Settings
+              {t.settings}
             </h1>
-            <p className="text-gray-600 mt-1">Manage your profile and preferences</p>
+            <p className="text-gray-600 mt-1">{t.settingsDescription}</p>
           </div>
         </div>
       </div>
@@ -420,7 +423,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             <CardTitle className="flex items-center justify-between">
               <div className="flex items-center justify-center gap-2 flex-1 text-center">
                 <User className="w-5 h-5" />
-                Profile Information
+                {t.profileInformation}
               </div>
               <Button
                 variant="ghost"
@@ -429,14 +432,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                 data-testid="button-edit-profile"
               >
                 <Edit3 className="w-4 h-4 mr-1" />
-                {isEditing ? 'Cancel' : 'Edit'}
+                {isEditing ? t.cancel : t.edit}
               </Button>
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="firstName">First Name</Label>
+                <Label htmlFor="firstName">{t.firstName}</Label>
                 <Input
                   id="firstName"
                   value={profile.firstName}
@@ -444,12 +447,12 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   disabled={true}
                   className="bg-muted"
                   data-testid="input-first-name"
-                  title="Name cannot be changed once set"
+                  title={t.nameCannotBeChanged}
                 />
-                <p className="text-xs text-muted-foreground mt-1">Name cannot be changed</p>
+                <p className="text-xs text-muted-foreground mt-1">{t.nameCannotBeChanged}</p>
               </div>
               <div>
-                <Label htmlFor="lastName">Last Name</Label>
+                <Label htmlFor="lastName">{t.lastName}</Label>
                 <Input
                   id="lastName"
                   value={profile.lastName}
@@ -457,14 +460,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   disabled={true}
                   className="bg-muted"
                   data-testid="input-last-name"
-                  title="Name cannot be changed once set"
+                  title={t.nameCannotBeChanged}
                 />
-                <p className="text-xs text-muted-foreground mt-1">Name cannot be changed</p>
+                <p className="text-xs text-muted-foreground mt-1">{t.nameCannotBeChanged}</p>
               </div>
             </div>
 
             <div>
-              <Label htmlFor="email">Email</Label>
+              <Label htmlFor="email">{t.email}</Label>
               <Input
                 id="email"
                 type="email"
@@ -476,7 +479,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             </div>
 
             <div>
-              <Label htmlFor="phone">Phone Number</Label>
+              <Label htmlFor="phone">{t.phoneNumber}</Label>
               <Input
                 id="phone"
                 value={profile.phone}
@@ -488,7 +491,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
 
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label htmlFor="birthMonth">Birth Month</Label>
+                <Label htmlFor="birthMonth">{t.birthMonth}</Label>
                 <Select
                   value={profile.birthMonth}
                   onValueChange={(value) => setProfile(prev => ({ ...prev, birthMonth: value }))}
@@ -505,7 +508,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                 </Select>
               </div>
               <div>
-                <Label htmlFor="birthDay">Birth Day</Label>
+                <Label htmlFor="birthDay">{t.birthDay}</Label>
                 <Select
                   value={profile.birthDay}
                   onValueChange={(value) => setProfile(prev => ({ ...prev, birthDay: value }))}
@@ -524,7 +527,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             </div>
 
             <div>
-              <Label htmlFor="timezone">Timezone</Label>
+              <Label htmlFor="timezone">{t.timezone}</Label>
               <Select
                 value={profile.timezone}
                 onValueChange={(value) => setProfile(prev => ({ ...prev, timezone: value }))}
@@ -539,7 +542,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground mt-1">Timezone cannot be changed</p>
+              <p className="text-xs text-muted-foreground mt-1">{t.timezoneCannotBeChanged}</p>
             </div>
 
             {isEditing && (
@@ -549,7 +552,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                 data-testid="button-save-profile"
               >
                 <Save className="w-4 h-4 mr-2" />
-                Save Profile
+                {t.saveProfile}
               </Button>
             )}
           </CardContent>
@@ -560,14 +563,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
           <CardHeader>
             <CardTitle className="flex items-center justify-center gap-2 text-center">
               <Bell className="w-5 h-5" />
-              Notifications
+              {t.notifications}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="dailyReminders" className="font-medium">Daily Reminders</Label>
-                <p className="text-sm text-muted-foreground">Get reminded to read your daily verse</p>
+                <Label htmlFor="dailyReminders" className="font-medium">{t.dailyReminders}</Label>
+                <p className="text-sm text-muted-foreground">{t.reminderToReadDailyVerse}</p>
               </div>
               <Switch
                 id="dailyReminders"
@@ -580,7 +583,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             {preferences.dailyReminders && (
               <div className="space-y-3">
                 <div>
-                  <Label htmlFor="reminderTime">Reminder Time</Label>
+                  <Label htmlFor="reminderTime">{t.reminderTime}</Label>
                   <Input
                     id="reminderTime"
                     type="time"
@@ -597,15 +600,15 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   data-testid="button-test-notification"
                 >
                   <TestTube className="w-4 h-4 mr-2" />
-                  Test Notification
+                  {t.testNotification}
                 </Button>
               </div>
             )}
 
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="streakNotifications" className="font-medium">Streak Notifications</Label>
-                <p className="text-sm text-muted-foreground">Celebrate your reading streaks</p>
+                <Label htmlFor="streakNotifications" className="font-medium">{t.streakNotifications}</Label>
+                <p className="text-sm text-muted-foreground">{t.celebrateReadingStreaks}</p>
               </div>
               <Switch
                 id="streakNotifications"
@@ -617,8 +620,8 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
 
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="emailUpdates" className="font-medium">Email Updates</Label>
-                <p className="text-sm text-muted-foreground">Receive newsletters and updates</p>
+                <Label htmlFor="emailUpdates" className="font-medium">{t.emailUpdates}</Label>
+                <p className="text-sm text-muted-foreground">{t.receiveNewsletters}</p>
               </div>
               <Switch
                 id="emailUpdates"
@@ -635,14 +638,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
           <CardHeader>
             <CardTitle className="flex items-center justify-center gap-2 text-center">
               <Smartphone className="w-5 h-5" />
-              App Settings
+              {t.appSettings}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between">
               <div>
-                <Label htmlFor="soundEnabled" className="font-medium">Sound Effects</Label>
-                <p className="text-sm text-muted-foreground">Enable app sounds and notifications</p>
+                <Label htmlFor="soundEnabled" className="font-medium">{t.soundEffects}</Label>
+                <p className="text-sm text-muted-foreground">{t.enableAppSounds}</p>
               </div>
               <Switch
                 id="soundEnabled"
@@ -653,7 +656,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
             </div>
 
             <div>
-              <Label htmlFor="language">App Language</Label>
+              <Label htmlFor="language">{t.appLanguage}</Label>
               <Select
                 value={preferences.language}
                 onValueChange={(value) => handlePreferenceChange('language', value)}
@@ -681,7 +684,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
           <CardHeader>
             <CardTitle className="flex items-center justify-center gap-2 text-center">
               <Shield className="w-5 h-5" />
-              Data & Privacy
+              {t.dataPrivacy}
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
@@ -692,7 +695,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
               data-testid="button-view-privacy"
             >
               <Shield className="w-4 h-4 mr-2" />
-              View Privacy Policy
+              {t.viewPrivacyPolicy}
             </Button>
             <Button 
               variant="outline" 
@@ -701,7 +704,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
               data-testid="button-export-data"
             >
               <Download className="w-4 h-4 mr-2" />
-              Export My Data
+              {t.exportMyData}
             </Button>
             
             <AlertDialog>
@@ -712,32 +715,32 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
                   data-testid="button-delete-account"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  Delete Account Data
+                  {t.deleteAccountData}
                 </Button>
               </AlertDialogTrigger>
               <AlertDialogContent>
                 <AlertDialogHeader>
-                  <AlertDialogTitle>Delete All Account Data?</AlertDialogTitle>
+                  <AlertDialogTitle>{t.deleteAllAccountData}</AlertDialogTitle>
                   <AlertDialogDescription>
-                    This will permanently delete all your data from this device, including:
+                    {t.deleteAccountWarning}
                     <ul className="list-disc list-inside mt-2 space-y-1">
-                      <li>Profile information</li>
-                      <li>Bookmarks and saved verses</li>
-                      <li>Personal notes</li>
-                      <li>App preferences</li>
-                      <li>Reading streak data</li>
+                      <li>{t.deleteAccountWarningProfile}</li>
+                      <li>{t.deleteAccountWarningBookmarks}</li>
+                      <li>{t.deleteAccountWarningNotes}</li>
+                      <li>{t.deleteAccountWarningPreferences}</li>
+                      <li>{t.deleteAccountWarningStreak}</li>
                     </ul>
-                    <p className="mt-3 font-semibold">This action cannot be undone.</p>
+                    <p className="mt-3 font-semibold">{t.actionCannotBeUndone}</p>
                   </AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                  <AlertDialogCancel data-testid="button-cancel-delete">Cancel</AlertDialogCancel>
+                  <AlertDialogCancel data-testid="button-cancel-delete">{t.cancel}</AlertDialogCancel>
                   <AlertDialogAction 
                     onClick={handleDeleteAccount}
                     className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                     data-testid="button-confirm-delete"
                   >
-                    Delete All Data
+                    {t.deleteAllData}
                   </AlertDialogAction>
                 </AlertDialogFooter>
               </AlertDialogContent>
@@ -748,12 +751,12 @@ export default function SettingsPage({ onNavigate, streakDays = 0, user }: Setti
         {/* Account Actions */}
         <Card className="shadow-lg border-2">
           <CardContent className="p-6 text-center">
-            <h3 className="text-lg font-semibold text-foreground mb-2 text-center">Account Actions</h3>
+            <h3 className="text-lg font-semibold text-foreground mb-2 text-center">{t.accountActions}</h3>
             <p className="text-muted-foreground text-sm mb-4 text-center">
-              Need help with your account? Contact our support team.
+              {t.needHelpWithAccount}
             </p>
             <Button variant="outline" onClick={() => onNavigate?.('support')}>
-              Contact Support
+              {t.contactSupport}
             </Button>
           </CardContent>
         </Card>

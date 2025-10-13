@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Brain, Trophy, BookOpen, Star, RotateCcw, Clock } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from "@/lib/translations";
 
 interface TriviaQuestion {
   id: number;
@@ -25,6 +26,7 @@ interface TriviaStats {
 
 interface BibleTriviaProps {
   onNavigate?: (page: string) => void;
+  language?: string;
 }
 
 const difficultyColors = {
@@ -33,23 +35,22 @@ const difficultyColors = {
   difficult: "bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400"
 };
 
-const getScoreLevel = (score: number): string => {
-  if (score >= 9) return "Bible Expert";
-  if (score >= 7) return "Bible Scholar";
-  if (score >= 5) return "Bible Student";
-  return "Keep Studying!";
+const getScoreLevel = (score: number, t: any): string => {
+  if (score >= 9) return t.bibleExpert;
+  if (score >= 7) return t.bibleScholar;
+  if (score >= 5) return t.bibleStudent;
+  return t.keepStudying;
 };
 
-const getLevelIcon = (level: string) => {
-  switch (level) {
-    case "Bible Expert": return <Trophy className="w-4 h-4 text-yellow-500" />;
-    case "Bible Scholar": return <Star className="w-4 h-4 text-blue-500" />;
-    case "Bible Student": return <BookOpen className="w-4 h-4 text-green-500" />;
-    default: return <Brain className="w-4 h-4 text-gray-500" />;
-  }
+const getLevelIcon = (level: string, t: any) => {
+  if (level === t.bibleExpert) return <Trophy className="w-4 h-4 text-yellow-500" />;
+  if (level === t.bibleScholar) return <Star className="w-4 h-4 text-blue-500" />;
+  if (level === t.bibleStudent) return <BookOpen className="w-4 h-4 text-green-500" />;
+  return <Brain className="w-4 h-4 text-gray-500" />;
 };
 
-export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
+export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaProps) {
+  const t = useTranslations(language);
   const { toast } = useToast();
   const [difficulty, setDifficulty] = useState<'easy' | 'medium' | 'difficult'>('easy');
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'results'>('setup');
@@ -118,7 +119,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
       console.error('Error generating questions:', error);
       toast({
         title: "Error",
-        description: "Failed to generate trivia questions. Please try again.",
+        description: t.failedToGenerateTriviaQuestions,
         variant: "destructive",
       });
     } finally {
@@ -144,7 +145,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
         return total + (answer === questions[index]?.correctAnswer ? 1 : 0);
       }, 0);
       
-      const level = getScoreLevel(score);
+      const level = getScoreLevel(score, t);
       const newStats = {
         gamesPlayed: stats.gamesPlayed + 1,
         lastScore: score,
@@ -174,7 +175,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
   }, 0);
 
   if (gameState === 'results') {
-    const finalLevel = getScoreLevel(score);
+    const finalLevel = getScoreLevel(score, t);
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
         {/* Header */}
@@ -190,7 +191,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
               <ArrowLeft className="w-5 h-5" />
             </Button>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">Bible Trivia Results</h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">{t.bibleTriviaResults}</h1>
             </div>
           </div>
         </div>
@@ -200,25 +201,25 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
           <Card className="mb-6">
             <CardHeader className="text-center">
               <div className="w-20 h-20 mx-auto mb-4 bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 rounded-full flex items-center justify-center">
-                {getLevelIcon(finalLevel)}
+                {getLevelIcon(finalLevel, t)}
               </div>
               <CardTitle className="text-2xl mb-2">{finalLevel}</CardTitle>
               <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
                 {score}/10
               </div>
               <Badge className={difficultyColors[difficulty]} data-testid={`badge-difficulty-${difficulty}`}>
-                {difficulty.charAt(0).toUpperCase() + difficulty.slice(1)} Level
+                {difficulty === 'easy' ? t.easy : difficulty === 'medium' ? t.medium : t.difficult} {t.level}
               </Badge>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-2 gap-4 text-center">
                 <div>
                   <div className="text-2xl font-bold text-gray-900 dark:text-foreground">{stats.gamesPlayed}</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Games Played</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.gamesPlayed}</div>
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-gray-900 dark:text-foreground">{stats.bestScore}/10</div>
-                  <div className="text-sm text-gray-600 dark:text-gray-400">Best Score</div>
+                  <div className="text-sm text-gray-600 dark:text-gray-400">{t.bestScore}</div>
                 </div>
               </div>
             </CardContent>
@@ -232,7 +233,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
               data-testid="button-play-again"
             >
               <RotateCcw className="w-4 h-4 mr-2" />
-              Play Again
+              {t.playAgain}
             </Button>
             <Button 
               variant="outline" 
@@ -240,7 +241,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
               onClick={() => onNavigate?.('home')}
               data-testid="button-back-home"
             >
-              Back to Home
+              {t.backToHome}
             </Button>
           </div>
         </div>
@@ -265,9 +266,9 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
                 <ArrowLeft className="w-5 h-5" />
               </Button>
               <div>
-                <h1 className="text-xl font-bold text-gray-900 dark:text-foreground">Bible Trivia</h1>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-foreground">{t.bibleTriviaTitle}</h1>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Question {currentQuestionIndex + 1} of {questions.length}
+                  {t.questionOf} {currentQuestionIndex + 1} / {questions.length}
                 </p>
               </div>
             </div>
@@ -297,7 +298,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
                   {currentQuestion.difficulty.charAt(0).toUpperCase() + currentQuestion.difficulty.slice(1)}
                 </Badge>
                 <span className="text-sm text-gray-600 dark:text-gray-400">
-                  Score: {score}/{currentQuestionIndex}
+                  {t.score}: {score}/{currentQuestionIndex}
                 </span>
               </div>
               <CardTitle className="text-lg leading-relaxed" data-testid={`question-${currentQuestion.id}`}>
@@ -344,7 +345,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
             disabled={selectedAnswer === null}
             data-testid="button-next-question"
           >
-            {currentQuestionIndex === questions.length - 1 ? 'Finish Quiz' : 'Next Question'}
+            {currentQuestionIndex === questions.length - 1 ? t.finishQuiz : t.nextQuestion}
           </Button>
         </div>
       </div>
@@ -367,8 +368,8 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">Bible Trivia</h1>
-            <p className="text-gray-600 dark:text-gray-400">Test your biblical knowledge</p>
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">{t.bibleTriviaTitle}</h1>
+            <p className="text-gray-600 dark:text-gray-400">{t.testBiblicalKnowledge}</p>
           </div>
         </div>
 
@@ -377,22 +378,22 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
           <div className="bg-blue-50 dark:bg-blue-900/20 rounded-lg p-4" data-testid="user-status-display">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
-                {getLevelIcon(stats.lastLevel)}
+                {getLevelIcon(stats.lastLevel, t)}
                 <div>
                   <div className="font-medium text-blue-900 dark:text-blue-100">
-                    Latest: {stats.lastLevel}
+                    {t.latest}: {stats.lastLevel}
                   </div>
                   <div className="text-sm text-blue-700 dark:text-blue-300">
-                    Last Score: {stats.lastScore}/10
+                    {t.lastScore}: {stats.lastScore}/10
                   </div>
                 </div>
               </div>
               <div className="text-right">
                 <div className="font-medium text-blue-900 dark:text-blue-100">
-                  Best: {stats.bestLevel}
+                  {t.best}: {stats.bestLevel}
                 </div>
                 <div className="text-sm text-blue-700 dark:text-blue-300">
-                  {stats.bestScore}/10 • {stats.gamesPlayed} games
+                  {stats.bestScore}/10 • {stats.gamesPlayed} {t.games}
                 </div>
               </div>
             </div>
@@ -406,7 +407,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Brain className="w-5 h-5 text-blue-600" />
-              Choose Difficulty Level
+              {t.chooseDifficultyLevel}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -423,12 +424,12 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
                 >
                   <div className="text-left">
                     <div className="font-medium">
-                      {level.charAt(0).toUpperCase() + level.slice(1)}
+                      {level === 'easy' ? t.easy : level === 'medium' ? t.medium : t.difficult}
                     </div>
                     <div className="text-sm opacity-70">
-                      {level === 'easy' && 'Basic Bible knowledge and well-known stories'}
-                      {level === 'medium' && 'Intermediate biblical facts and characters'}
-                      {level === 'difficult' && 'Advanced theology and lesser-known details'}
+                      {level === 'easy' && t.easyDescription}
+                      {level === 'medium' && t.mediumDescription}
+                      {level === 'difficult' && t.difficultDescription}
                     </div>
                   </div>
                 </Button>
@@ -442,7 +443,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Trophy className="w-5 h-5 text-amber-600" />
-              Scoring Guide
+              {t.scoringGuide}
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -450,30 +451,30 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Trophy className="w-4 h-4 text-yellow-500" />
-                  <span>Bible Expert</span>
+                  <span>{t.bibleExpert}</span>
                 </div>
-                <span className="text-gray-600 dark:text-gray-400">9-10 correct</span>
+                <span className="text-gray-600 dark:text-gray-400">{t.correctAnswers9to10}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Star className="w-4 h-4 text-blue-500" />
-                  <span>Bible Scholar</span>
+                  <span>{t.bibleScholar}</span>
                 </div>
-                <span className="text-gray-600 dark:text-gray-400">7-8 correct</span>
+                <span className="text-gray-600 dark:text-gray-400">{t.correctAnswers7to8}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <BookOpen className="w-4 h-4 text-green-500" />
-                  <span>Bible Student</span>
+                  <span>{t.bibleStudent}</span>
                 </div>
-                <span className="text-gray-600 dark:text-gray-400">5-6 correct</span>
+                <span className="text-gray-600 dark:text-gray-400">{t.correctAnswers5to6}</span>
               </div>
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Brain className="w-4 h-4 text-gray-500" />
-                  <span>Keep Studying!</span>
+                  <span>{t.keepStudying}</span>
                 </div>
-                <span className="text-gray-600 dark:text-gray-400">1-4 correct</span>
+                <span className="text-gray-600 dark:text-gray-400">{t.correctAnswers1to4}</span>
               </div>
             </div>
           </CardContent>
@@ -486,7 +487,7 @@ export default function BibleTriviaPage({ onNavigate }: BibleTriviaProps) {
           disabled={loading}
           data-testid="button-start-trivia"
         >
-          {loading ? 'Generating Questions...' : 'Start Trivia (10 Questions)'}
+          {loading ? t.generatingQuestions : t.startTrivia10Questions}
         </Button>
       </div>
     </div>

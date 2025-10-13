@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft } from "lucide-react";
+import { useTranslations } from "@/lib/translations";
 
 interface BibleStudyProps {
   currentUserId: string;
@@ -142,26 +143,34 @@ const sampleLessons: StudyLesson[] = [
   }
 ];
 
-export default function BibleStudiesPage({ currentUserId, language, onNavigate }: BibleStudyProps) {
+export default function BibleStudiesPage({ currentUserId, language = "en", onNavigate }: BibleStudyProps) {
+  const t = useTranslations(language);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [selectedCategory, setSelectedCategory] = useState(t.allCategory);
   const [selectedStudy, setSelectedStudy] = useState<BibleStudy | null>(null);
   const [showStudyDetail, setShowStudyDetail] = useState(false);
   const [showStudyLesson, setShowStudyLesson] = useState(false);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
 
-  const categories = ["All", "Discipleship", "Encouragement", "Character", "Prayer", "Prophecy", "Love"];
+  const categories = [t.allCategory, t.discipleship, t.encouragement, t.character, t.prayer, t.prophecy, t.love];
 
   const filteredStudies = sampleStudies.filter(study => {
     const matchesSearch = study.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          study.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          study.description.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesCategory = selectedCategory === "All" || study.category === selectedCategory;
+    const matchesCategory = selectedCategory === t.allCategory || study.category === selectedCategory;
     return matchesSearch && matchesCategory;
   });
 
   const featuredStudy = filteredStudies.find(study => study.featured);
   const otherStudies = filteredStudies.filter(study => !study.featured);
+
+  const getDifficultyLevel = (difficulty: string) => {
+    if (difficulty === "Beginner") return t.beginner;
+    if (difficulty === "Intermediate") return t.intermediate;
+    if (difficulty === "Advanced") return t.advanced;
+    return difficulty;
+  };
 
   const getDifficultyColor = (difficulty: string) => {
     switch (difficulty) {
@@ -191,9 +200,9 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
             <h1 className="text-2xl font-bold text-amber-800 dark:text-amber-300" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive'
             }}>
-              Bible Studies
+              {t.bibleStudiesTitle}
             </h1>
-            <p className="text-gray-600 dark:text-gray-300 mt-1">Grow deeper in your faith journey</p>
+            <p className="text-gray-600 dark:text-gray-300 mt-1">{t.bibleStudiesSubtitle}</p>
           </div>
         </div>
       </div>
@@ -202,18 +211,18 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
       <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
         {/* Featured Articles Header */}
         <div className="flex justify-between items-center">
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground">Featured Studies</h2>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground">{t.featuredStudies}</h2>
           <Button 
             variant="ghost" 
             className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
             onClick={() => {
-              setSelectedCategory("All");
+              setSelectedCategory(t.allCategory);
               setSearchQuery("");
               document.getElementById("studies-grid")?.scrollIntoView({ behavior: "smooth" });
             }}
             data-testid="button-browse-all-studies"
           >
-            Browse all Studies
+            {t.browseAllStudies}
             <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
@@ -225,7 +234,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
               <div className="flex-1 relative">
                 <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-4 h-4" />
                 <Input
-                  placeholder="Search Bible studies..."
+                  placeholder={t.searchBibleStudies}
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="pl-10"
@@ -256,7 +265,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
               <div className="md:w-1/3 h-64 md:h-auto bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center relative">
                 <div className="text-center p-8">
                   <BookOpen className="w-16 h-16 text-amber-600 dark:text-amber-400 mx-auto mb-4" />
-                  <Badge className="bg-amber-600 text-white">Featured</Badge>
+                  <Badge className="bg-amber-600 text-white">{t.featured}</Badge>
                 </div>
                 <div className="absolute top-4 right-4">
                   <Star className="w-6 h-6 text-amber-500 fill-current" />
@@ -265,7 +274,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
               <div className="md:w-2/3 p-6">
                 <div className="flex flex-wrap gap-2 mb-3">
                   <Badge variant="secondary" className={getDifficultyColor(featuredStudy.difficulty)}>
-                    {featuredStudy.difficulty}
+                    {getDifficultyLevel(featuredStudy.difficulty)}
                   </Badge>
                   <Badge variant="outline">{featuredStudy.category}</Badge>
                 </div>
@@ -289,7 +298,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                   </div>
                   <div className="flex items-center gap-1">
                     <BookOpen className="w-4 h-4" />
-                    {featuredStudy.lessons} lessons
+                    {featuredStudy.lessons} {t.lessons}
                   </div>
                 </div>
                 
@@ -301,7 +310,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                   }}
                   data-testid={`button-start-study-${featuredStudy.id}`}
                 >
-                  Start Study
+                  {t.startStudy}
                   <ChevronRight className="w-4 h-4 ml-2" />
                 </Button>
               </div>
@@ -312,7 +321,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
         {/* Other Studies Grid */}
         {otherStudies.length > 0 && (
           <div id="studies-grid">
-            <h3 className="text-xl font-bold text-gray-900 dark:text-foreground mb-6">More Studies</h3>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-foreground mb-6">{t.moreStudies}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {otherStudies.map((study) => (
                 <Card 
@@ -330,7 +339,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                   <CardContent className="p-6">
                     <div className="flex flex-wrap gap-2 mb-3">
                       <Badge variant="secondary" className={getDifficultyColor(study.difficulty)}>
-                        {study.difficulty}
+                        {getDifficultyLevel(study.difficulty)}
                       </Badge>
                       <Badge variant="outline">{study.category}</Badge>
                     </div>
@@ -367,7 +376,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                       }}
                       data-testid={`button-view-study-${study.id}`}
                     >
-                      View Study
+                      {t.viewStudy}
                     </Button>
                   </CardContent>
                 </Card>
@@ -380,9 +389,9 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
         {filteredStudies.length === 0 && (
           <div className="text-center py-12">
             <BookOpen className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">No studies found</h3>
+            <h3 className="text-lg font-semibold text-gray-600 dark:text-gray-300 mb-2">{t.noStudiesFound}</h3>
             <p className="text-gray-500 dark:text-gray-400">
-              Try adjusting your search terms or category filter
+              {t.adjustSearchTerms}
             </p>
           </div>
         )}
@@ -410,7 +419,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
               <div className="space-y-6">
                 <div className="flex flex-wrap gap-2">
                   <Badge variant="secondary" className={getDifficultyColor(selectedStudy.difficulty)}>
-                    {selectedStudy.difficulty}
+                    {getDifficultyLevel(selectedStudy.difficulty)}
                   </Badge>
                   <Badge variant="outline">{selectedStudy.category}</Badge>
                 </div>
@@ -426,17 +435,17 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                   </div>
                   <div className="flex items-center gap-2">
                     <BookOpen className="w-4 h-4 text-gray-500" />
-                    <span className="text-sm text-gray-600 dark:text-gray-300">{selectedStudy.lessons} lessons</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{selectedStudy.lessons} {t.lessons}</span>
                   </div>
                 </div>
                 
                 <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
-                  <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">What You'll Learn:</h4>
+                  <h4 className="font-semibold text-blue-900 dark:text-blue-100 mb-2">{t.whatYouLearn}</h4>
                   <ul className="space-y-1 text-sm text-blue-800 dark:text-blue-200">
-                    <li>• Deep biblical insights and practical applications</li>
-                    <li>• Guided reflection questions for personal growth</li>
-                    <li>• Scripture memorization and meditation techniques</li>
-                    <li>• Community discussion points for group study</li>
+                    <li>• {t.deepBiblicalInsights}</li>
+                    <li>• {t.guidedReflectionQuestions}</li>
+                    <li>• {t.scriptureMemorization}</li>
+                    <li>• {t.communityDiscussionPoints}</li>
                   </ul>
                 </div>
                 
@@ -452,14 +461,14 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                     data-testid={`button-start-study-detail-${selectedStudy.id}`}
                   >
                     <Play className="w-4 h-4 mr-2" />
-                    Start Study
+                    {t.startStudy}
                   </Button>
                   <Button 
                     variant="outline" 
                     onClick={() => setShowStudyDetail(false)}
                     data-testid="button-close-study-detail"
                   >
-                    Close
+                    {t.close}
                   </Button>
                 </div>
               </div>
@@ -487,12 +496,12 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                     <div>
                       <DialogTitle className="text-xl font-bold">{selectedStudy.title}</DialogTitle>
                       <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                        Lesson {currentLessonIndex + 1} of {sampleLessons.length}
+                        {t.lessonOf} {currentLessonIndex + 1} / {sampleLessons.length}
                       </p>
                     </div>
                   </div>
                   <Badge variant="outline" className="text-xs">
-                    Day {currentLessonIndex + 1}
+                    {t.day} {currentLessonIndex + 1}
                   </Badge>
                 </div>
               </DialogHeader>
@@ -517,7 +526,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                   <CardContent className="p-6">
                     <div className="text-center space-y-3">
                       <h3 className="text-lg font-semibold text-blue-900 dark:text-blue-100">
-                        Today's Scripture
+                        {t.todaysScripture}
                       </h3>
                       <div className="bg-white dark:bg-blue-950/50 rounded-lg p-4">
                         <p className="text-blue-800 dark:text-blue-200 italic leading-relaxed mb-3">
@@ -535,7 +544,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                 <Card>
                   <CardHeader>
                     <CardTitle className="text-lg text-gray-900 dark:text-foreground">
-                      Reflection Questions
+                      {t.reflectionQuestions}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -556,7 +565,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                 <Card className="bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800">
                   <CardHeader>
                     <CardTitle className="text-lg text-green-900 dark:text-green-100">
-                      Prayer for Today
+                      {t.todaysPrayer}
                     </CardTitle>
                   </CardHeader>
                   <CardContent>
@@ -575,7 +584,7 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                     data-testid="button-previous-lesson"
                   >
                     <ChevronLeft className="w-4 h-4 mr-2" />
-                    Previous
+                    {t.previousLesson}
                   </Button>
                   
                   <div className="text-center">
@@ -597,12 +606,12 @@ export default function BibleStudiesPage({ currentUserId, language, onNavigate }
                       } else {
                         // Study completed
                         setShowStudyLesson(false);
-                        alert("Congratulations! You've completed this study. Keep growing in your faith!");
+                        alert(t.lessonCompleted + " " + t.greatProgress);
                       }
                     }}
                     data-testid="button-next-lesson"
                   >
-                    {currentLessonIndex < sampleLessons.length - 1 ? "Next" : "Complete"}
+                    {currentLessonIndex < sampleLessons.length - 1 ? t.nextLesson : t.completeLesson}
                     <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>

@@ -7,6 +7,7 @@ import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_ba
 import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Capacitor } from '@capacitor/core';
+import { useTranslations } from '@/lib/translations';
 
 interface AskPageProps {
   onNavigate?: (page: string) => void;
@@ -17,6 +18,7 @@ interface AskPageProps {
 export default function AskPage({ onNavigate, streakDays = 0, language = "en" }: AskPageProps) {
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
+  const t = useTranslations(language);
   
   return (
     <div className="min-h-screen pb-20">
@@ -28,7 +30,7 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
               color: '#8B4513'
-            }}>Get AI-powered Scripture-based guidance and biblical wisdom</p>
+            }}>{t.askPageDescription}</p>
           </div>
           <div className="flex items-center space-x-2">
             <div className="flex items-center gap-1">
@@ -44,8 +46,8 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
             fontFamily: 'Dancing Script, Brush Script MT, cursive',
             textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
             color: '#8B4513'
-          }} aria-label="The Gospel in 5 Minutes - Daily Bible verses and spiritual guidance">
-            The Gospel in 5 Minutes™
+          }} aria-label={`${t.appTitle} - ${t.askPageDescription}`}>
+            {t.appTitle}
           </h2>
         </div>
         
@@ -60,7 +62,7 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
             aria-label="Follow us on Facebook - Opens in new window"
           >
             <Facebook className="w-3 h-3" aria-hidden="true" />
-            <span>Follow</span>
+            <span>{t.follow}</span>
           </a>
           <a 
             href="https://www.instagram.com/thegospelin5minutes" 
@@ -71,18 +73,18 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
             aria-label="Follow us on Instagram - Opens in new window"
           >
             <Instagram className="w-3 h-3" aria-hidden="true" />
-            <span>Follow</span>
+            <span>{t.follow}</span>
           </a>
           {/* Donate Button (Hidden on iOS for App Store compliance) */}
           {!isIOS && (
             <Button 
               className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-1 rounded-full text-xs font-medium shadow-sm"
               data-testid="button-donate-ask"
-              aria-label="Donate to help spread the Gospel"
+              aria-label={t.donateDesc}
               onClick={() => onNavigate?.('donate')}
             >
               <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
-              Donate
+              {t.donate}
             </Button>
           )}
         </div>
@@ -92,12 +94,12 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
           <Button 
             className="bg-amber-700 hover:bg-amber-800 text-white px-4 py-1 rounded-full text-xs font-medium shadow-sm"
             data-testid="button-share-ask"
-            aria-label="Share The Gospel in 5 Minutes with friends"
+            aria-label={`${t.share} - ${t.askPageShareText}`}
             onClick={() => {
               if (navigator.share) {
                 navigator.share({
-                  title: 'The Gospel in 5 Minutes',
-                  text: 'Ask the AI Pastor questions and get Scripture-based guidance!',
+                  title: t.appTitle,
+                  text: t.askPageShareText,
                   url: 'https://www.thegospelin5minutes.org'
                 }).catch(console.error);
               } else {
@@ -108,7 +110,7 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
             }}
           >
             <Share className="w-3 h-3 mr-1" aria-hidden="true" />
-            Share The Gospel in 5 Minutes
+            {t.share}
           </Button>
         </div>
       </div>
@@ -117,7 +119,7 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
         <div className="max-w-md mx-auto space-y-6">
           {/* Ask Pastor Section */}
           <div className="relative">
-            <AskPastorSection backgroundImage={shepherdImage} />
+            <AskPastorSection backgroundImage={shepherdImage} language={language} />
           </div>
 
           {/* Feelings & Scripture Section */}
@@ -134,16 +136,16 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
         {/* Professional Website Footer */}
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="text-center">
-            <p className="text-sm text-gray-500 mb-2">Visit our website for more resources</p>
+            <p className="text-sm text-gray-500 mb-2">{t.visitWebsite}</p>
             <a 
               href="https://www.thegospelin5minutes.org" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200"
               data-testid="link-website-footer-ask"
-              aria-label="Visit The Gospel in 5 Minutes website - Opens in new window"
+              aria-label={`${t.visitWebsite} - Opens in new window`}
             >
-              www.thegospelin5minutes.org
+              {t.websiteDescription}
             </a>
           </div>
         </div>

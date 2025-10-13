@@ -6,16 +6,19 @@ import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink
 import { videoService, type VideoItem } from "@/services/videoService";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslations } from '@/lib/translations';
 import worshipImage from '@assets/stock_images/church_worship_hands_6ff9edc7.jpg';
 
 interface VideosPageProps {
   onNavigate?: (page: string) => void;
   streakDays?: number;
+  language?: string;
 }
 
 // VideoItem interface is now imported from videoService
 
-export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPageProps) {
+export default function VideosPage({ onNavigate, streakDays = 0, language = "en" }: VideosPageProps) {
+  const t = useTranslations(language);
   const [videos, setVideos] = useState<VideoItem[]>([]);
   const [featuredVideo, setFeaturedVideo] = useState<VideoItem | null>(null);
   const [loading, setLoading] = useState(true);
@@ -43,8 +46,8 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
     } catch (error) {
       console.error('Error loading videos:', error);
       toast({
-        title: "Loading Error",
-        description: "Some video content may not be available right now.",
+        title: t.loadingError,
+        description: t.videoContentNotAvailable,
         variant: "destructive"
       });
     } finally {
@@ -109,13 +112,13 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
   const getCategoryName = (category: VideoItem['category']) => {
     switch (category) {
       case 'sermon':
-        return 'Sermon';
+        return t.sermon;
       case 'gospel-tidbits':
-        return 'Gospel Tidbits';
+        return t.gospelTidbits;
       case 'christian-advice':
-        return 'Christian Advice';
+        return t.christianAdvice;
       default:
-        return 'Video';
+        return t.video;
     }
   };
 
@@ -139,10 +142,10 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }}>
-              Faith Videos
+              {t.videosPageTitle}
             </h1>
             <div className="h-1.5 w-32 bg-gradient-to-r from-slate-500 via-blue-500 to-indigo-500 rounded-full mx-auto shadow-sm mb-4" />
-            <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">Sermons, Gospel insights, and Christian guidance</p>
+            <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">{t.videosPageSubtitle}</p>
           </div>
         </div>
       </div>
@@ -161,10 +164,10 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                   </div>
                 </div>
                 <CardTitle className="text-3xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent text-center">
-                  Featured This Week
+                  {t.featuredThisWeek}
                 </CardTitle>
                 <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg text-center mt-3">
-                  Handpicked spiritual content for your growth
+                  {t.handpickedSpiritualContent}
                 </p>
               </CardHeader>
             </div>
@@ -212,7 +215,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                   {featuredVideo.views && (
                     <span className="text-xs text-muted-foreground flex items-center gap-1">
                       <Users className="w-3 h-3" />
-                      {featuredVideo.views.toLocaleString()} views
+                      {featuredVideo.views.toLocaleString()} {t.views}
                     </span>
                   )}
                   <span className="text-xs text-primary font-medium">
@@ -222,7 +225,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
               </div>
             ) : (
               <div className="text-center py-8">
-                <p className="text-muted-foreground">No featured video available</p>
+                <p className="text-muted-foreground">{t.noFeaturedVideoAvailable}</p>
               </div>
             )}
           </CardContent>
@@ -230,8 +233,8 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
 
         {/* Professional Video Categories */}
         <div>
-          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">Browse by Category</h2>
-          <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">Discover content tailored to your spiritual journey</p>
+          <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">{t.browseByCategory}</h2>
+          <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">{t.discoverTailoredContent}</p>
           <div className="grid grid-cols-3 gap-4 mb-6">
             <Card 
               className={`text-center cursor-pointer shadow-2xl border-0 bg-gradient-to-br from-blue-100/90 to-indigo-100/90 dark:from-blue-900/60 dark:to-indigo-900/60 transform hover:scale-105 transition-all duration-500 ${
@@ -245,8 +248,8 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                   <BookOpen className="w-7 h-7 text-white" />
                   <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
                 </div>
-                <div className="text-base font-bold text-slate-800 dark:text-slate-200">Sermons</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">Faith messages</div>
+                <div className="text-base font-bold text-slate-800 dark:text-slate-200">{t.sermons}</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">{t.faithMessages}</div>
               </CardContent>
             </Card>
             
@@ -262,8 +265,8 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                   <Lightbulb className="w-7 h-7 text-white" />
                   <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
                 </div>
-                <div className="text-base font-bold text-slate-800 dark:text-slate-200">Gospel Tidbits</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">Quick insights</div>
+                <div className="text-base font-bold text-slate-800 dark:text-slate-200">{t.gospelTidbits}</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">{t.quickInsights}</div>
               </CardContent>
             </Card>
             
@@ -279,8 +282,8 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                   <Heart className="w-7 h-7 text-white" />
                   <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent rounded-full" />
                 </div>
-                <div className="text-base font-bold text-slate-800 dark:text-slate-200">Christian Advice</div>
-                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">Life guidance</div>
+                <div className="text-base font-bold text-slate-800 dark:text-slate-200">{t.christianAdvice}</div>
+                <div className="text-sm text-slate-600 dark:text-slate-400 font-medium">{t.lifeGuidance}</div>
               </CardContent>
             </Card>
           </div>
@@ -290,7 +293,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
         <div>
           <div className="flex items-center justify-between mb-6">
             <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent text-center flex-1">
-              {selectedCategory ? `${getCategoryName(selectedCategory)} Videos` : 'Recent Videos'}
+              {selectedCategory ? `${getCategoryName(selectedCategory)} ${t.categoryVideos}` : t.recentVideos}
             </h2>
             {selectedCategory && (
               <Button 
@@ -300,7 +303,7 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                 className="bg-gradient-to-r from-slate-100 to-blue-100 border-slate-300 hover:from-slate-200 hover:to-blue-200 text-slate-700 font-semibold shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-300"
                 data-testid="button-clear-filter"
               >
-                Show All
+                {t.showAll}
               </Button>
             )}
           </div>
@@ -324,8 +327,8 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
             </div>
           ) : videos.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-muted-foreground mb-4">No videos available</p>
-              <p className="text-muted-foreground/70 text-sm">Please check your internet connection and try again</p>
+              <p className="text-muted-foreground mb-4">{t.noVideosAvailable}</p>
+              <p className="text-muted-foreground/70 text-sm">{t.checkInternetConnection}</p>
             </div>
           ) : (
             <div className="space-y-4">
@@ -403,11 +406,10 @@ export default function VideosPage({ onNavigate, streakDays = 0 }: VideosPagePro
                   <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
                 </div>
                 <h3 className="text-2xl font-bold bg-gradient-to-r from-emerald-800 via-teal-700 to-green-800 bg-clip-text text-transparent mb-4 text-center">
-                  More Videos Coming Soon!
+                  {t.moreVideosComingSoon}
                 </h3>
                 <p className="text-slate-600 dark:text-slate-400 text-base font-medium mb-4 text-center leading-relaxed">
-                  We're constantly adding new sermons, Gospel insights, and Christian advice videos. 
-                  Check back regularly for fresh spiritual content!
+                  {t.moreVideosDescription}
                 </p>
               </CardContent>
             </div>

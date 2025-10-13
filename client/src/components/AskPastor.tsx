@@ -4,17 +4,20 @@ import { DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import { Send, Book, Heart, Loader2, BookOpen, MessageCircle } from "lucide-react";
 import { pastorService, type PastorMessage } from "../services/pastorService";
+import { useTranslations } from "@/lib/translations";
 
 interface AskPastorProps {
   onClose?: () => void;
+  language?: string;
 }
 
-export default function AskPastor({ onClose }: AskPastorProps) {
+export default function AskPastor({ onClose, language = "en" }: AskPastorProps) {
+  const t = useTranslations(language);
   const [messages, setMessages] = useState<PastorMessage[]>([
     {
       id: '1',
       type: 'pastor',
-      content: "Hello! I'm here to provide biblical guidance and spiritual counsel. What's on your heart today? Whether you're facing challenges, have questions about faith, or need prayer, I'm here to help with God's wisdom.",
+      content: t.pastorGreeting,
       timestamp: new Date()
     }
   ]);
@@ -60,7 +63,7 @@ export default function AskPastor({ onClose }: AskPastorProps) {
       const errorMessage: PastorMessage = {
         id: (Date.now() + 1).toString(),
         type: 'pastor',
-        content: "I apologize for the technical difficulty. Please know that God hears your heart even when technology fails. Feel free to try your question again.",
+        content: t.technicalDifficulty,
         timestamp: new Date()
       };
       setMessages(prev => [...prev, errorMessage]);
@@ -92,10 +95,10 @@ export default function AskPastor({ onClose }: AskPastorProps) {
       <DialogHeader className="pb-4">
         <DialogTitle className="text-center text-2xl font-bold text-primary flex items-center justify-center gap-2">
           <Heart className="w-6 h-6" />
-          Ask the AI Pastor
+          {t.askTheAIPastor}
         </DialogTitle>
         <p className="text-center text-sm text-muted-foreground">
-          AI-powered biblical guidance and spiritual counsel based on Scripture
+          {t.aiPoweredGuidance}
         </p>
       </DialogHeader>
 
@@ -116,7 +119,7 @@ export default function AskPastor({ onClose }: AskPastorProps) {
               {message.type === 'pastor' && (
                 <div className="flex items-center gap-2 mb-2">
                   <Book className="w-4 h-4 text-primary" />
-                  <span className="text-sm font-medium text-primary">Pastor</span>
+                  <span className="text-sm font-medium text-primary">{t.pastor}</span>
                 </div>
               )}
               <p className="text-sm leading-relaxed whitespace-pre-wrap">
@@ -127,7 +130,7 @@ export default function AskPastor({ onClose }: AskPastorProps) {
                 <div className="mt-3 pt-2 border-t border-primary/20">
                   <div className="flex items-center gap-1 mb-2">
                     <BookOpen className="w-3 h-3 text-primary" />
-                    <span className="text-xs font-medium text-primary">Scripture References:</span>
+                    <span className="text-xs font-medium text-primary">{t.scriptureReferences}</span>
                   </div>
                   <div className="flex flex-wrap gap-1">
                     {message.scriptures.map((scripture, index) => (
@@ -154,11 +157,11 @@ export default function AskPastor({ onClose }: AskPastorProps) {
             <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-2xl px-4 py-3 mr-4">
               <div className="flex items-center gap-2 mb-2">
                 <Book className="w-4 h-4 text-primary" />
-                <span className="text-sm font-medium text-primary">Pastor</span>
+                <span className="text-sm font-medium text-primary">{t.pastor}</span>
               </div>
               <div className="flex items-center gap-2 text-muted-foreground">
                 <Loader2 className="w-4 h-4 animate-spin" />
-                <span className="text-sm">Seeking wisdom in Scripture...</span>
+                <span className="text-sm">{t.seekingWisdom}</span>
               </div>
             </div>
           </div>
@@ -172,19 +175,24 @@ export default function AskPastor({ onClose }: AskPastorProps) {
         <div className="mb-4 space-y-4">
           {/* Prayer Request Quick Actions */}
           <div>
-            <p className="text-sm text-muted-foreground mb-2">Need prayer for:</p>
+            <p className="text-sm text-muted-foreground mb-2">{t.needPrayerFor}</p>
             <div className="grid grid-cols-2 gap-2">
-              {["healing", "guidance", "strength", "peace"].map((need, index) => (
+              {[
+                { key: "healing", label: t.healing },
+                { key: "guidance", label: t.guidance },
+                { key: "strength", label: t.strength },
+                { key: "peace", label: t.peace }
+              ].map((need, index) => (
                 <Button
-                  key={need}
+                  key={need.key}
                   variant="outline"
                   size="sm"
-                  className="text-left justify-start h-auto py-2 text-xs capitalize"
-                  onClick={() => handlePrayerRequest(need)}
-                  data-testid={`button-prayer-${need}`}
+                  className="text-left justify-start h-auto py-2 text-xs"
+                  onClick={() => handlePrayerRequest(need.key)}
+                  data-testid={`button-prayer-${need.key}`}
                 >
                   <MessageCircle className="w-3 h-3 mr-1" />
-                  {need}
+                  {need.label}
                 </Button>
               ))}
             </div>
@@ -192,7 +200,7 @@ export default function AskPastor({ onClose }: AskPastorProps) {
 
           {/* Common Questions */}
           <div>
-            <p className="text-sm text-muted-foreground mb-2">Common questions I can help with:</p>
+            <p className="text-sm text-muted-foreground mb-2">{t.commonQuestionsHelp}</p>
             <div className="grid grid-cols-1 gap-2">
               {suggestedQuestions.slice(0, 4).map((question, index) => (
                 <Button
@@ -219,7 +227,7 @@ export default function AskPastor({ onClose }: AskPastorProps) {
             value={currentQuestion}
             onChange={(e) => setCurrentQuestion(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder="Ask me anything about faith, life, or the Bible..."
+            placeholder={t.askAnythingFaith}
             className="flex-1 resize-none min-h-[44px] max-h-32"
             rows={1}
             disabled={isLoading}
@@ -236,7 +244,7 @@ export default function AskPastor({ onClose }: AskPastorProps) {
           </Button>
         </div>
         <p className="text-xs text-muted-foreground mt-2 text-center">
-          Guidance rooted in God's Word • Press Enter to send
+          {t.guidanceRootedGodsWord}
         </p>
       </div>
     </div>

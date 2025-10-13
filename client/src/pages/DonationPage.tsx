@@ -12,6 +12,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { apiRequest } from "@/lib/queryClient";
 import { Capacitor } from '@capacitor/core';
 import { Stripe as StripeCapacitor, ApplePayEventsEnum } from '@capacitor-community/stripe';
+import { useTranslations } from '@/lib/translations';
 
 // Load Stripe with public key (only on non-iOS platforms for App Store compliance)
 let stripePromise: any = null;
@@ -23,6 +24,7 @@ if (Capacitor.getPlatform() !== 'ios') {
 }
 
 interface DonationPageProps {
+  language?: string;
   onNavigate?: (page: string) => void;
 }
 
@@ -37,8 +39,9 @@ const presetAmounts = [
 ];
 
 // Stripe Payment Form Component
-const PaymentForm = ({ amount, onSuccess, onCancel }: { 
-  amount: number, 
+const PaymentForm = ({ amount, language = "en", onSuccess, onCancel }: { 
+  amount: number,
+  language?: string,
   onSuccess: () => void, 
   onCancel: () => void 
 }) => {
@@ -47,6 +50,7 @@ const PaymentForm = ({ amount, onSuccess, onCancel }: {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const { toast } = useToast();
+  const t = useTranslations(language);
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -68,24 +72,24 @@ const PaymentForm = ({ amount, onSuccess, onCancel }: {
       });
 
       if (error) {
-        setErrorMessage(error.message || 'An error occurred while processing your payment.');
+        setErrorMessage(error.message || t.paymentErrorOccurred);
         toast({
-          title: "Payment Failed",
-          description: error.message || 'An error occurred while processing your payment.',
+          title: t.paymentFailed,
+          description: error.message || t.paymentErrorOccurred,
           variant: "destructive",
         });
       } else {
         toast({
-          title: "Donation Successful!",
-          description: `Thank you for your $${amount.toFixed(2)} donation to spread God's word.`,
+          title: t.donationSuccessful,
+          description: t.donationSuccessMessage,
         });
         onSuccess();
       }
     } catch (err) {
-      setErrorMessage('An unexpected error occurred.');
+      setErrorMessage(t.unexpectedError);
       toast({
-        title: "Payment Error",
-        description: 'An unexpected error occurred.',
+        title: t.paymentError,
+        description: t.unexpectedError,
         variant: "destructive",
       });
     } finally {
@@ -97,7 +101,7 @@ const PaymentForm = ({ amount, onSuccess, onCancel }: {
     <Card className="shadow-lg border-2">
       <CardHeader>
         <CardTitle className="text-center">
-          Complete Your ${amount.toFixed(2)} Donation
+          {t.completeYourDonation} ${amount.toFixed(2)} {t.completeDonation}
         </CardTitle>
       </CardHeader>
       <CardContent>
@@ -117,9 +121,9 @@ const PaymentForm = ({ amount, onSuccess, onCancel }: {
               onClick={onCancel}
               className="flex-1 ios-tap-target"
               data-testid="button-cancel-payment"
-              aria-label="Cancel payment"
+              aria-label={t.cancelPaymentAction}
             >
-              Cancel
+              {t.cancelPayment}
             </Button>
             <Button
               type="submit"
@@ -130,12 +134,12 @@ const PaymentForm = ({ amount, onSuccess, onCancel }: {
               {loading ? (
                 <div className="flex items-center gap-2">
                   <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Processing...
+                  {t.processing}
                 </div>
               ) : (
                 <div className="flex items-center gap-2">
                   <Heart className="w-4 h-4" aria-hidden="true" />
-                  Donate ${amount.toFixed(2)}
+                  {t.completeDonation} ${amount.toFixed(2)}
                 </div>
               )}
             </Button>
@@ -146,9 +150,10 @@ const PaymentForm = ({ amount, onSuccess, onCancel }: {
   );
 };
 
-export default function DonationPage({ onNavigate }: DonationPageProps) {
+export default function DonationPage({ language = "en", onNavigate }: DonationPageProps) {
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
+  const t = useTranslations(language);
   
   const [selectedAmount, setSelectedAmount] = useState<number | null>(null);
   const [customAmount, setCustomAmount] = useState("");
@@ -206,8 +211,8 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
   const handleApplePayDonate = async () => {
     if (!isValidAmount()) {
       toast({
-        title: "Invalid Amount",
-        description: "Please enter an amount between $1 and $10,000.",
+        title: t.invalidAmount,
+        description: t.invalidAmountMessage,
         variant: "destructive",
       });
       return;
@@ -230,8 +235,8 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
         await StripeCapacitor.isApplePayAvailable();
       } catch (error) {
         toast({
-          title: "Apple Pay Not Available",
-          description: "Please add a card to Apple Wallet to use Apple Pay.",
+          title: t.applePayNotAvailable,
+          description: t.applePayNotAvailableMessage,
           variant: "destructive",
         });
         setLoading(false);
@@ -250,7 +255,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create payment intent');
+        throw new Error(data.error || t.failedToCreatePayment);
       }
 
       // Create and present Apple Pay
@@ -286,28 +291,28 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
           
           if (verifyData.success) {
             toast({
-              title: "Donation Successful!",
-              description: `Thank you for your $${amount.toFixed(2)} donation to spread God's word.`,
+              title: t.donationSuccessful,
+              description: t.donationSuccessMessage,
             });
             // Reset form
             setSelectedAmount(null);
             setCustomAmount("");
             setIsCustom(false);
           } else {
-            throw new Error('Payment verification failed');
+            throw new Error(t.paymentVerificationFailed);
           }
         } catch (verifyError) {
           console.error('Payment verification error:', verifyError);
           toast({
-            title: "Verification Failed",
-            description: 'Payment may still be processing. Please check back later.',
+            title: t.verificationFailed,
+            description: t.verificationFailedMessage,
             variant: "destructive",
           });
         }
       } else if (result.paymentResult === ApplePayEventsEnum.Failed) {
         toast({
-          title: "Payment Failed",
-          description: 'Your donation could not be processed. Please try again.',
+          title: t.paymentFailed,
+          description: t.paymentProcessingFailed,
           variant: "destructive",
         });
       }
@@ -316,8 +321,8 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
     } catch (error) {
       console.error('Apple Pay error:', error);
       toast({
-        title: "Payment Setup Failed",
-        description: error instanceof Error ? error.message : 'Failed to setup Apple Pay. Please try again.',
+        title: t.paymentSetupFailed,
+        description: error instanceof Error ? error.message : t.applePaySetupFailed,
         variant: "destructive",
       });
     } finally {
@@ -333,8 +338,8 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
     
     if (!isValidAmount()) {
       toast({
-        title: "Invalid Amount",
-        description: "Please enter an amount between $1 and $10,000.",
+        title: t.invalidAmount,
+        description: t.invalidAmountMessage,
         variant: "destructive",
       });
       return;
@@ -357,7 +362,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to create payment intent');
+        throw new Error(data.error || t.failedToCreatePayment);
       }
 
       // Set client secret and show payment form
@@ -366,8 +371,8 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
     } catch (error) {
       console.error('Error creating payment intent:', error);
       toast({
-        title: "Payment Setup Failed",
-        description: error instanceof Error ? error.message : 'Failed to setup payment. Please try again.',
+        title: t.paymentSetupFailed,
+        description: error instanceof Error ? error.message : t.paymentSetupFailedGeneric,
         variant: "destructive",
       });
     } finally {
@@ -401,15 +406,16 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                 onClick={handlePaymentCancel}
                 className="ios-tap-target"
                 data-testid="button-back-payment"
-                aria-label="Cancel payment"
+                aria-label={t.cancelPaymentAction}
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <h1 className="text-2xl font-bold text-primary">Complete Donation</h1>
+              <h1 className="text-2xl font-bold text-primary">{t.completeDonation}</h1>
             </div>
           </div>
           <PaymentForm 
             amount={getDonationAmount()}
+            language={language}
             onSuccess={handlePaymentSuccess}
             onCancel={handlePaymentCancel}
           />
@@ -431,27 +437,26 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               onClick={() => onNavigate?.('more')}
               className="ios-tap-target hover:bg-amber-200/60 dark:hover:bg-amber-800/50 transition-all duration-300 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105"
               data-testid="button-back-donation"
-              aria-label="Go back to More page"
+              aria-label={t.goBackToMore}
             >
               <ArrowLeft className="w-5 h-5 text-amber-800 dark:text-amber-200" />
             </Button>
             <div className="flex-1 text-center">
               <h1 className="text-5xl font-bold bg-gradient-to-r from-amber-800 via-yellow-700 to-orange-700 bg-clip-text text-transparent mb-3">
-                Make a Donation
+                {t.donationPageTitle}
               </h1>
               <div className="h-2 w-40 bg-gradient-to-r from-amber-500 via-yellow-500 to-orange-500 rounded-full mx-auto shadow-lg" />
               <p className="text-amber-700 dark:text-amber-300 font-semibold mt-4 text-xl">
-                Share God's Love Through Your Generosity
+                {t.donationPageSubtitle}
               </p>
             </div>
           </div>
           <div className="bg-gradient-to-br from-white/90 via-amber-50/95 to-orange-50/90 dark:from-gray-800/90 dark:via-amber-900/50 dark:to-orange-900/50 backdrop-blur-sm rounded-3xl p-8 border-2 border-amber-300/50 dark:border-amber-700/50 shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
             <p className="text-center font-bold text-lg text-gray-800 dark:text-gray-200 leading-relaxed mb-3">
-              🙏 Support our mission to spread God's word around the world through{' '}
-              <span className="text-amber-800 dark:text-amber-200 font-black">The Gospel in 5 Minutes™</span>
+              {t.donationMissionText}
             </p>
             <p className="text-center text-amber-700 dark:text-amber-300 mt-3 font-semibold text-lg">
-              Every donation brings hope and salvation to someone in need
+              {t.donationImpactText}
             </p>
           </div>
         </div>
@@ -480,16 +485,16 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                   ${(donationStats as any)?.success ? (donationStats as any).stats.totalDonations.toLocaleString('en-US', { minimumFractionDigits: 2 }) : '0.00'}
                 </div>
                 <div className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-6">
-                  💝 Total Love Shared Through Donations
+                  {t.totalDonationsLabel}
                 </div>
               </div>
               <div className="bg-gradient-to-br from-white/80 via-amber-100/90 to-orange-100/80 dark:from-gray-800/80 dark:via-amber-900/40 dark:to-orange-900/40 rounded-2xl p-6 backdrop-blur-sm border-2 border-amber-400/60 dark:border-amber-600/60 shadow-2xl transform hover:scale-105 transition-all duration-300">
                 <div className="text-center">
                   <div className="text-xl font-black text-amber-900 dark:text-amber-100">
-                    🙏 {(donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased.toLocaleString() : '0'} Souls Touched with God's Word
+                    {t.soulsTouchedLabel}
                   </div>
                   <p className="text-lg text-amber-800 dark:text-amber-200 mt-3 font-bold">
-                    Every Bible brings hope, healing, and eternal transformation
+                    {t.bibleImpactText}
                   </p>
                 </div>
               </div>
@@ -510,13 +515,13 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                     </div>
                   </div>
                   <CardTitle className="text-4xl font-black bg-gradient-to-r from-amber-800 via-yellow-700 to-orange-800 bg-clip-text text-transparent mb-4 text-center">
-                    Choose Your Gift of Love
+                    {t.chooseGiftTitle}
                   </CardTitle>
                   <p className="text-amber-700 dark:text-amber-300 font-bold text-xl text-center">
-                    💝 Every gift plants seeds of eternal hope
+                    {t.chooseGiftSubtitle}
                   </p>
                   <p className="text-amber-600 dark:text-amber-400 font-semibold mt-3 text-lg text-center">
-                    Join thousands spreading God's love worldwide
+                    {t.chooseGiftDescription}
                   </p>
                 </CardHeader>
               </div>
@@ -526,10 +531,10 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               {/* Light Brown Giving Options */}
               <div>
                 <Label className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-8 block text-center">
-                  💝 Choose Your Gift Amount
+                  {t.chooseAmountLabel}
                 </Label>
                 <p className="text-center text-amber-700 dark:text-amber-300 mb-8 font-bold text-lg">
-                  Select the amount that speaks to your heart
+                  {t.chooseAmountDescription}
                 </p>
                 <div className="grid grid-cols-3 gap-6">
                   {presetAmounts.map((preset) => (
@@ -560,17 +565,17 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                   ))}
                 </div>
                 <p className="text-center text-amber-600 dark:text-amber-400 mt-6 text-base font-bold">
-                  ✨ Popular amounts chosen by our loving community
+                  {t.popularAmountsText}
                 </p>
               </div>
 
               {/* Light Brown Custom Amount */}
               <div className="bg-gradient-to-br from-amber-100/90 to-orange-100/90 dark:from-amber-900/30 dark:to-orange-900/30 rounded-3xl p-8 border-3 border-amber-300/60 dark:border-amber-600/60 shadow-2xl transform hover:scale-[1.02] transition-all duration-300">
                 <Label htmlFor="custom-amount" className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-6 block text-center">
-                  💖 Or Enter Your Heart's Desire
+                  {t.customAmountLabel}
                 </Label>
                 <p className="text-center text-amber-700 dark:text-amber-300 mb-8 font-bold text-lg">
-                  Every amount, no matter the size, makes a difference
+                  {t.customAmountDescription}
                 </p>
                 <div className="relative">
                   <div className="absolute left-5 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-gradient-to-br from-amber-600 to-orange-600 rounded-full flex items-center justify-center shadow-lg">
@@ -583,7 +588,7 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                     step="0.01"
                     min="1"
                     max="10000"
-                    placeholder="Enter your loving gift amount..."
+                    placeholder={t.customAmountPlaceholder}
                     value={customAmount}
                     onChange={(e) => handleCustomAmountChange(e.target.value)}
                     className={`pl-16 pr-6 h-20 text-2xl font-bold border-4 rounded-3xl bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm transition-all duration-300 shadow-lg ${
@@ -595,10 +600,10 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                 {customAmount && (
                   <div className="mt-6 p-6 bg-gradient-to-br from-amber-200 via-yellow-200 to-orange-200 dark:from-amber-800/50 dark:via-yellow-800/50 dark:to-orange-800/50 rounded-2xl border-2 border-amber-400/60 dark:border-amber-500/60 shadow-2xl transform hover:scale-105 transition-all duration-300">
                     <p className="text-amber-900 dark:text-amber-100 font-black text-center text-2xl">
-                      🙏 Your Gift: ${parseFloat(customAmount || "0").toFixed(2)}
+                      {t.yourGiftLabel}
                     </p>
                     <p className="text-amber-800 dark:text-amber-200 text-center mt-3 font-bold text-lg">
-                      Thank you for your generous heart!
+                      {t.thankYouGenerousHeart}
                     </p>
                   </div>
                 )}
@@ -615,12 +620,12 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                 {loading ? (
                   <div className="flex items-center gap-2">
                     <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                    Processing...
+                    {t.processing}
                   </div>
                 ) : (
                   <div className="flex items-center gap-2">
                     <Heart className="w-5 h-5" aria-hidden="true" />
-                    Donate ${getDonationAmount().toFixed(2)}
+                    {t.completeDonation} ${getDonationAmount().toFixed(2)}
                   </div>
                 )}
               </Button>
@@ -629,34 +634,32 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               <div className="bg-gradient-to-br from-amber-100/80 to-orange-100/80 dark:from-amber-900/30 dark:to-orange-900/30 rounded-2xl p-6 border-2 border-amber-300/60 dark:border-amber-600/60 shadow-xl transform hover:scale-[1.01] transition-all duration-300">
                 <div className="text-center">
                   <h3 className="text-lg font-black text-amber-900 dark:text-amber-100 mb-4">
-                    Important Information
+                    {t.importantInformation}
                   </h3>
                 </div>
                 <div className="text-base text-amber-800 dark:text-amber-200 space-y-4">
                   <p className="font-bold text-center">
-                    <strong>Important:</strong> Donations are processed securely through Stripe. 
-                    No goods or services are provided in exchange for donations.
+                    {t.donationDisclaimer}
                   </p>
                   <p className="text-center font-semibold">
-                    Please consult your tax advisor regarding the deductibility of donations. 
-                    For questions about donations or refunds, please contact our support team.
+                    {t.taxAdvisorNote}
                   </p>
                   <p className="text-center font-semibold">
-                    By donating, you agree to our{" "}
+                    {t.agreeToTermsPrefix}{" "}
                     <button 
                       className="text-amber-700 dark:text-amber-300 underline hover:text-amber-900 dark:hover:text-amber-100 transition-colors font-black"
                       onClick={() => onNavigate?.('terms')}
                       data-testid="link-terms"
                     >
-                      Terms of Service
+                      {t.termsOfService}
                     </button>{" "}
-                    and{" "}
+                    {t.and}{" "}
                     <button 
                       className="text-amber-700 dark:text-amber-300 underline hover:text-amber-900 dark:hover:text-amber-100 transition-colors font-black"
                       onClick={() => onNavigate?.('privacy')}
                       data-testid="link-privacy"
                     >
-                      Privacy Policy
+                      {t.privacyPolicy}
                     </button>.
                   </p>
                 </div>
@@ -675,10 +678,9 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
               <div className="absolute inset-0 bg-gradient-to-t from-amber-900/90 via-orange-700/50 to-transparent"></div>
               <div className="absolute -inset-1 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-lg blur-lg"></div>
               <div className="absolute bottom-0 left-0 right-0 p-8 text-center">
-                <h3 className="font-black text-white text-2xl mb-4 text-center">Your Impact</h3>
+                <h3 className="font-black text-white text-2xl mb-4 text-center">{t.yourImpactTitle}</h3>
                 <p className="text-white text-lg leading-relaxed font-bold text-center">
-                  Every donation helps us distribute Bibles and share God's word with those who need it most. 
-                  Together, we're bringing hope and salvation to communities worldwide.
+                  {t.yourImpactDescription}
                 </p>
               </div>
             </div>
@@ -692,10 +694,9 @@ export default function DonationPage({ onNavigate }: DonationPageProps) {
                 <div className="absolute inset-0 bg-gradient-to-br from-white/30 to-transparent rounded-full" />
                 <div className="absolute -inset-2 bg-gradient-to-br from-amber-400/20 to-orange-400/20 rounded-full blur-lg" />
               </div>
-              <h3 className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-6 text-center">Our Mission</h3>
+              <h3 className="text-2xl font-black text-amber-900 dark:text-amber-100 mb-6 text-center">{t.ourMissionTitle}</h3>
               <p className="text-amber-800 dark:text-amber-200 leading-relaxed text-lg font-bold text-center">
-                Every donation helps us reach more souls with daily Bible verses, spiritual guidance, 
-                and the transformative power of God's word. Your generosity makes eternal impact possible.
+                {t.ourMissionDescription}
               </p>
             </CardContent>
           </Card>

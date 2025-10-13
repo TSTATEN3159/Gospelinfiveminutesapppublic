@@ -1,11 +1,15 @@
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/lib/translations";
 
 interface TermsOfServicePageProps {
   onBack: () => void;
+  language?: string;
 }
 
-export default function TermsOfServicePage({ onBack }: TermsOfServicePageProps) {
+export default function TermsOfServicePage({ onBack, language = "en" }: TermsOfServicePageProps) {
+  const t = useTranslations(language);
+
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
@@ -14,7 +18,7 @@ export default function TermsOfServicePage({ onBack }: TermsOfServicePageProps) 
           <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page">
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <h1 className="text-xl font-bold text-foreground text-center flex-1">Terms of Service</h1>
+          <h1 className="text-xl font-bold text-foreground text-center flex-1">{t.termsOfService}</h1>
         </div>
       </div>
 
@@ -22,147 +26,131 @@ export default function TermsOfServicePage({ onBack }: TermsOfServicePageProps) 
         <div className="bg-background rounded-lg p-6 shadow-lg border-2 space-y-6 text-sm">
           <div>
             <p className="text-muted-foreground mb-4">
-              <strong>Effective Date:</strong> {new Date().toLocaleDateString()}
+              <strong>{t.effectiveDate}</strong> {new Date().toLocaleDateString()}
             </p>
             <p className="text-muted-foreground leading-relaxed">
-              Welcome to The Gospel in 5 Minutes. These Terms of Service ("Terms") govern your use of our 
-              mobile application and services. By using our app, you agree to these Terms.
+              {t.tosWelcomeText}
             </p>
           </div>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">1. License to Use</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection1Title}</h2>
             <p className="text-muted-foreground">
-              We grant you a limited, non-exclusive, non-transferable license to use The Gospel in 5 Minutes 
-              for your personal, non-commercial use. This license does not include the right to resell, 
-              redistribute, or create derivative works.
+              {t.tosSection1Content}
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">2. Acceptable Use</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection2Title}</h2>
             <div className="space-y-3">
-              <p className="text-muted-foreground">You agree to use our app in a manner consistent with:</p>
+              <p className="text-muted-foreground">{t.tosSection2Intro}</p>
               <ul className="space-y-2 text-muted-foreground ml-4">
-                <li>• Christian values and biblical principles</li>
-                <li>• Respectful engagement with spiritual content</li>
-                <li>• Lawful purposes only</li>
-                <li>• Personal spiritual growth and education</li>
+                <li>• {t.tosSection2Item1}</li>
+                <li>• {t.tosSection2Item2}</li>
+                <li>• {t.tosSection2Item3}</li>
+                <li>• {t.tosSection2Item4}</li>
               </ul>
-              <p className="text-muted-foreground font-medium">You agree NOT to:</p>
+              <p className="text-muted-foreground font-medium">{t.tosSection2NotIntro}</p>
               <ul className="space-y-2 text-muted-foreground ml-4">
-                <li>• Use the app for commercial purposes without permission</li>
-                <li>• Attempt to reverse engineer or hack the app</li>
-                <li>• Share inappropriate or offensive content</li>
-                <li>• Violate any applicable laws or regulations</li>
+                <li>• {t.tosSection2NotItem1}</li>
+                <li>• {t.tosSection2NotItem2}</li>
+                <li>• {t.tosSection2NotItem3}</li>
+                <li>• {t.tosSection2NotItem4}</li>
               </ul>
             </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">3. AI-Powered Features</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection3Title}</h2>
             <div className="space-y-3">
               <p className="text-muted-foreground">
-                Our "Ask the Pastor" feature uses artificial intelligence to provide Biblical guidance. 
-                Please understand:
+                {t.tosSection3Intro}
               </p>
               <ul className="space-y-2 text-muted-foreground ml-4">
-                <li>• AI responses are for educational and inspirational purposes</li>
-                <li>• Responses should not replace professional counseling or medical advice</li>
-                <li>• AI-generated content may contain errors or limitations</li>
-                <li>• For serious spiritual matters, consult with a qualified pastor or counselor</li>
+                <li>• {t.tosSection3Item1}</li>
+                <li>• {t.tosSection3Item2}</li>
+                <li>• {t.tosSection3Item3}</li>
+                <li>• {t.tosSection3Item4}</li>
               </ul>
             </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">4. Content and Intellectual Property</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection4Title}</h2>
             <div className="space-y-3">
               <p className="text-muted-foreground">
-                <strong>Biblical Content:</strong> Scripture quotations are from public domain translations 
-                or used under appropriate licenses.
+                <strong>{t.tosSection4BiblicalContentLabel}</strong> {t.tosSection4BiblicalContentText}
               </p>
               <p className="text-muted-foreground">
-                <strong>Original Content:</strong> Our original content, including study plans, commentary, 
-                and app features, are protected by copyright and remain our property.
+                <strong>{t.tosSection4OriginalContentLabel}</strong> {t.tosSection4OriginalContentText}
               </p>
               <p className="text-muted-foreground">
-                <strong>User Content:</strong> Any questions or input you provide may be used to improve 
-                our services while respecting your privacy.
+                <strong>{t.tosSection4UserContentLabel}</strong> {t.tosSection4UserContentText}
               </p>
             </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">5. Disclaimers</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection5Title}</h2>
             <div className="space-y-3">
               <p className="text-muted-foreground">
-                <strong>Educational Purpose:</strong> This app is for educational and inspirational purposes. 
-                It is not a substitute for:
+                <strong>{t.tosSection5EducationalLabel}</strong> {t.tosSection5EducationalText}
               </p>
               <ul className="space-y-2 text-muted-foreground ml-4">
-                <li>• Professional pastoral counseling</li>
-                <li>• Medical or psychological advice</li>
-                <li>• Legal advice or financial guidance</li>
-                <li>• Crisis intervention or emergency services</li>
+                <li>• {t.tosSection5Item1}</li>
+                <li>• {t.tosSection5Item2}</li>
+                <li>• {t.tosSection5Item3}</li>
+                <li>• {t.tosSection5Item4}</li>
               </ul>
               <p className="text-muted-foreground">
-                <strong>Doctrinal Neutrality:</strong> While we strive for biblical accuracy, interpretations 
-                may vary among Christian denominations. Consult your local church for doctrinal guidance.
+                <strong>{t.tosSection5DoctrinalLabel}</strong> {t.tosSection5DoctrinalText}
               </p>
             </div>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">6. Limitation of Liability</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection6Title}</h2>
             <p className="text-muted-foreground">
-              To the maximum extent permitted by law, The Gospel in 5 Minutes and its creators shall not 
-              be liable for any indirect, incidental, special, or consequential damages arising from your 
-              use of the app, including but not limited to spiritual, emotional, or personal decisions 
-              based on app content.
+              {t.tosSection6Content}
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">7. Termination</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection7Title}</h2>
             <p className="text-muted-foreground">
-              You may stop using the app at any time and delete your account. We reserve the right to 
-              terminate or suspend access to users who violate these Terms or engage in inappropriate behavior.
+              {t.tosSection7Content}
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">8. Updates and Changes</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection8Title}</h2>
             <p className="text-muted-foreground">
-              We may update these Terms periodically. Continued use of the app after changes constitutes 
-              acceptance of the new Terms. Material changes will be communicated through the app.
+              {t.tosSection8Content}
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">9. Governing Law</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection9Title}</h2>
             <p className="text-muted-foreground">
-              These Terms are governed by the laws of the United States. Any disputes will be resolved 
-              through binding arbitration in accordance with Christian principles of reconciliation where possible.
+              {t.tosSection9Content}
             </p>
           </section>
 
           <section>
-            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">10. Contact Information</h2>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.tosSection10Title}</h2>
             <div className="text-muted-foreground space-y-2">
-              <p>For questions about these Terms, please contact us:</p>
+              <p>{t.tosSection10Intro}</p>
               <p>
-                <strong>Email:</strong> support@thegospelin5minutes.com<br />
-                <strong>Facebook:</strong> @TheGospelIn5Minutes<br />
-                <strong>Address:</strong> The Gospel in 5 Minutes, Legal Department
+                <strong>{t.contactEmailLabel}</strong> {t.tosSection10Email}<br />
+                <strong>{t.contactFacebookLabel}</strong> {t.tosSection10Facebook}<br />
+                <strong>{t.contactAddressLabel}</strong> {t.tosSection10Address}
               </p>
             </div>
           </section>
 
           <div className="pt-4 border-t border-border">
             <p className="text-muted-foreground text-xs">
-              By using The Gospel in 5 Minutes, you acknowledge that you have read, understood, and agree 
-              to be bound by these Terms of Service.
+              {t.tosFinalAcknowledgement}
             </p>
           </div>
         </div>
