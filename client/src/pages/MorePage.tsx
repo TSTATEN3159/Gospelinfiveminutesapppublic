@@ -126,7 +126,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
       <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
         {/* Top Row: Title + Streak Badge */}
         <div className="flex items-center justify-between mb-5">
-          <h1 className="text-lg font-medium text-gray-700" data-testid="text-title-more-features">
+          <h1 className="text-lg font-bold text-amber-900" style={{ 
+            fontFamily: 'Dancing Script, Brush Script MT, cursive'
+          }} data-testid="text-title-more-features">
             More Features
           </h1>
           <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">

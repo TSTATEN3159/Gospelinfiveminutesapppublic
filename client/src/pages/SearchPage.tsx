@@ -34,9 +34,11 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
       <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
         {/* Centered Professional Description */}
         <div className="text-center mb-4">
-          <p className="text-base font-medium text-gray-600 max-w-md mx-auto">
+          <h1 className="text-base font-bold text-amber-900 max-w-md mx-auto" style={{ 
+            fontFamily: 'Dancing Script, Brush Script MT, cursive'
+          }}>
             {t.searchPageDescription}
-          </p>
+          </h1>
         </div>
         
         {/* Streak Badge - Centered */}
