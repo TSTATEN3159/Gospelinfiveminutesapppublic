@@ -8,6 +8,11 @@
 
 Preferred communication style: Simple, everyday language.
 
+## Social Media & Branding
+
+- **Instagram**: https://www.instagram.com/thegospelinfiveminutes/
+- **Facebook**: https://www.facebook.com/TheGospelIn5Minutes
+
 ## System Architecture
 
 ### Frontend Architecture

@@ -169,7 +169,7 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
           </Button>
           <Button asChild variant="ghost" size="sm" data-testid="button-instagram-more">
             <a 
-              href="https://www.instagram.com/thegospelin5minutes" 
+              href="https://www.instagram.com/thegospelinfiveminutes/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-purple-300/50 hover:ring-purple-400/70"

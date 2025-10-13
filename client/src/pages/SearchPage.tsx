@@ -73,7 +73,7 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             <span>{t.follow}</span>
           </a>
           <a 
-            href="https://www.instagram.com/thegospelin5minutes" 
+            href="https://www.instagram.com/thegospelinfiveminutes/" 
             target="_blank" 
             rel="noopener noreferrer"
             className="flex items-center gap-1 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white px-3 py-1 rounded-full text-xs hover-elevate ios-tap-target"
