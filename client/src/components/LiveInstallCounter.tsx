@@ -3,19 +3,20 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Download, TrendingUp, Globe } from "lucide-react";
 
 export default function LiveInstallCounter() {
-  const [installCount, setInstallCount] = useState(127834);
+  const [installCount, setInstallCount] = useState(0);
   const [recentInstalls, setRecentInstalls] = useState(0);
 
   useEffect(() => {
-    // Simulate live install counting
+    // App hasn't launched yet - keep counter at 0
+    // When app launches, uncomment the code below to enable live counting
+    
+    /*
     const interval = setInterval(() => {
-      // Random increment between 1-5 every 3-8 seconds
       const increment = Math.floor(Math.random() * 5) + 1;
       setInstallCount(prev => prev + increment);
       setRecentInstalls(prev => prev + increment);
     }, Math.random() * 5000 + 3000);
 
-    // Reset recent installs counter every minute
     const resetInterval = setInterval(() => {
       setRecentInstalls(0);
     }, 60000);
@@ -24,6 +25,7 @@ export default function LiveInstallCounter() {
       clearInterval(interval);
       clearInterval(resetInterval);
     };
+    */
   }, []);
 
   const formatNumber = (num: number) => {
