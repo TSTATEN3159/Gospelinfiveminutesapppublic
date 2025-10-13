@@ -631,7 +631,7 @@ export const translations: Record<string, Translations> = {
     donateDesc: "Support our mission to spread the Gospel",
     supportLegal: "Support & Legal",
     supportPrivacyRights: "Support & Privacy Rights",
-    comingSoon: "Coming Soon",
+    comingSoon: "New Feature",
     
     // Common Actions
     follow: "Follow",
@@ -1024,8 +1024,8 @@ export const translations: Record<string, Translations> = {
     joinOurMission: "Join Our Mission",
     givingPageCTADescription: "Your donation helps us purchase and distribute Bibles to those who need God's word most. Every contribution brings the Gospel to someone seeking hope and salvation.",
     globalBibleDistribution: "Global Bible Distribution",
-    worldwideImpactComingSoon: "Worldwide Impact Coming Soon!",
-    worldwideImpactDescription: "Interactive map showing Bible distributions worldwide will be available soon. Track how your donations reach every corner of the globe!",
+    worldwideImpactComingSoon: "Growing Global Impact",
+    worldwideImpactDescription: "We're actively distributing Bibles worldwide. Your donations are reaching communities across the globe, bringing hope and the Gospel to those who need it most.",
     
     // Videos Page
     videosPageTitle: "Faith Videos",
@@ -1049,8 +1049,8 @@ export const translations: Record<string, Translations> = {
     noVideosAvailable: "No videos available",
     checkInternetConnection: "Please check your internet connection and try again",
     views: "views",
-    moreVideosComingSoon: "More Videos Coming Soon!",
-    moreVideosDescription: "We're constantly adding new sermons, Gospel insights, and Christian advice videos. Check back regularly for fresh spiritual content!",
+    moreVideosComingSoon: "Expanding Video Library",
+    moreVideosDescription: "Our collection grows with new sermons, Gospel insights, and Christian advice videos. Explore regularly for fresh spiritual content to strengthen your faith journey.",
     sermon: "Sermon",
     gospelTidbit: "Gospel Tidbit",
     video: "Video",
@@ -1218,7 +1218,7 @@ export const translations: Record<string, Translations> = {
     donateDesc: "Apoya nuestra misión de difundir el Evangelio",
     supportLegal: "Soporte y Legal",
     supportPrivacyRights: "Soporte y Derechos de Privacidad",
-    comingSoon: "Próximamente",
+    comingSoon: "Nueva Función",
     
     // Common Actions
     follow: "Seguir",
@@ -1607,8 +1607,8 @@ export const translations: Record<string, Translations> = {
     joinOurMission: "Únete a Nuestra Misión",
     givingPageCTADescription: "Tu donación nos ayuda a comprar y distribuir Biblias a quienes más necesitan la palabra de Dios. Cada contribución lleva el Evangelio a alguien que busca esperanza y salvación.",
     globalBibleDistribution: "Distribución Global de Biblias",
-    worldwideImpactComingSoon: "¡Impacto Mundial Próximamente!",
-    worldwideImpactDescription: "El mapa interactivo que muestra las distribuciones de Biblias en todo el mundo estará disponible pronto. ¡Rastrea cómo tus donaciones llegan a cada rincón del mundo!",
+    worldwideImpactComingSoon: "Impacto Global Creciente",
+    worldwideImpactDescription: "Estamos distribuyendo activamente Biblias en todo el mundo. Tus donaciones están llegando a comunidades de todo el globo, llevando esperanza y el Evangelio a quienes más lo necesitan.",
     
     // Videos Page
     videosPageTitle: "Videos de Fe",
@@ -1632,8 +1632,8 @@ export const translations: Record<string, Translations> = {
     noVideosAvailable: "No hay videos disponibles",
     checkInternetConnection: "Por favor verifica tu conexión a internet e intenta nuevamente",
     views: "vistas",
-    moreVideosComingSoon: "¡Más Videos Próximamente!",
-    moreVideosDescription: "Constantemente estamos agregando nuevos sermones, perspectivas del Evangelio y videos de consejos cristianos. ¡Vuelve regularmente para contenido espiritual fresco!",
+    moreVideosComingSoon: "Biblioteca de Videos en Expansión",
+    moreVideosDescription: "Nuestra colección crece con nuevos sermones, perspectivas del Evangelio y videos de consejos cristianos. Explora regularmente para obtener contenido espiritual fresco que fortalezca tu camino de fe.",
     sermon: "Sermón",
     gospelTidbit: "Perspectiva del Evangelio",
     video: "Video",
@@ -1801,7 +1801,7 @@ export const translations: Record<string, Translations> = {
     donateDesc: "Soutenez notre mission de répandre l'Évangile",
     supportLegal: "Support et Légal",
     supportPrivacyRights: "Support et Droits de Confidentialité",
-    comingSoon: "Bientôt Disponible",
+    comingSoon: "Nouvelle Fonctionnalité",
     
     // Common Actions
     follow: "Suivre",
@@ -2190,8 +2190,8 @@ export const translations: Record<string, Translations> = {
     joinOurMission: "Rejoignez Notre Mission",
     givingPageCTADescription: "Votre don nous aide à acheter et distribuer des Bibles à ceux qui ont le plus besoin de la parole de Dieu. Chaque contribution apporte l'Évangile à quelqu'un qui cherche l'espoir et le salut.",
     globalBibleDistribution: "Distribution Mondiale de Bibles",
-    worldwideImpactComingSoon: "Impact Mondial Bientôt Disponible !",
-    worldwideImpactDescription: "La carte interactive montrant les distributions de Bibles dans le monde sera bientôt disponible. Suivez comment vos dons atteignent tous les coins du globe !",
+    worldwideImpactComingSoon: "Impact Mondial Croissant",
+    worldwideImpactDescription: "Nous distribuons activement des Bibles dans le monde entier. Vos dons atteignent des communautés à travers le globe, apportant espoir et l'Évangile à ceux qui en ont le plus besoin.",
     
     // Videos Page
     videosPageTitle: "Vidéos de Foi",
@@ -2215,8 +2215,8 @@ export const translations: Record<string, Translations> = {
     noVideosAvailable: "Aucune vidéo disponible",
     checkInternetConnection: "Veuillez vérifier votre connexion Internet et réessayer",
     views: "vues",
-    moreVideosComingSoon: "Plus de Vidéos Bientôt !",
-    moreVideosDescription: "Nous ajoutons constamment de nouveaux sermons, perspectives évangéliques et vidéos de conseils chrétiens. Revenez régulièrement pour du contenu spirituel frais !",
+    moreVideosComingSoon: "Bibliothèque Vidéo en Expansion",
+    moreVideosDescription: "Notre collection s'enrichit de nouveaux sermons, perspectives évangéliques et vidéos de conseils chrétiens. Explorez régulièrement pour du contenu spirituel frais qui renforce votre parcours de foi.",
     sermon: "Sermon",
     gospelTidbit: "Perspective Évangélique",
     video: "Vidéo",
@@ -2384,7 +2384,7 @@ export const translations: Record<string, Translations> = {
     donateDesc: "Apoie nossa missão de espalhar o Evangelho",
     supportLegal: "Suporte e Legal",
     supportPrivacyRights: "Suporte e Direitos de Privacidade",
-    comingSoon: "Em Breve",
+    comingSoon: "Novo Recurso",
     
     // Common Actions
     follow: "Seguir",
@@ -2777,8 +2777,8 @@ export const translations: Record<string, Translations> = {
     joinOurMission: "Junte-se à Nossa Missão",
     givingPageCTADescription: "Sua doação nos ajuda a comprar e distribuir Bíblias para aqueles que mais precisam da palavra de Deus. Cada contribuição leva o Evangelho a alguém que busca esperança e salvação.",
     globalBibleDistribution: "Distribuição Global de Bíblias",
-    worldwideImpactComingSoon: "Impacto Mundial em Breve!",
-    worldwideImpactDescription: "Mapa interativo mostrando distribuições de Bíblias em todo o mundo estará disponível em breve. Acompanhe como suas doações alcançam todos os cantos do globo!",
+    worldwideImpactComingSoon: "Impacto Global Crescente",
+    worldwideImpactDescription: "Estamos distribuindo ativamente Bíblias em todo o mundo. Suas doações estão alcançando comunidades em todo o globo, trazendo esperança e o Evangelho para aqueles que mais precisam.",
     
     // Videos Page
     videosPageTitle: "Vídeos de Fé",
@@ -2802,8 +2802,8 @@ export const translations: Record<string, Translations> = {
     noVideosAvailable: "Nenhum vídeo disponível",
     checkInternetConnection: "Por favor, verifique sua conexão com a internet e tente novamente",
     views: "visualizações",
-    moreVideosComingSoon: "Mais Vídeos em Breve!",
-    moreVideosDescription: "Estamos constantemente adicionando novos sermões, percepções do Evangelho e vídeos de conselhos cristãos. Volte regularmente para conteúdo espiritual novo!",
+    moreVideosComingSoon: "Biblioteca de Vídeos em Expansão",
+    moreVideosDescription: "Nossa coleção cresce com novos sermões, percepções do Evangelho e vídeos de conselhos cristãos. Explore regularmente para conteúdo espiritual fresco que fortaleça sua jornada de fé.",
     sermon: "Sermão",
     gospelTidbit: "Percepção do Evangelho",
     video: "Vídeo",
@@ -2971,7 +2971,7 @@ export const translations: Record<string, Translations> = {
     donateDesc: "支持我们传播福音的使命",
     supportLegal: "支持和法律",
     supportPrivacyRights: "支持和隐私权",
-    comingSoon: "即将推出",
+    comingSoon: "新功能",
     
     // Common Actions
     follow: "关注",
@@ -3360,8 +3360,8 @@ export const translations: Record<string, Translations> = {
     joinOurMission: "加入我们的使命",
     givingPageCTADescription: "您的捐赠帮助我们购买和分发圣经给最需要神话语的人。每一份贡献都将福音带给寻求希望和救赎的人。",
     globalBibleDistribution: "全球圣经分发",
-    worldwideImpactComingSoon: "全球影响即将推出！",
-    worldwideImpactDescription: "互动地图显示全球圣经分发情况即将推出。追踪您的捐赠如何到达全球每一个角落！",
+    worldwideImpactComingSoon: "不断增长的全球影响力",
+    worldwideImpactDescription: "我们正在积极向全球分发圣经。您的捐赠正在到达全球各地的社区，为最需要的人带来希望和福音。",
     
     // Videos Page
     videosPageTitle: "信仰视频",
@@ -3385,8 +3385,8 @@ export const translations: Record<string, Translations> = {
     noVideosAvailable: "没有可用视频",
     checkInternetConnection: "请检查您的互联网连接并重试",
     views: "观看",
-    moreVideosComingSoon: "更多视频即将推出！",
-    moreVideosDescription: "我们不断添加新的讲道、福音见解和基督教建议视频。定期回来查看新的精神内容！",
+    moreVideosComingSoon: "不断扩展的视频库",
+    moreVideosDescription: "我们的收藏不断增长，包含新的讲道、福音见解和基督教建议视频。定期探索，获取能够加强您信仰之旅的新鲜精神内容。",
     sermon: "讲道",
     gospelTidbit: "福音要点",
     video: "视频",
@@ -3554,7 +3554,7 @@ export const translations: Record<string, Translations> = {
     donateDesc: "ادعم مهمتنا في نشر الإنجيل",
     supportLegal: "الدعم والقانوني",
     supportPrivacyRights: "الدعم وحقوق الخصوصية",
-    comingSoon: "قريباً",
+    comingSoon: "ميزة جديدة",
     
     // Common Actions
     follow: "تابع",
@@ -3943,8 +3943,8 @@ export const translations: Record<string, Translations> = {
     joinOurMission: "انضم إلى مهمتنا",
     givingPageCTADescription: "تبرعك يساعدنا في شراء وتوزيع الكتب المقدسة لأولئك الذين يحتاجون كلمة الله أكثر. كل مساهمة تجلب الإنجيل لشخص يبحث عن الأمل والخلاص.",
     globalBibleDistribution: "توزيع الكتاب المقدس العالمي",
-    worldwideImpactComingSoon: "التأثير العالمي قريباً!",
-    worldwideImpactDescription: "الخريطة التفاعلية التي تظهر توزيعات الكتاب المقدس في جميع أنحاء العالم ستكون متاحة قريباً. تتبع كيف تصل تبرعاتك إلى كل ركن من أركان العالم!",
+    worldwideImpactComingSoon: "تأثير عالمي متزايد",
+    worldwideImpactDescription: "نحن نوزع الكتب المقدسة بنشاط في جميع أنحاء العالم. تبرعاتك تصل إلى المجتمعات في جميع أنحاء العالم، وتجلب الأمل والإنجيل لأولئك الذين هم في أمس الحاجة إليه.",
     
     // Videos Page
     videosPageTitle: "فيديوهات الإيمان",
@@ -3968,8 +3968,8 @@ export const translations: Record<string, Translations> = {
     noVideosAvailable: "لا توجد فيديوهات متاحة",
     checkInternetConnection: "يرجى التحقق من اتصالك بالإنترنت والمحاولة مرة أخرى",
     views: "مشاهدات",
-    moreVideosComingSoon: "المزيد من الفيديوهات قريباً!",
-    moreVideosDescription: "نحن نضيف باستمرار خطباً جديدة ورؤى إنجيلية وفيديوهات نصائح مسيحية. عد بانتظام للحصول على محتوى روحي جديد!",
+    moreVideosComingSoon: "مكتبة فيديو متوسعة",
+    moreVideosDescription: "تنمو مجموعتنا بخطب جديدة ورؤى إنجيلية وفيديوهات نصائح مسيحية. استكشف بانتظام للحصول على محتوى روحي جديد يقوي رحلتك الإيمانية.",
     sermon: "خطبة",
     gospelTidbit: "نقطة من الإنجيل",
     video: "فيديو",
@@ -4137,7 +4137,7 @@ export const translations: Record<string, Translations> = {
     donateDesc: "सुसमाचार फैलाने के हमारे मिशन का समर्थन करें",
     supportLegal: "सहायता और कानूनी",
     supportPrivacyRights: "सहायता और गोपनीयता अधिकार",
-    comingSoon: "जल्द आ रहा है",
+    comingSoon: "नई सुविधा",
     
     // Common Actions
     follow: "फॉलो करें",
@@ -4530,8 +4530,8 @@ export const translations: Record<string, Translations> = {
     joinOurMission: "हमारे मिशन में शामिल हों",
     givingPageCTADescription: "आपका दान हमें उन लोगों को बाइबल खरीदने और वितरित करने में मदद करता है जिन्हें परमेश्वर के वचन की सबसे अधिक आवश्यकता है। हर योगदान किसी ऐसे व्यक्ति को सुसमाचार लाता है जो आशा और मोक्ष की तलाश में है।",
     globalBibleDistribution: "वैश्विक बाइबल वितरण",
-    worldwideImpactComingSoon: "विश्वव्यापी प्रभाव जल्द आ रहा है!",
-    worldwideImpactDescription: "दुनिया भर में बाइबल वितरण दिखाने वाला इंटरैक्टिव मैप जल्द ही उपलब्ध होगा। ट्रैक करें कि आपके दान दुनिया के हर कोने तक कैसे पहुंचते हैं!",
+    worldwideImpactComingSoon: "बढ़ता वैश्विक प्रभाव",
+    worldwideImpactDescription: "हम दुनिया भर में सक्रिय रूप से बाइबल वितरित कर रहे हैं। आपके दान दुनिया भर के समुदायों तक पहुंच रहे हैं, जो सबसे अधिक जरूरतमंदों के लिए आशा और सुसमाचार ला रहे हैं।",
     
     // Videos Page
     videosPageTitle: "विश्वास वीडियो",
@@ -4555,8 +4555,8 @@ export const translations: Record<string, Translations> = {
     noVideosAvailable: "कोई वीडियो उपलब्ध नहीं",
     checkInternetConnection: "कृपया अपना इंटरनेट कनेक्शन जांचें और पुनः प्रयास करें",
     views: "दृश्य",
-    moreVideosComingSoon: "और वीडियो जल्द आ रहे हैं!",
-    moreVideosDescription: "हम लगातार नए उपदेश, सुसमाचार अंतर्दृष्टि और ईसाई सलाह वीडियो जोड़ रहे हैं। ताज़ा आध्यात्मिक सामग्री के लिए नियमित रूप से वापस आएं!",
+    moreVideosComingSoon: "विस्तारित वीडियो पुस्तकालय",
+    moreVideosDescription: "हमारा संग्रह नए उपदेश, सुसमाचार अंतर्दृष्टि और ईसाई सलाह वीडियो के साथ बढ़ता है। अपनी विश्वास यात्रा को मजबूत करने वाली ताज़ा आध्यात्मिक सामग्री के लिए नियमित रूप से अन्वेषण करें।",
     sermon: "उपदेश",
     gospelTidbit: "सुसमाचार का सुझाव",
     video: "वीडियो",
