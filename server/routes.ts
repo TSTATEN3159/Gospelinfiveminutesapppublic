@@ -741,7 +741,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
               });
               
               if (verses.length > 0) {
-                return res.json({ success: true, verses, source: 'api.bible' });
+                // Return first verse in the format frontend expects
+                const firstVerse = verses[0];
+                return res.json({ 
+                  success: true, 
+                  text: firstVerse.text,
+                  reference: firstVerse.reference,
+                  version: version,
+                  source: 'api.bible'
+                });
               }
             }
           }
