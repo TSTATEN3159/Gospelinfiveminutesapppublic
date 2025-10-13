@@ -111,17 +111,21 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
-        {/* Top Row: Welcome + Streak Badge */}
-        <div className="flex items-center justify-between mb-5">
-          <h1 className="text-lg font-bold text-amber-900" style={{ 
-            fontFamily: 'Dancing Script, Brush Script MT, cursive'
-          }} aria-label="Welcome to The Gospel in 5 Minutes">
-            {t.welcome}
-          </h1>
+        {/* Streak Badge - Top Right */}
+        <div className="flex justify-end mb-4">
           <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
             <Flame className="w-4 h-4 text-red-600 fill-red-600" />
             <span className="text-sm font-bold text-red-700">{streakDays}</span>
           </div>
+        </div>
+        
+        {/* Welcome - Centered & Larger */}
+        <div className="text-center mb-5">
+          <h1 className="text-2xl font-bold text-amber-900" style={{ 
+            fontFamily: 'Dancing Script, Brush Script MT, cursive'
+          }} aria-label="Welcome to The Gospel in 5 Minutes">
+            {t.welcome}
+          </h1>
         </div>
         
         {/* App Title - Larger & Prominent */}
