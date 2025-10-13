@@ -183,9 +183,9 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
           <div className="flex items-center gap-3 mb-4">
             <Button
               variant="ghost"
-              size="sm"
+              size="icon"
               onClick={() => onNavigate?.('home')}
-              className="p-2"
+              className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
               data-testid="button-back-to-home"
             >
               <ArrowLeft className="w-5 h-5" />
@@ -258,9 +258,9 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
             <div className="flex items-center gap-3">
               <Button
                 variant="ghost"
-                size="sm"
+                size="icon"
                 onClick={resetGame}
-                className="p-2"
+                className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
                 data-testid="button-back-to-setup"
               >
                 <ArrowLeft className="w-5 h-5" />
@@ -360,9 +360,9 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
         <div className="flex items-center gap-3 mb-4">
           <Button
             variant="ghost"
-            size="sm"
+            size="icon"
             onClick={() => onNavigate?.('home')}
-            className="p-2"
+            className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
             data-testid="button-back-to-home"
           >
             <ArrowLeft className="w-5 h-5" />

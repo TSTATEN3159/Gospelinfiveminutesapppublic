@@ -14,7 +14,7 @@ export default function PrivacyPolicyPage({ onBack, language = "en" }: PrivacyPo
       {/* Header */}
       <div className="bg-background px-4 py-6 border-b border-border sticky top-0 z-10">
         <div className="flex items-center gap-3">
-          <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page">
+          <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page" className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-xl font-bold text-foreground text-center flex-1">{t.privacyPolicyTitle}</h1>

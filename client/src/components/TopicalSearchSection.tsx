@@ -480,9 +480,10 @@ export function TopicalSearchSection({ onNavigateToScripture, backgroundImage }:
             <Button
               onClick={closeScriptureViewer}
               variant="ghost" 
-              size="sm"
-              className="text-gray-500 hover:text-gray-700"
+              size="icon"
+              className="h-9 w-9 border-2 border-border bg-background hover:bg-accent hover:border-accent-border shadow-md hover:shadow-lg transition-all duration-200"
               data-testid="button-close-scripture"
+              aria-label="Close scripture viewer"
             >
               <X className="w-5 h-5" />
             </Button>

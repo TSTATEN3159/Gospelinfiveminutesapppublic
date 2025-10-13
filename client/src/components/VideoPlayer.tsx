@@ -54,8 +54,10 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
               size="icon"
               onClick={onClose}
               data-testid="button-close-video"
+              className="h-9 w-9 border-2 border-border bg-background hover:bg-accent hover:border-accent-border shadow-md hover:shadow-lg transition-all duration-200"
+              aria-label="Close video player"
             >
-              <X className="w-4 h-4" />
+              <X className="w-5 h-5" />
             </Button>
           </DialogTitle>
         </DialogHeader>
