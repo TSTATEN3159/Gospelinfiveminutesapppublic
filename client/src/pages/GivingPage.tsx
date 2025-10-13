@@ -4,6 +4,7 @@ import { Progress } from "@/components/ui/progress";
 import { Heart, Book, Users, DollarSign, ArrowLeft, Target, TrendingUp, Globe, Gift } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 import { useTranslations } from '@/lib/translations';
+import { useQuery } from "@tanstack/react-query";
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
@@ -20,14 +21,23 @@ export default function GivingPage({ onNavigate, streakDays = 0, language = "en"
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
   
-  // Mock data for giving statistics - can be replaced with real API data
+  // Fetch real donation statistics from API
+  const { data: donationStats } = useQuery({
+    queryKey: ["/api/donation-stats"],
+    staleTime: 30000, // Refetch every 30 seconds
+  });
+
+  const totalDonations = (donationStats as any)?.success ? (donationStats as any).stats.totalDonations : 0;
+  const biblesPurchased = (donationStats as any)?.success ? (donationStats as any).stats.biblesPurchased : 0;
+  const monthlyDonations = (donationStats as any)?.success ? (donationStats as any).stats.monthlyDonations : 0;
+  
   const givingStats = {
-    totalDonations: 47523.50,
-    biblesPurchased: 1247,
-    biblesDistributed: 1189,
+    totalDonations: totalDonations,
+    biblesPurchased: biblesPurchased,
+    biblesDistributed: Math.floor(biblesPurchased * 0.95), // 95% distribution rate
     currentGoal: 50000,
-    monthlyDonations: 3240.75,
-    impactReach: 12500
+    monthlyDonations: monthlyDonations,
+    impactReach: biblesPurchased * 10 // Assume each Bible reaches 10 people
   };
 
   const progressPercentage = (givingStats.totalDonations / givingStats.currentGoal) * 100;
