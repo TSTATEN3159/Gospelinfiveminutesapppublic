@@ -122,85 +122,70 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
 
   return (
     <div className="min-h-screen pb-20">
-      {/* Header Section - Same style as HomePage */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
+      {/* Professional Header Section */}
+      <div className="bg-gradient-to-b from-white to-gray-50/50 px-4 py-5 border-b border-gray-200 ios-safe-top">
+        {/* Top Row: Title + Streak */}
         <div className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-2xl font-bold" style={{ 
-              color: '#8B4513',
-              fontFamily: 'Dancing Script, Brush Script MT, cursive',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
-            }} data-testid="text-title-more-features">
-              More Features
-            </h1>
-          </div>
-          <div className="flex items-center space-x-2">
-            <div className="flex items-center gap-1">
-              <Flame className="w-6 h-6 text-red-600 fill-red-600" />
-              <span className="text-lg font-bold text-red-600" data-testid="text-streak-count">{streakDays}</span>
-            </div>
+          <h1 className="text-xl font-semibold text-amber-900" data-testid="text-title-more-features">
+            More Features
+          </h1>
+          <div className="flex items-center gap-2 bg-red-50 px-3 py-1.5 rounded-full border border-red-100">
+            <Flame className="w-5 h-5 text-red-600 fill-red-600" />
+            <span className="text-base font-bold text-red-600" data-testid="text-streak-count">{streakDays}</span>
           </div>
         </div>
         
-        {/* App Title */}
-        <div className="text-center">
-          <h2 className="text-3xl font-bold mb-3" style={{ 
-            fontFamily: 'Dancing Script, Brush Script MT, cursive',
-            textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
-            color: '#8B4513'
+        {/* App Title - Centered */}
+        <div className="text-center mb-4">
+          <h2 className="text-2xl font-bold text-amber-900" style={{ 
+            fontFamily: 'Dancing Script, Brush Script MT, cursive'
           }}>
             The Gospel in 5 Minutes™
           </h2>
         </div>
         
-        {/* Social Media Buttons */}
-        <div className="flex justify-center items-center gap-3 mt-4 mb-3">
-          <Button asChild variant="ghost" size="sm" data-testid="button-facebook-more">
-            <a 
-              href="https://www.facebook.com/TheGospelIn5Minutes" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-blue-300/50 hover:ring-blue-400/70"
-              aria-label="Follow us on Facebook - Opens in new window"
-            >
-              <Facebook className="w-3 h-3 mr-1" aria-hidden="true" />
-              <span>{t.follow}</span>
-            </a>
-          </Button>
-          <Button asChild variant="ghost" size="sm" data-testid="button-instagram-more">
-            <a 
-              href="https://www.instagram.com/thegospelinfiveminutes/" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-purple-300/50 hover:ring-purple-400/70"
-              aria-label="Follow us on Instagram - Opens in new window"
-            >
-              <Instagram className="w-3 h-3 mr-1" aria-hidden="true" />
-              <span>{t.follow}</span>
-            </a>
-          </Button>
+        {/* Action Buttons Row - Professional Layout */}
+        <div className="flex items-center justify-center gap-2 flex-wrap">
+          {/* Social Buttons */}
+          <a 
+            href="https://www.facebook.com/TheGospelIn5Minutes" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
+            data-testid="button-facebook-more"
+            aria-label="Follow us on Facebook - Opens in new window"
+          >
+            <Facebook className="w-4 h-4" aria-hidden="true" />
+            <span>{t.follow}</span>
+          </a>
+          <a 
+            href="https://www.instagram.com/thegospelinfiveminutes/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1.5 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
+            data-testid="button-instagram-more"
+            aria-label="Follow us on Instagram - Opens in new window"
+          >
+            <Instagram className="w-4 h-4" aria-hidden="true" />
+            <span>{t.follow}</span>
+          </a>
+          
           {/* Donate Button (Hidden on iOS for App Store compliance) */}
           {!isIOS && (
             <Button 
-              variant="ghost"
-              size="sm"
-              className="bg-amber-600 hover:bg-amber-700 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-amber-300/50 hover:ring-amber-400/70"
+              className="flex items-center gap-1.5 bg-amber-600 hover:bg-amber-700 text-white px-3 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-all"
               data-testid="button-donate-more"
               aria-label="Donate to help spread the Gospel"
               onClick={() => onNavigate?.('donate')}
             >
-              <Heart className="w-3 h-3 mr-1" aria-hidden="true" />
-              Donate
+              <Heart className="w-4 h-4" aria-hidden="true" />
+              <span>Donate</span>
             </Button>
           )}
-        </div>
-        
-        {/* Share Button */}
-        <div className="flex justify-center mt-3">
+          
+          {/* Share Button */}
           <Button 
-            variant="ghost"
-            size="sm"
-            className="bg-amber-700 hover:bg-amber-800 text-white font-medium px-3 py-2 rounded-md transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105 hover:-translate-y-1 ring-2 ring-amber-400/50 hover:ring-amber-500/70"
+            className="flex items-center gap-1.5 bg-gray-700 hover:bg-gray-800 text-white px-3 py-2 rounded-lg text-sm font-medium shadow-sm hover:shadow-md transition-all"
             data-testid="button-share-more"
             aria-label="Share The Gospel in 5 Minutes with friends"
             onClick={() => {
@@ -217,8 +202,8 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
               }
             }}
           >
-            <Share className="w-3 h-3 mr-1" aria-hidden="true" />
-            {t.share}
+            <Share className="w-4 h-4" aria-hidden="true" />
+            <span>{t.share}</span>
           </Button>
         </div>
       </div>
