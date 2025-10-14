@@ -38,15 +38,16 @@ export default function PersonalizedGreeting() {
 
   return (
     <div className="text-center mb-5">
-      <h2 
-        className="text-xl font-bold text-amber-900" 
+      <div 
+        className="text-lg font-bold text-amber-900" 
         style={{ 
           fontFamily: 'Dancing Script, Brush Script MT, cursive'
         }}
         data-testid="text-personalized-greeting"
       >
-        {greeting} {userName}
-      </h2>
+        <div>{greeting}</div>
+        <div>{userName}</div>
+      </div>
     </div>
   );
 }
