@@ -32,10 +32,6 @@ export default function PersonalizedGreeting() {
     return () => clearInterval(interval);
   }, []);
 
-  if (!userName) {
-    return null;
-  }
-
   return (
     <div className="text-center mb-5">
       <div 
@@ -46,7 +42,7 @@ export default function PersonalizedGreeting() {
         data-testid="text-personalized-greeting"
       >
         <div>{greeting}</div>
-        <div>{userName}</div>
+        {userName && <div>{userName}</div>}
       </div>
     </div>
   );
