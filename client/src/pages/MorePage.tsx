@@ -4,6 +4,7 @@ import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRig
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
+import AppLogo from "../components/AppLogo";
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 import mountainTopImage from '@assets/generated_images/Vibrant_mountain_top_vista_d60cfc2f.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
@@ -124,6 +125,9 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
+        {/* Professional Logo - Top Center */}
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        
         {/* Top Row: Title + Streak Badge */}
         <div className="flex items-center justify-between mb-5">
           <h1 className="text-lg font-bold text-amber-900" style={{ 

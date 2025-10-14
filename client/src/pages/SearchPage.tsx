@@ -1,6 +1,7 @@
 import BibleSearchSection from "../components/BibleSearchSection";
 import { TopicalSearchSection } from "../components/TopicalSearchSection";
 import LiveInstallCounter from "../components/LiveInstallCounter";
+import AppLogo from "../components/AppLogo";
 import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
@@ -36,6 +37,9 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
+        {/* Professional Logo - Top Center */}
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        
         {/* Centered Professional Description */}
         <div className="text-center mb-4">
           <h1 className="text-base font-bold text-amber-900 max-w-md mx-auto" style={{ 

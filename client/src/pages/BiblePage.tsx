@@ -1,6 +1,7 @@
 import AskPastorSection from "../components/AskPastorSection";
 import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import ScriptureMemorySection from "../components/ScriptureMemorySection";
+import AppLogo from "../components/AppLogo";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
 import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_background_2b3bbc13.png';
@@ -24,6 +25,9 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
+        {/* Professional Logo - Top Center */}
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        
         {/* Centered Professional Description */}
         <div className="text-center mb-4">
           <h1 className="text-base font-bold text-amber-900 max-w-md mx-auto" style={{ 

@@ -6,6 +6,7 @@ import BibleStudyPlans from "../components/BibleStudyPlans";
 import AskPastor from "../components/AskPastor";
 import BadgeNotification from "../components/BadgeNotification";
 import { VideoPlayer } from "../components/VideoPlayer";
+import AppLogo from "../components/AppLogo";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -110,6 +111,9 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
+        {/* Professional Logo - Top Center */}
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-4" />
+        
         {/* Streak Badge - Top Right */}
         <div className="flex justify-end mb-4">
           <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
