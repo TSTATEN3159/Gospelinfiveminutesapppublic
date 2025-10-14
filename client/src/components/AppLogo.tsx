@@ -1,4 +1,4 @@
-import logoImage from '@assets/Professional Logo white with TM_1760471843240.png';
+import logoImage from '@assets/Professional Logo pure white with TM_1760472370422.png';
 
 interface AppLogoProps {
   onNavigate?: (page: string, searchQuery?: string) => void;
@@ -8,9 +8,9 @@ interface AppLogoProps {
 
 export default function AppLogo({ onNavigate, size = 'medium', className = '' }: AppLogoProps) {
   const sizeClasses = {
-    small: 'w-24 h-24',
-    medium: 'w-32 h-32',
-    large: 'w-40 h-40'
+    small: 'w-20 h-20',
+    medium: 'w-24 h-24',
+    large: 'w-32 h-32'
   };
 
   const handleClick = () => {
@@ -37,7 +37,7 @@ export default function AppLogo({ onNavigate, size = 'medium', className = '' }:
       <img 
         src={logoImage} 
         alt="The Gospel in 5 Minutes - Golden clock with cross and trademark logo" 
-        className={`${sizeClasses[size]} object-contain`}
+        className={`${sizeClasses[size]} object-contain opacity-90`}
       />
     </div>
   );
