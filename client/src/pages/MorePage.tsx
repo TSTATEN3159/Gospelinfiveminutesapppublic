@@ -5,6 +5,7 @@ import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
@@ -112,12 +113,13 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
   return (
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
-      <div className="bg-gradient-to-b from-white via-gray-50/30 to-white px-4 py-6 border-b border-gray-200 ios-safe-top">
-        {/* Streak Badge - Top Right */}
-        <div className="flex justify-end mb-6">
-          <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
-            <Flame className="w-4 h-4 text-red-600 fill-red-600" />
-            <span className="text-sm font-bold text-red-700" data-testid="text-streak-count">{streakDays}</span>
+      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
+        {/* Top Bar: Streak Badge and Theme Toggle */}
+        <div className="flex justify-between items-center mb-6">
+          <ThemeToggle />
+          <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 dark:from-red-950 dark:to-red-900 px-2.5 py-1 rounded-full border border-red-200/50 dark:border-red-800/50 shadow-sm">
+            <Flame className="w-4 h-4 text-red-600 dark:text-red-400 fill-red-600 dark:fill-red-400" />
+            <span className="text-sm font-bold text-red-700 dark:text-red-300" data-testid="text-streak-count">{streakDays}</span>
           </div>
         </div>
         

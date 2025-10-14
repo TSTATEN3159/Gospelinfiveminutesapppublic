@@ -11,6 +11,7 @@ import { useToast } from "@/hooks/use-toast";
 import { notificationService } from "../services/notificationService";
 import { bibleService } from "../services/bibleService";
 import { store } from "@/lib/appStore";
+import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -391,7 +392,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
   return (
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
-      <div className="bg-white px-4 py-6 border-b border-gray-100 ios-safe-top">
+      <div className="bg-background border-b border-border px-4 py-6 ios-safe-top">
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
@@ -404,15 +405,15 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1">
-            <h1 className="text-2xl font-bold" style={{ 
+            <h1 className="text-2xl font-bold text-foreground" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
-              textShadow: '1px 1px 2px rgba(0,0,0,0.1)',
-              color: '#8B4513'
+              textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }}>
               {t.settings}
             </h1>
-            <p className="text-gray-600 mt-1">{t.settingsDescription}</p>
+            <p className="text-muted-foreground mt-1">{t.settingsDescription}</p>
           </div>
+          <ThemeToggle />
         </div>
       </div>
 

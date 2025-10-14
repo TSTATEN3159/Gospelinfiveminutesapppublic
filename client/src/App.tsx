@@ -11,6 +11,7 @@ import BottomNavigation from "./components/BottomNavigation";
 import OfflineIndicator from "./components/OfflineIndicator";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NetworkStatus from "./components/NetworkStatus";
+import { ThemeProvider } from "./components/ThemeProvider";
 
 // Initialize auto-recovery services
 import { silentLogger } from "./services/silentLogger";
@@ -179,14 +180,15 @@ function App() {
 
   return (
     <ErrorBoundary>
-      <QueryClientProvider client={queryClient}>
-        <TooltipProvider>
-          <div className="min-h-screen bg-gray-50">
+      <ThemeProvider defaultTheme="system" storageKey="gospel-app-theme">
+        <QueryClientProvider client={queryClient}>
+          <TooltipProvider>
+            <div className="min-h-screen bg-background">
             {/* Network Status - Apple-compliant auto-recovery */}
             <NetworkStatus onRetry={() => window.location.reload()} />
             
             {/* Current Page Content */}
-            <main className="min-h-screen bg-gray-50">
+            <main className="min-h-screen bg-background">
               {renderCurrentPage()}
             </main>
 
@@ -213,12 +215,13 @@ function App() {
                 onNavigateToFriends={handleNavigateToFriends}
               />
             )}
-          </div>
 
-          <Toaster />
-          <OfflineIndicator />
-        </TooltipProvider>
-      </QueryClientProvider>
+            <Toaster />
+            <OfflineIndicator />
+          </div>
+          </TooltipProvider>
+        </QueryClientProvider>
+      </ThemeProvider>
     </ErrorBoundary>
   );
 }
