@@ -50,7 +50,7 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
         <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
         
         {/* Personalized Greeting */}
-        <PersonalizedGreeting />
+        <PersonalizedGreeting language={language} />
         
         {/* Action Buttons - Refined & Professional */}
         <div className="flex items-center justify-center gap-2 flex-wrap">

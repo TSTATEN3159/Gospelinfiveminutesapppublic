@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useTranslations } from "@/lib/translations";
 
 interface User {
   firstName: string;
@@ -7,9 +8,11 @@ interface User {
 
 interface GreetingHeaderProps {
   user?: User;
+  language?: string;
 }
 
-export default function GreetingHeader({ user }: GreetingHeaderProps) {
+export default function GreetingHeader({ user, language = 'en' }: GreetingHeaderProps) {
+  const t = useTranslations(language);
   const [greeting, setGreeting] = useState("");
   const [timeOfDay, setTimeOfDay] = useState("");
 
@@ -20,13 +23,13 @@ export default function GreetingHeader({ user }: GreetingHeaderProps) {
       let period = "";
 
       if (hour >= 5 && hour < 12) {
-        greetingText = "Good morning";
+        greetingText = t.goodMorning;
         period = "morning";
       } else if (hour >= 12 && hour < 18) {
-        greetingText = "Good afternoon";
+        greetingText = t.goodAfternoon;
         period = "afternoon";
       } else {
-        greetingText = "Good evening";
+        greetingText = t.goodEvening;
         period = "evening";
       }
 
@@ -38,7 +41,7 @@ export default function GreetingHeader({ user }: GreetingHeaderProps) {
     const interval = setInterval(updateGreeting, 60000); // Update every minute
 
     return () => clearInterval(interval);
-  }, []);
+  }, [t]);
 
   const getGradientClass = () => {
     switch (timeOfDay) {

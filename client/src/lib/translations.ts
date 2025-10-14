@@ -13,6 +13,11 @@ export interface Translations {
   bibleStudyPlans: string;
   askThePastor: string;
   
+  // Time-based greetings
+  goodMorning: string;
+  goodAfternoon: string;
+  goodEvening: string;
+  
   // Ask Page
   askPageDescription: string;
   feelingsScripture: string;
@@ -600,6 +605,11 @@ export const translations: Record<string, Translations> = {
     bibleStudyPlans: "3-Day Bible Study Plans",
     askThePastor: "Ask the AI Pastor",
     
+    // Time-based greetings
+    goodMorning: "Good morning",
+    goodAfternoon: "Good afternoon",
+    goodEvening: "Good evening",
+    
     // Ask Page
     askPageDescription: "Get AI-powered Scripture-based guidance and biblical wisdom",
     feelingsScripture: "Feelings & Scripture",
@@ -1185,6 +1195,11 @@ export const translations: Record<string, Translations> = {
     welcome: "¡Bienvenido!",
     dailyVerse: "Versículo Diario",
     bibleStudyPlans: "Planes de Estudio Bíblico de 3 Días",
+    
+    // Time-based greetings
+    goodMorning: "Buenos días",
+    goodAfternoon: "Buenas tardes",
+    goodEvening: "Buenas noches",
     askThePastor: "Pregunta al Pastor IA",
     
     // Ask Page
@@ -1770,6 +1785,11 @@ export const translations: Record<string, Translations> = {
     bibleStudyPlans: "Plans d'Étude Biblique de 3 Jours",
     askThePastor: "Demandez au Pasteur IA",
     
+    // Time-based greetings
+    goodMorning: "Bonjour",
+    goodAfternoon: "Bon après-midi",
+    goodEvening: "Bonsoir",
+    
     // Ask Page
     askPageDescription: "Obtenez des conseils bibliques basés sur les Écritures avec l'IA",
     feelingsScripture: "Sentiments et Écriture",
@@ -2352,6 +2372,11 @@ export const translations: Record<string, Translations> = {
     dailyVerse: "Versículo Diário",
     bibleStudyPlans: "Planos de Estudo Bíblico de 3 Dias",
     askThePastor: "Pergunte ao Pastor IA",
+    
+    // Time-based greetings
+    goodMorning: "Bom dia",
+    goodAfternoon: "Boa tarde",
+    goodEvening: "Boa noite",
     
     // Ask Page
     askPageDescription: "Obtenha orientação bíblica baseada nas Escrituras com IA",
@@ -2940,6 +2965,11 @@ export const translations: Record<string, Translations> = {
     bibleStudyPlans: "3天圣经学习计划",
     askThePastor: "询问AI牧师",
     
+    // Time-based greetings
+    goodMorning: "早上好",
+    goodAfternoon: "下午好",
+    goodEvening: "晚上好",
+    
     // Ask Page
     askPageDescription: "获得基于圣经的AI指导和圣经智慧",
     feelingsScripture: "情感与圣经",
@@ -3523,6 +3553,11 @@ export const translations: Record<string, Translations> = {
     bibleStudyPlans: "خطط دراسة الكتاب المقدس لـ 3 أيام",
     askThePastor: "اسأل القس الذكي",
     
+    // Time-based greetings
+    goodMorning: "صباح الخير",
+    goodAfternoon: "مساء الخير",
+    goodEvening: "مساء الخير",
+    
     // Ask Page
     askPageDescription: "احصل على الإرشاد الكتابي القائم على الكتاب المقدس بالذكاء الاصطناعي",
     feelingsScripture: "المشاعر والكتاب المقدس",
@@ -4105,6 +4140,11 @@ export const translations: Record<string, Translations> = {
     dailyVerse: "दैनिक श्लोक",
     bibleStudyPlans: "3-दिन की बाइबल अध्ययन योजनाएं",
     askThePastor: "AI पादरी से पूछें",
+    
+    // Time-based greetings
+    goodMorning: "सुप्रभात",
+    goodAfternoon: "शुभ अपराह्न",
+    goodEvening: "शुभ संध्या",
     
     // Ask Page
     askPageDescription: "AI के साथ शास्त्र-आधारित मार्गदर्शन और बाइबल की बुद्धि प्राप्त करें",

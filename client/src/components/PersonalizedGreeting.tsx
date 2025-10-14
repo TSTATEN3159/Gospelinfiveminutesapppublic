@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Sunrise, Sun, Moon } from 'lucide-react';
+import { useTranslations } from '@/lib/translations';
 // @ts-ignore - appStore is a JS file
 import { store } from '@/lib/appStore';
 
@@ -7,17 +8,18 @@ interface HomePageProps {
   user?: {
     firstName: string;
   };
+  language?: string;
 }
 
-export default function PersonalizedGreeting({ user }: HomePageProps = {}) {
-  const [greeting, setGreeting] = useState('');
+export default function PersonalizedGreeting({ user, language = 'en' }: HomePageProps = {}) {
+  const t = useTranslations(language);
   const [timeIcon, setTimeIcon] = useState<'morning' | 'afternoon' | 'evening'>('morning');
   const [userName, setUserName] = useState('');
+  const [greeting, setGreeting] = useState('');
 
   useEffect(() => {
     // Load user profile from localStorage
     const profile = store.loadProfile();
-    console.log('Profile data:', profile); // Debug log
     
     // Try to get name from different sources
     let firstName = '';
@@ -27,7 +29,6 @@ export default function PersonalizedGreeting({ user }: HomePageProps = {}) {
       firstName = profile.name.split(' ')[0];
     }
     
-    console.log('First name:', firstName); // Debug log
     setUserName(firstName);
 
     // Determine time-based greeting
@@ -35,13 +36,13 @@ export default function PersonalizedGreeting({ user }: HomePageProps = {}) {
       const hour = new Date().getHours();
       
       if (hour >= 5 && hour < 12) {
-        setGreeting('Good morning');
+        setGreeting(t.goodMorning);
         setTimeIcon('morning');
       } else if (hour >= 12 && hour < 17) {
-        setGreeting('Good afternoon');
+        setGreeting(t.goodAfternoon);
         setTimeIcon('afternoon');
       } else {
-        setGreeting('Good evening');
+        setGreeting(t.goodEvening);
         setTimeIcon('evening');
       }
     };
@@ -51,7 +52,7 @@ export default function PersonalizedGreeting({ user }: HomePageProps = {}) {
     // Update greeting every minute in case time changes
     const interval = setInterval(updateGreeting, 60000);
     return () => clearInterval(interval);
-  }, [user]);
+  }, [user, t]);
 
   const IconComponent = timeIcon === 'morning' ? Sunrise : timeIcon === 'afternoon' ? Sun : Moon;
 
