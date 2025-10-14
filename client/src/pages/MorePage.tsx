@@ -1,13 +1,11 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Users, User, Shield, FileText, Globe, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck } from "lucide-react";
+import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
-import mountainTopImage from '@assets/generated_images/Vibrant_mountain_top_vista_d60cfc2f.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
@@ -15,20 +13,9 @@ import donateImage from '@assets/generated_images/Peaceful_donation_charitable_g
 
 interface MorePageProps {
   language: string;
-  onLanguageChange: (language: string) => void;
   onNavigate?: (page: string) => void;
   streakDays?: number;
 }
-
-const languages = [
-  { code: "en", name: "English" },
-  { code: "es", name: "Español" },
-  { code: "fr", name: "Français" },
-  { code: "pt", name: "Português" },
-  { code: "zh", name: "中文" },
-  { code: "ar", name: "العربية" },
-  { code: "hi", name: "हिन्दी" },
-];
 
 const getMainMenuItems = (t: any, isIOS = false) => {
   const items = [
@@ -104,7 +91,7 @@ const getSettingsMenuItems = (t: any) => [
   }
 ];
 
-export default function MorePage({ language, onLanguageChange, onNavigate, streakDays = 0 }: MorePageProps) {
+export default function MorePage({ language, onNavigate, streakDays = 0 }: MorePageProps) {
   const t = useTranslations(language);
   
   // iOS platform detection for Apple Store compliance
@@ -205,38 +192,6 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
       </div>
 
       <div className="max-w-sm mx-auto space-y-3 px-4">
-        {/* Language Selector */}
-        <Card className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 border-blue-200 hover-elevate">
-          <div className="relative h-24">
-            <img 
-              src={mountainTopImage}
-              alt="Language Selection"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-blue-900/70 via-blue-600/20 to-transparent" />
-          </div>
-          <CardContent className="p-4">
-            <div className="flex items-center justify-center gap-2 mb-3">
-              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center shadow-md border-2 border-blue-200/60">
-                <Globe className="w-4 h-4 text-blue-700" />
-              </div>
-              <h3 className="font-bold text-base text-gray-800">{t.language}</h3>
-            </div>
-            <Select value={language} onValueChange={onLanguageChange}>
-              <SelectTrigger data-testid="select-language">
-                <SelectValue placeholder="Select language" />
-              </SelectTrigger>
-              <SelectContent>
-                {languages.map(lang => (
-                  <SelectItem key={lang.code} value={lang.code}>
-                    {lang.name}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </CardContent>
-        </Card>
-
         {/* Main Menu Items */}
         {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {

@@ -79,7 +79,7 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
   const handleExportData = () => {
     const userData = {
       user: localStorage.getItem("gospelAppUser"),
-      language: localStorage.getItem("gospelAppLanguage"),
+      language: "en", // App is English-only
       streak: localStorage.getItem("gospelAppStreak"),
       lastVisit: localStorage.getItem("gospelAppLastVisit"),
       exportDate: new Date().toISOString(),

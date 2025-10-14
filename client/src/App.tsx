@@ -51,12 +51,17 @@ function App() {
   const [showRegistration, setShowRegistration] = useState(false);
   const [showImportFriends, setShowImportFriends] = useState(false);
   const [currentPage, setCurrentPage] = useState<AppPage>("home");
-  const [language, setLanguage] = useState("en");
   const [streakDays, setStreakDays] = useState(0);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  
+  // App is English-only (per Apple guidelines - iOS Settings handles language)
+  const language = "en";
 
-  // Check if user is registered on first visit and detect language
+  // Check if user is registered on first visit
   useEffect(() => {
+    // Clean up legacy language preference (no longer used)
+    localStorage.removeItem("gospelAppLanguage");
+    
     const userData = localStorage.getItem("gospelAppUser");
     if (userData) {
       setUser(JSON.parse(userData));
@@ -64,23 +69,6 @@ function App() {
       // Show registration modal for first-time users
       setShowRegistration(true);
     }
-
-    // Detect user language based on browser/location
-    const detectLanguage = () => {
-      const savedLanguage = localStorage.getItem("gospelAppLanguage");
-      if (savedLanguage) {
-        setLanguage(savedLanguage);
-      } else {
-        // Use browser language detection
-        const browserLang = navigator.language.split("-")[0];
-        const supportedLanguages = ["en", "es", "fr", "pt", "zh", "ar", "hi"];
-        const detectedLang = supportedLanguages.includes(browserLang) ? browserLang : "en";
-        setLanguage(detectedLang);
-        localStorage.setItem("gospelAppLanguage", detectedLang);
-      }
-    };
-
-    detectLanguage();
   }, []);
 
   const handleRegistrationComplete = async (userData?: User) => {
@@ -121,12 +109,6 @@ function App() {
     setShowRegistration(false);
   };
 
-  const handleLanguageChange = (newLanguage: string) => {
-    setLanguage(newLanguage);
-    localStorage.setItem("gospelAppLanguage", newLanguage);
-    console.log("Language changed to:", newLanguage);
-  };
-
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
     const validPages = ["home", "privacy", "terms", "support", "donate", "giving", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "more", "search"];
     if (validPages.includes(page)) {
@@ -165,7 +147,7 @@ function App() {
           onSearchUsed={() => setSearchQuery("")}
         />;
       case "more":
-        return <MorePage language={language} onLanguageChange={handleLanguageChange} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+        return <MorePage language={language} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
       case "privacy":
         return <PrivacyPolicyPage onBack={handleBackFromLegal} language={language} />;
       case "terms":
