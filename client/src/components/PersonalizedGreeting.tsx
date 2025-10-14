@@ -41,8 +41,7 @@ export default function PersonalizedGreeting() {
         }}
         data-testid="text-personalized-greeting"
       >
-        <div>{greeting}</div>
-        {userName && <div>{userName}</div>}
+        {greeting}{userName && `, ${userName}`}
       </div>
     </div>
   );
