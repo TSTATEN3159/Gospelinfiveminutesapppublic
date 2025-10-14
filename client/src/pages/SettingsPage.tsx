@@ -413,7 +413,6 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             </h1>
             <p className="text-muted-foreground mt-1">{t.settingsDescription}</p>
           </div>
-          <ThemeToggle />
         </div>
       </div>
 
@@ -643,6 +642,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
+            {/* Theme Selection */}
+            <div className="flex items-center justify-between">
+              <div>
+                <Label className="font-medium">Theme</Label>
+                <p className="text-sm text-muted-foreground">Choose light, dark, or system theme</p>
+              </div>
+              <ThemeToggle />
+            </div>
             <div className="flex items-center justify-between">
               <div>
                 <Label htmlFor="soundEnabled" className="font-medium">{t.soundEffects}</Label>

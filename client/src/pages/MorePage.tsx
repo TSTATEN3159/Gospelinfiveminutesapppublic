@@ -114,9 +114,8 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
-        {/* Top Bar: Streak Badge and Theme Toggle */}
-        <div className="flex justify-between items-center mb-6">
-          <ThemeToggle />
+        {/* Top Bar: Streak Badge */}
+        <div className="flex justify-end items-center mb-6">
           <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 dark:from-red-950 dark:to-red-900 px-2.5 py-1 rounded-full border border-red-200/50 dark:border-red-800/50 shadow-sm">
             <Flame className="w-4 h-4 text-red-600 dark:text-red-400 fill-red-600 dark:fill-red-400" />
             <span className="text-sm font-bold text-red-700 dark:text-red-300" data-testid="text-streak-count">{streakDays}</span>
@@ -335,6 +334,60 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                     </div>
                   </div>
                   {!item.comingSoon && <ChevronRight className="w-5 h-5 text-gray-500" />}
+                </div>
+              </CardContent>
+            </Card>
+          )
+        })}
+
+        {/* Settings & Account Section */}
+        {settingsMenuItems.map((item) => {
+          const colors = {
+            gradient: 'from-slate-50 to-gray-50 dark:from-slate-900 dark:to-gray-900',
+            borderColor: 'border-slate-200 dark:border-slate-700',
+            iconColor: 'text-slate-600 dark:text-slate-400'
+          };
+          
+          return (
+            <Card 
+              key={item.id} 
+              className={`
+                relative bg-gradient-to-br ${colors.gradient} 
+                border-4 ${colors.borderColor} 
+                hover-elevate cursor-pointer 
+                transition-all duration-300 
+                shadow-lg hover:shadow-xl 
+                before:absolute before:inset-0 before:rounded-lg 
+                before:bg-gradient-to-br before:from-white/30 dark:before:from-white/10 before:to-transparent 
+                before:pointer-events-none
+                ring-2 ring-white/40 dark:ring-white/20 ring-inset
+                outline outline-2 outline-gray-400/30 outline-offset-2
+                backdrop-blur-sm
+                transform hover:scale-[1.02]
+                ${item.comingSoon ? 'opacity-70' : ''}
+              `}
+              onClick={() => item.comingSoon ? null : handleMenuClick(item.id)}
+              data-testid={`menu-${item.id}`}
+            >
+              <CardContent className="relative p-4 z-10">
+                <div className="flex items-center justify-between min-h-[40px]">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-white/90 dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 dark:border-slate-600 ring-1 ring-gray-200/50 dark:ring-slate-700">
+                      <item.icon className={`w-5 h-5 ${colors.iconColor} stroke-[1.5]`} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-base text-gray-800 dark:text-gray-100 flex items-center gap-2">
+                        {item.title}
+                        {item.comingSoon && (
+                          <span className="text-xs bg-white/90 dark:bg-slate-700 text-gray-600 dark:text-gray-300 px-2 py-1 rounded-full font-medium shadow-sm">
+                            {t.comingSoon}
+                          </span>
+                        )}
+                      </h3>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">{item.description}</p>
+                    </div>
+                  </div>
+                  {!item.comingSoon && <ChevronRight className="w-5 h-5 text-gray-500 dark:text-gray-400" />}
                 </div>
               </CardContent>
             </Card>
