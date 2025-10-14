@@ -57,9 +57,9 @@ export default function PersonalizedGreeting({ user }: HomePageProps = {}) {
 
   return (
     <div className="flex items-center justify-center gap-2 mb-5">
-      <IconComponent className="w-5 h-5 text-amber-600" aria-hidden="true" />
+      <IconComponent className="w-7 h-7 text-amber-600" aria-hidden="true" />
       <div 
-        className="text-lg font-bold text-amber-900" 
+        className="text-2xl font-bold text-amber-900" 
         style={{ 
           fontFamily: 'Dancing Script, Brush Script MT, cursive'
         }}
