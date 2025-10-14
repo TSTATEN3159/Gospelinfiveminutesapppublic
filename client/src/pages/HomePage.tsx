@@ -124,7 +124,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
         
         {/* Personalized Greeting */}
-        <PersonalizedGreeting />
+        <PersonalizedGreeting user={user} />
         
         {/* Action Buttons - Refined & Professional */}
         <div className="flex items-center justify-center gap-2 flex-wrap">
