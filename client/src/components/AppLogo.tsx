@@ -21,24 +21,30 @@ export default function AppLogo({ onNavigate, size = 'medium', className = '' }:
 
   return (
     <div 
-      className={`w-full flex justify-center cursor-pointer transition-transform duration-200 hover:scale-105 ${className}`}
-      onClick={handleClick}
-      data-testid="logo-app"
-      role="button"
-      tabIndex={0}
-      onKeyDown={(e) => {
-        if (e.key === 'Enter' || e.key === ' ') {
-          e.preventDefault();
-          handleClick();
-        }
-      }}
-      aria-label="The Gospel in 5 Minutes - Return to home page"
+      className={`w-full flex flex-col items-center ${className}`}
     >
-      <img 
-        src={logoImage} 
-        alt="The Gospel in 5 Minutes - Golden clock with cross and trademark logo" 
-        className={`${sizeClasses[size]} object-contain opacity-90`}
-      />
+      <div
+        className="cursor-pointer transition-transform duration-200 hover:scale-105 rounded-full border-2 border-gray-300/40 p-2"
+        onClick={handleClick}
+        data-testid="logo-app"
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault();
+            handleClick();
+          }
+        }}
+        aria-label="The Gospel in 5 Minutes - Return to home page"
+      >
+        <img 
+          src={logoImage} 
+          alt="The Gospel in 5 Minutes - Golden clock with cross and trademark logo" 
+          className={`${sizeClasses[size]} object-contain opacity-90`}
+        />
+      </div>
+      {/* Subtle separator line */}
+      <div className="w-32 h-px bg-gray-200/50 mt-4"></div>
     </div>
   );
 }
