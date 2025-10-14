@@ -24,7 +24,7 @@ export default function AppLogo({ onNavigate, size = 'medium', className = '' }:
       className={`w-full flex flex-col items-center ${className}`}
     >
       <div
-        className="cursor-pointer transition-transform duration-200 hover:scale-105 rounded-full border-2 border-gray-300/40 p-2"
+        className="cursor-pointer transition-transform duration-200 hover:scale-105 border-2 border-gray-300/40 p-2 rounded-lg"
         onClick={handleClick}
         data-testid="logo-app"
         role="button"
