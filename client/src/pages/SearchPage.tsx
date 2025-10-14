@@ -1,6 +1,5 @@
 import BibleSearchSection from "../components/BibleSearchSection";
 import { TopicalSearchSection } from "../components/TopicalSearchSection";
-import LiveInstallCounter from "../components/LiveInstallCounter";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import bibleImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
@@ -153,25 +152,6 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
           {/* Topical Search Section - AFTER Help Spread God's Word */}
           <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} backgroundImage={shepherdImage} />
           
-          {/* Global Installs Section - Moved from HomePage */}
-          <div className="bg-white rounded-2xl p-4 shadow-lg border-2">
-            <div className="flex flex-col items-center space-y-4">
-              <div className="text-center">
-                <LiveInstallCounter />
-              </div>
-              <a 
-                href="https://www.facebook.com/TheGospelIn5Minutes" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="flex items-center gap-2 bg-blue-600 text-white px-6 py-3 rounded-full hover-elevate transition-all duration-200"
-                data-testid="button-facebook-search-bottom"
-              >
-                <Facebook className="w-5 h-5" />
-                <span className="font-medium">Follow on Facebook</span>
-              </a>
-            </div>
-          </div>
-
           {/* Help Spread God's Word Section - Moved from HomePage */}
           <div className="relative overflow-hidden rounded-3xl shadow-lg border-2 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
             {/* Background Image */}
