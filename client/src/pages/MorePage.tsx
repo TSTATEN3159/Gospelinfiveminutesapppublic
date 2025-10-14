@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
 import AppLogo from "../components/AppLogo";
+import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 import mountainTopImage from '@assets/generated_images/Vibrant_mountain_top_vista_d60cfc2f.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
@@ -134,7 +135,10 @@ export default function MorePage({ language, onLanguageChange, onNavigate, strea
         </div>
         
         {/* Professional Logo - Centered Above Social Buttons */}
-        <AppLogo onNavigate={onNavigate} size="medium" className="mb-5" />
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        
+        {/* Personalized Greeting */}
+        <PersonalizedGreeting />
         
         {/* Action Buttons - Refined & Professional */}
         <div className="flex items-center justify-center gap-2 flex-wrap">

@@ -2,6 +2,7 @@ import AskPastorSection from "../components/AskPastorSection";
 import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import ScriptureMemorySection from "../components/ScriptureMemorySection";
 import AppLogo from "../components/AppLogo";
+import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
 import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_background_2b3bbc13.png';
@@ -34,7 +35,10 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
         </div>
         
         {/* Professional Logo - Centered Above Social Buttons */}
-        <AppLogo onNavigate={onNavigate} size="medium" className="mb-5" />
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        
+        {/* Personalized Greeting */}
+        <PersonalizedGreeting />
         
         {/* Action Buttons - Refined & Professional */}
         <div className="flex items-center justify-center gap-2 flex-wrap">

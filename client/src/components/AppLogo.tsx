@@ -8,9 +8,9 @@ interface AppLogoProps {
 
 export default function AppLogo({ onNavigate, size = 'medium', className = '' }: AppLogoProps) {
   const sizeClasses = {
-    small: 'w-20 h-20',
-    medium: 'w-24 h-24',
-    large: 'w-32 h-32'
+    small: 'w-32 h-32',
+    medium: 'w-48 h-48',
+    large: 'w-64 h-64'
   };
 
   const handleClick = () => {

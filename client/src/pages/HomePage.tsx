@@ -7,6 +7,7 @@ import AskPastor from "../components/AskPastor";
 import BadgeNotification from "../components/BadgeNotification";
 import { VideoPlayer } from "../components/VideoPlayer";
 import AppLogo from "../components/AppLogo";
+import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -120,7 +121,10 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         </div>
         
         {/* Professional Logo - Centered Above Social Buttons */}
-        <AppLogo onNavigate={onNavigate} size="medium" className="mb-5" />
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        
+        {/* Personalized Greeting */}
+        <PersonalizedGreeting />
         
         {/* Action Buttons - Refined & Professional */}
         <div className="flex items-center justify-center gap-2 flex-wrap">
