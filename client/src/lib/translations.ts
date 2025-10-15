@@ -654,7 +654,7 @@ export const translations: Record<string, Translations> = {
     
     // App Info
     appTitle: "The Gospel in 5 Minutes™",
-    appTagline: "Bringing God's word to the world",
+    appTagline: "Daily scripture for spiritual growth",
     version: "Version 1.0.0",
     
     // Ask Page specific
@@ -681,6 +681,7 @@ export const translations: Record<string, Translations> = {
     // AI Pastor Dialog
     askTheAIPastor: "Ask the AI Pastor",
     aiPoweredGuidance: "AI-powered biblical guidance and spiritual counsel based on Scripture",
+    aiDisclaimer: "This is an AI assistant based on biblical scripture. For serious matters, please consult with a live pastor or spiritual advisor.",
     pastorGreeting: "Hello! I'm here to provide biblical guidance and spiritual counsel. What's on your heart today? Whether you're facing challenges, have questions about faith, or need prayer, I'm here to help with God's wisdom.",
     technicalDifficulty: "I apologize for the technical difficulty. Please know that God hears your heart even when technology fails. Feel free to try your question again.",
     pastor: "Pastor",
