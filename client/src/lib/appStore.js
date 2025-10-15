@@ -5,7 +5,7 @@ const KEY_BOOKMARKS = 'dg_bookmarks';
 const KEY_NOTES = 'dg_notes';
 const KEY_PROFILE = 'dg_profile'; // name, email, birthdate
 
-export const store = {
+export const appStore = {
   // TODAY'S READING
   saveToday(content) {
     localStorage.setItem(KEY_TODAY, JSON.stringify({ content, savedAt: Date.now() }));
@@ -17,7 +17,7 @@ export const store = {
 
   // BOOKMARKS
   addBookmark(ref) {
-    const list = store.getBookmarks();
+    const list = appStore.getBookmarks();
     if (!list.includes(ref)) list.push(ref);
     localStorage.setItem(KEY_BOOKMARKS, JSON.stringify(list));
   },
@@ -25,13 +25,13 @@ export const store = {
     return JSON.parse(localStorage.getItem(KEY_BOOKMARKS) || '[]');
   },
   removeBookmark(ref) {
-    const list = store.getBookmarks().filter(x => x !== ref);
+    const list = appStore.getBookmarks().filter(x => x !== ref);
     localStorage.setItem(KEY_BOOKMARKS, JSON.stringify(list));
   },
 
   // NOTES
   addNote(ref, text) {
-    const notes = store.getNotes();
+    const notes = appStore.getNotes();
     const existingIndex = notes.findIndex(note => note.ref === ref);
     
     if (existingIndex >= 0) {
@@ -67,5 +67,14 @@ export const store = {
   },
   deleteProfile() {
     localStorage.removeItem(KEY_PROFILE);
+  },
+
+  // GENERIC GET/SET
+  get(key) {
+    const raw = localStorage.getItem(key);
+    return raw ? JSON.parse(raw) : null;
+  },
+  set(key, value) {
+    localStorage.setItem(key, JSON.stringify(value));
   }
 };

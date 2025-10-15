@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { store } from "@/lib/appStore";
+import { appStore } from "@/lib/appStore";
 import {
   Dialog,
   DialogContent,
@@ -39,11 +39,11 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
   const [hasExistingNote, setHasExistingNote] = useState(false);
 
   useEffect(() => {
-    const bookmarks = store.getBookmarks();
+    const bookmarks = appStore.getBookmarks();
     setIsBookmarked(bookmarks.includes(verse.reference));
     
     // Check if note exists for this verse
-    const notes = store.getNotes();
+    const notes = appStore.getNotes();
     const existingNote = notes.find((note: any) => note.ref === verse.reference);
     setHasExistingNote(!!existingNote);
   }, [verse.reference]);
@@ -51,7 +51,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
   // Load existing note when dialog opens
   useEffect(() => {
     if (isNoteDialogOpen) {
-      const notes = store.getNotes();
+      const notes = appStore.getNotes();
       const existingNote = notes.find((note: any) => note.ref === verse.reference);
       if (existingNote) {
         setNoteText(existingNote.text);
@@ -122,14 +122,14 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
 
   const toggleBookmark = () => {
     if (isBookmarked) {
-      store.removeBookmark(verse.reference);
+      appStore.removeBookmark(verse.reference);
       setIsBookmarked(false);
       toast({
         title: "Bookmark Removed",
         description: "Verse removed from bookmarks.",
       });
     } else {
-      store.addBookmark(verse.reference);
+      appStore.addBookmark(verse.reference);
       setIsBookmarked(true);
       toast({
         title: "Verse Bookmarked!",
@@ -148,7 +148,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
       return;
     }
     
-    store.addNote(verse.reference, noteText.trim());
+    appStore.addNote(verse.reference, noteText.trim());
     setHasExistingNote(true); // Update button state immediately
     setNoteText("");
     setIsNoteDialogOpen(false);

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Sunrise, Sun, Moon } from 'lucide-react';
 import { useTranslations } from '@/lib/translations';
 // @ts-ignore - appStore is a JS file
-import { store } from '@/lib/appStore';
+import { appStore } from '@/lib/appStore';
 
 interface HomePageProps {
   user?: {
@@ -19,7 +19,7 @@ export default function PersonalizedGreeting({ user, language = 'en' }: HomePage
 
   useEffect(() => {
     // Load user profile from localStorage
-    const profile = store.loadProfile();
+    const profile = appStore.loadProfile();
     
     // Try to get name from different sources
     let firstName = '';

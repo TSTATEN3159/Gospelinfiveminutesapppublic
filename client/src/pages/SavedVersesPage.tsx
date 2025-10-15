@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookmarkCheck, BookmarkX, ChevronLeft, Book, Loader2 } from "lucide-react";
-import { store } from "@/lib/appStore";
+import { appStore } from "@/lib/appStore";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
 import {
@@ -33,13 +33,13 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
 
   useEffect(() => {
     // Load bookmarks when page opens
-    const savedBookmarks = store.getBookmarks();
+    const savedBookmarks = appStore.getBookmarks();
     setBookmarks(savedBookmarks);
   }, []);
 
   const removeBookmark = (ref: string) => {
-    store.removeBookmark(ref);
-    setBookmarks(store.getBookmarks());
+    appStore.removeBookmark(ref);
+    setBookmarks(appStore.getBookmarks());
     toast({
       title: t.bookmarkRemoved,
       description: `${ref} ${t.removedFromSavedVerses}`,

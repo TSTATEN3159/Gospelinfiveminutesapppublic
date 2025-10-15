@@ -52,7 +52,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVersion, setSelectedVersion] = useState(() => {
     // Get Bible version from user preferences, default to KJV
-    const prefs = appStore.get('preferences');
+    const prefs = appStore.get('gospelAppPreferences');
     return prefs?.bibleVersion || 'KJV';
   });
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
@@ -64,7 +64,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   // Listen for Bible version changes from Settings
   useEffect(() => {
     const handleStorageChange = () => {
-      const prefs = appStore.get('preferences');
+      const prefs = appStore.get('gospelAppPreferences');
       if (prefs?.bibleVersion && prefs.bibleVersion !== selectedVersion) {
         setSelectedVersion(prefs.bibleVersion);
       }

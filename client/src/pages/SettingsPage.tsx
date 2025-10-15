@@ -10,7 +10,7 @@ import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, TestT
 import { useToast } from "@/hooks/use-toast";
 import { notificationService } from "../services/notificationService";
 import { bibleService } from "../services/bibleService";
-import { store } from "@/lib/appStore";
+import { appStore } from "@/lib/appStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import {
   AlertDialog,
@@ -182,7 +182,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
       }
 
       // Also save to store for consistency
-      store.saveProfile({
+      appStore.saveProfile({
         name: profile.firstName,
         email: profile.email,
         birthdate: `${profile.birthMonth} ${profile.birthDay}`
@@ -209,15 +209,15 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
       const userData = {
         // Profile data from both sources
         profile: JSON.parse(localStorage.getItem("gospelAppUser") || "{}"),
-        storeProfile: store.loadProfile(),
+        storeProfile: appStore.loadProfile(),
         
         // Preferences
         preferences: preferences,
         
         // Offline reading data
-        bookmarks: store.getBookmarks(),
-        notes: store.getNotes(),
-        todayReading: store.loadToday(),
+        bookmarks: appStore.getBookmarks(),
+        notes: appStore.getNotes(),
+        todayReading: appStore.loadToday(),
         
         // Streak data
         streakData: JSON.parse(localStorage.getItem("gospelAppStreakData") || "{}"),
