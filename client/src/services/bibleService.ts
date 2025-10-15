@@ -329,7 +329,7 @@ class BibleService {
           book: refParts ? refParts[1] : 'Unknown',
           chapter: refParts ? refParts[2] : '1',
           verse: refParts ? refParts[3] : '1',
-          translation: bibleId === 'de4e12af7f28f599-02' ? 'NIV' : 'KJV'
+          translation: bibleId === '9879dbb7cfe39e4d-03' ? 'WEB' : 'KJV'
         };
       });
     } catch (error) {
