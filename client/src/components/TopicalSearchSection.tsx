@@ -452,15 +452,6 @@ export function TopicalSearchSection({ onNavigateToScripture, backgroundImage }:
                 </div>
               )}
 
-              {/* No results message */}
-              {(!selectedResult.verses || selectedResult.verses.length === 0) && (
-                <div className="bg-yellow-50 p-6 rounded-lg border border-yellow-200 text-center">
-                  <p className="text-gray-700">
-                    This topic was not found in our biblical database. Try searching for one of the preset topics above, or search for a specific biblical figure like Moses, David, Paul, or Jesus.
-                  </p>
-                </div>
-              )}
-
               {/* Footer with instruction */}
               <div className="text-center text-sm text-gray-500 pt-4 border-t border-gray-200">
                 <p>Click on any Scripture reference to explore the full biblical context</p>
