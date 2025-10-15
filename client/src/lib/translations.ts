@@ -962,7 +962,7 @@ export const translations: Record<string, Translations> = {
     streakNotifications: "Streak Notifications",
     celebrateReadingStreaks: "Celebrate your reading streaks",
     emailUpdates: "Email Updates",
-    receiveNewsletters: "Receive newsletters and updates",
+    receiveNewsletters: "Opt in to receive email updates",
     appSettings: "App Settings",
     soundEffects: "Sound Effects",
     enableAppSounds: "Enable app sounds and notifications",

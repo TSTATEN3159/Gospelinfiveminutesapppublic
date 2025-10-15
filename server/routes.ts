@@ -353,7 +353,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Only public domain/free-to-use translations to comply with copyright
   const bibleVersionMapping: { [key: string]: { id: string, name: string } } = {
     'KJV': { id: 'de4e12af7f28f599-01', name: 'King James Version' },
-    'WEB': { id: '9879dbb7cfe39e4d-03', name: 'World English Bible' }
+    'WEB': { id: '9879dbb7cfe39e4d-03', name: 'World English Bible' },
+    'ASV': { id: '06125adad2d5898a-01', name: 'American Standard Version' },
+    'BBE': { id: '65eec8e0b60e656b-01', name: 'Bible in Basic English' }
   };
 
   // Daily verse selection based on day of year for consistency

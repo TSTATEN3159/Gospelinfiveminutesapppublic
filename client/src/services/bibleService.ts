@@ -177,7 +177,9 @@ class BibleService {
       // Return default free/public domain versions on error
       const defaultVersions: BibleVersion[] = [
         { id: 'KJV', name: 'King James Version', abbreviation: 'KJV', language: 'English' },
-        { id: 'WEB', name: 'World English Bible', abbreviation: 'WEB', language: 'English' }
+        { id: 'WEB', name: 'World English Bible', abbreviation: 'WEB', language: 'English' },
+        { id: 'ASV', name: 'American Standard Version', abbreviation: 'ASV', language: 'English' },
+        { id: 'BBE', name: 'Bible in Basic English', abbreviation: 'BBE', language: 'English' }
       ];
       this.versionsCache.set(cacheKey, defaultVersions);
       return defaultVersions;
