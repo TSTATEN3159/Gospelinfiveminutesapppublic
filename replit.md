@@ -69,6 +69,19 @@ Preferred communication style: Simple, everyday language.
 - **OpenAI API**: AI-powered pastor responses and Q&A.
 - **Translation Services**: For multi-language support.
 
+### Content Sources & Attribution
+- **Christian Context API** (GetContext.xyz):
+  - Provides sermon videos, Christian advice content, and biblical commentary
+  - Free to use for ministry/faith-based apps per published terms
+  - Attribution displayed on Videos and Blog pages with link to getcontext.xyz
+  - Terms allow content use without prior written approval
+  
+- **BibleProject** (bibleproject.com):
+  - Provides animated Bible teaching videos via YouTube
+  - Free for ministry use with proper attribution
+  - Attribution displayed on Videos page: "BibleProject® (bibleproject.com)"
+  - Videos linked from YouTube for proper tracking and compliance
+
 ### Development Tools
 - **Vite**: Fast development server and optimized builds.
 - **ESBuild**: High-performance server-side bundling.
