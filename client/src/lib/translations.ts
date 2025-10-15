@@ -576,6 +576,7 @@ export interface Translations {
   // AI Pastor Dialog
   askTheAIPastor: string;
   aiPoweredGuidance: string;
+  aiDisclaimer: string;
   pastorGreeting: string;
   technicalDifficulty: string;
   pastor: string;
@@ -1274,6 +1275,7 @@ export const translations: Record<string, Translations> = {
     // AI Pastor Dialog
     askTheAIPastor: "Pregunta al Pastor IA",
     aiPoweredGuidance: "Orientación bíblica y consejería espiritual impulsada por IA basada en las Escrituras",
+    aiDisclaimer: "Este es un asistente de IA basado en las escrituras bíblicas. Para asuntos serios, consulte con un pastor o asesor espiritual en vivo.",
     pastorGreeting: "¡Hola! Estoy aquí para proporcionar orientación bíblica y consejería espiritual. ¿Qué hay en tu corazón hoy? Ya sea que enfrentes desafíos, tengas preguntas sobre la fe o necesites oración, estoy aquí para ayudarte con la sabiduría de Dios.",
     technicalDifficulty: "Pido disculpas por la dificultad técnica. Por favor, ten en cuenta que Dios escucha tu corazón incluso cuando la tecnología falla. Siéntete libre de intentar tu pregunta de nuevo.",
     pastor: "Pastor",
@@ -1862,6 +1864,7 @@ export const translations: Record<string, Translations> = {
     // AI Pastor Dialog
     askTheAIPastor: "Demandez au Pasteur IA",
     aiPoweredGuidance: "Conseils bibliques et conseil spirituel alimentés par l'IA basés sur les Écritures",
+    aiDisclaimer: "Ceci est un assistant IA basé sur les écritures bibliques. Pour des questions sérieuses, veuillez consulter un pasteur ou conseiller spirituel en direct.",
     pastorGreeting: "Bonjour ! Je suis là pour fournir des conseils bibliques et un conseil spirituel. Qu'est-ce qui est dans votre cœur aujourd'hui ? Que vous fassiez face à des défis, ayez des questions sur la foi ou ayez besoin de prière, je suis là pour vous aider avec la sagesse de Dieu.",
     technicalDifficulty: "Je m'excuse pour la difficulté technique. Sachez que Dieu entend votre cœur même quand la technologie échoue. N'hésitez pas à réessayer votre question.",
     pastor: "Pasteur",
@@ -2450,6 +2453,7 @@ export const translations: Record<string, Translations> = {
     // AI Pastor Dialog
     askTheAIPastor: "Pergunte ao Pastor IA",
     aiPoweredGuidance: "Orientação bíblica e aconselhamento espiritual impulsionado por IA baseado nas Escrituras",
+    aiDisclaimer: "Este é um assistente de IA baseado nas escrituras bíblicas. Para assuntos sérios, consulte um pastor ou conselheiro espiritual ao vivo.",
     pastorGreeting: "Olá! Estou aqui para fornecer orientação bíblica e aconselhamento espiritual. O que está em seu coração hoje? Seja enfrentando desafios, tendo perguntas sobre fé ou precisando de oração, estou aqui para ajudá-lo com a sabedoria de Deus.",
     technicalDifficulty: "Peço desculpas pela dificuldade técnica. Saiba que Deus ouve seu coração mesmo quando a tecnologia falha. Sinta-se livre para tentar sua pergunta novamente.",
     pastor: "Pastor",
@@ -3042,6 +3046,7 @@ export const translations: Record<string, Translations> = {
     // AI Pastor Dialog
     askTheAIPastor: "询问AI牧师",
     aiPoweredGuidance: "基于圣经的AI驱动的圣经指导和灵性咨询",
+    aiDisclaimer: "这是一个基于圣经经文的AI助手。对于严肃的事项，请咨询真正的牧师或灵性顾问。",
     pastorGreeting: "你好！我在这里提供圣经指导和灵性咨询。今天你心里有什么？无论你面临挑战，对信仰有疑问，还是需要祷告，我都在这里用神的智慧帮助你。",
     technicalDifficulty: "对技术困难我深表歉意。请知道，即使技术失败，神也听到你的心。请随时再试你的问题。",
     pastor: "牧师",
@@ -3630,6 +3635,7 @@ export const translations: Record<string, Translations> = {
     // AI Pastor Dialog
     askTheAIPastor: "اسأل القس الذكي",
     aiPoweredGuidance: "إرشاد كتابي ومشورة روحية مدعومة بالذكاء الاصطناعي بناءً على الكتاب المقدس",
+    aiDisclaimer: "هذا مساعد ذكاء اصطناعي يعتمد على الكتاب المقدس. للمسائل الجادة، يرجى استشارة قس أو مستشار روحي حقيقي.",
     pastorGreeting: "مرحباً! أنا هنا لتقديم إرشاد كتابي ومشورة روحية. ما الذي في قلبك اليوم؟ سواء كنت تواجه تحديات، أو لديك أسئلة حول الإيمان، أو تحتاج إلى صلاة، أنا هنا لمساعدتك بحكمة الله.",
     technicalDifficulty: "أعتذر عن الصعوبة التقنية. يرجى العلم أن الله يسمع قلبك حتى عندما تفشل التكنولوجيا. لا تتردد في محاولة سؤالك مرة أخرى.",
     pastor: "القس",
@@ -4218,6 +4224,7 @@ export const translations: Record<string, Translations> = {
     // AI Pastor Dialog
     askTheAIPastor: "AI पादरी से पूछें",
     aiPoweredGuidance: "शास्त्र पर आधारित AI-संचालित बाइबिल मार्गदर्शन और आध्यात्मिक परामर्श",
+    aiDisclaimer: "यह बाइबिल शास्त्र पर आधारित एक AI सहायक है। गंभीर मामलों के लिए, कृपया एक वास्तविक पादरी या आध्यात्मिक सलाहकार से परामर्श करें।",
     pastorGreeting: "नमस्ते! मैं यहां बाइबिल मार्गदर्शन और आध्यात्मिक परामर्श प्रदान करने के लिए हूं। आज आपके दिल में क्या है? चाहे आप चुनौतियों का सामना कर रहे हों, विश्वास के बारे में प्रश्न हों, या प्रार्थना की आवश्यकता हो, मैं परमेश्वर के ज्ञान से आपकी मदद के लिए यहां हूं।",
     technicalDifficulty: "तकनीकी कठिनाई के लिए मैं क्षमा चाहता हूं। कृपया जान लें कि भले ही तकनीक विफल हो जाए, परमेश्वर आपके दिल को सुनता है। अपना प्रश्न फिर से पूछने में संकोच न करें।",
     pastor: "पादरी",

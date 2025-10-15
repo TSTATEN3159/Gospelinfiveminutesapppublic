@@ -100,6 +100,9 @@ export default function AskPastor({ onClose, language = "en" }: AskPastorProps) 
         <p className="text-center text-sm text-muted-foreground">
           {t.aiPoweredGuidance}
         </p>
+        <p className="text-center text-xs text-muted-foreground/80 italic pt-1 border-t">
+          {t.aiDisclaimer}
+        </p>
       </DialogHeader>
 
       {/* Messages Area */}
