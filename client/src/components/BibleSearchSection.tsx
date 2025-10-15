@@ -8,6 +8,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
+import { appStore } from "@/lib/appStore";
 
 interface SearchResult {
   text: string;
@@ -16,11 +17,10 @@ interface SearchResult {
 }
 
 const bibleVersions = [
-  { value: "NIV", label: "New International Version (NIV)" },
-  { value: "ESV", label: "English Standard Version (ESV)" },
-  { value: "NASB", label: "New American Standard Bible (NASB)" },
   { value: "KJV", label: "King James Version (KJV)" },
-  { value: "NLT", label: "New Living Translation (NLT)" }
+  { value: "WEB", label: "World English Bible (WEB)" },
+  { value: "ASV", label: "American Standard Version (ASV)" },
+  { value: "BBE", label: "Bible in Basic English (BBE)" }
 ];
 
 // todo: remove mock functionality - replace with real Bible API
@@ -50,12 +50,35 @@ interface BibleSearchSectionProps {
 
 export default function BibleSearchSection({ backgroundImage, initialSearchQuery, onSearchUsed }: BibleSearchSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedVersion, setSelectedVersion] = useState("NIV");
+  const [selectedVersion, setSelectedVersion] = useState(() => {
+    // Get Bible version from user preferences, default to KJV
+    const prefs = appStore.get('preferences');
+    return prefs?.bibleVersion || 'KJV';
+  });
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const { toast } = useToast();
   const ranInitial = useRef<string | null>(null);
+
+  // Listen for Bible version changes from Settings
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const prefs = appStore.get('preferences');
+      if (prefs?.bibleVersion && prefs.bibleVersion !== selectedVersion) {
+        setSelectedVersion(prefs.bibleVersion);
+      }
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+    // Also check on component mount/updates
+    const interval = setInterval(handleStorageChange, 1000);
+    
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+      clearInterval(interval);
+    };
+  }, [selectedVersion]);
 
   // Handle initial search query from navigation
   useEffect(() => {
