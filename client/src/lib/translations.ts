@@ -554,6 +554,8 @@ export interface Translations {
   finishQuiz: string;
   nextQuestion: string;
   failedToGenerateTriviaQuestions: string;
+  hint: string;
+  checkBook: string;
   
   // AI Pastor Section
   aiPastor: string;
@@ -1183,7 +1185,9 @@ export const translations: Record<string, Translations> = {
     startTrivia10Questions: "Start Trivia (10 Questions)",
     finishQuiz: "Finish Quiz",
     nextQuestion: "Next Question",
-    failedToGenerateTriviaQuestions: "Failed to generate trivia questions. Please try again."
+    failedToGenerateTriviaQuestions: "Failed to generate trivia questions. Please try again.",
+    hint: "Hint",
+    checkBook: "Check"
   },
   
   es: {
@@ -1772,7 +1776,9 @@ export const translations: Record<string, Translations> = {
     startTrivia10Questions: "Comenzar Trivia (10 Preguntas)",
     finishQuiz: "Terminar Prueba",
     nextQuestion: "Siguiente Pregunta",
-    failedToGenerateTriviaQuestions: "Error al generar preguntas de trivia. Por favor, inténtalo de nuevo."
+    failedToGenerateTriviaQuestions: "Error al generar preguntas de trivia. Por favor, inténtalo de nuevo.",
+    hint: "Pista",
+    checkBook: "Consulta"
   },
   
   fr: {
@@ -2361,7 +2367,9 @@ export const translations: Record<string, Translations> = {
     startTrivia10Questions: "Commencer le Quiz (10 Questions)",
     finishQuiz: "Terminer le Quiz",
     nextQuestion: "Question Suivante",
-    failedToGenerateTriviaQuestions: "Échec de la génération des questions du quiz. Veuillez réessayer."
+    failedToGenerateTriviaQuestions: "Échec de la génération des questions du quiz. Veuillez réessayer.",
+    hint: "Indice",
+    checkBook: "Consulter"
   },
   
   pt: {
@@ -2954,7 +2962,9 @@ export const translations: Record<string, Translations> = {
     startTrivia10Questions: "Iniciar Quiz (10 Perguntas)",
     finishQuiz: "Finalizar Quiz",
     nextQuestion: "Próxima Pergunta",
-    failedToGenerateTriviaQuestions: "Falha ao gerar perguntas do quiz. Por favor, tente novamente."
+    failedToGenerateTriviaQuestions: "Falha ao gerar perguntas do quiz. Por favor, tente novamente.",
+    hint: "Dica",
+    checkBook: "Consulte"
   },
   
   zh: {
@@ -3543,7 +3553,9 @@ export const translations: Record<string, Translations> = {
     startTrivia10Questions: "开始问答（10个问题）",
     finishQuiz: "完成测验",
     nextQuestion: "下一个问题",
-    failedToGenerateTriviaQuestions: "生成问答问题失败。请重试。"
+    failedToGenerateTriviaQuestions: "生成问答问题失败。请重试。",
+    hint: "提示",
+    checkBook: "查看"
   },
   
   ar: {
@@ -4132,7 +4144,9 @@ export const translations: Record<string, Translations> = {
     startTrivia10Questions: "ابدأ المسابقة (10 أسئلة)",
     finishQuiz: "إنهاء الاختبار",
     nextQuestion: "السؤال التالي",
-    failedToGenerateTriviaQuestions: "فشل في إنشاء أسئلة المسابقة. يرجى المحاولة مرة أخرى."
+    failedToGenerateTriviaQuestions: "فشل في إنشاء أسئلة المسابقة. يرجى المحاولة مرة أخرى.",
+    hint: "تلميح",
+    checkBook: "راجع"
   },
   
   hi: {
@@ -4725,7 +4739,9 @@ export const translations: Record<string, Translations> = {
     startTrivia10Questions: "ट्रिविया शुरू करें (10 प्रश्न)",
     finishQuiz: "क्विज समाप्त करें",
     nextQuestion: "अगला प्रश्न",
-    failedToGenerateTriviaQuestions: "ट्रिविया प्रश्न उत्पन्न करने में विफल। कृपया पुनः प्रयास करें।"
+    failedToGenerateTriviaQuestions: "ट्रिविया प्रश्न उत्पन्न करने में विफल। कृपया पुनः प्रयास करें।",
+    hint: "संकेत",
+    checkBook: "जांचें"
   }
 };
 

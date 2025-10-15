@@ -80,15 +80,15 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
     }
   }, []);
 
-  // Timer effect for questions
+  // Timer effect for questions - stops when answer is selected
   useEffect(() => {
-    if (gameState === 'playing' && timeLeft > 0) {
+    if (gameState === 'playing' && timeLeft > 0 && selectedAnswer === null) {
       const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
       return () => clearTimeout(timer);
-    } else if (timeLeft === 0 && gameState === 'playing') {
+    } else if (timeLeft === 0 && gameState === 'playing' && selectedAnswer === null) {
       handleNextQuestion();
     }
-  }, [timeLeft, gameState]);
+  }, [timeLeft, gameState, selectedAnswer]);
 
   const generateQuestions = async () => {
     setLoading(true);
@@ -324,15 +324,18 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
               </div>
               
               {currentQuestion.verse && (
-                <div className="mt-4 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
-                  <p className="text-sm font-medium text-blue-900 dark:text-blue-100 mb-1">
-                    {currentQuestion.verse}
-                  </p>
-                  {currentQuestion.verseText && (
-                    <p className="text-sm text-blue-800 dark:text-blue-200 italic">
-                      "{currentQuestion.verseText}"
-                    </p>
-                  )}
+                <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+                  <div className="flex items-start gap-2">
+                    <BookOpen className="w-4 h-4 text-amber-600 dark:text-amber-400 mt-0.5 flex-shrink-0" />
+                    <div>
+                      <p className="text-xs font-semibold text-amber-900 dark:text-amber-100 uppercase tracking-wide mb-1">
+                        {t.hint || "Hint"}
+                      </p>
+                      <p className="text-sm text-amber-800 dark:text-amber-200">
+                        {t.checkBook || "Check"} {currentQuestion.verse.split(' ')[0]}
+                      </p>
+                    </div>
+                  </div>
                 </div>
               )}
             </CardContent>
