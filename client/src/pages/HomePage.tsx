@@ -152,17 +152,6 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
             <span>Follow</span>
           </a>
           
-          {/* Donate Button */}
-          <Button 
-            className="flex items-center gap-1 bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
-            data-testid="button-donate-home"
-            aria-label="Donate to help spread the Gospel"
-            onClick={() => onNavigate?.('donate')}
-          >
-            <Heart className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Donate</span>
-          </Button>
-          
           {/* Share Button - Professional Green */}
           <Button 
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
@@ -415,47 +404,6 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
               <p className="text-gray-600 text-xs text-center">
                 Tap to watch today's animated Bible teaching from BibleProject
               </p>
-            </div>
-          </div>
-        )}
-
-        {/* Donation Tile - Help Secure Bibles (Hidden on iOS for App Store compliance) */}
-        {!isIOS && (
-          <div className="bg-gradient-to-br from-amber-50 via-orange-50 to-yellow-50 rounded-2xl p-6 shadow-lg border-2 border-amber-200">
-            <div className="text-center space-y-4">
-              <div className="flex justify-center">
-                <div className="w-16 h-16 bg-gradient-to-br from-amber-400 to-orange-400 rounded-full flex items-center justify-center shadow-lg">
-                  <Heart className="w-8 h-8 text-white fill-current" />
-                </div>
-              </div>
-              <div>
-                <h3 className="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2" data-testid="heading-donation">
-                  Give the Gift of God's Word
-                </h3>
-                <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
-                  Right now, someone across the world is searching for hope, comfort, and truth. Your $5 gift can help us place a Bible directly into the hands of someone who desperately needs to hear that they are loved, they matter, and they have a purpose. 
-                </p>
-                <p className="text-sm text-amber-800 dark:text-amber-200 font-semibold mb-1">
-                  "Faith comes by hearing, and hearing by the word of God" - Romans 10:17
-                </p>
-                <p className="text-xs text-gray-600 dark:text-gray-400 italic">
-                  Every dollar goes directly to purchasing and distributing Bibles to those without access.
-                </p>
-              </div>
-              <Button
-                onClick={() => {
-                  onNavigate?.('donate');
-                }}
-                className="flex items-center gap-2 bg-amber-600 text-white px-8 py-3 text-base font-semibold mx-auto"
-                data-testid="button-donate"
-              >
-                <Heart className="w-5 h-5 fill-current" />
-                <span>Give $5 for a Bible</span>
-              </Button>
-              <div className="flex items-center justify-center gap-2 text-xs text-gray-500 dark:text-gray-400">
-                <span className="w-2 h-2 bg-green-500 rounded-full"></span>
-                <span>Secure donation powered by Stripe</span>
-              </div>
             </div>
           </div>
         )}

@@ -197,34 +197,6 @@ export default function GivingPage({ onNavigate, streakDays = 0, language = "en"
           </CardContent>
         </Card>
 
-        {/* Call to Action (Hidden on iOS for App Store compliance) */}
-        {!isIOS && (
-          <Card className="shadow-lg border-0 bg-gradient-to-br from-amber-600 via-yellow-600 to-orange-600 text-white overflow-hidden transform hover:scale-[1.01] transition-all duration-300">
-            <CardContent className="p-6 text-center">
-              <div className="w-12 h-12 bg-gradient-to-br from-white/20 to-white/10 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                <Heart className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-lg font-bold mb-2 text-center">
-                {t.joinOurMission}
-              </h3>
-              <p className="text-white/90 text-sm mb-4 leading-relaxed text-center">
-                {t.givingPageCTADescription}
-              </p>
-              <Button 
-                variant="outline"
-                size="lg"
-                className="bg-white/20 border-white/30 text-white hover:bg-white/30 hover:border-white/50 rounded-full font-medium"
-                data-testid="button-donate-giving"
-                aria-label="Make a donation to spread the Gospel"
-                onClick={() => onNavigate?.('donate')}
-              >
-                <Heart className="w-4 h-4 mr-2" />
-                {t.makeADonation}
-              </Button>
-            </CardContent>
-          </Card>
-        )}
-
         {/* Global Bible Distribution */}
         <Card className="shadow-lg border-0 bg-gradient-to-br from-amber-100/90 to-orange-100/90 dark:from-amber-900/60 dark:to-orange-900/60 overflow-hidden transform hover:scale-[1.01] transition-all duration-300">
           <CardHeader className="bg-gradient-to-r from-amber-600 via-yellow-600 to-orange-600 p-4">

@@ -66,19 +66,6 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
             <span>{t.follow}</span>
           </a>
           
-          {/* Donate Button (Hidden on iOS for App Store compliance) */}
-          {!isIOS && (
-            <Button 
-              className="flex items-center gap-1 bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
-              data-testid="button-donate-ask"
-              aria-label={t.donateDesc}
-              onClick={() => onNavigate?.('donate')}
-            >
-              <Heart className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>{t.donate}</span>
-            </Button>
-          )}
-          
           {/* Share Button - Professional Green */}
           <Button 
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
