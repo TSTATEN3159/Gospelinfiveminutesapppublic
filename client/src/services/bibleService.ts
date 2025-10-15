@@ -135,7 +135,7 @@ class BibleService {
   }
 
   // Fetch verse from backend API (which calls API.Bible)
-  private async fetchFromBackendApi(version: string = 'NIV'): Promise<BibleVerse> {
+  private async fetchFromBackendApi(version: string = 'KJV'): Promise<BibleVerse> {
     const response = await fetch(`/api/daily-verse?version=${encodeURIComponent(version)}`);
     
     if (!response.ok) {
@@ -174,10 +174,10 @@ class BibleService {
       return data.versions;
     } catch (error) {
       console.error('Error fetching Bible versions:', error);
-      // Return default versions on error
+      // Return default free/public domain versions on error
       const defaultVersions: BibleVersion[] = [
-        { id: 'NIV', name: 'New International Version', abbreviation: 'NIV', language: 'English' },
-        { id: 'KJV', name: 'King James Version', abbreviation: 'KJV', language: 'English' }
+        { id: 'KJV', name: 'King James Version', abbreviation: 'KJV', language: 'English' },
+        { id: 'WEB', name: 'World English Bible', abbreviation: 'WEB', language: 'English' }
       ];
       this.versionsCache.set(cacheKey, defaultVersions);
       return defaultVersions;
@@ -185,7 +185,7 @@ class BibleService {
   }
 
   // Get daily verse with caching and API.Bible integration
-  async getDailyVerse(translation: string = 'NIV'): Promise<DailyVerse> {
+  async getDailyVerse(translation: string = 'KJV'): Promise<DailyVerse> {
     const todayKey = `${this.getTodayKey()}_${translation}`;
     
     // Check cache first

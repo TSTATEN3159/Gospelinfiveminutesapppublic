@@ -350,12 +350,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
   };
 
   // Bible version mapping - maps abbreviations to API.Bible IDs
+  // Only public domain/free-to-use translations to comply with copyright
   const bibleVersionMapping: { [key: string]: { id: string, name: string } } = {
-    'NIV': { id: 'de4e12af7f28f599-02', name: 'New International Version' },
     'KJV': { id: 'de4e12af7f28f599-01', name: 'King James Version' },
-    'ESV': { id: '01b29f4e-0790-11e9-8515-23df8c4a3ba3', name: 'English Standard Version' },
-    'NLT': { id: '01b29f4e-0790-11e9-8b69-5ba9a4dbc48e', name: 'New Living Translation' },
-    'MSG': { id: '01b29f4e-0790-11e9-8c1b-4b8a3ba3f8d8', name: 'The Message' }
+    'WEB': { id: '9879dbb7cfe39e4d-03', name: 'World English Bible' }
   };
 
   // Daily verse selection based on day of year for consistency
@@ -375,7 +373,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Get daily verse from API.Bible
   app.get("/api/daily-verse", async (req, res) => {
     try {
-      const version = req.query.version as string || 'NIV';
+      const version = req.query.version as string || 'KJV';
       const versionInfo = bibleVersionMapping[version.toUpperCase()];
       
       if (!versionInfo) {
