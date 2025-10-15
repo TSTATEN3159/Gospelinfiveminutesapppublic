@@ -101,6 +101,7 @@ export interface Translations {
   friendRequestAccepted: string;
   friendRequestDeclined: string;
   friendRemoved: string;
+  noFriendsFound: string;
   
   // Saved Verses
   savedVerses: string;
@@ -109,6 +110,7 @@ export interface Translations {
   saved: string;
   noSavedVersesYet: string;
   bookmarkVersesMessage: string;
+  tapToViewVerseInContext: string;
   read: string;
   bookmarkRemoved: string;
   removedFromSavedVerses: string;
@@ -732,6 +734,7 @@ export const translations: Record<string, Translations> = {
     friendRequestAccepted: "Friend request accepted!",
     friendRequestDeclined: "Friend request declined",
     friendRemoved: "Friend removed successfully",
+    noFriendsFound: "No friends found",
     
     // Saved Verses
     savedVerses: "Saved Verses",
@@ -1310,7 +1313,12 @@ export const translations: Record<string, Translations> = {
     friendsListDescription: "Tus amigos espirituales",
     noFriendsFound: "No se encontraron amigos",
     incomingRequests: "Solicitudes Recibidas",
+    incomingRequestsDescription: "Solicitudes de amistad que has recibido",
     outgoingRequests: "Solicitudes Enviadas",
+    outgoingRequestsDescription: "Solicitudes de amistad que has enviado",
+    noUsersFound: "No se encontraron usuarios que coincidan con tu búsqueda",
+    typeToSearch: "Escribe al menos 2 caracteres para buscar",
+    noFriendsYet: "Aún no tienes amigos",
     startSearching: "Comienza buscando amigos para conectarte",
     noIncomingRequests: "No hay solicitudes pendientes",
     noOutgoingRequests: "No hay solicitudes enviadas pendientes",
@@ -1901,7 +1909,12 @@ export const translations: Record<string, Translations> = {
     friendsListDescription: "Vos amis spirituels",
     noFriendsFound: "Aucun ami trouvé",
     incomingRequests: "Demandes Reçues",
+    incomingRequestsDescription: "Demandes d'amitié que vous avez reçues",
     outgoingRequests: "Demandes Envoyées",
+    outgoingRequestsDescription: "Demandes d'amitié que vous avez envoyées",
+    noUsersFound: "Aucun utilisateur trouvé correspondant à votre recherche",
+    typeToSearch: "Tapez au moins 2 caractères pour rechercher",
+    noFriendsYet: "Vous n'avez pas encore d'amis",
     startSearching: "Commencez en recherchant des amis pour vous connecter",
     noIncomingRequests: "Aucune demande en attente",
     noOutgoingRequests: "Aucune demande envoyée en attente",
@@ -2490,8 +2503,14 @@ export const translations: Record<string, Translations> = {
     decline: "Recusar",
     pending: "Pendente",
     friendsListDescription: "Seus amigos espirituais",
+    noFriendsFound: "Nenhum amigo encontrado",
     incomingRequests: "Solicitações Recebidas",
+    incomingRequestsDescription: "Solicitações de amizade que você recebeu",
     outgoingRequests: "Solicitações Enviadas",
+    outgoingRequestsDescription: "Solicitações de amizade que você enviou",
+    noUsersFound: "Nenhum usuário encontrado correspondente à sua busca",
+    typeToSearch: "Digite pelo menos 2 caracteres para pesquisar",
+    noFriendsYet: "Você ainda não tem amigos",
     startSearching: "Comece procurando por amigos para se conectar",
     noIncomingRequests: "Nenhuma solicitação pendente",
     noOutgoingRequests: "Nenhuma solicitação enviada pendente",
@@ -2504,11 +2523,6 @@ export const translations: Record<string, Translations> = {
     friendRequestAccepted: "Solicitação de amizade aceita!",
     friendRequestDeclined: "Solicitação de amizade recusada",
     friendRemoved: "Amigo removido com sucesso",
-    incomingRequestsDescription: "Solicitações de amizade recebidas",
-    outgoingRequestsDescription: "Suas solicitações de amizade enviadas",
-    noUsersFound: "Nenhum usuário encontrado",
-    typeToSearch: "Digite para pesquisar",
-    noFriendsYet: "Você ainda não tem amigos",
     
     // Saved Verses
     savedVerses: "Versículos Salvos",
@@ -3087,7 +3101,12 @@ export const translations: Record<string, Translations> = {
     friendsListDescription: "你的灵性朋友",
     noFriendsFound: "未找到朋友",
     incomingRequests: "接收的请求",
+    incomingRequestsDescription: "您收到的朋友请求",
     outgoingRequests: "发送的请求",
+    outgoingRequestsDescription: "您发送的朋友请求",
+    noUsersFound: "未找到与您搜索匹配的用户",
+    typeToSearch: "输入至少2个字符以搜索",
+    noFriendsYet: "您还没有朋友",
     startSearching: "开始搜索朋友以连接",
     noIncomingRequests: "没有待定的朋友请求",
     noOutgoingRequests: "没有待定的发送请求",
@@ -3678,7 +3697,12 @@ export const translations: Record<string, Translations> = {
     friendsListDescription: "أصدقاؤك الروحيون",
     noFriendsFound: "لم يتم العثور على أصدقاء",
     incomingRequests: "الطلبات الواردة",
+    incomingRequestsDescription: "طلبات الصداقة التي تلقيتها",
     outgoingRequests: "الطلبات الصادرة",
+    outgoingRequestsDescription: "طلبات الصداقة التي أرسلتها",
+    noUsersFound: "لم يتم العثور على مستخدمين يطابقون بحثك",
+    typeToSearch: "اكتب على الأقل حرفين للبحث",
+    noFriendsYet: "ليس لديك أي أصدقاء بعد",
     startSearching: "ابدأ بالبحث عن الأصدقاء للتواصل",
     noIncomingRequests: "لا توجد طلبات صداقة معلقة",
     noOutgoingRequests: "لا توجد طلبات صادرة معلقة",
@@ -4267,6 +4291,7 @@ export const translations: Record<string, Translations> = {
     decline: "अस्वीकार करें",
     pending: "लंबित",
     friendsListDescription: "आपके आध्यात्मिक मित्र",
+    noFriendsFound: "कोई मित्र नहीं मिला",
     incomingRequests: "प्राप्त अनुरोध",
     outgoingRequests: "भेजे गए अनुरोध",
     startSearching: "जुड़ने के लिए मित्रों की खोज शुरू करें",
