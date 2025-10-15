@@ -43,8 +43,8 @@ export default function AppLogo({ onNavigate, size = 'medium', className = '' }:
           className={`${sizeClasses[size]} object-contain opacity-90`}
         />
       </div>
-      {/* Subtle separator line */}
-      <div className="w-32 h-px bg-gray-200/50 mt-4"></div>
+      {/* Decorative separator line */}
+      <div className="w-32 h-0.5 bg-gray-400/70 dark:bg-gray-500/70 mt-4 rounded-full"></div>
     </div>
   );
 }
