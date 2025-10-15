@@ -6,7 +6,6 @@ import { Capacitor } from '@capacitor/core';
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spiritual_77b7a27e.png';
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
@@ -26,13 +25,6 @@ const getMainMenuItems = (t: any, isIOS = false) => {
       icon: BookmarkCheck,
       comingSoon: false
     },
-  {
-    id: "giving",
-    title: t.givingImpact,
-    description: t.givingImpactDesc,
-    icon: TrendingUp,
-    comingSoon: false
-  },
   {
     id: "videos",
     title: t.faithVideos,
@@ -176,11 +168,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
         {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {
             switch(id) {
-              case 'giving': return {
-                gradient: 'from-stone-50 to-amber-50',
-                borderColor: 'border-stone-200',
-                iconColor: 'text-stone-600'
-              };
               case 'videos': return {
                 gradient: 'from-purple-50 to-violet-50',
                 borderColor: 'border-purple-200',
@@ -214,7 +201,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
           const getTileImage = (id: string) => {
             switch(id) {
               case 'savedverses': return { image: holyBibleImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
-              case 'giving': return { image: givingHandsImage, overlay: 'from-stone-900/70 via-stone-600/20', border: 'border-stone-200', iconBg: 'bg-stone-100', iconBorder: 'border-stone-200/60', iconRing: 'ring-stone-300/50', iconColor: 'text-stone-700' };
               case 'videos': return { image: holyBibleImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
               case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
               case 'friends': return { image: friendsFellowship, overlay: 'from-pink-900/70 via-pink-600/20', border: 'border-pink-200', iconBg: 'bg-pink-100', iconBorder: 'border-pink-200/60', iconRing: 'ring-pink-300/50', iconColor: 'text-pink-700' };
