@@ -10,7 +10,6 @@ import givingHandsImage from '@assets/generated_images/Peaceful_giving_hands_spi
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
-import donateImage from '@assets/generated_images/Peaceful_donation_charitable_giving_84a34ad2.png';
 
 interface MorePageProps {
   language: string;
@@ -25,13 +24,6 @@ const getMainMenuItems = (t: any, isIOS = false) => {
       title: "Saved Verses",
       description: "View your bookmarked scripture passages",
       icon: BookmarkCheck,
-      comingSoon: false
-    },
-    {
-      id: "donate",
-      title: t.donate,
-      description: isIOS ? t.donateDescApplePay || "Support our mission via Apple Pay" : t.donateDesc,
-      icon: Heart,
       comingSoon: false
     },
   {
@@ -154,19 +146,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
             <span>{t.follow}</span>
           </a>
           
-          {/* Donate Button (Hidden on iOS for App Store compliance) */}
-          {!isIOS && (
-            <Button 
-              className="flex items-center gap-1 bg-amber-600 hover:bg-amber-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
-              data-testid="button-donate-more"
-              aria-label="Donate to help spread the Gospel"
-              onClick={() => onNavigate?.('donate')}
-            >
-              <Heart className="w-3.5 h-3.5" aria-hidden="true" />
-              <span>Donate</span>
-            </Button>
-          )}
-          
           {/* Share Button - Professional Green */}
           <Button 
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
@@ -222,11 +201,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                 borderColor: 'border-pink-200',
                 iconColor: 'text-pink-600'
               };
-              case 'donate': return {
-                gradient: 'from-amber-50 to-orange-50',
-                borderColor: 'border-amber-200',
-                iconColor: 'text-amber-600'
-              };
               default: return {
                 gradient: 'from-indigo-50 to-blue-50',
                 borderColor: 'border-indigo-200',
@@ -243,7 +217,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
               case 'giving': return { image: givingHandsImage, overlay: 'from-stone-900/70 via-stone-600/20', border: 'border-stone-200', iconBg: 'bg-stone-100', iconBorder: 'border-stone-200/60', iconRing: 'ring-stone-300/50', iconColor: 'text-stone-700' };
               case 'videos': return { image: holyBibleImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
               case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
-              case 'donate': return { image: donateImage, overlay: 'from-amber-900/70 via-amber-600/20', border: 'border-amber-200', iconBg: 'bg-amber-100', iconBorder: 'border-amber-200/60', iconRing: 'ring-amber-300/50', iconColor: 'text-amber-700' };
               case 'friends': return { image: friendsFellowship, overlay: 'from-pink-900/70 via-pink-600/20', border: 'border-pink-200', iconBg: 'bg-pink-100', iconBorder: 'border-pink-200/60', iconRing: 'ring-pink-300/50', iconColor: 'text-pink-700' };
               default: return null;
             }
