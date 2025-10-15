@@ -3,7 +3,6 @@ import GreetingHeader from "../components/GreetingHeader";
 import DailyVerseCard from "../components/DailyVerseCard";
 import StreakCounter from "../components/StreakCounter";
 import BibleStudyPlans from "../components/BibleStudyPlans";
-import AskPastor from "../components/AskPastor";
 import BadgeNotification from "../components/BadgeNotification";
 import { VideoPlayer } from "../components/VideoPlayer";
 import AppLogo from "../components/AppLogo";
@@ -12,7 +11,7 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Book, FileText, Cross, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen } from "lucide-react";
+import { Book, FileText, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 
@@ -25,7 +24,6 @@ import { useTranslations } from "../lib/translations";
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
 import mountainLakeImage from '@assets/generated_images/Mountain_lake_sunrise_scripture_98ce5cc4.png';
 import forestPathImage from '@assets/generated_images/Forest_path_study_plans_fab1c678.png';
-import oceanCliffImage from '@assets/generated_images/Ocean_cliff_pastor_counseling_10177ffd.png';
 import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
 
 interface User {
@@ -50,7 +48,6 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showStudyPlans, setShowStudyPlans] = useState(false);
-  const [showAskPastor, setShowAskPastor] = useState(false);
   const [showVideoPlayer, setShowVideoPlayer] = useState(false);
   const [badgeData, setBadgeData] = useState({ type: "", days: 0 });
   const [streakDays, setStreakDays] = useState(0);
@@ -302,36 +299,6 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           </div>
         </div>
 
-        {/* Ask Pastor Section */}
-        <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
-          <div className="relative h-40">
-            <img 
-              src={oceanCliffImage}
-              alt="Ask the Pastor"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          </div>
-          <div className="p-4">
-            <div className="flex items-center mb-3">
-              <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                <Cross className="w-4 h-4 text-blue-600" />
-              </div>
-              <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-askPastor">Ask the AI Pastor</h2>
-            </div>
-            <p className="text-gray-600 text-sm mb-3">
-              Get AI-powered biblical guidance and spiritual counsel based on Scripture.
-            </p>
-            <Button 
-              className="w-full bg-blue-600" 
-              onClick={() => setShowAskPastor(true)}
-              data-testid="button-askPastor"
-            >
-              Ask a Question
-            </Button>
-          </div>
-        </div>
-
         {/* Streak Counter Section (Hidden - Just for Logic) */}
         <div className="hidden">
           <StreakCounter onBadgeEarned={handleBadgeEarned} onStreakUpdate={handleStreakUpdate} />
@@ -470,15 +437,6 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         <DialogContent className="max-w-md max-h-[90vh] overflow-y-auto p-0">
           <div className="p-6">
             <BibleStudyPlans />
-          </div>
-        </DialogContent>
-      </Dialog>
-
-      {/* Ask Pastor Modal */}
-      <Dialog open={showAskPastor} onOpenChange={setShowAskPastor}>
-        <DialogContent className="max-w-2xl max-h-[90vh] overflow-hidden p-0">
-          <div className="p-6 h-full">
-            <AskPastor onClose={() => setShowAskPastor(false)} />
           </div>
         </DialogContent>
       </Dialog>
