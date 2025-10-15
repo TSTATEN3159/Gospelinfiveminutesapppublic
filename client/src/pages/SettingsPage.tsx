@@ -32,23 +32,18 @@ interface SettingsPageProps {
   language?: string;
   user?: {
     firstName: string;
-    lastName: string;
     email: string;
     birthMonth: string;
     birthDay: string;
-    phone: string;
     appUserId?: string;
   };
 }
 
 interface UserProfile {
   firstName: string;
-  lastName: string;
   email: string;
-  phone: string;
   birthMonth: string;
   birthDay: string;
-  preferredName: string;
   timezone: string;
 }
 
@@ -70,12 +65,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
   // Initialize profile data from user prop or defaults
   const [profile, setProfile] = useState<UserProfile>({
     firstName: user?.firstName || 'John',
-    lastName: user?.lastName || 'Smith',
     email: user?.email || 'john.smith@email.com',
-    phone: user?.phone || '+1 (555) 123-4567',
     birthMonth: user?.birthMonth || 'March',
     birthDay: user?.birthDay || '15',
-    preferredName: user?.firstName || 'John',
     timezone: 'America/New_York'
   });
 
@@ -182,9 +174,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
         const updatedUserData = {
           ...userData,
           firstName: profile.firstName,
-          lastName: profile.lastName,
           email: profile.email,
-          phone: profile.phone,
           birthMonth: profile.birthMonth,
           birthDay: profile.birthDay,
         };
@@ -193,7 +183,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
 
       // Also save to store for consistency
       store.saveProfile({
-        name: `${profile.firstName} ${profile.lastName}`,
+        name: profile.firstName,
         email: profile.email,
         birthdate: `${profile.birthMonth} ${profile.birthDay}`
       });
@@ -284,12 +274,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
       // Reset local state
       const emptyProfile = {
         firstName: '',
-        lastName: '',
         email: '',
-        phone: '',
         birthMonth: 'January',
         birthDay: '1',
-        preferredName: '',
         timezone: 'America/New_York'
       };
 
@@ -437,33 +424,15 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <Label htmlFor="firstName">{t.firstName}</Label>
-                <Input
-                  id="firstName"
-                  value={profile.firstName}
-                  onChange={(e) => setProfile(prev => ({ ...prev, firstName: e.target.value }))}
-                  disabled={true}
-                  className="bg-muted"
-                  data-testid="input-first-name"
-                  title={t.nameCannotBeChanged}
-                />
-                <p className="text-xs text-muted-foreground mt-1">{t.nameCannotBeChanged}</p>
-              </div>
-              <div>
-                <Label htmlFor="lastName">{t.lastName}</Label>
-                <Input
-                  id="lastName"
-                  value={profile.lastName}
-                  onChange={(e) => setProfile(prev => ({ ...prev, lastName: e.target.value }))}
-                  disabled={true}
-                  className="bg-muted"
-                  data-testid="input-last-name"
-                  title={t.nameCannotBeChanged}
-                />
-                <p className="text-xs text-muted-foreground mt-1">{t.nameCannotBeChanged}</p>
-              </div>
+            <div>
+              <Label htmlFor="firstName">{t.firstName}</Label>
+              <Input
+                id="firstName"
+                value={profile.firstName}
+                onChange={(e) => setProfile(prev => ({ ...prev, firstName: e.target.value }))}
+                disabled={!isEditing}
+                data-testid="input-first-name"
+              />
             </div>
 
             <div>
@@ -475,17 +444,6 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
                 onChange={(e) => setProfile(prev => ({ ...prev, email: e.target.value }))}
                 disabled={!isEditing}
                 data-testid="input-email"
-              />
-            </div>
-
-            <div>
-              <Label htmlFor="phone">{t.phoneNumber}</Label>
-              <Input
-                id="phone"
-                value={profile.phone}
-                onChange={(e) => setProfile(prev => ({ ...prev, phone: e.target.value }))}
-                disabled={!isEditing}
-                data-testid="input-phone"
               />
             </div>
 
@@ -531,9 +489,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
               <Select
                 value={profile.timezone}
                 onValueChange={(value) => setProfile(prev => ({ ...prev, timezone: value }))}
-                disabled={true}
+                disabled={!isEditing}
               >
-                <SelectTrigger data-testid="select-timezone" className="bg-muted">
+                <SelectTrigger data-testid="select-timezone">
                   <SelectValue />
                 </SelectTrigger>
                 <SelectContent>
@@ -542,7 +500,6 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
                   ))}
                 </SelectContent>
               </Select>
-              <p className="text-xs text-muted-foreground mt-1">{t.timezoneCannotBeChanged}</p>
             </div>
 
             {isEditing && (
@@ -661,23 +618,6 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
                 onCheckedChange={(checked) => handlePreferenceChange('soundEnabled', checked)}
                 data-testid="switch-sound-enabled"
               />
-            </div>
-
-            <div>
-              <Label htmlFor="language">{t.appLanguage}</Label>
-              <Select
-                value={preferences.language}
-                onValueChange={(value) => handlePreferenceChange('language', value)}
-              >
-                <SelectTrigger data-testid="select-app-language">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {languages.map(lang => (
-                    <SelectItem key={lang.value} value={lang.value}>{lang.label}</SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
             </div>
 
             <BibleVersionSelector 
