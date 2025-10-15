@@ -552,7 +552,14 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={() => notificationService.testNotification()}
+                  onClick={async () => {
+                    const result = await notificationService.testNotification();
+                    toast({
+                      title: result.success ? "Success" : "Error",
+                      description: result.message,
+                      variant: result.success ? "default" : "destructive"
+                    });
+                  }}
                   className="w-full"
                   data-testid="button-test-notification"
                 >

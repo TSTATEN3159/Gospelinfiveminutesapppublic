@@ -140,14 +140,36 @@ class NotificationService {
     this.scheduleDailyReminders(preferences);
   }
 
-  async testNotification(): Promise<void> {
+  async testNotification(): Promise<{ success: boolean; message: string }> {
+    if (!('Notification' in window)) {
+      return {
+        success: false,
+        message: 'Notifications are not supported in this browser'
+      };
+    }
+
     const permission = await this.requestPermission();
+    
     if (permission === 'granted') {
       new Notification('Test Notification', {
         body: 'Daily verse reminders are working! You\'ll receive your next reminder at the scheduled time.',
         icon: '/favicon.ico',
         tag: 'test-notification'
       });
+      return {
+        success: true,
+        message: 'Test notification sent successfully!'
+      };
+    } else if (permission === 'denied') {
+      return {
+        success: false,
+        message: 'Notifications are blocked. Please enable them in your browser settings.'
+      };
+    } else {
+      return {
+        success: false,
+        message: 'Notification permission was not granted'
+      };
     }
   }
 }
