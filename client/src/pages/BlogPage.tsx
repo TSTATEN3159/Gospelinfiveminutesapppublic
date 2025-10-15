@@ -385,6 +385,24 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
             </div>
           </div>
         </Card>
+
+        {/* Content Attribution */}
+        <Card className="shadow-lg border-0 bg-muted/50">
+          <CardContent className="p-6 text-center">
+            <p className="text-sm text-muted-foreground mb-3">
+              Article content provided by
+            </p>
+            <a 
+              href="https://getcontext.xyz" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-primary hover:underline"
+              data-testid="link-christian-context-blog"
+            >
+              Christian Context / GetContext.xyz
+            </a>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Article Detail Modal */}

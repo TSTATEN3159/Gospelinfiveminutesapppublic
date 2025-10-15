@@ -1,0 +1,58 @@
+Yes — as of current published terms, Christian Context API (via GetContext.xyz) is free to use — including for faith-based or ministry web and app projects. 
+getcontext.xyz
++1
+
+However, “free to use” still comes with rules and disclaimers you should be aware of. Here’s a breakdown of what I found and what to watch out for:
+
+What “free to use” means (according to their site / terms)
+
+Here’s what the Christian Context API allows and how it describes usage:
+
+Their site states: “Use the Christian Context API to power your mobile app or web project for free.” 
+getcontext.xyz
+
+They offer a REST API with curated Bible verses, sermon videos, and written commentaries. 
+getcontext.xyz
+
+Their Terms of Service says:
+
+“You may copy, post, transmit, store, publish, download or otherwise use any of the content or code of this site in any way without my prior written approval.” 
+getcontext.xyz
+
+From that, we can infer that they intend very permissive usage — you don’t need to pay or license usage under most normal circumstances, and you’re allowed to redistribute or display their content/code in your project.
+
+Rules, limitations, and caveats to watch out for
+
+Even though the terms are permissive, “free” doesn’t mean “no responsibility.” Here are caveats, practical concerns, and “fine print” you should check/observe:
+
+Area	What to Watch For / Ask	Why It Matters
+Attribution / credit	Their terms don’t explicitly require you to credit them in all cases (the “use … in any way without prior written approval” phrasing is broad). But it’s good practice to credit the source or include their name or a link somewhere.	Helps with transparency, accountability, and avoids confusion for your users.
+Updates / stability	The API is advertised as a v0.9 “MVP” and “stable for the content it has” — meaning future expansions or changes are possible. 
+getcontext.xyz
+	You may need to adjust your app/website if they change endpoints, data formats, or add/remove content.
+Content limitations	The API catalog is finite (e.g. 3,752 Bible verses, 1,790 video sermons, 206 commentaries) as of their published snapshot. 
+getcontext.xyz
+	You might run into gaps for less common verses or topics.
+Commercial / revenue use	Their terms don’t explicitly forbid use in apps, websites, or ministries that generate revenue (ads, donations, etc.), but because the license is permissive, it appears allowed — unless future terms change.	If your ministry app is monetized, it’s wise to double-check that nothing in their future terms prohibits that.
+Prior written approval clause	Their wording is unusually strong: “use … in any way without my prior written approval.” 
+getcontext.xyz
+	That sounds like “you don’t need permission,” but the phrasing might be ambiguous in extreme or commercial scenarios. If you plan large distribution or embedding in paid software, consider contacting the owner.
+Copyright / third‐party content	Even though their terms say “copy … use any of the content,” you should ensure that the biblical texts, video sermons, commentaries, etc., are themselves legally cleared for reuse (i.e. public domain or properly licensed).	If one of their video sermons is under a stricter license (or copyrighted by a preacher or publisher), that could complicate your right to redistribute it.
+Privacy & API limits	Their privacy policy and usage limits (rate limits, quotas) should also be considered. Their privacy page exists. 
+getcontext.xyz
+	If your app makes many requests, you might be rate-limited or see performance issues. Also, users’ data privacy must be considered.
+My recommendation & “best practices”
+
+To use the Christian Context API safely and responsibly for your ministry, here are some best practices:
+
+Check the latest Terms / License — Terms may change. Always review the version posted on their site before deploying in production.
+
+Document attribution — Even if not required, include a note like “Content provided by Christian Context / GetContext.xyz” (with a link) somewhere visible (e.g. “About / Credits” page).
+
+Test stability & fallback — Because it's in a kind of MVP state, have fallback behavior if certain verses or videos aren’t available.
+
+Reach out for permission — If your use is large-scale (e.g. embedding into a widely sold app, or bundling the content into an offline package), get in contact with the API maintainer to ensure your particular use is acceptable.
+
+Respect privacy & rate limits — Don’t abuse the API endpoints (e.g. by mass scraping), and honor any rate limits or policies they publish.
+
+Keep backups / caching — To mitigate against downtime or changes, maintain a cache of content where legally permissible.

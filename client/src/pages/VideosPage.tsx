@@ -416,6 +416,35 @@ export default function VideosPage({ onNavigate, streakDays = 0, language = "en"
           </div>
         </Card>
 
+        {/* Content Attribution */}
+        <Card className="shadow-lg border-0 bg-muted/50">
+          <CardContent className="p-6 text-center">
+            <p className="text-sm text-muted-foreground mb-3">
+              Video content provided by
+            </p>
+            <div className="flex flex-col gap-2 items-center">
+              <a 
+                href="https://getcontext.xyz" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-primary hover:underline"
+                data-testid="link-christian-context"
+              >
+                Christian Context / GetContext.xyz
+              </a>
+              <a 
+                href="https://bibleproject.com" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-primary hover:underline"
+                data-testid="link-bibleproject"
+              >
+                BibleProject® (bibleproject.com)
+              </a>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Video Player Modal */}
         <VideoPlayer
           video={currentVideo}
