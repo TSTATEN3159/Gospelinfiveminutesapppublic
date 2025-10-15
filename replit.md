@@ -49,9 +49,9 @@ Preferred communication style: Simple, everyday language.
 - **Notes Feature**: CRUD operations for personal reflections on verses.
 - **Complete Internationalization (Apple Store Ready)**: ALL 17 pages fully support 7 languages (English, Spanish, French, Portuguese, Chinese, Arabic, Hindi) with 200+ translation keys covering UI elements, error messages, legal content, form labels, and dynamic content. Language switching tested and verified across all pages including critical components like AI Pastor, Privacy Policy, Terms of Service, and payment flows.
 - **Streak Tracking**: Consecutive days counter with localStorage persistence.
-- **Donations**: Platform-specific payment processing (Apple Pay for iOS, Stripe for Web/Android).
 - **Offline Functionality**: Network status indicator, bookmarks, and notes persistence.
 - **Data Management**: User data export (JSON) and full account deletion capabilities.
+- **Apple Store Compliance**: All in-app donation functionality removed per Guidelines 3.2.1(iv) and 3.2.2 (organization is not Apple-approved nonprofit).
 
 ## External Dependencies
 
