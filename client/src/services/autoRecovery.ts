@@ -126,7 +126,8 @@ class AutoRecoveryService {
       setTimeout(async () => {
         try {
           // Test network connectivity
-          const response = await fetch('/api/health', {
+          const { apiUrl } = await import('@/lib/api-config');
+          const response = await fetch(apiUrl('/api/health'), {
             method: 'GET',
             signal: AbortSignal.timeout(5000)
           });
@@ -156,7 +157,8 @@ class AutoRecoveryService {
       }
 
       // No cached data available, try to fetch minimal data
-      const response = await fetch('/api/daily-verse', {
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/daily-verse'), {
         signal: AbortSignal.timeout(3000)
       });
       

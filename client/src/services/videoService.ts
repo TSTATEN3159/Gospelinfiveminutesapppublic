@@ -52,7 +52,8 @@ class VideoService {
       if (category) params.append('category', category);
       params.append('limit', limit.toString());
 
-      const response = await fetch(`/api/videos?${params}`);
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl(`/api/videos?${params}`));
       const data: VideoResponse = await response.json();
 
       if (!data.success) {

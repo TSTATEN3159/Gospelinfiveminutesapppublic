@@ -83,7 +83,8 @@ export default function NetworkStatus({ onRetry, showOfflineMessage = true }: Ne
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 5000);
 
-      const response = await fetch('/api/health', {
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/health'), {
         method: 'GET',
         signal: controller.signal,
         cache: 'no-cache'
@@ -232,7 +233,8 @@ export function useNetworkStatus() {
 
   const checkConnection = async (): Promise<boolean> => {
     try {
-      const response = await fetch('/api/health', {
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/health'), {
         method: 'GET',
         cache: 'no-cache',
         signal: AbortSignal.timeout(3000)

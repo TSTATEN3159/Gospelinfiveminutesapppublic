@@ -33,7 +33,8 @@ export default function AskPastorSection({ backgroundImage, language = "en" }: A
   // OpenAI Pastor API Integration  
   const askPastorMutation = useMutation({
     mutationFn: async (question: string) => {
-      const response = await fetch("/api/ask-pastor", {
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl("/api/ask-pastor"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ question }),

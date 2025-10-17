@@ -91,7 +91,8 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
         setLoading(true);
         setError(null);
         
-        const response = await fetch('/api/blog-articles?limit=5');
+        const { apiUrl } = await import('@/lib/api-config');
+        const response = await fetch(apiUrl('/api/blog-articles?limit=5'));
         const data = await response.json();
         
         if (data.success && data.articles) {

@@ -99,7 +99,8 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     setHasSearched(true);
 
     try {
-      const response = await fetch('/api/bible-search', {
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/bible-search'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -74,7 +74,8 @@ function App() {
     if (userData) {
       try {
         // Create app_users entry in the database
-        const response = await fetch('/api/users', {
+        const { apiUrl } = await import('@/lib/api-config');
+        const response = await fetch(apiUrl('/api/users'), {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

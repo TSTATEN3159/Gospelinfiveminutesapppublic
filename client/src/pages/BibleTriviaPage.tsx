@@ -93,7 +93,8 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
   const generateQuestions = async () => {
     setLoading(true);
     try {
-      const response = await fetch('/api/bible-trivia', {
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/bible-trivia'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

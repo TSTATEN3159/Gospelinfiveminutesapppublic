@@ -95,7 +95,8 @@ class ErrorBoundary extends Component<Props, State> {
       setTimeout(async () => {
         try {
           // Test network connectivity
-          const response = await fetch('/api/health', { 
+          const { apiUrl } = await import('@/lib/api-config');
+          const response = await fetch(apiUrl('/api/health'), { 
             method: 'GET',
             signal: AbortSignal.timeout(5000)
           });

@@ -88,7 +88,10 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
   const BibleVersionSelector = ({ value, onChange }: { value: string, onChange: (value: string) => void }) => {
     const { data: bibleVersions, isLoading } = useQuery({
       queryKey: ['/api/bible-versions'],
-      queryFn: () => fetch('/api/bible-versions').then(r => r.json())
+      queryFn: async () => {
+        const { apiUrl } = await import('@/lib/api-config');
+        return fetch(apiUrl('/api/bible-versions')).then(r => r.json());
+      }
     });
 
     if (isLoading) {

@@ -136,7 +136,8 @@ class BibleService {
 
   // Fetch verse from backend API (which calls API.Bible)
   private async fetchFromBackendApi(version: string = 'KJV'): Promise<BibleVerse> {
-    const response = await fetch(`/api/daily-verse?version=${encodeURIComponent(version)}`);
+    const { apiUrl } = await import('@/lib/api-config');
+    const response = await fetch(apiUrl(`/api/daily-verse?version=${encodeURIComponent(version)}`));
     
     if (!response.ok) {
       throw new Error(`Backend API request failed: ${response.status}`);
@@ -159,7 +160,8 @@ class BibleService {
     }
 
     try {
-      const response = await fetch('/api/bible-versions');
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/bible-versions'));
       
       if (!response.ok) {
         throw new Error(`Failed to fetch Bible versions: ${response.status}`);

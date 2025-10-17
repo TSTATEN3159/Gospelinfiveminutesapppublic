@@ -51,7 +51,8 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
     setIsDialogOpen(true);
 
     try {
-      const response = await fetch('/api/bible-search', {
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/bible-search'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
