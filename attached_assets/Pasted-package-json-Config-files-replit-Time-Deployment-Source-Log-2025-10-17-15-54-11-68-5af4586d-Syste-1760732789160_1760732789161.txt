@@ -1,0 +1,161 @@
+package.json
+Config files
+.replit
+
+
+Time
+Deployment
+Source
+Log
+2025-10-17 15:54:11.68
+5af4586d
+System
+starting up user application
+2025-10-17 15:54:11.68
+5af4586d
+System
+forwarding local port 5000 to external port 80 (mapped as 1104)
+2025-10-17 15:54:12.83
+5af4586d
+User
+> rest-express@1.0.0 start
+2025-10-17 15:54:12.83
+5af4586d
+User
+> NODE_ENV=production node dist/index.js
+2025-10-17 15:54:13.87
+5af4586d
+User
+SENDGRID_API_KEY environment variable not set - email functionality will be disabled
+2025-10-17 15:54:13.98
+5af4586d
+User
+7:54:13 PM [express] serving on port 5000
+2025-10-17 15:54:13.98
+5af4586d
+User
+Starting blog update scheduler - will send updates every 2 weeks
+2025-10-17 15:54:14.15
+5af4586d
+User
+7:54:14 PM [express] GET /api/health/db 200 in 161ms :: {"success":true,"service":"database","status…
+2025-10-17 15:54:14.98
+5af4586d
+User
+7:54:14 PM [express] GET /api/health/bible 200 in 830ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:54:45.18
+5af4586d
+User
+7:54:45 PM [express] GET /api/health/db 200 in 1200ms :: {"success":true,"service":"database","statu…
+2025-10-17 15:54:46.48
+5af4586d
+User
+7:54:46 PM [express] GET /api/health/bible 200 in 802ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:55:15.18
+5af4586d
+User
+7:55:15 PM [express] GET /api/health/db 200 in 1100ms :: {"success":true,"service":"database","statu…
+2025-10-17 15:55:16.60
+5af4586d
+User
+7:55:16 PM [express] GET /api/health/bible 200 in 822ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:55:44.68
+5af4586d
+User
+7:55:44 PM [express] GET /api/health/db 200 in 802ms :: {"success":true,"service":"database","status…
+2025-10-17 15:55:46.28
+5af4586d
+User
+7:55:46 PM [express] GET /api/health/bible 200 in 898ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:56:14.78
+5af4586d
+User
+7:56:14 PM [express] GET /api/health/db 200 in 902ms :: {"success":true,"service":"database","status…
+2025-10-17 15:56:16.51
+5af4586d
+User
+7:56:16 PM [express] GET /api/health/bible 200 in 723ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:56:44.88
+5af4586d
+User
+7:56:44 PM [express] GET /api/health/db 200 in 903ms :: {"success":true,"service":"database","status…
+2025-10-17 15:56:46.58
+5af4586d
+User
+7:56:46 PM [express] GET /api/health/bible 200 in 799ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:57:15.18
+5af4586d
+User
+7:57:15 PM [express] GET /api/health/db 200 in 1200ms :: {"success":true,"service":"database","statu…
+2025-10-17 15:57:16.68
+5af4586d
+User
+7:57:16 PM [express] GET /api/health/bible 200 in 772ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:57:45.58
+5af4586d
+User
+7:57:45 PM [express] GET /api/health/db 200 in 1600ms :: {"success":true,"service":"database","statu…
+2025-10-17 15:57:46.69
+5af4586d
+User
+7:57:46 PM [express] GET /api/health/bible 200 in 712ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:58:14.78
+5af4586d
+User
+7:58:14 PM [express] GET /api/health/db 200 in 897ms :: {"success":true,"service":"database","status…
+2025-10-17 15:58:16.12
+5af4586d
+User
+7:58:16 PM [express] GET /api/health/bible 200 in 933ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:58:44.68
+5af4586d
+User
+7:58:44 PM [express] GET /api/health/db 200 in 798ms :: {"success":true,"service":"database","status…
+2025-10-17 15:58:45.92
+5af4586d
+User
+7:58:45 PM [express] GET /api/health/bible 200 in 736ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:59:15.28
+5af4586d
+User
+7:59:15 PM [express] GET /api/health/db 200 in 1100ms :: {"success":true,"service":"database","statu…
+2025-10-17 15:59:16.44
+5af4586d
+User
+7:59:16 PM [express] GET /api/health/bible 200 in 754ms :: {"success":true,"service":"bible-api","st…
+2025-10-17 15:59:40.86
+7fdbb248
+System
+starting up user application
+2025-10-17 15:59:40.86
+7fdbb248
+System
+forwarding local port 5000 to external port 80 (mapped as 1104)
+2025-10-17 15:59:42.03
+7fdbb248
+User
+> rest-express@1.0.0 start
+2025-10-17 15:59:42.03
+7fdbb248
+User
+> NODE_ENV=production node dist/index.js
+2025-10-17 15:59:43.11
+7fdbb248
+User
+SENDGRID_API_KEY environment variable not set - email functionality will be disabled
+2025-10-17 15:59:43.20
+7fdbb248
+User
+7:59:43 PM [express] serving on port 5000
+2025-10-17 15:59:43.20
+7fdbb248
+User
+Starting blog update scheduler - will send updates every 2 weeks
+2025-10-17 15:59:43.38
+7fdbb248
+User
+7:59:43 PM [express] GET /api/health/db 200 in 163ms :: {"success":true,"service":"database","status…
+2025-10-17 15:59:43.76
+7fdbb248
+User
+7:59:43 PM [express] GET /api/health/bible 200 in 374ms :: {"success":true,"service":"bible-api","st…
