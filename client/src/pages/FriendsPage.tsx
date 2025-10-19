@@ -10,6 +10,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft, Contact, Download, Share, BookOpen, Smartphone, Shield, MessageCircle, Sparkles, Globe } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
+import { apiUrl } from "@/lib/api-config";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
 import { Contacts } from '@capacitor-community/contacts';
@@ -69,32 +70,32 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   // Search users
   const { data: searchResults = { users: [] }, isLoading: isSearching } = useQuery({
     queryKey: ['/api/users/search', searchQuery],
-    queryFn: () => searchQuery.length >= 2 ? fetch(`/api/users/search?q=${encodeURIComponent(searchQuery)}`).then(r => r.json()) : Promise.resolve({ users: [] }),
+    queryFn: () => searchQuery.length >= 2 ? fetch(apiUrl(`/api/users/search?q=${encodeURIComponent(searchQuery)}`)).then(r => r.json()) : Promise.resolve({ users: [] }),
     enabled: searchQuery.length >= 2
   });
 
   // Get friends list
   const { data: friendsData, isLoading: isLoadingFriends } = useQuery({
     queryKey: ['/api/friends', currentUserId],
-    queryFn: () => fetch(`/api/friends/${currentUserId}`).then(r => r.json())
+    queryFn: () => fetch(apiUrl(`/api/friends/${currentUserId}`)).then(r => r.json())
   });
 
   // Get friend requests
   const { data: requestsData, isLoading: isLoadingRequests } = useQuery({
     queryKey: ['/api/friends/requests', currentUserId],
-    queryFn: () => fetch(`/api/friends/requests/${currentUserId}`).then(r => r.json())
+    queryFn: () => fetch(apiUrl(`/api/friends/requests/${currentUserId}`)).then(r => r.json())
   });
 
   // Get contacts
   const { data: contactsData, isLoading: isLoadingContacts } = useQuery({
     queryKey: ['/api/contacts', currentUserId],
-    queryFn: () => fetch(`/api/contacts/${currentUserId}`).then(r => r.json())
+    queryFn: () => fetch(apiUrl(`/api/contacts/${currentUserId}`)).then(r => r.json())
   });
 
   // Get received verses
   const { data: receivedVersesData, isLoading: isLoadingVerses } = useQuery({
     queryKey: ['/api/verses/received', currentUserId],
-    queryFn: () => fetch(`/api/verses/received/${currentUserId}`).then(r => r.json())
+    queryFn: () => fetch(apiUrl(`/api/verses/received/${currentUserId}`)).then(r => r.json())
   });
 
   // Send friend request mutation

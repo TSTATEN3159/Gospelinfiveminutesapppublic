@@ -11,11 +11,13 @@ deploymentTarget = "autoscale"
 build = ["npm", "run", "build"]
 run = ["npm", "run", "start"]
 
-# CRITICAL: Autoscale deployments support ONLY ONE port
-# Your app serves both frontend and backend on port 5000
 [[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 35361
+externalPort = 3000
 
 [env]
 PORT = "5000"

@@ -13,6 +13,18 @@ Preferred communication style: Simple, everyday language.
 - **Instagram**: https://www.instagram.com/thegospelinfiveminutes/
 - **Facebook**: https://www.facebook.com/TheGospelIn5Minutes
 
+## Production Deployment Status
+
+- **Backend URL**: https://daily-gospel-timothystaten.replit.app
+- **Status**: ✅ Fully operational and verified
+- **API Architecture**: ✅ Refactored from proxy calls to direct API calls
+- **iOS Compatibility**: ✅ All fetch() calls now use apiUrl() helper for Appflow deployment
+- **Database**: Connected (PostgreSQL via Neon, slightly degraded but functional)
+- **Recent Fixes** (Oct 2025):
+  - Removed all proxy API calls that would fail in iOS
+  - Fixed: videoService.ts, FriendsPage.tsx, SupportPage.tsx
+  - All API calls now support production backend URL via VITE_API_BASE_URL
+
 ## System Architecture
 
 ### Frontend Architecture

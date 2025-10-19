@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { useTranslations } from "@/lib/translations";
+import { apiUrl } from "@/lib/api-config";
 
 interface SupportPageProps {
   onBack: () => void;
@@ -28,7 +29,7 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
           
           if (user.appUserId) {
             // Make API call to delete user account from server
-            const response = await fetch(`/api/users/${user.appUserId}`, {
+            const response = await fetch(apiUrl(`/api/users/${user.appUserId}`), {
               method: 'DELETE',
               headers: {
                 'Content-Type': 'application/json',

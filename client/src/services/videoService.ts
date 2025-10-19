@@ -1,3 +1,5 @@
+import { apiUrl } from '@/lib/api-config';
+
 export interface VideoItem {
   id: string;
   title: string;
@@ -112,7 +114,7 @@ class VideoService {
   async getDailyGospelVideo(): Promise<VideoItem | null> {
     try {
       // Use Christian Context API (same as Faith Videos page)
-      const response = await fetch(`/api/videos?category=sermon&limit=1`);
+      const response = await fetch(apiUrl('/api/videos?category=sermon&limit=1'));
       const data = await response.json();
       
       if (data.success && data.videos.length > 0) {
