@@ -1,5 +1,6 @@
 // Pastor Service - Biblical guidance using OpenAI
 // Using the OpenAI integration blueprint for spiritual counsel
+import { apiUrl } from '@/lib/api-config';
 
 export interface PastorMessage {
   id: string;
@@ -16,11 +17,9 @@ export interface PastorResponse {
 }
 
 class PastorService {
-  private apiUrl = '/api/ask-pastor';
-
   async askPastor(question: string): Promise<PastorResponse> {
     try {
-      const response = await fetch(this.apiUrl, {
+      const response = await fetch(apiUrl('/api/ask-pastor'), {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
