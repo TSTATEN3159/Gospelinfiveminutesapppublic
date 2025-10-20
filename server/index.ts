@@ -4,6 +4,39 @@ import { setupVite, serveStatic, log } from "./vite";
 import { BlogUpdateScheduler } from "./scheduler";
 
 const app = express();
+
+// CORS Configuration for iOS/Android Capacitor apps
+app.use((req, res, next) => {
+  const origin = req.headers.origin;
+  
+  // Allow requests from Capacitor apps (iOS/Android) and web browsers
+  const allowedOrigins = [
+    'capacitor://localhost',
+    'ionic://localhost', 
+    'http://localhost',
+    'http://localhost:5000',
+    'https://daily-gospel-timothystaten.replit.app'
+  ];
+  
+  if (origin && allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else if (!origin) {
+    // Allow requests without origin (like from native apps)
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
+  
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  
+  // Handle preflight requests
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200);
+  }
+  
+  next();
+});
+
 // Apply JSON parsing to all routes EXCEPT Stripe webhook which needs raw body
 app.use((req, res, next) => {
   if (req.path === '/api/stripe-webhook') {

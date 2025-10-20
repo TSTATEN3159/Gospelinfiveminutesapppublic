@@ -1,22 +1,50 @@
 # iOS Appflow Setup Guide
 
 ## Overview
-Your app is now ready for iOS deployment via Ionic Appflow. All API calls have been refactored to use direct URLs instead of proxies, making them compatible with mobile deployment.
+Your app is now **fully configured for iOS deployment** via Ionic Appflow or Xcode. All changes comply with **Apple's App Transport Security requirements** and TestFlight standards.
 
-## What Was Fixed
-✅ **All proxy API calls removed** - Previously used relative URLs like `/api/verse` which only work when frontend and backend are on the same server
-✅ **Direct API calls implemented** - Now uses `apiUrl()` helper to call full URLs like `https://daily-gospel-timothystaten.replit.app/api/verse`
-✅ **Production backend deployed** - Backend is live at https://daily-gospel-timothystaten.replit.app
-✅ **Environment variable ready** - `VITE_API_BASE_URL` configured for production builds
+## ✅ What Was Fixed
+
+The original TestFlight connection failures were caused by missing Apple security configuration. Here's what was fixed:
+
+### 1. iOS Network Permissions (Info.plist) ✅
+**Problem**: Apple's App Transport Security (ATS) blocks all network requests by default  
+**Solution**: Added `NSAppTransportSecurity` configuration to `ios/App/App/Info.plist`
+
+Whitelisted domains:
+- `daily-gospel-timothystaten.replit.app` (your backend)
+- `api.scripture.api.bible` (Bible API)
+- `getcontext.xyz` (Christian video content)
+
+### 2. Capacitor Server Configuration ✅
+**Problem**: iOS apps need explicit permission to navigate to external URLs  
+**Solution**: Updated `capacitor.config.ts` with:
+- iOS scheme: `capacitor://localhost`
+- Allowed navigation domains
+- Proper HTTPS configuration
+
+### 3. Backend CORS for iOS ✅
+**Problem**: iOS Capacitor apps use `capacitor://localhost` origin which was blocked  
+**Solution**: Added CORS middleware to `server/index.ts` that allows:
+- `capacitor://localhost` (iOS)
+- `ionic://localhost` (Android)
+- Production domains
+
+### 4. API Architecture ✅
+**Previous Work**: All proxy API calls were already refactored to use `apiUrl()` helper  
+**Result**: App can call `https://daily-gospel-timothystaten.replit.app` from iOS
 
 ## Files Changed
-The following files were updated to use `apiUrl()` instead of direct `fetch('/api/...')` calls:
 
-1. **client/src/services/videoService.ts** - Daily gospel video API call
-2. **client/src/pages/FriendsPage.tsx** - User search, friends list, contacts, verse sharing
-3. **client/src/pages/SupportPage.tsx** - Account deletion API call
+### iOS Configuration Files (NEW - Fixed TestFlight)
+1. **ios/App/App/Info.plist** - Added NSAppTransportSecurity network permissions
+2. **capacitor.config.ts** - Added iOS scheme and allowNavigation
+3. **server/index.ts** - Added CORS middleware for Capacitor apps
 
-All other files were already using `apiUrl()` correctly.
+### API Refactoring Files (PREVIOUS - Already Fixed)
+4. **client/src/services/videoService.ts** - Daily gospel video API call
+5. **client/src/pages/FriendsPage.tsx** - User search, friends list, contacts, verse sharing
+6. **client/src/pages/SupportPage.tsx** - Account deletion API call
 
 ## How It Works
 

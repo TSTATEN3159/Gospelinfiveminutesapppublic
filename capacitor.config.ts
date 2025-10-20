@@ -5,10 +5,18 @@ const config: CapacitorConfig = {
   appName: 'The Gospel in 5 Minutes',
   webDir: 'dist/public',
   server: { 
-    androidScheme: 'https' 
+    androidScheme: 'https',
+    iosScheme: 'capacitor',
+    // Allow navigation to backend API and external services
+    allowNavigation: [
+      'https://daily-gospel-timothystaten.replit.app',
+      'https://api.scripture.api.bible',
+      'https://getcontext.xyz'
+    ]
   },
   ios: {
-    contentInset: 'automatic'
+    contentInset: 'automatic',
+    scheme: 'capacitor'
   }
 };
 

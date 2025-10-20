@@ -47,5 +47,36 @@
         <true/>
         <key>NSContactsUsageDescription</key>
         <string>The Gospel in 5 Minutes would like to access your contacts to help you invite friends to share daily scripture and spiritual encouragement together.</string>
+        <key>NSAppTransportSecurity</key>
+        <dict>
+                <key>NSExceptionDomains</key>
+                <dict>
+                        <key>daily-gospel-timothystaten.replit.app</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                                <key>NSExceptionMinimumTLSVersion</key>
+                                <string>TLSv1.2</string>
+                        </dict>
+                        <key>api.scripture.api.bible</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
+                        <key>getcontext.xyz</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
+                </dict>
+                <key>NSAllowsArbitraryLoadsInWebContent</key>
+                <true/>
+        </dict>
 </dict>
 </plist>

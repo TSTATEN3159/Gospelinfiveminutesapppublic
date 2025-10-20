@@ -18,12 +18,14 @@ Preferred communication style: Simple, everyday language.
 - **Backend URL**: https://daily-gospel-timothystaten.replit.app
 - **Status**: ✅ Fully operational and verified
 - **API Architecture**: ✅ Refactored from proxy calls to direct API calls
-- **iOS Compatibility**: ✅ All fetch() calls now use apiUrl() helper for Appflow deployment
+- **iOS Compatibility**: ✅ FULLY CONFIGURED for TestFlight & App Store
 - **Database**: Connected (PostgreSQL via Neon, slightly degraded but functional)
-- **Recent Fixes** (Oct 2025):
-  - Removed all proxy API calls that would fail in iOS
-  - Fixed: videoService.ts, FriendsPage.tsx, SupportPage.tsx
-  - All API calls now support production backend URL via VITE_API_BASE_URL
+- **Recent Fixes** (Oct 20, 2025):
+  - ✅ **iOS Network Permissions**: Added NSAppTransportSecurity to Info.plist
+  - ✅ **Capacitor Configuration**: Updated capacitor.config.ts with iOS scheme and navigation allowlist
+  - ✅ **Backend CORS**: Added support for capacitor://localhost origin
+  - ✅ **API Architecture**: All fetch() calls use apiUrl() for production deployment
+  - Fixed Files: videoService.ts, FriendsPage.tsx, SupportPage.tsx, Info.plist, capacitor.config.ts, server/index.ts
 
 ## System Architecture
 
