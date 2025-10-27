@@ -4,9 +4,9 @@ export interface VideoItem {
   id: string;
   title: string;
   description: string;
-  duration: string;
+  duration?: string;
   category: 'sermon' | 'gospel-tidbits' | 'christian-advice';
-  views: number;
+  views?: number;
   thumbnail: string;
   videoUrl?: string;
   externalUrl?: string;

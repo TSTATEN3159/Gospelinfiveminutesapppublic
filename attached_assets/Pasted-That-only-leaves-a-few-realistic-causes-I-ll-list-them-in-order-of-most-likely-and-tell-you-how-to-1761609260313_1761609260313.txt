@@ -1,0 +1,105 @@
+That only leaves a few realistic causes. I’ll list them in order of most likely, and tell you how to prove/fix each one:
+1. The app is still calling the older endpoint path
+You told me those two screens are:
+“Faith Videos”
+“Gospel in Motion”
+Question: are BOTH of those screens in the app actually calling the same /api/videos endpoint in production? Or…
+Common pattern I’ve seen in your app structure:
+One component might still be calling /videos (no /api) or /api/gospel-in-motion or /api/bibleproject (an older route that no longer exists or returns empty), while the backend you shipped now standardized everything behind /api/videos.
+So:
+Scripture features got updated in the rebuild (they’re calling the current endpoints).
+Video features may still be using older hardcoded URLs in the React code that did NOT get refactored to your new apiUrl() helper.
+What this looks like in code:
+// good pattern elsewhere in the app
+fetch(`${apiUrl()}/api/videos`)
+
+// but inside FaithVideos.tsx or GospelInMotion.tsx
+fetch("http://localhost:5000/api/videos")  // or
+fetch("/api/gospel-in-motion")             // or
+fetch(apiUrl() + "/api/bibleproject")      // endpoint that doesn’t exist now
+If those screens are still pointing to an old/stale path, they’ll fail silently in prod even though /api/videos is fine.
+👉 Fix: in those two components, make sure they are using the same apiUrl() (or VITE_API_BASE_URL) + /api/videos.
+This DOES require a rebuild in Appflow because it’s frontend code.
+2. The frontend is filtering out results
+Look at the JSON you pasted. Each object has a source like "Christian Context API" or "BibleProject".
+Sometimes code does something like:
+Faith Videos screen shows only where source === "Christian Context API"
+Gospel in Motion screen shows only where source === "BibleProject"
+Now imagine this:
+The code expects "Bible Project" (with a space)
+But the backend returns "BibleProject" (no space)
+→ The Gospel in Motion list is filtered down to zero.
+Or:
+The code expects lowercase ("bibleproject") but you’re returning "BibleProject"
+→ Again, zero results.
+That would cause exactly what you’re seeing:
+Backend JSON is good.
+App shows nothing (because after filtering, it thinks there are 0 matches, so it renders blank/no cards).
+👉 Fix: In the React components that render “Faith Videos” and “Gospel in Motion,” check how they filter the array. Make sure the string compare matches what the backend actually sends.
+Even if you can’t open code right this second, you can infer:
+If both lists are blank in the app, and the backend definitely returned both source types, then the filter logic is probably mismatched.
+This also needs a rebuild in Appflow after it’s fixed.
+3. The UI is erroring when rendering the thumbnail/preview
+Another super common thing in video grids:
+If your frontend code does something like:
+<img src={video.thumbnailUrl} />
+but the backend response actually returns:
+{
+  "videoUrl": "https://www.youtube.com/watch?v=1p3oDv9i_o0"
+}
+with NO thumbnailUrl field, then thumbnailUrl is undefined.
+In dev builds, React might just render a broken image icon and continue.
+In production iOS WebView / WKWebView (which Capacitor uses), a runtime error inside that component could cause the entire list to silently fail rendering.
+Same idea if the component assumes video.id must be numeric but it's actually "context_1761609065866_0". If it's using that ID as a React key somewhere weird (or tries to parse it), that could also explode rendering.
+Clues:
+Your backend video items have:
+id
+title
+videoUrl
+verseReference
+source
+(No thumbnail field mentioned. No description field mentioned.)
+If the UI expects thumbnail or description, those components may be throwing.
+👉 Fix: in FaithVideos / GospelInMotion components, make sure they only rely on fields that actually exist in the new response: title, videoUrl, maybe verseReference. Don’t assume thumb, channel, duration, etc. unless your backend actually returns those.
+Yes, this also requires a rebuild.
+4. Hardcoded absolute HTTP vs HTTPS (less likely now but I’ll say it)
+If the Faith Videos component is still calling http://... (not https://), iOS will block it.
+BUT you just proved /api/videos on the backend returns good JSON over HTTPS, so unless that screen ignores apiUrl() and hits http://... directly, this is less likely now.
+Still worth glancing at the code later.
+How to figure out WHICH of the 4 is happening fastest
+Here’s how you can test right now without digging through code yet:
+On your iPhone (the same one with TestFlight build), open Safari and go to
+https://daily-gospel-timothystaten.replit.app/api/videos
+Look at the array of videos.
+Ask yourself:
+Do you see source: "Christian Context API" items? (Those should show in Faith Videos)
+Do you see source: "BibleProject" items? (Those should show in Gospel in Motion)
+Do any items include a thumbnail URL field at all? Or is it just videoUrl?
+Now match that to how the screens behave in the app:
+If Faith Videos and Gospel in Motion are both completely blank:
+I strongly suspect cause #1 (wrong endpoint in those components) OR cause #3 (render crash).
+If Faith Videos shows nothing but Gospel in Motion ALSO shows nothing, and yet /api/videos clearly returns both sources…
+I lean even harder toward cause #1 (they’re not even calling /api/videos in this build, they’re still on an old local path) OR cause #3 (runtime crash in the list renderer).
+If Faith Videos shows some stuff after your rebuild but Gospel in Motion is still blank:
+I lean toward cause #2 (string mismatch in filtering BibleProject videos).
+From what you said (“both Faith Videos and Gospel in Motion are not working”), the top two suspects are:
+Suspect A: Those two components never got moved to the new apiUrl()/api/videos pattern, so they’re still pointing to something that doesn’t exist in production (like /api/gospel-in-motion, /api/bibleproject, or localhost).
+→ Requires code update + new Appflow build.
+Suspect B: The component tries to use fields that aren’t in the response (like thumbnail) and crashes silently.
+→ Requires code update + new Appflow build.
+Either way, the backend is done. You do NOT need to touch Replit anymore for this part. The fix is in the frontend code that renders those lists, then rebuild in Appflow (the same way you just successfully rebuilt to get Bible Search working).
+What I recommend you do next
+Do this sequence:
+On the phone, open Safari and load /api/videos so you can see the shape of real production data.
+Compare that mental picture to what the Faith Videos screen is trying to show.
+Example: If Faith Videos screen has slots for thumbnail images... but the API doesn’t return thumbnail, then we’ve found it.
+Rebuild in Appflow one more time after updating those video components to:
+Fetch using the same apiUrl() + /api/videos.
+Use the actual fields that exist: title, videoUrl, maybe verseReference, and maybe conditionally show the source.
+Upload that new build to TestFlight.
+After that, those two video sections should populate just like the rest of the app.
+Bottom line:
+You’re now down to a frontend mapping issue, not infrastructure, not Apple policy, not certs, not keys.
+Everything Bible-related works live in TestFlight. That’s massive.
+Faith Videos + Gospel in Motion will work once those components are pointed at /api/videos and they render the actual response shape that production is giving.
+You are extremely close to feature-complete on a real iPhone.
