@@ -1,0 +1,149 @@
+Perfect update. That error message — “Watch video on YouTube Error 153 video player configuration error” — tells us exactly where the problem is now. We’re past data fetch, and we’re down in “how the app is trying to play the YouTube video.”
+Let’s break this down and fix it.
+What’s working vs failing now
+✅ Gospel in Motion (BibleProject) videos work.
+That means: your video rendering component and navigation flow are generally functional.
+So the UI can list videos and open/play them.
+❌ Faith Videos (Christian Context API) still fails when you tap to play.
+You’re seeing:
+“Watch video on YouTube
+Error 153
+video player configuration error”
+That’s happening on click, not on initial list load.
+So the list is fine, but the player itself can’t launch that video.
+That means:
+The item exists.
+You tapped it.
+Your code attempted to open or embed a YouTube player.
+The player (or the URL handoff) wasn’t valid.
+This is now a playback/URL handling issue.
+Why this only happens on “Faith Videos”
+BibleProject is probably coming from a known playlist or from pre-formatted objects where you already knew thumbnail/id/etc.
+Christian Context API is returning items like:
+{
+  "id": "context_...",
+  "title": "Faith: Ephesians 2:8",
+  "videoUrl": "https://www.youtube.com/watch?v=1p3oDv9i_o0",
+  "source": "Christian Context API"
+}
+So notice: videoUrl is a full YouTube watch URL (https://www.youtube.com/watch?v=...).
+Many mobile players / in-app webviews / YouTube IFrame wrappers / Capacitor plugins do NOT want the full watch URL. They just want the YouTube video ID (for example 1p3oDv9i_o0), and they build the player themselves.
+So there are two classic failure patterns that produce exactly what you’re describing:
+Failure Pattern 1. The player expects a video ID, but we gave it a full URL
+For example, code like this in React:
+// pseudo-example
+openVideoPlayer(video.videoUrl); // sends "https://www.youtube.com/watch?v=1p3oDv9i_o0"
+But under the hood, openVideoPlayer() might be doing something like:
+YouTubePlayer.play(videoIdString)
+and it’s trying to treat the entire URL as the ID.
+That will throw a configuration / invalid ID error on device.
+This would explain:
+BibleProject videos might already be stored in the format your player expects (maybe you stored just videoId for those in your code).
+Christian Context API is sending videoUrl, and your code isn’t extracting the ID before handing it to the player.
+Result: BibleProject works, Faith Videos blows up.
+Failure Pattern 2. You’re trying to embed the YouTube IFrame player in a WKWebView using youtube.com/watch?v=... directly
+Apple/iOS Capacitor WebView sometimes refuses inline playback or gets into restricted mode depending on how you inject the player. Some plugins only work with https://www.youtube.com/embed/<VIDEO_ID>?... and not the standard watch URL.
+Again, BibleProject might already be formatted as an embeddable link or using a known player component. Christian Context API is not.
+Error 153 / “player configuration error” is consistent with the embedded player being given something it can’t initialize.
+How to confirm which one it is
+Here’s how you can confirm without digging into Xcode logs yet:
+Take one of the Faith Videos that fails in TestFlight.
+Copy the URL you see in its JSON (the videoUrl like https://www.youtube.com/watch?v=1p3oDv9i_o0).
+On that same iPhone (not simulator), in Safari:
+Paste that URL.
+Does it open in mobile YouTube (either app or web)?
+If yes: the URL itself is valid.
+That means iOS is not blocking the video. The problem is your in-app player code.
+That tells us we don’t need DRM keys or anything — we just need to hand the player the ID correctly.
+What to change in code
+I’m going to give you the fix in the way you’ll probably patch it in your React/Capacitor code.
+Find the code path that runs when you tap a Faith Video. This is usually something like:
+onPress / onClick handler in your FaithVideos list item
+or a navigateToVideoDetail(video) type function
+or a playVideo(video) helper
+Inside that handler, you’ll see it passing some property from the video object to the player.
+You want to do this:
+Extract the YouTube video ID from video.videoUrl.
+For a URL like:
+https://www.youtube.com/watch?v=1p3oDv9i_o0
+The ID is the part after v= → 1p3oDv9i_o0.
+Pseudocode:
+function getYoutubeId(url: string): string | null {
+  try {
+    const u = new URL(url);
+    // First try normal watch?v=VIDEOID
+    if (u.hostname.includes("youtube.com")) {
+      const vid = u.searchParams.get("v");
+      if (vid) return vid;
+    }
+    // Also try youtu.be short links
+    // e.g. https://youtu.be/1p3oDv9i_o0
+    if (u.hostname === "youtu.be") {
+      return u.pathname.replace("/", "");
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+Pass THAT ID into your player / modal / detail screen instead of the full URL.
+For example, if you have:
+const handlePlay = (video: VideoItem) => {
+  openVideoPlayer(video.videoUrl);
+}
+change it to:
+const handlePlay = (video: VideoItem) => {
+  const id = getYoutubeId(video.videoUrl);
+  openVideoPlayer(id ?? video.videoUrl);
+}
+And ideally openVideoPlayer (or the screen you navigate to) will construct its own embed-friendly URL like:
+const embedUrl = `https://www.youtube.com/embed/${id}?autoplay=1&playsinline=1`
+or pass the ID into the Capacitor YouTube plugin if you’re using one.
+This does two things:
+Keeps BibleProject working (if those already had IDs or embed links).
+Fixes Faith Videos by giving the player exactly what it expects.
+Alternate quick fix (less elegant but works)
+If your current behavior is: tap → try to play inline inside the app (and that’s failing),
+you can temporarily change the tap to just open YouTube externally instead of playing inline.
+Something like:
+const handlePlay = (video: VideoItem) => {
+  window.open(video.videoUrl, "_blank"); // or Capacitor Browser.open({ url: video.videoUrl })
+};
+Capacitor’s Browser.open(...) will open Safari / YouTube app to that URL. Almost always works because you’re no longer trying to embed YouTube inside your app — you’re just deep-linking.
+This is allowed by Apple as long as you’re not hiding purchases behind paywalls or trying to route around IAP. You’re just opening a public sermon video, which is fine.
+Pros of this fallback:
+Zero fuss with player IDs.
+Immediate usability for testers.
+Cons:
+Video opens outside your app experience.
+But if you just want Faith Videos to work tonight for people testing the build, this is the fastest path.
+What you should do next
+Here’s the path forward, step by step:
+Pick one approach:
+Proper fix: parse videoUrl, extract YouTube ID, feed it to your in-app player.
+Fast fix: on tap, open that videoUrl in Capacitor Browser instead of embedding.
+Update that tap handler / navigation function in the Faith Videos component.
+Rebuild in Appflow again (App Store / Release build type).
+Upload that new build to TestFlight.
+On the phone:
+Tap a BibleProject video → should still work.
+Tap a Christian Context API “Faith” video → should now either:
+open in external YouTube/Safari (fast fix), or
+play correctly inline without Error 153 (proper fix).
+Once that works, you’re done with core video.
+Where you are overall
+Let’s zoom out:
+Bible data: ✅ working in production
+Ask Pastor / AI: ✅ fixed in code
+Video lists: ✅ now rendering in production
+BibleProject playback: ✅ working in production
+Christian Context playback: 🔄 one final tweak to how we open YouTube links
+That last tweak is not theological, not legal, not Apple policy. It’s just: “what exact string are we feeding the video player?” That’s entirely under your control.
+So you’re not in a crisis. You’re in polish.
+You are literally inches from a ministry app that someone can open on their iPhone and:
+Search Scripture,
+Get comfort by feeling (“I’m anxious” → Word of God),
+Get memory help to hide Scripture in their heart,
+Watch Gospel teaching videos,
+Ask faith questions.
+This is anointed work. Let’s finish this last tap handler. 💪

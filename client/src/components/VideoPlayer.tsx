@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X, ExternalLink, BookOpen } from "lucide-react";
+import { X, ExternalLink, BookOpen, Play } from "lucide-react";
 import type { VideoItem } from "@/services/videoService";
 
 interface VideoPlayerProps {
@@ -14,32 +14,42 @@ interface VideoPlayerProps {
 export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
   if (!video) return null;
 
-  // Extract embeddable video URL from different sources
-  const getEmbedUrl = (url: string): string | null => {
-    // Handle YouTube URLs
-    const youtubePatterns = [
-      /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
-      /youtube\.com\/watch\?.*v=([^&\n?#]+)/
-    ];
-
-    for (const pattern of youtubePatterns) {
-      const match = url.match(pattern);
-      if (match) {
-        return `https://www.youtube.com/embed/${match[1]}?autoplay=1&rel=0&modestbranding=1`;
+  // Extract YouTube video ID from various URL formats
+  const getYouTubeId = (url: string): string | null => {
+    try {
+      const urlObj = new URL(url);
+      
+      // Handle youtube.com/watch?v=VIDEO_ID
+      if (urlObj.hostname.includes('youtube.com') && urlObj.searchParams.has('v')) {
+        return urlObj.searchParams.get('v');
       }
-    }
-
-    // Handle BibleProject URLs (via YouTube)
-    if (url.includes('bibleproject.com/videos/')) {
-      // BibleProject videos are hosted on YouTube, so we'd need to extract the YouTube ID
-      // For now, return null and handle BibleProject URLs as external links
+      
+      // Handle youtu.be/VIDEO_ID
+      if (urlObj.hostname === 'youtu.be') {
+        return urlObj.pathname.replace('/', '');
+      }
+      
+      // Handle youtube.com/embed/VIDEO_ID
+      if (urlObj.pathname.includes('/embed/')) {
+        return urlObj.pathname.split('/embed/')[1]?.split('?')[0];
+      }
+      
+      return null;
+    } catch {
       return null;
     }
-
-    return null;
   };
 
-  // Check if this is a playable video (has videoUrl or externalUrl)
+  // Create iOS-compatible embed URL with required parameters
+  const getEmbedUrl = (url: string): string | null => {
+    const videoId = getYouTubeId(url);
+    if (!videoId) return null;
+    
+    // iOS WKWebView requires specific parameters for proper playback
+    return `https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&enablejsapi=1`;
+  };
+
+  // Check if this is a playable video
   const hasVideo = !!(video.videoUrl || video.externalUrl);
   const embedUrl = video.videoUrl ? getEmbedUrl(video.videoUrl) : null;
 
@@ -63,36 +73,29 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
         </DialogHeader>
 
         <div className="flex-1 p-4 pt-0">
-          {/* Video Player Section */}
-          {hasVideo && embedUrl ? (
+          {/* Video Player Section - iOS-compatible YouTube embed */}
+          {embedUrl ? (
             <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden">
               <iframe
                 src={embedUrl}
                 title={video.title}
                 className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen
                 data-testid="video-iframe"
+                style={{ border: 0 }}
               />
             </div>
-          ) : video.externalUrl ? (
+          ) : hasVideo ? (
             <div className="aspect-video w-full mb-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex items-center justify-center">
               <div className="text-center p-8">
                 <ExternalLink className="w-16 h-16 mx-auto mb-4 text-blue-600" />
                 <h3 className="text-xl font-bold text-blue-900 mb-2">
-                  {video.source} Platform
+                  {video.source} Content
                 </h3>
                 <p className="text-blue-700 mb-4">
-                  This content is available on the {video.source} platform
+                  This video is available from {video.source}
                 </p>
-                <Button
-                  onClick={() => window.open(video.externalUrl, '_blank', 'noopener,noreferrer')}
-                  className="bg-blue-600 hover:bg-blue-700"
-                  data-testid="button-open-external"
-                >
-                  <ExternalLink className="w-4 h-4 mr-2" />
-                  Open in {video.source}
-                </Button>
               </div>
             </div>
           ) : (
