@@ -683,10 +683,10 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
                   <div className="mb-6">
                     <h3 className="font-semibold text-green-700 mb-3 flex items-center">
                       <Users className="w-4 h-4 mr-2" />
-                      Friends Found in Contacts ({contactsData.appUsers.length})
+                      Friends Found in Contacts ({Math.min(contactsData.appUsers.length, 10)}{contactsData.appUsers.length > 10 ? ' of ' + contactsData.appUsers.length : ''})
                     </h3>
                     <div className="grid grid-cols-1 gap-3">
-                      {contactsData.appUsers.map((contact: Contact) => renderContactCard(contact))}
+                      {contactsData.appUsers.slice(0, 10).map((contact: Contact) => renderContactCard(contact))}
                     </div>
                   </div>
                 )}
