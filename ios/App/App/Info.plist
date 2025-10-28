@@ -17,9 +17,9 @@
         <key>CFBundlePackageType</key>
         <string>APPL</string>
         <key>CFBundleShortVersionString</key>
-        <string>1.0.0</string>
+	<string>1.0.0</string>
         <key>CFBundleVersion</key>
-        <string>12</string>
+	<string>13</string>
         <key>LSRequiresIPhoneOS</key>
         <true/>
         <key>UILaunchStoryboardName</key>
@@ -68,48 +68,6 @@
                                 <true/>
                         </dict>
                         <key>getcontext.xyz</key>
-                        <dict>
-                                <key>NSIncludesSubdomains</key>
-                                <true/>
-                                <key>NSExceptionRequiresForwardSecrecy</key>
-                                <true/>
-                        </dict>
-                        <key>youtube.com</key>
-                        <dict>
-                                <key>NSIncludesSubdomains</key>
-                                <true/>
-                                <key>NSExceptionRequiresForwardSecrecy</key>
-                                <true/>
-                        </dict>
-                        <key>www.youtube.com</key>
-                        <dict>
-                                <key>NSIncludesSubdomains</key>
-                                <true/>
-                                <key>NSExceptionRequiresForwardSecrecy</key>
-                                <true/>
-                        </dict>
-                        <key>youtu.be</key>
-                        <dict>
-                                <key>NSIncludesSubdomains</key>
-                                <true/>
-                                <key>NSExceptionRequiresForwardSecrecy</key>
-                                <true/>
-                        </dict>
-                        <key>www.youtube-nocookie.com</key>
-                        <dict>
-                                <key>NSIncludesSubdomains</key>
-                                <true/>
-                                <key>NSExceptionRequiresForwardSecrecy</key>
-                                <true/>
-                        </dict>
-                        <key>i.ytimg.com</key>
-                        <dict>
-                                <key>NSIncludesSubdomains</key>
-                                <true/>
-                                <key>NSExceptionRequiresForwardSecrecy</key>
-                                <true/>
-                        </dict>
-                        <key>img.youtube.com</key>
                         <dict>
                                 <key>NSIncludesSubdomains</key>
                                 <true/>
