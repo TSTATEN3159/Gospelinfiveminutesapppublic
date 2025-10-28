@@ -11,7 +11,10 @@ const config: CapacitorConfig = {
     allowNavigation: [
       'https://daily-gospel-timothystaten.replit.app',
       'https://api.scripture.api.bible',
-      'https://getcontext.xyz'
+      'https://getcontext.xyz',
+      'https://youtube.com',
+      'https://www.youtube.com',
+      'https://youtu.be'
     ]
   },
   ios: {
