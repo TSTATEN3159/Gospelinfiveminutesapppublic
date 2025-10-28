@@ -106,6 +106,13 @@
                                 <key>NSExceptionRequiresForwardSecrecy</key>
                                 <true/>
                         </dict>
+                        <key>youtu.be</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
                 </dict>
         </dict>
 </dict>
