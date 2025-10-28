@@ -14,7 +14,10 @@ const config: CapacitorConfig = {
       'https://getcontext.xyz',
       'https://youtube.com',
       'https://www.youtube.com',
-      'https://youtu.be'
+      'https://youtu.be',
+      'https://www.youtube-nocookie.com',
+      'https://i.ytimg.com',
+      'https://img.youtube.com'
     ]
   },
   ios: {

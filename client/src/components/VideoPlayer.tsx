@@ -46,7 +46,10 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
     if (!videoId) return null;
     
     // iOS WKWebView requires specific parameters for proper playback
-    return `https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&enablejsapi=1`;
+    // playsinline=1: Allows inline playback without forcing fullscreen
+    // autoplay=1: Start playing immediately when loaded
+    // rel=0: Don't show related videos at the end
+    return `https://www.youtube.com/embed/${videoId}?playsinline=1&autoplay=1&rel=0&modestbranding=1`;
   };
 
   // Check if this is a playable video
@@ -80,7 +83,7 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
                 src={embedUrl}
                 title={video.title}
                 className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowFullScreen
                 data-testid="video-iframe"
                 style={{ border: 0 }}

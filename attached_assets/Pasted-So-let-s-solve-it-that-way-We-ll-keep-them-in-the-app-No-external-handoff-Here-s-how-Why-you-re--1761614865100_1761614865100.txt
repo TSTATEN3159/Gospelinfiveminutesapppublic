@@ -1,0 +1,150 @@
+So let’s solve it that way.
+We’ll keep them in the app. No external handoff. Here’s how.
+Why you’re still getting Error 153
+Even after:
+allowing youtube.com, www.youtube.com, youtu.be in allowNavigation
+adding ATS exceptions in Info.plist
+You still get:
+"Watch video on YouTube
+Error 153 video player configuration error"
+That means the in-app player is still being given something YouTube doesn’t accept for embedded playback.
+YouTube does not like to be embedded with just the normal watch URL (the https://www.youtube.com/watch?v=... link).
+On iOS webview, a compliant inline embed must look like:
+<iframe
+  src="https://www.youtube.com/embed/VIDEO_ID?playsinline=1&autoplay=1"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+  allowfullscreen
+  style="border:0;width:100%;height:100%;"
+></iframe>
+If instead your component is trying to iframe the watch URL, or passing the entire watch URL into a Capacitor YouTube plugin that expects just the ID, YouTube returns a config error — which is exactly what you’re seeing.
+So we are going to do this:
+Extract the YouTube video ID.
+Build the proper /embed/VIDEO_ID?... URL, not watch?v=.
+Render that in an inline iframe inside your “video player” view.
+(Optional but recommended) Add playsinline=1 so iOS does not force full-screen takeover.
+That keeps the user totally inside your app.
+Step-by-step fix to keep playback in-app (no leaving)
+Step 1. Extract the YouTube ID from video.videoUrl
+Your Faith Videos objects look like this from Christian Context API:
+{
+  "id": "context_...",
+  "title": "Faith: Ephesians 2:8",
+  "videoUrl": "https://www.youtube.com/watch?v=1p3oDv9i_o0",
+  "source": "Christian Context API"
+}
+We want just 1p3oDv9i_o0.
+In your React/Capacitor code (where you handle tap to play), add a tiny helper:
+function getYoutubeIdFromUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+
+    // Case 1: standard watch URL
+    // https://www.youtube.com/watch?v=1p3oDv9i_o0
+    if (u.hostname.includes("youtube.com")) {
+      const vid = u.searchParams.get("v");
+      if (vid) return vid;
+    }
+
+    // Case 2: short youtu.be URL
+    // https://youtu.be/1p3oDv9i_o0
+    if (u.hostname.includes("youtu.be")) {
+      return u.pathname.replace("/", "");
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+Step 2. Build the embed URL for the player screen
+Instead of storing the full videoUrl in state for playback, store the embed URL:
+const handleOpenFaithVideo = (video: VideoItem) => {
+  const id = getYoutubeIdFromUrl(video.videoUrl);
+
+  if (!id) {
+    // fallback: show an error toast or something
+    return;
+  }
+
+  const embedUrl = `https://www.youtube.com/embed/${id}?playsinline=1&autoplay=1`;
+
+  setActiveVideo({
+    title: video.title,
+    embedUrl
+  });
+  setIsPlayerOpen(true);
+};
+You’re basically saying: when they tap a Faith Video, open your in-app modal / detail screen with embedUrl (not the old watch URL).
+Step 3. Render that embed URL in an iframe inside your modal / detail component
+Wherever you currently render the player (for example a VideoPlayerModal component, or a <div className="video-player"> inside a route/sheet):
+Replace whatever it’s doing now with something shaped like:
+{isPlayerOpen && activeVideo && (
+  <div className="video-modal">
+    <div className="video-header">
+      <h2>{activeVideo.title}</h2>
+      <button onClick={() => setIsPlayerOpen(false)}>Close</button>
+    </div>
+
+    <div className="video-frame-wrapper" style={{ position: "relative", width: "100%", paddingBottom: "56.25%", borderRadius: "12px", overflow: "hidden", backgroundColor: "#000" }}>
+      <iframe
+        src={activeVideo.embedUrl}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          border: 0
+        }}
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+        allowFullScreen
+      />
+    </div>
+  </div>
+)}
+Important details:
+src uses /embed/${id}, not watch?v=....
+playsinline=1 lets iOS play inline rather than forcing full-screen native Player or blocking.
+autoplay=1 is optional, but most people expect it.
+allowFullScreen and the allow="..." attributes help iOS grant permission to actually play.
+Now you’re not asking Capacitor’s webview to navigate to full youtube.com UI. You’re embedding YouTube’s official embed player, which is what iOS expects.
+Step 4. Make sure the new embedded URL host is allowed
+Your allowNavigation / ATS list needs to allow:
+https://www.youtube.com
+https://youtube.com
+https://youtu.be
+https://www.youtube-nocookie.com (OPTIONAL but wise: sometimes YouTube swaps to this privacy domain)
+https://i.ytimg.com (for thumbnails/preview images inside the iframe)
+https://img.youtube.com (older thumb host)
+If you haven’t yet added www.youtube-nocookie.com, i.ytimg.com, and img.youtube.com, add them alongside the others in:
+capacitor.config.ts under allowNavigation
+Info.plist ATS exceptions
+That prevents iOS from saying “this iframe is trying to load sub-content from a domain you didn’t approve.”
+Step 5. Rebuild (again) for App Store / Release in Appflow
+This build will:
+Contain the new inline-embed logic.
+Contain the expanded allowedNavigation domains.
+Ship to TestFlight.
+Now, when a user taps a Faith Video:
+You will not send them outside the app.
+You will not attempt to open the raw watch?v= link (which iOS/YouTube were rejecting).
+You will launch your own in-app player modal with a legal YouTube embed URL.
+The video should render and play without Error 153.
+Why this works and the old way doesn’t
+The old way was most likely trying to either:
+iframe the full watch?v= page (not allowed for embed), or
+feed the full URL into a player component that expected a bare video ID, causing player init failure.
+The “Error 153” is YouTube’s way of saying “the way you’re trying to load this player is not configured or permitted.”
+By switching to /embed/VIDEO_ID?...playsinline=1, we become a normal embedded player. That’s what every in-app YouTube experience is built on.
+And because we’re still inside a modal in your app, visually the user never leaves your app. They feel like it’s fully native.
+Quick recap / action items
+You do NOT have to throw users out to Safari. We can keep them inside.
+Your action list:
+Parse video ID from video.videoUrl.
+Build https://www.youtube.com/embed/${id}?playsinline=1&autoplay=1.
+Pass that as embedUrl into your in-app player modal/screen.
+Render that embedUrl in an <iframe> with allowFullScreen, etc.
+Add www.youtube-nocookie.com, i.ytimg.com, img.youtube.com to allowNavigation / ATS.
+Rebuild in Appflow (App Store / Release), push to TestFlight, test again.
+When you do that, you should get Faith Videos playing inline, with no redirect, and no Error 153.
+That gives you a completely self-contained Gospel video experience inside your app.
