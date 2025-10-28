@@ -16,7 +16,6 @@ interface UserData {
   email: string;
   birthMonth: string;
   birthDay: string;
-  phone: string;
 }
 
 const months = [
@@ -32,8 +31,7 @@ export default function UserRegistrationModal({ isOpen, onClose }: UserRegistrat
     lastName: "",
     email: "",
     birthMonth: "",
-    birthDay: "",
-    phone: ""
+    birthDay: ""
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -119,18 +117,6 @@ export default function UserRegistrationModal({ isOpen, onClose }: UserRegistrat
                 </SelectContent>
               </Select>
             </div>
-          </div>
-
-          <div>
-            <Label htmlFor="phone">Phone Number</Label>
-            <Input
-              id="phone"
-              type="tel"
-              value={formData.phone}
-              onChange={(e) => handleInputChange("phone", e.target.value)}
-              required
-              data-testid="input-phone"
-            />
           </div>
 
           <Button type="submit" className="w-full" data-testid="button-submit">
