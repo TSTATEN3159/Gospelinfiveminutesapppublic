@@ -22,6 +22,7 @@ const config: CapacitorConfig = {
       'https://i.ytimg.com',
       'https://img.youtube.com',
       'https://*.ytimg.com',
+      'https://googlevideo.com',
       'https://*.googlevideo.com'
     ]
   },
