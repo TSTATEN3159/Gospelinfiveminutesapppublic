@@ -1,0 +1,125 @@
+The 6 Requirements for Inline YouTube Playback Inside Your App
+1. We are using the EMBED URL, not the WATCH URL
+This part is absolutely non-negotiable.
+❌ Bad:
+https://www.youtube.com/watch?v=1p3oDv9i_o0
+✅ Must be:
+https://www.youtube.com/embed/1p3oDv9i_o0?playsinline=1&autoplay=1
+Why:
+The watch page is YouTube’s full site, which often refuses to initialize inside an embedded webview. That triggers “player configuration error.”
+The embed URL is what the iframe player expects.
+Ask Replit to confirm:
+When I tap a Faith Video in TestFlight, is the code trying to show watch?v= or /embed/?
+It MUST be /embed/VIDEO_ID?... when rendered in your player modal.
+If you’re still feeding a watch?v= URL to the iframe or player component, it will keep failing. No amount of whitelisting will fix that. This is the #1 cause of 153.
+2. The code is extracting the YouTube video ID correctly
+We talked about this logic, and it matters in production:
+function getYoutubeIdFromUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+
+    // Standard form
+    // https://www.youtube.com/watch?v=VIDEOID
+    if (u.hostname.includes("youtube.com")) {
+        const vid = u.searchParams.get("v");
+        if (vid) return vid;
+    }
+
+    // Short form
+    // https://youtu.be/VIDEOID
+    if (u.hostname.includes("youtu.be")) {
+        return u.pathname.replace("/", "");
+    }
+
+    return null;
+  } catch {
+    return null;
+  }
+}
+Then inside the tap:
+const id = getYoutubeIdFromUrl(video.videoUrl);
+const embedUrl = `https://www.youtube.com/embed/${id}?playsinline=1&autoplay=1`;
+Ask Replit:
+Are we doing this extraction and storing embedUrl?
+Or are we still pushing the raw video.videoUrl into the player component?
+If we’re still using the raw video.videoUrl, we’re still broken.
+3. The iframe is actually rendering embedUrl
+Your video modal or detail screen should literally be doing something like:
+<iframe
+  src={embedUrl}
+  style={{
+    position: "absolute",
+    top: 0,
+    left: 0,
+    width: "100%",
+    height: "100%",
+    border: 0,
+    borderRadius: "12px",
+  }}
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+  allowFullScreen
+/>
+Ask Replit:
+Did we update the JSX/TSX component that opens when I tap a Faith Video to use an <iframe src="https://www.youtube.com/embed/..."> with allowFullScreen etc.?
+If the app is still navigating to a route like /watch/:id and then trying to “play” with some other internal player component that was built before these changes, that could still be feeding the bad URL into a <webview> or <iframe> wrapper.
+You need to confirm the actual runtime <iframe> is using the embed URL.
+4. The allowed domains list includes ALL YouTube domains used by the embedded player
+Whitelisting only youtube.com and youtu.be is good, but not always enough.
+Inline embeds regularly pull assets from:
+www.youtube.com
+youtube.com
+www.youtube-nocookie.com
+i.ytimg.com
+img.youtube.com
+Ask Replit:
+In capacitor.config.ts, under allowNavigation, do we include:
+https://www.youtube.com
+https://youtube.com
+https://www.youtube-nocookie.com
+https://i.ytimg.com
+https://img.youtube.com
+https://youtu.be
+In Info.plist ATS exceptions, did we also add exceptions / allowlist for those same domains (including subdomains)?
+If i.ytimg.com is blocked, the iframe can still fail to init, because it can’t fetch the poster/thumbnail/preview frame, and iOS will treat that as a blocked resource. That can still surface as a “player configuration error.”
+5. The player view is NOT trying to sandbox or intercept navigation in a way that kills YouTube scripts
+Sometimes devs wrap the iframe in something like Capacitor’s <IonWebView> or a custom <InAppWebView> component with restrictive props. If those props block script execution, fullscreen API, autoplay, etc., YouTube will throw config errors.
+Ask Replit:
+Are we rendering a raw <iframe> inside React, or are we navigating an in-app browser view component that tries to sandbox/limit JS?
+We want the raw iframe approach, not a sandbox that strips YouTube’s scripts.
+6. The build you’re testing in TestFlight is 100% from AFTER all of these changes
+Just to be blunt, because this happens a lot in teams: sometimes the code is now perfect, but the TestFlight binary you’re tapping is still an earlier build.
+You already did a rebuild with navigation domains added, and it still failed. Now we’ve changed behavior of playback (embed vs watch). That is a code change in the component, not just a plist tweak.
+Ask Replit:
+Did you (Replit) already commit and push the code that:
+extracts the VIDEO_ID,
+builds an /embed/... URL,
+and uses <iframe src={embedUrl}> with those allow= attributes?
+Did you then do a fresh Appflow “App Store / Release” build from THAT commit and push that specific build to TestFlight?
+Because if this change was explained in chat but not actually merged into the code before the last build, you’ll still see 153.
+That’s the “other apps” lesson, by the way. Every iOS app that embeds YouTube successfully:
+uses /embed/<id>?playsinline=1
+uses <iframe>
+allows the right domains/ATS
+and ships that code in the binary that’s on device.
+There isn’t a secret Apple entitlement beyond that. This is the pattern.
+How to move forward right now
+Tell Replit, literally:
+We are still getting Error 153 in TestFlight.
+We are NOT allowed to throw users out to Safari or the YouTube app.
+We must play inline.
+Confirm these items in the code that was actually built and uploaded:
+When I tap a Faith Video, you are extracting the YouTube video ID from video.videoUrl and creating https://www.youtube.com/embed/<VIDEO_ID>?playsinline=1&autoplay=1.
+The player screen is rendering an <iframe> whose src is that embed URL (NOT the original watch URL).
+The iframe has allowFullScreen and allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen".
+The domains www.youtube.com, youtube.com, www.youtube-nocookie.com, i.ytimg.com, img.youtube.com, and youtu.be are all in:
+capacitor.config.ts → allowNavigation
+AND Info.plist ATS exceptions.
+The latest Appflow “App Store / Release” build was made AFTER those exact changes, and that is the .ipa/.xcarchive we uploaded to TestFlight.
+If ANY of those are missing in the build you’re running, Error 153 is expected.
+If ALL of those are true and you still get Error 153, then we escalate to one more fallback — we embed from https://www.youtube-nocookie.com/embed/<VIDEO_ID>?playsinline=1&autoplay=1 instead of www.youtube.com, because some ministries' videos are marked with certain restrictions that refuse normal embed but will allow the privacy-enhanced domain. That sometimes clears config errors for restricted religious/age-gated content.
+But we don’t jump to that yet. First, we force those 5 checks.
+Bottom line:
+You are right to push for in-app playback.
+That is still absolutely possible.
+We’re now in “verify the final 1% of implementation actually made it into the TestFlight binary.”
+Give Replit that 5-point checklist. That will force the next build to either solve this or expose exactly which part of that pipeline is still not aligned.
