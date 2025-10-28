@@ -12,12 +12,10 @@ const config: CapacitorConfig = {
       'https://daily-gospel-timothystaten.replit.app',
       'https://api.scripture.api.bible',
       'https://getcontext.xyz',
-      'https://youtube.com',
-      'https://www.youtube.com',
-      'https://youtu.be',
-      'https://www.youtube-nocookie.com',
-      'https://i.ytimg.com',
-      'https://img.youtube.com'
+      'https://*.youtube.com',
+      'https://*.youtube-nocookie.com',
+      'https://*.ytimg.com',
+      'https://*.googlevideo.com'
     ]
   },
   ios: {

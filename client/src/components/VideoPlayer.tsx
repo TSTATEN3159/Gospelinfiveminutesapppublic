@@ -45,11 +45,11 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
     const videoId = getYouTubeId(url);
     if (!videoId) return null;
     
-    // iOS WKWebView requires specific parameters for proper playback
+    // iOS WKWebView Error 153 fix: Use youtube-nocookie.com (more relaxed referrer requirements)
     // playsinline=1: Allows inline playback without forcing fullscreen
     // autoplay=1: Start playing immediately when loaded
     // rel=0: Don't show related videos at the end
-    return `https://www.youtube.com/embed/${videoId}?playsinline=1&autoplay=1&rel=0&modestbranding=1`;
+    return `https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&autoplay=1&rel=0&modestbranding=1`;
   };
 
   // Check if this is a playable video
@@ -84,6 +84,7 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
                 title={video.title}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+                referrerPolicy="strict-origin"
                 allowFullScreen
                 data-testid="video-iframe"
                 style={{ border: 0 }}

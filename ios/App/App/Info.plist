@@ -17,9 +17,9 @@
         <key>CFBundlePackageType</key>
         <string>APPL</string>
         <key>CFBundleShortVersionString</key>
-	<string>1.0.0</string>
+        <string>1.0.0</string>
         <key>CFBundleVersion</key>
-	<string>13</string>
+        <string>13</string>
         <key>LSRequiresIPhoneOS</key>
         <true/>
         <key>UILaunchStoryboardName</key>
@@ -49,6 +49,10 @@
         <string>The Gospel in 5 Minutes would like to access your contacts to help you invite friends to share daily scripture and spiritual encouragement together.</string>
         <key>NSAppTransportSecurity</key>
         <dict>
+                <key>NSAllowsArbitraryLoadsForMedia</key>
+                <true/>
+                <key>NSAllowsArbitraryLoadsInWebContent</key>
+                <true/>
                 <key>NSExceptionDomains</key>
                 <dict>
                         <key>daily-gospel-timothystaten.replit.app</key>
@@ -74,9 +78,35 @@
                                 <key>NSExceptionRequiresForwardSecrecy</key>
                                 <true/>
                         </dict>
+                        <key>youtube.com</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
+                        <key>youtube-nocookie.com</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
+                        <key>googlevideo.com</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
+                        <key>ytimg.com</key>
+                        <dict>
+                                <key>NSIncludesSubdomains</key>
+                                <true/>
+                                <key>NSExceptionRequiresForwardSecrecy</key>
+                                <true/>
+                        </dict>
                 </dict>
-                <key>NSAllowsArbitraryLoadsInWebContent</key>
-                <true/>
         </dict>
 </dict>
 </plist>
