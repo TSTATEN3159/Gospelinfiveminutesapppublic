@@ -164,7 +164,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
       const permission = await Contacts.requestPermissions();
       if (permission.contacts === 'granted') {
         const result = await Contacts.getContacts({ projection: { name: true, phones: true, emails: true } });
-        const contacts = result.contacts.map(contact => ({
+        const allContacts = result.contacts.map(contact => ({
           contactId: contact.contactId,
           firstName: contact.name?.given || null,
           lastName: contact.name?.family || null,
@@ -172,6 +172,8 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           email: contact.emails?.[0]?.address || null,
           phone: contact.phones?.[0]?.number || null
         }));
+        // Limit to 50 contacts max
+        const contacts = allContacts.slice(0, 50);
         return apiRequest('POST', `/api/contacts/${currentUserId}/import`, { contacts });
       } else {
         throw new Error('Contact permission not granted');
