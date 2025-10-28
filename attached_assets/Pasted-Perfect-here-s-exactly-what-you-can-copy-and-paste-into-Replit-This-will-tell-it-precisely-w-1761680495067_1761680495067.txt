@@ -1,0 +1,85 @@
+Perfect 👍 — here’s exactly what you can copy and paste into Replit.
+This will tell it *precisely* what to check and modify to fix the YouTube video issue in your Capacitor app:
+
+---
+
+### 💬 **Message to copy and paste into Replit:**
+
+> Please update my Capacitor configuration and native settings to make YouTube embeds work properly inside the iOS and Android builds.
+>
+> Specifically:
+>
+> **1️⃣ capacitor.config.ts (or capacitor.config.json)**
+>
+> * Under the `server` section, add an `allowNavigation` array with the following entries:
+>
+>   ```ts
+>   server: {
+>     allowNavigation: [
+>       "www.youtube.com",
+>       "youtube.com",
+>       "www.youtube-nocookie.com",
+>       "youtube-nocookie.com",
+>       "youtu.be"
+>     ]
+>   }
+>   ```
+> * Make sure the server configuration is preserved for both development and production builds.
+>
+> **2️⃣ iOS — Info.plist (inside ios/App/App/Info.plist)**
+>
+> * Add the following keys to allow YouTube iframes and external navigation:
+>
+>   ```xml
+>   <key>NSAppTransportSecurity</key>
+>   <dict>
+>     <key>NSAllowsArbitraryLoads</key>
+>     <true/>
+>     <key>NSExceptionDomains</key>
+>     <dict>
+>       <key>youtube.com</key>
+>       <dict>
+>         <key>NSIncludesSubdomains</key>
+>         <true/>
+>         <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+>         <true/>
+>       </dict>
+>       <key>youtube-nocookie.com</key>
+>       <dict>
+>         <key>NSIncludesSubdomains</key>
+>         <true/>
+>         <key>NSTemporaryExceptionAllowsInsecureHTTPLoads</key>
+>         <true/>
+>       </dict>
+>     </dict>
+>   </dict>
+>   ```
+> * Also make sure the WebView allows inline playback by confirming this key is present:
+>
+>   ```xml
+>   <key>WKWebViewConfiguration</key>
+>   <dict>
+>     <key>allowsInlineMediaPlayback</key>
+>     <true/>
+>   </dict>
+>   ```
+>
+> **3️⃣ Android — AndroidManifest.xml (inside android/app/src/main/)**
+>
+> * Confirm the Internet permission is declared:
+>
+>   ```xml
+>   <uses-permission android:name="android.permission.INTERNET" />
+>   ```
+>
+> **4️⃣ (Optional)**
+>
+> * In the YouTube iframe embed URL, if autoplay causes issues, remove `autoplay=1` from the query string.
+>
+> After making these updates, please rebuild the Capacitor project for both iOS and Android so the changes apply to the native layers.
+
+---
+
+Once you send that to Replit, it’ll know exactly what to modify.
+
+Would you like me to give you a quick **follow-up message** you can send after Replit finishes — to confirm whether the fixes were correctly applied?
