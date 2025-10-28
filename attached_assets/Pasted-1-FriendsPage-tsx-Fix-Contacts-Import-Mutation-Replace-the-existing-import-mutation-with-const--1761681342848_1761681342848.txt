@@ -1,0 +1,91 @@
+1️⃣ FriendsPage.tsx – Fix Contacts Import Mutation
+Replace the existing import mutation with:
+const importContactsMutation = useMutation({
+  mutationFn: async () => {
+    const permission = await Contacts.requestPermissions();
+    if (permission.contacts === 'granted') {
+      const result = await Contacts.getContacts({ projection: { name: true, phones: true, emails: true } });
+      const allContacts = result.contacts.map(contact => ({
+        contactId: contact.contactId,
+        firstName: contact.name?.given || null,
+        lastName: contact.name?.family || null,
+        displayName: contact.name?.display || null,
+        email: contact.emails?.[0]?.address || null,
+        phone: contact.phones?.[0]?.number || null
+      })).filter(c => (c.firstName || c.lastName || c.displayName) && (c.email || c.phone));
+      
+      const contactsList = allContacts.slice(0, 50); // Limit to 50 contacts for signup
+
+      const res = await apiRequest(
+        'POST',
+        `/api/contacts/${currentUserId}/import?fromSignup=true`,
+        { contacts: contactsList }
+      );
+
+      const json = await res.json();
+      return json;
+    }
+  },
+  onSuccess: (data) => {
+    toast({
+      title: 'Contacts Imported!',
+      description: `${data.totalImported} contacts imported, ${data.appUsersFound} friends found.`,
+    });
+
+    queryClient.invalidateQueries(['/api/contacts', currentUserId]);
+    queryClient.invalidateQueries(['/api/friends', currentUserId]);
+    queryClient.invalidateQueries(['/api/friends/requests', currentUserId]);
+  }
+});
+Fixes included:
+Adds ?fromSignup=true query parameter.
+Properly parses JSON response.
+Shows import counts to the user.
+Refreshes all relevant queries.
+2️⃣ ImportFriendsDialog.tsx – Confirm Import Function
+Update the confirm function:
+const handleConfirmImport = async () => {
+  const selectedContactsArray = Array.from(selectedContacts).map(index => contacts[index]);
+
+  const res = await apiRequest(
+    'POST',
+    `/api/contacts/${appUserId}/import?fromSignup=true`,
+    { contacts: selectedContactsArray }
+  );
+
+  const result = await res.json();
+
+  setImportResults({
+    totalImported: result.totalImported || 0,
+    appUsersFound: result.appUsersFound || 0
+  });
+
+  toast({
+    title: 'Success!',
+    description: `${result.totalImported || 0} contacts imported, ${result.appUsersFound || 0} friends found.`,
+  });
+
+  setImportComplete(true);
+};
+Fixes included:
+Ensures backend receives the correct query parameter.
+Parses JSON response correctly.
+Provides user feedback with counts.
+3️⃣ FriendsPage.tsx – Display Contacts with App User Status
+Update contact list rendering:
+{contactsData?.contacts?.map(c => (
+  <li key={c.id}>
+    {c.displayName || `${c.firstName} ${c.lastName}`}
+    {c.isAppUser && ' (App User)'}
+  </li>
+))}
+Fixes included:
+Shows which contacts are already using the app.
+4️⃣ Recommendation
+Use ImportFriendsDialog as the canonical import flow.
+Remove or disable any other import flows in FriendsPage that do not include fromSignup=true and proper feedback.
+This patch fully fixes:
+✅ Friends import
+✅ Backend integration
+✅ Response parsing
+✅ UI display with counts and app user indicators

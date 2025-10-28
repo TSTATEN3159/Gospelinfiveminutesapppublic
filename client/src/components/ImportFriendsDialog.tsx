@@ -85,9 +85,13 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
     try {
       const selectedContactsArray = Array.from(selectedContacts).map(index => contacts[index]);
       
-      const result = await apiRequest('POST', `/api/contacts/${appUserId}/import?fromSignup=true`, {
-        contacts: selectedContactsArray
-      }) as any;
+      const res = await apiRequest(
+        'POST',
+        `/api/contacts/${appUserId}/import?fromSignup=true`,
+        { contacts: selectedContactsArray }
+      );
+
+      const result = await res.json();
       
       setImportResults({
         totalImported: result.totalImported || 0,
@@ -97,7 +101,7 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
       
       toast({
         title: "Success!",
-        description: `${result.totalImported || 0} contacts imported, ${result.appUsersFound || 0} friends found`,
+        description: `${result.totalImported || 0} contacts imported, ${result.appUsersFound || 0} friends found.`,
       });
     } catch (error) {
       console.error('Error importing contacts:', error);

@@ -171,20 +171,31 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
           displayName: contact.name?.display || null,
           email: contact.emails?.[0]?.address || null,
           phone: contact.phones?.[0]?.number || null
-        }));
-        // Limit to 50 contacts max
-        const contacts = allContacts.slice(0, 50);
-        return apiRequest('POST', `/api/contacts/${currentUserId}/import`, { contacts });
+        })).filter(c => (c.firstName || c.lastName || c.displayName) && (c.email || c.phone));
+        
+        const contactsList = allContacts.slice(0, 50); // Limit to 50 contacts for signup
+
+        const res = await apiRequest(
+          'POST',
+          `/api/contacts/${currentUserId}/import?fromSignup=true`,
+          { contacts: contactsList }
+        );
+
+        const json = await res.json();
+        return json;
       } else {
         throw new Error('Contact permission not granted');
       }
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast({
-        title: t.success,
-        description: 'Contacts imported successfully',
+        title: 'Contacts Imported!',
+        description: `${data.totalImported} contacts imported, ${data.appUsersFound} friends found.`,
       });
+
       queryClient.invalidateQueries({ queryKey: ['/api/contacts', currentUserId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends', currentUserId] });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends/requests', currentUserId] });
     },
     onError: () => {
       toast({

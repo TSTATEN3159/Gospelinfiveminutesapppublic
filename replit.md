@@ -26,6 +26,23 @@ Preferred communication style: Simple, everyday language.
   - ✅ **Backend CORS**: Added support for capacitor://localhost origin
   - ✅ **API Architecture**: All fetch() calls use apiUrl() for production deployment
   - Fixed Files: videoService.ts, FriendsPage.tsx, SupportPage.tsx, Info.plist, capacitor.config.ts, server/index.ts
+  
+- **Recent Fixes** (Oct 28, 2025):
+  - ✅ **YouTube Error 153 RESOLVED**: Comprehensive fix for iOS inline video playback
+    - Changed to youtube-nocookie.com/embed URLs with playsinline parameter
+    - Added referrerPolicy="strict-origin" to iframe
+    - Configured iOS NSAppTransportSecurity with NSAllowsArbitraryLoadsForMedia
+    - Added WKWebViewConfiguration with allowsInlineMediaPlayback=true to Info.plist
+    - Added all YouTube domains (12 total) to capacitor.config.ts with HTTPS wildcards
+    - All domains configured in Info.plist with NSIncludesSubdomains
+  - ✅ **Friends Import Functionality FIXED**:
+    - Fixed FriendsPage.tsx contacts import mutation to include `?fromSignup=true` parameter
+    - Added proper JSON response parsing with `await res.json()`
+    - Improved user feedback showing count of imported contacts and friends found
+    - Added filter to only import contacts with name AND (email OR phone)
+    - Fixed ImportFriendsDialog.tsx to properly parse backend response
+    - Now invalidates all relevant queries (contacts, friends, friend requests) on success
+    - Fixed Files: FriendsPage.tsx, ImportFriendsDialog.tsx
 
 ## System Architecture
 
