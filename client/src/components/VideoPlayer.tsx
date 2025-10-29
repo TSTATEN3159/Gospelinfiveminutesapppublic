@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -11,7 +11,19 @@ interface VideoPlayerProps {
   onClose: () => void;
 }
 
+// Declare YouTube IFrame API types
+declare global {
+  interface Window {
+    YT: any;
+    onYouTubeIframeAPIReady: () => void;
+  }
+}
+
 export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
+  const [playerReady, setPlayerReady] = useState(false);
+  const playerRef = useRef<any>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+
   if (!video) return null;
 
   // Extract YouTube video ID from various URL formats
@@ -40,24 +52,81 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
     }
   };
 
-  // Create iOS-compatible embed URL with required parameters
-  const getEmbedUrl = (url: string): string | null => {
-    const videoId = getYouTubeId(url);
-    if (!videoId) return null;
-    
-    // iOS WKWebView Error 153 fix: Use youtube-nocookie.com (more relaxed referrer requirements)
-    // playsinline=1: Allows inline playback without forcing fullscreen
-    // autoplay=1: Start playing immediately when loaded
-    // rel=0: Don't show related videos at the end
-    return `https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&autoplay=1&rel=0&modestbranding=1`;
+  const videoId = video.videoUrl ? getYouTubeId(video.videoUrl) : null;
+  const hasVideo = !!(video.videoUrl || video.externalUrl);
+
+  // Load YouTube IFrame API for iOS compatibility
+  useEffect(() => {
+    if (!videoId || !isOpen) return;
+
+    // Load YouTube IFrame API script if not already loaded
+    if (!window.YT) {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+
+      // Wait for API to load
+      window.onYouTubeIframeAPIReady = () => {
+        setPlayerReady(true);
+      };
+    } else {
+      setPlayerReady(true);
+    }
+
+    return () => {
+      // Cleanup player on unmount
+      if (playerRef.current && playerRef.current.destroy) {
+        playerRef.current.destroy();
+        playerRef.current = null;
+      }
+    };
+  }, [videoId, isOpen]);
+
+  // Initialize YouTube player when API is ready
+  useEffect(() => {
+    if (!playerReady || !videoId || !isOpen || !containerRef.current) return;
+    if (playerRef.current) return; // Player already initialized
+
+    try {
+      playerRef.current = new window.YT.Player(containerRef.current, {
+        videoId: videoId,
+        width: '100%',
+        height: '100%',
+        playerVars: {
+          playsinline: 1,        // Critical for iOS inline playback
+          autoplay: 0,           // Don't autoplay (better UX)
+          rel: 0,                // Don't show related videos
+          modestbranding: 1,     // Minimal YouTube branding
+          origin: window.location.origin, // Required for WKWebView
+          enablejsapi: 1,        // Enable JavaScript API
+          controls: 1,           // Show player controls
+          fs: 1,                 // Allow fullscreen
+        },
+        events: {
+          onError: (event: any) => {
+            console.error('YouTube Player Error:', event.data);
+            // Errors 150, 152, 153 are restriction/configuration errors
+            // These indicate the video can't be played in embedded mode
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error initializing YouTube player:', error);
+    }
+  }, [playerReady, videoId, isOpen]);
+
+  // Cleanup on close
+  const handleClose = () => {
+    if (playerRef.current && playerRef.current.destroy) {
+      playerRef.current.destroy();
+      playerRef.current = null;
+    }
+    onClose();
   };
 
-  // Check if this is a playable video
-  const hasVideo = !!(video.videoUrl || video.externalUrl);
-  const embedUrl = video.videoUrl ? getEmbedUrl(video.videoUrl) : null;
-
   return (
-    <Dialog open={isOpen} onOpenChange={onClose}>
+    <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="max-w-4xl w-full h-[90vh] p-0">
         <DialogHeader className="p-4 pb-2">
           <DialogTitle className="flex items-center justify-between">
@@ -65,7 +134,7 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
             <Button
               variant="ghost"
               size="icon"
-              onClick={onClose}
+              onClick={handleClose}
               data-testid="button-close-video"
               className="h-9 w-9 border-2 border-border bg-background hover:bg-accent hover:border-accent-border shadow-md hover:shadow-lg transition-all duration-200"
               aria-label="Close video player"
@@ -75,19 +144,14 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 p-4 pt-0">
-          {/* Video Player Section - iOS-compatible YouTube embed */}
-          {embedUrl ? (
+        <div className="flex-1 p-4 pt-0 overflow-y-auto">
+          {/* Video Player Section - YouTube IFrame API (iOS-compatible) */}
+          {videoId ? (
             <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden">
-              <iframe
-                src={embedUrl}
-                title={video.title}
+              <div 
+                ref={containerRef}
                 className="w-full h-full"
-                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-                referrerPolicy="strict-origin"
-                allowFullScreen
-                data-testid="video-iframe"
-                style={{ border: 0 }}
+                data-testid="video-player"
               />
             </div>
           ) : hasVideo ? (
