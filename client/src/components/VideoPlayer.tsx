@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { X, ExternalLink, BookOpen, Play } from "lucide-react";
+import { X, ExternalLink, BookOpen } from "lucide-react";
 import type { VideoItem } from "@/services/videoService";
 
 interface VideoPlayerProps {
@@ -16,13 +16,51 @@ declare global {
   interface Window {
     YT: any;
     onYouTubeIframeAPIReady: () => void;
+    _ytApiReadyPromise?: Promise<void>;
+    _ytApiReadyResolve?: () => void;
   }
 }
 
+// Single promise that resolves when YouTube API is fully loaded
+function ensureYouTubeAPI(): Promise<void> {
+  // Return existing promise if API loading already in progress
+  if (window._ytApiReadyPromise) {
+    return window._ytApiReadyPromise;
+  }
+
+  // API already loaded and ready
+  if (window.YT && window.YT.Player) {
+    return Promise.resolve();
+  }
+
+  // Create new promise for API loading
+  window._ytApiReadyPromise = new Promise<void>((resolve) => {
+    window._ytApiReadyResolve = resolve;
+    
+    // Load YouTube IFrame API script
+    const tag = document.createElement('script');
+    tag.src = 'https://www.youtube.com/iframe_api';
+    tag.async = true;
+    
+    const firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+
+    // YouTube API calls this when ready
+    window.onYouTubeIframeAPIReady = () => {
+      if (window._ytApiReadyResolve) {
+        window._ytApiReadyResolve();
+      }
+    };
+  });
+
+  return window._ytApiReadyPromise;
+}
+
 export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
-  const [playerReady, setPlayerReady] = useState(false);
   const playerRef = useRef<any>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const isInitializingRef = useRef(false);
 
   if (!video) return null;
 
@@ -55,73 +93,138 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
   const videoId = video.videoUrl ? getYouTubeId(video.videoUrl) : null;
   const hasVideo = !!(video.videoUrl || video.externalUrl);
 
-  // Load YouTube IFrame API for iOS compatibility
+  // Initialize YouTube player when modal opens
   useEffect(() => {
-    if (!videoId || !isOpen) return;
-
-    // Load YouTube IFrame API script if not already loaded
-    if (!window.YT) {
-      const tag = document.createElement('script');
-      tag.src = 'https://www.youtube.com/iframe_api';
-      const firstScriptTag = document.getElementsByTagName('script')[0];
-      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
-
-      // Wait for API to load
-      window.onYouTubeIframeAPIReady = () => {
-        setPlayerReady(true);
-      };
-    } else {
-      setPlayerReady(true);
+    if (!isOpen || !videoId || !containerRef.current) {
+      return;
     }
 
-    return () => {
-      // Cleanup player on unmount
-      if (playerRef.current && playerRef.current.destroy) {
+    // Prevent duplicate initialization
+    if (isInitializingRef.current) {
+      return;
+    }
+
+    isInitializingRef.current = true;
+    setIsLoading(true);
+
+    // Cleanup any existing player first
+    if (playerRef.current && playerRef.current.destroy) {
+      try {
         playerRef.current.destroy();
+      } catch (e) {
+        console.warn('Error destroying previous player:', e);
+      }
+      playerRef.current = null;
+    }
+
+    // Clear container
+    if (containerRef.current) {
+      containerRef.current.innerHTML = '';
+    }
+
+    // Ensure YouTube API is loaded, then initialize player
+    ensureYouTubeAPI()
+      .then(() => {
+        if (!isOpen || !containerRef.current) {
+          isInitializingRef.current = false;
+          return;
+        }
+
+        try {
+          // Determine origin for WKWebView compatibility
+          let playerOrigin = window.location.origin;
+          
+          // Handle Capacitor schemes, file://, and null origins
+          if (!playerOrigin || 
+              playerOrigin === 'null' ||
+              playerOrigin.includes('capacitor://') || 
+              playerOrigin.includes('ionic://') || 
+              playerOrigin.includes('file://')) {
+            playerOrigin = 'https://localhost';
+          }
+
+          // Create player
+          playerRef.current = new window.YT.Player(containerRef.current, {
+            videoId: videoId,
+            width: '100%',
+            height: '100%',
+            playerVars: {
+              playsinline: 1,              // CRITICAL for iOS inline playback
+              autoplay: 0,                 // Don't autoplay (better UX)
+              rel: 0,                      // Don't show related videos
+              modestbranding: 1,           // Minimal YouTube branding
+              origin: playerOrigin,        // Required for WKWebView/Capacitor
+              enablejsapi: 1,              // Enable JavaScript API
+              controls: 1,                 // Show player controls
+              fs: 1,                       // Allow fullscreen
+              cc_load_policy: 0,           // Don't show captions by default
+              iv_load_policy: 3,           // Hide video annotations
+            },
+            events: {
+              onReady: (event: any) => {
+                // CRITICAL: Set playsinline attribute on iframe for iOS WKWebView
+                try {
+                  const iframe = event.target.getIframe();
+                  if (iframe) {
+                    iframe.setAttribute('playsinline', '1');
+                    iframe.setAttribute('webkit-playsinline', '1');
+                  }
+                } catch (e) {
+                  console.warn('Could not set playsinline on iframe:', e);
+                }
+                
+                setIsLoading(false);
+                isInitializingRef.current = false;
+              },
+              onError: (event: any) => {
+                console.error('YouTube Player Error:', event.data);
+                setIsLoading(false);
+                isInitializingRef.current = false;
+                // Errors 150, 152, 153 are restriction/configuration errors
+              },
+              onStateChange: () => {
+                // Player state changed (playing, paused, etc.)
+              }
+            }
+          });
+        } catch (error) {
+          console.error('Error initializing YouTube player:', error);
+          setIsLoading(false);
+          isInitializingRef.current = false;
+        }
+      })
+      .catch((error) => {
+        console.error('Error loading YouTube API:', error);
+        setIsLoading(false);
+        isInitializingRef.current = false;
+      });
+
+    // Cleanup on unmount or modal close
+    return () => {
+      if (playerRef.current && playerRef.current.destroy) {
+        try {
+          playerRef.current.destroy();
+        } catch (e) {
+          console.warn('Error in cleanup:', e);
+        }
         playerRef.current = null;
       }
+      isInitializingRef.current = false;
     };
-  }, [videoId, isOpen]);
-
-  // Initialize YouTube player when API is ready
-  useEffect(() => {
-    if (!playerReady || !videoId || !isOpen || !containerRef.current) return;
-    if (playerRef.current) return; // Player already initialized
-
-    try {
-      playerRef.current = new window.YT.Player(containerRef.current, {
-        videoId: videoId,
-        width: '100%',
-        height: '100%',
-        playerVars: {
-          playsinline: 1,        // Critical for iOS inline playback
-          autoplay: 0,           // Don't autoplay (better UX)
-          rel: 0,                // Don't show related videos
-          modestbranding: 1,     // Minimal YouTube branding
-          origin: window.location.origin, // Required for WKWebView
-          enablejsapi: 1,        // Enable JavaScript API
-          controls: 1,           // Show player controls
-          fs: 1,                 // Allow fullscreen
-        },
-        events: {
-          onError: (event: any) => {
-            console.error('YouTube Player Error:', event.data);
-            // Errors 150, 152, 153 are restriction/configuration errors
-            // These indicate the video can't be played in embedded mode
-          }
-        }
-      });
-    } catch (error) {
-      console.error('Error initializing YouTube player:', error);
-    }
-  }, [playerReady, videoId, isOpen]);
+  }, [isOpen, videoId]);
 
   // Cleanup on close
   const handleClose = () => {
     if (playerRef.current && playerRef.current.destroy) {
-      playerRef.current.destroy();
+      try {
+        playerRef.current.destroy();
+      } catch (e) {
+        console.warn('Error destroying player on close:', e);
+      }
       playerRef.current = null;
     }
+    setIsLoading(true);
+    isInitializingRef.current = false;
     onClose();
   };
 
@@ -147,12 +250,17 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
         <div className="flex-1 p-4 pt-0 overflow-y-auto">
           {/* Video Player Section - YouTube IFrame API (iOS-compatible) */}
           {videoId ? (
-            <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden">
+            <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden relative">
               <div 
                 ref={containerRef}
                 className="w-full h-full"
                 data-testid="video-player"
               />
+              {isLoading && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                  <div className="text-white text-sm">Loading player...</div>
+                </div>
+              )}
             </div>
           ) : hasVideo ? (
             <div className="aspect-video w-full mb-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex items-center justify-center">
