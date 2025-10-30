@@ -111,6 +111,22 @@ Preferred communication style: Simple, everyday language.
       - `DELETE /admin/seed-test-friends` - Remove test data (no key required)
     - Fixed Files: server/index.ts, server/routes.ts, ImportFriendsDialog.tsx, FriendsPage.tsx
 
+  - ✅ **Dynamic Bible Trivia System - PRODUCTION READY** (Oct 30, 2025):
+    - **Critical User Need**: Transitioned from hardcoded static questions to fully dynamic, updateable database-backed trivia
+    - **Database Schema**: Created `trivia_questions` table with difficulty enum ('easy', 'medium', 'difficult')
+    - **Multi-Language Support**: Language enum (en, es, fr, pt, zh, ar, hi) for future expansion
+    - **Seed Data**: Migrated all 30 hardcoded questions to database (10 easy, 10 medium, 10 difficult)
+    - **Storage Layer**: Added 3 trivia methods to IStorage:
+      - `getRandomTriviaQuestions(difficulty, count, language)` - SQL RANDOM() for true randomness
+      - `getAllTriviaQuestions(language)` - Admin/management purposes
+      - `createTriviaQuestion(question)` - Add new questions dynamically
+    - **API Update**: `/api/bible-trivia` endpoint now fetches from database instead of hardcoded array
+    - **Bible Integration**: Maintains verse text fetching from Bible API for questions with verse references
+    - **Why This Matters**: Users reported "seeing the same questions over and over" - database randomization solves this
+    - **Future Expansion**: Questions can now be added/removed without code changes, maintaining user engagement
+    - **Type Safety**: Fixed enum comparison issues using sql`` template for PostgreSQL enum columns
+    - Fixed Files: shared/schema.ts, server/storage.ts, server/routes.ts, server/seed-trivia.ts
+
 ## System Architecture
 
 ### Frontend Architecture
