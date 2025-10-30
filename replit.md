@@ -50,16 +50,20 @@ Preferred communication style: Simple, everyday language.
       - Backend route validates video ID format (11 chars, alphanumeric + `-` and `_`)
       - Returns full HTML page with YouTube embed using proper parameters
       - **Privacy-Enhanced Embed**: Uses `youtube-nocookie.com` instead of `youtube.com` for better privacy and compatibility with restricted religious content
-      - Includes `autoplay=1` for immediate playback, `referrerpolicy="strict-origin-when-cross-origin"` for security
-      - Cache-Control: no-store to avoid stale HTML
+      - **Critical Headers for iOS WKWebView**:
+        - `X-Frame-Options: ALLOWALL` - Allows wrapper to be embedded in app
+        - `Content-Security-Policy: frame-ancestors 'self' capacitor://localhost http://localhost https://daily-gospel-timothystaten.replit.app app://*;` - Allows app origins to frame the wrapper
+        - `Cache-Control: no-store` - Avoids stale HTML
+      - **Simplified Embed Parameters**: Removed `autoplay=1` and `enablejsapi=1` to reduce iOS friction (tap-to-play instead of autoplay)
+      - Uses `playsinline=1`, `rel=0`, `modestbranding=1` for clean iOS inline playback
       - Frontend uses `apiUrl()` helper to construct proxy URL (works in dev and production)
       - Removed complex YouTube IFrame API - now uses simple, proven approach
-    - **Testing**: Proxy endpoint verified working at `/youtube-proxy/1p3oDv9i_o0`
+    - **Testing**: Proxy endpoint verified working at `/youtube-proxy/M7lc1UVf-VE` with proper headers
     - **ToS Compliance**: Lightweight HTML wrapper only - NOT proxying video streams or caching chunks (YouTube ToS compliant)
     - **Research Sources**: 
       - Medium article "Working around YouTube iframes on WebView based mobile apps"
-      - ChatGPT recommendations for privacy-enhanced embed (youtube-nocookie.com)
-    - Fixed Files: server/routes.ts (added proxy endpoint), VideoPlayer.tsx (updated to use proxy)
+      - ChatGPT recommendations for privacy-enhanced embed and iframe headers
+    - Fixed Files: server/routes.ts (added proxy endpoint with proper headers), VideoPlayer.tsx (updated to use proxy)
 
 ## System Architecture
 
