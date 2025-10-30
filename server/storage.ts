@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type StudyTopic, type InsertStudyTopic, type StudyTranslation, type InsertStudyTranslation, type StudyLesson, type InsertStudyLesson, type LessonTranslation, type InsertLessonTranslation, users, subscribers, appUsers, friendships, donations, contacts, verseShares, studyTopics, studyTranslations, studyLessons, lessonTranslations } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type StudyTopic, type InsertStudyTopic, type StudyTranslation, type InsertStudyTranslation, type StudyLesson, type InsertStudyLesson, type LessonTranslation, type InsertLessonTranslation, type TriviaQuestion, type InsertTriviaQuestion, users, subscribers, appUsers, friendships, donations, contacts, verseShares, studyTopics, studyTranslations, studyLessons, lessonTranslations, triviaQuestions } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -61,6 +61,11 @@ export interface IStorage {
   getStudyLessons(studyId: string, language?: string): Promise<Array<StudyLesson & { translation: LessonTranslation | null }>>;
   getLessonByDay(studyId: string, dayNumber: number, language?: string): Promise<(StudyLesson & { translation: LessonTranslation | null }) | undefined>;
   createLesson(lesson: InsertStudyLesson, translation: InsertLessonTranslation): Promise<StudyLesson>;
+  
+  // Trivia methods
+  getRandomTriviaQuestions(difficulty: 'easy' | 'medium' | 'difficult', count: number, language?: string): Promise<TriviaQuestion[]>;
+  getAllTriviaQuestions(language?: string): Promise<TriviaQuestion[]>;
+  createTriviaQuestion(question: InsertTriviaQuestion): Promise<TriviaQuestion>;
 }
 
 // Database storage implementation
@@ -579,6 +584,43 @@ export class DatabaseStorage implements IStorage {
 
     return createdLesson;
   }
+
+  // Trivia methods
+  async getRandomTriviaQuestions(difficulty: 'easy' | 'medium' | 'difficult', count: number, language: string = 'en'): Promise<TriviaQuestion[]> {
+    const results = await this.db
+      .select()
+      .from(triviaQuestions)
+      .where(
+        and(
+          sql`${triviaQuestions.difficulty} = ${difficulty}`,
+          sql`${triviaQuestions.language} = ${language}`,
+          eq(triviaQuestions.isActive, true)
+        )
+      )
+      .orderBy(sql`RANDOM()`)
+      .limit(count);
+    
+    return results;
+  }
+
+  async getAllTriviaQuestions(language: string = 'en'): Promise<TriviaQuestion[]> {
+    const results = await this.db
+      .select()
+      .from(triviaQuestions)
+      .where(
+        and(
+          sql`${triviaQuestions.language} = ${language}`,
+          eq(triviaQuestions.isActive, true)
+        )
+      );
+    
+    return results;
+  }
+
+  async createTriviaQuestion(question: InsertTriviaQuestion): Promise<TriviaQuestion> {
+    const result = await this.db.insert(triviaQuestions).values(question).returning();
+    return result[0];
+  }
 }
 
 // Fallback memory storage for development
@@ -997,6 +1039,19 @@ export class MemStorage implements IStorage {
 
   async createLesson(lesson: InsertStudyLesson, translation: InsertLessonTranslation): Promise<StudyLesson> {
     throw new Error("MemStorage does not support Bible studies - use DatabaseStorage");
+  }
+
+  // Trivia methods - simplified for MemStorage
+  async getRandomTriviaQuestions(difficulty: 'easy' | 'medium' | 'difficult', count: number, language: string = 'en'): Promise<TriviaQuestion[]> {
+    return [];
+  }
+
+  async getAllTriviaQuestions(language: string = 'en'): Promise<TriviaQuestion[]> {
+    return [];
+  }
+
+  async createTriviaQuestion(question: InsertTriviaQuestion): Promise<TriviaQuestion> {
+    throw new Error("MemStorage does not support trivia questions - use DatabaseStorage");
   }
 }
 

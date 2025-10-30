@@ -249,3 +249,25 @@ export type InsertStudyLesson = z.infer<typeof insertStudyLessonSchema>;
 export type StudyLesson = typeof studyLessons.$inferSelect;
 export type InsertLessonTranslation = z.infer<typeof insertLessonTranslationSchema>;
 export type LessonTranslation = typeof lessonTranslations.$inferSelect;
+
+// Bible trivia enums
+export const triviaDifficultyEnum = pgEnum('trivia_difficulty', ['easy', 'medium', 'difficult']);
+
+// Trivia questions table - stores all trivia questions
+export const triviaQuestions = pgTable("trivia_questions", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  language: languageEnum("language").notNull().default('en'),
+  difficulty: triviaDifficultyEnum("difficulty").notNull(),
+  question: text("question").notNull(),
+  options: text("options").array().notNull(), // Array of 4 answer options
+  correctAnswer: integer("correct_answer").notNull(), // Index (0-3) of correct option
+  verseReference: text("verse_reference"), // Optional Bible verse reference (e.g., "GEN.1.3")
+  category: text("category"), // Optional category (e.g., "Old Testament", "New Testament", "Prophets")
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+export const insertTriviaQuestionSchema = createInsertSchema(triviaQuestions).omit({ id: true, createdAt: true });
+
+export type InsertTriviaQuestion = z.infer<typeof insertTriviaQuestionSchema>;
+export type TriviaQuestion = typeof triviaQuestions.$inferSelect;

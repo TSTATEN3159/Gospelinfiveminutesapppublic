@@ -1078,31 +1078,34 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { difficulty, count } = bibleTriviaSchema.parse(req.body);
       console.log("Bible Trivia - Difficulty:", difficulty, "Count:", count);
 
-      // Get questions for the specified difficulty
-      const questionPool = triviaQuestions[difficulty];
+      // Get random questions from database for the specified difficulty
+      const dbQuestions = await storage.getRandomTriviaQuestions(difficulty, count, 'en');
       
-      // Shuffle and select the requested number of questions
-      const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
-      const selectedQuestions = shuffled.slice(0, Math.min(count, questionPool.length));
+      if (dbQuestions.length === 0) {
+        return res.status(404).json({
+          success: false,
+          error: "No trivia questions found for this difficulty level."
+        });
+      }
 
       // Fetch actual verse text from Bible API for questions that have verse references
       const questionsWithVerses = await Promise.all(
-        selectedQuestions.map(async (q, index) => {
+        dbQuestions.map(async (q, index) => {
           let verseReference = null;
           let verseText = null;
           
-          if (q.verse) {
+          if (q.verseReference) {
             try {
-              const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
+              const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verseReference);
               if (verseData) {
                 verseReference = verseData.reference;
                 // Clean the HTML tags from the verse content
                 verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
               }
             } catch (error) {
-              console.log(`Could not fetch verse ${q.verse} from Bible API:`, error);
+              console.log(`Could not fetch verse ${q.verseReference} from Bible API:`, error);
               // Fallback to verse ID
-              verseReference = q.verse;
+              verseReference = q.verseReference;
             }
           }
 
@@ -1111,7 +1114,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             question: q.question,
             options: q.options,
             correctAnswer: q.correctAnswer,
-            verse: verseReference || q.verse,
+            verse: verseReference || q.verseReference,
             verseText: verseText,
             difficulty: difficulty
           };
