@@ -1,0 +1,131 @@
+1) Verify the proxy wrapper HTML + headers
+
+Show the route code around the proxy:
+
+rg -n "youtube-proxy" -n server/routes.ts
+sed -n '1,260p' server/routes.ts | sed -n '2150,2300p'   # adjust if needed
+
+
+What we expect in that route:
+
+<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1">
+
+No autoplay=1 and no enablejsapi=1 (those can trip 153 on iOS)
+
+Response headers: just Content-Type: text/html; charset=utf-8 and Cache-Control: no-store (no CSP, no X-Frame-Options)
+
+Check the prod headers:
+
+curl -I https://daily-gospel-timothystaten.replit.app/youtube-proxy/M7lc1UVf-VE
+
+
+We want to see:
+
+HTTP/2 200
+
+content-type: text/html; charset=utf-8
+
+cache-control: no-store
+
+No content-security-policy
+
+No x-frame-options
+
+Check the embed URL actually rendered:
+
+curl -s https://daily-gospel-timothystaten.replit.app/youtube-proxy/M7lc1UVf-VE \
+  | grep -A2 "<iframe"
+
+
+We want: www.youtube-nocookie.com/embed/... ?playsinline=1&rel=0&modestbranding=1
+
+2) Make sure iOS won’t block navigation to your own proxy page
+
+Capacitor allowNavigation must include your backend domain:
+
+sed -n '1,200p' capacitor.config.ts
+
+
+If you don’t see it, add:
+
+allowNavigation: [
+  'https://daily-gospel-timothystaten.replit.app',
+  // (keep your existing YouTube domains)
+],
+
+3) Confirm WKAppBoundDomains is NOT sabotaging us
+
+If this key exists and doesn’t list your proxy domain and the YouTube domains, iOS will block the iframe.
+
+grep -n "WKAppBoundDomains" ios/App/App/Info.plist || true
+
+
+If nothing prints → good (skip).
+
+If it exists, ensure the array includes all of these:
+
+daily-gospel-timothystaten.replit.app
+
+youtube-nocookie.com
+
+youtube.com
+
+googlevideo.com
+
+ytimg.com
+
+youtu.be
+
+(You already have ATS exceptions for the YouTube family; App-Bound Domains is a different gate.)
+
+4) Sanity check the iframe attributes in the client
+
+Show the player component:
+
+sed -n '1,200p' client/src/components/VideoPlayer.tsx
+
+
+Confirm the iframe has:
+
+allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+allowfullscreen
+
+
+…and that the src is your proxy:
+
+const url = apiUrl(`youtube-proxy/${videoId}`);
+
+5) Commit & build
+git add -A && git commit -m "YouTube: verify minimal wrapper + allowNavigation + app-bound domains" || true
+git push
+
+
+In Appflow:
+
+Start a new iOS App Store/Release build from this commit
+
+Install via TestFlight
+
+Open any Faith Video → tap to play
+
+6) If it still errors…
+
+Grab the first relevant line from device logs (Mac required):
+
+Connect iPhone → open Xcode → Window → Devices and Simulators → Console
+
+Reproduce the error
+
+Copy any line that mentions WebKit, WK, iframe, CSP, app-bound, or blocked
+
+Paste that one line here and I’ll give you the precise one-liner fix (it will name the exact remaining gate).
+
+Why this works
+
+The wrapper serves a tiny HTML page from your HTTPS domain (trusted origin) that embeds the official YouTube player on youtube-nocookie.com with playsinline and without the flags that trigger Error 153.
+
+We ensure no CSP or X-Frame-Options collide.
+
+We ensure Capacitor allowNavigation and, if present, WKAppBoundDomains explicitly allow both your proxy page and the YouTube hosts.
+
+Once those three layers agree, YouTube plays happily inside WKWebView.

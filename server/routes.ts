@@ -2239,7 +2239,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   allowfullscreen></iframe>
 </div></body></html>`;
 
-    // Minimal headers - no X-Frame-Options or CSP unless absolutely required
+    // Minimal headers - explicitly remove CSP that Google Frontend might add
+    res.removeHeader("Content-Security-Policy");
+    res.removeHeader("X-Frame-Options");
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("Cache-Control", "no-store");
     res.status(200).send(html);
