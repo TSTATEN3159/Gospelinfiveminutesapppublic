@@ -1894,6 +1894,83 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Friend request by email (useful when you only have email, not user ID)
+  app.post("/api/friends/request-by-email", async (req, res) => {
+    const t0 = Date.now();
+    try {
+      console.log("[API] POST /api/friends/request-by-email body:", JSON.stringify(req.body));
+      
+      const { requesterEmail, addresseeEmail } = z.object({
+        requesterEmail: z.string().email(),
+        addresseeEmail: z.string().email(),
+      }).parse(req.body);
+
+      const requester = await storage.getAppUserByEmail(requesterEmail);
+      const addressee = await storage.getAppUserByEmail(addresseeEmail);
+
+      if (!requester || !addressee) {
+        console.warn("[API] friends/request-by-email user-not-found", { 
+          requesterEmail, 
+          requesterFound: !!requester,
+          addresseeEmail,
+          addresseeFound: !!addressee 
+        });
+        return res.status(404).json({ 
+          success: false, 
+          error: "USER_NOT_FOUND",
+          message: "One or both users not found"
+        });
+      }
+
+      // Check if friendship already exists
+      const existingFriendship = await storage.getFriendship(requester.id, addressee.id);
+      if (existingFriendship) {
+        return res.status(400).json({
+          success: false,
+          error: "ALREADY_FRIENDS",
+          message: "Friend request already exists or you are already friends."
+        });
+      }
+
+      const friendship = await storage.createFriendRequest(requester.id, addressee.id);
+
+      console.log("[API] friends/request-by-email ok", {
+        ms: Date.now() - t0,
+        requesterId: requester.id,
+        addresseeId: addressee.id,
+        friendshipId: friendship.id
+      });
+
+      res.json({ 
+        success: true, 
+        friendship: {
+          id: friendship.id,
+          status: friendship.status
+        }
+      });
+    } catch (err: any) {
+      console.error("[API] friends/request-by-email error", { 
+        ms: Date.now() - t0, 
+        message: err?.message, 
+        stack: err?.stack 
+      });
+      
+      if (err instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "VALIDATION_ERROR",
+          message: "Invalid email addresses"
+        });
+      }
+      
+      res.status(400).json({ 
+        success: false, 
+        error: "FRIEND_REQUEST_FAILED", 
+        message: err?.message || "Failed to send friend request"
+      });
+    }
+  });
+
   app.put("/api/friends/request/:id", async (req, res) => {
     try {
       const { id } = z.object({ id: z.string().min(1) }).parse(req.params);

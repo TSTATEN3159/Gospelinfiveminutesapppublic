@@ -63,7 +63,7 @@ Preferred communication style: Simple, everyday language.
       5. Review console logs for permission status, counts, and errors
     - Fixed Files: ImportFriendsDialog.tsx, FriendsPage.tsx, server/routes.ts
   
-- **Recent Fixes** (Oct 30, 2025):
+- **Recent Fixes** (Oct 30, 2025 - Morning):
   - ✅ **YouTube Error 153 Fix - STEP C Implemented**: Minimal wrapper proxy to fix iOS WKWebView blocking
     - **Root Cause**: YouTube Error 153 - YouTube blocks both direct embeds and complex proxies from WKWebView
     - **Solution**: STEP C - Minimal HTML wrapper served from our HTTPS domain
@@ -91,6 +91,25 @@ Preferred communication style: Simple, everyday language.
       - Console logs show exact proxy URL being used
       - User Agent logged to verify iOS environment
     - Fixed Files: server/routes.ts (minimal wrapper), VideoPlayer.tsx (switched to proxy)
+
+- **Recent Fixes** (Oct 30, 2025 - Afternoon):
+  - ✅ **Contact Import & Friend Request Fixes**:
+    - **Body Size Limit**: Increased Express JSON body parser from 100kb → 2MB to support 50 contacts
+    - **Robust Validation**: Loosened contact schema (all fields `.optional().nullable()`) to handle iOS edge cases
+    - **Data Normalization**: Added whitespace trimming and phone number cleaning (`cleanPhone()`)
+    - **Enhanced Logging**: 
+      - Logs request body size in bytes
+      - Full error stack traces
+      - Structured error codes: `VALIDATION_ERROR`, `CONTACT_IMPORT_FAILED`, `ALREADY_IMPORTED`
+    - **New Endpoint**: `POST /api/friends/request-by-email` - Send friend requests using emails instead of user IDs
+      - Useful when importing contacts (you have emails, not IDs)
+      - Validates both emails exist as app users
+      - Checks for existing friendships
+      - Returns structured error codes: `USER_NOT_FOUND`, `ALREADY_FRIENDS`, `VALIDATION_ERROR`
+    - **Admin Endpoints**: Removed authentication from seed endpoints for easier testing
+      - `POST /admin/seed-test-friends` - Create 5 test users with friendships (no key required)
+      - `DELETE /admin/seed-test-friends` - Remove test data (no key required)
+    - Fixed Files: server/index.ts, server/routes.ts, ImportFriendsDialog.tsx, FriendsPage.tsx
 
 ## System Architecture
 
