@@ -1291,6 +1291,135 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   }
 
+  // Reading Plan endpoints
+
+  // Get all active reading plans
+  app.get("/api/reading-plans", async (req, res) => {
+    try {
+      const language = (req.query.language as string) || 'en';
+      const plans = await storage.getAllReadingPlans(language);
+      res.json(plans);
+    } catch (error) {
+      console.error("Error fetching reading plans:", error);
+      res.status(500).json({
+        error: "Error fetching reading plans"
+      });
+    }
+  });
+
+  // Get a specific reading plan
+  app.get("/api/reading-plan/:planId", async (req, res) => {
+    try {
+      const { planId } = req.params;
+      const plan = await storage.getReadingPlan(planId);
+      
+      if (!plan) {
+        return res.status(404).json({
+          error: "Reading plan not found"
+        });
+      }
+
+      res.json(plan);
+    } catch (error) {
+      console.error("Error fetching reading plan:", error);
+      res.status(500).json({
+        error: "Error fetching reading plan"
+      });
+    }
+  });
+
+  // Get a specific day's reading from a plan
+  app.get("/api/reading-plan/:planId/day/:dayNumber", async (req, res) => {
+    try {
+      const { planId, dayNumber } = req.params;
+      const day = parseInt(dayNumber);
+
+      if (isNaN(day) || day < 1) {
+        return res.status(400).json({
+          error: "Invalid day number"
+        });
+      }
+
+      const reading = await storage.getReadingPlanDay(planId, day);
+      
+      if (!reading) {
+        return res.status(404).json({
+          error: "Reading not found for this day"
+        });
+      }
+
+      res.json(reading);
+    } catch (error) {
+      console.error("Error fetching reading plan day:", error);
+      res.status(500).json({
+        error: "Error fetching reading"
+      });
+    }
+  });
+
+  // Get user's reading plan progress
+  app.get("/api/reading-plan/progress/:userId/:planId", async (req, res) => {
+    try {
+      const { userId, planId } = req.params;
+
+      let progress = await storage.getUserReadingPlanProgress(userId, planId);
+      
+      // Create progress if it doesn't exist
+      if (!progress) {
+        progress = await storage.createUserReadingPlanProgress(userId, planId);
+      }
+
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching reading plan progress:", error);
+      res.status(500).json({
+        error: "Error fetching progress"
+      });
+    }
+  });
+
+  // Complete a reading plan day
+  app.post("/api/reading-plan/complete", async (req, res) => {
+    try {
+      const { userId, planId, dayNumber } = req.body;
+
+      if (!userId || !planId || dayNumber === undefined) {
+        return res.status(400).json({
+          error: "Missing required fields: userId, planId, dayNumber"
+        });
+      }
+
+      const day = parseInt(dayNumber);
+      if (isNaN(day) || day < 1) {
+        return res.status(400).json({
+          error: "Invalid day number"
+        });
+      }
+
+      // Check if progress exists, create if not
+      let progress = await storage.getUserReadingPlanProgress(userId, planId);
+      if (!progress) {
+        progress = await storage.createUserReadingPlanProgress(userId, planId);
+      }
+
+      // Update progress
+      const updatedProgress = await storage.updateReadingPlanProgress(userId, planId, day);
+
+      // Generate warm streak message
+      const streakMessage = getStreakMessage(updatedProgress.currentStreak || 0);
+
+      res.json({
+        progress: updatedProgress,
+        message: streakMessage
+      });
+    } catch (error) {
+      console.error("Error completing reading plan day:", error);
+      res.status(500).json({
+        error: "Error updating progress"
+      });
+    }
+  });
+
   // Stripe donation route for one-time payments
   app.post("/api/create-payment-intent", async (req, res) => {
     try {
