@@ -216,6 +216,7 @@ function App() {
                 isOpen={showImportFriends}
                 onClose={handleImportFriendsClose}
                 appUserId={user.appUserId}
+                userEmail={user.email}
                 onNavigateToFriends={handleNavigateToFriends}
               />
             )}

@@ -2147,6 +2147,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const imported = await storage.importContacts(userId, contactsToImport);
       const appUserContacts = await storage.findAppUsersFromContacts(userId);
 
+      // Get the actual app users for the contacts
+      const appUsersList = await Promise.all(
+        appUserContacts.map(async (contact) => {
+          if (contact.appUserId) {
+            const appUser = await storage.getAppUser(contact.appUserId);
+            if (appUser) {
+              return {
+                contactId: contact.id,
+                appUserId: appUser.id,
+                firstName: appUser.firstName,
+                lastName: appUser.lastName,
+                email: appUser.email
+              };
+            }
+          }
+          return null;
+        })
+      ).then(results => results.filter(Boolean));
+
       console.log("[API] contacts/import ok", {
         userId,
         ms: Date.now() - t0,
@@ -2157,7 +2176,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         success: true,
         totalImported: imported.length,
-        appUsersFound: appUserContacts.length
+        appUsersFound: appUserContacts.length,
+        appUsers: appUsersList // Return the list of app users
       });
     } catch (err: any) {
       console.error("[API] contacts/import error", {

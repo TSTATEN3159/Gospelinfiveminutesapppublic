@@ -25,17 +25,23 @@ interface ImportFriendsDialogProps {
   isOpen: boolean;
   onClose: () => void;
   appUserId: string;
+  userEmail: string;
   onNavigateToFriends?: () => void;
 }
 
-export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavigateToFriends }: ImportFriendsDialogProps) {
+export default function ImportFriendsDialog({ isOpen, onClose, appUserId, userEmail, onNavigateToFriends }: ImportFriendsDialogProps) {
   const [isImporting, setIsImporting] = useState(false);
   const [permissionDenied, setPermissionDenied] = useState(false);
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [selectedContacts, setSelectedContacts] = useState<Set<number>>(new Set());
   const [showContactList, setShowContactList] = useState(false);
   const [importComplete, setImportComplete] = useState(false);
-  const [importResults, setImportResults] = useState<{ totalImported: number; appUsersFound: number } | null>(null);
+  const [importResults, setImportResults] = useState<{ 
+    totalImported: number; 
+    appUsersFound: number; 
+    appUsers?: Array<{ contactId: string; appUserId: string; firstName: string; lastName: string; email: string; }>;
+  } | null>(null);
+  const [sendingRequests, setSendingRequests] = useState<Set<string>>(new Set());
   const { toast } = useToast();
 
   // Helper: tolerant of different plugin versions and iOS statuses
@@ -177,7 +183,8 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
       
       setImportResults({
         totalImported: result.totalImported || 0,
-        appUsersFound: result.appUsersFound || 0
+        appUsersFound: result.appUsersFound || 0,
+        appUsers: result.appUsers || []
       });
       setImportComplete(true);
       
@@ -220,6 +227,58 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
   const getContactInitials = (contact: Contact) => {
     const name = getContactDisplayName(contact);
     return name.substring(0, 2).toUpperCase();
+  };
+
+  const handleSendFriendRequest = async (appUser: { appUserId: string; firstName: string; lastName: string; email: string; }) => {
+    if (!appUserId) {
+      toast({
+        title: "Error",
+        description: "Please sign in to send friend requests.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setSendingRequests(prev => new Set(prev).add(appUser.appUserId));
+
+    try {
+      console.log('[Friends] Sending request by email from:', userEmail, 'to:', appUser.email);
+      
+      const res = await fetch(apiUrl("/api/friends/request-by-email"), {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ 
+          requesterEmail: userEmail, 
+          addresseeEmail: appUser.email 
+        }),
+      });
+      
+      const result = await res.json();
+      console.log("[Friends] request-by-email", res.status, result);
+      
+      if (!res.ok || !result.success) {
+        throw new Error(result.message || result.error || "Request failed");
+      }
+
+      toast({
+        title: "Request Sent!",
+        description: `Friend request sent to ${appUser.firstName} ${appUser.lastName}`,
+      });
+    } catch (error: any) {
+      console.error('[Friends] Send request error:', error);
+      toast({
+        title: "Failed",
+        description: error?.message || "Failed to send friend request",
+        variant: "destructive",
+      });
+    } finally {
+      setSendingRequests(prev => {
+        const newSet = new Set(prev);
+        newSet.delete(appUser.appUserId);
+        return newSet;
+      });
+    }
   };
 
   const handleSkip = () => {
@@ -398,6 +457,44 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
                   }
                 </p>
               </div>
+
+              {/* Show list of app users found */}
+              {importResults.appUsers && importResults.appUsers.length > 0 && (
+                <div className="space-y-2 max-h-48 overflow-y-auto">
+                  <p className="text-sm font-medium text-gray-700">Friends found:</p>
+                  {importResults.appUsers.map((appUser) => (
+                    <div 
+                      key={appUser.appUserId}
+                      className="flex items-center gap-3 p-2 rounded-lg bg-gray-50"
+                    >
+                      <Avatar className="w-8 h-8">
+                        <AvatarFallback className="bg-blue-100 text-blue-600 text-xs">
+                          {`${appUser.firstName?.[0] || ''}${appUser.lastName?.[0] || ''}`.toUpperCase()}
+                        </AvatarFallback>
+                      </Avatar>
+                      <div className="flex-1 min-w-0">
+                        <p className="text-sm font-medium truncate">
+                          {appUser.firstName} {appUser.lastName}
+                        </p>
+                        <p className="text-xs text-gray-500 truncate">
+                          {appUser.email}
+                        </p>
+                      </div>
+                      <Button
+                        size="sm"
+                        onClick={() => handleSendFriendRequest(appUser)}
+                        disabled={sendingRequests.has(appUser.appUserId)}
+                        className="bg-blue-600 hover:bg-blue-700 text-xs"
+                        data-testid={`button-send-request-${appUser.appUserId}`}
+                      >
+                        <UserPlus className="w-3 h-3 mr-1" />
+                        {sendingRequests.has(appUser.appUserId) ? 'Sending...' : 'Add'}
+                      </Button>
+                    </div>
+                  ))}
+                </div>
+              )}
+
               <div className="flex gap-3">
                 {importResults.appUsersFound > 0 && onNavigateToFriends && (
                   <Button 
