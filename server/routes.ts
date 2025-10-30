@@ -2016,30 +2016,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Contact management routes
+  // Loosen schema so odd iOS contact shapes don't fail
+  const ContactSchema = z.object({
+    contactId: z.string().optional().nullable(),
+    firstName: z.string().optional().nullable(),
+    lastName: z.string().optional().nullable(),
+    displayName: z.string().optional().nullable(),
+    email: z.string().optional().nullable(), // Don't validate email format - iOS can have weird data
+    phone: z.string().optional().nullable(),
+  });
+
   app.post("/api/contacts/:userId/import", async (req, res) => {
     const t0 = Date.now();
     try {
       const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
-      const fromSignup = req.query.fromSignup === 'true';
-      
-      console.log("[API] POST /api/contacts/:userId/import", { 
-        userId, 
-        fromSignup, 
-        contactsCount: req.body?.contacts?.length 
+      const fromSignup = req.query.fromSignup === "true";
+
+      // Validate but don't be brittle
+      const body = z.object({
+        contacts: z.array(ContactSchema).max(fromSignup ? 50 : 1000)
+      }).parse(req.body);
+
+      // Normalize inputs (strip weird whitespace, normalize phone)
+      const norm = (s?: string | null) => (s ?? "").trim() || null;
+      const cleanPhone = (p?: string | null) => (p ? p.replace(/[^\d+]/g, "") : null);
+
+      const contactsToImport = body.contacts.map(c => ({
+        ownerId: userId,
+        contactId: norm(c.contactId),
+        firstName: norm(c.firstName),
+        lastName: norm(c.lastName),
+        displayName: norm(c.displayName),
+        email: norm(c.email),
+        phone: cleanPhone(c.phone),
+      }));
+
+      console.log("[API] contacts/import start", {
+        userId, fromSignup, rawCount: body.contacts.length, importing: contactsToImport.length
       });
-      
-      const bodySchema = z.object({
-        contacts: z.array(z.object({
-          contactId: z.string().nullable(),
-          firstName: z.string().nullable(),
-          lastName: z.string().nullable(),
-          displayName: z.string().nullable(),
-          email: z.string().nullable(),
-          phone: z.string().nullable()
-        })).max(fromSignup ? 50 : 1000) // Enforce 50 limit during signup
-      });
-      
-      const { contacts } = bodySchema.parse(req.body);
 
       // Check if this is first-time import during signup
       if (fromSignup) {
@@ -2047,57 +2061,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
         if (existingContacts.length > 0) {
           return res.status(400).json({
             success: false,
-            error: "Signup import only allowed for new users with no existing contacts."
+            error: "ALREADY_IMPORTED",
+            message: "Signup import only allowed for new users with no existing contacts."
           });
         }
       }
 
-      // Limit to 50 contacts for signup imports
-      const contactsToImport = fromSignup ? contacts.slice(0, 50) : contacts;
-
-      // Import contacts and find app users
-      const importedContacts = await storage.importContacts(userId, contactsToImport.map(c => ({
-        ownerId: userId,
-        contactId: c.contactId,
-        firstName: c.firstName,
-        lastName: c.lastName,
-        displayName: c.displayName,
-        email: c.email,
-        phone: c.phone
-      })));
-
-      // Find which contacts are app users
+      const imported = await storage.importContacts(userId, contactsToImport);
       const appUserContacts = await storage.findAppUsersFromContacts(userId);
 
-      console.log("[API] contacts/import success", { 
-        ms: Date.now() - t0, 
-        totalImported: importedContacts.length, 
-        appUsersFound: appUserContacts.length 
+      console.log("[API] contacts/import ok", {
+        userId,
+        ms: Date.now() - t0,
+        totalImported: imported.length,
+        appUsersFound: appUserContacts.length
       });
 
       res.json({
         success: true,
-        message: `${importedContacts.length} contacts imported, ${appUserContacts.length} app users found`,
-        totalImported: importedContacts.length,
-        appUsersFound: appUserContacts.length,
-        fromSignup
+        totalImported: imported.length,
+        appUsersFound: appUserContacts.length
       });
-    } catch (error: any) {
-      console.error("[API] POST /api/contacts/:userId/import error", { 
-        ms: Date.now() - t0, 
-        error: error?.message || error 
+    } catch (err: any) {
+      console.error("[API] contacts/import error", {
+        ms: Date.now() - t0,
+        message: err?.message,
+        stack: err?.stack,
+        bodyBytes: Buffer.byteLength(JSON.stringify(req.body) || "")
       });
       
-      if (error instanceof z.ZodError) {
+      if (err instanceof z.ZodError) {
         return res.status(400).json({
           success: false,
-          error: "Invalid request data. Contact limit exceeded for signup import."
+          error: "VALIDATION_ERROR",
+          message: "Invalid contacts payload or limit exceeded"
         });
       }
       
-      res.status(500).json({
+      res.status(400).json({
         success: false,
-        error: "Failed to import contacts."
+        error: "CONTACT_IMPORT_FAILED",
+        message: err?.message ?? "Invalid contacts payload"
       });
     }
   });
