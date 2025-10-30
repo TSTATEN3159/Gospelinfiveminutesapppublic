@@ -2300,7 +2300,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Read back IDs
-      const rows = await db.execute(sql`
+      const rows: any = await db.execute(sql`
         SELECT id, email, first_name, last_name FROM app_users
         WHERE email IN (
           'sarah.johnson@test.com',
@@ -2311,7 +2311,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         )
       `);
       const byEmail: Record<string, any> = {};
-      for (const r of rows.rows ?? rows) byEmail[r.email] = r;
+      for (const r of (rows.rows ?? rows)) byEmail[r.email] = r;
 
       const sarah  = byEmail["sarah.johnson@test.com"].id;
       const michael= byEmail["michael.chen@test.com"].id;
@@ -2320,7 +2320,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const lisa   = byEmail["lisa.anderson@test.com"].id;
 
       // Helper to insert friendship respecting canonical_order check
-      async function upsertFriendship(a: string, b: string, initiator: string, status: "pending"|"accepted"|"declined"|"blocked") {
+      const upsertFriendship = async (a: string, b: string, initiator: string, status: "pending"|"accepted"|"declined"|"blocked") => {
         const [reqId, addrId] = canonical(a, b);
         await db.execute(sql`
           INSERT INTO friendships (id, requester_id, addressee_id, initiator_id, status, created_at, updated_at)
@@ -2328,7 +2328,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           ON CONFLICT (requester_id, addressee_id) DO UPDATE
           SET status = EXCLUDED.status, initiator_id = EXCLUDED.initiator_id, updated_at = NOW()
         `);
-      }
+      };
 
       // 2) Accepted friendships
       await upsertFriendship(sarah, michael, sarah, "accepted");

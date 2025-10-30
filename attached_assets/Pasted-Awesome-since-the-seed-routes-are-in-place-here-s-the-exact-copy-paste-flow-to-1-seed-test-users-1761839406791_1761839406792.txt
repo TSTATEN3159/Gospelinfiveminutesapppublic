@@ -1,0 +1,128 @@
+Awesome—since the seed routes are in place, here’s the exact, copy-paste flow to (1) seed test users in production, (2) verify the Friends APIs, and (3) attach a few of those test users to your real account so the Friends page in TestFlight shows data for you (not just for Sarah).
+
+1) Seed production with 5 test users (run once)
+# SEED the 5 users + friendships in PRODUCTION
+curl -sS -X POST \
+  "https://daily-gospel-timothystaten.replit.app/admin/seed-test-friends?key=let_me_in_123" | jq .
+
+
+Expected (truncated):
+
+{
+  "success": true,
+  "users": {
+    "sarah":   "UUID_SARAH",
+    "michael": "UUID_MICHAEL",
+    "emma":    "UUID_EMMA",
+    "david":   "UUID_DAVID",
+    "lisa":    "UUID_LISA"
+  }
+}
+
+
+Keep those UUIDs handy—you’ll use them below.
+
+2) Quick API spot checks (confirm it’s live in prod)
+# Replace with UUIDs from the seed response
+SARAH="UUID_SARAH"
+LISA="UUID_LISA"
+
+# Sarah should have 2 accepted friends (Michael & Emma)
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/$SARAH" | jq .
+
+# Lisa should have 2 incoming pending requests (David & Emma)
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/requests/$LISA" | jq .
+
+
+You should see data (not empty arrays).
+
+3) Attach TEST FRIENDS to your real user (so TestFlight shows friends)
+
+Grab your own appUsers.id (the one your TestFlight build uses). If you don’t know it, use whichever way is easiest for you:
+
+If you have an admin view/endpoint, fetch by your email.
+
+Or temporarily log a line on signup to the server.
+
+If you want, I can give you a tiny one-time /admin/whoami endpoint that echoes the appUserId the client is sending.
+
+Assuming you got your ID:
+
+# Put your real user id here
+ME="YOUR_REAL_APPUSER_ID"
+
+# Also re-use test user IDs from step 1:
+MICHAEL="UUID_MICHAEL"
+EMMA="UUID_EMMA"
+
+# Send friend requests FROM you to Michael & Emma:
+curl -sS -X POST "https://daily-gospel-timothystaten.replit.app/api/friends/request" \
+  -H "Content-Type: application/json" \
+  -d "{\"requesterId\":\"$ME\",\"addresseeId\":\"$MICHAEL\"}" | jq .
+
+curl -sS -X POST "https://daily-gospel-timothystaten.replit.app/api/friends/request" \
+  -H "Content-Type: application/json" \
+  -d "{\"requesterId\":\"$ME\",\"addresseeId\":\"$EMMA\"}" | jq .
+
+
+Now approve those requests (we’ll approve from the canonical pair created in your DB). If your API returns the friendship id in the POST response above, you can use that directly. If not, just run:
+
+# List your pending requests (to find each friendship id)
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/requests/$ME" | jq .
+
+
+Copy each friendship.id where you are the requester or addressee, then:
+
+# Accept each friendship by its ID (repeat for each)
+FRIENDSHIP_ID="PASTE_ONE_ID_HERE"
+
+curl -sS -X PUT "https://daily-gospel-timothystaten.replit.app/api/friends/request/$FRIENDSHIP_ID" \
+  -H "Content-Type: application/json" \
+  -d '{"status":"accepted"}' | jq .
+
+
+Finally, confirm your own friends list now returns data:
+
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/$ME" | jq .
+
+
+You should see Michael & Emma.
+
+Now your actual TestFlight user will see friends on the Friends page. No need to impersonate Sarah.
+
+4) If “Import Contacts” still looks dead in TestFlight
+
+You already have logging enabled. While testing:
+
+Open Xcode → Window → Devices and Simulators → [Your iPhone] → Open Console
+
+Filter for: [Contacts] and [Friends] and [API]
+
+Try Import Contacts and Find Friends
+
+You should see logs like:
+
+[Contacts] Permission raw: {"contacts":"granted"} (or limited/denied)
+
+[Contacts] Raw contacts length: N / Filtered: M
+
+POST /api/contacts/:userId/import status
+
+[Friends] GET status: 200 with payload
+
+If permission shows limited or denied, on the device go:
+Settings → Privacy & Security → Contacts → The Gospel in 5 Minutes → Allow Full Access.
+
+5) Clean-up when you’re done
+# Remove test users + friendships (leave your data untouched)
+curl -sS -X DELETE \
+  "https://daily-gospel-timothystaten.replit.app/admin/seed-test-friends?key=let_me_in_123" | jq .
+
+
+Then delete the seed routes from server/routes.ts so they’re not deployed anymore.
+
+Pro tips
+
+Make sure your client’s api base URL is pointing at the Replit prod URL in api-config.ts (you already had this wired for videos; just double-check for Friends routes).
+
+If you want a super quick “Switch User (DEV)” button in Settings that sets appUserId to a known seeded ID, say the word and I’ll drop in a tight snippet guarded by import.meta.env.DEV.
