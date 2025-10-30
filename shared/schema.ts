@@ -168,3 +168,84 @@ export const insertVerseShareSchema = createInsertSchema(verseShares).pick({
 
 export type InsertVerseShare = z.infer<typeof insertVerseShareSchema>;
 export type VerseShare = typeof verseShares.$inferSelect;
+
+// Bible studies enums
+export const studyDifficultyEnum = pgEnum('study_difficulty', ['Beginner', 'Intermediate', 'Advanced']);
+export const languageEnum = pgEnum('language', ['en', 'es', 'fr', 'pt', 'zh', 'ar', 'hi']);
+
+// Study topics table - core study metadata
+export const studyTopics = pgTable("study_topics", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  slug: text("slug").notNull().unique(), // URL-friendly identifier
+  defaultLanguage: languageEnum("default_language").notNull().default('en'),
+  isFeatured: boolean("is_featured").notNull().default(false),
+  isPublished: boolean("is_published").notNull().default(true),
+  lessonsCount: integer("lessons_count").notNull(), // Total number of lessons in study
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+});
+
+// Study translations table - localized study content
+export const studyTranslations = pgTable("study_translations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  studyId: varchar("study_id").notNull().references(() => studyTopics.id, { onDelete: 'cascade' }),
+  language: languageEnum("language").notNull(),
+  title: text("title").notNull(),
+  author: text("author").notNull(),
+  description: text("description").notNull(),
+  category: text("category").notNull(), // e.g., "Discipleship", "Prayer", "Character"
+  duration: text("duration").notNull(), // e.g., "30 days", "14 days"
+  difficulty: studyDifficultyEnum("difficulty").notNull(),
+  heroImageUrl: text("hero_image_url"),
+}, (table) => {
+  return {
+    uniqueStudyLanguage: unique('unique_study_language').on(table.studyId, table.language),
+  };
+});
+
+// Study lessons table - lesson metadata
+export const studyLessons = pgTable("study_lessons", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  studyId: varchar("study_id").notNull().references(() => studyTopics.id, { onDelete: 'cascade' }),
+  dayNumber: integer("day_number").notNull(), // 1-based day number
+  isPublished: boolean("is_published").notNull().default(true),
+  audioUrl: text("audio_url"), // Optional audio version
+  videoUrl: text("video_url"), // Optional video version
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniqueStudyDay: unique('unique_study_day').on(table.studyId, table.dayNumber),
+  };
+});
+
+// Lesson translations table - localized lesson content
+export const lessonTranslations = pgTable("lesson_translations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  lessonId: varchar("lesson_id").notNull().references(() => studyLessons.id, { onDelete: 'cascade' }),
+  language: languageEnum("language").notNull(),
+  title: text("title").notNull(),
+  verseReference: text("verse_reference").notNull(), // e.g., "Matthew 11:28-30"
+  verseText: text("verse_text").notNull(), // Full verse text
+  content: text("content").notNull(), // Main lesson body
+  reflectionQuestions: text("reflection_questions").notNull(), // JSON array of questions
+  prayer: text("prayer").notNull(), // Closing prayer
+}, (table) => {
+  return {
+    uniqueLessonLanguage: unique('unique_lesson_language').on(table.lessonId, table.language),
+  };
+});
+
+// Insert schemas and types
+export const insertStudyTopicSchema = createInsertSchema(studyTopics).omit({ id: true, createdAt: true, updatedAt: true });
+export const insertStudyTranslationSchema = createInsertSchema(studyTranslations).omit({ id: true });
+export const insertStudyLessonSchema = createInsertSchema(studyLessons).omit({ id: true, createdAt: true });
+export const insertLessonTranslationSchema = createInsertSchema(lessonTranslations).omit({ id: true });
+
+export type InsertStudyTopic = z.infer<typeof insertStudyTopicSchema>;
+export type StudyTopic = typeof studyTopics.$inferSelect;
+export type InsertStudyTranslation = z.infer<typeof insertStudyTranslationSchema>;
+export type StudyTranslation = typeof studyTranslations.$inferSelect;
+export type InsertStudyLesson = z.infer<typeof insertStudyLessonSchema>;
+export type StudyLesson = typeof studyLessons.$inferSelect;
+export type InsertLessonTranslation = z.infer<typeof insertLessonTranslationSchema>;
+export type LessonTranslation = typeof lessonTranslations.$inferSelect;
