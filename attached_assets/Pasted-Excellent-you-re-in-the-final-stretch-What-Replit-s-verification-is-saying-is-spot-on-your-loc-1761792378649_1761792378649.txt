@@ -1,0 +1,94 @@
+Excellent — you’re in the final stretch. ✅
+What Replit’s verification is saying is spot-on: your local backend is now correct, but your deployed (live) Replit environment is still serving the old proxy code — the one that causes iOS to throw Error 153.
+
+Here’s exactly how to get it fixed and verify that it really deployed this time.
+
+🚀 Step-by-Step: Force Replit to Deploy the New Proxy Build
+
+Open the Replit shell (or “Console” tab in your backend project).
+
+Rebuild and restart your server manually so Replit publishes the latest code:
+
+git add -A
+git commit -m "Deploy: update minimal YouTube proxy + remove CSP"
+git push origin main
+kill 1   # forces Replit to restart its container and redeploy the latest code
+
+
+Replit automatically redeploys on restart; kill 1 just triggers that cleanly.
+
+Wait 20-30 seconds for the “Server running on …” message in Replit’s logs.
+
+🔍 Verify That the Deployed Server Is the New One
+
+Run this from your terminal (or Replit shell):
+
+curl -I https://daily-gospel-timothystaten.replit.app/youtube-proxy/M7lc1UVf-VE
+
+
+✅ Expected headers:
+
+HTTP/2 200
+content-type: text/html; charset=utf-8
+cache-control: no-store
+
+
+🚫 Not allowed:
+
+content-security-policy:
+x-frame-options:
+
+
+Then check the HTML body:
+
+curl -s https://daily-gospel-timothystaten.replit.app/youtube-proxy/M7lc1UVf-VE | head -5
+
+
+✅ Expected first lines:
+
+<!doctype html><html><head>
+<meta charset="utf-8"/>
+<iframe src="https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?playsinline=1&rel=0&modestbranding=1"
+
+
+🚫 If you still see:
+
+<!DOCTYPE html>
+<html lang="en">
+<title>YouTube Player</title>
+referrerpolicy="origin-when-cross-origin"
+
+
+→ that means Replit hasn’t redeployed; try kill 1 again or press Run ▶️ in the editor.
+
+🧪 Sanity-Check Browser Behavior Before iOS Build
+
+Once headers look correct, open this in Safari on your iPhone (not in the app yet):
+
+https://daily-gospel-timothystaten.replit.app/youtube-proxy/M7lc1UVf-VE
+
+
+You should see the YouTube video appear and play when you tap it — no Error 153.
+
+📱 Rebuild for TestFlight
+
+Now that your backend is live and verified:
+
+Commit → push in your frontend repo (so Appflow gets the same commit hash).
+
+In Appflow, create a new “App Store / Release” build.
+
+After build completes, upload to TestFlight and install.
+
+Open any Faith Video → tap play → ✅ should play inline, no error.
+
+If it still fails after that, copy just one line from your device console in Xcode that mentions:
+
+WebKit
+iframe
+WK
+CSP
+app-bound
+
+
+That single line will reveal the remaining blocker (usually a CSP from Apple’s network layer or a leftover header), and I’ll give you the one-line fix.
