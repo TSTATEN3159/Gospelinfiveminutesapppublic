@@ -1,0 +1,73 @@
+Here’s exactly how to run that friends check—and how to read the result.
+1) Run the request (macOS/Linux)
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/b8a1b21d-6629-41c1-9156-5c35a3eeb720" | jq .
+
+If you don’t have jq:
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/b8a1b21d-6629-41c1-9156-5c35a3eeb720"
+
+2) Run the request (Windows PowerShell)
+iwr "https://daily-gospel-timothystaten.replit.app/api/friends/b8a1b21d-6629-41c1-9156-5c35a3eeb720" | Select-Object -ExpandProperty Content
+
+3) Add headers if you need to debug
+curl -sS -D - "https://daily-gospel-timothystaten.replit.app/api/friends/b8a1b21d-6629-41c1-9156-5c35a3eeb720" | tail -n +1
+
+Expected shapes
+
+
+Success with friends
+
+
+{
+  "success": true,
+  "friends": [
+    { "id":"...", "firstName":"Sarah", "lastName":"Lee", "email":"sarah@example.com", "joinDate":"2025-10-30T..." },
+    ...
+  ]
+}
+
+
+
+Success but none found
+
+
+{ "success": true, "friends": [] }
+
+(That means the user exists but has no “accepted” friendships.)
+
+
+Error
+
+
+{ "success": false, "error": "..." }
+
+If you get an unexpected result
+
+
+friends = [] even though Replit “seeded 5 test friends”:
+
+
+That user ID might not match the seeded one. Try the other test IDs Replit created or ask Replit to print the exact app_users.id values it inserted and one sample friendships row.
+
+
+Friendships might still be “pending”. Only accepted friendships should appear. Have Replit confirm at least one row in friendships where status = 'accepted' and includes requester_id or addressee_id = b8a1b21d-...720.
+
+
+
+
+HTTP 404/500:
+
+
+404: route mismatch—make sure it’s exactly /api/friends/:userId.
+
+
+500: check Replit server logs for [API] GET /api/friends/:userId lines and the error that follows.
+
+
+
+
+Quick server-side sanity checks (ask Replit to run & paste results)
+# Show one sample friendship row (accepted) for the test user
+rg -n "app.get\(\"/api/friends/:userId\"" server/routes.ts
+# Print logs when hitting the route (make one request while tailing logs)
+
+If you paste the JSON/headers you get back, I’ll tell you the next exact fix.
