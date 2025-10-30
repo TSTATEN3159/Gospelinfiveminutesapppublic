@@ -1,0 +1,96 @@
+Great—STEP A is in. Now let’s lock this down and remove the guesswork with one precise round of checks + rebuild.
+Paste the block below to Replit exactly as-is.
+
+---
+
+**To Replit (copy–paste):**
+
+> **A) Confirm repo is ready for Appflow**
+>
+> 1. Show current commit hash and changed files:
+>
+> ```
+> git rev-parse HEAD
+> git status --porcelain
+> ```
+>
+> 2. Confirm the exact file we changed and the embed URL pattern:
+>
+> ```
+> rg -n "youtube-nocookie\.com/embed" client/src/components/VideoPlayer.tsx
+> sed -n '1,160p' client/src/components/VideoPlayer.tsx
+> ```
+>
+> **B) Check for any CSP that could block iframes**
+> (A meta Content-Security-Policy can silently block `<iframe>`.)
+>
+> ```
+> rg -n "Content-Security-Policy|frame-src|frame-ancestors" -S client public index.html
+> (test -f client/index.html && sed -n '1,200p' client/index.html) || true
+> (test -f public/index.html && sed -n '1,200p' public/index.html) || true
+> rg -n "http-equiv=.Content-Security-Policy." -S client public
+> ```
+>
+> If any CSP exists, ensure **frame-src** (or **child-src** for older CSP) includes:
+>
+> ```
+> https://www.youtube-nocookie.com https://www.youtube.com https://i.ytimg.com https://img.youtube.com https://*.ytimg.com https://googlevideo.com https://*.googlevideo.com
+> ```
+>
+> If missing, add a meta CSP (or update existing) to allow these.
+>
+> **C) Sanity-check Capacitor + iOS allowlists again**
+>
+> ```
+> sed -n '1,200p' capacitor.config.ts
+> rg -n "allowNavigation|youtube|nocookie|ytimg|googlevideo|youtu\.be" -S capacitor.config.ts
+> sed -n '1,220p' ios/App/App/Info.plist
+> rg -n "NSAppTransportSecurity|NSAllowsArbitraryLoads|ExceptionDomains|youtube|nocookie|ytimg|googlevideo|youtu\.be|NSIncludesSubdomains" -S ios/App/App/Info.plist
+> ```
+>
+> **D) Build readiness**
+>
+> * Confirm nothing local is uncommitted: `git status --porcelain` should be empty.
+> * **Push to GitHub** now:
+>
+> ```
+> git add -A && git commit -m "Direct YouTube nocookie embed + CSP check" || true
+> git push
+> git rev-parse HEAD
+> ```
+>
+> Paste back the final commit hash.
+>
+> **E) Known-good video test IDs**
+> In the app, try one of these IDs after the new TestFlight build:
+>
+> * `M7lc1UVf-VE` (YouTube official embed demo)
+> * `Y4315CLOYCs` (from our logs)
+>   Log the exact iframe `src` at runtime.
+>
+> **F) After Appflow Build**
+>
+> 1. In Appflow, create a new **iOS App Store/Release** build from the commit hash above.
+> 2. Install from TestFlight.
+> 3. On device, reproduce and capture console logs (Xcode → Devices → your iPhone → Console).
+>    Also log inside app:
+>
+>    * The exact `embedUrl` string rendered
+>    * `navigator.userAgent`
+> 4. If it still fails, paste:
+>
+>    * The device console error lines (WebKit / iframe / policy / CSP)
+>    * The exact `embedUrl` printed by the app
+>    * Whether any CSP meta tag exists and what its **frame-src** is
+
+---
+
+### Why this works
+
+* **Direct nocookie embed** is correct for WKWebView.
+* **CSP** is the last silent blocker that can still kill iframes even when ATS/allowNavigation are correct.
+* Pushing a **new commit hash** ensures Appflow builds the exact code we reviewed.
+* Testing **known-good IDs** isolates content restrictions from app policy issues.
+* **Device console logs** will name the blocker if one remains (CSP, mixed content, navigation denied, etc.).
+
+Once you share the outputs (commit hash + any CSP + device console error line + the exact `embedUrl`), I’ll pinpoint the next 1-line fix if anything’s still off.
