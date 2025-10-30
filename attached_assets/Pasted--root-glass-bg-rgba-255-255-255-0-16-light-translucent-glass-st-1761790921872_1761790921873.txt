@@ -1,0 +1,90 @@
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.16);              /* light translucent */
+  --glass-stroke: rgba(255, 255, 255, 0.28);
+  --glass-shadow: rgba(0, 0, 0, 0.25);
+  --glass-blur: 20px;
+  --glass-sat: 180%;
+  --glass-radius: 24px;
+  --glass-ring: rgba(255, 255, 255, 0.45);
+  --glass-hover: rgba(255, 255, 255, 0.22);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --glass-bg: rgba(15, 15, 15, 0.42);               /* dark translucent */
+    --glass-stroke: rgba(255, 255, 255, 0.12);
+    --glass-shadow: rgba(0, 0, 0, 0.6);
+    --glass-ring: rgba(255, 255, 255, 0.2);
+    --glass-hover: rgba(255, 255, 255, 0.33);
+  }
+}
+
+/* Respect accessibility */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --glass-bg: color-mix(in oklab, Canvas, transparent 0%);
+    --glass-blur: 0px;
+    --glass-sat: 100%;
+  }
+}
+
+/* Base glass surface */
+.glass {
+  position: relative;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(var(--glass-sat)) blur(var(--glass-blur));
+  backdrop-filter: saturate(var(--glass-sat)) blur(var(--glass-blur));
+  border: 1px solid var(--glass-stroke);
+  border-radius: var(--glass-radius);
+  box-shadow:
+    0 12px 30px -12px var(--glass-shadow),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+  overflow: clip;
+}
+
+/* Subtle inner highlight ring */
+.glass::before {
+  content: "";
+  position: absolute; inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  box-shadow: inset 0 0 0 1px var(--glass-ring);
+}
+
+/* Tap/hover feedback */
+.glass-pressable {
+  transition: transform .18s ease, background-color .18s ease, box-shadow .18s ease;
+  will-change: transform, backdrop-filter;
+}
+.glass-pressable:active { transform: scale(0.98); }
+.glass-pressable:hover { background: var(--glass-hover); }
+
+/* Top “frosted” bars (Nav / Tab), with safe areas */
+.glass-bar {
+  padding-block: calc(env(safe-area-inset-top) + 8px) 8px;
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(var(--glass-sat)) blur(var(--glass-blur));
+  backdrop-filter: saturate(var(--glass-sat)) blur(var(--glass-blur));
+  border-bottom: 1px solid var(--glass-stroke);
+}
+
+.glass-tabbar {
+  padding-block: 10px calc(env(safe-area-inset-bottom) + 10px);
+  background: var(--glass-bg);
+  -webkit-backdrop-filter: saturate(var(--glass-sat)) blur(var(--glass-blur));
+  backdrop-filter: saturate(var(--glass-sat)) blur(var(--glass-blur));
+  border-top: 1px solid var(--glass-stroke);
+}
+
+/* Depth masks for edge fade (optional polish) */
+.mask-top-fade {
+  -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.6));
+  mask-image: linear-gradient(to bottom, rgba(0,0,0,1), rgba(0,0,0,0.6));
+}
+.mask-bottom-fade {
+  -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.6));
+  mask-image: linear-gradient(to top, rgba(0,0,0,1), rgba(0,0,0,0.6));
+}
+
+/* Token for subtle card padding */
+.glass-pad { padding: 16px; border-radius: inherit; }
