@@ -49,10 +49,16 @@ Preferred communication style: Simple, everyday language.
     - **Implementation Details**:
       - Backend route validates video ID format (11 chars, alphanumeric + `-` and `_`)
       - Returns full HTML page with YouTube embed using proper parameters
+      - **Privacy-Enhanced Embed**: Uses `youtube-nocookie.com` instead of `youtube.com` for better privacy and compatibility with restricted religious content
+      - Includes `autoplay=1` for immediate playback, `referrerpolicy="strict-origin-when-cross-origin"` for security
+      - Cache-Control: no-store to avoid stale HTML
       - Frontend uses `apiUrl()` helper to construct proxy URL (works in dev and production)
       - Removed complex YouTube IFrame API - now uses simple, proven approach
-    - **Testing**: Proxy endpoint verified working (returns proper HTML with YouTube embed)
-    - **Research Source**: Medium article "Working around YouTube iframes on WebView based mobile apps"
+    - **Testing**: Proxy endpoint verified working at `/youtube-proxy/1p3oDv9i_o0`
+    - **ToS Compliance**: Lightweight HTML wrapper only - NOT proxying video streams or caching chunks (YouTube ToS compliant)
+    - **Research Sources**: 
+      - Medium article "Working around YouTube iframes on WebView based mobile apps"
+      - ChatGPT recommendations for privacy-enhanced embed (youtube-nocookie.com)
     - Fixed Files: server/routes.ts (added proxy endpoint), VideoPlayer.tsx (updated to use proxy)
 
 ## System Architecture
