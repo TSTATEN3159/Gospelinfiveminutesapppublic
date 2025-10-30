@@ -1,9 +1,9 @@
-import { useEffect, useRef } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X, ExternalLink, BookOpen } from "lucide-react";
 import type { VideoItem } from "@/services/videoService";
+import { apiUrl } from "@/lib/apiUrl";
 
 interface VideoPlayerProps {
   video: VideoItem | null;
@@ -12,8 +12,6 @@ interface VideoPlayerProps {
 }
 
 export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
-  const iframeRef = useRef<HTMLIFrameElement>(null);
-
   if (!video) return null;
 
   // Extract YouTube video ID from various URL formats
@@ -45,9 +43,10 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
   const videoId = video.videoUrl ? getYouTubeId(video.videoUrl) : null;
   const hasVideo = !!(video.videoUrl || video.externalUrl);
 
-  // Build YouTube embed URL with iOS-compatible parameters
-  const youtubeEmbedUrl = videoId 
-    ? `https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&enablejsapi=1`
+  // Use backend proxy for YouTube embeds (fixes iOS WKWebView origin issues)
+  // This loads the YouTube iframe from our HTTPS domain instead of capacitor:// origin
+  const youtubeProxyUrl = videoId 
+    ? `${apiUrl()}/youtube-proxy/${videoId}`
     : null;
 
   return (
@@ -70,12 +69,11 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
         </DialogHeader>
 
         <div className="flex-1 p-4 pt-0 overflow-y-auto">
-          {/* Video Player Section - Simple iframe (iOS-compatible) */}
-          {youtubeEmbedUrl ? (
+          {/* Video Player Section - Proxy iframe (iOS WKWebView compatible) */}
+          {youtubeProxyUrl ? (
             <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden">
               <iframe
-                ref={iframeRef}
-                src={youtubeEmbedUrl}
+                src={youtubeProxyUrl}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 allowFullScreen

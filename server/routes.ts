@@ -2218,6 +2218,41 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // YouTube Proxy Endpoint - Serves YouTube embeds from HTTPS domain
+  // This fixes iOS WKWebView origin issues where YouTube blocks capacitor:// origins
+  app.get("/youtube-proxy/:videoId", (req, res) => {
+    const { videoId } = req.params;
+    
+    // Validate video ID format (YouTube IDs are 11 characters, alphanumeric plus - and _)
+    if (!/^[a-zA-Z0-9_-]{11}$/.test(videoId)) {
+      return res.status(400).send('Invalid video ID');
+    }
+
+    const html = `<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    * { margin: 0; padding: 0; }
+    html, body { width: 100%; height: 100%; overflow: hidden; }
+    iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; }
+  </style>
+</head>
+<body>
+  <iframe
+    src="https://www.youtube.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&enablejsapi=1"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    allowfullscreen
+    title="YouTube video player">
+  </iframe>
+</body>
+</html>`;
+
+    res.setHeader('Content-Type', 'text/html');
+    res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+    res.send(html);
+  });
+
   // Apple-Compliant Application Health Monitoring Endpoints
   // Transparent health checks for auto-recovery system
   app.get("/api/health", async (req, res) => {
