@@ -77,7 +77,14 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   // Get friends list
   const { data: friendsData, isLoading: isLoadingFriends } = useQuery({
     queryKey: ['/api/friends', currentUserId],
-    queryFn: () => fetch(apiUrl(`/api/friends/${currentUserId}`)).then(r => r.json())
+    queryFn: async () => {
+      console.log('[Friends] Fetching for userId:', currentUserId);
+      const res = await fetch(apiUrl(`/api/friends/${currentUserId}`));
+      console.log('[Friends] GET status:', res.status);
+      const json = await res.json();
+      console.log('[Friends] Response:', json);
+      return json;
+    }
   });
 
   // Get friend requests

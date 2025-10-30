@@ -1,0 +1,187 @@
+Got it. Since Replit’s scan says your code paths are “correct,” the next step is to prove what’s happening on the device (TestFlight) at runtime. Here’s a tight, no-guesswork plan that will show exactly where it’s failing and fix the two most common causes: permission shape on iOS 18 and missing userId during import.
+
+Step 1 — Drop in on-device debug logs (safe to ship)
+
+Add these temporary logs so we can see what the app is doing in TestFlight (you’ll see them in Xcode’s Devices Console, and users won’t notice unless you keep the alert):
+
+client/src/components/ImportFriendsDialog.tsx
+
+import { Capacitor } from '@capacitor/core';
+import { Contacts } from '@capacitor-community/contacts';
+
+// helper tolerant of different plugin versions
+function isGranted(perm: any): boolean {
+  // v7 returns { granted: boolean }; older returns { contacts: 'granted'|'denied'|'prompt'|'limited' }
+  if (typeof perm?.granted === 'boolean') return perm.granted;
+  if (typeof perm?.contacts === 'string') return perm.contacts === 'granted' || perm.contacts === 'limited';
+  return false;
+}
+
+async function openSettingsIfDenied() {
+  try {
+    // Deep-link to Settings if user denied
+    await (window as any).Capacitor?.App?.openUrl?.({ url: 'app-settings:' });
+  } catch {}
+}
+
+async function importDeviceContacts(userId: string) {
+  console.log('[Contacts] Platform:', Capacitor.getPlatform(), 'userId:', userId);
+
+  const perm = await Contacts.requestPermissions();
+  console.log('[Contacts] Permission raw:', JSON.stringify(perm));
+  const allowed = isGranted(perm);
+  console.log('[Contacts] allowed:', allowed);
+
+  if (!allowed) {
+    console.warn('[Contacts] Permission not granted — prompting settings.');
+    alert('Please enable Contacts in Settings > Privacy to import friends.');
+    await openSettingsIfDenied();
+    throw new Error('Contacts permission not granted');
+  }
+
+  const result = await Contacts.getContacts({
+    projection: { name: true, phones: true, emails: true }
+  });
+  console.log('[Contacts] contacts length:', result?.contacts?.length ?? 0);
+
+  const contacts = (result?.contacts || [])
+    .map(c => ({
+      firstName: c.name?.given ?? '',
+      lastName: c.name?.family ?? '',
+      displayName: c.displayName ?? '',
+      email: (c.emails?.[0]?.address ?? '').trim() || undefined,
+      phone: (c.phones?.[0]?.number ?? '').trim() || undefined,
+    }))
+    .filter(c => (c.firstName || c.lastName || c.displayName) && (c.email || c.phone))
+    .slice(0, 50);
+
+  console.log('[Contacts] filtered count (<=50):', contacts.length);
+
+  if (!userId) {
+    console.error('[Contacts] Missing appUserId during import!');
+    alert('Please complete sign-in/registration before importing contacts.');
+    throw new Error('Missing userId');
+  }
+
+  const resp = await fetch(apiUrl(`/api/contacts/${userId}/import?fromSignup=true`), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contacts })
+  });
+
+  console.log('[Contacts] import status:', resp.status);
+  const json = await resp.json().catch(() => ({}));
+  console.log('[Contacts] import response:', json);
+
+  if (!resp.ok || !json?.success) {
+    throw new Error(`Import failed: ${resp.status} ${JSON.stringify(json)}`);
+  }
+
+  return json;
+}
+
+
+client/src/pages/FriendsPage.tsx (where you fetch friends):
+
+useEffect(() => {
+  console.log('[Friends] appUserId:', appUserId);
+  if (!appUserId) return;
+  fetch(apiUrl(`/api/friends/${appUserId}`))
+    .then(r => (console.log('[Friends] GET status:', r.status), r.json()))
+    .then(j => console.log('[Friends] payload:', j))
+    .catch(e => console.error('[Friends] error:', e));
+}, [appUserId]);
+
+
+Purpose: confirm permission outcome, contacts count, userId presence, and server response codes on the device.
+
+Step 2 — Harden permission handling for iOS 17/18
+
+You already request permission, but iOS 18 can return limited. The helper above treats limited as allowed (you’ll still get a subset). If you’d rather demand full access, change:
+
+if (typeof perm?.contacts === 'string') return perm.contacts === 'granted' || perm.contacts === 'limited';
+
+
+to:
+
+if (typeof perm?.contacts === 'string') return perm.contacts === 'granted';
+
+
+…and show a UI to guide the user to Settings to switch from Limited → Full Access.
+
+Step 3 — Prove the server is being hit (or not)
+
+Add light server logging around both endpoints to see device calls in your Replit logs:
+
+server/routes.ts (near contacts import)
+
+app.post("/api/contacts/:userId/import", async (req, res) => {
+  const t0 = Date.now();
+  console.log("[API] contacts/import hit", { userId: req.params?.userId, fromSignup: req.query?.fromSignup, count: req.body?.contacts?.length });
+  try {
+    // ...existing logic...
+    console.log("[API] contacts/import ok", { ms: Date.now() - t0, totalImported: importedContacts.length, appUsersFound: appUserContacts.length });
+    res.json({ success: true, totalImported: importedContacts.length, appUsersFound: appUserContacts.length });
+  } catch (err:any) {
+    console.error("[API] contacts/import error", { ms: Date.now() - t0, err: err?.message });
+    res.status(500).json({ success: false, error: "Failed to import contacts" });
+  }
+});
+
+
+Friends list
+
+app.get("/api/friends/:userId", async (req, res) => {
+  const t0 = Date.now();
+  console.log("[API] friends get", { userId: req.params?.userId });
+  try {
+    // ...existing logic...
+    console.log("[API] friends ok", { ms: Date.now() - t0, count: friends.length });
+    res.json({ success: true, friends: /* ... */ });
+  } catch (err:any) {
+    console.error("[API] friends error", { ms: Date.now() - t0, err: err?.message });
+    res.status(500).json({ success: false, error: "Failed to fetch friends" });
+  }
+});
+
+
+Now you’ll know instantly if the app isn’t calling the backend, is sending userId = undefined, or if something 500s.
+
+Step 4 — One common gotcha: missing appUserId
+
+If the user hasn’t finished registration (or if you lose auth state after TestFlight install), appUserId can be empty. Add a guard where you call the import:
+
+if (!appUserId) {
+  presentToast('Please sign in first, then Import Contacts.');
+  return;
+}
+await importDeviceContacts(appUserId);
+
+
+Also ensure you persist user state (e.g., in secure storage) and rehydrate it on app launch.
+
+Step 5 — Confirm Info.plist & plugin are actually in the build
+
+You likely already have this, but double-check in your last Appflow build:
+
+NSContactsUsageDescription exists and is non-empty.
+
+@capacitor-community/contacts is present in Podfile.lock.
+
+You ran a build after any Info.plist change (Capacitor copies during cap sync → Appflow does this for you).
+
+What I expect will surface
+
+Either permission returns denied or limited on device and you weren’t handling it (fixed above), or
+
+userId is empty at the moment you press Import/Find Friends (the logs will show it), or
+
+A networking/env issue (the server logs in Step 3 will immediately reveal that).
+
+Run with these logs, try both Import Contacts and Find Friends on your TestFlight build, and then tell me:
+
+The [Contacts] and [Friends] console lines from Xcode Devices Console (just a few lines), and
+
+The matching [API] log lines from Replit.
+
+From that, I’ll pinpoint the exact line to change (if anything else is lurking).

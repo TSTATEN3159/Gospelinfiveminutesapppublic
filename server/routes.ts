@@ -1914,10 +1914,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   app.get("/api/friends/:userId", async (req, res) => {
+    const t0 = Date.now();
     try {
       const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
+      console.log("[API] GET /api/friends/:userId", { userId });
       
       const friends = await storage.getFriends(userId);
+      console.log("[API] friends fetched", { ms: Date.now() - t0, count: friends.length });
       
       res.json({
         success: true,
@@ -1929,8 +1932,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           joinDate: friend.joinDate
         }))
       });
-    } catch (error) {
-      console.error("Get friends error:", error);
+    } catch (error: any) {
+      console.error("[API] GET /api/friends/:userId error", { ms: Date.now() - t0, error: error?.message || error });
       res.status(500).json({
         success: false,
         error: "Failed to get friends list."
@@ -1992,9 +1995,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Contact management routes
   app.post("/api/contacts/:userId/import", async (req, res) => {
+    const t0 = Date.now();
     try {
       const { userId } = z.object({ userId: z.string().min(1) }).parse(req.params);
       const fromSignup = req.query.fromSignup === 'true';
+      
+      console.log("[API] POST /api/contacts/:userId/import", { 
+        userId, 
+        fromSignup, 
+        contactsCount: req.body?.contacts?.length 
+      });
       
       const bodySchema = z.object({
         contacts: z.array(z.object({
@@ -2037,6 +2047,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Find which contacts are app users
       const appUserContacts = await storage.findAppUsersFromContacts(userId);
 
+      console.log("[API] contacts/import success", { 
+        ms: Date.now() - t0, 
+        totalImported: importedContacts.length, 
+        appUsersFound: appUserContacts.length 
+      });
+
       res.json({
         success: true,
         message: `${importedContacts.length} contacts imported, ${appUserContacts.length} app users found`,
@@ -2044,8 +2060,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         appUsersFound: appUserContacts.length,
         fromSignup
       });
-    } catch (error) {
-      console.error("Import contacts error:", error);
+    } catch (error: any) {
+      console.error("[API] POST /api/contacts/:userId/import error", { 
+        ms: Date.now() - t0, 
+        error: error?.message || error 
+      });
       
       if (error instanceof z.ZodError) {
         return res.status(400).json({

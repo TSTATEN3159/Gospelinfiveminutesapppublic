@@ -37,6 +37,32 @@ Preferred communication style: Simple, everyday language.
     - Now invalidates all relevant queries (contacts, friends, friend requests) on success
     - Fixed Files: FriendsPage.tsx, ImportFriendsDialog.tsx
   
+- **Recent Enhancements** (Oct 30, 2025):
+  - ✅ **Comprehensive Debugging System Added**:
+    - **Frontend Debugging (ImportFriendsDialog.tsx)**:
+      - Platform and userId logging on import start
+      - Permission response logging (handles iOS 17/18 'limited' status)
+      - Contact count logging (raw, filtered, selected)
+      - API request/response logging with status codes
+      - Missing userId guards with user-friendly toast messages
+    - **Frontend Debugging (FriendsPage.tsx)**:
+      - Friends list fetch logging with userId and response status
+      - Console logs visible in Xcode Devices Console for TestFlight debugging
+    - **Backend Debugging (server/routes.ts)**:
+      - GET /api/friends/:userId - Request logging with timing metrics
+      - POST /api/contacts/:userId/import - Request/response logging with counts
+      - All endpoints log userId, timing (ms), counts, and errors
+    - **iOS 18 Compatibility**:
+      - Permission helper handles 'granted', 'denied', 'prompt', and 'limited' statuses
+      - Tolerant of different plugin versions (v7 and older)
+    - **Testing Protocol**:
+      1. Install from TestFlight
+      2. Connect iPhone to Mac → Xcode → Devices → Console
+      3. Filter logs: "[Contacts]" or "[Friends]" or "[API]"
+      4. Try Import Contacts and Find Friends features
+      5. Review console logs for permission status, counts, and errors
+    - Fixed Files: ImportFriendsDialog.tsx, FriendsPage.tsx, server/routes.ts
+  
 - **Recent Fixes** (Oct 30, 2025):
   - ✅ **YouTube Error 153 Fix - STEP C Implemented**: Minimal wrapper proxy to fix iOS WKWebView blocking
     - **Root Cause**: YouTube Error 153 - YouTube blocks both direct embeds and complex proxies from WKWebView

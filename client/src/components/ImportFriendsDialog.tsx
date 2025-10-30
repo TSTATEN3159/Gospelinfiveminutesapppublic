@@ -7,8 +7,10 @@ import { Badge } from "@/components/ui/badge";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Smartphone, Users, UserPlus, Check, X, Settings } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Capacitor } from '@capacitor/core';
 import { Contacts } from '@capacitor-community/contacts';
 import { apiRequest } from "@/lib/queryClient";
+import { apiUrl } from "@/lib/api-config";
 
 interface Contact {
   contactId?: string | null;
@@ -36,13 +38,40 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
   const [importResults, setImportResults] = useState<{ totalImported: number; appUsersFound: number } | null>(null);
   const { toast } = useToast();
 
+  // Helper: tolerant of different plugin versions and iOS statuses
+  const isPermissionGranted = (perm: any): boolean => {
+    console.log('[Contacts] Permission raw:', JSON.stringify(perm));
+    // v7 returns { granted: boolean }
+    if (typeof perm?.granted === 'boolean') return perm.granted;
+    // older versions return { contacts: 'granted'|'denied'|'prompt'|'limited' }
+    if (typeof perm?.contacts === 'string') {
+      return perm.contacts === 'granted' || perm.contacts === 'limited'; // iOS 18 can return 'limited'
+    }
+    return false;
+  };
+
   const handleStartImport = async () => {
+    console.log('[Contacts] Platform:', Capacitor.getPlatform(), 'appUserId:', appUserId);
+    
+    if (!appUserId) {
+      console.error('[Contacts] Missing appUserId!');
+      toast({
+        title: "Sign In Required",
+        description: "Please complete registration before importing contacts.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsImporting(true);
     setPermissionDenied(false);
     
     try {
       const permission = await Contacts.requestPermissions();
-      if (permission.contacts === 'granted') {
+      const allowed = isPermissionGranted(permission);
+      console.log('[Contacts] Permission allowed:', allowed);
+      
+      if (allowed) {
         const result = await Contacts.getContacts({ 
           projection: { 
             name: true, 
@@ -50,6 +79,8 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
             emails: true 
           } 
         });
+        
+        console.log('[Contacts] Raw contacts length:', result?.contacts?.length ?? 0);
         
         const contactsList = result.contacts.map(contact => ({
           contactId: contact.contactId,
@@ -64,15 +95,23 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
           (contact.email || contact.phone)
         ).slice(0, 50); // Limit to 50 contacts
         
+        console.log('[Contacts] Filtered count (<=50):', contactsList.length);
+        
         setContacts(contactsList);
         // Pre-select all contacts initially
         setSelectedContacts(new Set(contactsList.map((_, index) => index)));
         setShowContactList(true);
       } else {
+        console.warn('[Contacts] Permission not granted — showing settings prompt');
         setPermissionDenied(true);
+        toast({
+          title: "Permission Required",
+          description: "Please enable Contacts in Settings > Privacy to import friends.",
+          variant: "destructive",
+        });
       }
     } catch (error) {
-      console.error('Error requesting contacts permission:', error);
+      console.error('[Contacts] Error requesting permission:', error);
       setPermissionDenied(true);
     } finally {
       setIsImporting(false);
@@ -80,10 +119,23 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
   };
 
   const handleConfirmImport = async () => {
+    console.log('[Contacts] Starting import for userId:', appUserId);
+    
+    if (!appUserId) {
+      console.error('[Contacts] Missing appUserId during import!');
+      toast({
+        title: "Error",
+        description: "Please sign in before importing contacts.",
+        variant: "destructive",
+      });
+      return;
+    }
+    
     setIsImporting(true);
     
     try {
       const selectedContactsArray = Array.from(selectedContacts).map(index => contacts[index]);
+      console.log('[Contacts] Importing count:', selectedContactsArray.length);
       
       const res = await apiRequest(
         'POST',
@@ -91,7 +143,9 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
         { contacts: selectedContactsArray }
       );
 
+      console.log('[Contacts] Import status:', res.status);
       const result = await res.json();
+      console.log('[Contacts] Import response:', result);
       
       setImportResults({
         totalImported: result.totalImported || 0,
@@ -104,7 +158,7 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
         description: `${result.totalImported || 0} contacts imported, ${result.appUsersFound || 0} friends found.`,
       });
     } catch (error) {
-      console.error('Error importing contacts:', error);
+      console.error('[Contacts] Import error:', error);
       toast({
         title: "Import Failed",
         description: "Failed to import contacts. Please try again later.",
