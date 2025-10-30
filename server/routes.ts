@@ -2218,9 +2218,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // YouTube Proxy Endpoint - Serves YouTube embeds from HTTPS domain
-  // This fixes iOS WKWebView origin issues where YouTube blocks capacitor:// origins
-  // Uses youtube-nocookie.com for privacy-enhanced embed (better for restricted content)
+  // YouTube Proxy Endpoint - STEP C: Minimal wrapper (no autoplay, no JS API)
+  // This fixes iOS WKWebView Error 153 by serving YouTube embeds from our HTTPS domain
+  // Uses youtube-nocookie.com for privacy-enhanced embed
   app.get("/youtube-proxy/:videoId", (req, res) => {
     const videoId = req.params.videoId;
     
@@ -2229,38 +2229,19 @@ export async function registerRoutes(app: Express): Promise<Server> {
       return res.status(400).send('Invalid video ID');
     }
 
-    const html = `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>YouTube Player</title>
-  <style>
-    html, body { margin:0; padding:0; background:#000; height:100%; }
-    .wrap { position:relative; width:100%; height:100vh; }
-    iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
-  </style>
-</head>
-<body>
-  <div class="wrap">
-    <iframe
-      src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1"
-      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
-      allowfullscreen
-      referrerpolicy="origin-when-cross-origin"
-    ></iframe>
-  </div>
-</body>
-</html>`;
+    // Minimal HTML wrapper - no autoplay, no JS API to avoid Error 153
+    const html = `<!doctype html><html><head>
+<meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<style>html,body{margin:0;height:100%;background:#000} .wrap{position:relative;height:100vh} iframe{position:absolute;inset:0;width:100%;height:100%;border:0}</style>
+</head><body><div class="wrap">
+<iframe src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1"
+  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+  allowfullscreen></iframe>
+</div></body></html>`;
 
-    // Critical headers so this page CAN be embedded by your app
+    // Minimal headers - no X-Frame-Options or CSP unless absolutely required
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.setHeader("Cache-Control", "no-store");
-    res.setHeader("X-Frame-Options", "ALLOWALL"); // override Helmet if present
-    // Allow your app/webview origins to frame it
-    res.setHeader("Content-Security-Policy",
-      "frame-ancestors 'self' capacitor://localhost http://localhost https://daily-gospel-timothystaten.replit.app app://*;"
-    );
     res.status(200).send(html);
   });
 

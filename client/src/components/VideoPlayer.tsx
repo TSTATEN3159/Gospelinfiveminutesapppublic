@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X, ExternalLink, BookOpen } from "lucide-react";
 import type { VideoItem } from "@/services/videoService";
+import { apiUrl } from "@/lib/api-config";
 
 interface VideoPlayerProps {
   video: VideoItem | null;
@@ -45,16 +46,15 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
   const videoId = video.videoUrl ? getYouTubeId(video.videoUrl) : null;
   const hasVideo = !!(video.videoUrl || video.externalUrl);
 
-  // STEP A: Direct YouTube embed (bypassing proxy to test if proxy is the blocker)
-  // Using youtube-nocookie.com for privacy and better compatibility
-  // Added mute=1&autoplay=1 for iOS autoplay (iOS allows autoplay when muted)
-  const directEmbedUrl = videoId 
-    ? `https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&mute=1&autoplay=1`
+  // STEP C: Minimal proxy wrapper to fix Error 153 on iOS
+  // Backend serves YouTube embed from our HTTPS domain to avoid WKWebView blocking
+  const proxyEmbedUrl = videoId 
+    ? apiUrl(`youtube-proxy/${videoId}`)
     : null;
 
   // Log embed URL for debugging in TestFlight
-  if (directEmbedUrl) {
-    console.log('[VideoPlayer] Direct embed URL:', directEmbedUrl);
+  if (proxyEmbedUrl) {
+    console.log('[VideoPlayer] Proxy embed URL:', proxyEmbedUrl);
     console.log('[VideoPlayer] Video ID:', videoId);
     console.log('[VideoPlayer] User Agent:', navigator.userAgent);
   }
@@ -79,11 +79,11 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
         </DialogHeader>
 
         <div className="flex-1 p-4 pt-0 overflow-y-auto">
-          {/* Video Player Section - Direct YouTube embed (STEP A: bypassing proxy) */}
-          {directEmbedUrl ? (
+          {/* Video Player Section - Minimal proxy wrapper (STEP C: fixes Error 153) */}
+          {proxyEmbedUrl ? (
             <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden relative">
               <iframe
-                src={directEmbedUrl}
+                src={proxyEmbedUrl}
                 className="w-full h-full"
                 allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowFullScreen
