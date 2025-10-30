@@ -1,14 +1,21 @@
 import UIKit
 import Capacitor
+import WebKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: CAPAppDelegate {
 
-    var window: UIWindow?
-
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Override point for customization after application launch.
-        return true
+    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+        // Allow inline YouTube playback & remove user-gesture requirement
+        CAPBridgeViewController.wkWebViewConfiguration.allowsInlineMediaPlayback = true
+        CAPBridgeViewController.wkWebViewConfiguration.mediaTypesRequiringUserActionForPlayback = []
+        
+        // (Optional) AirPlay/PiP support
+        if #available(iOS 10.0, *) {
+            CAPBridgeViewController.wkWebViewConfiguration.allowsAirPlayForMediaPlayback = true
+        }
+        
+        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {
