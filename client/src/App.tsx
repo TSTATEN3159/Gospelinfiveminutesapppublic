@@ -19,6 +19,7 @@ import { performanceMonitor } from "./services/performanceMonitor";
 
 // Pages
 import HomePage from "./pages/HomePage";
+import DailyDevotionalPage from "./pages/DailyDevotionalPage";
 import AskPage from "./pages/BiblePage";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/MorePage";
@@ -44,7 +45,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo";
+type AppPage = "home" | "daily" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -117,7 +118,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "more", "search"];
+    const validPages = ["home", "daily", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "more", "search"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -143,6 +144,8 @@ function App() {
     switch (currentPage) {
       case "home":
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
+      case "daily":
+        return <DailyDevotionalPage user={user || undefined} onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "ask":
         return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "search":

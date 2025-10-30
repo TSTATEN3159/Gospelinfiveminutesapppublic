@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type StudyTopic, type InsertStudyTopic, type StudyTranslation, type InsertStudyTranslation, type StudyLesson, type InsertStudyLesson, type LessonTranslation, type InsertLessonTranslation, type TriviaQuestion, type InsertTriviaQuestion, type Devotional, type UserDevotionalProgress, users, subscribers, appUsers, friendships, donations, contacts, verseShares, studyTopics, studyTranslations, studyLessons, lessonTranslations, triviaQuestions, devotionals, userDevotionalProgress } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type StudyTopic, type InsertStudyTopic, type StudyTranslation, type InsertStudyTranslation, type StudyLesson, type InsertStudyLesson, type LessonTranslation, type InsertLessonTranslation, type TriviaQuestion, type InsertTriviaQuestion, type Devotional, type UserDevotionalProgress, type ReadingPlan, type InsertReadingPlan, type ReadingPlanDay, type InsertReadingPlanDay, type UserReadingPlanProgress, type InsertUserReadingPlanProgress, users, subscribers, appUsers, friendships, donations, contacts, verseShares, studyTopics, studyTranslations, studyLessons, lessonTranslations, triviaQuestions, devotionals, userDevotionalProgress, readingPlans, readingPlanDays, userReadingPlanProgress } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -72,6 +72,16 @@ export interface IStorage {
   getUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress | undefined>;
   createUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress>;
   updateDevotionalProgress(userId: string, gender: 'men' | 'women', dayNumber: number): Promise<UserDevotionalProgress>;
+  
+  // Reading Plan methods
+  getAllReadingPlans(language?: string): Promise<ReadingPlan[]>;
+  getReadingPlan(planId: string): Promise<ReadingPlan | undefined>;
+  getReadingPlanDay(planId: string, dayNumber: number): Promise<ReadingPlanDay | undefined>;
+  getUserReadingPlanProgress(userId: string, planId: string): Promise<UserReadingPlanProgress | undefined>;
+  createUserReadingPlanProgress(userId: string, planId: string): Promise<UserReadingPlanProgress>;
+  updateReadingPlanProgress(userId: string, planId: string, dayNumber: number): Promise<UserReadingPlanProgress>;
+  createReadingPlan(plan: InsertReadingPlan): Promise<ReadingPlan>;
+  createReadingPlanDay(day: InsertReadingPlanDay): Promise<ReadingPlanDay>;
 }
 
 // Database storage implementation
@@ -740,6 +750,163 @@ export class DatabaseStorage implements IStorage {
 
     return result[0];
   }
+
+  // Reading Plan methods
+  async getAllReadingPlans(language: string = 'en'): Promise<ReadingPlan[]> {
+    const plans = await this.db
+      .select()
+      .from(readingPlans)
+      .where(
+        and(
+          eq(readingPlans.language, language),
+          eq(readingPlans.isActive, true)
+        )
+      );
+    return plans;
+  }
+
+  async getReadingPlan(planId: string): Promise<ReadingPlan | undefined> {
+    const result = await this.db
+      .select()
+      .from(readingPlans)
+      .where(eq(readingPlans.id, planId))
+      .limit(1);
+    return result[0];
+  }
+
+  async getReadingPlanDay(planId: string, dayNumber: number): Promise<ReadingPlanDay | undefined> {
+    const result = await this.db
+      .select()
+      .from(readingPlanDays)
+      .where(
+        and(
+          eq(readingPlanDays.planId, planId),
+          eq(readingPlanDays.dayNumber, dayNumber)
+        )
+      )
+      .limit(1);
+    return result[0];
+  }
+
+  async getUserReadingPlanProgress(userId: string, planId: string): Promise<UserReadingPlanProgress | undefined> {
+    const result = await this.db
+      .select()
+      .from(userReadingPlanProgress)
+      .where(
+        and(
+          eq(userReadingPlanProgress.userId, userId),
+          eq(userReadingPlanProgress.planId, planId)
+        )
+      )
+      .limit(1);
+    return result[0];
+  }
+
+  async createUserReadingPlanProgress(userId: string, planId: string): Promise<UserReadingPlanProgress> {
+    const result = await this.db
+      .insert(userReadingPlanProgress)
+      .values({
+        userId,
+        planId,
+        currentDay: 1,
+        completedDays: [],
+        currentStreak: 0,
+        longestStreak: 0,
+        totalDaysCompleted: 0,
+      })
+      .returning();
+    return result[0];
+  }
+
+  async updateReadingPlanProgress(userId: string, planId: string, dayNumber: number): Promise<UserReadingPlanProgress> {
+    // Get current progress
+    const progress = await this.getUserReadingPlanProgress(userId, planId);
+    
+    if (!progress) {
+      throw new Error('User reading plan progress not found');
+    }
+
+    // Check if this day is already completed
+    const alreadyCompleted = progress.completedDays?.includes(dayNumber.toString()) || false;
+    if (alreadyCompleted) {
+      return progress; // Don't update if already completed
+    }
+
+    // Calculate streak (same logic as devotionals)
+    const now = new Date();
+    const lastRead = progress.lastReadDate ? new Date(progress.lastReadDate) : null;
+    
+    let newStreak = 1;
+    if (lastRead) {
+      const daysSinceLastRead = Math.floor((now.getTime() - lastRead.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysSinceLastRead === 1) {
+        // Consecutive day - increment streak
+        newStreak = (progress.currentStreak || 0) + 1;
+      } else if (daysSinceLastRead === 0) {
+        // Same day - keep current streak
+        newStreak = progress.currentStreak || 1;
+      } else {
+        // Streak broken - reset to 1
+        newStreak = 1;
+      }
+    }
+
+    // Update longest streak if current streak is higher
+    const newLongestStreak = Math.max(newStreak, progress.longestStreak || 0);
+
+    // Add day to completed days
+    const newCompletedDays = [...(progress.completedDays || []), dayNumber.toString()];
+
+    // Get the plan to check total days
+    const plan = await this.getReadingPlan(planId);
+    const totalDays = plan?.totalDays || 365;
+
+    // Calculate next day (wrap around after totalDays)
+    const nextDay = dayNumber >= totalDays ? 1 : dayNumber + 1;
+
+    // Check if plan is completed
+    const isCompleted = newCompletedDays.length >= totalDays;
+
+    // Update progress
+    const result = await this.db
+      .update(userReadingPlanProgress)
+      .set({
+        currentDay: nextDay,
+        completedDays: newCompletedDays,
+        lastReadDate: now,
+        currentStreak: newStreak,
+        longestStreak: newLongestStreak,
+        totalDaysCompleted: newCompletedDays.length,
+        completedAt: isCompleted ? now : null,
+        updatedAt: now,
+      })
+      .where(
+        and(
+          eq(userReadingPlanProgress.userId, userId),
+          eq(userReadingPlanProgress.planId, planId)
+        )
+      )
+      .returning();
+
+    return result[0];
+  }
+
+  async createReadingPlan(plan: InsertReadingPlan): Promise<ReadingPlan> {
+    const result = await this.db
+      .insert(readingPlans)
+      .values(plan)
+      .returning();
+    return result[0];
+  }
+
+  async createReadingPlanDay(day: InsertReadingPlanDay): Promise<ReadingPlanDay> {
+    const result = await this.db
+      .insert(readingPlanDays)
+      .values(day)
+      .returning();
+    return result[0];
+  }
 }
 
 // Fallback memory storage for development
@@ -1188,6 +1355,39 @@ export class MemStorage implements IStorage {
 
   async updateDevotionalProgress(userId: string, gender: 'men' | 'women', dayNumber: number): Promise<UserDevotionalProgress> {
     throw new Error("MemStorage does not support devotionals - use DatabaseStorage");
+  }
+
+  // Reading Plan methods - not supported in MemStorage
+  async getAllReadingPlans(language: string = 'en'): Promise<ReadingPlan[]> {
+    return [];
+  }
+
+  async getReadingPlan(planId: string): Promise<ReadingPlan | undefined> {
+    return undefined;
+  }
+
+  async getReadingPlanDay(planId: string, dayNumber: number): Promise<ReadingPlanDay | undefined> {
+    return undefined;
+  }
+
+  async getUserReadingPlanProgress(userId: string, planId: string): Promise<UserReadingPlanProgress | undefined> {
+    return undefined;
+  }
+
+  async createUserReadingPlanProgress(userId: string, planId: string): Promise<UserReadingPlanProgress> {
+    throw new Error("MemStorage does not support reading plans - use DatabaseStorage");
+  }
+
+  async updateReadingPlanProgress(userId: string, planId: string, dayNumber: number): Promise<UserReadingPlanProgress> {
+    throw new Error("MemStorage does not support reading plans - use DatabaseStorage");
+  }
+
+  async createReadingPlan(plan: InsertReadingPlan): Promise<ReadingPlan> {
+    throw new Error("MemStorage does not support reading plans - use DatabaseStorage");
+  }
+
+  async createReadingPlanDay(day: InsertReadingPlanDay): Promise<ReadingPlanDay> {
+    throw new Error("MemStorage does not support reading plans - use DatabaseStorage");
   }
 }
 

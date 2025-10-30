@@ -325,3 +325,63 @@ export type InsertDevotional = z.infer<typeof insertDevotionalSchema>;
 export type Devotional = typeof devotionals.$inferSelect;
 export type InsertUserDevotionalProgress = z.infer<typeof insertUserDevotionalProgressSchema>;
 export type UserDevotionalProgress = typeof userDevotionalProgress.$inferSelect;
+
+// Bible Reading Plans - Master reading plan table
+export const readingPlans = pgTable("reading_plans", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(), // "Bible in 1 Year", "Gospels in 30 Days", etc.
+  description: text("description").notNull(),
+  totalDays: integer("total_days").notNull(), // 365 for "Bible in 1 Year"
+  language: languageEnum("language").notNull().default('en'),
+  isActive: boolean("is_active").notNull().default(true),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+});
+
+// Reading Plan Days - Daily reading content for each plan
+export const readingPlanDays = pgTable("reading_plan_days", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  planId: varchar("plan_id").notNull().references(() => readingPlans.id, { onDelete: 'cascade' }),
+  dayNumber: integer("day_number").notNull(), // 1-365
+  readings: text("readings").array().notNull(), // Array of Bible readings (e.g., ["GEN.1-GEN.3", "MAT.1"])
+  readingsText: text("readings_text"), // Optional: pre-fetched text for offline
+  title: text("title"), // Optional: "Creation", "The Beginning", etc.
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniquePlanDay: unique('unique_plan_day').on(table.planId, table.dayNumber),
+  };
+});
+
+// User Reading Plan Progress - tracks user's progress through reading plans
+export const userReadingPlanProgress = pgTable("user_reading_plan_progress", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => appUsers.id, { onDelete: 'cascade' }),
+  planId: varchar("plan_id").notNull().references(() => readingPlans.id, { onDelete: 'cascade' }),
+  currentDay: integer("current_day").notNull().default(1), // Current day (1-totalDays)
+  completedDays: text("completed_days").array().notNull().default(sql`ARRAY[]::text[]`), // Array of completed day numbers
+  lastReadDate: timestamp("last_read_date"), // Last time they read
+  currentStreak: integer("current_streak").notNull().default(0), // Consecutive days
+  longestStreak: integer("longest_streak").notNull().default(0), // Best streak ever
+  totalDaysCompleted: integer("total_days_completed").notNull().default(0), // Total days finished
+  startedAt: timestamp("started_at").notNull().default(sql`now()`),
+  completedAt: timestamp("completed_at"), // When they finished the entire plan
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniqueUserPlan: unique('unique_user_plan').on(table.userId, table.planId),
+  };
+});
+
+// Insert schemas and types for reading plans
+export const insertReadingPlanSchema = createInsertSchema(readingPlans).omit({ id: true, createdAt: true, updatedAt: true });
+export const insertReadingPlanDaySchema = createInsertSchema(readingPlanDays).omit({ id: true, createdAt: true });
+export const insertUserReadingPlanProgressSchema = createInsertSchema(userReadingPlanProgress).omit({ id: true, createdAt: true, updatedAt: true });
+
+export type InsertReadingPlan = z.infer<typeof insertReadingPlanSchema>;
+export type ReadingPlan = typeof readingPlans.$inferSelect;
+export type InsertReadingPlanDay = z.infer<typeof insertReadingPlanDaySchema>;
+export type ReadingPlanDay = typeof readingPlanDays.$inferSelect;
+export type InsertUserReadingPlanProgress = z.infer<typeof insertUserReadingPlanProgressSchema>;
+export type UserReadingPlanProgress = typeof userReadingPlanProgress.$inferSelect;
