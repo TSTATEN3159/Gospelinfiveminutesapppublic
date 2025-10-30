@@ -32,7 +32,7 @@ interface User {
   email: string;
   birthMonth: string;
   birthDay: string;
-  phone: string;
+  phone?: string;
 }
 
 interface HomePageProps {
