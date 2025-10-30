@@ -69,6 +69,12 @@ function App() {
       // Show registration modal for first-time users
       setShowRegistration(true);
     }
+
+    // Check for hash-based routing (e.g., /#glassdemo)
+    const hash = window.location.hash.slice(1);
+    if (hash && ["glassdemo"].includes(hash)) {
+      setCurrentPage(hash as AppPage);
+    }
   }, []);
 
   const handleRegistrationComplete = async (userData?: User) => {
