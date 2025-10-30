@@ -1114,6 +1114,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             question: q.question,
             options: q.options,
             correctAnswer: q.correctAnswer,
+            hint: q.hint,
             verse: verseReference || q.verseReference,
             verseText: verseText,
             difficulty: difficulty

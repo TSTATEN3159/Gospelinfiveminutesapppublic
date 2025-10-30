@@ -113,17 +113,19 @@ Preferred communication style: Simple, everyday language.
 
   - ✅ **Dynamic Bible Trivia System - PRODUCTION READY** (Oct 30, 2025):
     - **Critical User Need**: Transitioned from hardcoded static questions to fully dynamic, updateable database-backed trivia
-    - **Database Schema**: Created `trivia_questions` table with difficulty enum ('easy', 'medium', 'difficult')
+    - **Scale**: 150 total questions (50 easy, 50 medium, 50 difficult) - System randomly selects 10 from pool of 50
+    - **Hint System**: Every question includes a helpful hint to guide users
+    - **Database Schema**: Created `trivia_questions` table with difficulty enum ('easy', 'medium', 'difficult') and hint field
     - **Multi-Language Support**: Language enum (en, es, fr, pt, zh, ar, hi) for future expansion
-    - **Seed Data**: Migrated all 30 hardcoded questions to database (10 easy, 10 medium, 10 difficult)
     - **Storage Layer**: Added 3 trivia methods to IStorage:
-      - `getRandomTriviaQuestions(difficulty, count, language)` - SQL RANDOM() for true randomness
+      - `getRandomTriviaQuestions(difficulty, count, language)` - SQL RANDOM() for true randomness from 50-question pool
       - `getAllTriviaQuestions(language)` - Admin/management purposes
       - `createTriviaQuestion(question)` - Add new questions dynamically
-    - **API Update**: `/api/bible-trivia` endpoint now fetches from database instead of hardcoded array
+    - **API Response**: `/api/bible-trivia` now returns question, options, hint, verseReference, verseText, difficulty
     - **Bible Integration**: Maintains verse text fetching from Bible API for questions with verse references
-    - **Why This Matters**: Users reported "seeing the same questions over and over" - database randomization solves this
-    - **Future Expansion**: Questions can now be added/removed without code changes, maintaining user engagement
+    - **Why This Matters**: Solves user complaint "seeing the same questions over and over" - 50 questions per difficulty ensures variety
+    - **User Experience**: Each trivia session shows 10 randomly selected questions from a pool of 50 (different every time)
+    - **Future Expansion**: Questions can be added/removed without code changes, maintaining long-term user engagement
     - **Type Safety**: Fixed enum comparison issues using sql`` template for PostgreSQL enum columns
     - Fixed Files: shared/schema.ts, server/storage.ts, server/routes.ts, server/seed-trivia.ts
 
