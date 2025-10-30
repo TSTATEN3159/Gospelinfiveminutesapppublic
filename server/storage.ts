@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, users, subscribers, appUsers, friendships, donations, contacts, verseShares } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type StudyTopic, type InsertStudyTopic, type StudyTranslation, type InsertStudyTranslation, type StudyLesson, type InsertStudyLesson, type LessonTranslation, type InsertLessonTranslation, users, subscribers, appUsers, friendships, donations, contacts, verseShares, studyTopics, studyTranslations, studyLessons, lessonTranslations } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -52,6 +52,15 @@ export interface IStorage {
   getSentVerses(userId: string): Promise<VerseShare[]>;
   markVerseAsRead(verseShareId: string): Promise<VerseShare | undefined>;
   deleteVerseShare(verseShareId: string): Promise<boolean>;
+  
+  // Bible studies methods
+  getAllStudies(language?: string): Promise<Array<StudyTopic & { translation: StudyTranslation | null }>>;
+  getStudyBySlug(slug: string, language?: string): Promise<(StudyTopic & { translation: StudyTranslation | null }) | undefined>;
+  createStudy(topic: InsertStudyTopic, translation: InsertStudyTranslation): Promise<StudyTopic>;
+  updateStudy(id: string, updates: Partial<InsertStudyTopic>): Promise<StudyTopic | undefined>;
+  getStudyLessons(studyId: string, language?: string): Promise<Array<StudyLesson & { translation: LessonTranslation | null }>>;
+  getLessonByDay(studyId: string, dayNumber: number, language?: string): Promise<(StudyLesson & { translation: LessonTranslation | null }) | undefined>;
+  createLesson(lesson: InsertStudyLesson, translation: InsertLessonTranslation): Promise<StudyLesson>;
 }
 
 // Database storage implementation
