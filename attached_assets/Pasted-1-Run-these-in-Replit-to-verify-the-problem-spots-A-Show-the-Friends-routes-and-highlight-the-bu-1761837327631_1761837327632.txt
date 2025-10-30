@@ -1,0 +1,226 @@
+1) Run these in Replit to verify the problem spots
+# A. Show the Friends routes and highlight the bug (missing req.params.userId usage)
+nl -ba server/routes.ts | sed -n '1,260p' | sed -n '1,9999p' | grep -n "api/friends" -n
+rg -n "app\.get\(\"/api/friends/:userId\"" server/routes.ts -n
+sed -n '1,2600p' server/routes.ts | nl -ba | sed -n '1,2600p' | rg -n "GET /api/friends|friends\(\)|req\.params|userId"
+
+# B. Print the whole handler so we can patch precisely
+rg -n "app\.get\(\"/api/friends/:userId\"" -n server/routes.ts
+# (Take the line number from above and print ~40 lines around it)
+nl -ba server/routes.ts | sed -n '<LINE-20>,<LINE+40>p'
+
+# C. Confirm the Contacts plugin exists in iOS build (Pods) and package.json
+rg -n "@capacitor-community/contacts" package.json ios/Podfile.lock
+
+# D. Confirm your iOS permission string (must exist & be non-empty)
+rg -n "NSContactsUsageDescription" ios/App/App/Info.plist
+cat ios/App/App/Info.plist | sed -n '1,200p' | rg -n "NSContactsUsageDescription|NSPhotoLibrary|NSCamera"
+
+# E. Frontend: show the Import UI and service so we can confirm permission flow & API call
+sed -n '1,240p' client/src/components/ImportFriendsDialog.tsx
+sed -n '1,240p' client/src/pages/FriendsPage.tsx
+sed -n '1,240p' client/src/services/friendsService.ts 2>/dev/null || echo "No friendsService.ts"
+
+
+Paste the outputs (especially the friends route block) if you want me to double-check line numbers. Meanwhile, just apply the patches below—they’re safe.
+
+2) Quick backend patch (fixes “Find Friends”)
+
+Problem:
+Your snippet shows:
+
+app.get("/api/friends/:userId", async (req, res) => {
+  const friends = await storage.getFriends(userId); // ← userId is undefined
+  res.json({ success: true, friends: ... });
+});
+
+
+Fix: Read from req.params, validate, and harden errors.
+
+// server/routes.ts  — replace the existing handler with this one
+app.get("/api/friends/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    if (!userId) {
+      return res.status(400).json({ success: false, error: "Missing userId param" });
+    }
+    const friends = await storage.getFriends(userId);
+    return res.json({
+      success: true,
+      friends: friends.map(f => ({
+        id: f.id,
+        firstName: f.firstName,
+        lastName: f.lastName,
+        email: f.email,
+        joinDate: f.joinDate
+      }))
+    });
+  } catch (err: any) {
+    console.error("[GET /api/friends/:userId] error:", err?.message || err);
+    return res.status(500).json({ success: false, error: "Failed to fetch friends" });
+  }
+});
+
+
+Also sanity-check the DELETE route has params pulled:
+
+// If your delete handler looks similar, harden it too
+app.delete("/api/friends/:userId/:friendId", async (req, res) => {
+  try {
+    const { userId, friendId } = req.params;
+    if (!userId || !friendId) {
+      return res.status(400).json({ success: false, error: "Missing userId or friendId" });
+    }
+    await storage.removeFriend(userId, friendId);
+    return res.json({ success: true, message: "Friend removed successfully." });
+  } catch (err: any) {
+    console.error("[DELETE /api/friends/:userId/:friendId] error:", err?.message || err);
+    return res.status(500).json({ success: false, error: "Failed to remove friend" });
+  }
+});
+
+
+Smoke test (server-only, no app rebuild needed):
+
+# Replace USER_ID below with a real app_users.id from your DB
+curl -s https://daily-gospel-timothystaten.replit.app/api/friends/USER_ID | jq .
+
+3) iOS Contacts permission & import flow (fixes “Import Contacts”)
+A) Make sure the iOS permission string exists
+
+Your build logs show the Contacts plugin compiling. Now ensure Info.plist has this key with a human-readable message:
+
+<!-- ios/App/App/Info.plist -->
+<key>NSContactsUsageDescription</key>
+<string>We use your contacts to help you find friends already using The Gospel in 5 Minutes.</string>
+
+
+If it wasn’t there, add it, commit, and rebuild in Appflow.
+
+B) Frontend: request permissions explicitly before fetching
+
+In ImportFriendsDialog.tsx (or wherever you tap “Import”), make sure you do this:
+
+import { Contacts } from '@capacitor-community/contacts';
+import { Capacitor } from '@capacitor/core';
+
+async function importDeviceContacts(userId: string) {
+  // iOS: request permission explicitly
+  if (Capacitor.getPlatform() === 'ios') {
+    const perm = await Contacts.requestPermissions();
+    // statuses: 'granted' | 'denied' | 'prompt' | 'limited' (iOS 17+)
+    if (!perm?.granted) {
+      throw new Error('Contacts permission not granted');
+    }
+  }
+
+  const res = await Contacts.getContacts({
+    projection: {
+      name: true,
+      phones: true,
+      emails: true
+    }
+  });
+
+  const contacts = (res?.contacts || [])
+    .map(c => ({
+      firstName: c.name?.given ?? '',
+      lastName:  c.name?.family ?? '',
+      email: (c.emails?.[0]?.address ?? '').trim() || undefined,
+      phone: (c.phones?.[0]?.number ?? '').trim() || undefined
+    }))
+    // require name + (email OR phone)
+    .filter(c => (c.firstName || c.lastName) && (c.email || c.phone));
+
+  // Limit to 50 during signup (matches your backend)
+  const payload = { contacts: contacts.slice(0, 50) };
+
+  const resp = await fetch(apiUrl(`/api/contacts/${userId}/import?fromSignup=true`), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+
+  if (!resp.ok) {
+    const txt = await resp.text();
+    throw new Error(`Import failed: ${resp.status} ${txt}`);
+  }
+
+  return await resp.json();
+}
+
+
+Common frontend pitfalls to check:
+
+You’re actually passing a real userId into /api/contacts/:userId/import. (If you’re anonymous, create/register first and persist userId.)
+
+Show a toast/modal if perm.granted === false so the user can go to Settings → Privacy → Contacts and enable access.
+
+4) Quick backend hardening for contacts import (optional, but recommended)
+
+Add validation so bad payloads don’t 500 your server:
+
+app.post("/api/contacts/:userId/import", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const fromSignup = req.query.fromSignup === 'true';
+
+    if (!userId) return res.status(400).json({ success: false, error: "Missing userId" });
+    if (!Array.isArray(req.body?.contacts)) {
+      return res.status(400).json({ success: false, error: "contacts must be an array" });
+    }
+
+    const limit = fromSignup ? 50 : 1000;
+    const contacts = req.body.contacts
+      .slice(0, limit)
+      .filter((c: any) => (c?.firstName || c?.lastName) && (c?.email || c?.phone));
+
+    const importedContacts = await storage.importContacts(userId, contacts);
+    const appUserContacts = await storage.findAppUsersFromContacts(userId);
+
+    return res.json({
+      success: true,
+      message: `${importedContacts.length} contacts imported, ${appUserContacts.length} app users found`,
+      totalImported: importedContacts.length,
+      appUsersFound: appUserContacts.length
+    });
+  } catch (err: any) {
+    console.error("[POST /api/contacts/:userId/import] error:", err?.message || err);
+    return res.status(500).json({ success: false, error: "Failed to import contacts" });
+  }
+});
+
+5) Post-fix tests you can run right now
+# Replace with a real user id
+USER_ID="YOUR_APP_USER_ID"
+
+# A) Friends endpoint now returns (no 500)
+curl -s https://daily-gospel-timothystaten.replit.app/api/friends/$USER_ID | jq .
+
+# B) Contacts import accepts minimal valid payload
+curl -s -X POST "https://daily-gospel-timothystaten.replit.app/api/contacts/$USER_ID/import?fromSignup=true" \
+  -H "Content-Type: application/json" \
+  -d '{"contacts":[{"firstName":"Jane","lastName":"Smith","email":"jane@example.com"}]}' | jq .
+
+# C) Fetch contacts to see flags
+curl -s https://daily-gospel-timothystaten.replit.app/api/contacts/$USER_ID | jq .
+
+6) If it still doesn’t work in TestFlight
+
+Plug your iPhone into your Mac → Xcode → Window → Devices and Simulators → Console.
+
+Tap Import Contacts.
+
+Copy any logs mentioning Contacts, AuthorizationStatus, CNContactStore, or NSContactsUsageDescription.
+
+I’ll map that to a precise fix (e.g., denied/limited handling, missing plist string, or a plugin quirk on iOS 18).
+
+TL;DR
+
+Fix backend route that forgot const { userId } = req.params; → breaks “Find Friends”.
+
+Ensure Info.plist has NSContactsUsageDescription and the frontend requests permissions before calling Contacts.getContacts().
+
+Pass a real userId when importing.
+
+Run the commands above; if anything throws, paste it here and I’ll patch it line-by-line.
