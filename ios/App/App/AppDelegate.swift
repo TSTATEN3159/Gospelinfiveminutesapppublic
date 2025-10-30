@@ -4,19 +4,26 @@ import WebKit
 
 @UIApplicationMain
 class AppDelegate: CAPAppDelegate {
+  override func application(
+    _ application: UIApplication,
+    didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?
+  ) -> Bool {
+    let cfg = CAPBridgeViewController.wkWebViewConfiguration
 
-    override func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        // Allow inline YouTube playback & remove user-gesture requirement
-        CAPBridgeViewController.wkWebViewConfiguration.allowsInlineMediaPlayback = true
-        CAPBridgeViewController.wkWebViewConfiguration.mediaTypesRequiringUserActionForPlayback = []
-        
-        // (Optional) AirPlay/PiP support
-        if #available(iOS 10.0, *) {
-            CAPBridgeViewController.wkWebViewConfiguration.allowsAirPlayForMediaPlayback = true
-        }
-        
-        return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+    // Allow inline playback for iframes (YouTube)
+    cfg.allowsInlineMediaPlayback = true
+
+    // Remove user-gesture requirement for all media types (iOS 10+)
+    if #available(iOS 10.0, *) {
+      cfg.mediaTypesRequiringUserActionForPlayback = []
+      cfg.allowsAirPlayForMediaPlayback = true
+    } else {
+      // Fallback for older iOS (deprecated on iOS 10+)
+      cfg.requiresUserActionForMediaPlayback = false
     }
+
+    return super.application(application, didFinishLaunchingWithOptions: launchOptions)
+  }
 
     func applicationWillResignActive(_ application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
