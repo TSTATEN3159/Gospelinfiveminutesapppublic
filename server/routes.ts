@@ -1821,17 +1821,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Friends Routes
   app.post("/api/friends/request", async (req, res) => {
+    const t0 = Date.now();
     try {
+      console.log("[API] POST /api/friends/request body:", JSON.stringify(req.body));
+      
       const { requesterId, addresseeId } = z.object({
         requesterId: z.string().min(1),
         addresseeId: z.string().min(1)
       }).parse(req.body);
       
+      console.log("[API] Parsed:", { requesterId, addresseeId });
+      
       // Check if users exist
       const requester = await storage.getAppUser(requesterId);
       const addressee = await storage.getAppUser(addresseeId);
       
+      console.log("[API] Users found:", { 
+        requester: !!requester, 
+        addressee: !!addressee 
+      });
+      
       if (!requester || !addressee) {
+        console.error("[API] User not found:", { 
+          requesterId, 
+          requesterFound: !!requester, 
+          addresseeId, 
+          addresseeFound: !!addressee 
+        });
         return res.status(404).json({
           success: false,
           error: "One or both users not found."
@@ -1840,6 +1856,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       // Check if friendship already exists
       const existingFriendship = await storage.getFriendship(requesterId, addresseeId);
+      console.log("[API] Existing friendship:", !!existingFriendship);
+      
       if (existingFriendship) {
         return res.status(400).json({
           success: false,
@@ -1848,6 +1866,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
       
       const friendship = await storage.createFriendRequest(requesterId, addresseeId);
+      
+      console.log("[API] Friend request success", { ms: Date.now() - t0, friendshipId: friendship.id });
       
       res.json({
         success: true,
@@ -1858,7 +1878,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
     } catch (error) {
-      console.error("Create friend request error:", error);
+      console.error("[API] Create friend request error:", error);
       
       if (error instanceof z.ZodError) {
         return res.status(400).json({

@@ -136,16 +136,21 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
     try {
       const selectedContactsArray = Array.from(selectedContacts).map(index => contacts[index]);
       console.log('[Contacts] Importing count:', selectedContactsArray.length);
+      console.log('[Contacts] Sample contact:', JSON.stringify(selectedContactsArray[0]));
+      
+      const url = `/api/contacts/${appUserId}/import?fromSignup=true`;
+      console.log('[Contacts] POST URL:', url);
+      console.log('[Contacts] Payload:', { contactsCount: selectedContactsArray.length });
       
       const res = await apiRequest(
         'POST',
-        `/api/contacts/${appUserId}/import?fromSignup=true`,
+        url,
         { contacts: selectedContactsArray }
       );
 
       console.log('[Contacts] Import status:', res.status);
       const result = await res.json();
-      console.log('[Contacts] Import response:', result);
+      console.log('[Contacts] Import response:', JSON.stringify(result));
       
       setImportResults({
         totalImported: result.totalImported || 0,
@@ -157,11 +162,13 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
         title: "Success!",
         description: `${result.totalImported || 0} contacts imported, ${result.appUsersFound || 0} friends found.`,
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error('[Contacts] Import error:', error);
+      console.error('[Contacts] Error message:', error?.message);
+      console.error('[Contacts] Error stack:', error?.stack);
       toast({
         title: "Import Failed",
-        description: "Failed to import contacts. Please try again later.",
+        description: error?.message || "Failed to import contacts. Please try again later.",
         variant: "destructive",
       });
     } finally {

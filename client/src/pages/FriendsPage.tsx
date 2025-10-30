@@ -107,8 +107,14 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
   // Send friend request mutation
   const sendRequestMutation = useMutation({
-    mutationFn: (addresseeId: string) => 
-      apiRequest('POST', '/api/friends/request', { requesterId: currentUserId, addresseeId }),
+    mutationFn: async (addresseeId: string) => {
+      console.log('[Friends] Sending request from:', currentUserId, 'to:', addresseeId);
+      const res = await apiRequest('POST', '/api/friends/request', { requesterId: currentUserId, addresseeId });
+      console.log('[Friends] Request status:', res.status);
+      const result = await res.json();
+      console.log('[Friends] Request response:', JSON.stringify(result));
+      return result;
+    },
     onSuccess: () => {
       toast({
         title: t.success,
@@ -116,10 +122,12 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
       });
       queryClient.invalidateQueries({ queryKey: ['/api/friends/requests', currentUserId] });
     },
-    onError: () => {
+    onError: (error: any) => {
+      console.error('[Friends] Request error:', error);
+      console.error('[Friends] Error message:', error?.message);
       toast({
         title: t.error,
-        description: t.friendRequestFailed,
+        description: error?.message || t.friendRequestFailed,
         variant: "destructive",
       });
     }
