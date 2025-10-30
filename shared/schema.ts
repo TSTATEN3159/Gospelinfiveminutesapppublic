@@ -253,6 +253,9 @@ export type LessonTranslation = typeof lessonTranslations.$inferSelect;
 // Bible trivia enums
 export const triviaDifficultyEnum = pgEnum('trivia_difficulty', ['easy', 'medium', 'difficult']);
 
+// Devotional enums
+export const genderEnum = pgEnum('gender', ['men', 'women']);
+
 // Trivia questions table - stores all trivia questions
 export const triviaQuestions = pgTable("trivia_questions", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
@@ -272,3 +275,53 @@ export const insertTriviaQuestionSchema = createInsertSchema(triviaQuestions).om
 
 export type InsertTriviaQuestion = z.infer<typeof insertTriviaQuestionSchema>;
 export type TriviaQuestion = typeof triviaQuestions.$inferSelect;
+
+// Daily Devotionals table - 365-day devotional content (separate tracks for men and women)
+export const devotionals = pgTable("devotionals", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  dayNumber: integer("day_number").notNull(), // 1-365
+  gender: genderEnum("gender").notNull(), // men or women
+  language: languageEnum("language").notNull().default('en'),
+  title: text("title").notNull(),
+  mainScripture: text("main_scripture").notNull(), // Reference like "John 3:16"
+  mainScriptureText: text("main_scripture_text").notNull(), // Full verse text
+  devotionalContent: text("devotional_content").notNull(), // 5-minute read content
+  supportingVerse1: text("supporting_verse_1"), // Optional supporting verse reference
+  supportingVerse1Text: text("supporting_verse_1_text"), // Supporting verse text
+  supportingVerse2: text("supporting_verse_2"), // Optional supporting verse reference
+  supportingVerse2Text: text("supporting_verse_2_text"), // Supporting verse text
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniqueDayGender: unique('unique_day_gender_lang').on(table.dayNumber, table.gender, table.language),
+  };
+});
+
+// User devotional progress table - tracks user's progress through devotional
+export const userDevotionalProgress = pgTable("user_devotional_progress", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => appUsers.id, { onDelete: 'cascade' }),
+  gender: genderEnum("gender").notNull(), // Which track they're following
+  currentDay: integer("current_day").notNull().default(1), // Current day (1-365)
+  completedDays: text("completed_days").array().notNull().default(sql`ARRAY[]::text[]`), // Array of completed day numbers
+  lastReadDate: timestamp("last_read_date"), // Last time they read a devotional
+  currentStreak: integer("current_streak").notNull().default(0), // Consecutive days
+  longestStreak: integer("longest_streak").notNull().default(0), // Best streak ever
+  totalDaysCompleted: integer("total_days_completed").notNull().default(0), // Total days finished
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniqueUserGender: unique('unique_user_gender').on(table.userId, table.gender),
+  };
+});
+
+// Insert schemas and types for devotionals
+export const insertDevotionalSchema = createInsertSchema(devotionals).omit({ id: true, createdAt: true, updatedAt: true });
+export const insertUserDevotionalProgressSchema = createInsertSchema(userDevotionalProgress).omit({ id: true, createdAt: true, updatedAt: true });
+
+export type InsertDevotional = z.infer<typeof insertDevotionalSchema>;
+export type Devotional = typeof devotionals.$inferSelect;
+export type InsertUserDevotionalProgress = z.infer<typeof insertUserDevotionalProgressSchema>;
+export type UserDevotionalProgress = typeof userDevotionalProgress.$inferSelect;

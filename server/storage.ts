@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type StudyTopic, type InsertStudyTopic, type StudyTranslation, type InsertStudyTranslation, type StudyLesson, type InsertStudyLesson, type LessonTranslation, type InsertLessonTranslation, type TriviaQuestion, type InsertTriviaQuestion, users, subscribers, appUsers, friendships, donations, contacts, verseShares, studyTopics, studyTranslations, studyLessons, lessonTranslations, triviaQuestions } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type StudyTopic, type InsertStudyTopic, type StudyTranslation, type InsertStudyTranslation, type StudyLesson, type InsertStudyLesson, type LessonTranslation, type InsertLessonTranslation, type TriviaQuestion, type InsertTriviaQuestion, type Devotional, type UserDevotionalProgress, users, subscribers, appUsers, friendships, donations, contacts, verseShares, studyTopics, studyTranslations, studyLessons, lessonTranslations, triviaQuestions, devotionals, userDevotionalProgress } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -66,6 +66,12 @@ export interface IStorage {
   getRandomTriviaQuestions(difficulty: 'easy' | 'medium' | 'difficult', count: number, language?: string): Promise<TriviaQuestion[]>;
   getAllTriviaQuestions(language?: string): Promise<TriviaQuestion[]>;
   createTriviaQuestion(question: InsertTriviaQuestion): Promise<TriviaQuestion>;
+  
+  // Devotional methods
+  getDevotional(dayNumber: number, gender: 'men' | 'women', language?: string): Promise<Devotional | undefined>;
+  getUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress | undefined>;
+  createUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress>;
+  updateDevotionalProgress(userId: string, gender: 'men' | 'women', dayNumber: number): Promise<UserDevotionalProgress>;
 }
 
 // Database storage implementation
@@ -621,6 +627,119 @@ export class DatabaseStorage implements IStorage {
     const result = await this.db.insert(triviaQuestions).values(question).returning();
     return result[0];
   }
+  
+  // Devotional implementations
+  async getDevotional(dayNumber: number, gender: 'men' | 'women', language: string = 'en'): Promise<Devotional | undefined> {
+    const results = await this.db
+      .select()
+      .from(devotionals)
+      .where(
+        and(
+          eq(devotionals.dayNumber, dayNumber),
+          sql`${devotionals.gender} = ${gender}`,
+          sql`${devotionals.language} = ${language}`
+        )
+      );
+    
+    return results[0];
+  }
+
+  async getUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress | undefined> {
+    const results = await this.db
+      .select()
+      .from(userDevotionalProgress)
+      .where(
+        and(
+          eq(userDevotionalProgress.userId, userId),
+          sql`${userDevotionalProgress.gender} = ${gender}`
+        )
+      );
+    
+    return results[0];
+  }
+
+  async createUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress> {
+    const result = await this.db
+      .insert(userDevotionalProgress)
+      .values({
+        userId,
+        gender,
+        currentDay: 1,
+        completedDays: [],
+        currentStreak: 0,
+        longestStreak: 0,
+        totalDaysCompleted: 0,
+      })
+      .returning();
+    
+    return result[0];
+  }
+
+  async updateDevotionalProgress(userId: string, gender: 'men' | 'women', dayNumber: number): Promise<UserDevotionalProgress> {
+    // Get current progress
+    const progress = await this.getUserDevotionalProgress(userId, gender);
+    
+    if (!progress) {
+      throw new Error('User devotional progress not found');
+    }
+
+    // Check if this day is already completed
+    const alreadyCompleted = progress.completedDays?.includes(dayNumber.toString()) || false;
+    if (alreadyCompleted) {
+      return progress; // Don't update if already completed
+    }
+
+    // Calculate streak
+    const now = new Date();
+    const lastRead = progress.lastReadDate ? new Date(progress.lastReadDate) : null;
+    
+    let newStreak = 1;
+    if (lastRead) {
+      const daysSinceLastRead = Math.floor((now.getTime() - lastRead.getTime()) / (1000 * 60 * 60 * 24));
+      
+      if (daysSinceLastRead === 1) {
+        // Consecutive day - increment streak
+        newStreak = (progress.currentStreak || 0) + 1;
+      } else if (daysSinceLastRead === 0) {
+        // Same day - keep current streak
+        newStreak = progress.currentStreak || 1;
+      } else {
+        // Streak broken - reset to 1
+        newStreak = 1;
+      }
+    }
+
+    // Update longest streak if current streak is higher
+    const newLongestStreak = Math.max(newStreak, progress.longestStreak || 0);
+
+    // Add day to completed days
+    const newCompletedDays = [...(progress.completedDays || []), dayNumber.toString()];
+
+    // Calculate next day (wrap around after 365)
+    const nextDay = dayNumber >= 365 ? 1 : dayNumber + 1;
+
+    // Update progress
+    const result = await this.db
+      .update(userDevotionalProgress)
+      .set({
+        currentDay: nextDay,
+        completedDays: newCompletedDays,
+        lastReadDate: now,
+        currentStreak: newStreak,
+        longestStreak: newLongestStreak,
+        totalDaysCompleted: newCompletedDays.length,
+        updatedAt: now,
+      })
+      .where(
+        and(
+          eq(userDevotionalProgress.userId, userId),
+          sql`${userDevotionalProgress.gender} = ${gender}`
+        )
+      )
+      .returning();
+
+    return result[0];
+  }
 }
 
 // Fallback memory storage for development
@@ -1052,6 +1171,23 @@ export class MemStorage implements IStorage {
 
   async createTriviaQuestion(question: InsertTriviaQuestion): Promise<TriviaQuestion> {
     throw new Error("MemStorage does not support trivia questions - use DatabaseStorage");
+  }
+  
+  // Devotional methods - not supported in MemStorage
+  async getDevotional(dayNumber: number, gender: 'men' | 'women', language: string = 'en'): Promise<Devotional | undefined> {
+    return undefined;
+  }
+
+  async getUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress | undefined> {
+    return undefined;
+  }
+
+  async createUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress> {
+    throw new Error("MemStorage does not support devotionals - use DatabaseStorage");
+  }
+
+  async updateDevotionalProgress(userId: string, gender: 'men' | 'women', dayNumber: number): Promise<UserDevotionalProgress> {
+    throw new Error("MemStorage does not support devotionals - use DatabaseStorage");
   }
 }
 
