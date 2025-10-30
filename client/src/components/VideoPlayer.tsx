@@ -47,8 +47,9 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
 
   // STEP A: Direct YouTube embed (bypassing proxy to test if proxy is the blocker)
   // Using youtube-nocookie.com for privacy and better compatibility
+  // Added mute=1&autoplay=1 for iOS autoplay (iOS allows autoplay when muted)
   const directEmbedUrl = videoId 
-    ? `https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1`
+    ? `https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&mute=1&autoplay=1`
     : null;
 
   // Log embed URL for debugging in TestFlight

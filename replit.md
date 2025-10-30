@@ -43,7 +43,8 @@ Preferred communication style: Simple, everyday language.
     - **Implementation**: 
       - VideoPlayer.tsx now loads YouTube iframes directly from `youtube-nocookie.com/embed/`
       - Bypasses backend proxy entirely to test if proxy was the blocker
-      - Uses minimal embed parameters: `playsinline=1&rel=0&modestbranding=1`
+      - Uses optimized embed parameters: `playsinline=1&rel=0&modestbranding=1&mute=1&autoplay=1`
+      - iOS autoplay enabled (muted autoplay is allowed on iOS)
       - Added error logging with visual overlay for debugging in TestFlight
       - Logs embed URL, video ID, and User Agent to console for verification
     - **Testing Protocol**:
