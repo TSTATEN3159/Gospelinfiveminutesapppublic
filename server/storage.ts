@@ -457,6 +457,128 @@ export class DatabaseStorage implements IStorage {
       .returning();
     return result.length > 0;
   }
+
+  // Bible studies methods
+  async getAllStudies(language: string = 'en'): Promise<Array<StudyTopic & { translation: StudyTranslation | null }>> {
+    const results = await this.db
+      .select()
+      .from(studyTopics)
+      .leftJoin(
+        studyTranslations,
+        and(
+          eq(studyTranslations.studyId, studyTopics.id),
+          sql`${studyTranslations.language} = ${language}`
+        )
+      )
+      .where(eq(studyTopics.isPublished, true))
+      .orderBy(studyTopics.isFeatured, studyTopics.createdAt);
+
+    return results.map(r => ({
+      ...r.study_topics,
+      translation: r.study_translations
+    }));
+  }
+
+  async getStudyBySlug(slug: string, language: string = 'en'): Promise<(StudyTopic & { translation: StudyTranslation | null }) | undefined> {
+    const results = await this.db
+      .select()
+      .from(studyTopics)
+      .leftJoin(
+        studyTranslations,
+        and(
+          eq(studyTranslations.studyId, studyTopics.id),
+          sql`${studyTranslations.language} = ${language}`
+        )
+      )
+      .where(and(eq(studyTopics.slug, slug), eq(studyTopics.isPublished, true)));
+
+    if (results.length === 0) return undefined;
+
+    return {
+      ...results[0].study_topics,
+      translation: results[0].study_translations
+    };
+  }
+
+  async createStudy(topic: InsertStudyTopic, translation: InsertStudyTranslation): Promise<StudyTopic> {
+    const topicResult = await this.db.insert(studyTopics).values(topic).returning();
+    const createdTopic = topicResult[0];
+
+    await this.db.insert(studyTranslations).values({
+      ...translation,
+      studyId: createdTopic.id
+    });
+
+    return createdTopic;
+  }
+
+  async updateStudy(id: string, updates: Partial<InsertStudyTopic>): Promise<StudyTopic | undefined> {
+    const result = await this.db
+      .update(studyTopics)
+      .set({ ...updates, updatedAt: new Date() })
+      .where(eq(studyTopics.id, id))
+      .returning();
+    return result[0];
+  }
+
+  async getStudyLessons(studyId: string, language: string = 'en'): Promise<Array<StudyLesson & { translation: LessonTranslation | null }>> {
+    const results = await this.db
+      .select()
+      .from(studyLessons)
+      .leftJoin(
+        lessonTranslations,
+        and(
+          eq(lessonTranslations.lessonId, studyLessons.id),
+          sql`${lessonTranslations.language} = ${language}`
+        )
+      )
+      .where(and(eq(studyLessons.studyId, studyId), eq(studyLessons.isPublished, true)))
+      .orderBy(studyLessons.dayNumber);
+
+    return results.map(r => ({
+      ...r.study_lessons,
+      translation: r.lesson_translations
+    }));
+  }
+
+  async getLessonByDay(studyId: string, dayNumber: number, language: string = 'en'): Promise<(StudyLesson & { translation: LessonTranslation | null }) | undefined> {
+    const results = await this.db
+      .select()
+      .from(studyLessons)
+      .leftJoin(
+        lessonTranslations,
+        and(
+          eq(lessonTranslations.lessonId, studyLessons.id),
+          sql`${lessonTranslations.language} = ${language}`
+        )
+      )
+      .where(
+        and(
+          eq(studyLessons.studyId, studyId),
+          eq(studyLessons.dayNumber, dayNumber),
+          eq(studyLessons.isPublished, true)
+        )
+      );
+
+    if (results.length === 0) return undefined;
+
+    return {
+      ...results[0].study_lessons,
+      translation: results[0].lesson_translations
+    };
+  }
+
+  async createLesson(lesson: InsertStudyLesson, translation: InsertLessonTranslation): Promise<StudyLesson> {
+    const lessonResult = await this.db.insert(studyLessons).values(lesson).returning();
+    const createdLesson = lessonResult[0];
+
+    await this.db.insert(lessonTranslations).values({
+      ...translation,
+      lessonId: createdLesson.id
+    });
+
+    return createdLesson;
+  }
 }
 
 // Fallback memory storage for development
@@ -846,6 +968,35 @@ export class MemStorage implements IStorage {
 
   async deleteVerseShare(verseShareId: string): Promise<boolean> {
     return this.verseSharesMap.delete(verseShareId);
+  }
+
+  // Bible studies methods - simplified for MemStorage
+  async getAllStudies(language: string = 'en'): Promise<Array<StudyTopic & { translation: StudyTranslation | null }>> {
+    return [];
+  }
+
+  async getStudyBySlug(slug: string, language: string = 'en'): Promise<(StudyTopic & { translation: StudyTranslation | null }) | undefined> {
+    return undefined;
+  }
+
+  async createStudy(topic: InsertStudyTopic, translation: InsertStudyTranslation): Promise<StudyTopic> {
+    throw new Error("MemStorage does not support Bible studies - use DatabaseStorage");
+  }
+
+  async updateStudy(id: string, updates: Partial<InsertStudyTopic>): Promise<StudyTopic | undefined> {
+    return undefined;
+  }
+
+  async getStudyLessons(studyId: string, language: string = 'en'): Promise<Array<StudyLesson & { translation: LessonTranslation | null }>> {
+    return [];
+  }
+
+  async getLessonByDay(studyId: string, dayNumber: number, language: string = 'en'): Promise<(StudyLesson & { translation: LessonTranslation | null }) | undefined> {
+    return undefined;
+  }
+
+  async createLesson(lesson: InsertStudyLesson, translation: InsertLessonTranslation): Promise<StudyLesson> {
+    throw new Error("MemStorage does not support Bible studies - use DatabaseStorage");
   }
 }
 

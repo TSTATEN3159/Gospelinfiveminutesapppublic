@@ -2622,6 +2622,142 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Bible studies routes
+  app.get("/api/studies", async (req, res) => {
+    try {
+      const language = (req.query.lang as string) || 'en';
+      const studies = await storage.getAllStudies(language);
+      
+      // Transform to frontend-friendly format
+      const response = studies.map(study => ({
+        id: study.id,
+        slug: study.slug,
+        lessonsCount: study.lessonsCount,
+        isFeatured: study.isFeatured,
+        title: study.translation?.title || 'Untitled Study',
+        author: study.translation?.author || 'Unknown',
+        description: study.translation?.description || '',
+        category: study.translation?.category || 'General',
+        duration: study.translation?.duration || `${study.lessonsCount} days`,
+        difficulty: study.translation?.difficulty || 'Beginner',
+        heroImageUrl: study.translation?.heroImageUrl || null
+      }));
+
+      res.json(response);
+    } catch (error) {
+      console.error('[API] Error fetching studies:', error);
+      res.status(500).json({ error: "Failed to fetch studies" });
+    }
+  });
+
+  app.get("/api/studies/:slug", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const language = (req.query.lang as string) || 'en';
+      
+      const study = await storage.getStudyBySlug(slug, language);
+      
+      if (!study || !study.translation) {
+        return res.status(404).json({ error: "Study not found" });
+      }
+
+      const response = {
+        id: study.id,
+        slug: study.slug,
+        lessonsCount: study.lessonsCount,
+        isFeatured: study.isFeatured,
+        title: study.translation.title,
+        author: study.translation.author,
+        description: study.translation.description,
+        category: study.translation.category,
+        duration: study.translation.duration,
+        difficulty: study.translation.difficulty,
+        heroImageUrl: study.translation.heroImageUrl || null
+      };
+
+      res.json(response);
+    } catch (error) {
+      console.error('[API] Error fetching study:', error);
+      res.status(500).json({ error: "Failed to fetch study" });
+    }
+  });
+
+  app.get("/api/studies/:slug/lessons", async (req, res) => {
+    try {
+      const { slug } = req.params;
+      const language = (req.query.lang as string) || 'en';
+      
+      // First get the study to get its ID
+      const study = await storage.getStudyBySlug(slug, language);
+      if (!study) {
+        return res.status(404).json({ error: "Study not found" });
+      }
+
+      const lessons = await storage.getStudyLessons(study.id, language);
+      
+      // Transform to frontend-friendly format
+      const response = lessons.map(lesson => ({
+        id: lesson.id,
+        dayNumber: lesson.dayNumber,
+        title: lesson.translation?.title || `Day ${lesson.dayNumber}`,
+        verseReference: lesson.translation?.verseReference || '',
+        verseText: lesson.translation?.verseText || '',
+        content: lesson.translation?.content || '',
+        reflectionQuestions: lesson.translation?.reflectionQuestions ? JSON.parse(lesson.translation.reflectionQuestions) : [],
+        prayer: lesson.translation?.prayer || '',
+        audioUrl: lesson.audioUrl || null,
+        videoUrl: lesson.videoUrl || null
+      }));
+
+      res.json(response);
+    } catch (error) {
+      console.error('[API] Error fetching lessons:', error);
+      res.status(500).json({ error: "Failed to fetch lessons" });
+    }
+  });
+
+  app.get("/api/studies/:slug/lessons/:dayNumber", async (req, res) => {
+    try {
+      const { slug, dayNumber } = req.params;
+      const language = (req.query.lang as string) || 'en';
+      const day = parseInt(dayNumber, 10);
+
+      if (isNaN(day)) {
+        return res.status(400).json({ error: "Invalid day number" });
+      }
+
+      // First get the study to get its ID
+      const study = await storage.getStudyBySlug(slug, language);
+      if (!study) {
+        return res.status(404).json({ error: "Study not found" });
+      }
+
+      const lesson = await storage.getLessonByDay(study.id, day, language);
+      
+      if (!lesson || !lesson.translation) {
+        return res.status(404).json({ error: "Lesson not found" });
+      }
+
+      const response = {
+        id: lesson.id,
+        dayNumber: lesson.dayNumber,
+        title: lesson.translation.title,
+        verseReference: lesson.translation.verseReference,
+        verseText: lesson.translation.verseText,
+        content: lesson.translation.content,
+        reflectionQuestions: JSON.parse(lesson.translation.reflectionQuestions),
+        prayer: lesson.translation.prayer,
+        audioUrl: lesson.audioUrl || null,
+        videoUrl: lesson.videoUrl || null
+      };
+
+      res.json(response);
+    } catch (error) {
+      console.error('[API] Error fetching lesson:', error);
+      res.status(500).json({ error: "Failed to fetch lesson" });
+    }
+  });
+
   const httpServer = createServer(app);
 
   return httpServer;

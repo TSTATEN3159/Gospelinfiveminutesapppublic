@@ -1,10 +1,11 @@
 import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft } from "lucide-react";
+import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft, Loader2 } from "lucide-react";
 import { useTranslations } from "@/lib/translations";
 
 interface BibleStudyProps {
@@ -15,131 +16,30 @@ interface BibleStudyProps {
 
 interface BibleStudy {
   id: string;
+  slug: string;
   title: string;
   author: string;
   description: string;
   category: string;
   duration: string;
   difficulty: "Beginner" | "Intermediate" | "Advanced";
-  lessons: number;
-  imageUrl?: string;
-  featured?: boolean;
+  lessonsCount: number;
+  heroImageUrl?: string | null;
+  isFeatured: boolean;
 }
 
 interface StudyLesson {
-  id: number;
+  id: string;
+  dayNumber: number;
   title: string;
   content: string;
-  verse: string;
+  verseReference: string;
   verseText: string;
-  reflection: string[];
+  reflectionQuestions: string[];
   prayer: string;
+  audioUrl?: string | null;
+  videoUrl?: string | null;
 }
-
-const sampleStudies: BibleStudy[] = [
-  {
-    id: "1",
-    title: "Walking with Jesus: A 30-Day Journey",
-    author: "Dr. Sarah Mitchell",
-    description: "Discover the profound joy and peace that comes from walking daily with our Savior. This comprehensive study explores Christ's teachings and how they transform our everyday lives through practical application and deep reflection.",
-    category: "Discipleship",
-    duration: "30 days",
-    difficulty: "Beginner",
-    lessons: 30,
-    featured: true
-  },
-  {
-    id: "2",
-    title: "Faith in Times of Trial",
-    author: "Pastor Mark Johnson",
-    description: "Learn how biblical characters overcame adversity through unwavering faith and trust in God's plan.",
-    category: "Encouragement",
-    duration: "14 days",
-    difficulty: "Intermediate",
-    lessons: 14
-  },
-  {
-    id: "3",
-    title: "The Fruit of the Spirit",
-    author: "Rev. Lisa Thompson",
-    description: "A deep dive into Galatians 5:22-23, exploring how to cultivate spiritual fruit in your daily walk.",
-    category: "Character",
-    duration: "21 days",
-    difficulty: "Intermediate",
-    lessons: 21
-  },
-  {
-    id: "4",
-    title: "Prayer That Changes Everything",
-    author: "Bishop James Wilson",
-    description: "Transform your prayer life and experience God's power through effective, biblical prayer principles.",
-    category: "Prayer",
-    duration: "10 days",
-    difficulty: "Beginner",
-    lessons: 10
-  },
-  {
-    id: "5",
-    title: "Understanding Biblical Prophecy",
-    author: "Dr. Michael Roberts",
-    description: "Explore the prophetic books of the Bible and their relevance to our modern world and future hope.",
-    category: "Prophecy",
-    duration: "45 days",
-    difficulty: "Advanced",
-    lessons: 45
-  },
-  {
-    id: "6",
-    title: "Love Like Jesus",
-    author: "Rev. Grace Adams",
-    description: "Learn to love others with the sacrificial, unconditional love that Jesus demonstrated throughout His ministry.",
-    category: "Love",
-    duration: "7 days",
-    difficulty: "Beginner",
-    lessons: 7
-  }
-];
-
-// Function to generate lessons for any study
-const generateLessons = (study: BibleStudy): StudyLesson[] => {
-  const lessonTitles = [
-    "Beginning Your Journey", "Learning to Trust", "Finding Joy", "Growing in Faith",
-    "Prayer and Devotion", "Walking in Love", "Overcoming Challenges", "Understanding Grace",
-    "Building Character", "Sharing Your Faith", "Finding Peace", "Seeking Wisdom",
-    "Serving Others", "Spiritual Discipline", "God's Promises", "Living with Purpose",
-    "Cultivating Hope", "Embracing Change", "Finding Strength", "Understanding Scripture",
-    "Walking in Truth", "Pursuing Holiness", "Celebrating Victory", "Enduring Trials",
-    "Growing Deeper", "Reflecting Christ", "Living Boldly", "Trusting God's Timing",
-    "Experiencing Freedom", "Maturing in Faith", "Walking in Power", "Finishing Strong"
-  ];
-
-  const verses = [
-    { ref: "Matthew 11:28-30", text: "Come to me, all you who are weary and burdened, and I will give you rest." },
-    { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart and lean not on your own understanding." },
-    { ref: "Nehemiah 8:10", text: "The joy of the Lord is your strength." },
-    { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him." },
-    { ref: "Philippians 4:6-7", text: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God." },
-    { ref: "1 John 4:19", text: "We love because he first loved us." },
-    { ref: "James 1:2-4", text: "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds." },
-    { ref: "Ephesians 2:8-9", text: "For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God." },
-    { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control." },
-    { ref: "Matthew 28:19-20", text: "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit." }
-  ];
-
-  return Array.from({ length: study.lessons }, (_, i) => ({
-    id: i + 1,
-    title: lessonTitles[i % lessonTitles.length] || `Day ${i + 1} Lesson`,
-    content: `Welcome to Day ${i + 1} of "${study.title}". ${study.description} Today we continue our journey of spiritual growth and deeper understanding of God's Word. Each day brings new opportunities to grow closer to Christ and discover His perfect will for our lives.`,
-    verse: verses[i % verses.length].ref,
-    verseText: verses[i % verses.length].text,
-    reflection: [
-      `How does today's scripture apply to your current life situation?`,
-      `What is God teaching you through this lesson?`,
-      `How can you put this into practice today?`
-    ],
-    prayer: `Heavenly Father, thank You for Day ${i + 1} of this journey. Help me to apply what I've learned today and to grow closer to You. Guide my steps and fill me with Your wisdom. In Jesus' name, Amen.`
-  }));
-};
 
 export default function BibleStudiesPage({ currentUserId, language = "en", onNavigate }: BibleStudyProps) {
   const t = useTranslations(language);
@@ -150,11 +50,32 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
   const [showStudyLesson, setShowStudyLesson] = useState(false);
   const [showLessonList, setShowLessonList] = useState(false);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
-  const [currentLessons, setCurrentLessons] = useState<StudyLesson[]>([]);
+
+  // Fetch all studies from API
+  const { data: studies = [], isLoading: studiesLoading } = useQuery<BibleStudy[]>({
+    queryKey: ['/api/studies', language],
+    queryFn: async () => {
+      const response = await fetch(`/api/studies?lang=${language}`);
+      if (!response.ok) throw new Error('Failed to fetch studies');
+      return response.json();
+    },
+  });
+
+  // Fetch lessons for selected study
+  const { data: currentLessons = [], isLoading: lessonsLoading } = useQuery<StudyLesson[]>({
+    queryKey: ['/api/studies', selectedStudy?.slug, 'lessons', language],
+    queryFn: async () => {
+      if (!selectedStudy?.slug) return [];
+      const response = await fetch(`/api/studies/${selectedStudy.slug}/lessons?lang=${language}`);
+      if (!response.ok) throw new Error('Failed to fetch lessons');
+      return response.json();
+    },
+    enabled: !!selectedStudy?.slug,
+  });
 
   const categories = [t.allCategory, t.discipleship, t.encouragement, t.character, t.prayer, t.prophecy, t.love];
 
-  const filteredStudies = sampleStudies.filter(study => {
+  const filteredStudies = studies.filter(study => {
     const matchesSearch = study.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          study.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
                          study.description.toLowerCase().includes(searchQuery.toLowerCase());
@@ -162,8 +83,8 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
     return matchesSearch && matchesCategory;
   });
 
-  const featuredStudy = filteredStudies.find(study => study.featured);
-  const otherStudies = filteredStudies.filter(study => !study.featured);
+  const featuredStudy = filteredStudies.find(study => study.isFeatured);
+  const otherStudies = filteredStudies.filter(study => !study.isFeatured);
 
   const getDifficultyLevel = (difficulty: string) => {
     if (difficulty === "Beginner") return t.beginner;
@@ -258,8 +179,16 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
           </CardContent>
         </Card>
 
+        {/* Loading State */}
+        {studiesLoading && (
+          <div className="flex justify-center items-center py-12">
+            <Loader2 className="w-8 h-8 animate-spin text-amber-600" />
+            <span className="ml-3 text-gray-600 dark:text-gray-300">{t.loading || "Loading studies..."}</span>
+          </div>
+        )}
+
         {/* Featured Study */}
-        {featuredStudy && (
+        {!studiesLoading && featuredStudy && (
           <Card className="shadow-lg border-0 overflow-hidden hover-elevate transition-all duration-300 cursor-pointer" data-testid={`featured-study-${featuredStudy.id}`}>
             <div className="md:flex">
               <div className="md:w-1/3 h-64 md:h-auto bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center relative">
@@ -298,7 +227,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   </div>
                   <div className="flex items-center gap-1">
                     <BookOpen className="w-4 h-4" />
-                    {featuredStudy.lessons} {t.lessons}
+                    {featuredStudy.lessonsCount} {t.lessons}
                   </div>
                 </div>
                 
@@ -319,7 +248,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
         )}
 
         {/* Other Studies Grid */}
-        {otherStudies.length > 0 && (
+        {!studiesLoading && otherStudies.length > 0 && (
           <div id="studies-grid">
             <h3 className="text-xl font-bold text-gray-900 dark:text-foreground mb-6">{t.moreStudies}</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -363,7 +292,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                       </div>
                       <div className="flex items-center gap-1">
                         <BookOpen className="w-3 h-3" />
-                        {study.lessons}
+                        {study.lessonsCount}
                       </div>
                     </div>
                     
@@ -435,7 +364,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   </div>
                   <div className="flex items-center gap-2">
                     <BookOpen className="w-4 h-4 text-gray-500" />
-                    <span className="text-sm text-gray-600 dark:text-gray-300">{selectedStudy.lessons} {t.lessons}</span>
+                    <span className="text-sm text-gray-600 dark:text-gray-300">{selectedStudy.lessonsCount} {t.lessons}</span>
                   </div>
                 </div>
                 
@@ -453,16 +382,24 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   <Button 
                     className="flex-1 bg-amber-600 hover:bg-amber-700 text-white"
                     onClick={() => {
-                      const lessons = generateLessons(selectedStudy);
-                      setCurrentLessons(lessons);
                       setShowStudyDetail(false);
                       setShowLessonList(true);
-                      console.log(`Starting study: ${selectedStudy.title} with ${lessons.length} lessons`);
+                      console.log(`Starting study: ${selectedStudy.title} with ${currentLessons.length} lessons`);
                     }}
+                    disabled={lessonsLoading || currentLessons.length === 0}
                     data-testid={`button-start-study-detail-${selectedStudy.id}`}
                   >
-                    <Play className="w-4 h-4 mr-2" />
-                    {t.startStudy}
+                    {lessonsLoading ? (
+                      <>
+                        <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                        {t.loading || "Loading..."}
+                      </>
+                    ) : (
+                      <>
+                        <Play className="w-4 h-4 mr-2" />
+                        {t.startStudy}
+                      </>
+                    )}
                   </Button>
                   <Button 
                     variant="outline" 
@@ -523,10 +460,10 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                         setShowLessonList(false);
                         setShowStudyLesson(true);
                       }}
-                      data-testid={`button-select-day-${lesson.id}`}
+                      data-testid={`button-select-day-${lesson.dayNumber}`}
                     >
                       <span className="text-xs text-gray-500 dark:text-gray-400">Day</span>
-                      <span className="text-lg font-bold">{lesson.id}</span>
+                      <span className="text-lg font-bold">{lesson.dayNumber}</span>
                     </Button>
                   ))}
                 </div>
@@ -594,7 +531,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                           "{currentLessons[currentLessonIndex].verseText}"
                         </p>
                         <p className="text-blue-600 dark:text-blue-300 font-medium">
-                          — {currentLessons[currentLessonIndex].verse}
+                          — {currentLessons[currentLessonIndex].verseReference}
                         </p>
                       </div>
                     </div>
@@ -610,7 +547,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
-                      {currentLessons[currentLessonIndex].reflection.map((question, idx) => (
+                      {currentLessons[currentLessonIndex].reflectionQuestions.map((question, idx) => (
                         <li key={idx} className="flex gap-3">
                           <span className="flex-shrink-0 w-6 h-6 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full flex items-center justify-center text-sm font-medium">
                             {idx + 1}
