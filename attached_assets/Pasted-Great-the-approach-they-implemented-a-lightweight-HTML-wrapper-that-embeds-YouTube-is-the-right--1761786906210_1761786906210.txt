@@ -1,0 +1,87 @@
+Great — the approach they implemented (a lightweight HTML wrapper that embeds YouTube) is the right kind of “proxy.” You’re not relaying video chunks; you’re just serving an HTML page that contains the official YouTube embed. 👍
+
+Given what they showed, I recommend one tweak: switch the iframe inside that wrapper to youtube-nocookie.com. It’s privacy-enhanced and often behaves better in restricted contexts.
+
+Here’s a single message you can paste to Replit to (1) switch to nocookie, (2) verify the exact code, and (3) redeploy only the backend (no iOS rebuild needed for this change):
+
+Message to Replit:
+
+Please update the YouTube wrapper route to use the privacy-enhanced embed and re-publish the backend. Then verify all details.
+
+1) Edit server/routes.ts (the /youtube-proxy/:videoId route) to this exact HTML:
+
+app.get("/youtube-proxy/:videoId", (req, res) => {
+  const videoId = req.params.videoId;
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YouTube Player</title>
+  <style>
+    html, body { margin:0; padding:0; background:#000; height:100%; }
+    .wrap { position:relative; width:100%; height:100vh; }
+    iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&autoplay=1&rel=0&modestbranding=1&enablejsapi=1"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+      allowfullscreen
+      referrerpolicy="strict-origin-when-cross-origin"
+    ></iframe>
+  </div>
+</body>
+</html>`;
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.setHeader("Cache-Control", "no-store"); // avoid stale HTML
+  res.status(200).send(html);
+});
+
+
+2) Confirm the frontend already loads this wrapper (good):
+
+client/src/components/VideoPlayer.tsx uses:
+src={apiUrl(\/youtube-proxy/${videoId}`)}`
+
+3) Verify domain allowlists are in place (they should be already, just re-check):
+
+capacitor.config.ts → allowNavigation includes:
+
+https://www.youtube.com, https://youtube.com
+
+https://www.youtube-nocookie.com, https://youtube-nocookie.com
+
+https://youtu.be
+
+https://i.ytimg.com, https://img.youtube.com
+
+https://googlevideo.com, https://*.googlevideo.com
+
+ios/App/App/Info.plist ATS exceptions include the same domains with NSIncludesSubdomains = YES.
+
+4) Publish only the backend (no iOS rebuild needed for this step):
+
+Replit → Publish/Deploy the server so /youtube-proxy/:videoId now serves the nocookie embed.
+
+5) Quick live tests (please run and paste results):
+
+Hit this on device Safari:
+https://daily-gospel-timothystaten.replit.app/youtube-proxy/1p3oDv9i_o0
+(should show the inline player)
+
+In the TestFlight app, open a Faith Video (Christian Context) and confirm it plays inline without Error 153.
+
+Why this helps
+
+Using youtube-nocookie.com reduces tracking and sometimes avoids embed restrictions that can trigger “player configuration” errors.
+
+Because your app already loads apiUrl('/youtube-proxy/:id'), this is a server-only tweak: just publish on Replit; you don’t need an Appflow rebuild for this particular change.
+
+If it still errors after this:
+
+Have Replit paste the final HTML returned by /youtube-proxy/:videoId (as seen in device Safari) and the exact src that your <iframe> renders in-app.
+
+Also have them confirm in device Safari that https://…/youtube-proxy/<id> plays (this isolates iOS WebView vs. content issues).
