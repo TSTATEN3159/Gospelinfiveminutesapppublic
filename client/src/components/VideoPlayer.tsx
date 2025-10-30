@@ -1,9 +1,9 @@
+import { useState } from "react";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X, ExternalLink, BookOpen } from "lucide-react";
 import type { VideoItem } from "@/services/videoService";
-import { apiUrl } from "@/lib/api-config";
 
 interface VideoPlayerProps {
   video: VideoItem | null;
@@ -12,6 +12,8 @@ interface VideoPlayerProps {
 }
 
 export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
+  const [iframeError, setIframeError] = useState<string | null>(null);
+
   if (!video) return null;
 
   // Extract YouTube video ID from various URL formats
@@ -43,11 +45,18 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
   const videoId = video.videoUrl ? getYouTubeId(video.videoUrl) : null;
   const hasVideo = !!(video.videoUrl || video.externalUrl);
 
-  // Use backend proxy for YouTube embeds (fixes iOS WKWebView origin issues)
-  // This loads the YouTube iframe from our HTTPS domain instead of capacitor:// origin
-  const youtubeProxyUrl = videoId 
-    ? apiUrl(`youtube-proxy/${videoId}`)
+  // STEP A: Direct YouTube embed (bypassing proxy to test if proxy is the blocker)
+  // Using youtube-nocookie.com for privacy and better compatibility
+  const directEmbedUrl = videoId 
+    ? `https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1`
     : null;
+
+  // Log embed URL for debugging in TestFlight
+  if (directEmbedUrl) {
+    console.log('[VideoPlayer] Direct embed URL:', directEmbedUrl);
+    console.log('[VideoPlayer] Video ID:', videoId);
+    console.log('[VideoPlayer] User Agent:', navigator.userAgent);
+  }
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -69,22 +78,48 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
         </DialogHeader>
 
         <div className="flex-1 p-4 pt-0 overflow-y-auto">
-          {/* Video Player Section - Proxy iframe (iOS WKWebView compatible) */}
-          {youtubeProxyUrl ? (
-            <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden">
+          {/* Video Player Section - Direct YouTube embed (STEP A: bypassing proxy) */}
+          {directEmbedUrl ? (
+            <div className="aspect-video w-full mb-4 bg-black rounded-lg overflow-hidden relative">
               <iframe
-                src={youtubeProxyUrl}
+                src={directEmbedUrl}
                 className="w-full h-full"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
                 allowFullScreen
                 data-testid="video-player"
                 style={{
-                  border: 'none',
+                  position: 'absolute',
+                  inset: 0,
                   width: '100%',
-                  height: '100%'
+                  height: '100%',
+                  border: 0
                 }}
                 title={video.title}
+                onError={(e) => {
+                  console.error('[VideoPlayer] iframe error:', e);
+                  setIframeError('iframe failed to load');
+                }}
               />
+              {/* Error overlay for debugging */}
+              {iframeError && (
+                <div 
+                  style={{
+                    position: 'absolute',
+                    left: 8,
+                    bottom: 8,
+                    right: 8,
+                    background: 'rgba(255, 0, 0, 0.8)',
+                    color: '#fff',
+                    padding: 8,
+                    fontSize: 12,
+                    borderRadius: 4,
+                    zIndex: 10
+                  }}
+                  data-testid="video-error-overlay"
+                >
+                  Player error: {iframeError}
+                </div>
+              )}
             </div>
           ) : hasVideo ? (
             <div className="aspect-video w-full mb-4 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg flex items-center justify-center">

@@ -38,32 +38,29 @@ Preferred communication style: Simple, everyday language.
     - Fixed Files: FriendsPage.tsx, ImportFriendsDialog.tsx
   
 - **Recent Fixes** (Oct 30, 2025):
-  - ✅ **YouTube Proxy Solution IMPLEMENTED**: Fixed iOS WKWebView origin blocking issue
-    - **Root Cause Identified**: YouTube blocks iframes from Capacitor's local origins (`capacitor://localhost`, `file://`) - this works in browser but fails in iOS WKWebView because YouTube validates origin/Referer headers
-    - **Solution**: Created backend YouTube proxy endpoint (`/youtube-proxy/:videoId`) that serves YouTube embeds from our HTTPS domain
-    - **How It Works**: 
-      - Frontend iframe points to: `https://daily-gospel-timothystaten.replit.app/youtube-proxy/{VIDEO_ID}`
-      - Backend returns HTML page with YouTube iframe embedded inside
-      - YouTube sees request from our HTTPS domain instead of `capacitor://` origin
-      - This matches the approach used by successful iOS apps like iDisciple
-    - **Implementation Details**:
-      - Backend route validates video ID format (11 chars, alphanumeric + `-` and `_`)
-      - Returns full HTML page with YouTube embed using proper parameters
-      - **Privacy-Enhanced Embed**: Uses `youtube-nocookie.com` instead of `youtube.com` for better privacy and compatibility with restricted religious content
-      - **Critical Headers for iOS WKWebView**:
-        - `X-Frame-Options: ALLOWALL` - Allows wrapper to be embedded in app
-        - `Content-Security-Policy: frame-ancestors 'self' capacitor://localhost http://localhost https://daily-gospel-timothystaten.replit.app app://*;` - Allows app origins to frame the wrapper
-        - `Cache-Control: no-store` - Avoids stale HTML
-      - **Simplified Embed Parameters**: Removed `autoplay=1` and `enablejsapi=1` to reduce iOS friction (tap-to-play instead of autoplay)
-      - Uses `playsinline=1`, `rel=0`, `modestbranding=1` for clean iOS inline playback
-      - Frontend uses `apiUrl()` helper to construct proxy URL (works in dev and production)
-      - Removed complex YouTube IFrame API - now uses simple, proven approach
-    - **Testing**: Proxy endpoint verified working at `/youtube-proxy/M7lc1UVf-VE` with proper headers
-    - **ToS Compliance**: Lightweight HTML wrapper only - NOT proxying video streams or caching chunks (YouTube ToS compliant)
-    - **Research Sources**: 
-      - Medium article "Working around YouTube iframes on WebView based mobile apps"
-      - ChatGPT recommendations for privacy-enhanced embed and iframe headers
-    - Fixed Files: server/routes.ts (added proxy endpoint with proper headers), VideoPlayer.tsx (updated to use proxy)
+  - ⚠️ **YouTube Embed Testing - STEP A Implemented**: Bypassing proxy to test direct embeds
+    - **Current Approach**: Testing direct YouTube embeds (no proxy) to determine root cause
+    - **Implementation**: 
+      - VideoPlayer.tsx now loads YouTube iframes directly from `youtube-nocookie.com/embed/`
+      - Bypasses backend proxy entirely to test if proxy was the blocker
+      - Uses minimal embed parameters: `playsinline=1&rel=0&modestbranding=1`
+      - Added error logging with visual overlay for debugging in TestFlight
+      - Logs embed URL, video ID, and User Agent to console for verification
+    - **Testing Protocol**:
+      1. Rebuild iOS app in Appflow (App Store/Release build)
+      2. Install from TestFlight
+      3. Open a Faith Video and check if it plays
+      4. If it plays: Direct embeds work, proxy was the issue (keep this approach)
+      5. If it fails: Check console logs in Xcode Devices for iframe/WebKit errors
+    - **Diagnostic Features**:
+      - Red error overlay appears on screen if iframe fails to load
+      - Console logs show exact embed URL being used
+      - User Agent logged to verify iOS environment
+    - **Next Steps Based on Results**:
+      - If direct embed works: Remove proxy endpoint, keep direct approach
+      - If direct embed fails: Analyze console logs and try minimal wrapper (STEP C)
+    - **Backend Proxy**: Still available at `/youtube-proxy/:videoId` but NOT currently used by frontend
+    - Fixed Files: VideoPlayer.tsx (switched to direct YouTube embeds with error logging)
 
 ## System Architecture
 

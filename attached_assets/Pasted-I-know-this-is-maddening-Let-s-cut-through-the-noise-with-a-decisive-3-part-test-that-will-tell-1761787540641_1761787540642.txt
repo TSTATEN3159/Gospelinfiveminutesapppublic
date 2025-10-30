@@ -1,0 +1,109 @@
+I know this is maddening. Let’s cut through the noise with a **decisive 3-part test** that will tell us exactly where the failure lives — and fix it.
+
+### Copy–paste this to Replit
+
+> **STEP A — Prove YouTube works without our wrapper (no proxy)**
+>
+> 1. In `client/src/components/VideoPlayer.tsx`, **bypass the proxy** and render the iframe **directly** to nocookie:
+>
+> ```tsx
+> // inside the player component where the iframe src is set
+> const id = getYouTubeId(video.videoUrl);
+> const embedUrl = id
+>   ? `https://www.youtube-nocookie.com/embed/${id}?playsinline=1&rel=0&modestbranding=1`
+>   : null;
+>
+> return embedUrl ? (
+>   <iframe
+>     src={embedUrl}
+>     style={{ position: "absolute", inset: 0, width: "100%", height: "100%", border: 0 }}
+>     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+>     allowFullScreen
+>   />
+> ) : null;
+> ```
+>
+> 2. **Commit & push** to GitHub and **run a fresh Appflow iOS “App Store/Release” build**.
+> 3. Install that TestFlight build and try a Faith Video.
+>
+> ➜ **If this works**, the **proxy page/headers** were the blocker. Keep the direct embed and remove the proxy route.
+>
+> ---
+>
+> **STEP B — If direct embed still fails in TestFlight, capture the *actual* runtime errors**
+>
+> 1. In `VideoPlayer.tsx`, add an **onError** logger and a tiny overlay to print video errors:
+>
+> ```tsx
+> const [err, setErr] = useState<string | null>(null);
+>
+> return (
+>   <div style={{position:"relative", width:"100%", paddingBottom:"56.25%", background:"#000"}}>
+>     {embedUrl && (
+>       <iframe
+>         src={embedUrl}
+>         style={{ position:"absolute", inset:0, width:"100%", height:"100%", border:0 }}
+>         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+>         allowFullScreen
+>         onError={(e) => { console.log("YT iframe error", e); setErr("iframe failed to load"); }}
+>       />
+>     )}
+>     {err && (
+>       <div style={{position:"absolute", left:8, bottom:8, right:8, background:"rgba(255,0,0,.8)", color:"#fff", padding:8, fontSize:12}}>
+>         Player error: {err}
+>       </div>
+>     )}
+>   </div>
+> );
+> ```
+>
+> 2. Rebuild in Appflow, install from TestFlight, try again, and **send console logs from Xcode Devices → your app → Console** (look for WebKit / iframe errors), or add `console.log(embedUrl)` so we can see the exact URL rendered on-device.
+>
+> ---
+>
+> **STEP C — Re-try wrapper only if necessary (minimal, no JS API, no autoplay)**
+>
+> If A fails and we must use the wrapper, set **minimal headers** and **no JS API**:
+>
+> ```ts
+> // server/routes.ts
+> app.get("/youtube-proxy/:videoId", (req, res) => {
+>   const { videoId } = req.params;
+>   const html = `<!doctype html><html><head>
+>   <meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+>   <style>html,body{margin:0;height:100%;background:#000} .wrap{position:relative;height:100vh} iframe{position:absolute;inset:0;width:100%;height:100%;border:0}</style>
+>   </head><body><div class="wrap">
+>   <iframe src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1"
+>     allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+>     allowfullscreen></iframe>
+>   </div></body></html>`;
+>   res.setHeader("Content-Type", "text/html; charset=utf-8");
+>   res.setHeader("Cache-Control", "no-store");
+>   // DO NOT set X-Frame-Options or CSP here unless absolutely required
+>   res.status(200).send(html);
+> });
+> ```
+>
+> Then in `VideoPlayer.tsx` set `src={apiUrl(\`/youtube-proxy/${id}`)}` and test in **device Safari** and in the **app**.
+>
+> ---
+>
+> **ALSO: print these values in the TestFlight build to confirm environment & URL are correct**
+>
+> * `apiUrl()` at runtime
+> * the **exact** iframe `src` string you render
+> * `navigator.userAgent`
+>
+> And verify in the final app bundle (archive) that `Info.plist` includes ATS exceptions for:
+>
+> * `youtube-nocookie.com`, `youtube.com`, `ytimg.com`, `googlevideo.com`, `youtu.be` with `NSIncludesSubdomains = YES`.
+
+---
+
+### Why this is the fastest path
+
+* **Step A** removes the proxy entirely. If that works, we’re done.
+* If it still fails, **Step B** grabs the exact runtime error from the real device (no more guessing).
+* **Step C** gives a minimal wrapper (no autoplay, no JS API, no framing headers) to avoid header conflicts if you must keep a wrapper.
+
+Once you run Step A, you’ll know in one build whether the proxy is the culprit.
