@@ -1144,6 +1144,153 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Devotional routes
+  // Get devotional by day number and gender
+  app.get("/api/devotional/:gender/:dayNumber", async (req, res) => {
+    try {
+      const { gender, dayNumber } = req.params;
+      const language = (req.query.language as string) || 'en';
+
+      if (gender !== 'men' && gender !== 'women') {
+        return res.status(400).json({
+          error: "Invalid gender. Must be 'men' or 'women'."
+        });
+      }
+
+      const day = parseInt(dayNumber);
+      if (isNaN(day) || day < 1 || day > 365) {
+        return res.status(400).json({
+          error: "Invalid day number. Must be between 1 and 365."
+        });
+      }
+
+      const devotional = await storage.getDevotional(day, gender as 'men' | 'women', language);
+
+      if (!devotional) {
+        return res.status(404).json({
+          error: `Devotional for ${gender} day ${day} not found. We're working on adding more content!`
+        });
+      }
+
+      res.json(devotional);
+    } catch (error) {
+      console.error("Error fetching devotional:", error);
+      res.status(500).json({
+        error: "Error fetching devotional"
+      });
+    }
+  });
+
+  // Get user's devotional progress
+  app.get("/api/devotional/progress/:userId/:gender", async (req, res) => {
+    try {
+      const { userId, gender } = req.params;
+
+      if (gender !== 'men' && gender !== 'women') {
+        return res.status(400).json({
+          error: "Invalid gender. Must be 'men' or 'women'."
+        });
+      }
+
+      let progress = await storage.getUserDevotionalProgress(userId, gender as 'men' | 'women');
+
+      // If no progress exists, create it
+      if (!progress) {
+        progress = await storage.createUserDevotionalProgress(userId, gender as 'men' | 'women');
+      }
+
+      res.json(progress);
+    } catch (error) {
+      console.error("Error fetching devotional progress:", error);
+      res.status(500).json({
+        error: "Error fetching progress"
+      });
+    }
+  });
+
+  // Complete a devotional day
+  app.post("/api/devotional/complete", async (req, res) => {
+    try {
+      const { userId, gender, dayNumber } = req.body;
+
+      if (!userId || !gender || dayNumber === undefined) {
+        return res.status(400).json({
+          error: "Missing required fields: userId, gender, dayNumber"
+        });
+      }
+
+      if (gender !== 'men' && gender !== 'women') {
+        return res.status(400).json({
+          error: "Invalid gender. Must be 'men' or 'women'."
+        });
+      }
+
+      const day = parseInt(dayNumber);
+      if (isNaN(day) || day < 1 || day > 365) {
+        return res.status(400).json({
+          error: "Invalid day number. Must be between 1 and 365."
+        });
+      }
+
+      // Check if progress exists, create if not
+      let progress = await storage.getUserDevotionalProgress(userId, gender as 'men' | 'women');
+      if (!progress) {
+        progress = await storage.createUserDevotionalProgress(userId, gender as 'men' | 'women');
+      }
+
+      // Update progress
+      const updatedProgress = await storage.updateDevotionalProgress(userId, gender as 'men' | 'women', day);
+
+      // Generate warm, encouraging streak message
+      const streakMessage = getStreakMessage(updatedProgress.currentStreak || 0);
+
+      res.json({
+        progress: updatedProgress,
+        message: streakMessage
+      });
+    } catch (error) {
+      console.error("Error completing devotional:", error);
+      res.status(500).json({
+        error: "Error updating progress"
+      });
+    }
+  });
+
+  // Helper function for warm, non-judgmental streak messages
+  function getStreakMessage(streak: number): string {
+    if (streak === 1) {
+      return "Great start! 🌱 Every journey begins with a single step.";
+    } else if (streak === 2) {
+      return "You're building momentum! 💪 Two days in a row.";
+    } else if (streak === 3) {
+      return "Three days strong! 🔥 You're creating a beautiful habit.";
+    } else if (streak === 7) {
+      return "One week complete! 🎉 You're growing spiritually every day.";
+    } else if (streak === 14) {
+      return "Two weeks of faithfulness! ✨ Your consistency is inspiring.";
+    } else if (streak === 21) {
+      return "Three weeks! 🌟 They say it takes 21 days to form a habit - you're there!";
+    } else if (streak === 30) {
+      return "One month dedicated to God's Word! 📖 What a blessing.";
+    } else if (streak === 60) {
+      return "Two months of daily devotion! 🙏 You're an inspiration.";
+    } else if (streak === 90) {
+      return "90 days strong! 💎 Your dedication is remarkable.";
+    } else if (streak === 100) {
+      return "100 days! 🎊 You're living proof that consistency transforms lives.";
+    } else if (streak === 180) {
+      return "Half a year! ⭐ Your spiritual journey is beautiful to witness.";
+    } else if (streak === 365) {
+      return "ONE FULL YEAR! 🏆 You've completed an entire year of daily devotions. Incredible!";
+    } else if (streak > 365) {
+      return `${streak} days of faithfulness! 👑 You're a champion of spiritual discipline.`;
+    } else if (streak % 10 === 0) {
+      return `${streak} days! 🌈 Keep nurturing your relationship with God.`;
+    } else {
+      return `${streak} day${streak > 1 ? 's' : ''} of growth! 💚 Keep going, you're doing great.`;
+    }
+  }
+
   // Stripe donation route for one-time payments
   app.post("/api/create-payment-intent", async (req, res) => {
     try {
