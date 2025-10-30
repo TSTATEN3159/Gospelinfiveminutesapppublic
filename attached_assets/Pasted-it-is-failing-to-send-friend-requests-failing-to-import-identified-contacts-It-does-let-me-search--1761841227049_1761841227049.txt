@@ -1,0 +1,75 @@
+it is failing to send friend requests, failing to import identified contacts. It does let me search my contact listing but then fails to import them
+
+3 minutes ago
+Optimized Agent memory
+
+Diagnosed friend request, import issues
+Let me investigate the friend request and contact import failures. I'll check the LSP errors and recent logs to identify the issue.
+
+
+Show 2 more
+
+Identified production environment issue
+Good - no logs show errors locally because this is happening in production/TestFlight. Let me review the friend request and contact import code to find the issues:
+
+
+Show 9 more
+
+Diagnosed API response consumption issue (5 seconds)
+Found it! I see the issue. Let me check how the apiRequest function is being used:
+
+
+Opened client/src/components/ImportFriendsDialog.tsx
+
+Decided on error logging strategy (10 seconds)
+I found the issue! The error handling is swallowing the actual error details. Let me add better error logging to both frontend and backend so we can see what's failing in production:
+
+
+Show 4 more
+
+Decided on logging details added
+Perfect! ✅ I've added comprehensive debugging logs. Now when you test in TestFlight, we'll see exactly what's failing:
+
+🔍 Enhanced Debugging Added:
+Frontend (ImportFriendsDialog):
+Logs the exact URL being called
+Logs sample contact data
+Logs full error messages and stack traces
+Shows error details in toast messages
+Frontend (FriendsPage):
+Logs friend request details (from/to user IDs)
+Logs response status and data
+Shows specific error messages
+Backend (Both Endpoints):
+Logs request body and parsed data
+Logs user lookup results
+Logs timing and success/failure details
+📱 Testing Protocol:
+1. Build in Appflow (wait for backend to restart first - should happen automatically)
+
+2. Install from TestFlight
+
+3. Connect to Xcode Console:
+
+iPhone → Mac → Xcode → Window → Devices and Simulators
+Select your iPhone → Open Console
+4. Filter Logs:
+
+Type: [Contacts] or [Friends] or [API]
+5. Try Both Features:
+
+Import Contacts → Watch for [Contacts] logs
+Send Friend Request → Watch for [Friends] logs
+6. Share the Logs:
+
+Copy the exact error messages from Xcode console
+Share them with me so I can identify the root cause
+🎯 What We'll Learn:
+The logs will show:
+
+✅ Exact API URLs being called
+✅ Request/response status codes
+✅ Error messages from backend
+✅ Whether users are found in database
+✅ Sample contact data being sent
+Ready! Wait for restart, then build in Appflow. 🚀
