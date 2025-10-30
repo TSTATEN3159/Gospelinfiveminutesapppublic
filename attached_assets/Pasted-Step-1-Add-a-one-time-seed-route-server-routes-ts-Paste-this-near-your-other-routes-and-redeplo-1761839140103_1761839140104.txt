@@ -1,0 +1,187 @@
+Step 1 — Add a one-time seed route (server/routes.ts)
+
+Paste this near your other routes and redeploy the backend. It’s guarded by a SEED_KEY so it can’t be abused.
+
+// --- ONE-TIME TEST SEED ENDPOINTS (remove after use) ---
+import { db } from "./db"; // wherever your drizzle db is exported
+import { appUsers, friendships } from "../shared/schema"; // adjust the path if needed
+import { sql, eq } from "drizzle-orm";
+
+// Lexicographic order to satisfy friendships.canonical_order check
+function canonical(a: string, b: string) {
+  return a < b ? [a, b] as const : [b, a] as const;
+}
+
+app.post("/admin/seed-test-friends", async (req, res) => {
+  try {
+    const key = String(req.query.key || "");
+    if (!process.env.SEED_KEY || key !== process.env.SEED_KEY) {
+      return res.status(401).json({ success: false, error: "Unauthorized" });
+    }
+
+    // 1) Upsert 5 test users
+    const testUsers = [
+      { firstName: "Sarah",  lastName: "Johnson",  email: "sarah.johnson@test.com",  phone: "+15550101" },
+      { firstName: "Michael",lastName: "Chen",     email: "michael.chen@test.com",   phone: "+15550102" },
+      { firstName: "Emma",   lastName: "Williams", email: "emma.williams@test.com",  phone: "+15550103" },
+      { firstName: "David",  lastName: "Martinez", email: "david.martinez@test.com", phone: "+15550104" },
+      { firstName: "Lisa",   lastName: "Anderson", email: "lisa.anderson@test.com",  phone: "+15550105" },
+    ];
+
+    // Insert-if-not-exists by email
+    for (const u of testUsers) {
+      await db.execute(sql`
+        INSERT INTO app_users (id, first_name, last_name, email, phone, is_active)
+        VALUES (gen_random_uuid(), ${u.firstName}, ${u.lastName}, ${u.email}, ${u.phone}, true)
+        ON CONFLICT (email) DO NOTHING
+      `);
+    }
+
+    // Read back IDs
+    const rows = await db.execute(sql`
+      SELECT id, email, first_name, last_name FROM app_users
+      WHERE email IN (
+        'sarah.johnson@test.com',
+        'michael.chen@test.com',
+        'emma.williams@test.com',
+        'david.martinez@test.com',
+        'lisa.anderson@test.com'
+      )
+    `);
+    // rows.rows for pg
+    const byEmail: Record<string, any> = {};
+    // @ts-ignore
+    for (const r of rows.rows ?? rows) byEmail[r.email] = r;
+
+    const sarah  = byEmail["sarah.johnson@test.com"].id;
+    const michael= byEmail["michael.chen@test.com"].id;
+    const emma   = byEmail["emma.williams@test.com"].id;
+    const david  = byEmail["david.martinez@test.com"].id;
+    const lisa   = byEmail["lisa.anderson@test.com"].id;
+
+    // Helper to insert friendship respecting canonical_order check
+    async function upsertFriendship(a: string, b: string, initiator: string, status: "pending"|"accepted"|"declined"|"blocked") {
+      const [reqId, addrId] = canonical(a, b);
+      await db.execute(sql`
+        INSERT INTO friendships (id, requester_id, addressee_id, initiator_id, status, created_at, updated_at)
+        VALUES (gen_random_uuid(), ${reqId}, ${addrId}, ${initiator}, ${status}, NOW(), NOW())
+        ON CONFLICT (requester_id, addressee_id) DO UPDATE
+        SET status = EXCLUDED.status, initiator_id = EXCLUDED.initiator_id, updated_at = NOW()
+      `);
+    }
+
+    // 2) Accepted friendships
+    await upsertFriendship(sarah, michael, sarah, "accepted");
+    await upsertFriendship(sarah, emma,    sarah, "accepted");
+    await upsertFriendship(michael, david, michael, "accepted");
+
+    // 3) Pending requests -> to Lisa
+    await upsertFriendship(david, lisa, david, "pending");
+    await upsertFriendship(emma,  lisa, emma,  "pending");
+
+    return res.json({
+      success: true,
+      users: {
+        sarah, michael, emma, david, lisa
+      }
+    });
+  } catch (err: any) {
+    console.error("[SEED] error", err);
+    return res.status(500).json({ success: false, error: String(err?.message || err) });
+  }
+});
+
+app.delete("/admin/seed-test-friends", async (req, res) => {
+  try {
+    const key = String(req.query.key || "");
+    if (!process.env.SEED_KEY || key !== process.env.SEED_KEY) {
+      return res.status(401).json({ success: false, error: "Unauthorized" });
+    }
+    await db.execute(sql`
+      DELETE FROM friendships
+      WHERE requester_id IN (SELECT id FROM app_users WHERE email LIKE '%@test.com')
+         OR addressee_id IN (SELECT id FROM app_users WHERE email LIKE '%@test.com')
+    `);
+    await db.execute(sql`DELETE FROM app_users WHERE email LIKE '%@test.com'`);
+    return res.json({ success: true, message: "Test data removed." });
+  } catch (err: any) {
+    console.error("[SEED CLEANUP] error", err);
+    return res.status(500).json({ success: false, error: String(err?.message || err) });
+  }
+});
+// --- END ONE-TIME TEST SEED ---
+
+
+If your db export or schema import paths differ, Replit can adjust those two import lines.
+
+Step 2 — Set a seed key in Replit
+
+Add an env var in Replit:
+
+SEED_KEY=let_me_in_123 (any random string is fine)
+
+Redeploy the Replit backend (or hit the “Run” button if it auto-reloads).
+
+Step 3 — Seed production data
+
+Run this (macOS/Linux/WSL):
+
+curl -sS -X POST "https://daily-gospel-timothystaten.replit.app/admin/seed-test-friends?key=let_me_in_123" | jq .
+
+
+You should get back the 5 test user IDs.
+
+Step 4 — Verify production friends endpoint
+
+Use the returned Sarah ID (or fetch by email once and cache the ID). Example with Sarah:
+
+# Replace SARAH_ID with the id from the seed response
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/SARAH_ID" | jq .
+
+
+Expected: Michael and Emma in friends[].
+
+You can also verify pending:
+
+# Replace LISA_ID with the id from the seed response
+curl -sS "https://daily-gospel-timothystaten.replit.app/api/friends/requests/LISA_ID" | jq .
+
+
+Expected: 2 incoming (David, Emma), 0 outgoing.
+
+Step 5 — Point the app to a seeded user for a quick UI test
+
+On device (TestFlight) after installing a new build, make sure your app stores the correct appUserId (a real production ID) before opening Friends:
+
+If your app writes appUserId to localStorage (webview) during sign-up, complete sign-up first.
+
+For a quick internal test build, you can add a dev-only override in the app (e.g., hidden “Switch User” button in Settings) that sets appUserId to Sarah’s ID. If you want that snippet, say the word and I’ll paste it.
+
+Step 6 — (If Contacts import still doesn’t trigger)
+
+You already added logging. In Xcode → Devices & Simulators → Console, look for:
+
+[Contacts] Permission raw: {"contacts":"granted"} or limited
+
+[Contacts] Raw contacts length: N and the filtered count
+
+The POST to /api/contacts/:userId/import?fromSignup=true and its HTTP status
+
+If it shows denied or limited, iOS 18 may be restricting access. Tell users to go:
+Settings → Privacy & Security → Contacts → The Gospel in 5 Minutes → Allow Full Access.
+
+Step 7 — Clean up test data (later)
+curl -sS -X DELETE "https://daily-gospel-timothystaten.replit.app/admin/seed-test-friends?key=let_me_in_123" | jq .
+
+
+Then remove those seed routes from server/routes.ts.
+
+Why this fixes your exact situation
+
+Your TestFlight build talks to production (Replit URL).
+
+The 5 demo friends Replit created earlier were inserted into local/dev, so prod returned friends: [].
+
+Seeding production guarantees the Friends UI returns data right now, so you can verify the screen and actions end-to-end.
+
+If you want, I can also give you a tiny /admin/whoami route that echoes the appUserId your client is sending—handy to confirm the app and API are using the same user.

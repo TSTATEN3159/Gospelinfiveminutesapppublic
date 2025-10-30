@@ -7,6 +7,8 @@ import { storage } from "./storage";
 import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
+import { db } from "./db";
+import { sql } from "drizzle-orm";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -2265,6 +2267,109 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.setHeader("Cache-Control", "no-store");
     res.status(200).send(html);
   });
+
+  // --- ONE-TIME TEST SEED ENDPOINTS (remove after use) ---
+  // Lexicographic order to satisfy friendships.canonical_order check
+  function canonical(a: string, b: string) {
+    return a < b ? [a, b] as const : [b, a] as const;
+  }
+
+  app.post("/admin/seed-test-friends", async (req, res) => {
+    try {
+      const key = String(req.query.key || "");
+      if (!process.env.SEED_KEY || key !== process.env.SEED_KEY) {
+        return res.status(401).json({ success: false, error: "Unauthorized" });
+      }
+
+      // 1) Upsert 5 test users
+      const testUsers = [
+        { firstName: "Sarah",  lastName: "Johnson",  email: "sarah.johnson@test.com",  phone: "+15550101" },
+        { firstName: "Michael",lastName: "Chen",     email: "michael.chen@test.com",   phone: "+15550102" },
+        { firstName: "Emma",   lastName: "Williams", email: "emma.williams@test.com",  phone: "+15550103" },
+        { firstName: "David",  lastName: "Martinez", email: "david.martinez@test.com", phone: "+15550104" },
+        { firstName: "Lisa",   lastName: "Anderson", email: "lisa.anderson@test.com",  phone: "+15550105" },
+      ];
+
+      // Insert-if-not-exists by email
+      for (const u of testUsers) {
+        await db.execute(sql`
+          INSERT INTO app_users (id, first_name, last_name, email, phone, is_active)
+          VALUES (gen_random_uuid(), ${u.firstName}, ${u.lastName}, ${u.email}, ${u.phone}, true)
+          ON CONFLICT (email) DO NOTHING
+        `);
+      }
+
+      // Read back IDs
+      const rows = await db.execute(sql`
+        SELECT id, email, first_name, last_name FROM app_users
+        WHERE email IN (
+          'sarah.johnson@test.com',
+          'michael.chen@test.com',
+          'emma.williams@test.com',
+          'david.martinez@test.com',
+          'lisa.anderson@test.com'
+        )
+      `);
+      const byEmail: Record<string, any> = {};
+      for (const r of rows.rows ?? rows) byEmail[r.email] = r;
+
+      const sarah  = byEmail["sarah.johnson@test.com"].id;
+      const michael= byEmail["michael.chen@test.com"].id;
+      const emma   = byEmail["emma.williams@test.com"].id;
+      const david  = byEmail["david.martinez@test.com"].id;
+      const lisa   = byEmail["lisa.anderson@test.com"].id;
+
+      // Helper to insert friendship respecting canonical_order check
+      async function upsertFriendship(a: string, b: string, initiator: string, status: "pending"|"accepted"|"declined"|"blocked") {
+        const [reqId, addrId] = canonical(a, b);
+        await db.execute(sql`
+          INSERT INTO friendships (id, requester_id, addressee_id, initiator_id, status, created_at, updated_at)
+          VALUES (gen_random_uuid(), ${reqId}, ${addrId}, ${initiator}, ${status}, NOW(), NOW())
+          ON CONFLICT (requester_id, addressee_id) DO UPDATE
+          SET status = EXCLUDED.status, initiator_id = EXCLUDED.initiator_id, updated_at = NOW()
+        `);
+      }
+
+      // 2) Accepted friendships
+      await upsertFriendship(sarah, michael, sarah, "accepted");
+      await upsertFriendship(sarah, emma,    sarah, "accepted");
+      await upsertFriendship(michael, david, michael, "accepted");
+
+      // 3) Pending requests -> to Lisa
+      await upsertFriendship(david, lisa, david, "pending");
+      await upsertFriendship(emma,  lisa, emma,  "pending");
+
+      return res.json({
+        success: true,
+        users: {
+          sarah, michael, emma, david, lisa
+        }
+      });
+    } catch (err: any) {
+      console.error("[SEED] error", err);
+      return res.status(500).json({ success: false, error: String(err?.message || err) });
+    }
+  });
+
+  app.delete("/admin/seed-test-friends", async (req, res) => {
+    try {
+      const key = String(req.query.key || "");
+      if (!process.env.SEED_KEY || key !== process.env.SEED_KEY) {
+        return res.status(401).json({ success: false, error: "Unauthorized" });
+      }
+      await db.execute(sql`
+        DELETE FROM friendships
+        WHERE requester_id IN (SELECT id FROM app_users WHERE email LIKE '%@test.com')
+           OR addressee_id IN (SELECT id FROM app_users WHERE email LIKE '%@test.com')
+      `);
+      await db.execute(sql`DELETE FROM app_users WHERE email LIKE '%@test.com'`);
+      return res.json({ success: true, message: "Test data removed." });
+    } catch (err: any) {
+      console.error("[SEED CLEANUP] error", err);
+      return res.status(500).json({ success: false, error: String(err?.message || err) });
+    }
+  });
+  // --- END ONE-TIME TEST SEED ---
 
   // Apple-Compliant Application Health Monitoring Endpoints
   // Transparent health checks for auto-recovery system
