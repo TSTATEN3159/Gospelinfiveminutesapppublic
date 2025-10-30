@@ -1,0 +1,166 @@
+Perfect! Let me add comprehensive debugging logs to help diagnose exactly what's happening in TestFlight:
+
+
+Show 5 more
+
+Added debugging to FriendsPage
+Now let me add debugging to FriendsPage and the backend routes:
+
+
+Show 5 more
+
+Planned backend route debugging
+Now let me add backend debugging to the server routes:
+
+
+Show 4 more
+
+Documented debugging improvements
+Perfect! Let me update the documentation with the new debugging features:
+
+
+Edited replit.md
+
+Decided on summary document content
+✅ Comprehensive Debugging System Implemented!
+I've added production-ready debugging logs to help diagnose any issues with Friends and Contacts in TestFlight. Here's what was added:
+
+🔍 Frontend Debugging
+ImportFriendsDialog.tsx - Contact Import Flow
+Added logging for:
+
+✅ Platform detection (iOS/Android) and userId validation
+✅ Permission request response (raw JSON)
+✅ iOS 17/18 compatibility - Handles 'limited' permission status
+✅ Raw contacts count from device
+✅ Filtered contacts count (after name + email/phone filter)
+✅ API request status codes
+✅ Import response with counts
+Example logs you'll see:
+
+[Contacts] Platform: ios appUserId: abc123
+[Contacts] Permission raw: {"contacts":"granted"}
+[Contacts] Permission allowed: true
+[Contacts] Raw contacts length: 150
+[Contacts] Filtered count (<=50): 48
+[Contacts] Importing count: 48
+[Contacts] Import status: 200
+[Contacts] Import response: {success: true, totalImported: 48, appUsersFound: 3}
+
+New safeguards:
+
+Guards against missing appUserId before import
+User-friendly toast messages for permission issues
+Handles both old and new Capacitor plugin versions
+FriendsPage.tsx - Friends List Fetch
+Added logging for:
+
+✅ UserId being used for fetch
+✅ API response status
+✅ Response payload with friend count
+Example logs:
+
+[Friends] Fetching for userId: abc123
+[Friends] GET status: 200
+[Friends] Response: {success: true, friends: [...]}
+
+🖥️ Backend Debugging
+GET /api/friends/:userId
+Logs:
+
+[API] GET /api/friends/:userId { userId: 'abc123' }
+[API] friends fetched { ms: 45, count: 5 }
+
+POST /api/contacts/:userId/import
+Logs:
+
+[API] POST /api/contacts/:userId/import { userId: 'abc123', fromSignup: true, contactsCount: 48 }
+[API] contacts/import success { ms: 234, totalImported: 48, appUsersFound: 3 }
+
+📱 How to Debug in TestFlight
+Step 1: Install from TestFlight
+Rebuild your iOS app in Appflow and install from TestFlight
+
+Step 2: Connect Device to Xcode Console
+1. Connect iPhone to Mac via cable
+2. Open Xcode
+3. Window → Devices and Simulators
+4. Select your iPhone
+5. Click "Open Console" button
+
+Step 3: Filter Logs
+In the console search box, enter one of these filters:
+
+[Contacts] - See all contact import logs
+[Friends] - See all friends fetch logs
+[API] - See all backend API logs
+Step 4: Test Features
+Try Import Contacts
+Try Find Friends
+Watch the console for real-time logs
+Step 5: Share Results
+Copy relevant log lines that show:
+
+Permission status
+Contact counts
+API responses
+Any errors
+🛠️ What to Look For
+Common Issues & Their Logs:
+1. Permission Denied:
+
+[Contacts] Permission raw: {"contacts":"denied"}
+[Contacts] Permission not granted — showing settings prompt
+
+Fix: User needs to enable Contacts in Settings
+
+2. Missing userId:
+
+[Contacts] Missing appUserId!
+
+Fix: User needs to complete registration first
+
+3. iOS 18 Limited Access:
+
+[Contacts] Permission raw: {"contacts":"limited"}
+[Contacts] Permission allowed: true
+[Contacts] Raw contacts length: 25
+
+Note: Limited access is OK - app will work with subset
+
+4. Backend Error:
+
+[API] POST /api/contacts/:userId/import error { ms: 123, error: 'Database connection failed' }
+
+Fix: Backend issue needs investigation
+
+📊 Testing Commands
+You can test the API directly without the app:
+
+# Replace with real user ID
+USER_ID="your-user-id-here"
+# Test friends endpoint
+curl -s https://daily-gospel-timothystaten.replit.app/api/friends/$USER_ID | jq .
+# Test contacts import
+curl -s -X POST "https://daily-gospel-timothystaten.replit.app/api/contacts/$USER_ID/import?fromSignup=true" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "contacts": [
+      {
+        "firstName": "Jane",
+        "lastName": "Doe",
+        "email": "jane@example.com",
+        "phone": null,
+        "contactId": null,
+        "displayName": null
+      }
+    ]
+  }' | jq .
+
+🎯 Next Steps
+Rebuild in Appflow with these debugging improvements
+Install from TestFlight
+Connect to Xcode Console and filter for [Contacts] or [Friends]
+Try the features and watch the logs
+Share any errors - The logs will pinpoint exactly what's failing
+The debugging system is now production-ready and will help us quickly identify any issues! 🚀
