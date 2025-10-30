@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { X, ExternalLink, BookOpen } from "lucide-react";
 import type { VideoItem } from "@/services/videoService";
-import { apiUrl } from "@/lib/apiUrl";
+import { apiUrl } from "@/lib/api-config";
 
 interface VideoPlayerProps {
   video: VideoItem | null;
@@ -46,7 +46,7 @@ export function VideoPlayer({ video, isOpen, onClose }: VideoPlayerProps) {
   // Use backend proxy for YouTube embeds (fixes iOS WKWebView origin issues)
   // This loads the YouTube iframe from our HTTPS domain instead of capacitor:// origin
   const youtubeProxyUrl = videoId 
-    ? `${apiUrl()}/youtube-proxy/${videoId}`
+    ? apiUrl(`youtube-proxy/${videoId}`)
     : null;
 
   return (
