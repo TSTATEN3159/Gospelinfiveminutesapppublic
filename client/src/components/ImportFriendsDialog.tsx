@@ -82,18 +82,40 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
         
         console.log('[Contacts] Raw contacts length:', result?.contacts?.length ?? 0);
         
-        const contactsList = result.contacts.map(contact => ({
-          contactId: contact.contactId,
-          firstName: contact.name?.given || null,
-          lastName: contact.name?.family || null,
-          displayName: contact.name?.display || null,
-          email: contact.emails?.[0]?.address || null,
-          phone: contact.phones?.[0]?.number || null
-        })).filter(contact => 
-          // Only include contacts with name and either email or phone
-          (contact.firstName || contact.lastName || contact.displayName) && 
-          (contact.email || contact.phone)
-        ).slice(0, 50); // Limit to 50 contacts
+        // Normalize contacts to handle different plugin versions and property names
+        const toPlain = (c: any) => {
+          // Prefer explicit fields, fall back to displayName
+          const first = c.name?.given ?? c.name?.givenName ?? c.firstName ?? null;
+          const last = c.name?.family ?? c.name?.familyName ?? c.lastName ?? null;
+          const display = c.name?.display ?? c.displayName ?? ([first, last].filter(Boolean).join(" ") || null);
+
+          const phonesArr = c.phones ?? c.phoneNumbers ?? [];
+          const emailsArr = c.emails ?? c.emailAddresses ?? [];
+
+          // Take first phone/email if present
+          const rawPhone = (phonesArr[0]?.number || phonesArr[0]?.value || phonesArr[0]) ?? null;
+          const rawEmail = (emailsArr[0]?.address || emailsArr[0]?.value || emailsArr[0]) ?? null;
+
+          const cleanPhone = rawPhone ? String(rawPhone).replace(/[^\d+]/g, "") : null;
+          const email = rawEmail ? String(rawEmail).trim() : null;
+
+          return {
+            contactId: c.contactId ?? c.id ?? null,
+            firstName: first,
+            lastName: last,
+            displayName: display,
+            email,
+            phone: cleanPhone,
+          };
+        };
+
+        const contactsList = result.contacts
+          .map(toPlain)
+          .filter(x => 
+            // Require a visible name AND at least an email or phone
+            (x.firstName || x.lastName || x.displayName) && (x.email || x.phone)
+          )
+          .slice(0, 50); // Limit to 50 contacts
         
         console.log('[Contacts] Filtered count (<=50):', contactsList.length);
         
