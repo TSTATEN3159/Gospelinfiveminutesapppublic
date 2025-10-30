@@ -108,6 +108,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   // Send friend request mutation
   const sendRequestMutation = useMutation({
     mutationFn: async (addresseeId: string) => {
+      console.log('[Friends] API base:', apiUrl(""));
       console.log('[Friends] Sending request from:', currentUserId, 'to:', addresseeId);
       const res = await apiRequest('POST', '/api/friends/request', { requesterId: currentUserId, addresseeId });
       console.log('[Friends] Request status:', res.status);

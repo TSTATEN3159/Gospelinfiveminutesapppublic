@@ -52,6 +52,7 @@ export default function ImportFriendsDialog({ isOpen, onClose, appUserId, onNavi
 
   const handleStartImport = async () => {
     console.log('[Contacts] Platform:', Capacitor.getPlatform(), 'appUserId:', appUserId);
+    console.log('[Contacts] API base:', apiUrl(""));
     
     if (!appUserId) {
       console.error('[Contacts] Missing appUserId!');
