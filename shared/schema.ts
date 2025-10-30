@@ -261,6 +261,7 @@ export const triviaQuestions = pgTable("trivia_questions", {
   question: text("question").notNull(),
   options: text("options").array().notNull(), // Array of 4 answer options
   correctAnswer: integer("correct_answer").notNull(), // Index (0-3) of correct option
+  hint: text("hint"), // Optional hint to help users
   verseReference: text("verse_reference"), // Optional Bible verse reference (e.g., "GEN.1.3")
   category: text("category"), // Optional category (e.g., "Old Testament", "New Testament", "Prophets")
   isActive: boolean("is_active").notNull().default(true),
