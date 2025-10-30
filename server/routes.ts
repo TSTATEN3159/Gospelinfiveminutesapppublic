@@ -2375,6 +2375,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return a < b ? [a, b] as const : [b, a] as const;
   }
 
+  // Admin debug endpoint to lookup user by email
+  app.get("/admin/whoami", async (req, res) => {
+    try {
+      const email = String(req.query.email || "").trim().toLowerCase();
+      if (!email) {
+        return res.status(400).json({ 
+          success: false, 
+          error: "EMAIL_REQUIRED",
+          message: "Please provide an email query parameter: /admin/whoami?email=your@email.com"
+        });
+      }
+      
+      console.log("[API] /admin/whoami lookup:", { email });
+      
+      const user = await storage.getAppUserByEmail(email);
+      
+      if (!user) {
+        return res.json({ 
+          success: false, 
+          error: "USER_NOT_FOUND",
+          message: `No user found with email: ${email}`
+        });
+      }
+      
+      return res.json({ 
+        success: true, 
+        user: {
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+          phone: user.phone,
+          joinDate: user.joinDate
+        }
+      });
+    } catch (error: any) {
+      console.error("[API] /admin/whoami error:", error);
+      return res.status(500).json({ 
+        success: false, 
+        error: "LOOKUP_FAILED",
+        message: error?.message || "Failed to lookup user"
+      });
+    }
+  });
+
   app.post("/admin/seed-test-friends", async (req, res) => {
     try {
 
