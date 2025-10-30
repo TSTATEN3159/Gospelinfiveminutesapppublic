@@ -47,11 +47,10 @@ Preferred communication style: Simple, everyday language.
       - iOS autoplay enabled (muted autoplay is allowed on iOS)
       - Added error logging with visual overlay for debugging in TestFlight
       - Logs embed URL, video ID, and User Agent to console for verification
-      - **Native iOS Configuration (AppDelegate.swift)**:
-        - Changed base class from UIResponder to CAPAppDelegate
-        - Set `allowsInlineMediaPlayback = true` for WKWebView
-        - Set `mediaTypesRequiringUserActionForPlayback = []` to remove tap requirement
-        - Enabled AirPlay/PiP support for iOS 10+
+      - **Native iOS Configuration**:
+        - AppDelegate.swift reverted to stock Capacitor template (UIResponder, UIApplicationDelegate)
+        - No custom WKWebView configuration needed - inline playback handled by iframe params + ATS
+        - Removed incompatible CAPAppDelegate and CAPBridgeViewController references
     - **Testing Protocol**:
       1. Rebuild iOS app in Appflow (App Store/Release build)
       2. Install from TestFlight
