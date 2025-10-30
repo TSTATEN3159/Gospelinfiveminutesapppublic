@@ -100,48 +100,46 @@ const sampleStudies: BibleStudy[] = [
   }
 ];
 
-// Sample lesson content for the featured study
-const sampleLessons: StudyLesson[] = [
-  {
-    id: 1,
-    title: "Beginning Your Journey with Jesus",
-    content: "Welcome to this transformative 30-day journey with Jesus Christ. Today we begin by understanding what it truly means to walk with our Savior daily. Walking with Jesus isn't just about Sunday worship; it's about inviting Him into every moment of our lives, allowing His love and wisdom to guide our decisions, relationships, and purpose.",
-    verse: "Matthew 11:28-30",
-    verseText: "Come to me, all you who are weary and burdened, and I will give you rest. Take my yoke upon you and learn from me, for I am gentle and humble in heart, and you will find rest for your souls. For my yoke is easy and my burden is light.",
+// Function to generate lessons for any study
+const generateLessons = (study: BibleStudy): StudyLesson[] => {
+  const lessonTitles = [
+    "Beginning Your Journey", "Learning to Trust", "Finding Joy", "Growing in Faith",
+    "Prayer and Devotion", "Walking in Love", "Overcoming Challenges", "Understanding Grace",
+    "Building Character", "Sharing Your Faith", "Finding Peace", "Seeking Wisdom",
+    "Serving Others", "Spiritual Discipline", "God's Promises", "Living with Purpose",
+    "Cultivating Hope", "Embracing Change", "Finding Strength", "Understanding Scripture",
+    "Walking in Truth", "Pursuing Holiness", "Celebrating Victory", "Enduring Trials",
+    "Growing Deeper", "Reflecting Christ", "Living Boldly", "Trusting God's Timing",
+    "Experiencing Freedom", "Maturing in Faith", "Walking in Power", "Finishing Strong"
+  ];
+
+  const verses = [
+    { ref: "Matthew 11:28-30", text: "Come to me, all you who are weary and burdened, and I will give you rest." },
+    { ref: "Proverbs 3:5-6", text: "Trust in the Lord with all your heart and lean not on your own understanding." },
+    { ref: "Nehemiah 8:10", text: "The joy of the Lord is your strength." },
+    { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him." },
+    { ref: "Philippians 4:6-7", text: "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God." },
+    { ref: "1 John 4:19", text: "We love because he first loved us." },
+    { ref: "James 1:2-4", text: "Consider it pure joy, my brothers and sisters, whenever you face trials of many kinds." },
+    { ref: "Ephesians 2:8-9", text: "For it is by grace you have been saved, through faith—and this is not from yourselves, it is the gift of God." },
+    { ref: "Galatians 5:22-23", text: "But the fruit of the Spirit is love, joy, peace, forbearance, kindness, goodness, faithfulness, gentleness and self-control." },
+    { ref: "Matthew 28:19-20", text: "Therefore go and make disciples of all nations, baptizing them in the name of the Father and of the Son and of the Holy Spirit." }
+  ];
+
+  return Array.from({ length: study.lessons }, (_, i) => ({
+    id: i + 1,
+    title: lessonTitles[i % lessonTitles.length] || `Day ${i + 1} Lesson`,
+    content: `Welcome to Day ${i + 1} of "${study.title}". ${study.description} Today we continue our journey of spiritual growth and deeper understanding of God's Word. Each day brings new opportunities to grow closer to Christ and discover His perfect will for our lives.`,
+    verse: verses[i % verses.length].ref,
+    verseText: verses[i % verses.length].text,
     reflection: [
-      "What does it mean to you personally to 'come to Jesus'?",
-      "How have you experienced rest or peace in Christ before?",
-      "What burdens are you carrying that you need to surrender to Him?"
+      `How does today's scripture apply to your current life situation?`,
+      `What is God teaching you through this lesson?`,
+      `How can you put this into practice today?`
     ],
-    prayer: "Lord Jesus, thank You for Your invitation to come to You with all my burdens. Help me to trust You completely and walk closely with You each day. Show me how to find true rest in Your presence. Amen."
-  },
-  {
-    id: 2,
-    title: "Learning to Trust His Plan",
-    content: "Trust is foundational to any relationship, especially our relationship with God. Today we explore how to develop deeper trust in God's perfect plan for our lives, even when we can't see the full picture. His ways are higher than our ways, and His timing is always perfect.",
-    verse: "Proverbs 3:5-6",
-    verseText: "Trust in the Lord with all your heart and lean not on your own understanding; in all your ways submit to him, and he will make your paths straight.",
-    reflection: [
-      "In what areas of your life do you struggle to trust God?",
-      "How has God shown His faithfulness to you in the past?",
-      "What does it mean to 'lean not on your own understanding'?"
-    ],
-    prayer: "Heavenly Father, I choose to trust You with my whole heart. Help me to surrender my need to understand everything and instead rest in Your perfect wisdom and timing. Guide my steps today. Amen."
-  },
-  {
-    id: 3,
-    title: "Finding Joy in His Presence",
-    content: "Joy is one of the most beautiful gifts of walking with Jesus. Unlike happiness, which depends on circumstances, joy comes from knowing we are deeply loved by God and that nothing can separate us from His love. Today we discover how to cultivate lasting joy through His presence.",
-    verse: "Nehemiah 8:10",
-    verseText: "Do not grieve, for the joy of the Lord is your strength.",
-    reflection: [
-      "What brings you the deepest joy in life?",
-      "How is the joy of the Lord different from worldly happiness?",
-      "How can you tap into God's joy during difficult times?"
-    ],
-    prayer: "Lord, fill my heart with Your joy that transcends all circumstances. Help me to find my strength in You and to be a source of joy to others. Thank You for the privilege of walking with You. Amen."
-  }
-];
+    prayer: `Heavenly Father, thank You for Day ${i + 1} of this journey. Help me to apply what I've learned today and to grow closer to You. Guide my steps and fill me with Your wisdom. In Jesus' name, Amen.`
+  }));
+};
 
 export default function BibleStudiesPage({ currentUserId, language = "en", onNavigate }: BibleStudyProps) {
   const t = useTranslations(language);
@@ -150,7 +148,9 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
   const [selectedStudy, setSelectedStudy] = useState<BibleStudy | null>(null);
   const [showStudyDetail, setShowStudyDetail] = useState(false);
   const [showStudyLesson, setShowStudyLesson] = useState(false);
+  const [showLessonList, setShowLessonList] = useState(false);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
+  const [currentLessons, setCurrentLessons] = useState<StudyLesson[]>([]);
 
   const categories = [t.allCategory, t.discipleship, t.encouragement, t.character, t.prayer, t.prophecy, t.love];
 
@@ -453,10 +453,11 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   <Button 
                     className="flex-1 bg-amber-600 hover:bg-amber-700 text-white"
                     onClick={() => {
+                      const lessons = generateLessons(selectedStudy);
+                      setCurrentLessons(lessons);
                       setShowStudyDetail(false);
-                      setCurrentLessonIndex(0);
-                      setShowStudyLesson(true);
-                      console.log(`Starting study: ${selectedStudy.title}`);
+                      setShowLessonList(true);
+                      console.log(`Starting study: ${selectedStudy.title} with ${lessons.length} lessons`);
                     }}
                     data-testid={`button-start-study-detail-${selectedStudy.id}`}
                   >
@@ -477,10 +478,68 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
         </DialogContent>
       </Dialog>
 
+      {/* Lesson List Modal (Day Selector) */}
+      <Dialog open={showLessonList} onOpenChange={setShowLessonList}>
+        <DialogContent className="max-w-3xl max-h-[90vh] overflow-y-auto">
+          {selectedStudy && currentLessons.length > 0 && (
+            <>
+              <DialogHeader>
+                <div className="flex items-center gap-3 mb-4">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    onClick={() => {
+                      setShowLessonList(false);
+                      setShowStudyDetail(true);
+                    }}
+                    className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
+                    aria-label="Go back to study details"
+                  >
+                    <ArrowLeft className="w-5 h-5" />
+                  </Button>
+                  <div>
+                    <DialogTitle className="text-xl font-bold">{selectedStudy.title}</DialogTitle>
+                    <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
+                      Select a day to begin
+                    </p>
+                  </div>
+                </div>
+              </DialogHeader>
+
+              <div className="space-y-4">
+                <p className="text-gray-600 dark:text-gray-300">
+                  Choose which day you'd like to study. You can start from Day 1 or jump to any lesson.
+                </p>
+
+                {/* Day Grid */}
+                <div className="grid grid-cols-5 sm:grid-cols-7 gap-2">
+                  {currentLessons.map((lesson, index) => (
+                    <Button
+                      key={lesson.id}
+                      variant="outline"
+                      className="h-14 flex flex-col items-center justify-center hover:bg-amber-100 dark:hover:bg-amber-900/30 hover:border-amber-600"
+                      onClick={() => {
+                        setCurrentLessonIndex(index);
+                        setShowLessonList(false);
+                        setShowStudyLesson(true);
+                      }}
+                      data-testid={`button-select-day-${lesson.id}`}
+                    >
+                      <span className="text-xs text-gray-500 dark:text-gray-400">Day</span>
+                      <span className="text-lg font-bold">{lesson.id}</span>
+                    </Button>
+                  ))}
+                </div>
+              </div>
+            </>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Study Lesson Modal */}
       <Dialog open={showStudyLesson} onOpenChange={setShowStudyLesson}>
         <DialogContent className="max-w-4xl max-h-[95vh] overflow-y-auto">
-          {selectedStudy && sampleLessons[currentLessonIndex] && (
+          {selectedStudy && currentLessons[currentLessonIndex] && (
             <>
               <DialogHeader>
                 <div className="flex items-center justify-between mb-4">
@@ -498,7 +557,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                     <div>
                       <DialogTitle className="text-xl font-bold">{selectedStudy.title}</DialogTitle>
                       <p className="text-sm text-blue-600 dark:text-blue-400 font-medium">
-                        {t.lessonOf} {currentLessonIndex + 1} / {sampleLessons.length}
+                        {t.lessonOf} {currentLessonIndex + 1} / {currentLessons.length}
                       </p>
                     </div>
                   </div>
@@ -512,14 +571,14 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                 {/* Lesson Title */}
                 <div className="text-center">
                   <h2 className="text-2xl font-bold text-gray-900 dark:text-foreground">
-                    {sampleLessons[currentLessonIndex].title}
+                    {currentLessons[currentLessonIndex].title}
                   </h2>
                 </div>
 
                 {/* Main Content */}
                 <div className="prose prose-lg max-w-none dark:prose-invert">
                   <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
-                    {sampleLessons[currentLessonIndex].content}
+                    {currentLessons[currentLessonIndex].content}
                   </p>
                 </div>
 
@@ -532,10 +591,10 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                       </h3>
                       <div className="bg-white dark:bg-blue-950/50 rounded-lg p-4">
                         <p className="text-blue-800 dark:text-blue-200 italic leading-relaxed mb-3">
-                          "{sampleLessons[currentLessonIndex].verseText}"
+                          "{currentLessons[currentLessonIndex].verseText}"
                         </p>
                         <p className="text-blue-600 dark:text-blue-300 font-medium">
-                          — {sampleLessons[currentLessonIndex].verse}
+                          — {currentLessons[currentLessonIndex].verse}
                         </p>
                       </div>
                     </div>
@@ -551,7 +610,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   </CardHeader>
                   <CardContent>
                     <ul className="space-y-3">
-                      {sampleLessons[currentLessonIndex].reflection.map((question, idx) => (
+                      {currentLessons[currentLessonIndex].reflection.map((question, idx) => (
                         <li key={idx} className="flex gap-3">
                           <span className="flex-shrink-0 w-6 h-6 bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-300 rounded-full flex items-center justify-center text-sm font-medium">
                             {idx + 1}
@@ -572,7 +631,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   </CardHeader>
                   <CardContent>
                     <p className="text-green-800 dark:text-green-200 italic leading-relaxed">
-                      {sampleLessons[currentLessonIndex].prayer}
+                      {currentLessons[currentLessonIndex].prayer}
                     </p>
                   </CardContent>
                 </Card>
@@ -591,19 +650,19 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   
                   <div className="text-center">
                     <p className="text-sm text-gray-500 dark:text-gray-400">
-                      Progress: {currentLessonIndex + 1} / {sampleLessons.length}
+                      Progress: {currentLessonIndex + 1} / {currentLessons.length}
                     </p>
                     <div className="w-32 h-2 bg-gray-200 dark:bg-gray-700 rounded-full mt-1">
                       <div 
                         className="h-2 bg-amber-600 rounded-full transition-all duration-300"
-                        style={{ width: `${((currentLessonIndex + 1) / sampleLessons.length) * 100}%` }}
+                        style={{ width: `${((currentLessonIndex + 1) / currentLessons.length) * 100}%` }}
                       ></div>
                     </div>
                   </div>
 
                   <Button
                     onClick={() => {
-                      if (currentLessonIndex < sampleLessons.length - 1) {
+                      if (currentLessonIndex < currentLessons.length - 1) {
                         setCurrentLessonIndex(currentLessonIndex + 1);
                       } else {
                         // Study completed
@@ -613,7 +672,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                     }}
                     data-testid="button-next-lesson"
                   >
-                    {currentLessonIndex < sampleLessons.length - 1 ? t.nextLesson : t.completeLesson}
+                    {currentLessonIndex < currentLessons.length - 1 ? t.nextLesson : t.completeLesson}
                     <ChevronRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
