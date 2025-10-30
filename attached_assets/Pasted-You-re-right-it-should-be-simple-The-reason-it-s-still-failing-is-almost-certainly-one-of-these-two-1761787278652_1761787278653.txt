@@ -1,0 +1,128 @@
+You’re right—it should be simple. The reason it’s still failing is almost certainly one of these two gotchas:
+
+Your wrapper page is being blocked from being iframed (e.g., by X-Frame-Options or a strict frame-ancestors CSP header).
+
+You’re using the YouTube JS API (enablejsapi=1) without an origin parameter, which causes player init errors (153) on iOS.
+
+Let’s verify + fix both immediately.
+
+1) Check the proxy page’s response headers (iframe blockers)
+
+Tell Replit to run this and paste the output:
+
+curl -I https://daily-gospel-timothystaten.replit.app/youtube-proxy/M7lc1UVf-VE
+
+
+If you see X-Frame-Options: SAMEORIGIN or a Content-Security-Policy with frame-ancestors that does not include your app origins, the page can’t be iframed inside your app → error 153.
+
+Ask Replit to update the /youtube-proxy/:videoId route to set SAFE headers (and not be overwritten by Helmet/etc.):
+
+app.get("/youtube-proxy/:videoId", (req, res) => {
+  const videoId = req.params.videoId;
+  const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>YouTube Player</title>
+  <style>
+    html, body { margin:0; padding:0; background:#000; height:100%; }
+    .wrap { position:relative; width:100%; height:100vh; }
+    iframe { position:absolute; inset:0; width:100%; height:100%; border:0; }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <iframe
+      src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1"
+      allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
+      allowfullscreen
+      referrerpolicy="origin-when-cross-origin"
+    ></iframe>
+  </div>
+</body>
+</html>`;
+
+  // ---- critical headers so this page CAN be embedded by your app ----
+  res.setHeader("Content-Type", "text/html; charset=utf-8");
+  res.setHeader("Cache-Control", "no-store");
+  res.setHeader("X-Frame-Options", "ALLOWALL"); // override Helmet if present
+  // allow your app/webview origins to frame it
+  res.setHeader("Content-Security-Policy",
+    "frame-ancestors 'self' capacitor://localhost http://localhost https://daily-gospel-timothystaten.replit.app app://*;"
+  );
+  res.status(200).send(html);
+});
+
+
+Note: we removed autoplay=1 and enablejsapi=1 for now to reduce iOS/JS-API friction. We’ll re-add later if you need programmatic controls. Autoplay on iOS often requires muted=1 or a user gesture—let’s first make “tap to play” work.
+
+Now publish the backend and test again:
+
+open on iPhone Safari:
+https://daily-gospel-timothystaten.replit.app/youtube-proxy/M7lc1UVf-VE
+
+
+If this demo video plays, try one of your “Faith” video IDs the same way.
+
+Then try inside the TestFlight app.
+
+2) If you must use the JS API (enablejsapi=1), add origin=...
+
+If your player code needs the IFrame API, you must include origin, or YouTube will throw config errors on iOS:
+
+<iframe
+  src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1&enablejsapi=1&origin=https://daily-gospel-timothystaten.replit.app"
+  ...
+></iframe>
+
+
+Try the no-JS-API version first (above). If you later add enablejsapi=1, add origin= exactly as shown.
+
+3) Quick sanity checks (give these to Replit)
+
+Test a known embeddable video first:
+
+https://www.youtube-nocookie.com/embed/M7lc1UVf-VE?playsinline=1
+
+
+If that won’t play via your proxy, it’s headers (not content).
+
+Confirm /youtube-proxy/... doesn’t return any other headers like:
+
+X-Content-Type-Options: nosniff is fine.
+
+But X-Frame-Options: DENY/SAMEORIGIN → must be removed/overridden.
+
+CSP with frame-ancestors 'none' or missing your app origins → must be fixed (use the header above).
+
+4) If this still fails in-app but works in Safari
+
+That means the WKWebView is the only remaining constraint. Two options:
+
+Keep the proxy page, but in your app’s capacitor.config.ts set:
+
+ios: {
+  contentInset: 'automatic', // ok
+  backgroundColor: '#000000', // ok
+  // (Capacitor doesn’t expose allowsInlineMediaPlayback; the iframe's playsinline covers it)
+}
+
+
+(You likely already have what you need here; the real blockers are headers + embed URL, which we just addressed.)
+
+Bypass the proxy and point the iframe directly at https://www.youtube-nocookie.com/embed/${id}?playsinline=1 from your VideoPlayer.tsx. This removes one moving piece (the wrapper page) and proves whether the wrapper headers were the issue.
+
+Why this path fixes it
+
+Many ministries’ videos embed fine, but your wrapper must be embeddable. Any X-Frame-Options / strict frame-ancestors will kill it in a WebView.
+
+iOS is picky about autoplay and JS API origins. We neutralize that first (no JS API, no autoplay), then add features back carefully.
+
+If you want, have Replit paste:
+
+the response headers from curl -I .../youtube-proxy/<id>, and
+
+the exact iframe HTML your app renders at tap-time.
+
+I’ll sanity-check them quickly and tell you if anything still looks off.

@@ -2244,16 +2244,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
 <body>
   <div class="wrap">
     <iframe
-      src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&autoplay=1&rel=0&modestbranding=1&enablejsapi=1"
+      src="https://www.youtube-nocookie.com/embed/${videoId}?playsinline=1&rel=0&modestbranding=1"
       allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen"
       allowfullscreen
-      referrerpolicy="strict-origin-when-cross-origin"
+      referrerpolicy="origin-when-cross-origin"
     ></iframe>
   </div>
 </body>
 </html>`;
+
+    // Critical headers so this page CAN be embedded by your app
     res.setHeader("Content-Type", "text/html; charset=utf-8");
-    res.setHeader("Cache-Control", "no-store"); // avoid stale HTML
+    res.setHeader("Cache-Control", "no-store");
+    res.setHeader("X-Frame-Options", "ALLOWALL"); // override Helmet if present
+    // Allow your app/webview origins to frame it
+    res.setHeader("Content-Security-Policy",
+      "frame-ancestors 'self' capacitor://localhost http://localhost https://daily-gospel-timothystaten.replit.app app://*;"
+    );
     res.status(200).send(html);
   });
 
