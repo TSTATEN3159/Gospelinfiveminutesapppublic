@@ -2276,10 +2276,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/admin/seed-test-friends", async (req, res) => {
     try {
-      const key = String(req.query.key || "");
-      if (!process.env.SEED_KEY || key !== process.env.SEED_KEY) {
-        return res.status(401).json({ success: false, error: "Unauthorized" });
-      }
 
       // 1) Upsert 5 test users
       const testUsers = [
@@ -2353,10 +2349,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.delete("/admin/seed-test-friends", async (req, res) => {
     try {
-      const key = String(req.query.key || "");
-      if (!process.env.SEED_KEY || key !== process.env.SEED_KEY) {
-        return res.status(401).json({ success: false, error: "Unauthorized" });
-      }
       await db.execute(sql`
         DELETE FROM friendships
         WHERE requester_id IN (SELECT id FROM app_users WHERE email LIKE '%@test.com')
