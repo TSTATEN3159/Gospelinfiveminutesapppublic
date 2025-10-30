@@ -38,14 +38,15 @@ app.use((req, res, next) => {
 });
 
 // Apply JSON parsing to all routes EXCEPT Stripe webhook which needs raw body
+// Use 2MB limit to support contact imports (up to 50 contacts with full details)
 app.use((req, res, next) => {
   if (req.path === '/api/stripe-webhook') {
     // Skip JSON parsing for Stripe webhook - it needs raw body for signature verification
     return next();
   }
-  express.json()(req, res, next);
+  express.json({ limit: "2mb" })(req, res, next);
 });
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true, limit: "2mb" }));
 
 app.use((req, res, next) => {
   const start = Date.now();
