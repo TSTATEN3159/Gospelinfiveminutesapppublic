@@ -1396,6 +1396,65 @@ Respond in JSON format:
     }
   });
 
+  // Helper function to fetch Bible text from API.Bible
+  async function fetchBiblePassage(reference: string): Promise<{ reference: string; text: string } | null> {
+    try {
+      const apiKey = process.env.API_BIBLE_KEY;
+      if (!apiKey) {
+        console.error('API_BIBLE_KEY not found');
+        return null;
+      }
+
+      // Use de4e12af7f28f599-02 (KJV) as the default Bible version
+      const bibleId = 'de4e12af7f28f599-02';
+      
+      // Search for the passage first to get the passage ID
+      const searchUrl = `https://api.scripture.api.bible/v1/bibles/${bibleId}/search?query=${encodeURIComponent(reference)}&limit=1`;
+      const searchResponse = await fetch(searchUrl, {
+        headers: {
+          'api-key': apiKey
+        }
+      });
+
+      if (!searchResponse.ok) {
+        console.error(`API.Bible search failed: ${searchResponse.status}`);
+        return null;
+      }
+
+      const searchData = await searchResponse.json();
+      
+      if (!searchData.data?.passages || searchData.data.passages.length === 0) {
+        console.error(`No passages found for reference: ${reference}`);
+        return null;
+      }
+
+      const passage = searchData.data.passages[0];
+      
+      // Fetch the full passage text
+      const passageUrl = `https://api.scripture.api.bible/v1/bibles/${bibleId}/passages/${passage.id}?content-type=text&include-notes=false&include-titles=false&include-chapter-numbers=false&include-verse-numbers=false`;
+      const passageResponse = await fetch(passageUrl, {
+        headers: {
+          'api-key': apiKey
+        }
+      });
+
+      if (!passageResponse.ok) {
+        console.error(`API.Bible passage fetch failed: ${passageResponse.status}`);
+        return null;
+      }
+
+      const passageData = await passageResponse.json();
+      
+      return {
+        reference: passageData.data?.reference || reference,
+        text: passageData.data?.content || ''
+      };
+    } catch (error) {
+      console.error('Error fetching Bible passage:', error);
+      return null;
+    }
+  }
+
   // Get a specific day's reading from a plan
   app.get("/api/reading-plan/:planId/day/:dayNumber", async (req, res) => {
     try {
@@ -1416,7 +1475,19 @@ Respond in JSON format:
         });
       }
 
-      res.json(reading);
+      // Fetch actual Bible text for the reading
+      let bibleText = null;
+      if (reading.scriptureReference) {
+        bibleText = await fetchBiblePassage(reading.scriptureReference);
+      }
+
+      // Return reading with Bible text
+      const response = {
+        ...reading,
+        biblePassage: bibleText
+      };
+
+      res.json(response);
     } catch (error) {
       console.error("Error fetching reading plan day:", error);
       res.status(500).json({
