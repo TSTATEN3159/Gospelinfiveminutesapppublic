@@ -19,10 +19,10 @@ interface MorePageProps {
 const getMainMenuItems = (t: any, isIOS = false) => {
   const items = [
     {
-      id: "readingplans",
-      title: "Reading Plans",
-      description: "Read the Bible in 1 year with guided daily readings",
-      icon: Calendar,
+      id: "devotional",
+      title: "365 Daily Devotional",
+      description: "Journey through faith with daily scripture and reflections",
+      icon: BookOpen,
       comingSoon: false
     },
     {
@@ -175,10 +175,10 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
         {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {
             switch(id) {
-              case 'readingplans': return {
-                gradient: 'from-green-50 to-emerald-50',
-                borderColor: 'border-green-200',
-                iconColor: 'text-green-600'
+              case 'devotional': return {
+                gradient: 'from-blue-50 to-indigo-50',
+                borderColor: 'border-blue-200',
+                iconColor: 'text-blue-600'
               };
               case 'videos': return {
                 gradient: 'from-purple-50 to-violet-50',

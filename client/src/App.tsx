@@ -19,6 +19,7 @@ import { performanceMonitor } from "./services/performanceMonitor";
 
 // Pages
 import HomePage from "./pages/HomePage";
+import DailyHubPage from "./pages/DailyHubPage";
 import DailyDevotionalPage from "./pages/DailyDevotionalPage";
 import ReadingPlansPage from "./pages/ReadingPlansPage";
 import AskPage from "./pages/BiblePage";
@@ -46,7 +47,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "daily" | "readingplans" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo";
+type AppPage = "home" | "daily" | "devotional" | "readingplans" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -146,6 +147,8 @@ function App() {
       case "home":
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
       case "daily":
+        return <DailyHubPage user={user || undefined} onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
+      case "devotional":
         return <DailyDevotionalPage user={user || undefined} onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "readingplans":
         return <ReadingPlansPage user={user || undefined} onNavigate={handleNavigateToLegal} language={language} />;
@@ -203,7 +206,7 @@ function App() {
             </main>
 
             {/* Bottom Navigation - Hide on legal pages and friends page */}
-            {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "readingplans"].includes(currentPage) && (
+            {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotional", "readingplans"].includes(currentPage) && (
               <BottomNavigation 
                 currentPage={currentPage as "home" | "ask" | "search" | "more"} 
                 onPageChange={(page) => setCurrentPage(page as AppPage)} 
