@@ -2970,6 +2970,45 @@ Respond in JSON format:
     }
   });
 
+  // Helper function to generate Bible Study lesson content using OpenAI
+  async function generateStudyLessonContent(studyTitle: string, studyCategory: string, dayNumber: number, language: string = 'en') {
+    const prompt = `Generate a Bible study lesson for "${studyTitle}" (category: ${studyCategory}) for Day ${dayNumber}. Include:
+    
+1. A meaningful lesson title (5-7 words)
+2. A relevant Bible verse reference and its full text
+3. Lesson content (400-500 words) that:
+   - Provides deep biblical insight
+   - Connects scripture to daily life
+   - Offers practical application
+   - Encourages spiritual growth
+4. Three reflection questions that prompt personal contemplation
+5. A closing prayer (50-75 words)
+6. Language: ${language === 'en' ? 'English' : language}
+
+Respond in JSON format:
+{
+  "title": "string",
+  "verseReference": "string (e.g., 'Romans 8:28')",
+  "verseText": "string (full verse text)",
+  "content": "string (400-500 words)",
+  "reflectionQuestions": ["question1", "question2", "question3"],
+  "prayer": "string (50-75 words)"
+}`;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-5", // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
+      messages: [
+        { role: "system", content: "You are an insightful Bible study teacher who creates engaging, transformative lessons that help people understand and apply Scripture to their lives." },
+        { role: "user", content: prompt }
+      ],
+      response_format: { type: "json_object" },
+      max_completion_tokens: 2048
+    });
+
+    const content = JSON.parse(response.choices[0].message.content || '{}');
+    return content;
+  }
+
   // Bible studies routes
   app.get("/api/studies", async (req, res) => {
     try {
@@ -3076,14 +3115,74 @@ Respond in JSON format:
 
       // First get the study to get its ID
       const study = await storage.getStudyBySlug(slug, language);
-      if (!study) {
+      if (!study || !study.translation) {
         return res.status(404).json({ error: "Study not found" });
       }
 
-      const lesson = await storage.getLessonByDay(study.id, day, language);
+      // Validate day is within study range
+      if (day < 1 || day > study.lessonsCount) {
+        return res.status(400).json({ error: `Invalid day number. Must be between 1 and ${study.lessonsCount}` });
+      }
+
+      // Try to get lesson from database first
+      let lesson = await storage.getLessonByDay(study.id, day, language);
       
+      // If not found, generate using OpenAI and save to database
       if (!lesson || !lesson.translation) {
-        return res.status(404).json({ error: "Lesson not found" });
+        console.log(`Generating Bible study lesson for ${slug} day ${day} in ${language}...`);
+        
+        try {
+          const generated = await generateStudyLessonContent(
+            study.translation.title,
+            study.translation.category,
+            day,
+            language
+          );
+          
+          // Save to database for future use
+          lesson = await storage.createLesson(
+            {
+              studyId: study.id,
+              dayNumber: day,
+              audioUrl: null,
+              videoUrl: null
+            },
+            {
+              lessonId: '', // Will be set by database
+              language: language as any,
+              title: generated.title,
+              verseReference: generated.verseReference,
+              verseText: generated.verseText,
+              content: generated.content,
+              reflectionQuestions: JSON.stringify(generated.reflectionQuestions || []),
+              prayer: generated.prayer
+            }
+          );
+          
+          console.log(`Successfully generated and saved lesson for ${slug} day ${day}`);
+          
+          // Manually construct translation since createLesson returns without it
+          const lessonWithTranslation = {
+            ...lesson,
+            translation: {
+              lessonId: lesson.id,
+              language: language as any,
+              title: generated.title,
+              verseReference: generated.verseReference,
+              verseText: generated.verseText,
+              content: generated.content,
+              reflectionQuestions: JSON.stringify(generated.reflectionQuestions || []),
+              prayer: generated.prayer
+            }
+          };
+          
+          lesson = lessonWithTranslation;
+        } catch (genError) {
+          console.error("Error generating Bible study lesson with OpenAI:", genError);
+          return res.status(500).json({
+            error: "Unable to generate Bible study lesson at this time. Please try again later."
+          });
+        }
       }
 
       const response = {
