@@ -9,6 +9,7 @@ import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
 import { db } from "./db";
 import { sql } from "drizzle-orm";
+import { getWholePlan, getDay } from "./devotionals";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -2621,6 +2622,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     }
   });
+
+  // --- Devotionals 365 dynamic API ---
+  app.get("/api/devotionals/365", getWholePlan);
+  app.get("/api/devotionals/365/:gender/:day", getDay);
 
   const httpServer = createServer(app);
 
