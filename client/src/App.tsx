@@ -86,6 +86,12 @@ function App() {
       try {
         // Register event to fire each time user resumes the app
         CapacitorApp.addListener('resume', async () => {
+          // Don't reload during critical operations (login, registration, etc.)
+          if (localStorage.getItem('shouldBlockReload') === 'true') {
+            console.log('[LiveUpdates] Reload blocked - critical operation in progress');
+            return;
+          }
+
           if (localStorage.getItem('shouldReloadApp') === 'true') {
             console.log('[LiveUpdates] Reloading app with new update');
             await LiveUpdates.reload();
@@ -119,6 +125,9 @@ function App() {
   const handleRegistrationComplete = async (userData?: User) => {
     if (userData) {
       try {
+        // Block Live Updates reload during registration
+        localStorage.setItem('shouldBlockReload', 'true');
+        
         // Create app_users entry in the database
         const { apiUrl } = await import('@/lib/api-config');
         const response = await fetch(apiUrl('/api/users'), {
@@ -150,6 +159,9 @@ function App() {
         // Still save locally but without appUserId
         setUser(userData);
         localStorage.setItem("gospelAppUser", JSON.stringify(userData));
+      } finally {
+        // Unblock Live Updates reload after registration completes
+        localStorage.setItem('shouldBlockReload', 'false');
       }
     }
     setShowRegistration(false);
