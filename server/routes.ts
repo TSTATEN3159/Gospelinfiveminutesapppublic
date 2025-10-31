@@ -1144,8 +1144,50 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Helper function to generate devotional content using OpenAI
+  async function generateDevotionalContent(day: number, gender: 'men' | 'women', language: string = 'en') {
+    const genderContext = gender === 'men' ? 'men facing daily challenges in faith, work, and relationships' : 'women navigating faith, family, and personal growth';
+    
+    const prompt = `Generate a 5-minute daily devotional for ${genderContext} for day ${day} of a 365-day journey. Include:
+    
+1. A relevant Bible verse (provide full text)
+2. A meaningful title (5-7 words)
+3. Devotional content (350-400 words) that:
+   - Applies the scripture to daily life
+   - Offers practical wisdom and encouragement
+   - Maintains a warm, non-judgmental tone
+   - Addresses real-life struggles with compassion
+4. Two supporting Bible verses with their full text
+5. Language: ${language === 'en' ? 'English' : language}
+
+Respond in JSON format:
+{
+  "title": "string",
+  "mainScripture": "string (reference like 'John 3:16')",
+  "mainScriptureText": "string (full verse text)",
+  "devotionalContent": "string (350-400 words)",
+  "supportingVerse1": "string (reference)",
+  "supportingVerse1Text": "string (full text)",
+  "supportingVerse2": "string (reference)",
+  "supportingVerse2Text": "string (full text)"
+}`;
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-5", // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
+      messages: [
+        { role: "system", content: "You are a compassionate Christian devotional writer who creates meaningful, applicable content that speaks to real-life struggles." },
+        { role: "user", content: prompt }
+      ],
+      response_format: { type: "json_object" },
+      max_completion_tokens: 2048
+    });
+
+    const content = JSON.parse(response.choices[0].message.content || '{}');
+    return content;
+  }
+
   // Devotional routes
-  // Get devotional by day number and gender
+  // Get devotional by day number and gender - generates content dynamically if not in database
   app.get("/api/devotional/:gender/:dayNumber", async (req, res) => {
     try {
       const { gender, dayNumber } = req.params;
@@ -1164,12 +1206,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      const devotional = await storage.getDevotional(day, gender as 'men' | 'women', language);
+      // Try to get from database first
+      let devotional = await storage.getDevotional(day, gender as 'men' | 'women', language);
 
+      // If not found, generate using OpenAI and save to database
       if (!devotional) {
-        return res.status(404).json({
-          error: `Devotional for ${gender} day ${day} not found. We're working on adding more content!`
-        });
+        console.log(`Generating devotional for ${gender} day ${day} in ${language}...`);
+        
+        try {
+          const generated = await generateDevotionalContent(day, gender as 'men' | 'women', language);
+          
+          // Save to database for future use
+          devotional = await storage.createDevotional({
+            dayNumber: day,
+            gender: gender as 'men' | 'women',
+            language: language as any,
+            title: generated.title,
+            mainScripture: generated.mainScripture,
+            mainScriptureText: generated.mainScriptureText,
+            devotionalContent: generated.devotionalContent,
+            supportingVerse1: generated.supportingVerse1 || null,
+            supportingVerse1Text: generated.supportingVerse1Text || null,
+            supportingVerse2: generated.supportingVerse2 || null,
+            supportingVerse2Text: generated.supportingVerse2Text || null
+          });
+          
+          console.log(`Successfully generated and saved devotional for ${gender} day ${day}`);
+        } catch (genError) {
+          console.error("Error generating devotional with OpenAI:", genError);
+          return res.status(500).json({
+            error: "Unable to generate devotional content at this time. Please try again later."
+          });
+        }
       }
 
       res.json(devotional);

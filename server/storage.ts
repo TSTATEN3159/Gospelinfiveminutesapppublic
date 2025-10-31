@@ -69,6 +69,7 @@ export interface IStorage {
   
   // Devotional methods
   getDevotional(dayNumber: number, gender: 'men' | 'women', language?: string): Promise<Devotional | undefined>;
+  createDevotional(devotional: InsertDevotional): Promise<Devotional>;
   getUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress | undefined>;
   createUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress>;
   updateDevotionalProgress(userId: string, gender: 'men' | 'women', dayNumber: number): Promise<UserDevotionalProgress>;
@@ -652,6 +653,15 @@ export class DatabaseStorage implements IStorage {
       );
     
     return results[0];
+  }
+
+  async createDevotional(devotional: InsertDevotional): Promise<Devotional> {
+    const result = await this.db
+      .insert(devotionals)
+      .values(devotional)
+      .returning();
+    
+    return result[0];
   }
 
   async getUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress | undefined> {
@@ -1343,6 +1353,10 @@ export class MemStorage implements IStorage {
   // Devotional methods - not supported in MemStorage
   async getDevotional(dayNumber: number, gender: 'men' | 'women', language: string = 'en'): Promise<Devotional | undefined> {
     return undefined;
+  }
+
+  async createDevotional(devotional: InsertDevotional): Promise<Devotional> {
+    throw new Error("MemStorage does not support devotionals - use DatabaseStorage");
   }
 
   async getUserDevotionalProgress(userId: string, gender: 'men' | 'women'): Promise<UserDevotionalProgress | undefined> {
