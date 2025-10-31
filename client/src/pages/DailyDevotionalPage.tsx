@@ -223,8 +223,19 @@ export default function DailyDevotionalPage({ user, onNavigate, streakDays = 0, 
     <div className="min-h-screen pb-20 bg-gradient-to-b from-background to-accent/10">
       {/* Header */}
       <div className="bg-background px-4 py-6 border-b border-border ios-safe-top sticky top-0 z-10">
-        {/* Streak Badge - Top Right */}
+        {/* Top Row: Back Button, Gender Track, Streak */}
         <div className="flex justify-between items-center mb-6">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onNavigate?.('daily')}
+            className="ios-tap-target"
+            data-testid="button-back-to-daily"
+            aria-label="Back to Daily hub"
+          >
+            <ChevronLeft className="w-5 h-5" />
+          </Button>
+          
           <Button
             variant="ghost"
             size="sm"

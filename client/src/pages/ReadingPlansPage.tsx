@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Flame, BookOpen, Check, Calendar, Loader2, Trophy } from "lucide-react";
+import { Flame, BookOpen, Check, Calendar, Loader2, Trophy, ChevronLeft } from "lucide-react";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { apiUrl } from '@/lib/api-config';
@@ -212,14 +212,30 @@ export default function ReadingPlansPage({ user, onNavigate, language = "en" }: 
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20">
       <div className="max-w-2xl mx-auto px-4 py-8 pb-24">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <AppLogo className="mx-auto mb-4" size="lg" />
-          <PersonalizedGreeting user={user} />
-          <h1 className="text-3xl font-bold mt-4 mb-2">Reading Plans</h1>
-          <p className="text-muted-foreground">
-            Read the Bible systematically with guided daily readings
-          </p>
+        {/* Header with Back Button */}
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onNavigate?.('daily')}
+              className="ios-tap-target"
+              data-testid="button-back-to-daily"
+              aria-label="Back to Daily hub"
+            >
+              <ChevronLeft className="w-5 h-5" />
+            </Button>
+            <div className="flex-1" />
+          </div>
+          
+          <div className="text-center">
+            <AppLogo className="mx-auto mb-4" size="lg" />
+            <PersonalizedGreeting user={user} />
+            <h1 className="text-3xl font-bold mt-4 mb-2">Reading Plans</h1>
+            <p className="text-muted-foreground">
+              Read the Bible systematically with guided daily readings
+            </p>
+          </div>
         </div>
 
         {/* Progress Overview */}
