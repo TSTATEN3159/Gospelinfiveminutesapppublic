@@ -1475,16 +1475,18 @@ Respond in JSON format:
         });
       }
 
-      // Fetch actual Bible text for the reading
-      let bibleText = null;
-      if (reading.scriptureReference) {
-        bibleText = await fetchBiblePassage(reading.scriptureReference);
+      // Fetch actual Bible text for the readings
+      let biblePassages = null;
+      if (reading.readings && reading.readings.length > 0) {
+        // Fetch text for the first reading reference
+        const firstReading = reading.readings[0];
+        biblePassages = await fetchBiblePassage(firstReading);
       }
 
       // Return reading with Bible text
       const response = {
         ...reading,
-        biblePassage: bibleText
+        biblePassage: biblePassages
       };
 
       res.json(response);
@@ -3211,7 +3213,7 @@ Respond in JSON format:
           );
           
           // Save to database for future use
-          lesson = await storage.createLesson(
+          const createdLesson = await storage.createLesson(
             {
               studyId: study.id,
               dayNumber: day,
@@ -3233,10 +3235,11 @@ Respond in JSON format:
           console.log(`Successfully generated and saved lesson for ${slug} day ${day}`);
           
           // Manually construct translation since createLesson returns without it
-          const lessonWithTranslation = {
-            ...lesson,
+          lesson = {
+            ...createdLesson,
             translation: {
-              lessonId: lesson.id,
+              id: '',
+              lessonId: createdLesson.id,
               language: language as any,
               title: generated.title,
               verseReference: generated.verseReference,
@@ -3246,14 +3249,19 @@ Respond in JSON format:
               prayer: generated.prayer
             }
           };
-          
-          lesson = lessonWithTranslation;
         } catch (genError) {
           console.error("Error generating Bible study lesson with OpenAI:", genError);
           return res.status(500).json({
             error: "Unable to generate Bible study lesson at this time. Please try again later."
           });
         }
+      }
+
+      // Ensure lesson and translation exist before proceeding
+      if (!lesson || !lesson.translation) {
+        return res.status(404).json({
+          error: "Lesson content not available"
+        });
       }
 
       const response = {
