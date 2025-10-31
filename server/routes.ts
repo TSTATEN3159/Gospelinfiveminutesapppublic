@@ -360,7 +360,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     'BBE': { id: '65eec8e0b60e656b-01', name: 'Bible in Basic English' }
   };
 
-  // Verse for today selection based on day of year for consistency
+  // Daily verse selection based on day of year for consistency
   const getDailyVerseReference = (): string => {
     const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
     const verses = [
@@ -374,7 +374,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return verses[dayOfYear % verses.length];
   };
 
-  // Get verse for today from API.Bible
+  // Get daily verse from API.Bible
   app.get("/api/daily-verse", async (req, res) => {
     try {
       const version = req.query.version as string || 'KJV';
@@ -406,7 +406,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ success: true, verse: result });
     } catch (error) {
-      console.error('Error fetching verse for today:', error);
+      console.error('Error fetching daily verse:', error);
       
       // Fallback to inspirational verses with requested translation noted
       const requestedVersion = req.query.version as string || 'NIV';
@@ -1078,34 +1078,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { difficulty, count } = bibleTriviaSchema.parse(req.body);
       console.log("Bible Trivia - Difficulty:", difficulty, "Count:", count);
 
-      // Get random questions from database for the specified difficulty
-      const dbQuestions = await storage.getRandomTriviaQuestions(difficulty, count, 'en');
+      // Get questions for the specified difficulty
+      const questionPool = triviaQuestions[difficulty];
       
-      if (dbQuestions.length === 0) {
-        return res.status(404).json({
-          success: false,
-          error: "No trivia questions found for this difficulty level."
-        });
-      }
+      // Shuffle and select the requested number of questions
+      const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
+      const selectedQuestions = shuffled.slice(0, Math.min(count, questionPool.length));
 
       // Fetch actual verse text from Bible API for questions that have verse references
       const questionsWithVerses = await Promise.all(
-        dbQuestions.map(async (q, index) => {
+        selectedQuestions.map(async (q, index) => {
           let verseReference = null;
           let verseText = null;
           
-          if (q.verseReference) {
+          if (q.verse) {
             try {
-              const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verseReference);
+              const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
               if (verseData) {
                 verseReference = verseData.reference;
                 // Clean the HTML tags from the verse content
                 verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
               }
             } catch (error) {
-              console.log(`Could not fetch verse ${q.verseReference} from Bible API:`, error);
+              console.log(`Could not fetch verse ${q.verse} from Bible API:`, error);
               // Fallback to verse ID
-              verseReference = q.verseReference;
+              verseReference = q.verse;
             }
           }
 
@@ -1114,8 +1111,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             question: q.question,
             options: q.options,
             correctAnswer: q.correctAnswer,
-            hint: q.hint,
-            verse: verseReference || q.verseReference,
+            verse: verseReference || q.verse,
             verseText: verseText,
             difficulty: difficulty
           };
@@ -1140,423 +1136,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({
         success: false,
         error: "I'm having trouble loading trivia questions right now. Please try again in a moment."
-      });
-    }
-  });
-
-  // Helper function to generate devotional content using OpenAI
-  async function generateDevotionalContent(day: number, gender: 'men' | 'women', language: string = 'en') {
-    const genderContext = gender === 'men' ? 'men facing daily challenges in faith, work, and relationships' : 'women navigating faith, family, and personal growth';
-    
-    const prompt = `Generate a 5-minute daily devotional for ${genderContext} for day ${day} of a 365-day journey. Include:
-    
-1. A relevant Bible verse (provide full text)
-2. A meaningful title (5-7 words)
-3. Devotional content (350-400 words) that:
-   - Applies the scripture to daily life
-   - Offers practical wisdom and encouragement
-   - Maintains a warm, non-judgmental tone
-   - Addresses real-life struggles with compassion
-4. Two supporting Bible verses with their full text
-5. Language: ${language === 'en' ? 'English' : language}
-
-Respond in JSON format:
-{
-  "title": "string",
-  "mainScripture": "string (reference like 'John 3:16')",
-  "mainScriptureText": "string (full verse text)",
-  "devotionalContent": "string (350-400 words)",
-  "supportingVerse1": "string (reference)",
-  "supportingVerse1Text": "string (full text)",
-  "supportingVerse2": "string (reference)",
-  "supportingVerse2Text": "string (full text)"
-}`;
-
-    const response = await openai.chat.completions.create({
-      model: "gpt-5", // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
-      messages: [
-        { role: "system", content: "You are a compassionate Christian devotional writer who creates meaningful, applicable content that speaks to real-life struggles." },
-        { role: "user", content: prompt }
-      ],
-      response_format: { type: "json_object" },
-      max_completion_tokens: 2048
-    });
-
-    const content = JSON.parse(response.choices[0].message.content || '{}');
-    return content;
-  }
-
-  // Devotional routes
-  // Get devotional by day number and gender - generates content dynamically if not in database
-  app.get("/api/devotional/:gender/:dayNumber", async (req, res) => {
-    try {
-      const { gender, dayNumber } = req.params;
-      const language = (req.query.language as string) || 'en';
-
-      if (gender !== 'men' && gender !== 'women') {
-        return res.status(400).json({
-          error: "Invalid gender. Must be 'men' or 'women'."
-        });
-      }
-
-      const day = parseInt(dayNumber);
-      if (isNaN(day) || day < 1 || day > 365) {
-        return res.status(400).json({
-          error: "Invalid day number. Must be between 1 and 365."
-        });
-      }
-
-      // Try to get from database first
-      let devotional = await storage.getDevotional(day, gender as 'men' | 'women', language);
-
-      // If not found, generate using OpenAI and save to database
-      if (!devotional) {
-        console.log(`Generating devotional for ${gender} day ${day} in ${language}...`);
-        
-        try {
-          const generated = await generateDevotionalContent(day, gender as 'men' | 'women', language);
-          
-          // Save to database for future use
-          devotional = await storage.createDevotional({
-            dayNumber: day,
-            gender: gender as 'men' | 'women',
-            language: language as any,
-            title: generated.title,
-            mainScripture: generated.mainScripture,
-            mainScriptureText: generated.mainScriptureText,
-            devotionalContent: generated.devotionalContent,
-            supportingVerse1: generated.supportingVerse1 || null,
-            supportingVerse1Text: generated.supportingVerse1Text || null,
-            supportingVerse2: generated.supportingVerse2 || null,
-            supportingVerse2Text: generated.supportingVerse2Text || null
-          });
-          
-          console.log(`Successfully generated and saved devotional for ${gender} day ${day}`);
-        } catch (genError) {
-          console.error("Error generating devotional with OpenAI:", genError);
-          return res.status(500).json({
-            error: "Unable to generate devotional content at this time. Please try again later."
-          });
-        }
-      }
-
-      res.json(devotional);
-    } catch (error) {
-      console.error("Error fetching devotional:", error);
-      res.status(500).json({
-        error: "Error fetching devotional"
-      });
-    }
-  });
-
-  // Get user's devotional progress
-  app.get("/api/devotional/progress/:userId/:gender", async (req, res) => {
-    try {
-      const { userId, gender } = req.params;
-
-      if (gender !== 'men' && gender !== 'women') {
-        return res.status(400).json({
-          error: "Invalid gender. Must be 'men' or 'women'."
-        });
-      }
-
-      let progress = await storage.getUserDevotionalProgress(userId, gender as 'men' | 'women');
-
-      // If no progress exists, create it
-      if (!progress) {
-        progress = await storage.createUserDevotionalProgress(userId, gender as 'men' | 'women');
-      }
-
-      res.json(progress);
-    } catch (error) {
-      console.error("Error fetching devotional progress:", error);
-      res.status(500).json({
-        error: "Error fetching progress"
-      });
-    }
-  });
-
-  // Complete a devotional day
-  app.post("/api/devotional/complete", async (req, res) => {
-    try {
-      const { userId, gender, dayNumber } = req.body;
-
-      if (!userId || !gender || dayNumber === undefined) {
-        return res.status(400).json({
-          error: "Missing required fields: userId, gender, dayNumber"
-        });
-      }
-
-      if (gender !== 'men' && gender !== 'women') {
-        return res.status(400).json({
-          error: "Invalid gender. Must be 'men' or 'women'."
-        });
-      }
-
-      const day = parseInt(dayNumber);
-      if (isNaN(day) || day < 1 || day > 365) {
-        return res.status(400).json({
-          error: "Invalid day number. Must be between 1 and 365."
-        });
-      }
-
-      // Check if progress exists, create if not
-      let progress = await storage.getUserDevotionalProgress(userId, gender as 'men' | 'women');
-      if (!progress) {
-        progress = await storage.createUserDevotionalProgress(userId, gender as 'men' | 'women');
-      }
-
-      // Update progress
-      const updatedProgress = await storage.updateDevotionalProgress(userId, gender as 'men' | 'women', day);
-
-      // Generate warm, encouraging streak message
-      const streakMessage = getStreakMessage(updatedProgress.currentStreak || 0);
-
-      res.json({
-        progress: updatedProgress,
-        message: streakMessage
-      });
-    } catch (error) {
-      console.error("Error completing devotional:", error);
-      res.status(500).json({
-        error: "Error updating progress"
-      });
-    }
-  });
-
-  // Helper function for warm, non-judgmental streak messages
-  function getStreakMessage(streak: number): string {
-    if (streak === 1) {
-      return "Great start! 🌱 Every journey begins with a single step.";
-    } else if (streak === 2) {
-      return "You're building momentum! 💪 Two days in a row.";
-    } else if (streak === 3) {
-      return "Three days strong! 🔥 You're creating a beautiful habit.";
-    } else if (streak === 7) {
-      return "One week complete! 🎉 You're growing spiritually every day.";
-    } else if (streak === 14) {
-      return "Two weeks of faithfulness! ✨ Your consistency is inspiring.";
-    } else if (streak === 21) {
-      return "Three weeks! 🌟 They say it takes 21 days to form a habit - you're there!";
-    } else if (streak === 30) {
-      return "One month dedicated to God's Word! 📖 What a blessing.";
-    } else if (streak === 60) {
-      return "Two months of daily devotion! 🙏 You're an inspiration.";
-    } else if (streak === 90) {
-      return "90 days strong! 💎 Your dedication is remarkable.";
-    } else if (streak === 100) {
-      return "100 days! 🎊 You're living proof that consistency transforms lives.";
-    } else if (streak === 180) {
-      return "Half a year! ⭐ Your spiritual journey is beautiful to witness.";
-    } else if (streak === 365) {
-      return "ONE FULL YEAR! 🏆 You've completed an entire year of daily devotions. Incredible!";
-    } else if (streak > 365) {
-      return `${streak} days of faithfulness! 👑 You're a champion of spiritual discipline.`;
-    } else if (streak % 10 === 0) {
-      return `${streak} days! 🌈 Keep nurturing your relationship with God.`;
-    } else {
-      return `${streak} day${streak > 1 ? 's' : ''} of growth! 💚 Keep going, you're doing great.`;
-    }
-  }
-
-  // Reading Plan endpoints
-
-  // Get all active reading plans
-  app.get("/api/reading-plans", async (req, res) => {
-    try {
-      const language = (req.query.language as string) || 'en';
-      const plans = await storage.getAllReadingPlans(language);
-      res.json(plans);
-    } catch (error) {
-      console.error("Error fetching reading plans:", error);
-      res.status(500).json({
-        error: "Error fetching reading plans"
-      });
-    }
-  });
-
-  // Get a specific reading plan
-  app.get("/api/reading-plan/:planId", async (req, res) => {
-    try {
-      const { planId } = req.params;
-      const plan = await storage.getReadingPlan(planId);
-      
-      if (!plan) {
-        return res.status(404).json({
-          error: "Reading plan not found"
-        });
-      }
-
-      res.json(plan);
-    } catch (error) {
-      console.error("Error fetching reading plan:", error);
-      res.status(500).json({
-        error: "Error fetching reading plan"
-      });
-    }
-  });
-
-  // Helper function to fetch Bible text from API.Bible
-  async function fetchBiblePassage(reference: string): Promise<{ reference: string; text: string } | null> {
-    try {
-      const apiKey = process.env.API_BIBLE_KEY;
-      if (!apiKey) {
-        console.error('API_BIBLE_KEY not found');
-        return null;
-      }
-
-      // Use de4e12af7f28f599-02 (KJV) as the default Bible version
-      const bibleId = 'de4e12af7f28f599-02';
-      
-      // Search for the passage first to get the passage ID
-      const searchUrl = `https://api.scripture.api.bible/v1/bibles/${bibleId}/search?query=${encodeURIComponent(reference)}&limit=1`;
-      const searchResponse = await fetch(searchUrl, {
-        headers: {
-          'api-key': apiKey
-        }
-      });
-
-      if (!searchResponse.ok) {
-        console.error(`API.Bible search failed: ${searchResponse.status}`);
-        return null;
-      }
-
-      const searchData = await searchResponse.json();
-      
-      if (!searchData.data?.passages || searchData.data.passages.length === 0) {
-        console.error(`No passages found for reference: ${reference}`);
-        return null;
-      }
-
-      const passage = searchData.data.passages[0];
-      
-      // Fetch the full passage text
-      const passageUrl = `https://api.scripture.api.bible/v1/bibles/${bibleId}/passages/${passage.id}?content-type=text&include-notes=false&include-titles=false&include-chapter-numbers=false&include-verse-numbers=false`;
-      const passageResponse = await fetch(passageUrl, {
-        headers: {
-          'api-key': apiKey
-        }
-      });
-
-      if (!passageResponse.ok) {
-        console.error(`API.Bible passage fetch failed: ${passageResponse.status}`);
-        return null;
-      }
-
-      const passageData = await passageResponse.json();
-      
-      return {
-        reference: passageData.data?.reference || reference,
-        text: passageData.data?.content || ''
-      };
-    } catch (error) {
-      console.error('Error fetching Bible passage:', error);
-      return null;
-    }
-  }
-
-  // Get a specific day's reading from a plan
-  app.get("/api/reading-plan/:planId/day/:dayNumber", async (req, res) => {
-    try {
-      const { planId, dayNumber } = req.params;
-      const day = parseInt(dayNumber);
-
-      if (isNaN(day) || day < 1) {
-        return res.status(400).json({
-          error: "Invalid day number"
-        });
-      }
-
-      const reading = await storage.getReadingPlanDay(planId, day);
-      
-      if (!reading) {
-        return res.status(404).json({
-          error: "Reading not found for this day"
-        });
-      }
-
-      // Fetch actual Bible text for the readings
-      let biblePassages = null;
-      if (reading.readings && reading.readings.length > 0) {
-        // Fetch text for the first reading reference
-        const firstReading = reading.readings[0];
-        biblePassages = await fetchBiblePassage(firstReading);
-      }
-
-      // Return reading with Bible text
-      const response = {
-        ...reading,
-        biblePassage: biblePassages
-      };
-
-      res.json(response);
-    } catch (error) {
-      console.error("Error fetching reading plan day:", error);
-      res.status(500).json({
-        error: "Error fetching reading"
-      });
-    }
-  });
-
-  // Get user's reading plan progress
-  app.get("/api/reading-plan/progress/:userId/:planId", async (req, res) => {
-    try {
-      const { userId, planId } = req.params;
-
-      let progress = await storage.getUserReadingPlanProgress(userId, planId);
-      
-      // Create progress if it doesn't exist
-      if (!progress) {
-        progress = await storage.createUserReadingPlanProgress(userId, planId);
-      }
-
-      res.json(progress);
-    } catch (error) {
-      console.error("Error fetching reading plan progress:", error);
-      res.status(500).json({
-        error: "Error fetching progress"
-      });
-    }
-  });
-
-  // Complete a reading plan day
-  app.post("/api/reading-plan/complete", async (req, res) => {
-    try {
-      const { userId, planId, dayNumber } = req.body;
-
-      if (!userId || !planId || dayNumber === undefined) {
-        return res.status(400).json({
-          error: "Missing required fields: userId, planId, dayNumber"
-        });
-      }
-
-      const day = parseInt(dayNumber);
-      if (isNaN(day) || day < 1) {
-        return res.status(400).json({
-          error: "Invalid day number"
-        });
-      }
-
-      // Check if progress exists, create if not
-      let progress = await storage.getUserReadingPlanProgress(userId, planId);
-      if (!progress) {
-        progress = await storage.createUserReadingPlanProgress(userId, planId);
-      }
-
-      // Update progress
-      const updatedProgress = await storage.updateReadingPlanProgress(userId, planId, day);
-
-      // Generate warm streak message
-      const streakMessage = getStreakMessage(updatedProgress.currentStreak || 0);
-
-      res.json({
-        progress: updatedProgress,
-        message: streakMessage
-      });
-    } catch (error) {
-      console.error("Error completing reading plan day:", error);
-      res.status(500).json({
-        error: "Error updating progress"
       });
     }
   });
@@ -3040,247 +2619,6 @@ Respond in JSON format:
         success: false,
         error: "Failed to perform health check"
       });
-    }
-  });
-
-  // Helper function to generate Bible Study lesson content using OpenAI
-  async function generateStudyLessonContent(studyTitle: string, studyCategory: string, dayNumber: number, language: string = 'en') {
-    const prompt = `Generate a Bible study lesson for "${studyTitle}" (category: ${studyCategory}) for Day ${dayNumber}. Include:
-    
-1. A meaningful lesson title (5-7 words)
-2. A relevant Bible verse reference and its full text
-3. Lesson content (400-500 words) that:
-   - Provides deep biblical insight
-   - Connects scripture to daily life
-   - Offers practical application
-   - Encourages spiritual growth
-4. Three reflection questions that prompt personal contemplation
-5. A closing prayer (50-75 words)
-6. Language: ${language === 'en' ? 'English' : language}
-
-Respond in JSON format:
-{
-  "title": "string",
-  "verseReference": "string (e.g., 'Romans 8:28')",
-  "verseText": "string (full verse text)",
-  "content": "string (400-500 words)",
-  "reflectionQuestions": ["question1", "question2", "question3"],
-  "prayer": "string (50-75 words)"
-}`;
-
-    const response = await openai.chat.completions.create({
-      model: "gpt-5", // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
-      messages: [
-        { role: "system", content: "You are an insightful Bible study teacher who creates engaging, transformative lessons that help people understand and apply Scripture to their lives." },
-        { role: "user", content: prompt }
-      ],
-      response_format: { type: "json_object" },
-      max_completion_tokens: 2048
-    });
-
-    const content = JSON.parse(response.choices[0].message.content || '{}');
-    return content;
-  }
-
-  // Bible studies routes
-  app.get("/api/studies", async (req, res) => {
-    try {
-      const language = (req.query.lang as string) || 'en';
-      const studies = await storage.getAllStudies(language);
-      
-      // Transform to frontend-friendly format
-      const response = studies.map(study => ({
-        id: study.id,
-        slug: study.slug,
-        lessonsCount: study.lessonsCount,
-        isFeatured: study.isFeatured,
-        title: study.translation?.title || 'Untitled Study',
-        author: study.translation?.author || 'Unknown',
-        description: study.translation?.description || '',
-        category: study.translation?.category || 'General',
-        duration: study.translation?.duration || `${study.lessonsCount} days`,
-        difficulty: study.translation?.difficulty || 'Beginner',
-        heroImageUrl: study.translation?.heroImageUrl || null
-      }));
-
-      res.json(response);
-    } catch (error) {
-      console.error('[API] Error fetching studies:', error);
-      res.status(500).json({ error: "Failed to fetch studies" });
-    }
-  });
-
-  app.get("/api/studies/:slug", async (req, res) => {
-    try {
-      const { slug } = req.params;
-      const language = (req.query.lang as string) || 'en';
-      
-      const study = await storage.getStudyBySlug(slug, language);
-      
-      if (!study || !study.translation) {
-        return res.status(404).json({ error: "Study not found" });
-      }
-
-      const response = {
-        id: study.id,
-        slug: study.slug,
-        lessonsCount: study.lessonsCount,
-        isFeatured: study.isFeatured,
-        title: study.translation.title,
-        author: study.translation.author,
-        description: study.translation.description,
-        category: study.translation.category,
-        duration: study.translation.duration,
-        difficulty: study.translation.difficulty,
-        heroImageUrl: study.translation.heroImageUrl || null
-      };
-
-      res.json(response);
-    } catch (error) {
-      console.error('[API] Error fetching study:', error);
-      res.status(500).json({ error: "Failed to fetch study" });
-    }
-  });
-
-  app.get("/api/studies/:slug/lessons", async (req, res) => {
-    try {
-      const { slug } = req.params;
-      const language = (req.query.lang as string) || 'en';
-      
-      // First get the study to get its ID
-      const study = await storage.getStudyBySlug(slug, language);
-      if (!study) {
-        return res.status(404).json({ error: "Study not found" });
-      }
-
-      const lessons = await storage.getStudyLessons(study.id, language);
-      
-      // Transform to frontend-friendly format
-      const response = lessons.map(lesson => ({
-        id: lesson.id,
-        dayNumber: lesson.dayNumber,
-        title: lesson.translation?.title || `Day ${lesson.dayNumber}`,
-        verseReference: lesson.translation?.verseReference || '',
-        verseText: lesson.translation?.verseText || '',
-        content: lesson.translation?.content || '',
-        reflectionQuestions: lesson.translation?.reflectionQuestions ? JSON.parse(lesson.translation.reflectionQuestions) : [],
-        prayer: lesson.translation?.prayer || '',
-        audioUrl: lesson.audioUrl || null,
-        videoUrl: lesson.videoUrl || null
-      }));
-
-      res.json(response);
-    } catch (error) {
-      console.error('[API] Error fetching lessons:', error);
-      res.status(500).json({ error: "Failed to fetch lessons" });
-    }
-  });
-
-  app.get("/api/studies/:slug/lessons/:dayNumber", async (req, res) => {
-    try {
-      const { slug, dayNumber } = req.params;
-      const language = (req.query.lang as string) || 'en';
-      const day = parseInt(dayNumber, 10);
-
-      if (isNaN(day)) {
-        return res.status(400).json({ error: "Invalid day number" });
-      }
-
-      // First get the study to get its ID
-      const study = await storage.getStudyBySlug(slug, language);
-      if (!study || !study.translation) {
-        return res.status(404).json({ error: "Study not found" });
-      }
-
-      // Validate day is within study range
-      if (day < 1 || day > study.lessonsCount) {
-        return res.status(400).json({ error: `Invalid day number. Must be between 1 and ${study.lessonsCount}` });
-      }
-
-      // Try to get lesson from database first
-      let lesson = await storage.getLessonByDay(study.id, day, language);
-      
-      // If not found, generate using OpenAI and save to database
-      if (!lesson || !lesson.translation) {
-        console.log(`Generating Bible study lesson for ${slug} day ${day} in ${language}...`);
-        
-        try {
-          const generated = await generateStudyLessonContent(
-            study.translation.title,
-            study.translation.category,
-            day,
-            language
-          );
-          
-          // Save to database for future use
-          const createdLesson = await storage.createLesson(
-            {
-              studyId: study.id,
-              dayNumber: day,
-              audioUrl: null,
-              videoUrl: null
-            },
-            {
-              lessonId: '', // Will be set by database
-              language: language as any,
-              title: generated.title,
-              verseReference: generated.verseReference,
-              verseText: generated.verseText,
-              content: generated.content,
-              reflectionQuestions: JSON.stringify(generated.reflectionQuestions || []),
-              prayer: generated.prayer
-            }
-          );
-          
-          console.log(`Successfully generated and saved lesson for ${slug} day ${day}`);
-          
-          // Manually construct translation since createLesson returns without it
-          lesson = {
-            ...createdLesson,
-            translation: {
-              id: '',
-              lessonId: createdLesson.id,
-              language: language as any,
-              title: generated.title,
-              verseReference: generated.verseReference,
-              verseText: generated.verseText,
-              content: generated.content,
-              reflectionQuestions: JSON.stringify(generated.reflectionQuestions || []),
-              prayer: generated.prayer
-            }
-          };
-        } catch (genError) {
-          console.error("Error generating Bible study lesson with OpenAI:", genError);
-          return res.status(500).json({
-            error: "Unable to generate Bible study lesson at this time. Please try again later."
-          });
-        }
-      }
-
-      // Ensure lesson and translation exist before proceeding
-      if (!lesson || !lesson.translation) {
-        return res.status(404).json({
-          error: "Lesson content not available"
-        });
-      }
-
-      const response = {
-        id: lesson.id,
-        dayNumber: lesson.dayNumber,
-        title: lesson.translation.title,
-        verseReference: lesson.translation.verseReference,
-        verseText: lesson.translation.verseText,
-        content: lesson.translation.content,
-        reflectionQuestions: JSON.parse(lesson.translation.reflectionQuestions),
-        prayer: lesson.translation.prayer,
-        audioUrl: lesson.audioUrl || null,
-        videoUrl: lesson.videoUrl || null
-      };
-
-      res.json(response);
-    } catch (error) {
-      console.error('[API] Error fetching lesson:', error);
-      res.status(500).json({ error: "Failed to fetch lesson" });
     }
   });
 

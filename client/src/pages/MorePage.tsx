@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck, Calendar } from "lucide-react";
+import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
@@ -23,13 +23,6 @@ const getMainMenuItems = (t: any, isIOS = false) => {
       title: "Saved Verses",
       description: "View your bookmarked scripture passages",
       icon: BookmarkCheck,
-      comingSoon: false
-    },
-    {
-      id: "readingplans",
-      title: "Bible Reading Plans",
-      description: "Follow structured Bible reading plans",
-      icon: Calendar,
       comingSoon: false
     },
   {
@@ -175,11 +168,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
         {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {
             switch(id) {
-              case 'devotional': return {
-                gradient: 'from-blue-50 to-indigo-50',
-                borderColor: 'border-blue-200',
-                iconColor: 'text-blue-600'
-              };
               case 'videos': return {
                 gradient: 'from-purple-50 to-violet-50',
                 borderColor: 'border-purple-200',
@@ -213,7 +201,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
           const getTileImage = (id: string) => {
             switch(id) {
               case 'savedverses': return { image: holyBibleImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
-              case 'readingplans': return { image: holyBibleImage, overlay: 'from-green-900/70 via-green-600/20', border: 'border-green-200', iconBg: 'bg-green-100', iconBorder: 'border-green-200/60', iconRing: 'ring-green-300/50', iconColor: 'text-green-700' };
               case 'videos': return { image: holyBibleImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
               case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
               case 'friends': return { image: friendsFellowship, overlay: 'from-pink-900/70 via-pink-600/20', border: 'border-pink-200', iconBg: 'bg-pink-100', iconBorder: 'border-pink-200/60', iconRing: 'ring-pink-300/50', iconColor: 'text-pink-700' };

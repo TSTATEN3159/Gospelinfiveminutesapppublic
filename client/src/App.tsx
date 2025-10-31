@@ -19,9 +19,6 @@ import { performanceMonitor } from "./services/performanceMonitor";
 
 // Pages
 import HomePage from "./pages/HomePage";
-import DailyHubPage from "./pages/DailyHubPage";
-import DailyDevotionalPage from "./pages/DailyDevotionalPage";
-import ReadingPlansPage from "./pages/ReadingPlansPage";
 import AskPage from "./pages/BiblePage";
 import SearchPage from "./pages/SearchPage";
 import MorePage from "./pages/MorePage";
@@ -47,7 +44,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "daily" | "devotional" | "readingplans" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo";
+type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -120,7 +117,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "daily", "devotional", "readingplans", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "more", "search"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "more", "search"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -146,12 +143,6 @@ function App() {
     switch (currentPage) {
       case "home":
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
-      case "daily":
-        return <DailyHubPage user={user || undefined} onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
-      case "devotional":
-        return <DailyDevotionalPage user={user || undefined} onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
-      case "readingplans":
-        return <ReadingPlansPage user={user || undefined} onNavigate={handleNavigateToLegal} language={language} />;
       case "ask":
         return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "search":
@@ -206,7 +197,7 @@ function App() {
             </main>
 
             {/* Bottom Navigation - Hide on legal pages and friends page */}
-            {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotional", "readingplans"].includes(currentPage) && (
+            {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses"].includes(currentPage) && (
               <BottomNavigation 
                 currentPage={currentPage as "home" | "ask" | "search" | "more"} 
                 onPageChange={(page) => setCurrentPage(page as AppPage)} 

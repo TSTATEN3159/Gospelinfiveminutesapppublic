@@ -1,21 +1,13 @@
-import { LocalNotifications } from '@capacitor/local-notifications';
-import { PushNotifications } from '@capacitor/push-notifications';
+import { getBibleVerse } from './bibleService';
 
-export interface NotificationPreferences {
+interface NotificationPreferences {
   dailyReminders: boolean;
   reminderTime: string;
-  readingPlanReminders?: boolean;
-  readingPlanTime?: string;
-}
-
-export interface NotificationSchedule {
-  hour: number;
-  minute: number;
 }
 
 class NotificationService {
   private static instance: NotificationService;
-  private initialized = false;
+  private notificationId: number | null = null;
 
   private constructor() {}
 
@@ -26,293 +18,157 @@ class NotificationService {
     return NotificationService.instance;
   }
 
-  async initialize() {
-    if (this.initialized) return true;
+  async requestPermission(): Promise<NotificationPermission> {
+    if (!('Notification' in window)) {
+      console.warn('This browser does not support notifications');
+      return 'denied';
+    }
 
+    if (Notification.permission === 'granted') {
+      return 'granted';
+    }
+
+    if (Notification.permission !== 'denied') {
+      const permission = await Notification.requestPermission();
+      return permission;
+    }
+
+    return Notification.permission;
+  }
+
+  async showDailyVerseNotification(): Promise<void> {
     try {
-      // Request permissions for local notifications
-      const { display } = await LocalNotifications.requestPermissions();
-      
-      if (display === 'granted') {
-        console.log('[Notifications] Permission granted');
-        this.initialized = true;
-        return true;
-      } else {
-        console.log('[Notifications] Permission denied');
-        return false;
+      const permission = await this.requestPermission();
+      if (permission !== 'granted') {
+        console.warn('Notification permission not granted');
+        return;
       }
-    } catch (error) {
-      console.error('[Notifications] Failed to initialize:', error);
-      return false;
-    }
-  }
 
-  async scheduleDailyDevotional(schedule: NotificationSchedule) {
-    try {
-      const initialized = await this.initialize();
-      if (!initialized) return false;
+      // Get today's verse
+      const dailyVerse = await getBibleVerse();
       
-      // Cancel existing devotional notifications by ID
-      await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
-
-      // Schedule repeating daily notification using 'on' property
-      // Note: Using 'on' alone creates a recurring daily notification
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            id: 1,
-            title: 'Daily Devotional',
-            body: 'Your daily scripture is ready! Start your day with God\'s word.',
-            schedule: {
-              on: {
-                hour: schedule.hour,
-                minute: schedule.minute
-              },
-              allowWhileIdle: true,
-            },
-            extra: {
-              type: 'daily-devotional',
-              route: '/daily'
-            }
-          }
-        ]
+      const notification = new Notification('Your Daily Verse', {
+        body: `${dailyVerse.reference}: "${dailyVerse.text}"`,
+        icon: '/favicon.ico',
+        badge: '/favicon.ico',
+        tag: 'daily-verse',
+        requireInteraction: false,
+        silent: false,
+        data: {
+          reference: dailyVerse.reference,
+          text: dailyVerse.text
+        }
       });
 
-      console.log('[Notifications] Daily devotional scheduled (repeating daily) at', `${schedule.hour}:${schedule.minute}`);
-      return true;
+      notification.onclick = () => {
+        window.focus();
+        notification.close();
+      };
+
+      // Auto close after 10 seconds
+      setTimeout(() => {
+        notification.close();
+      }, 10000);
+
     } catch (error) {
-      console.error('[Notifications] Failed to schedule daily devotional:', error);
-      return false;
+      console.error('Error showing daily verse notification:', error);
     }
   }
 
-  async scheduleReadingPlanReminder(schedule: NotificationSchedule, planName: string = 'Bible in 1 Year') {
-    try {
-      const initialized = await this.initialize();
-      if (!initialized) return false;
-      
-      // Cancel existing reading plan notifications by ID
-      await LocalNotifications.cancel({ notifications: [{ id: 2 }] });
+  scheduleDailyReminders(preferences: NotificationPreferences): void {
+    // Clear existing scheduled notifications
+    this.clearScheduledReminders();
 
-      // Schedule repeating daily notification using 'on' property
-      // Note: Using 'on' alone creates a recurring daily notification
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            id: 2,
-            title: planName,
-            body: 'Time for today\'s reading! Continue your journey through the Bible.',
-            schedule: {
-              on: {
-                hour: schedule.hour,
-                minute: schedule.minute
-              },
-              allowWhileIdle: true,
-            },
-            extra: {
-              type: 'reading-plan',
-              route: '/readingplans'
-            }
-          }
-        ]
-      });
-
-      console.log('[Notifications] Reading plan reminder scheduled (repeating daily) at', `${schedule.hour}:${schedule.minute}`);
-      return true;
-    } catch (error) {
-      console.error('[Notifications] Failed to schedule reading plan reminder:', error);
-      return false;
-    }
-  }
-
-  async sendStreakAlert(streakDays: number) {
-    try {
-      const initialized = await this.initialize();
-      if (!initialized) return false;
-
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            id: 999,
-            title: `🔥 ${streakDays} Day Streak!`,
-            body: `Amazing! You've maintained your streak for ${streakDays} days. Keep it going!`,
-            schedule: {
-              at: new Date(Date.now() + 1000), // Send immediately
-              allowWhileIdle: true,
-            },
-            extra: {
-              type: 'streak-alert',
-              streakDays
-            }
-          }
-        ]
-      });
-
-      console.log('[Notifications] Streak alert sent for', streakDays, 'days');
-      return true;
-    } catch (error) {
-      console.error('[Notifications] Failed to send streak alert:', error);
-      return false;
-    }
-  }
-
-  async scheduleDailyReminders(preferences: NotificationPreferences): Promise<boolean> {
     if (!preferences.dailyReminders) {
-      await this.clearScheduledReminders();
-      return false;
+      return;
     }
 
     // Parse reminder time (format: "HH:MM")
     const [hours, minutes] = preferences.reminderTime.split(':').map(Number);
     
-    // Schedule daily devotional
-    const devotionalScheduled = await this.scheduleDailyDevotional({ hour: hours, minute: minutes });
-    
-    // Schedule reading plan reminder if enabled
-    if (preferences.readingPlanReminders && preferences.readingPlanTime) {
-      const [planHours, planMinutes] = preferences.readingPlanTime.split(':').map(Number);
-      await this.scheduleReadingPlanReminder({ hour: planHours, minute: planMinutes });
+    // Calculate next notification time
+    const now = new Date();
+    const nextNotification = new Date();
+    nextNotification.setHours(hours, minutes, 0, 0);
+
+    // If the time has already passed today, schedule for tomorrow
+    if (nextNotification <= now) {
+      nextNotification.setDate(nextNotification.getDate() + 1);
     }
 
-    // Save preferences
-    localStorage.setItem('notificationPreferences', JSON.stringify(preferences));
-    
-    return devotionalScheduled;
+    const timeUntilNext = nextNotification.getTime() - now.getTime();
+
+    console.log(`Daily reminder scheduled for ${nextNotification.toLocaleString()}`);
+
+    // Schedule the first notification
+    this.notificationId = window.setTimeout(() => {
+      this.showDailyVerseNotification();
+      
+      // Schedule recurring daily notifications
+      this.notificationId = window.setInterval(() => {
+        this.showDailyVerseNotification();
+      }, 24 * 60 * 60 * 1000); // 24 hours in milliseconds
+      
+    }, timeUntilNext);
+
+    // Save only the essential scheduling info
+    localStorage.setItem('dailyReminderScheduled', JSON.stringify({
+      reminderTime: preferences.reminderTime,
+      scheduledAt: new Date().getTime()
+    }));
   }
 
-  async cancelNotificationsByIds(ids: number[]) {
-    try {
-      await LocalNotifications.cancel({ 
-        notifications: ids.map(id => ({ id }))
-      });
-      console.log('[Notifications] Cancelled notification IDs:', ids);
-    } catch (error) {
-      console.error('[Notifications] Failed to cancel notifications:', error);
+  clearScheduledReminders(): void {
+    if (this.notificationId) {
+      clearTimeout(this.notificationId);
+      clearInterval(this.notificationId);
+      this.notificationId = null;
     }
-  }
-
-  async clearScheduledReminders(): Promise<void> {
-    try {
-      const pending = await LocalNotifications.getPending();
-      if (pending.notifications.length > 0) {
-        await LocalNotifications.cancel({ 
-          notifications: pending.notifications.map(n => ({ id: n.id }))
-        });
-        console.log('[Notifications] Cancelled all notifications');
-      }
-      localStorage.removeItem('notificationPreferences');
-    } catch (error) {
-      console.error('[Notifications] Failed to clear notifications:', error);
-    }
+    localStorage.removeItem('dailyReminderScheduled');
+    console.log('Daily reminders cleared');
   }
 
   // Check if we need to reschedule notifications on app startup
-  async restoreScheduledReminders(preferences: NotificationPreferences): Promise<void> {
+  restoreScheduledReminders(preferences: NotificationPreferences): void {
     if (!preferences.dailyReminders) {
-      await this.clearScheduledReminders();
+      this.clearScheduledReminders();
       return;
     }
 
     // Always reschedule when reminders are enabled
-    // This ensures notifications work after app restart
-    await this.scheduleDailyReminders(preferences);
-  }
-
-  async getPendingNotifications() {
-    try {
-      const pending = await LocalNotifications.getPending();
-      return pending.notifications;
-    } catch (error) {
-      console.error('[Notifications] Failed to get pending notifications:', error);
-      return [];
-    }
-  }
-
-  async registerPushNotifications() {
-    try {
-      // Request permission to use push notifications
-      let permStatus = await PushNotifications.requestPermissions();
-
-      if (permStatus.receive === 'granted') {
-        // Register with Apple / Google to receive push via APNS/FCM
-        await PushNotifications.register();
-        console.log('[Push Notifications] Registered successfully');
-      } else {
-        console.log('[Push Notifications] Permission denied');
-      }
-    } catch (error) {
-      console.error('[Push Notifications] Failed to register:', error);
-    }
-  }
-
-  // Listen for push notification registration token
-  onPushRegistration(callback: (token: string) => void) {
-    PushNotifications.addListener('registration', (token) => {
-      console.log('[Push Notifications] Registration token:', token.value);
-      callback(token.value);
-    });
-  }
-
-  // Listen for push notification errors
-  onPushRegistrationError(callback: (error: any) => void) {
-    PushNotifications.addListener('registrationError', (error) => {
-      console.error('[Push Notifications] Registration error:', error);
-      callback(error);
-    });
-  }
-
-  // Listen for incoming push notifications
-  onPushReceived(callback: (notification: any) => void) {
-    PushNotifications.addListener('pushNotificationReceived', (notification) => {
-      console.log('[Push Notifications] Received:', notification);
-      callback(notification);
-    });
-  }
-
-  // Listen for notification tap actions
-  onNotificationAction(callback: (action: any) => void) {
-    PushNotifications.addListener('pushNotificationActionPerformed', (action) => {
-      console.log('[Push Notifications] Action performed:', action);
-      callback(action);
-    });
+    // This ensures notifications work after page reload since timers are lost
+    this.scheduleDailyReminders(preferences);
   }
 
   async testNotification(): Promise<{ success: boolean; message: string }> {
-    try {
-      const initialized = await this.initialize();
-      
-      if (!initialized) {
-        return {
-          success: false,
-          message: 'Notification permission denied. Please enable in Settings.'
-        };
-      }
+    if (!('Notification' in window)) {
+      return {
+        success: false,
+        message: 'Notifications are not supported in this browser'
+      };
+    }
 
-      await LocalNotifications.schedule({
-        notifications: [
-          {
-            id: 9999,
-            title: 'Test Notification',
-            body: 'Daily reminders are working! You\'ll receive your next reminder at the scheduled time.',
-            schedule: {
-              at: new Date(Date.now() + 1000),
-              allowWhileIdle: true,
-            },
-            extra: {
-              type: 'test'
-            }
-          }
-        ]
+    const permission = await this.requestPermission();
+    
+    if (permission === 'granted') {
+      new Notification('Test Notification', {
+        body: 'Daily verse reminders are working! You\'ll receive your next reminder at the scheduled time.',
+        icon: '/favicon.ico',
+        tag: 'test-notification'
       });
-
       return {
         success: true,
         message: 'Test notification sent successfully!'
       };
-    } catch (error) {
+    } else if (permission === 'denied') {
       return {
         success: false,
-        message: 'Failed to send test notification'
+        message: 'Notifications are blocked. Please enable them in your browser settings.'
+      };
+    } else {
+      return {
+        success: false,
+        message: 'Notification permission was not granted'
       };
     }
   }
