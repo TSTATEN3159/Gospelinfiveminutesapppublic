@@ -1,11 +1,15 @@
-import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, BookOpen, Flame, ChevronRight } from "lucide-react";
+import { Calendar, BookOpen, Flame } from "lucide-react";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { Badge } from "@/components/ui/badge";
 import { useState, useEffect } from "react";
 import { apiUrl } from '@/lib/api-config';
+
+// Import images
+import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
+import forestPathImage from '@assets/generated_images/Forest_path_study_plans_fab1c678.png';
 
 interface User {
   firstName: string;
@@ -54,127 +58,135 @@ export default function DailyHubPage({ user, onNavigate, streakDays = 0, languag
   };
 
   return (
-    <div className="min-h-screen bg-background">
+    <div className="min-h-screen pb-20">
       {/* Header - NOT sticky, scrolls with content */}
-      <div className="bg-gradient-to-b from-primary/5 to-background px-4 pt-6 pb-4">
-        <div className="flex items-center justify-between mb-4">
-          <AppLogo size="small" />
-          <ThemeToggle />
-        </div>
-        
-        <PersonalizedGreeting user={user} language={language} />
-        
-        {/* Streak Badge */}
+      <div className="bg-background px-4 py-6 border-b border-border">
+        {/* Streak Badge - Top Right */}
         {streakDays > 0 && (
-          <div className="mt-4 inline-flex items-center gap-2 px-3 py-2 bg-primary/10 rounded-lg border border-primary/20">
-            <Flame className="w-4 h-4 text-primary" />
-            <span className="text-sm font-medium text-foreground">
-              {streakDays} Day Streak
-            </span>
+          <div className="flex justify-end mb-6">
+            <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
+              <Flame className="w-4 h-4 text-red-600 fill-red-600" />
+              <span className="text-sm font-bold text-red-700">{streakDays}</span>
+            </div>
           </div>
         )}
+        
+        {/* Logo */}
+        <AppLogo size="medium" className="mb-3" />
+        
+        {/* Personalized Greeting */}
+        <PersonalizedGreeting user={user} language={language} />
       </div>
 
       {/* Content - Scrolls freely */}
-      <div className="px-4 py-6 space-y-4">
-        {/* Daily Devotional Card */}
-        <Card 
-          className="overflow-hidden cursor-pointer hover-elevate active-elevate-2 transition-all"
-          onClick={() => onNavigate?.('devotional')}
-          data-testid="card-daily-devotional"
-        >
-          <div className="bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-950/20 dark:to-indigo-950/20 p-6">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="p-2 bg-blue-600 rounded-lg">
-                    <BookOpen className="w-5 h-5 text-white" />
-                  </div>
-                  <h2 className="text-xl font-semibold text-foreground">
-                    Daily Devotional
-                  </h2>
+      <div className="px-4 py-4 space-y-4">
+        {/* Daily Devotional Tile */}
+        <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg border-2 border-border">
+          <div className="relative h-40">
+            <img 
+              src={sunriseImage}
+              alt="Daily Devotional"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            {devotionalProgress && (
+              <div className="absolute bottom-4 left-4 right-4">
+                <Badge className="bg-blue-600 text-white text-xs mb-2">
+                  <BookOpen className="w-3 h-3 mr-1" />
+                  Day {devotionalProgress.currentDay} of 365
+                </Badge>
+              </div>
+            )}
+          </div>
+          <div className="p-4">
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                <BookOpen className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                Daily Devotional
+              </h2>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+              365-day journey through faith with daily scripture and reflections
+            </p>
+            {devotionalProgress && (
+              <div className="flex items-center gap-4 mb-3 text-sm">
+                <div className="flex items-center gap-1">
+                  <Flame className="w-4 h-4 text-orange-500" />
+                  <span className="text-gray-700 dark:text-gray-300">{devotionalProgress.currentStreak} day streak</span>
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
-                  365-day journey through faith and scripture
-                </p>
-                
-                {devotionalProgress && (
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="text-muted-foreground">Day {devotionalProgress.currentDay} of 365</span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Flame className="w-4 h-4 text-orange-500" />
-                      <span className="font-medium">{devotionalProgress.currentStreak} day streak</span>
-                    </div>
-                  </div>
-                )}
-              </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground mt-1" />
-            </div>
-          </div>
-        </Card>
-
-        {/* Bible in 1 Year Reading Plan Card */}
-        <Card 
-          className="overflow-hidden cursor-pointer hover-elevate active-elevate-2 transition-all"
-          onClick={() => onNavigate?.('readingplans')}
-          data-testid="card-reading-plan"
-        >
-          <div className="bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950/20 dark:to-emerald-950/20 p-6">
-            <div className="flex items-start justify-between">
-              <div className="flex-1">
-                <div className="flex items-center gap-2 mb-2">
-                  <div className="p-2 bg-green-600 rounded-lg">
-                    <Calendar className="w-5 h-5 text-white" />
-                  </div>
-                  <h2 className="text-xl font-semibold text-foreground">
-                    Bible in 1 Year
-                  </h2>
+                <div className="text-gray-500 dark:text-gray-400">
+                  {devotionalProgress.totalDaysCompleted} completed
                 </div>
-                <p className="text-sm text-muted-foreground mb-3">
-                  Read the entire Bible with guided daily readings
-                </p>
-                
-                {readingProgress && (
-                  <div className="space-y-2">
-                    <div className="flex items-center gap-2 text-sm">
-                      <span className="text-muted-foreground">
-                        {readingProgress.completedDays?.length || 0} of 365 days completed
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2 text-sm">
-                      <Flame className="w-4 h-4 text-orange-500" />
-                      <span className="font-medium">{readingProgress.currentStreak || 0} day streak</span>
-                    </div>
-                  </div>
-                )}
               </div>
-              <ChevronRight className="w-5 h-5 text-muted-foreground mt-1" />
-            </div>
+            )}
+            <Button 
+              className="w-full bg-blue-600 hover:bg-blue-700" 
+              onClick={() => {
+                console.log('Daily Devotional clicked');
+                onNavigate?.('devotional');
+              }}
+              data-testid="button-daily-devotional"
+            >
+              Read Today's Devotional
+            </Button>
           </div>
-        </Card>
+        </div>
 
-        {/* Quick Stats */}
-        {(devotionalProgress || readingProgress) && (
-          <div className="mt-6 p-4 bg-muted/50 rounded-lg">
-            <h3 className="text-sm font-medium text-muted-foreground mb-3">Your Progress</h3>
-            <div className="grid grid-cols-2 gap-4">
-              <div>
-                <p className="text-2xl font-bold text-foreground">
-                  {(devotionalProgress?.totalDaysCompleted || 0) + (readingProgress?.completedDays?.length || 0)}
-                </p>
-                <p className="text-xs text-muted-foreground">Total Days</p>
+        {/* Bible in 1 Year Tile */}
+        <div className="bg-white dark:bg-gray-900 rounded-2xl overflow-hidden shadow-lg border-2 border-border">
+          <div className="relative h-40">
+            <img 
+              src={forestPathImage}
+              alt="Bible in 1 Year"
+              className="w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+            {readingProgress && (
+              <div className="absolute bottom-4 left-4 right-4">
+                <Badge className="bg-green-600 text-white text-xs mb-2">
+                  <Calendar className="w-3 h-3 mr-1" />
+                  {readingProgress.completedDays?.length || 0} of 365 days
+                </Badge>
               </div>
-              <div>
-                <p className="text-2xl font-bold text-foreground">
-                  {Math.max(devotionalProgress?.longestStreak || 0, readingProgress?.currentStreak || 0)}
-                </p>
-                <p className="text-xs text-muted-foreground">Longest Streak</p>
-              </div>
-            </div>
+            )}
           </div>
-        )}
+          <div className="p-4">
+            <div className="flex items-center mb-3">
+              <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center mr-3">
+                <Calendar className="w-4 h-4 text-green-600 dark:text-green-400" />
+              </div>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-white">
+                Bible in 1 Year
+              </h2>
+            </div>
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
+              Read the entire Bible with guided daily readings and progress tracking
+            </p>
+            {readingProgress && (
+              <div className="flex items-center gap-4 mb-3 text-sm">
+                <div className="flex items-center gap-1">
+                  <Flame className="w-4 h-4 text-orange-500" />
+                  <span className="text-gray-700 dark:text-gray-300">{readingProgress.currentStreak || 0} day streak</span>
+                </div>
+                <div className="text-gray-500 dark:text-gray-400">
+                  {readingProgress.completedDays?.length || 0} completed
+                </div>
+              </div>
+            )}
+            <Button 
+              className="w-full bg-green-600 hover:bg-green-700" 
+              onClick={() => {
+                console.log('Reading Plan clicked');
+                onNavigate?.('readingplans');
+              }}
+              data-testid="button-reading-plan"
+            >
+              Continue Reading Plan
+            </Button>
+          </div>
+        </div>
       </div>
     </div>
   );

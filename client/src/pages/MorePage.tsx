@@ -19,13 +19,6 @@ interface MorePageProps {
 const getMainMenuItems = (t: any, isIOS = false) => {
   const items = [
     {
-      id: "devotional",
-      title: "365 Daily Devotional",
-      description: "Journey through faith with daily scripture and reflections",
-      icon: BookOpen,
-      comingSoon: false
-    },
-    {
       id: "savedverses",
       title: "Saved Verses",
       description: "View your bookmarked scripture passages",
