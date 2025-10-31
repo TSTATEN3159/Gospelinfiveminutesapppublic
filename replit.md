@@ -45,7 +45,7 @@ Preferred communication style: Simple, everyday language.
 - **Data Management**: User data export (JSON) and full account deletion.
 - **Dynamic Bible Trivia System**: Database-backed, dynamic questions with hints, multi-language support, and random selection.
 - **Bible in 1 Year Reading Plan System**: 3-table architecture for plans, daily readings, and user progress tracking with a seed script for 365 days of readings.
-- **Push Notification System**: Capacitor native local notifications for daily devotional, reading plan, and streak reminders.
+- **Push Notification System**: Capacitor native local notifications using `on: { hour, minute }` for recurring daily devotional and reading plan reminders. ID-based notification management (1=devotional, 2=reading plan, 999=streak alerts). Architect-verified for iOS/Android compatibility with `allowWhileIdle` for Android Doze mode.
 
 ## External Dependencies
 
