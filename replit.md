@@ -44,7 +44,13 @@ Preferred communication style: Simple, everyday language.
 - **Offline Functionality**: Network status indicator, bookmarks, and notes persistence.
 - **Data Management**: User data export (JSON) and full account deletion.
 - **Dynamic Bible Trivia System**: Database-backed, dynamic questions with hints, multi-language support, and random selection.
-- **Bible in 1 Year Reading Plan System**: 3-table architecture for plans, daily readings, and user progress tracking with a seed script for 365 days of readings.
+- **Bible Reading Plans System**: 
+  - 3-table architecture for plans, daily readings, and user progress tracking
+  - Three available plans: Bible in 1 Year (365 days), Old Testament in 1 Year (365 days), New Testament in 1 Year (365 days)
+  - Guest preview mode: Non-authenticated users can view Day 1 content for all plans
+  - Authenticated tracking: Signed-in users can mark days complete and track progress
+  - Accessible via More page → Bible Reading Plans menu item
+  - Sample data (days 1-10) for all three plans for testing
 - **Push Notification System**: Capacitor native local notifications using `on: { hour, minute }` for recurring daily devotional and reading plan reminders. ID-based notification management (1=devotional, 2=reading plan, 999=streak alerts). Architect-verified for iOS/Android compatibility with `allowWhileIdle` for Android Doze mode.
 
 ## External Dependencies
