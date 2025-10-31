@@ -33,6 +33,7 @@ import BibleStudiesPage from "./pages/BibleStudiesPage";
 import BibleTriviaPage from "./pages/BibleTriviaPage";
 import SavedVersesPage from "./pages/SavedVersesPage";
 import GlassDemoPage from "./pages/GlassDemoPage";
+import DevotionalsPage from "./pages/DevotionalsPage";
 
 interface User {
   firstName: string;
@@ -44,7 +45,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo";
+type AppPage = "home" | "ask" | "search" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -117,7 +118,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "more", "search"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "more", "search"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -177,6 +178,8 @@ function App() {
         return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
       case "glassdemo":
         return <GlassDemoPage />;
+      case "devotionals":
+        return <DevotionalsPage onBack={handleBackFromLegal} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }

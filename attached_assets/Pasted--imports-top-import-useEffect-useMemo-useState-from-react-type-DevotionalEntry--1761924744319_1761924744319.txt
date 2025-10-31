@@ -1,0 +1,176 @@
+// imports top
+import { useEffect, useMemo, useState } from "react";
+
+type DevotionalEntry = {
+  day: number;
+  scriptureRef: string;
+  scriptureText: string;
+  devotion: string;
+  application: string;
+};
+type Plan = { men: Record<string, DevotionalEntry>; women: Record<string, DevotionalEntry> };
+type Gender = "men" | "women";
+
+// ---- local fallback seed (safe if network down) ----
+const localFallback: Plan = {
+  men: {
+    "1": {
+      day: 1,
+      scriptureRef: "Psalm 1:1–3 (NKJV)",
+      scriptureText:
+        "Blessed is the man who walks not in the counsel of the ungodly... he shall be like a tree planted by the rivers of water...",
+      devotion:
+        "God’s blessing flows where our roots are sunk in His Word. Planted people prosper in seasons and endure in droughts.",
+      application: "• Read Psalm 1.\n• Replace one ungodly input today.\n• Pray: ‘Root me by Your river.’"
+    }
+  },
+  women: {
+    "1": {
+      day: 1,
+      scriptureRef: "Psalm 1:1–3 (NKJV)",
+      scriptureText:
+        "Blessed is the woman who walks not in the counsel of the ungodly... she shall be like a tree planted by the rivers of water...",
+      devotion:
+        "God’s blessing flows where our roots are sunk in His Word. Planted people prosper in seasons and endure in droughts.",
+      application: "• Read Psalm 1.\n• Replace one ungodly input today.\n• Pray: ‘Root me by Your river.’"
+    }
+  }
+};
+
+export default function Devotional365() {
+  // User greeting/progress (local) -------------
+  const [displayName, setDisplayName] = useState<string>("Friend");
+  const [streak, setStreak] = useState<number>(0);
+  const [lastOpenedISO, setLastOpenedISO] = useState<string | null>(null);
+
+  // Gender + day selection ----------------------
+  const [gender, setGender] = useState<Gender>("men");
+  const [day, setDay] = useState<number>(1);
+
+  // Remote plan loader --------------------------
+  const [plan, setPlan] = useState<Plan | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [netErr, setNetErr] = useState<string | null>(null);
+
+  // Load user basics & streak from localStorage
+  useEffect(() => {
+    try {
+      const nm = localStorage.getItem("displayName");
+      if (nm) setDisplayName(nm);
+      const ls = localStorage.getItem("devotional.lastOpenedISO");
+      const st = localStorage.getItem("devotional.streak");
+      if (ls) setLastOpenedISO(ls);
+      if (st) setStreak(parseInt(st, 10) || 0);
+    } catch {}
+  }, []);
+
+  // Update streak if the calendar day advanced
+  useEffect(() => {
+    const today = new Date();
+    const todayKey = today.toISOString().slice(0, 10); // YYYY-MM-DD
+    if (lastOpenedISO !== todayKey) {
+      const yesterday = new Date();
+      yesterday.setDate(today.getDate() - 1);
+      const yKey = yesterday.toISOString().slice(0, 10);
+      const newStreak = lastOpenedISO === yKey ? streak + 1 : 1;
+      setStreak(newStreak);
+      setLastOpenedISO(todayKey);
+      try {
+        localStorage.setItem("devotional.streak", String(newStreak));
+        localStorage.setItem("devotional.lastOpenedISO", todayKey);
+      } catch {}
+    }
+  }, [lastOpenedISO, streak]);
+
+  // Fetch dynamic plan from backend
+  useEffect(() => {
+    let cancelled = false;
+    async function load() {
+      setLoading(true);
+      setNetErr(null);
+      try {
+        const base = import.meta.env.VITE_API_BASE_URL || "";
+        // IMPORTANT: make sure this is set in .env.production during Appflow/Xcode Cloud builds
+        const url = `${base.replace(/\/+$/, "")}/api/devotionals/365`;
+        const res = await fetch(url, { method: "GET" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = (await res.json()) as Plan;
+        if (!cancelled) setPlan(data);
+      } catch (e: any) {
+        console.error("[Devotional] fetch failed:", e?.message || e);
+        if (!cancelled) {
+          setPlan(null);
+          setNetErr("Using offline devotional (network issue).");
+        }
+      } finally {
+        if (!cancelled) setLoading(false);
+      }
+    }
+    load();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const effectivePlan = plan ?? localFallback;
+  const entry = useMemo<DevotionalEntry | null>(() => {
+    const record = effectivePlan[gender] || {};
+    return record[String(day)] || null;
+  }, [effectivePlan, gender, day]);
+
+  // Greeting text
+  const greeting = useMemo(() => {
+    const name = displayName || "Friend";
+    const startText = streak > 1 ? "continue" : "begin/restart";
+    return `Welcome back ${name}, are you ready to ${startText}?`;
+  }, [displayName, streak]);
+
+  // UI (replace with your design system as needed)
+  return (
+    <div className="p-4 space-y-3">
+      <h2 className="text-xl font-semibold">{greeting}</h2>
+      <div className="text-sm opacity-70">Streak: {streak} day{streak === 1 ? "" : "s"}</div>
+
+      <div className="flex gap-2 items-center">
+        <label className="text-sm">Audience:</label>
+        <select
+          value={gender}
+          onChange={(e) => setGender(e.target.value as Gender)}
+          className="border rounded px-2 py-1"
+        >
+          <option value="men">Men</option>
+          <option value="women">Women</option>
+        </select>
+
+        <label className="text-sm ml-3">Day:</label>
+        <input
+          type="number"
+          min={1}
+          max={365}
+          value={day}
+          onChange={(e) => setDay(Math.max(1, Math.min(365, Number(e.target.value) || 1)))}
+          className="w-20 border rounded px-2 py-1"
+        />
+      </div>
+
+      {loading && <div>Loading devotionals…</div>}
+      {netErr && <div className="text-amber-600 text-sm">{netErr}</div>}
+
+      {entry ? (
+        <div className="space-y-2">
+          <div className="text-xs uppercase tracking-wide opacity-60">Day {entry.day}</div>
+          <div className="font-medium">{entry.scriptureRef}</div>
+          <blockquote className="italic opacity-80">{entry.scriptureText}</blockquote>
+
+          <h3 className="font-semibold mt-2">Devotion</h3>
+          <p className="leading-relaxed">{entry.devotion}</p>
+
+          <h3 className="font-semibold mt-2">Application</h3>
+          <pre className="whitespace-pre-wrap leading-relaxed">{entry.application}</pre>
+        </div>
+      ) : (
+        !loading && <div>Pick a day between 1 and 365.</div>
+      )}
+    </div>
+  );
+}
