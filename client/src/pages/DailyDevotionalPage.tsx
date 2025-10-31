@@ -65,6 +65,8 @@ export default function DailyDevotionalPage({ user, onNavigate, streakDays = 0, 
   const [completing, setCompleting] = useState(false);
   const [showSupportingVerse, setShowSupportingVerse] = useState<{ verse: string; text: string } | null>(null);
   const [showGenderSelection, setShowGenderSelection] = useState(false);
+  const [showDaySelector, setShowDaySelector] = useState(false);
+  const [selectedDay, setSelectedDay] = useState(1);
 
   // Load gender preference from localStorage
   useEffect(() => {
@@ -131,8 +133,38 @@ export default function DailyDevotionalPage({ user, onNavigate, streakDays = 0, 
     setShowGenderSelection(false);
   };
 
+  const loadSpecificDay = async (dayNumber: number) => {
+    setLoading(true);
+    setShowDaySelector(false);
+    try {
+      const devotionalRes = await fetch(apiUrl(`/api/devotional/${selectedGender}/${dayNumber}?language=${language}`));
+      
+      if (devotionalRes.ok) {
+        const devotionalData = await devotionalRes.json();
+        setDevotional(devotionalData);
+      } else {
+        const error = await devotionalRes.json();
+        toast({
+          title: "Devotional Not Available",
+          description: error.error || "This devotional is not yet available. Check back soon!",
+          variant: "default"
+        });
+      }
+    } catch (error) {
+      console.error("Error loading devotional:", error);
+      toast({
+        title: "Error Loading Devotional",
+        description: "Please check your connection and try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleCompleteDay = async () => {
     if (!user?.appUserId || !devotional) {
+      console.log('Mark Complete failed - user or devotional missing:', { hasUser: !!user?.appUserId, hasDevotional: !!devotional });
       toast({
         title: "Sign In Required",
         description: "Please create an account to track your devotional progress.",
@@ -141,6 +173,7 @@ export default function DailyDevotionalPage({ user, onNavigate, streakDays = 0, 
       return;
     }
 
+    console.log('Marking day complete:', { userId: user.appUserId, gender: selectedGender, dayNumber: devotional.dayNumber });
     setCompleting(true);
     try {
       const response = await fetch(apiUrl('/api/devotional/complete'), {
@@ -253,10 +286,60 @@ export default function DailyDevotionalPage({ user, onNavigate, streakDays = 0, 
         </div>
         
         <h1 className="text-center text-xl font-bold text-foreground">Daily Devotional</h1>
-        <p className="text-center text-sm text-muted-foreground mt-1">
-          Day {progress?.currentDay || 1} of 365
-        </p>
+        <button
+          onClick={() => setShowDaySelector(true)}
+          className="text-center text-sm text-primary hover:underline mt-1 mx-auto block"
+          data-testid="button-select-day"
+        >
+          Day {devotional?.dayNumber || progress?.currentDay || 1} of 365 - Change Day
+        </button>
       </div>
+
+      {/* Day Selector Modal */}
+      <Dialog open={showDaySelector} onOpenChange={setShowDaySelector}>
+        <DialogContent className="max-w-md" data-testid="dialog-day-selector">
+          <DialogHeader>
+            <DialogTitle className="text-center text-xl">Jump to Any Day</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 mt-4">
+            <p className="text-center text-muted-foreground text-sm">
+              Choose which day's devotional you'd like to read (1-365)
+            </p>
+            <div className="flex gap-3 items-center">
+              <input
+                type="number"
+                min="1"
+                max="365"
+                value={selectedDay}
+                onChange={(e) => setSelectedDay(parseInt(e.target.value) || 1)}
+                className="flex-1 px-4 py-2 border border-border rounded-md text-center text-lg font-semibold"
+                placeholder="Enter day number"
+                data-testid="input-day-number"
+              />
+              <Button
+                onClick={() => loadSpecificDay(selectedDay)}
+                disabled={selectedDay < 1 || selectedDay > 365}
+                data-testid="button-go-to-day"
+              >
+                Go to Day
+              </Button>
+            </div>
+            <div className="grid grid-cols-3 gap-2">
+              {[1, 50, 100, 150, 200, 250, 300, 365].map((day) => (
+                <Button
+                  key={day}
+                  variant="outline"
+                  size="sm"
+                  onClick={() => loadSpecificDay(day)}
+                  data-testid={`button-quick-day-${day}`}
+                >
+                  Day {day}
+                </Button>
+              ))}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
 
       {/* Gender Selection Modal */}
       <Dialog open={showGenderSelection} onOpenChange={setShowGenderSelection}>
