@@ -52,7 +52,7 @@ class BibleService {
     });
   }
 
-  // Fetch from Our Manna API (daily verse service) - HTTPS version
+  // Fetch from Our Manna API (verse for today service) - HTTPS version
   private async fetchFromOurManna(): Promise<BibleVerse> {
     const response = await this.safeFetch('https://www.ourmanna.com/verses/api/get?format=json');
     if (!response.ok) throw new Error('Our Manna API failed');
@@ -188,7 +188,7 @@ class BibleService {
     }
   }
 
-  // Get daily verse with caching and API.Bible integration
+  // Get verse for today with caching and API.Bible integration
   async getDailyVerse(translation: string = 'KJV'): Promise<DailyVerse> {
     const todayKey = `${this.getTodayKey()}_${translation}`;
     

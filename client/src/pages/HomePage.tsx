@@ -59,7 +59,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
 
-  // Load daily verse from Bible API and daily video
+  // Load verse for today from Bible API and daily video
   useEffect(() => {
     const loadDailyContent = async () => {
       try {
@@ -175,7 +175,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
       </div>
 
       <div className="px-4 py-4 space-y-4 ios-safe-bottom">
-        {/* Daily Verse Card with Image */}
+        {/* Verse for Today Card with Image */}
         <div 
           className="bg-white rounded-2xl overflow-hidden shadow-lg border-2 cursor-pointer hover-elevate"
           onClick={() => setShowVerseModal(true)}

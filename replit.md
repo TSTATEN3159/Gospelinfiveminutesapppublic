@@ -1,7 +1,7 @@
 # The Gospel in 5 Minutes - Mobile Bible App
 
 ## Overview
-"The Gospel in 5 Minutes" is a mobile-first spiritual wellness application delivering daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. It aims to offer meaningful spiritual content in digestible 5-minute sessions, combining wellness app aesthetics with Bible app functionality. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, and gamified streak tracking. The project's ambition is to provide a calming, intuitive spiritual experience accessible globally.
+"The Gospel in 5 Minutes" is a mobile-first spiritual wellness application delivering daily Bible verses (presented as "Verse for Today"), emotional scripture guidance, and AI-powered biblical Q&A. It aims to offer meaningful spiritual content in digestible 5-minute sessions, combining wellness app aesthetics with Bible app functionality. Key capabilities include verse for today delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, and gamified streak tracking. The project's ambition is to provide a calming, intuitive spiritual experience accessible globally.
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -33,7 +33,7 @@ Preferred communication style: Simple, everyday language.
 - **User Registration**: Modal-based registration for personalized experiences.
 
 ### Core Features & Implementation
-- **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, copying.
+- **Verse for Today**: Card-based display (labeled "Verse for Today") with bookmarking, personal notes, sharing, copying.
 - **AI Pastor Chat**: Professional UI for AI-powered Q&A with full internationalization.
 - **Feelings & Scripture**: Emotion-based guidance.
 - **Scripture Memory Helper**: Interactive memorization.

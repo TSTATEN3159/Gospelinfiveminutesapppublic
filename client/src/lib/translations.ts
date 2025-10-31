@@ -606,7 +606,7 @@ export const translations: Record<string, Translations> = {
     
     // Home Page
     welcome: "Welcome!",
-    dailyVerse: "Daily Verse",
+    dailyVerse: "Verse for Today",
     bibleStudyPlans: "3-Day Bible Study Plans",
     askThePastor: "Ask the AI Pastor",
     
@@ -1202,7 +1202,7 @@ export const translations: Record<string, Translations> = {
     
     // Home Page
     welcome: "¡Bienvenido!",
-    dailyVerse: "Versículo Diario",
+    dailyVerse: "Versículo de Hoy",
     bibleStudyPlans: "Planes de Estudio Bíblico de 3 Días",
     
     // Time-based greetings
@@ -1798,7 +1798,7 @@ export const translations: Record<string, Translations> = {
     
     // Home Page
     welcome: "Bienvenue !",
-    dailyVerse: "Verset Quotidien",
+    dailyVerse: "Verset d'Aujourd'hui",
     bibleStudyPlans: "Plans d'Étude Biblique de 3 Jours",
     askThePastor: "Demandez au Pasteur IA",
     
@@ -2394,7 +2394,7 @@ export const translations: Record<string, Translations> = {
     
     // Home Page
     welcome: "Bem-vindo!",
-    dailyVerse: "Versículo Diário",
+    dailyVerse: "Versículo de Hoje",
     bibleStudyPlans: "Planos de Estudo Bíblico de 3 Dias",
     askThePastor: "Pergunte ao Pastor IA",
     
@@ -2990,7 +2990,7 @@ export const translations: Record<string, Translations> = {
     
     // Home Page
     welcome: "欢迎！",
-    dailyVerse: "每日经文",
+    dailyVerse: "今日经文",
     bibleStudyPlans: "3天圣经学习计划",
     askThePastor: "询问AI牧师",
     
@@ -3586,7 +3586,7 @@ export const translations: Record<string, Translations> = {
     
     // Home Page
     welcome: "مرحباً!",
-    dailyVerse: "آية يومية",
+    dailyVerse: "آية اليوم",
     bibleStudyPlans: "خطط دراسة الكتاب المقدس لـ 3 أيام",
     askThePastor: "اسأل القس الذكي",
     
@@ -4182,7 +4182,7 @@ export const translations: Record<string, Translations> = {
     
     // Home Page
     welcome: "स्वागत!",
-    dailyVerse: "दैनिक श्लोक",
+    dailyVerse: "आज का श्लोक",
     bibleStudyPlans: "3-दिन की बाइबल अध्ययन योजनाएं",
     askThePastor: "AI पादरी से पूछें",
     

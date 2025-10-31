@@ -360,7 +360,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     'BBE': { id: '65eec8e0b60e656b-01', name: 'Bible in Basic English' }
   };
 
-  // Daily verse selection based on day of year for consistency
+  // Verse for today selection based on day of year for consistency
   const getDailyVerseReference = (): string => {
     const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
     const verses = [
@@ -374,7 +374,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return verses[dayOfYear % verses.length];
   };
 
-  // Get daily verse from API.Bible
+  // Get verse for today from API.Bible
   app.get("/api/daily-verse", async (req, res) => {
     try {
       const version = req.query.version as string || 'KJV';
@@ -406,7 +406,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       res.json({ success: true, verse: result });
     } catch (error) {
-      console.error('Error fetching daily verse:', error);
+      console.error('Error fetching verse for today:', error);
       
       // Fallback to inspirational verses with requested translation noted
       const requestedVersion = req.query.version as string || 'NIV';
