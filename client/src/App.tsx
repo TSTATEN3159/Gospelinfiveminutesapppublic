@@ -35,7 +35,7 @@ import BibleStudiesPage from "./pages/BibleStudiesPage";
 import BibleTriviaPage from "./pages/BibleTriviaPage";
 import SavedVersesPage from "./pages/SavedVersesPage";
 import GlassDemoPage from "./pages/GlassDemoPage";
-import DevotionalsPage from "./pages/DevotionalsPage";
+import DailyDevotionsPage from "./pages/DailyDevotionsPage";
 
 interface User {
   firstName: string;
@@ -229,7 +229,7 @@ function App() {
       case "glassdemo":
         return <GlassDemoPage />;
       case "devotionals":
-        return <DevotionalsPage onBack={handleBackFromLegal} />;
+        return <DailyDevotionsPage onBack={handleBackFromLegal} />;
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
