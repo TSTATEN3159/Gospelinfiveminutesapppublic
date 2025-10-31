@@ -3,6 +3,8 @@ import { QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { queryClient } from "./lib/queryClient";
+import { App as CapacitorApp } from '@capacitor/app';
+import * as LiveUpdates from '@capacitor/live-updates';
 
 // Components
 import UserRegistrationModal from "./components/UserRegistrationModal";
@@ -76,6 +78,42 @@ function App() {
     if (hash && ["glassdemo"].includes(hash)) {
       setCurrentPage(hash as AppPage);
     }
+  }, []);
+
+  // Initialize Live Updates for OTA updates
+  useEffect(() => {
+    const initializeLiveUpdates = async () => {
+      try {
+        // Register event to fire each time user resumes the app
+        CapacitorApp.addListener('resume', async () => {
+          if (localStorage.getItem('shouldReloadApp') === 'true') {
+            console.log('[LiveUpdates] Reloading app with new update');
+            await LiveUpdates.reload();
+          } else {
+            console.log('[LiveUpdates] Checking for updates on resume');
+            const result = await LiveUpdates.sync();
+            localStorage.setItem('shouldReloadApp', String(result.activeApplicationPathChanged));
+            if (result.activeApplicationPathChanged) {
+              console.log('[LiveUpdates] Update downloaded, will reload on next resume');
+            }
+          }
+        });
+
+        // First sync on app load
+        console.log('[LiveUpdates] Initial sync on app load');
+        const result = await LiveUpdates.sync();
+        localStorage.setItem('shouldReloadApp', String(result.activeApplicationPathChanged));
+        if (result.activeApplicationPathChanged) {
+          console.log('[LiveUpdates] Update downloaded, will reload on next app resume');
+        }
+      } catch (error) {
+        // Live Updates only works on native platforms (iOS/Android)
+        // Silently fail in web browser
+        console.log('[LiveUpdates] Not available (web browser or disabled)');
+      }
+    };
+
+    initializeLiveUpdates();
   }, []);
 
   const handleRegistrationComplete = async (userData?: User) => {
