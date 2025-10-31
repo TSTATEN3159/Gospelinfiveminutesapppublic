@@ -221,10 +221,10 @@ export default function DailyDevotionalPage({ user, onNavigate, streakDays = 0, 
 
   return (
     <div className="min-h-screen pb-20 bg-gradient-to-b from-background to-accent/10">
-      {/* Header */}
-      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top sticky top-0 z-10">
+      {/* Header - NOT sticky, scrolls with content */}
+      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
         {/* Top Row: Back Button, Gender Track, Streak */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-4">
           <Button
             variant="ghost"
             size="icon"
@@ -252,13 +252,7 @@ export default function DailyDevotionalPage({ user, onNavigate, streakDays = 0, 
           </div>
         </div>
         
-        {/* Logo */}
-        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
-        
-        {/* Greeting */}
-        <PersonalizedGreeting user={user} language={language} />
-        
-        <h1 className="text-center text-2xl font-bold text-foreground mt-4">Daily Devotional</h1>
+        <h1 className="text-center text-xl font-bold text-foreground">Daily Devotional</h1>
         <p className="text-center text-sm text-muted-foreground mt-1">
           Day {progress?.currentDay || 1} of 365
         </p>
