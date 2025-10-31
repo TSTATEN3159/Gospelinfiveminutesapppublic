@@ -11,8 +11,13 @@ export type Devotional = {
 };
 
 function apiUrl(path: string) {
-  if (!BASE) throw new Error("VITE_API_BASE_URL is not set");
-  return `${BASE}${path}`;
+  // In production (iOS app), use the deployed backend URL
+  // In development (Replit), use relative URLs (frontend & backend on same server)
+  if (BASE) {
+    return `${BASE}${path}`;
+  }
+  // Development: relative URL
+  return path;
 }
 
 export async function fetchDevotional(gender: Gender, day: number): Promise<Devotional> {
