@@ -46,11 +46,14 @@ Preferred communication style: Simple, everyday language.
 - **Dynamic Bible Trivia System**: Database-backed, dynamic questions with hints, multi-language support, and random selection.
 - **Bible Reading Plans System**: 
   - 3-table architecture for plans, daily readings, and user progress tracking
-  - Three available plans: Bible in 1 Year (365 days), Old Testament in 1 Year (365 days), New Testament in 1 Year (365 days)
+  - Three complete plans with full 365-day reading schedules:
+    - **Bible in 1 Year**: Complete OT + NT chronologically over 365 days
+    - **Old Testament in 1 Year**: Genesis through Malachi with all 39 OT books
+    - **New Testament in 1 Year**: Matthew through Revelation (4 complete cycles for deep study)
   - Guest preview mode: Non-authenticated users can view Day 1 content for all plans
   - Authenticated tracking: Signed-in users can mark days complete and track progress
-  - Accessible via More page → Bible Reading Plans menu item
-  - Sample data (days 1-10) for all three plans for testing
+  - Accessible via More page → Bible Reading Plans menu item with green-themed tile
+  - All plans have complete daily readings with titles and scripture references
 - **Push Notification System**: Capacitor native local notifications using `on: { hour, minute }` for recurring daily devotional and reading plan reminders. ID-based notification management (1=devotional, 2=reading plan, 999=streak alerts). Architect-verified for iOS/Android compatibility with `allowWhileIdle` for Android Doze mode.
 
 ## External Dependencies
