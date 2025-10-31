@@ -52,19 +52,11 @@ class NotificationService {
       const initialized = await this.initialize();
       if (!initialized) return false;
       
-      // Cancel existing devotional notifications
-      await this.cancelNotifications(['daily-devotional']);
+      // Cancel existing devotional notifications by ID
+      await LocalNotifications.cancel({ notifications: [{ id: 1 }] });
 
-      // Calculate next notification time
-      const now = new Date();
-      const scheduledTime = new Date();
-      scheduledTime.setHours(schedule.hour, schedule.minute, 0, 0);
-      
-      // If time has passed today, schedule for tomorrow
-      if (scheduledTime <= now) {
-        scheduledTime.setDate(scheduledTime.getDate() + 1);
-      }
-
+      // Schedule repeating daily notification using 'on' property
+      // Note: Using 'on' alone creates a recurring daily notification
       await LocalNotifications.schedule({
         notifications: [
           {
@@ -72,7 +64,10 @@ class NotificationService {
             title: 'Daily Devotional',
             body: 'Your daily scripture is ready! Start your day with God\'s word.',
             schedule: {
-              at: scheduledTime,
+              on: {
+                hour: schedule.hour,
+                minute: schedule.minute
+              },
               allowWhileIdle: true,
             },
             extra: {
@@ -83,7 +78,7 @@ class NotificationService {
         ]
       });
 
-      console.log('[Notifications] Daily devotional scheduled for', scheduledTime);
+      console.log('[Notifications] Daily devotional scheduled (repeating daily) at', `${schedule.hour}:${schedule.minute}`);
       return true;
     } catch (error) {
       console.error('[Notifications] Failed to schedule daily devotional:', error);
@@ -96,19 +91,11 @@ class NotificationService {
       const initialized = await this.initialize();
       if (!initialized) return false;
       
-      // Cancel existing reading plan notifications
-      await this.cancelNotifications(['reading-plan']);
+      // Cancel existing reading plan notifications by ID
+      await LocalNotifications.cancel({ notifications: [{ id: 2 }] });
 
-      // Calculate next notification time
-      const now = new Date();
-      const scheduledTime = new Date();
-      scheduledTime.setHours(schedule.hour, schedule.minute, 0, 0);
-      
-      // If time has passed today, schedule for tomorrow
-      if (scheduledTime <= now) {
-        scheduledTime.setDate(scheduledTime.getDate() + 1);
-      }
-
+      // Schedule repeating daily notification using 'on' property
+      // Note: Using 'on' alone creates a recurring daily notification
       await LocalNotifications.schedule({
         notifications: [
           {
@@ -116,7 +103,10 @@ class NotificationService {
             title: planName,
             body: 'Time for today\'s reading! Continue your journey through the Bible.',
             schedule: {
-              at: scheduledTime,
+              on: {
+                hour: schedule.hour,
+                minute: schedule.minute
+              },
               allowWhileIdle: true,
             },
             extra: {
@@ -127,7 +117,7 @@ class NotificationService {
         ]
       });
 
-      console.log('[Notifications] Reading plan reminder scheduled for', scheduledTime);
+      console.log('[Notifications] Reading plan reminder scheduled (repeating daily) at', `${schedule.hour}:${schedule.minute}`);
       return true;
     } catch (error) {
       console.error('[Notifications] Failed to schedule reading plan reminder:', error);
@@ -190,17 +180,12 @@ class NotificationService {
     return devotionalScheduled;
   }
 
-  async cancelNotifications(types: string[]) {
+  async cancelNotificationsByIds(ids: number[]) {
     try {
-      const pending = await LocalNotifications.getPending();
-      const toCancel = pending.notifications
-        .filter(n => types.includes(n.extra?.type))
-        .map(n => ({ id: n.id }));
-
-      if (toCancel.length > 0) {
-        await LocalNotifications.cancel({ notifications: toCancel });
-        console.log('[Notifications] Cancelled', toCancel.length, 'notifications');
-      }
+      await LocalNotifications.cancel({ 
+        notifications: ids.map(id => ({ id }))
+      });
+      console.log('[Notifications] Cancelled notification IDs:', ids);
     } catch (error) {
       console.error('[Notifications] Failed to cancel notifications:', error);
     }
