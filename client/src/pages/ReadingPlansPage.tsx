@@ -72,7 +72,7 @@ export default function ReadingPlansPage({ user, onNavigate, language = "en" }: 
 
   // Load progress and today's reading when plan is selected
   useEffect(() => {
-    if (selectedPlan && user?.appUserId) {
+    if (selectedPlan) {
       loadPlanData();
     }
   }, [selectedPlan, user?.appUserId]);
@@ -103,22 +103,33 @@ export default function ReadingPlansPage({ user, onNavigate, language = "en" }: 
   };
 
   const loadPlanData = async () => {
-    if (!selectedPlan || !user?.appUserId) return;
+    if (!selectedPlan) return;
     
     setLoading(true);
     try {
-      // Load progress
-      const progressRes = await fetch(apiUrl(`/api/reading-plan/progress/${user.appUserId}/${selectedPlan.id}`));
-      if (progressRes.ok) {
-        const progressData = await progressRes.json();
-        setProgress(progressData);
-        
-        // Load today's reading
-        const dayRes = await fetch(apiUrl(`/api/reading-plan/${selectedPlan.id}/day/${progressData.currentDay}`));
-        if (dayRes.ok) {
-          const dayData = await dayRes.json();
-          setTodayReading(dayData);
+      let currentDay = 1; // Default to day 1
+      
+      // Load progress if user is signed in
+      if (user?.appUserId) {
+        const progressRes = await fetch(apiUrl(`/api/reading-plan/progress/${user.appUserId}/${selectedPlan.id}`));
+        if (progressRes.ok) {
+          const progressData = await progressRes.json();
+          setProgress(progressData);
+          currentDay = progressData.currentDay;
         }
+      }
+      
+      // Load today's reading (or day 1 if not signed in)
+      const dayRes = await fetch(apiUrl(`/api/reading-plan/${selectedPlan.id}/day/${currentDay}`));
+      if (dayRes.ok) {
+        const dayData = await dayRes.json();
+        setTodayReading(dayData);
+      } else {
+        toast({
+          title: "Reading Not Available",
+          description: "This day's reading is not yet available.",
+          variant: "default"
+        });
       }
     } catch (error) {
       console.error("Error loading plan data:", error);
