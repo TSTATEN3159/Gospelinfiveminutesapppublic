@@ -45,7 +45,7 @@ Preferred communication style: Simple, everyday language.
 - **Notes Feature**: CRUD operations for personal reflections on verses.
 - **Streak Tracking**: Consecutive days counter with localStorage persistence.
 - **Devotional Progress Tracking**: API to mark devotional days complete, track progress, and calculate streaks. Includes content for 365 days.
-- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, and real-time UI synchronization via custom events.
+- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, real-time UI synchronization via custom events, and on-demand NIV Scripture text display. Users can expand/collapse to read the full Bible text for each day's reading without leaving the app.
 - **Data Management**: User data export (JSON) and full account deletion capabilities.
 - **Apple Store Compliance**: In-app donation functionality removed.
 
