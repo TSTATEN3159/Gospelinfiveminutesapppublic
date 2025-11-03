@@ -1,0 +1,105 @@
+import { Router } from "express";
+
+const router = Router();
+
+// Clamp 1..365
+const clampDay = (n: number) => Math.max(1, Math.min(365, n));
+
+// TODO: replace this with your real content source (DB or generator).
+// The key is: DO NOT modulo to 4 or slice. Always return the exact `day`.
+async function getDevotionalForDay(
+  gender: "men" | "women",
+  day: number
+) {
+  // Example deterministic content stub so every day is unique:
+  const psalm = ((day - 1) % 150) + 1;
+  const isWomen = gender === "women";
+
+  return {
+    day,
+    gender,
+    scriptureRef: `Psalm ${psalm}:1 (NKJV)`,
+    scriptureText:
+      "Blessed is the man who walks not in the counsel of the ungodly...",
+    devotion: isWomen
+      ? `Day ${day}: Sister, fix your heart on Christ—He is your steady vine.`
+      : `Day ${day}: Brother, fix your strength in Christ—He is your steady vine.`,
+    application:
+      "• Set 10 minutes for Scripture today.\n• Pray this verse back to God.\n• Share one takeaway with a friend."
+  };
+}
+
+// Disable caching so iOS doesn’t reuse day 1–4 responses
+const noStore = (res: any) => {
+  res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+};
+
+// GET a specific day
+router.get("/api/devotionals/365/:gender/:day", async (req, res) => {
+  try {
+    const gender = req.params.gender === "women" ? "women" : "men";
+    const day = clampDay(parseInt(req.params.day, 10) || 1);
+    noStore(res);
+    const devo = await getDevotionalForDay(gender, day);
+    return res.json(devo);
+  } catch (e) {
+    console.error("[API] 365/day error", e);
+    return res.status(500).json({ success: false, error: "devotional_day_failed" });
+  }
+});
+
+// GET all 365 for both genders (be large; only use if you truly need it)
+router.get("/api/devotionals/365", async (_req, res) => {
+  try {
+    noStore(res);
+    const men = await Promise.all(
+      Array.from({ length: 365 }, (_, i) => getDevotionalForDay("men", i + 1))
+    );
+    const women = await Promise.all(
+      Array.from({ length: 365 }, (_, i) => getDevotionalForDay("women", i + 1))
+    );
+    return res.json({ men, women });
+  } catch (e) {
+    console.error("[API] 365/all error", e);
+    return res.status(500).json({ success: false, error: "devotional_all_failed" });
+  }
+});
+
+// PROGRESS ENDPOINTS (you already mounted storage methods; wiring example)
+router.post("/api/devotionals/365/progress", async (req, res) => {
+  try {
+    const { userId, day } = req.body ?? {};
+    if (!userId || !Number.isInteger(day) || day < 1 || day > 365) {
+      return res.status(400).json({ success: false, error: "bad_request" });
+    }
+    noStore(res);
+    const saved = await req.app.get("storage").markDevotionalComplete({ userId, day });
+    return res.json({ success: true, saved });
+  } catch (e) {
+    console.error("[API] 365/progress error", e);
+    return res.status(500).json({ success: false, error: "progress_failed" });
+  }
+});
+
+router.get("/api/devotionals/365/progress/:userId", async (req, res) => {
+  try {
+    const { userId } = req.params;
+    noStore(res);
+    const rows = await req.app.get("storage").getDevotionalProgress(userId);
+    const completedDays = rows.map(r => r.day).sort((a, b) => a - b);
+
+    // streak calc (simple: consecutive from most recent backward)
+    const lastReadISO = rows.length ? rows[rows.length - 1].completedAt : null;
+    let streak = 0;
+    const set = new Set(completedDays);
+    let cursor = completedDays[completedDays.length - 1] ?? 0;
+    while (set.has(cursor)) { streak++; cursor--; }
+
+    return res.json({ success: true, progress: { completedDays, lastReadISO, streak } });
+  } catch (e) {
+    console.error("[API] 365/progress get error", e);
+    return res.status(500).json({ success: false, error: "progress_get_failed" });
+  }
+});
+
+export default router;
