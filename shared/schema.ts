@@ -216,3 +216,23 @@ export const insertReadingProgressSchema = createInsertSchema(readingProgress).p
 
 export type InsertReadingProgress = z.infer<typeof insertReadingProgressSchema>;
 export type ReadingProgress = typeof readingProgress.$inferSelect;
+
+// Devotional Progress - Tracks which devotional days users have completed and their streaks
+export const devotionalProgress = pgTable("devotional_progress", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => appUsers.id),
+  day: integer("day").notNull(), // 1-365
+  completedAt: timestamp("completed_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniqueUserDay: uniqueIndex('devotional_progress_unique').on(table.userId, table.day),
+  };
+});
+
+export const insertDevotionalProgressSchema = createInsertSchema(devotionalProgress).pick({
+  userId: true,
+  day: true,
+});
+
+export type InsertDevotionalProgress = z.infer<typeof insertDevotionalProgressSchema>;
+export type DevotionalProgress = typeof devotionalProgress.$inferSelect;

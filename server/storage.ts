@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type ReadingProgress, type InsertReadingProgress, users, subscribers, appUsers, friendships, donations, contacts, verseShares, readingProgress } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type ReadingProgress, type InsertReadingProgress, type DevotionalProgress, type InsertDevotionalProgress, users, subscribers, appUsers, friendships, donations, contacts, verseShares, readingProgress, devotionalProgress } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -56,6 +56,10 @@ export interface IStorage {
   // Reading progress methods
   getReadingProgress(userId: string, planType: string): Promise<ReadingProgress[]>;
   markReadingComplete(data: InsertReadingProgress): Promise<ReadingProgress>;
+  
+  // Devotional progress methods
+  getDevotionalProgress(userId: string): Promise<DevotionalProgress[]>;
+  markDevotionalComplete(data: InsertDevotionalProgress): Promise<DevotionalProgress>;
 }
 
 // Database storage implementation
@@ -487,6 +491,37 @@ export class DatabaseStorage implements IStorage {
       .returning();
     return result[0];
   }
+
+  async getDevotionalProgress(userId: string): Promise<DevotionalProgress[]> {
+    const result = await this.db
+      .select()
+      .from(devotionalProgress)
+      .where(eq(devotionalProgress.userId, userId))
+      .orderBy(devotionalProgress.day);
+    return result;
+  }
+
+  async markDevotionalComplete(data: InsertDevotionalProgress): Promise<DevotionalProgress> {
+    // Check if already marked complete (idempotency)
+    const existing = await this.db
+      .select()
+      .from(devotionalProgress)
+      .where(and(
+        eq(devotionalProgress.userId, data.userId),
+        eq(devotionalProgress.day, data.day)
+      ));
+    
+    if (existing.length > 0) {
+      return existing[0]; // Already complete, return existing record
+    }
+    
+    // Insert new completion record
+    const result = await this.db
+      .insert(devotionalProgress)
+      .values(data)
+      .returning();
+    return result[0];
+  }
 }
 
 // Fallback memory storage for development
@@ -909,6 +944,36 @@ export class MemStorage implements IStorage {
       completedAt: new Date()
     };
     this.readingProgressMap.set(id, progress);
+    return progress;
+  }
+
+  private devotionalProgressMap: Map<string, DevotionalProgress> = new Map();
+
+  async getDevotionalProgress(userId: string): Promise<DevotionalProgress[]> {
+    return Array.from(this.devotionalProgressMap.values())
+      .filter(p => p.userId === userId)
+      .sort((a, b) => a.day - b.day);
+  }
+
+  async markDevotionalComplete(data: InsertDevotionalProgress): Promise<DevotionalProgress> {
+    // Check if already marked complete (idempotency)
+    const existing = Array.from(this.devotionalProgressMap.values()).find(
+      p => p.userId === data.userId && p.day === data.day
+    );
+    
+    if (existing) {
+      return existing; // Already complete, return existing record
+    }
+    
+    // Insert new completion record
+    const id = randomUUID();
+    const progress: DevotionalProgress = {
+      id,
+      userId: data.userId,
+      day: data.day,
+      completedAt: new Date()
+    };
+    this.devotionalProgressMap.set(id, progress);
     return progress;
   }
 }

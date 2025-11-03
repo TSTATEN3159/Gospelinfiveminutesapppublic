@@ -111,6 +111,19 @@ Preferred communication style: Simple, everyday language.
       - `DELETE /admin/seed-test-friends` - Remove test data (no key required)
     - Fixed Files: server/index.ts, server/routes.ts, ImportFriendsDialog.tsx, FriendsPage.tsx
 
+- **Recent Enhancements** (Nov 3, 2025):
+  - ✅ **Devotional Progress Tracking API Implemented**:
+    - **Database Schema**: Added `devotionalProgress` table with unique constraint on userId+day
+    - **Storage Layer**: Added `getDevotionalProgress()` and `markDevotionalComplete()` methods with idempotency
+    - **API Endpoints**: 
+      - `POST /api/devotionals/365/progress` - Mark devotional day complete, returns updated progress with streak calculation
+      - `GET /api/devotionals/365/progress/:userId` - Get user's completed days, last read date, and current streak
+    - **Streak Calculation**: Automatic consecutive-day streak counting from most recent completed day
+    - **Validation**: Days must be 1-365, userId required, duplicate completion prevented
+    - **Route Ordering**: Progress routes placed before generic `/:gender/:day` route to prevent route conflicts
+    - **Testing**: Comprehensive tests validate idempotency, validation, streak calculation, and edge cases
+    - Fixed Files: shared/schema.ts, server/storage.ts, server/routes.ts
+
 ## System Architecture
 
 ### Frontend Architecture
