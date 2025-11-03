@@ -70,9 +70,9 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
   // Get the current day's reading
   const todayReading = planData?.plan.dailyReadings.find(r => r.day === currentDay);
 
-  // Fetch Scripture text for current day's reading
+  // Fetch Scripture text for current day's reading (only when expanded)
   const { data: scriptureData, isLoading: isLoadingScripture } = useQuery({
-    queryKey: ["/api/bible-passage", todayReading?.scriptureReferences],
+    queryKey: ["/api/bible-passage", todayReading?.scriptureReferences, currentDay],
     queryFn: async () => {
       if (!todayReading?.scriptureReferences) return null;
       
@@ -84,7 +84,7 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
       const data = await res.json();
       return data.success ? data : null;
     },
-    enabled: !!todayReading?.scriptureReferences,
+    enabled: isScriptureExpanded && !!todayReading?.scriptureReferences,
     staleTime: 1000 * 60 * 60, // Cache for 1 hour
   });
 
