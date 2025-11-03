@@ -1,0 +1,60 @@
+// --- Devotionals: 365-day --- //
+import express from "express";
+const router = express.Router();
+
+// helper: clamp 1..365
+const clampDay = (n: number) => Math.max(1, Math.min(365, n));
+
+// TODO: replace with your real generator / DB lookup
+async function getDevotionalForDay(gender: "men" | "women", day: number) {
+  // IMPORTANT: no modulo to 4, no slicing
+  // Return the exact requested day 1..365.
+  // Example (stub): you should wire to your real content.
+  return {
+    day,
+    gender,
+    scriptureRef: `Psalm ${((day - 1) % 150) + 1}:1 (KJV)`,
+    scriptureText: "Blessed is the man that walketh not in the counsel of the ungodly...",
+    devotion: gender === "women"
+      ? `Day ${day}: Abide in Christ with steadfast heart.`
+      : `Day ${day}: Abide in Christ with steadfast strength.`,
+    application: "• Set 10 minutes today for Scripture.\n• Pray this verse back to God.\n• Share one takeaway with a friend."
+  };
+}
+
+// GET /api/devotionals/365/:gender/:day
+router.get("/api/devotionals/365/:gender/:day", async (req, res) => {
+  try {
+    const gender = req.params.gender === "women" ? "women" : "men";
+    const day = clampDay(parseInt(req.params.day, 10) || 1);
+
+    // Disable caching so iOS doesn’t reuse an old response
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+
+    const devo = await getDevotionalForDay(gender, day);
+    return res.json(devo);
+  } catch (e) {
+    console.error("[API] 365/day error", e);
+    return res.status(500).json({ success: false, error: "devotional_day_failed" });
+  }
+});
+
+// GET /api/devotionals/365  (return ALL 365 — no slice(0,4)!)
+router.get("/api/devotionals/365", async (_req, res) => {
+  try {
+    res.setHeader("Cache-Control", "no-store, no-cache, must-revalidate, max-age=0");
+
+    const men = await Promise.all(
+      Array.from({ length: 365 }, (_, i) => getDevotionalForDay("men", i + 1))
+    );
+    const women = await Promise.all(
+      Array.from({ length: 365 }, (_, i) => getDevotionalForDay("women", i + 1))
+    );
+    return res.json({ men, women });
+  } catch (e) {
+    console.error("[API] 365/all error", e);
+    return res.status(500).json({ success: false, error: "devotional_all_failed" });
+  }
+});
+
+export default router;
