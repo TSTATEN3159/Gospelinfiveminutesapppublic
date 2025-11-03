@@ -84,6 +84,11 @@ export const appStore = {
     };
     
     localStorage.setItem(KEY_READING_PROGRESS, JSON.stringify(progress));
+    
+    // Dispatch custom event to notify UI of progress change
+    window.dispatchEvent(new CustomEvent('readingProgressChanged', { 
+      detail: { planType, dayNumber } 
+    }));
   },
   
   markDayIncomplete(planType, dayNumber) {
@@ -93,6 +98,11 @@ export const appStore = {
     if (progress[planType] && progress[planType][dayNumber]) {
       delete progress[planType][dayNumber];
       localStorage.setItem(KEY_READING_PROGRESS, JSON.stringify(progress));
+      
+      // Dispatch custom event to notify UI of progress change
+      window.dispatchEvent(new CustomEvent('readingProgressChanged', { 
+        detail: { planType, dayNumber } 
+      }));
     }
   },
   

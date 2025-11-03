@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, BookOpen, Calendar, Check } from "lucide-react";
@@ -16,10 +16,6 @@ type ReadingPlan = {
   totalReadings: number;
 };
 
-type LocalProgress = {
-  completedAt: string;
-};
-
 type PlanProgress = {
   completedCount: number;
   percentComplete: number;
@@ -32,6 +28,8 @@ interface ReadingPlansPageProps {
 }
 
 export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPageProps) {
+  const [allProgress, setAllProgress] = useState<Record<string, Record<number, { completedAt: string }>>>({});
+
   // Fetch all reading plans
   const { data: plansData, isLoading: plansLoading } = useQuery({
     queryKey: ["/api/reading-plans"],
@@ -44,9 +42,26 @@ export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPag
     }
   });
 
-  // Get progress from localStorage
-  const allProgress = useMemo(() => {
-    return appStore.getAllReadingProgress();
+  // Load progress from localStorage on mount and when progress changes
+  useEffect(() => {
+    const loadProgress = () => {
+      const progress = appStore.getAllReadingProgress();
+      setAllProgress(progress);
+    };
+
+    // Load initial progress
+    loadProgress();
+
+    // Listen for custom readingProgressChanged events from appStore
+    window.addEventListener('readingProgressChanged', loadProgress);
+    
+    // Listen for storage events from other tabs/windows
+    window.addEventListener('storage', loadProgress);
+
+    return () => {
+      window.removeEventListener('readingProgressChanged', loadProgress);
+      window.removeEventListener('storage', loadProgress);
+    };
   }, []);
 
   // Calculate progress stats for each plan

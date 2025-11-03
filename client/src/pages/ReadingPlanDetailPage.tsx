@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -35,6 +35,7 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
   });
 
   const [currentDay, setCurrentDay] = useState(1);
+  const [localProgress, setLocalProgress] = useState<Record<number, { completedAt: string }>>({});
 
   // Helper function to calculate streak from completed days
   const calculateStreak = (completedDays: number[]): number => {
@@ -64,9 +65,34 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
     }
   });
 
-  // Get progress from localStorage
-  const localProgress = useMemo(() => {
-    return appStore.getReadingProgress(planType);
+  // Load progress from localStorage on mount and when it changes
+  useEffect(() => {
+    const loadProgress = () => {
+      const progress = appStore.getReadingProgress(planType);
+      setLocalProgress(progress);
+    };
+    
+    // Load initial progress
+    loadProgress();
+    
+    // Listen for custom readingProgressChanged events from appStore
+    // Only reload if the event is for this specific plan
+    const handleProgressChange = (event: Event) => {
+      const customEvent = event as CustomEvent;
+      if (customEvent.detail && customEvent.detail.planType === planType) {
+        loadProgress();
+      }
+    };
+    
+    window.addEventListener('readingProgressChanged', handleProgressChange);
+    
+    // Listen for storage events from other tabs/windows (reload for any storage change)
+    window.addEventListener('storage', loadProgress);
+    
+    return () => {
+      window.removeEventListener('readingProgressChanged', handleProgressChange);
+      window.removeEventListener('storage', loadProgress);
+    };
   }, [planType]);
 
   // Calculate progress stats
@@ -94,12 +120,12 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
     return { completedCount, percentComplete, currentDay, streak };
   }, [localProgress, planData]);
 
-  // Auto-advance to current day on load
-  useState(() => {
-    if (progressStats.currentDay) {
+  // Auto-advance to current day on initial load
+  useEffect(() => {
+    if (progressStats.currentDay && currentDay === 1) {
       setCurrentDay(progressStats.currentDay);
     }
-  });
+  }, [progressStats.currentDay]);
 
   const handleDayToggle = (day: number) => {
     const isComplete = !!localProgress[day];
@@ -110,8 +136,9 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
       appStore.markDayComplete(planType, day);
     }
     
-    // Force re-render by updating state
-    setCurrentDay(prev => prev);
+    // Immediately reload progress to update UI
+    const updatedProgress = appStore.getReadingProgress(planType);
+    setLocalProgress(updatedProgress);
   };
 
   const handlePrevDay = () => {
