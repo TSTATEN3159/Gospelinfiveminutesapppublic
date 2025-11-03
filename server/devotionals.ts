@@ -1,4 +1,5 @@
 import type { Request, Response } from "express";
+import devotional365Content from "./devotionals-content-365";
 
 export type DevotionalEntry = {
   day: number;               // 1..365
@@ -15,62 +16,42 @@ export type DevotionalPlan = {
   women: Record<string, DevotionalEntry>;
 };
 
-// --- Minimal seed content (Days 1–3 real text), rest are clean placeholders.
-// You can expand/replace later from DB/OpenAI without changing the client.
-const seedDays = (): Record<string, { ref: string; text: string; devo: string; app: string }> => ({
-  "1": {
-    ref: "Psalm 1:1–3 (NKJV)",
-    text:
-      "Blessed is the man who walks not in the counsel of the ungodly... he shall be like a tree planted by the rivers of water...",
-    devo:
-      "God's blessing flows where our roots are sunk in His Word. The ungodly offer quick counsel, but Scripture forms slow strength. Planted people prosper in seasons and endure in droughts. Choose your counsel and your rhythms—Scripture daily, prayerfully, expectantly.",
-    app:
-      "• Pick a 10-minute daily Scripture slot and protect it.\n• Replace one ungodly input today (video/podcast) with Psalm 1.\n• Pray: 'Root me by Your river, Lord.'"
-  },
-  "2": {
-    ref: "John 15:5 (ESV)",
-    text: "I am the vine; you are the branches... apart from me you can do nothing.",
-    devo:
-      "Fruit isn't forced—it's produced by abiding. Jesus does the heavy lifting when we remain in Him. Your job is connection; His job is transformation. Practice awareness of Christ's presence through the day, not merely morning devotions.",
-    app:
-      "• Whisper 'I abide in You' before each task today.\n• Identify one branch-breaking habit; replace it with prayer.\n• End day asking: Where did I notice Christ's help?"
-  },
-  "3": {
-    ref: "Philippians 4:6–7 (NIV)",
-    text: "Do not be anxious about anything... present your requests to God...",
-    devo:
-      "Anxiety shrinks when prayer expands. Paul gives a pathway: refuse worry, present requests, give thanks, then receive peace. Peace doesn't wait for solved problems—it comes from the guarding presence of God in Christ.",
-    app:
-      "• Write 3 worries → convert each into a request.\n• Thank God for one specific past rescue.\n• Breathe: 'Your peace guards me in Christ.'"
-  }
-});
-
-// Generate a full 365-day plan by blending seeds + structured placeholders
+// Generate a full 365-day plan with unique content for each day
 function build365(): DevotionalPlan {
-  const base = seedDays();
   const makeEntry = (day: number, gender: Gender): DevotionalEntry => {
     const key = String(day);
-    if (base[key]) {
-      const b = base[key];
-      // tiny gender tweak in voice (optional)
-      const tweak = gender === "men" ? "" : " (Sisters, take this to heart.)";
+    const base = devotional365Content[key];
+    
+    if (!base) {
+      // Fallback (should never happen as we have all 365 days)
       return {
         day,
-        scriptureRef: b.ref,
-        scriptureText: b.text,
-        devotion: b.devo + tweak,
-        application: b.app
+        scriptureRef: `Psalm ${((day - 1) % 150) + 1}:1 (ESV)`,
+        scriptureText: "God's Word is a lamp to our feet and a light to our path.",
+        devotion: "Today's focus: walking in God's truth. His Word guides us in every season of life. Take time to meditate on Scripture and allow the Holy Spirit to illuminate its meaning for your circumstances today.",
+        application: "• Read one chapter from the Psalms.\n• Pray for wisdom to apply God's Word.\n• Journal one truth that stands out to you."
       };
     }
-    // clean, App Store–safe placeholders for the rest
+    
+    // Apply gentle gender-appropriate language adjustments
+    const genderTweak = gender === "men" 
+      ? base.devo 
+      : base.devo.replace(/\b(man|men|he|his|him)\b/gi, (match) => {
+          const lower = match.toLowerCase();
+          if (lower === "man") return "person";
+          if (lower === "men") return "people";
+          if (lower === "he") return "they";
+          if (lower === "his") return "their";
+          if (lower === "him") return "them";
+          return match;
+        });
+    
     return {
       day,
-      scriptureRef: `Proverbs ${((day - 1) % 31) + 1}:${(day % 7) + 1} (ESV)`,
-      scriptureText: "Wise living grows from listening to God's instruction.",
-      devotion:
-        "Today's focus: simple obedience. Choose one instruction of Jesus and practice it deliberately—gentleness with a hard person, secrecy in generosity, or patient prayer. Small obedience, repeated daily, forms Christlike character.",
-      application:
-        "• Read one Proverb aloud.\n• Name one small act of obedience and do it.\n• Journal one sentence: 'Today I obeyed Jesus in ____.'"
+      scriptureRef: base.ref,
+      scriptureText: base.text,
+      devotion: genderTweak,
+      application: base.app
     };
   };
 
