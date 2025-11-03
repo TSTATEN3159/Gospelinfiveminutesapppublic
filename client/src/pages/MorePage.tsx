@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
+import dailyDevotionsImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
 
 interface MorePageProps {
   language: string;
@@ -210,6 +211,7 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
               case 'savedverses': return { image: holyBibleImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
               case 'videos': return { image: holyBibleImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
               case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
+              case 'devotionals': return { image: dailyDevotionsImage, overlay: 'from-amber-900/70 via-amber-600/20', border: 'border-amber-200', iconBg: 'bg-amber-100', iconBorder: 'border-amber-200/60', iconRing: 'ring-amber-300/50', iconColor: 'text-amber-700' };
               case 'friends': return { image: friendsFellowship, overlay: 'from-pink-900/70 via-pink-600/20', border: 'border-pink-200', iconBg: 'bg-pink-100', iconBorder: 'border-pink-200/60', iconRing: 'ring-pink-300/50', iconColor: 'text-pink-700' };
               default: return null;
             }

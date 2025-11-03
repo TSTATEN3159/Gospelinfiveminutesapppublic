@@ -4,12 +4,13 @@ import { z } from "zod";
 import OpenAI from "openai";
 import Stripe from "stripe";
 import { storage } from "./storage";
-import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema } from "@shared/schema";
+import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
 import { db } from "./db";
 import { sql } from "drizzle-orm";
 import { getWholePlan, getDay } from "./devotionals";
+import { getAllPlans, getPlan, getDayReading, type PlanType } from "./reading-plans";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -2626,6 +2627,148 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // --- Devotionals 365 dynamic API ---
   app.get("/api/devotionals/365", getWholePlan);
   app.get("/api/devotionals/365/:gender/:day", getDay);
+
+  // --- Reading Plans API ---
+  // GET /api/reading-plans - List all available reading plans
+  app.get("/api/reading-plans", (req, res) => {
+    try {
+      const plans = getAllPlans();
+      const metadata = plans.map(p => ({
+        planType: p.planType,
+        title: p.title,
+        description: p.description,
+        durationDays: p.durationDays,
+        totalReadings: p.dailyReadings.length
+      }));
+      res.json({ success: true, plans: metadata });
+    } catch (error) {
+      console.error("Error fetching reading plans:", error);
+      res.status(500).json({ success: false, error: "Failed to fetch reading plans" });
+    }
+  });
+
+  // GET /api/reading-plans/:planType - Get full plan details with all daily readings
+  app.get("/api/reading-plans/:planType", (req, res) => {
+    try {
+      const { planType } = req.params;
+      
+      if (!["1yr-whole", "6mo-ot", "6mo-nt"].includes(planType)) {
+        return res.status(400).json({ success: false, error: "Invalid plan type" });
+      }
+      
+      const plan = getPlan(planType as PlanType);
+      
+      if (!plan) {
+        return res.status(404).json({ success: false, error: "Plan not found" });
+      }
+      
+      res.json({ success: true, plan });
+    } catch (error) {
+      console.error(`Error fetching plan ${req.params.planType}:`, error);
+      res.status(500).json({ success: false, error: "Failed to fetch plan" });
+    }
+  });
+
+  // GET /api/reading-plans/:planType/day/:day - Get specific day's reading
+  app.get("/api/reading-plans/:planType/day/:day", (req, res) => {
+    try {
+      const { planType, day } = req.params;
+      const dayNum = parseInt(day, 10);
+      
+      if (!["1yr-whole", "6mo-ot", "6mo-nt"].includes(planType)) {
+        return res.status(400).json({ success: false, error: "Invalid plan type" });
+      }
+      
+      if (isNaN(dayNum) || dayNum < 1) {
+        return res.status(400).json({ success: false, error: "Invalid day number" });
+      }
+      
+      const reading = getDayReading(planType as PlanType, dayNum);
+      
+      if (!reading) {
+        return res.status(404).json({ success: false, error: "Reading not found" });
+      }
+      
+      res.json({ success: true, reading });
+    } catch (error) {
+      console.error(`Error fetching day ${req.params.day} for plan ${req.params.planType}:`, error);
+      res.status(500).json({ success: false, error: "Failed to fetch reading" });
+    }
+  });
+
+  // GET /api/reading-progress/:userId/:planType - Get user's progress for a specific plan
+  app.get("/api/reading-progress/:userId/:planType", async (req, res) => {
+    try {
+      const { userId, planType } = req.params;
+      
+      if (!["1yr-whole", "6mo-ot", "6mo-nt"].includes(planType)) {
+        return res.status(400).json({ success: false, error: "Invalid plan type" });
+      }
+      
+      const progress = await storage.getReadingProgress(userId, planType as PlanType);
+      
+      // Calculate completion percentage
+      const plan = getPlan(planType as PlanType);
+      const completedDays = progress.length;
+      const totalDays = plan?.durationDays || 0;
+      const percentComplete = totalDays > 0 ? Math.round((completedDays / totalDays) * 100) : 0;
+      
+      res.json({
+        success: true,
+        progress,
+        stats: {
+          completedDays,
+          totalDays,
+          percentComplete,
+          currentDay: completedDays + 1
+        }
+      });
+    } catch (error) {
+      console.error(`Error fetching reading progress for user ${req.params.userId}:`, error);
+      res.status(500).json({ success: false, error: "Failed to fetch reading progress" });
+    }
+  });
+
+  // POST /api/reading-progress - Mark a reading as complete
+  app.post("/api/reading-progress", async (req, res) => {
+    try {
+      const parsed = insertReadingProgressSchema.safeParse(req.body);
+      
+      if (!parsed.success) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request body",
+          details: parsed.error.format()
+        });
+      }
+      
+      const { userId, planType, dayNumber, scriptureReferences } = parsed.data;
+      
+      // Check if this day is already completed
+      const existingProgress = await storage.getReadingProgress(userId, planType);
+      const alreadyCompleted = existingProgress.some(p => p.dayNumber === dayNumber);
+      
+      if (alreadyCompleted) {
+        return res.status(200).json({
+          success: true,
+          message: "Reading already marked as complete"
+        });
+      }
+      
+      // Mark reading as complete
+      const result = await storage.markReadingComplete({
+        userId,
+        planType,
+        dayNumber,
+        scriptureReferences
+      });
+      
+      res.json({ success: true, progress: result });
+    } catch (error) {
+      console.error("Error marking reading as complete:", error);
+      res.status(500).json({ success: false, error: "Failed to mark reading as complete" });
+    }
+  });
 
   const httpServer = createServer(app);
 

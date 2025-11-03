@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, users, subscribers, appUsers, friendships, donations, contacts, verseShares } from "@shared/schema";
+import { type User, type InsertUser, type Subscriber, type InsertSubscriber, type AppUser, type InsertAppUser, type Friendship, type InsertFriendship, type Donation, type InsertDonation, type Contact, type InsertContact, type VerseShare, type InsertVerseShare, type ReadingProgress, type InsertReadingProgress, users, subscribers, appUsers, friendships, donations, contacts, verseShares, readingProgress } from "@shared/schema";
 import { randomUUID } from "crypto";
 import { drizzle } from "drizzle-orm/neon-http";
 import { neon } from "@neondatabase/serverless";
@@ -52,6 +52,10 @@ export interface IStorage {
   getSentVerses(userId: string): Promise<VerseShare[]>;
   markVerseAsRead(verseShareId: string): Promise<VerseShare | undefined>;
   deleteVerseShare(verseShareId: string): Promise<boolean>;
+  
+  // Reading progress methods
+  getReadingProgress(userId: string, planType: string): Promise<ReadingProgress[]>;
+  markReadingComplete(data: InsertReadingProgress): Promise<ReadingProgress>;
 }
 
 // Database storage implementation
@@ -448,6 +452,41 @@ export class DatabaseStorage implements IStorage {
       .returning();
     return result.length > 0;
   }
+
+  async getReadingProgress(userId: string, planType: string): Promise<ReadingProgress[]> {
+    const result = await this.db
+      .select()
+      .from(readingProgress)
+      .where(and(
+        eq(readingProgress.userId, userId),
+        eq(readingProgress.planType, planType as any)
+      ))
+      .orderBy(readingProgress.dayNumber);
+    return result;
+  }
+
+  async markReadingComplete(data: InsertReadingProgress): Promise<ReadingProgress> {
+    // Check if already marked complete (idempotency)
+    const existing = await this.db
+      .select()
+      .from(readingProgress)
+      .where(and(
+        eq(readingProgress.userId, data.userId),
+        eq(readingProgress.planType, data.planType as any),
+        eq(readingProgress.dayNumber, data.dayNumber)
+      ));
+    
+    if (existing.length > 0) {
+      return existing[0]; // Already complete, return existing record
+    }
+    
+    // Insert new completion record
+    const result = await this.db
+      .insert(readingProgress)
+      .values(data)
+      .returning();
+    return result[0];
+  }
 }
 
 // Fallback memory storage for development
@@ -457,6 +496,7 @@ export class MemStorage implements IStorage {
   private appUsersMap: Map<string, AppUser>;
   private friendshipsMap: Map<string, Friendship>;
   private donationsMap: Map<string, Donation>;
+  private readingProgressMap: Map<string, ReadingProgress>;
 
   constructor() {
     this.users = new Map();
@@ -464,6 +504,7 @@ export class MemStorage implements IStorage {
     this.appUsersMap = new Map();
     this.friendshipsMap = new Map();
     this.donationsMap = new Map();
+    this.readingProgressMap = new Map();
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -837,6 +878,38 @@ export class MemStorage implements IStorage {
 
   async deleteVerseShare(verseShareId: string): Promise<boolean> {
     return this.verseSharesMap.delete(verseShareId);
+  }
+
+  async getReadingProgress(userId: string, planType: string): Promise<ReadingProgress[]> {
+    return Array.from(this.readingProgressMap.values())
+      .filter(p => p.userId === userId && p.planType === planType)
+      .sort((a, b) => a.dayNumber - b.dayNumber);
+  }
+
+  async markReadingComplete(data: InsertReadingProgress): Promise<ReadingProgress> {
+    // Check if already marked complete (idempotency)
+    const existing = Array.from(this.readingProgressMap.values()).find(
+      p => p.userId === data.userId && 
+           p.planType === data.planType && 
+           p.dayNumber === data.dayNumber
+    );
+    
+    if (existing) {
+      return existing; // Already complete, return existing record
+    }
+    
+    // Insert new completion record
+    const id = randomUUID();
+    const progress: ReadingProgress = {
+      id,
+      userId: data.userId,
+      planType: data.planType as any,
+      dayNumber: data.dayNumber,
+      scriptureReferences: data.scriptureReferences,
+      completedAt: new Date()
+    };
+    this.readingProgressMap.set(id, progress);
+    return progress;
   }
 }
 

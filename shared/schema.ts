@@ -168,3 +168,51 @@ export const insertVerseShareSchema = createInsertSchema(verseShares).pick({
 
 export type InsertVerseShare = z.infer<typeof insertVerseShareSchema>;
 export type VerseShare = typeof verseShares.$inferSelect;
+
+// Bible Reading Plans - Fixed plans for different durations
+export const planTypeEnum = pgEnum('plan_type', ['1yr-whole', '6mo-ot', '6mo-nt']);
+
+export const readingPlans = pgTable("reading_plans", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  planType: planTypeEnum("plan_type").notNull().unique(),
+  title: text("title").notNull(),
+  description: text("description").notNull(),
+  durationDays: integer("duration_days").notNull(),
+  totalReadings: integer("total_readings").notNull(),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+export const insertReadingPlanSchema = createInsertSchema(readingPlans).pick({
+  planType: true,
+  title: true,
+  description: true,
+  durationDays: true,
+  totalReadings: true,
+});
+
+export type InsertReadingPlan = z.infer<typeof insertReadingPlanSchema>;
+export type ReadingPlan = typeof readingPlans.$inferSelect;
+
+// Reading Plan Progress - Tracks which readings users have completed
+export const readingProgress = pgTable("reading_progress", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => appUsers.id),
+  planType: planTypeEnum("plan_type").notNull(),
+  dayNumber: integer("day_number").notNull(), // 1-365 for 1yr, 1-180 for 6mo
+  scriptureReferences: text("scripture_references").notNull(), // e.g., "Genesis 1-3"
+  completedAt: timestamp("completed_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    uniqueUserPlanDay: uniqueIndex('reading_progress_unique').on(table.userId, table.planType, table.dayNumber),
+  };
+});
+
+export const insertReadingProgressSchema = createInsertSchema(readingProgress).pick({
+  userId: true,
+  planType: true,
+  dayNumber: true,
+  scriptureReferences: true,
+});
+
+export type InsertReadingProgress = z.infer<typeof insertReadingProgressSchema>;
+export type ReadingProgress = typeof readingProgress.$inferSelect;
