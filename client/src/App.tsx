@@ -39,6 +39,7 @@ import DailyDevotionsPage from "./pages/DailyDevotionsPage";
 import DailyPage from "./pages/DailyPage";
 import ReadingPlansPage from "./pages/ReadingPlansPage";
 import ReadingPlanDetailPage from "./pages/ReadingPlanDetailPage";
+import ScreenshotToolPage from "./pages/ScreenshotToolPage";
 
 interface User {
   firstName: string;
@@ -50,7 +51,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
