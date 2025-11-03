@@ -24,6 +24,7 @@ export async function fetchDevotional(gender: Gender, day: number): Promise<Devo
   const res = await fetch(apiUrl(`/api/devotionals/365/${gender}/${day}`), {
     method: "GET",
     headers: { "Accept": "application/json" },
+    cache: "no-store" // Prevent iOS from caching devotionals
   });
   if (!res.ok) {
     const text = await res.text().catch(() => "");
@@ -34,7 +35,10 @@ export async function fetchDevotional(gender: Gender, day: number): Promise<Devo
 
 export async function pingPlan(): Promise<{ ok: true }> {
   // Optional: touches the plan index so first call is "warm"
-  const res = await fetch(apiUrl(`/api/devotionals/365`), { method: "GET" });
+  const res = await fetch(apiUrl(`/api/devotionals/365`), { 
+    method: "GET",
+    cache: "no-store" // Prevent caching
+  });
   if (!res.ok) throw new Error(`Devotional plan ping failed: ${res.status}`);
   return { ok: true };
 }
