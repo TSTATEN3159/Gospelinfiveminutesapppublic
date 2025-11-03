@@ -2172,16 +2172,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({
         success: true,
         incoming: requests.incoming.map(request => ({
-          id: request.user.id,
-          firstName: request.user.firstName,
-          lastName: request.user.lastName,
-          email: request.user.email
+          friendshipId: request.friendshipId,
+          user: {
+            id: request.user.id,
+            firstName: request.user.firstName,
+            lastName: request.user.lastName,
+            email: request.user.email
+          }
         })),
         outgoing: requests.outgoing.map(request => ({
-          id: request.user.id,
-          firstName: request.user.firstName,
-          lastName: request.user.lastName,
-          email: request.user.email
+          friendshipId: request.friendshipId,
+          user: {
+            id: request.user.id,
+            firstName: request.user.firstName,
+            lastName: request.user.lastName,
+            email: request.user.email
+          }
         }))
       });
     } catch (error) {

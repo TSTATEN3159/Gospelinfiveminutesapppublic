@@ -355,6 +355,13 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
   const renderRequestCard = (request: FriendRequestItem, type: 'incoming' | 'outgoing') => {
     const { user, friendshipId } = request;
+    
+    // Safety check for undefined user
+    if (!user || !user.firstName || !user.lastName) {
+      console.warn('Invalid request data:', request);
+      return null;
+    }
+    
     const initials = `${user.firstName[0]}${user.lastName[0]}`.toUpperCase();
     
     return (
