@@ -29,7 +29,8 @@ Preferred communication style: Simple, everyday language.
 - **Database ORM**: Drizzle ORM for PostgreSQL (Neon serverless database).
 - **Schema**: Extensible user authentication and spiritual content schema.
 - **Migrations**: Managed by drizzle-kit.
-- **Local Storage**: Client-side `appStore.js` utility for user preferences, streak tracking, offline content, bookmarks, and personal notes.
+- **Local Storage**: Client-side `appStore.js` utility for user preferences, streak tracking, offline content, bookmarks, personal notes, and reading plan progress tracking.
+- **Custom Event System**: appStore dispatches 'readingProgressChanged' events with `{planType, dayNumber}` for real-time cross-component reactivity in reading plans.
 
 ### Authentication and Authorization
 - **User Registration**: Modal-based registration for personalized experiences.
@@ -44,7 +45,7 @@ Preferred communication style: Simple, everyday language.
 - **Notes Feature**: CRUD operations for personal reflections on verses.
 - **Streak Tracking**: Consecutive days counter with localStorage persistence.
 - **Devotional Progress Tracking**: API to mark devotional days complete, track progress, and calculate streaks. Includes content for 365 days.
-- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with progress tracking, streak calculation, and auto-advancing to incomplete days.
+- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, and real-time UI synchronization via custom events.
 - **Data Management**: User data export (JSON) and full account deletion capabilities.
 - **Apple Store Compliance**: In-app donation functionality removed.
 
