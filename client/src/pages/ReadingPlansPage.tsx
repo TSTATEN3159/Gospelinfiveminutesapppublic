@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, BookOpen, Calendar, Check } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { apiUrl } from "@/lib/api-config";
+import { useToast } from "@/hooks/use-toast";
 
 type PlanType = "1yr-whole" | "6mo-ot" | "6mo-nt";
 
@@ -49,11 +50,16 @@ interface ReadingPlansPageProps {
   userId: string;
 }
 
-function getProfile(): { id?: string; firstName?: string } {
+function getProfile(): { id?: string; appUserId?: string; firstName?: string } {
   try {
     const raw = localStorage.getItem("profile") || localStorage.getItem("app_user") || localStorage.getItem("gospelAppUser");
     if (!raw) return {};
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // Return appUserId as id if id is not set (for compatibility)
+    return {
+      ...parsed,
+      id: parsed.id || parsed.appUserId
+    };
   } catch {
     return {};
   }
@@ -62,7 +68,24 @@ function getProfile(): { id?: string; firstName?: string } {
 export default function ReadingPlansPage({ onBack, onNavigate, userId }: ReadingPlansPageProps) {
   const profile = getProfile();
   const firstName = profile.firstName?.trim() || "friend";
-  const effectiveUserId = userId || profile.id || "demo-user";
+  const effectiveUserId = userId?.trim() || profile.id?.trim();
+  const { toast } = useToast();
+  
+  // Require authentication
+  useEffect(() => {
+    if (!effectiveUserId) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to access reading plans",
+        variant: "destructive"
+      });
+      onBack();
+    }
+  }, [effectiveUserId, onBack, toast]);
+  
+  if (!effectiveUserId) {
+    return null;
+  }
 
   // Fetch all reading plans
   const { data: plansData, isLoading: plansLoading } = useQuery({

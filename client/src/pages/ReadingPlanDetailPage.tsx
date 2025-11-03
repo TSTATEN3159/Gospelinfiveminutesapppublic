@@ -59,11 +59,16 @@ interface ReadingPlanDetailPageProps {
   planType?: PlanType;
 }
 
-function getProfile(): { id?: string; firstName?: string } {
+function getProfile(): { id?: string; appUserId?: string; firstName?: string } {
   try {
     const raw = localStorage.getItem("profile") || localStorage.getItem("app_user") || localStorage.getItem("gospelAppUser");
     if (!raw) return {};
-    return JSON.parse(raw);
+    const parsed = JSON.parse(raw);
+    // Return appUserId as id if id is not set (for compatibility)
+    return {
+      ...parsed,
+      id: parsed.id || parsed.appUserId
+    };
   } catch {
     return {};
   }
@@ -71,8 +76,24 @@ function getProfile(): { id?: string; firstName?: string } {
 
 export default function ReadingPlanDetailPage({ onBack, userId, planType: initialPlanType }: ReadingPlanDetailPageProps) {
   const profile = getProfile();
-  const effectiveUserId = userId || profile.id || "demo-user";
+  const effectiveUserId = userId?.trim() || profile.id?.trim();
   const { toast } = useToast();
+  
+  // Require authentication
+  useEffect(() => {
+    if (!effectiveUserId) {
+      toast({
+        title: "Authentication required",
+        description: "Please log in to track your reading progress",
+        variant: "destructive"
+      });
+      onBack();
+    }
+  }, [effectiveUserId, onBack, toast]);
+  
+  if (!effectiveUserId) {
+    return null;
+  }
 
   // Get plan type from props or localStorage
   const [planType] = useState<PlanType>(() => {
