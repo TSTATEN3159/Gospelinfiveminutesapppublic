@@ -9,7 +9,7 @@ import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
 import { db } from "./db";
 import { sql } from "drizzle-orm";
-import { mountDevotionals365 } from "./devotionals-365";
+import devotionals365Router from "./devotionals-365";
 import { getAllPlans, getPlan, getDayReading, type PlanType } from "./reading-plans";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
@@ -2626,7 +2626,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // --- Devotionals 365 API ---
   // Mount all 365-day devotional endpoints (progress tracking + content)
-  mountDevotionals365(app);
+  app.use(devotionals365Router);
 
   // --- Reading Plans API ---
   // GET /api/reading-plans - List all available reading plans

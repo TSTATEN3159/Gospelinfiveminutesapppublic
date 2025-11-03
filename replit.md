@@ -118,11 +118,15 @@ Preferred communication style: Simple, everyday language.
     - **API Endpoints**: 
       - `POST /api/devotionals/365/progress` - Mark devotional day complete, returns updated progress with streak calculation
       - `GET /api/devotionals/365/progress/:userId` - Get user's completed days, last read date, and current streak
+      - `GET /api/devotionals/365` - Get whole 365-day plan (all days for men & women)
+      - `GET /api/devotionals/365/:gender/:day` - Get specific day's devotional
+    - **Router Pattern**: Refactored into `server/devotionals-365.ts` using express.Router() for better modularity
+    - **Cache Control**: Added `Cache-Control: no-store, no-cache, must-revalidate, max-age=0` headers to prevent iOS caching issues
     - **Streak Calculation**: Automatic consecutive-day streak counting from most recent completed day
+    - **Content Coverage**: All 365 days accessible (days 1-3 have full content, days 4-365 use structured placeholders)
     - **Validation**: Days must be 1-365, userId required, duplicate completion prevented
-    - **Route Ordering**: Progress routes placed before generic `/:gender/:day` route to prevent route conflicts
-    - **Testing**: Comprehensive tests validate idempotency, validation, streak calculation, and edge cases
-    - Fixed Files: shared/schema.ts, server/storage.ts, server/routes.ts
+    - **Testing**: Comprehensive tests validate idempotency, validation, streak calculation, and all 365 days
+    - Fixed Files: shared/schema.ts, server/storage.ts, server/routes.ts, server/devotionals-365.ts
 
 ## System Architecture
 
