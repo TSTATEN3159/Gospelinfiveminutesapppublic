@@ -352,12 +352,10 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
                             <span>Loading Scripture...</span>
                           </div>
                         ) : scriptureData ? (
-                          <div className="rounded-lg border border-border bg-card p-4 max-h-96 overflow-y-auto">
-                            <div className="prose prose-sm dark:prose-invert max-w-none">
-                              <pre className="whitespace-pre-wrap text-sm leading-relaxed font-serif text-foreground">
-                                {scriptureData.content}
-                              </pre>
-                            </div>
+                          <div className="rounded-lg border border-border bg-background p-6 max-h-96 overflow-y-auto shadow-sm">
+                            <pre className="whitespace-pre-wrap text-base leading-relaxed font-serif text-foreground m-0">
+                              {scriptureData.content}
+                            </pre>
                           </div>
                         ) : (
                           <div className="rounded-lg border border-border bg-muted p-4 text-center">
