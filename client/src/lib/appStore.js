@@ -69,6 +69,44 @@ export const appStore = {
     localStorage.removeItem(KEY_PROFILE);
   },
 
+  // READING PLAN PROGRESS
+  // Format: { planType: { dayNumber: { completedAt: ISO timestamp }, ... } }
+  markDayComplete(planType, dayNumber) {
+    const KEY_READING_PROGRESS = 'dg_readingProgress';
+    const progress = JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
+    
+    if (!progress[planType]) {
+      progress[planType] = {};
+    }
+    
+    progress[planType][dayNumber] = {
+      completedAt: new Date().toISOString()
+    };
+    
+    localStorage.setItem(KEY_READING_PROGRESS, JSON.stringify(progress));
+  },
+  
+  markDayIncomplete(planType, dayNumber) {
+    const KEY_READING_PROGRESS = 'dg_readingProgress';
+    const progress = JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
+    
+    if (progress[planType] && progress[planType][dayNumber]) {
+      delete progress[planType][dayNumber];
+      localStorage.setItem(KEY_READING_PROGRESS, JSON.stringify(progress));
+    }
+  },
+  
+  getReadingProgress(planType) {
+    const KEY_READING_PROGRESS = 'dg_readingProgress';
+    const progress = JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
+    return progress[planType] || {};
+  },
+  
+  getAllReadingProgress() {
+    const KEY_READING_PROGRESS = 'dg_readingProgress';
+    return JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
+  },
+
   // GENERIC GET/SET
   get(key) {
     const raw = localStorage.getItem(key);

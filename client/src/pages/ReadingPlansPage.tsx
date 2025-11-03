@@ -1,10 +1,10 @@
-import { useEffect, useState } from "react";
+import { useState, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { ArrowLeft, BookOpen, Calendar, Check } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { apiUrl } from "@/lib/api-config";
-import { useToast } from "@/hooks/use-toast";
+import { appStore } from "@/lib/appStore";
 
 type PlanType = "1yr-whole" | "6mo-ot" | "6mo-nt";
 
@@ -16,77 +16,22 @@ type ReadingPlan = {
   totalReadings: number;
 };
 
-type ReadingProgressEntry = {
-  id: string;
-  userId: string;
-  planType: PlanType;
-  dayNumber: number;
-  scriptureReferences: string;
+type LocalProgress = {
   completedAt: string;
 };
 
-type UserProgressResponse = {
-  success: true;
-  progress: ReadingProgressEntry[];
-  stats: {
-    completedDays: number;
-    totalDays: number;
-    percentComplete: number;
-    currentDay: number;
-  };
-};
-
-type UserProgress = {
-  completedDaysSet: Set<number>;
+type PlanProgress = {
   completedCount: number;
   percentComplete: number;
-  lastReadISO: string | null;
   streak: number;
 };
 
 interface ReadingPlansPageProps {
   onBack: () => void;
   onNavigate: (page: string, planType?: string) => void;
-  userId: string;
 }
 
-function getProfile(): { id?: string; appUserId?: string; firstName?: string } {
-  try {
-    const raw = localStorage.getItem("profile") || localStorage.getItem("app_user") || localStorage.getItem("gospelAppUser");
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    // Return appUserId as id if id is not set (for compatibility)
-    return {
-      ...parsed,
-      id: parsed.id || parsed.appUserId
-    };
-  } catch {
-    return {};
-  }
-}
-
-export default function ReadingPlansPage({ onBack, onNavigate, userId }: ReadingPlansPageProps) {
-  const profile = getProfile();
-  const firstName = profile.firstName?.trim() || "friend";
-  const effectiveUserId = userId?.trim() || profile.id?.trim();
-  const { toast } = useToast();
-  
-  // Require authentication
-  useEffect(() => {
-    if (!effectiveUserId) {
-      toast({
-        title: "Authentication required",
-        description: "Please log in to access reading plans",
-        variant: "destructive"
-      });
-      onBack();
-    }
-  }, [effectiveUserId, onBack, toast]);
-  
-  if (!effectiveUserId) {
-    return null;
-  }
-
+export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPageProps) {
   // Fetch all reading plans
   const { data: plansData, isLoading: plansLoading } = useQuery({
     queryKey: ["/api/reading-plans"],
@@ -99,75 +44,33 @@ export default function ReadingPlansPage({ onBack, onNavigate, userId }: Reading
     }
   });
 
-  // Helper function to calculate streak from progress entries
-  const calculateStreak = (entries: ReadingProgressEntry[]): number => {
-    if (entries.length === 0) return 0;
-    
-    // Sort by day number descending
-    const sortedByDay = [...entries].sort((a, b) => b.dayNumber - a.dayNumber);
-    const completedSet = new Set(entries.map(e => e.dayNumber));
-    
-    // Start from highest completed day and count consecutive days backward
-    let streak = 0;
-    let cursor = sortedByDay[0].dayNumber;
-    while (completedSet.has(cursor)) {
-      streak++;
-      cursor--;
-    }
-    return streak;
-  };
+  // Get progress from localStorage
+  const allProgress = useMemo(() => {
+    return appStore.getAllReadingProgress();
+  }, []);
 
-  // Fetch progress for each plan
-  const { data: progressData } = useQuery({
-    queryKey: ["/api/reading-progress", effectiveUserId],
-    queryFn: async () => {
-      const plans: PlanType[] = ["1yr-whole", "6mo-ot", "6mo-nt"];
-      const results = await Promise.all(
-        plans.map(async (planType) => {
-          const res = await fetch(apiUrl(`/api/reading-progress/${effectiveUserId}/${planType}`), {
-            cache: "no-store"
-          });
-          if (!res.ok) {
-            return { 
-              planType, 
-              completedDaysSet: new Set<number>(), 
-              completedCount: 0,
-              percentComplete: 0,
-              lastReadISO: null,
-              streak: 0
-            };
-          }
-          const data = await res.json() as UserProgressResponse;
-          
-          // Build completed days set from progress array
-          const completedDaysSet = new Set(data.progress.map(p => p.dayNumber));
-          
-          // Get last read date from most recent entry
-          const sortedByTime = [...data.progress].sort((a, b) => 
-            new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
-          );
-          const lastReadISO = sortedByTime[0]?.completedAt || null;
-          
-          // Calculate streak
-          const streak = calculateStreak(data.progress);
-          
-          return { 
-            planType, 
-            completedDaysSet,
-            completedCount: data.stats.completedDays,
-            percentComplete: data.stats.percentComplete,
-            lastReadISO,
-            streak
-          };
-        })
-      );
-      return results.reduce((acc, r) => {
-        acc[r.planType] = r;
-        return acc;
-      }, {} as Record<PlanType, UserProgress>);
-    },
-    enabled: !!effectiveUserId
-  });
+  // Calculate progress stats for each plan
+  const calculatePlanProgress = (planType: PlanType, totalDays: number): PlanProgress => {
+    const planProgress = allProgress[planType] || {};
+    const completedDays = Object.keys(planProgress).map(Number).sort((a, b) => a - b);
+    const completedCount = completedDays.length;
+    const percentComplete = totalDays > 0 ? (completedCount / totalDays) * 100 : 0;
+
+    // Calculate streak (consecutive days from the highest completed day backward)
+    let streak = 0;
+    if (completedDays.length > 0) {
+      const highestDay = completedDays[completedDays.length - 1];
+      const completedSet = new Set(completedDays);
+      
+      let cursor = highestDay;
+      while (completedSet.has(cursor)) {
+        streak++;
+        cursor--;
+      }
+    }
+
+    return { completedCount, percentComplete, streak };
+  };
 
   const plans = plansData?.plans || [];
 
@@ -213,9 +116,8 @@ export default function ReadingPlansPage({ onBack, onNavigate, userId }: Reading
       {!plansLoading && (
         <div className="max-w-2xl mx-auto px-4 py-6 space-y-4">
           {plans.map((plan) => {
-            const progress = progressData?.[plan.planType];
-            const completedCount = progress?.completedCount || 0;
-            const progressPercent = progress?.percentComplete || 0;
+            const progress = calculatePlanProgress(plan.planType, plan.durationDays);
+            const { completedCount, percentComplete, streak } = progress;
 
             return (
               <Card
@@ -250,10 +152,10 @@ export default function ReadingPlansPage({ onBack, onNavigate, userId }: Reading
                       <Calendar className="w-4 h-4" />
                       <span>{plan.durationDays} days</span>
                     </div>
-                    {progress && progress.streak > 0 && (
+                    {streak > 0 && (
                       <div className="flex items-center gap-1 text-primary font-medium">
                         <span className="text-lg">🔥</span>
-                        <span>{progress.streak} day streak</span>
+                        <span>{streak} day streak</span>
                       </div>
                     )}
                   </div>
@@ -261,9 +163,9 @@ export default function ReadingPlansPage({ onBack, onNavigate, userId }: Reading
                   {/* Progress Bar */}
                   {completedCount > 0 && (
                     <div className="space-y-1">
-                      <Progress value={progressPercent} className="h-2" />
+                      <Progress value={percentComplete} className="h-2" />
                       <p className="text-xs text-muted-foreground text-right">
-                        {completedCount} of {plan.durationDays} days ({Math.round(progressPercent)}%)
+                        {completedCount} of {plan.durationDays} days ({Math.round(percentComplete)}%)
                       </p>
                     </div>
                   )}
