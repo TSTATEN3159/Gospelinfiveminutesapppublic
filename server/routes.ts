@@ -30,6 +30,15 @@ const getStripeClient = (): Stripe => {
 };
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Serve static privacy policy and terms pages for Apple App Store compliance
+  app.get('/privacy', (req, res) => {
+    res.sendFile('static/privacy.html', { root: './server' });
+  });
+
+  app.get('/terms', (req, res) => {
+    res.sendFile('static/terms.html', { root: './server' });
+  });
+
   // Stripe webhook endpoint for secure donation recording
   app.post('/api/stripe-webhook', express.raw({ type: 'application/json' }), async (req, res) => {
     const sig = req.headers['stripe-signature'] as string;

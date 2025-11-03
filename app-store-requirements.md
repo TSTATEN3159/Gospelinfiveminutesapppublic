@@ -3,15 +3,16 @@
 ## 🔒 Privacy & Legal Compliance ✅
 
 ### Privacy Policy  
-- ⚠️ **URL**: https://thegospelin5minutes.app/privacy (MUST BE HOSTED - Required for App Store)
+- ✅ **URL**: https://thegospelin5minutes.app/privacy (HOSTED AND LIVE)
 - ✅ **In-App Access**: Available through More → Support & Legal  
 - ✅ **Compliant Content**: Covers all data collection, OpenAI processing, user rights
-- ⚠️ **ACTION REQUIRED**: Host live privacy policy at the URL before App Store submission
+- ✅ **STATUS**: Privacy policy is now live and ready for App Store submission
 
 ### Terms of Service
-- ✅ **URL**: https://thegospelin5minutes.app/terms  
+- ✅ **URL**: https://thegospelin5minutes.app/terms (HOSTED AND LIVE)
 - ✅ **In-App Access**: Available through More → Support & Legal
 - ✅ **Compliant Content**: Covers AI disclaimers, acceptable use, intellectual property
+- ✅ **STATUS**: Terms of Service is now live and ready for App Store submission
 
 ### App Privacy Details
 - ✅ **Data Types**: Contact Info (Name, Email, Phone), User Content (AI questions), Usage Data
@@ -147,7 +148,7 @@ The app helps users build consistent Bible reading habits with personalized cont
 - [x] App icons created in all required sizes
 - [x] Screenshots captured for all device sizes  
 - [x] App Store Connect metadata completed
-- [ ] **HOST LIVE PRIVACY POLICY & TERMS URLs** (CRITICAL)
+- [x] **HOST LIVE PRIVACY POLICY & TERMS URLs** ✅ COMPLETED
 - [ ] TestFlight build uploaded and tested
 - [ ] Network error handling for API calls (Ask Pastor, Bible features)
 
