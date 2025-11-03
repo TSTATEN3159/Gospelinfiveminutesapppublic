@@ -32,25 +32,22 @@ router.post("/api/devotionals/365/progress", async (req, res) => {
     const allProgress = await storage.getDevotionalProgress(validated.userId);
     const completedDays = allProgress.map(p => p.day).sort((a, b) => a - b);
     
-    // Calculate streak (consecutive days from most recent)
-    let streak = 0;
-    if (completedDays.length > 0) {
-      const sortedDesc = [...completedDays].sort((a, b) => b - a);
-      streak = 1;
-      for (let i = 1; i < sortedDesc.length; i++) {
-        if (sortedDesc[i] === sortedDesc[i - 1] - 1) {
-          streak++;
-        } else {
-          break;
-        }
-      }
-    }
-
-    // Get most recent completion date
-    const mostRecentProgress = allProgress.sort((a, b) => 
+    // Get most recent completion date (sort by timestamp, not day number)
+    const sortedByTime = [...allProgress].sort((a, b) => 
       new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
-    )[0];
-    const lastReadISO = mostRecentProgress ? mostRecentProgress.completedAt.toISOString() : null;
+    );
+    const lastReadISO = sortedByTime.length > 0 
+      ? sortedByTime[0].completedAt.toISOString() 
+      : null;
+
+    // Calculate streak (consecutive days from highest completed day backward)
+    let streak = 0;
+    const daySet = new Set(completedDays);
+    let cursor = completedDays[completedDays.length - 1] ?? 0;
+    while (daySet.has(cursor)) {
+      streak++;
+      cursor--;
+    }
 
     res.json({
       success: true,
@@ -92,25 +89,22 @@ router.get("/api/devotionals/365/progress/:userId", async (req, res) => {
     const allProgress = await storage.getDevotionalProgress(userId);
     const completedDays = allProgress.map(p => p.day).sort((a, b) => a - b);
     
-    // Calculate streak (consecutive days from most recent)
-    let streak = 0;
-    if (completedDays.length > 0) {
-      const sortedDesc = [...completedDays].sort((a, b) => b - a);
-      streak = 1;
-      for (let i = 1; i < sortedDesc.length; i++) {
-        if (sortedDesc[i] === sortedDesc[i - 1] - 1) {
-          streak++;
-        } else {
-          break;
-        }
-      }
-    }
-
-    // Get most recent completion date
-    const mostRecentProgress = allProgress.sort((a, b) => 
+    // Get most recent completion date (sort by timestamp, not day number)
+    const sortedByTime = [...allProgress].sort((a, b) => 
       new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
-    )[0];
-    const lastReadISO = mostRecentProgress ? mostRecentProgress.completedAt.toISOString() : null;
+    );
+    const lastReadISO = sortedByTime.length > 0 
+      ? sortedByTime[0].completedAt.toISOString() 
+      : null;
+
+    // Calculate streak (consecutive days from highest completed day backward)
+    let streak = 0;
+    const daySet = new Set(completedDays);
+    let cursor = completedDays[completedDays.length - 1] ?? 0;
+    while (daySet.has(cursor)) {
+      streak++;
+      cursor--;
+    }
 
     res.json({
       success: true,
