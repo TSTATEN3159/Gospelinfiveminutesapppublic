@@ -1,0 +1,126 @@
+openapi: 3.1.0
+info:
+  title: 365 Day Devotionals API
+  version: 1.0.0
+servers:
+  - url: https://daily-gospel-timothystaten.replit.app
+paths:
+  /api/devotionals/365:
+    get:
+      summary: Get the 365-day plan (jump-to list)
+      responses:
+        "200":
+          description: List of days with scripture references
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  count: { type: integer, example: 365 }
+                  plan:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        day: { type: integer, minimum: 1, maximum: 365 }
+                        scriptureRef: { type: string }
+  /api/devotionals/365/{gender}/{day}:
+    get:
+      summary: Get a specific day’s devotional
+      parameters:
+        - in: path
+          name: gender
+          required: true
+          schema:
+            type: string
+            enum: [men, women]
+        - in: path
+          name: day
+          required: true
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 365
+      responses:
+        "200":
+          description: Devotional for the requested day
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  day: { type: integer }
+                  scriptureRef: { type: string, example: "Psalm 1:1–3 (NKJV)" }
+                  scriptureText: { type: string, nullable: true, description: "Present if API_BIBLE_KEY is set" }
+                  devotion: { type: string }
+                  meaning: { type: string }
+                  application: { type: string }
+        "400":
+          description: Invalid gender/day
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error: { type: string }
+  /api/devotionals/365/progress:
+    post:
+      summary: Save progress & streak
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [userId, day]
+              properties:
+                userId: { type: string }
+                day: { type: integer, minimum: 1, maximum: 365 }
+                completedAtISO: { type: string, format: date }
+      responses:
+        "200":
+          description: Updated progress
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  progress:
+                    type: object
+                    properties:
+                      completedDays:
+                        type: array
+                        items: { type: integer }
+                      lastReadISO: { type: string, nullable: true }
+                      streak: { type: integer }
+        "400":
+          description: Validation error
+  /api/devotionals/365/progress/{userId}:
+    get:
+      summary: Read user’s progress & streak
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Progress
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success: { type: boolean }
+                  progress:
+                    type: object
+                    properties:
+                      completedDays:
+                        type: array
+                        items: { type: integer }
+                      lastReadISO: { type: string, nullable: true }
+                      streak: { type: integer }
+        "400":
+          description: Validation error
