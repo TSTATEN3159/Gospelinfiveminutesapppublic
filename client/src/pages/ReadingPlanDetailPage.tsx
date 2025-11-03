@@ -2,8 +2,9 @@ import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronLeft, ChevronRight, Check, BookOpen } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Check, BookOpen, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { apiUrl } from "@/lib/api-config";
 import { appStore } from "@/lib/appStore";
 
@@ -36,6 +37,7 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
 
   const [currentDay, setCurrentDay] = useState(1);
   const [localProgress, setLocalProgress] = useState<Record<number, { completedAt: string }>>({});
+  const [isScriptureExpanded, setIsScriptureExpanded] = useState(false);
 
   // Helper function to calculate streak from completed days
   const calculateStreak = (completedDays: number[]): number => {
@@ -63,6 +65,27 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
       if (!res.ok) throw new Error("Failed to fetch plan details");
       return res.json() as Promise<{ success: true; plan: ReadingPlanData }>;
     }
+  });
+
+  // Get the current day's reading
+  const todayReading = planData?.plan.dailyReadings.find(r => r.day === currentDay);
+
+  // Fetch Scripture text for current day's reading
+  const { data: scriptureData, isLoading: isLoadingScripture } = useQuery({
+    queryKey: ["/api/bible-passage", todayReading?.scriptureReferences],
+    queryFn: async () => {
+      if (!todayReading?.scriptureReferences) return null;
+      
+      const res = await fetch(
+        apiUrl(`/api/bible-passage?reference=${encodeURIComponent(todayReading.scriptureReferences)}`)
+      );
+      if (!res.ok) return null;
+      
+      const data = await res.json();
+      return data.success ? data : null;
+    },
+    enabled: !!todayReading?.scriptureReferences,
+    staleTime: 1000 * 60 * 60, // Cache for 1 hour
   });
 
   // Load progress from localStorage on mount and when it changes
@@ -174,7 +197,6 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
   }
 
   const plan = planData.plan;
-  const todayReading = plan.dailyReadings.find(r => r.day === currentDay);
   const isCurrentDayComplete = !!localProgress[currentDay];
 
   return (
@@ -297,6 +319,55 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
                         {todayReading.description}
                       </p>
                     )}
+                    
+                    {/* Collapsible Scripture Text */}
+                    <Collapsible
+                      open={isScriptureExpanded}
+                      onOpenChange={setIsScriptureExpanded}
+                      className="mt-3"
+                    >
+                      <CollapsibleTrigger asChild>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="w-full flex items-center justify-between gap-2 mt-3"
+                          data-testid="button-toggle-scripture"
+                        >
+                          <span className="flex items-center gap-2">
+                            <BookOpen className="w-4 h-4" />
+                            {isScriptureExpanded ? "Hide Scripture Text" : "Read Scripture (NIV)"}
+                          </span>
+                          {isScriptureExpanded ? (
+                            <ChevronUp className="w-4 h-4" />
+                          ) : (
+                            <ChevronDown className="w-4 h-4" />
+                          )}
+                        </Button>
+                      </CollapsibleTrigger>
+                      
+                      <CollapsibleContent className="mt-3">
+                        {isLoadingScripture ? (
+                          <div className="flex items-center justify-center py-8 text-muted-foreground">
+                            <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                            <span>Loading Scripture...</span>
+                          </div>
+                        ) : scriptureData ? (
+                          <div className="rounded-lg border border-border bg-card p-4 max-h-96 overflow-y-auto">
+                            <div className="prose prose-sm dark:prose-invert max-w-none">
+                              <pre className="whitespace-pre-wrap text-sm leading-relaxed font-serif text-foreground">
+                                {scriptureData.content}
+                              </pre>
+                            </div>
+                          </div>
+                        ) : (
+                          <div className="rounded-lg border border-border bg-muted p-4 text-center">
+                            <p className="text-sm text-muted-foreground">
+                              Unable to load Scripture text. Please try again later.
+                            </p>
+                          </div>
+                        )}
+                      </CollapsibleContent>
+                    </Collapsible>
                   </div>
                 ) : (
                   <p className="text-sm text-muted-foreground italic">
