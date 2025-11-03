@@ -288,6 +288,127 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Fetch Bible passage for reading plans (supports chapter ranges like "Genesis 1-3")
+  app.get("/api/bible-passage", async (req, res) => {
+    try {
+      const { reference, bibleId = 'de4e12af7f28f599-02' } = req.query; // NIV by default
+      
+      if (!reference) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Missing required parameter: reference' 
+        });
+      }
+      
+      const API_KEY = process.env.API_BIBLE_KEY;
+      
+      if (!API_KEY) {
+        return res.status(500).json({ success: false, error: 'API key not configured' });
+      }
+
+      // Parse reference (e.g., "Genesis 1-3" or "Matthew 5")
+      const parseReference = (ref: string): { book: string; startChapter: number; endChapter?: number } | null => {
+        const match = ref.match(/^(.+?)\s+(\d+)(?:-(\d+))?$/);
+        if (!match) return null;
+        
+        return {
+          book: match[1].trim(),
+          startChapter: parseInt(match[2]),
+          endChapter: match[3] ? parseInt(match[3]) : undefined
+        };
+      };
+
+      // Map book names to API.Bible book IDs
+      const bookNameToId: Record<string, string> = {
+        'Genesis': 'GEN', 'Exodus': 'EXO', 'Leviticus': 'LEV', 'Numbers': 'NUM', 'Deuteronomy': 'DEU',
+        'Joshua': 'JOS', 'Judges': 'JDG', 'Ruth': 'RUT', '1 Samuel': '1SA', '2 Samuel': '2SA',
+        '1 Kings': '1KI', '2 Kings': '2KI', '1 Chronicles': '1CH', '2 Chronicles': '2CH',
+        'Ezra': 'EZR', 'Nehemiah': 'NEH', 'Esther': 'EST', 'Job': 'JOB', 'Psalm': 'PSA', 'Psalms': 'PSA',
+        'Proverbs': 'PRO', 'Ecclesiastes': 'ECC', 'Song of Solomon': 'SNG',
+        'Isaiah': 'ISA', 'Jeremiah': 'JER', 'Lamentations': 'LAM', 'Ezekiel': 'EZK', 'Daniel': 'DAN',
+        'Hosea': 'HOS', 'Joel': 'JOL', 'Amos': 'AMO', 'Obadiah': 'OBA', 'Jonah': 'JON',
+        'Micah': 'MIC', 'Nahum': 'NAM', 'Habakkuk': 'HAB', 'Zephaniah': 'ZEP', 'Haggai': 'HAG',
+        'Zechariah': 'ZEC', 'Malachi': 'MAL',
+        'Matthew': 'MAT', 'Mark': 'MRK', 'Luke': 'LUK', 'John': 'JHN', 'Acts': 'ACT',
+        'Romans': 'ROM', '1 Corinthians': '1CO', '2 Corinthians': '2CO', 'Galatians': 'GAL',
+        'Ephesians': 'EPH', 'Philippians': 'PHP', 'Colossians': 'COL',
+        '1 Thessalonians': '1TH', '2 Thessalonians': '2TH', '1 Timothy': '1TI', '2 Timothy': '2TI',
+        'Titus': 'TIT', 'Philemon': 'PHM', 'Hebrews': 'HEB', 'James': 'JAS',
+        '1 Peter': '1PE', '2 Peter': '2PE', '1 John': '1JN', '2 John': '2JN', '3 John': '3JN',
+        'Jude': 'JUD', 'Revelation': 'REV'
+      };
+
+      const parsed = parseReference(reference as string);
+      if (!parsed) {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Invalid reference format. Use format like "Genesis 1-3" or "Matthew 5"' 
+        });
+      }
+
+      const bookId = bookNameToId[parsed.book];
+      if (!bookId) {
+        return res.status(400).json({ 
+          success: false, 
+          error: `Unknown book: ${parsed.book}` 
+        });
+      }
+
+      // Fetch chapters
+      const endChapter = parsed.endChapter || parsed.startChapter;
+      const chapters: string[] = [];
+      
+      for (let chapterNum = parsed.startChapter; chapterNum <= endChapter; chapterNum++) {
+        const chapterId = `${bookId}.${chapterNum}`;
+        
+        try {
+          const response = await fetch(
+            `https://api.scripture.api.bible/v1/bibles/${bibleId}/chapters/${chapterId}`,
+            {
+              headers: { 'api-key': API_KEY }
+            }
+          );
+          
+          if (response.ok) {
+            const data = await response.json();
+            // Strip HTML and clean up the text
+            const cleanText = data.data.content
+              .replace(/<\/?[^>]+(>|$)/g, '') // Remove HTML tags
+              .replace(/\[.*?\]/g, '') // Remove verse numbers in brackets
+              .replace(/\n{3,}/g, '\n\n') // Clean up excessive newlines
+              .trim();
+            
+            chapters.push(`${parsed.book} ${chapterNum}\n\n${cleanText}`);
+          }
+        } catch (err) {
+          console.error(`Failed to fetch chapter ${chapterId}:`, err);
+        }
+      }
+
+      if (chapters.length === 0) {
+        return res.status(404).json({ 
+          success: false, 
+          error: 'Failed to fetch any chapters' 
+        });
+      }
+
+      res.json({
+        success: true,
+        reference: reference as string,
+        content: chapters.join('\n\n---\n\n'),
+        chapters: chapters.length
+      });
+      
+    } catch (error: any) {
+      console.error('Bible passage fetch error:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to fetch Bible passage',
+        details: error.message
+      });
+    }
+  });
+
   // Temporary admin endpoint to find recent payment intents
   app.get("/api/find-recent-payments", async (req, res) => {
     try {
