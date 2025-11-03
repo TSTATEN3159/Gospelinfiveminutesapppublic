@@ -1,13 +1,11 @@
-import { useEffect, useState } from "react";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useState, useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, ChevronLeft, ChevronRight, Check, BookOpen } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { apiUrl } from "@/lib/api-config";
-import { queryClient } from "@/lib/queryClient";
-import { useToast } from "@/hooks/use-toast";
-import { apiRequest } from "@/lib/queryClient";
+import { appStore } from "@/lib/appStore";
 
 type PlanType = "1yr-whole" | "6mo-ot" | "6mo-nt";
 
@@ -25,76 +23,12 @@ type ReadingPlanData = {
   dailyReadings: DailyReading[];
 };
 
-type ReadingProgressEntry = {
-  id: string;
-  userId: string;
-  planType: PlanType;
-  dayNumber: number;
-  scriptureReferences: string;
-  completedAt: string;
-};
-
-type UserProgressResponse = {
-  success: true;
-  progress: ReadingProgressEntry[];
-  stats: {
-    completedDays: number;
-    totalDays: number;
-    percentComplete: number;
-    currentDay: number;
-  };
-};
-
-type UserProgress = {
-  completedDaysSet: Set<number>;
-  completedCount: number;
-  percentComplete: number;
-  lastReadISO: string | null;
-  streak: number;
-};
-
 interface ReadingPlanDetailPageProps {
   onBack: () => void;
-  userId: string;
   planType?: PlanType;
 }
 
-function getProfile(): { id?: string; appUserId?: string; firstName?: string } {
-  try {
-    const raw = localStorage.getItem("profile") || localStorage.getItem("app_user") || localStorage.getItem("gospelAppUser");
-    if (!raw) return {};
-    const parsed = JSON.parse(raw);
-    // Return appUserId as id if id is not set (for compatibility)
-    return {
-      ...parsed,
-      id: parsed.id || parsed.appUserId
-    };
-  } catch {
-    return {};
-  }
-}
-
-export default function ReadingPlanDetailPage({ onBack, userId, planType: initialPlanType }: ReadingPlanDetailPageProps) {
-  const profile = getProfile();
-  const effectiveUserId = userId?.trim() || profile.id?.trim();
-  const { toast } = useToast();
-  
-  // Require authentication
-  useEffect(() => {
-    if (!effectiveUserId) {
-      toast({
-        title: "Authentication required",
-        description: "Please log in to track your reading progress",
-        variant: "destructive"
-      });
-      onBack();
-    }
-  }, [effectiveUserId, onBack, toast]);
-  
-  if (!effectiveUserId) {
-    return null;
-  }
-
+export default function ReadingPlanDetailPage({ onBack, planType: initialPlanType }: ReadingPlanDetailPageProps) {
   // Get plan type from props or localStorage
   const [planType] = useState<PlanType>(() => {
     return initialPlanType || (localStorage.getItem("selectedReadingPlan") as PlanType) || "1yr-whole";
@@ -102,17 +36,15 @@ export default function ReadingPlanDetailPage({ onBack, userId, planType: initia
 
   const [currentDay, setCurrentDay] = useState(1);
 
-  // Helper function to calculate streak from progress entries
-  const calculateStreak = (entries: ReadingProgressEntry[]): number => {
-    if (entries.length === 0) return 0;
+  // Helper function to calculate streak from completed days
+  const calculateStreak = (completedDays: number[]): number => {
+    if (completedDays.length === 0) return 0;
     
-    // Sort by day number descending
-    const sortedByDay = [...entries].sort((a, b) => b.dayNumber - a.dayNumber);
-    const completedSet = new Set(entries.map(e => e.dayNumber));
+    const sorted = [...completedDays].sort((a, b) => b - a);
+    const completedSet = new Set(completedDays);
     
-    // Start from highest completed day and count consecutive days backward
     let streak = 0;
-    let cursor = sortedByDay[0].dayNumber;
+    let cursor = sorted[0];
     while (completedSet.has(cursor)) {
       streak++;
       cursor--;
@@ -127,137 +59,75 @@ export default function ReadingPlanDetailPage({ onBack, userId, planType: initia
       const res = await fetch(apiUrl(`/api/reading-plans/${planType}`), {
         cache: "no-store"
       });
-      if (!res.ok) throw new Error("Failed to fetch plan");
+      if (!res.ok) throw new Error("Failed to fetch plan details");
       return res.json() as Promise<{ success: true; plan: ReadingPlanData }>;
     }
   });
 
-  // Fetch user progress
-  const { data: progressData, refetch: refetchProgress, isLoading: progressLoading } = useQuery({
-    queryKey: ["/api/reading-progress", effectiveUserId, planType],
-    queryFn: async () => {
-      const res = await fetch(apiUrl(`/api/reading-progress/${effectiveUserId}/${planType}`), {
-        cache: "no-store"
-      });
-      if (!res.ok) {
-        return { 
-          completedDaysSet: new Set<number>(), 
-          completedCount: 0,
-          percentComplete: 0,
-          lastReadISO: null,
-          streak: 0
-        };
+  // Get progress from localStorage
+  const localProgress = useMemo(() => {
+    return appStore.getReadingProgress(planType);
+  }, [planType]);
+
+  // Calculate progress stats
+  const progressStats = useMemo(() => {
+    const completedDays = Object.keys(localProgress).map(Number).sort((a, b) => a - b);
+    const completedCount = completedDays.length;
+    const totalDays = planData?.plan.durationDays || 1;
+    const percentComplete = (completedCount / totalDays) * 100;
+    const streak = calculateStreak(completedDays);
+
+    // Find the current day (first incomplete day, or last day + 1 if all complete)
+    let currentDay = 1;
+    const completedSet = new Set(completedDays);
+    for (let day = 1; day <= totalDays; day++) {
+      if (!completedSet.has(day)) {
+        currentDay = day;
+        break;
       }
-      const data = await res.json() as UserProgressResponse;
-      
-      // Build completed days set from progress array
-      const completedDaysSet = new Set(data.progress.map(p => p.dayNumber));
-      
-      // Get last read date from most recent entry
-      const sortedByTime = [...data.progress].sort((a, b) => 
-        new Date(b.completedAt).getTime() - new Date(a.completedAt).getTime()
-      );
-      const lastReadISO = sortedByTime[0]?.completedAt || null;
-      
-      // Calculate streak
-      const streak = calculateStreak(data.progress);
-      
-      return {
-        completedDaysSet,
-        completedCount: data.stats.completedDays,
-        percentComplete: data.stats.percentComplete,
-        lastReadISO,
-        streak
-      };
-    },
-    enabled: !!effectiveUserId
+    }
+    // If all days are complete, stay on last day
+    if (completedSet.size === totalDays) {
+      currentDay = totalDays;
+    }
+
+    return { completedCount, percentComplete, currentDay, streak };
+  }, [localProgress, planData]);
+
+  // Auto-advance to current day on load
+  useState(() => {
+    if (progressStats.currentDay) {
+      setCurrentDay(progressStats.currentDay);
+    }
   });
 
-  const plan = planData?.plan;
-  const progress = progressData || { 
-    completedDaysSet: new Set<number>(), 
-    completedCount: 0,
-    percentComplete: 0,
-    lastReadISO: null,
-    streak: 0
+  const handleDayToggle = (day: number) => {
+    const isComplete = !!localProgress[day];
+    
+    if (isComplete) {
+      appStore.markDayIncomplete(planType, day);
+    } else {
+      appStore.markDayComplete(planType, day);
+    }
+    
+    // Force re-render by updating state
+    setCurrentDay(prev => prev);
   };
-  const currentReading = plan?.dailyReadings.find(r => r.day === currentDay);
-  const isCompleted = progress.completedDaysSet.has(currentDay);
-  const completedCount = progress.completedCount;
-  const progressPercent = progress.percentComplete;
-
-  // Auto-navigate to next incomplete day on mount
-  useEffect(() => {
-    if (plan && progress) {
-      const nextIncompleteDay = plan.dailyReadings.find(r => !progress.completedDaysSet.has(r.day));
-      if (nextIncompleteDay) {
-        setCurrentDay(nextIncompleteDay.day);
-      }
-    }
-  }, [plan, progress]);
-
-  // Mark reading complete mutation
-  const markCompleteMutation = useMutation({
-    mutationFn: async () => {
-      if (!currentReading) throw new Error("No current reading");
-      return await apiRequest("POST", "/api/reading-progress", {
-        userId: effectiveUserId,
-        planType,
-        dayNumber: currentDay,
-        scriptureReferences: currentReading.scriptureReferences
-      });
-    },
-    onSuccess: async () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/reading-progress"] });
-      
-      toast({
-        title: "Reading marked complete!",
-        description: `Day ${currentDay} completed. Keep up the great work!`,
-      });
-      
-      // Refetch progress and wait for it to complete
-      await refetchProgress();
-      
-      // Auto-advance to next INCOMPLETE day after refetch completes
-      // We need to fetch the raw API response again to get the updated Set
-      if (plan) {
-        const res = await fetch(apiUrl(`/api/reading-progress/${effectiveUserId}/${planType}`), {
-          cache: "no-store"
-        });
-        if (res.ok) {
-          const rawData = await res.json() as UserProgressResponse;
-          const updatedCompletedSet = new Set(rawData.progress.map((p: ReadingProgressEntry) => p.dayNumber));
-          const nextIncompleteDay = plan.dailyReadings.find(r => r.day > currentDay && !updatedCompletedSet.has(r.day));
-          
-          if (nextIncompleteDay) {
-            setTimeout(() => {
-              setCurrentDay(nextIncompleteDay.day);
-            }, 500);
-          }
-        }
-      }
-    },
-    onError: (error: any) => {
-      toast({
-        title: "Error",
-        description: error.message || "Failed to mark reading complete",
-        variant: "destructive"
-      });
-    }
-  });
 
   const handlePrevDay = () => {
-    if (currentDay > 1) setCurrentDay(currentDay - 1);
+    if (currentDay > 1) {
+      setCurrentDay(currentDay - 1);
+    }
   };
 
   const handleNextDay = () => {
-    if (plan && currentDay < plan.durationDays) setCurrentDay(currentDay + 1);
+    if (planData && currentDay < planData.plan.durationDays) {
+      setCurrentDay(currentDay + 1);
+    }
   };
 
-  const handleMarkComplete = () => {
-    if (!isCompleted) {
-      markCompleteMutation.mutate();
-    }
+  const handleJumpToCurrent = () => {
+    setCurrentDay(progressStats.currentDay);
   };
 
   if (isLoading) {
@@ -268,13 +138,17 @@ export default function ReadingPlanDetailPage({ onBack, userId, planType: initia
     );
   }
 
-  if (!plan) {
+  if (!planData) {
     return (
       <div className="min-h-screen pb-20 bg-background flex items-center justify-center">
-        <p className="text-destructive">Plan not found</p>
+        <p className="text-muted-foreground">Plan not found</p>
       </div>
     );
   }
+
+  const plan = planData.plan;
+  const todayReading = plan.dailyReadings.find(r => r.day === currentDay);
+  const isCurrentDayComplete = !!localProgress[currentDay];
 
   return (
     <div className="min-h-screen pb-20 bg-background">
@@ -294,106 +168,168 @@ export default function ReadingPlanDetailPage({ onBack, userId, planType: initia
               <BookOpen className="w-6 h-6 text-primary" />
             </div>
           </div>
-          <h1 className="text-xl font-bold text-foreground mb-1">{plan.title}</h1>
-          <p className="text-sm text-muted-foreground">{plan.description}</p>
+          <h1 className="text-2xl font-bold text-foreground mb-2">{plan.title}</h1>
+          <p className="text-muted-foreground text-sm">{plan.description}</p>
         </div>
       </div>
 
-      {/* Progress Overview */}
-      <div className="max-w-2xl mx-auto px-4 py-4 space-y-3">
-        <div className="flex items-center justify-between text-sm">
-          <span className="text-muted-foreground">Overall Progress</span>
-          <span className="font-medium">
-            {completedCount} of {plan.durationDays} days ({Math.round(progressPercent)}%)
-          </span>
-        </div>
-        <Progress value={progressPercent} className="h-2" />
-        
-        {progress.streak > 0 && (
-          <div className="flex items-center gap-2 text-sm text-primary font-medium">
-            <span className="text-lg">🔥</span>
-            <span>{progress.streak} day streak!</span>
-          </div>
-        )}
+      {/* Progress Summary */}
+      <div className="max-w-2xl mx-auto px-4 py-4">
+        <Card>
+          <CardContent className="pt-6">
+            <div className="space-y-4">
+              <div className="flex items-center justify-between text-sm">
+                <span className="text-muted-foreground">Progress</span>
+                <span className="font-semibold text-foreground">
+                  {progressStats.completedCount} of {plan.durationDays} days
+                </span>
+              </div>
+              <Progress value={progressStats.percentComplete} className="h-2" />
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <span className="text-sm text-muted-foreground">
+                    {Math.round(progressStats.percentComplete)}% complete
+                  </span>
+                </div>
+                {progressStats.streak > 0 && (
+                  <div className="flex items-center gap-1 text-sm text-primary font-medium">
+                    <span className="text-lg">🔥</span>
+                    <span>{progressStats.streak} day streak</span>
+                  </div>
+                )}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
       </div>
 
       {/* Day Navigation */}
-      <div className="max-w-2xl mx-auto px-4 py-3">
-        <div className="flex items-center justify-between">
+      <div className="max-w-2xl mx-auto px-4 py-4">
+        <div className="flex items-center justify-between gap-4">
           <Button
+            onClick={handlePrevDay}
+            disabled={currentDay <= 1}
             variant="outline"
             size="sm"
-            onClick={handlePrevDay}
-            disabled={currentDay === 1}
+            className="flex-shrink-0"
             data-testid="button-prev-day"
           >
             <ChevronLeft className="w-4 h-4 mr-1" />
             Previous
           </Button>
           
-          <span className="text-sm font-medium">
-            Day {currentDay} of {plan.durationDays}
-          </span>
-          
+          <div className="flex-1 text-center">
+            <p className="text-sm text-muted-foreground">Day</p>
+            <p className="text-2xl font-bold text-foreground">{currentDay}</p>
+          </div>
+
           <Button
+            onClick={handleNextDay}
+            disabled={currentDay >= plan.durationDays}
             variant="outline"
             size="sm"
-            onClick={handleNextDay}
-            disabled={currentDay === plan.durationDays}
+            className="flex-shrink-0"
             data-testid="button-next-day"
           >
             Next
             <ChevronRight className="w-4 h-4 ml-1" />
           </Button>
         </div>
+
+        {currentDay !== progressStats.currentDay && (
+          <div className="mt-3 text-center">
+            <Button
+              onClick={handleJumpToCurrent}
+              variant="ghost"
+              size="sm"
+              className="text-primary hover:text-primary"
+              data-testid="button-jump-to-current"
+            >
+              Jump to current day ({progressStats.currentDay})
+            </Button>
+          </div>
+        )}
       </div>
 
-      {/* Reading Content */}
+      {/* Today's Reading */}
       <div className="max-w-2xl mx-auto px-4 pb-6">
-        <Card className={isCompleted ? "border-primary/40 bg-primary/5" : ""}>
-          <CardContent className="p-6 space-y-4">
-            {isCompleted && (
-              <div className="flex items-center gap-2 text-primary text-sm font-medium bg-primary/10 px-3 py-2 rounded-lg">
-                <Check className="w-5 h-5" />
-                <span>Completed!</span>
+        <Card className={isCurrentDayComplete ? "border-primary/50 bg-primary/5" : ""}>
+          <CardContent className="pt-6 space-y-4">
+            <div className="flex items-start justify-between gap-4">
+              <div className="flex-1">
+                <h2 className="text-lg font-semibold text-foreground mb-2">
+                  Today's Reading
+                </h2>
+                {todayReading ? (
+                  <div className="space-y-2">
+                    <p className="text-base text-foreground font-medium">
+                      {todayReading.scriptureReferences}
+                    </p>
+                    {todayReading.description && (
+                      <p className="text-sm text-muted-foreground">
+                        {todayReading.description}
+                      </p>
+                    )}
+                  </div>
+                ) : (
+                  <p className="text-sm text-muted-foreground italic">
+                    No reading found for this day
+                  </p>
+                )}
               </div>
-            )}
-            
-            <div>
-              <h2 className="text-lg font-bold text-foreground mb-2">Today's Reading</h2>
-              <p className="text-2xl font-semibold text-primary">
-                {currentReading?.scriptureReferences}
-              </p>
+              
+              {todayReading && (
+                <button
+                  onClick={() => handleDayToggle(currentDay)}
+                  className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                    isCurrentDayComplete
+                      ? "bg-primary text-primary-foreground shadow-md"
+                      : "bg-muted hover:bg-muted/80"
+                  }`}
+                  data-testid={`button-toggle-day-${currentDay}`}
+                >
+                  {isCurrentDayComplete && <Check className="w-5 h-5" />}
+                </button>
+              )}
             </div>
 
-            {currentReading?.description && (
-              <p className="text-sm text-muted-foreground">
-                {currentReading.description}
-              </p>
+            {todayReading && !isCurrentDayComplete && (
+              <Button
+                onClick={() => handleDayToggle(currentDay)}
+                className="w-full"
+                data-testid="button-mark-complete"
+              >
+                <Check className="w-4 h-4 mr-2" />
+                Mark as Complete
+              </Button>
             )}
 
-            <Button
-              onClick={handleMarkComplete}
-              disabled={isCompleted || markCompleteMutation.isPending || progressLoading}
-              className="w-full"
-              size="lg"
-              data-testid="button-mark-complete"
-            >
-              {progressLoading ? (
-                "Loading progress..."
-              ) : markCompleteMutation.isPending ? (
-                "Marking complete..."
-              ) : isCompleted ? (
-                <>
-                  <Check className="w-5 h-5 mr-2" />
-                  Completed
-                </>
-              ) : (
-                "Mark as Complete"
-              )}
-            </Button>
+            {todayReading && isCurrentDayComplete && (
+              <div className="flex items-center gap-2 text-sm text-primary">
+                <Check className="w-4 h-4" />
+                <span className="font-medium">Completed</span>
+              </div>
+            )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Quick Stats */}
+      <div className="max-w-2xl mx-auto px-4 pb-6">
+        <div className="grid grid-cols-2 gap-3">
+          <Card>
+            <CardContent className="pt-4 text-center">
+              <p className="text-2xl font-bold text-primary">{progressStats.completedCount}</p>
+              <p className="text-xs text-muted-foreground mt-1">Days Complete</p>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardContent className="pt-4 text-center">
+              <p className="text-2xl font-bold text-primary">{plan.durationDays - progressStats.completedCount}</p>
+              <p className="text-xs text-muted-foreground mt-1">Days Remaining</p>
+            </CardContent>
+          </Card>
+        </div>
       </div>
     </div>
   );
