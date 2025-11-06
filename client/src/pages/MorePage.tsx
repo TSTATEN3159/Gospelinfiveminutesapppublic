@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck, Calendar, Book } from "lucide-react";
+import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
@@ -45,22 +45,6 @@ const getMainMenuItems = (t: any, isIOS = false) => {
     icon: BookOpen,
     comingSoon: false,
     isPremium: false
-    },
-    {
-      id: "devotionals",
-      title: "365 Daily Devotionals",
-      description: "Daily scripture, devotion, and practical application",
-      icon: Calendar,
-      comingSoon: false,
-      isPremium: true
-    },
-    {
-      id: "reading-plans",
-      title: "Bible Reading Plans",
-      description: "Systematic Bible reading with daily progress tracking",
-      icon: Book,
-      comingSoon: false,
-      isPremium: true
     },
     {
       id: "friends",
