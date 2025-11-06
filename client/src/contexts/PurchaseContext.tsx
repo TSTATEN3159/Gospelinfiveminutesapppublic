@@ -40,10 +40,9 @@ export function PurchaseProvider({ children }: PurchaseProviderProps) {
         await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
 
         // Configure RevenueCat with iOS API key
-        // TODO: Replace with actual RevenueCat API key from dashboard
         const apiKey = Capacitor.getPlatform() === 'ios' 
-          ? 'appl_YOUR_IOS_API_KEY_HERE' 
-          : 'goog_YOUR_ANDROID_API_KEY_HERE';
+          ? 'test_mZBsTTZeGjtGTtjLdKoaczHLTAj'
+          : 'test_mZBsTTZeGjtGTtjLdKoaczHLTAj';
 
         await Purchases.configure({
           apiKey: apiKey,
