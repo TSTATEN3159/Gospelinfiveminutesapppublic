@@ -1,4 +1,4 @@
-import { Home, Book, Search, Calendar, MoreHorizontal } from "lucide-react";
+import { Home, Book, Search, Calendar, MoreHorizontal, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type NavPage = "home" | "ask" | "search" | "daily" | "more";
@@ -10,15 +10,15 @@ interface BottomNavigationProps {
 
 export default function BottomNavigation({ currentPage, onPageChange }: BottomNavigationProps) {
   const navItems = [
-    { id: "home" as const, icon: Home, label: "Home" },
-    { id: "ask" as const, icon: Book, label: "Ask" },
-    { id: "search" as const, icon: Search, label: "Search" },
-    { id: "daily" as const, icon: Calendar, label: "Daily" },
-    { id: "more" as const, icon: MoreHorizontal, label: "More" },
+    { id: "home" as const, icon: Home, label: "Home", isPremium: false },
+    { id: "ask" as const, icon: Book, label: "Ask", isPremium: true },
+    { id: "search" as const, icon: Search, label: "Search", isPremium: false },
+    { id: "daily" as const, icon: Calendar, label: "Daily", isPremium: false },
+    { id: "more" as const, icon: MoreHorizontal, label: "More", isPremium: false },
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-border z-50">
+    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-border z-50">
       <div className="flex justify-around items-center py-2 px-4 max-w-md mx-auto">
         {navItems.map((item) => (
           <Button
@@ -26,11 +26,16 @@ export default function BottomNavigation({ currentPage, onPageChange }: BottomNa
             variant={currentPage === item.id ? "default" : "ghost"}
             size="sm"
             onClick={() => onPageChange(item.id)}
-            className="flex flex-col items-center gap-1 h-auto py-2 px-3"
+            className="flex flex-col items-center gap-1 h-auto py-2 px-3 relative"
             data-testid={`nav-${item.id}`}
           >
             <item.icon className="w-5 h-5" />
-            <span className="text-xs">{item.label}</span>
+            <span className="text-xs flex items-center gap-0.5">
+              {item.label}
+              {item.isPremium && (
+                <Crown className="w-2.5 h-2.5 text-amber-500" />
+              )}
+            </span>
           </Button>
         ))}
       </div>

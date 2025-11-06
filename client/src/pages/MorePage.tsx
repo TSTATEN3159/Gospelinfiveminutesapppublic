@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck, Calendar, Book } from "lucide-react";
+import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck, Calendar, Book, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
@@ -27,42 +27,48 @@ const getMainMenuItems = (t: any, isIOS = false) => {
       title: "Saved Verses",
       description: "View your bookmarked scripture passages",
       icon: BookmarkCheck,
-      comingSoon: false
+      comingSoon: false,
+      isPremium: false
     },
   {
     id: "videos",
     title: t.faithVideos,
     description: t.faithVideosDesc,
     icon: Play,
-    comingSoon: false
+    comingSoon: false,
+    isPremium: true
   },
   {
     id: "blog",
     title: t.christianBlog,
     description: t.christianBlogDesc,
     icon: BookOpen,
-    comingSoon: false
+    comingSoon: false,
+    isPremium: false
     },
     {
       id: "devotionals",
       title: "365 Daily Devotionals",
       description: "Daily scripture, devotion, and practical application",
       icon: Calendar,
-      comingSoon: false
+      comingSoon: false,
+      isPremium: true
     },
     {
       id: "reading-plans",
       title: "Bible Reading Plans",
       description: "Systematic Bible reading with daily progress tracking",
       icon: Book,
-      comingSoon: false
+      comingSoon: false,
+      isPremium: true
     },
     {
       id: "friends",
       title: t.friends,
       description: t.friendsDesc,
       icon: Users,
-      comingSoon: false
+      comingSoon: false,
+      isPremium: false
     }
   ];
   
@@ -324,6 +330,12 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                       <div className="flex-1">
                         <h3 className="font-bold text-sm text-gray-800 flex items-center gap-1">
                           {item.title}
+                          {item.isPremium && (
+                            <span className="inline-flex items-center gap-1 text-[10px] bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-1.5 py-0.5 rounded-full font-bold shadow-sm">
+                              <Crown className="w-2.5 h-2.5" />
+                              Premium
+                            </span>
+                          )}
                           {item.comingSoon && (
                             <span className={`text-xs ${tileImage.iconBg} text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm`}>
                               {t.comingSoon}
@@ -371,6 +383,12 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                     <div className="flex-1">
                       <h3 className="font-bold text-base text-gray-800 flex items-center gap-2">
                         {item.title}
+                        {item.isPremium && (
+                          <span className="inline-flex items-center gap-1 text-[10px] bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2 py-0.5 rounded-full font-bold shadow-sm">
+                            <Crown className="w-3 h-3" />
+                            Premium
+                          </span>
+                        )}
                         {item.comingSoon && (
                           <span className="text-xs bg-white/90 text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm">
                             {t.comingSoon}
