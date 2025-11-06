@@ -3,9 +3,8 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, Flame, Calendar, ChevronLeft, ChevronRight, Crown } from "lucide-react";
+import { ArrowLeft, Flame, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
 import { apiUrl } from "@/lib/api-config";
-import PurchaseGate from "@/components/PurchaseGate";
 
 type DevotionalEntry = {
   day: number;
@@ -145,17 +144,10 @@ export default function DevotionalsPage({ onBack }: DevotionalsPageProps) {
   };
 
   return (
-    <PurchaseGate>
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Header */}
       <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
         <div className="max-w-4xl mx-auto px-4 py-4">
-          <div className="flex justify-end mb-2">
-            <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
-              <Crown className="w-3.5 h-3.5" />
-              Premium
-            </div>
-          </div>
           <div className="flex items-center justify-between">
             <Button
               variant="ghost"
@@ -298,6 +290,5 @@ export default function DevotionalsPage({ onBack }: DevotionalsPageProps) {
         )}
       </div>
     </div>
-    </PurchaseGate>
   );
 }

@@ -3,11 +3,10 @@ import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import ScriptureMemorySection from "../components/ScriptureMemorySection";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
-import PurchaseGate from "../components/PurchaseGate";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
 import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_background_2b3bbc13.png';
-import { Facebook, Instagram, Heart, Flame, Share, Crown } from "lucide-react";
+import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Capacitor } from '@capacitor/core';
 import { useTranslations } from '@/lib/translations';
@@ -27,12 +26,8 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
-        {/* Top Right Badges: Premium + Streak */}
-        <div className="flex justify-end items-center gap-2 mb-6">
-          <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
-            <Crown className="w-3.5 h-3.5" />
-            Premium
-          </div>
+        {/* Streak Badge - Top Right */}
+        <div className="flex justify-end mb-6">
           <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
             <Flame className="w-4 h-4 text-red-600 fill-red-600" />
             <span className="text-sm font-bold text-red-700">{streakDays}</span>
@@ -98,19 +93,17 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
 
       <div className="px-4 py-4 space-y-6 ios-safe-bottom">
         <div className="max-w-md mx-auto space-y-6">
-          {/* Ask Pastor Section - PREMIUM */}
-          <PurchaseGate>
-            <div className="relative">
-              <AskPastorSection backgroundImage={shepherdImage} language={language} />
-            </div>
-          </PurchaseGate>
+          {/* Ask Pastor Section */}
+          <div className="relative">
+            <AskPastorSection backgroundImage={shepherdImage} language={language} />
+          </div>
 
-          {/* Feelings & Scripture Section - FREE */}
+          {/* Feelings & Scripture Section */}
           <div className="relative">
             <EmotionScriptureSection backgroundImage={handsImage} />
           </div>
 
-          {/* Scripture Memory Helper Section - FREE */}
+          {/* Scripture Memory Helper Section */}
           <div className="relative">
             <ScriptureMemorySection backgroundImage={bibleMemoryImage} />
           </div>

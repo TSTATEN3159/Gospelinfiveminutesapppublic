@@ -198,84 +198,69 @@ function App() {
   };
 
   const renderCurrentPage = () => {
-    switch (currentPage) {
-      case "home":
-        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
-      case "ask":
-        return (
-          <PurchaseGate>
-            <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />
-          </PurchaseGate>
-        );
-      case "paywall":
-        return <PaywallPage onClose={() => setCurrentPage("home")} />;
-      case "search":
-        return <SearchPage 
-          onNavigate={handleNavigateToLegal} 
-          streakDays={streakDays} 
-          language={language}
-          initialSearchQuery={searchQuery}
-          onSearchUsed={() => setSearchQuery("")}
-        />;
-      case "daily":
-        return <DailyPage onNavigate={handleNavigateToLegal} />;
-      case "more":
-        return <MorePage language={language} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
-      case "privacy":
-        return <PrivacyPolicyPage onBack={handleBackFromLegal} language={language} />;
-      case "terms":
-        return <TermsOfServicePage onBack={handleBackFromLegal} language={language} />;
-      case "support":
-        return <SupportPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} language={language} />;
-      case "videos":
-        return (
-          <PurchaseGate>
-            <VideosPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />
-          </PurchaseGate>
-        );
-      case "blog":
-        return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
-      case "settings":
-        return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} user={user || undefined} language={language} />;
-      case "friends":
-        return <FriendsPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
-      case "biblestudies":
-        return (
-          <PurchaseGate>
-            <BibleStudiesPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />
-          </PurchaseGate>
-        );
-      case "bibletrivia":
-        return (
-          <PurchaseGate>
-            <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />
-          </PurchaseGate>
-        );
-      case "savedverses":
-        return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
-      case "glassdemo":
-        return <GlassDemoPage />;
-      case "devotionals":
-        return (
-          <PurchaseGate>
-            <DailyDevotionsPage onBack={handleBackFromLegal} />
-          </PurchaseGate>
-        );
-      case "reading-plans":
-        return (
-          <PurchaseGate>
-            <ReadingPlansPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} userId={user?.appUserId || ""} />
-          </PurchaseGate>
-        );
-      case "reading-plan-detail":
-        return (
-          <PurchaseGate>
-            <ReadingPlanDetailPage onBack={handleBackFromLegal} userId={user?.appUserId || ""} />
-          </PurchaseGate>
-        );
-      default:
-        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
+    // Legal pages and paywall are always accessible (App Store requirement)
+    if (["privacy", "terms", "paywall"].includes(currentPage)) {
+      switch (currentPage) {
+        case "privacy":
+          return <PrivacyPolicyPage onBack={handleBackFromLegal} language={language} />;
+        case "terms":
+          return <TermsOfServicePage onBack={handleBackFromLegal} language={language} />;
+        case "paywall":
+          return <PaywallPage onClose={() => setCurrentPage("home")} />;
+      }
     }
+
+    // All other content requires purchase
+    return (
+      <PurchaseGate>
+        {(() => {
+          switch (currentPage) {
+            case "home":
+              return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
+            case "ask":
+              return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
+            case "search":
+              return <SearchPage 
+                onNavigate={handleNavigateToLegal} 
+                streakDays={streakDays} 
+                language={language}
+                initialSearchQuery={searchQuery}
+                onSearchUsed={() => setSearchQuery("")}
+              />;
+            case "daily":
+              return <DailyPage onNavigate={handleNavigateToLegal} />;
+            case "more":
+              return <MorePage language={language} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
+            case "support":
+              return <SupportPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} language={language} />;
+            case "videos":
+              return <VideosPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
+            case "blog":
+              return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
+            case "settings":
+              return <SettingsPage onNavigate={handleNavigateToLegal} streakDays={streakDays} user={user || undefined} language={language} />;
+            case "friends":
+              return <FriendsPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
+            case "biblestudies":
+              return <BibleStudiesPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
+            case "bibletrivia":
+              return <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />;
+            case "savedverses":
+              return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
+            case "glassdemo":
+              return <GlassDemoPage />;
+            case "devotionals":
+              return <DailyDevotionsPage onBack={handleBackFromLegal} />;
+            case "reading-plans":
+              return <ReadingPlansPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} userId={user?.appUserId || ""} />;
+            case "reading-plan-detail":
+              return <ReadingPlanDetailPage onBack={handleBackFromLegal} userId={user?.appUserId || ""} />;
+            default:
+              return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
+          }
+        })()}
+      </PurchaseGate>
+    );
   };
 
   return (
