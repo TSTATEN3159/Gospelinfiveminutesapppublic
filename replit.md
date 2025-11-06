@@ -1,7 +1,14 @@
 # The Gospel in 5 Minutes - Mobile Bible App
 
 ## Overview
-"The Gospel in 5 Minutes" is a mobile-first spiritual wellness application delivering daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. It aims to combine the peaceful aesthetic of wellness apps with the functionality of Bible apps, offering meaningful spiritual content in digestible 5-minute sessions. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, gamified streak tracking, and comprehensive Bible reading plans. The project's ambition is to provide a calming, intuitive spiritual experience accessible to a global audience.
+"The Gospel in 5 Minutes" is a mobile-first spiritual wellness application delivering daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. It aims to combine the peaceful aesthetic of wellness apps with the functionality of Bible apps, offering meaningful spiritual content in digestible 5-minute sessions. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, gamified streak tracking, and comprehensive Bible reading plans.
+
+## Monetization
+- **Business Model**: One-time purchase ($3.99) for lifetime access to all premium features
+- **Free Features**: Limited preview of daily verse, basic Bible search, settings
+- **Premium Features**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, unlimited videos, Bible studies, trivia, full search, bookmarks & notes
+- **Payment Processing**: RevenueCat + Apple In-App Purchases (non-consumable)
+- **No Subscriptions**: Single $3.99 payment, no recurring charges
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -38,16 +45,19 @@ Preferred communication style: Simple, everyday language.
 
 ### Core Features & Implementation
 - **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, and copying.
-- **AI Pastor Chat**: Professional UI for AI-powered Q&A.
+- **AI Pastor Chat**: Professional UI for AI-powered Q&A (premium).
 - **Feelings & Scripture**: Emotion-based guidance.
 - **Scripture Memory Helper**: Interactive memorization.
 - **Saved Verses Page**: Dedicated page for bookmarked verses.
 - **Notes Feature**: CRUD operations for personal reflections on verses.
 - **Streak Tracking**: Consecutive days counter with localStorage persistence.
-- **Devotional Progress Tracking**: API to mark devotional days complete, track progress, and calculate streaks. Includes content for 365 days.
-- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, real-time UI synchronization via custom events, and on-demand NIV Scripture text display. Users can expand/collapse to read the full Bible text for each day's reading without leaving the app.
+- **Devotional Progress Tracking**: API to mark devotional days complete, track progress, and calculate streaks. Includes content for 365 days (premium).
+- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, real-time UI synchronization via custom events, and on-demand NIV Scripture text display. Users can expand/collapse to read the full Bible text for each day's reading without leaving the app (premium).
+- **Bible Videos & Studies**: Integrated video teaching and Bible studies (premium).
+- **Bible Trivia**: Interactive Bible trivia game (premium).
+- **RevenueCat Integration**: One-time purchase system with PurchaseContext, PaywallPage, PurchaseGate wrapper component. Automatic purchase restoration for reinstalls. Purchase status display on More page.
 - **Data Management**: User data export (JSON) and full account deletion capabilities.
-- **Apple Store Compliance**: In-app donation functionality removed. Live Privacy Policy and Terms of Service hosted at `/privacy` and `/terms` endpoints.
+- **Apple Store Compliance**: In-app donation functionality removed. Live Privacy Policy and Terms of Service hosted at `/privacy` and `/terms` endpoints. One-time purchase system complies with App Store guidelines.
 
 ## External Dependencies
 

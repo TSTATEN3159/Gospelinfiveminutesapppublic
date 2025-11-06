@@ -14,6 +14,7 @@ import OfflineIndicator from "./components/OfflineIndicator";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NetworkStatus from "./components/NetworkStatus";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { PurchaseProvider } from "./contexts/PurchaseContext";
 
 // Initialize auto-recovery services
 import { silentLogger } from "./services/silentLogger";
@@ -40,6 +41,8 @@ import DailyPage from "./pages/DailyPage";
 import ReadingPlansPage from "./pages/ReadingPlansPage";
 import ReadingPlanDetailPage from "./pages/ReadingPlanDetailPage";
 import ScreenshotToolPage from "./pages/ScreenshotToolPage";
+import PaywallPage from "./pages/PaywallPage";
+import PurchaseGate from "./components/PurchaseGate";
 
 interface User {
   firstName: string;
@@ -51,7 +54,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "paywall";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -172,7 +175,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "paywall"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -199,7 +202,13 @@ function App() {
       case "home":
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
       case "ask":
-        return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
+        return (
+          <PurchaseGate>
+            <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />
+          </PurchaseGate>
+        );
+      case "paywall":
+        return <PaywallPage onClose={() => setCurrentPage("home")} />;
       case "search":
         return <SearchPage 
           onNavigate={handleNavigateToLegal} 
@@ -219,7 +228,11 @@ function App() {
       case "support":
         return <SupportPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} language={language} />;
       case "videos":
-        return <VideosPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
+        return (
+          <PurchaseGate>
+            <VideosPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />
+          </PurchaseGate>
+        );
       case "blog":
         return <BlogPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
       case "settings":
@@ -227,19 +240,39 @@ function App() {
       case "friends":
         return <FriendsPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
       case "biblestudies":
-        return <BibleStudiesPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />;
+        return (
+          <PurchaseGate>
+            <BibleStudiesPage currentUserId={user?.appUserId || "demo-user-123"} language={language} onNavigate={handleNavigateToLegal} />
+          </PurchaseGate>
+        );
       case "bibletrivia":
-        return <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />;
+        return (
+          <PurchaseGate>
+            <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />
+          </PurchaseGate>
+        );
       case "savedverses":
         return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
       case "glassdemo":
         return <GlassDemoPage />;
       case "devotionals":
-        return <DailyDevotionsPage onBack={handleBackFromLegal} />;
+        return (
+          <PurchaseGate>
+            <DailyDevotionsPage onBack={handleBackFromLegal} />
+          </PurchaseGate>
+        );
       case "reading-plans":
-        return <ReadingPlansPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} userId={user?.appUserId || ""} />;
+        return (
+          <PurchaseGate>
+            <ReadingPlansPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} userId={user?.appUserId || ""} />
+          </PurchaseGate>
+        );
       case "reading-plan-detail":
-        return <ReadingPlanDetailPage onBack={handleBackFromLegal} userId={user?.appUserId || ""} />;
+        return (
+          <PurchaseGate>
+            <ReadingPlanDetailPage onBack={handleBackFromLegal} userId={user?.appUserId || ""} />
+          </PurchaseGate>
+        );
       default:
         return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -248,47 +281,49 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="system" storageKey="gospel-app-theme">
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
-            <div className="min-h-screen bg-background">
-            {/* Network Status - Apple-compliant auto-recovery */}
-            <NetworkStatus onRetry={() => window.location.reload()} />
-            
-            {/* Current Page Content */}
-            <main className="min-h-screen bg-background">
-              {renderCurrentPage()}
-            </main>
+        <PurchaseProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
+              <div className="min-h-screen bg-background">
+                {/* Network Status - Apple-compliant auto-recovery */}
+                <NetworkStatus onRetry={() => window.location.reload()} />
+                
+                {/* Current Page Content */}
+                <main className="min-h-screen bg-background">
+                  {renderCurrentPage()}
+                </main>
 
-            {/* Bottom Navigation - Hide on legal pages and friends page */}
-            {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail"].includes(currentPage) && (
-              <BottomNavigation 
-                currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
-                onPageChange={(page) => setCurrentPage(page as AppPage)} 
-              />
-            )}
+                {/* Bottom Navigation - Hide on legal pages and friends page */}
+                {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail"].includes(currentPage) && (
+                  <BottomNavigation 
+                    currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
+                    onPageChange={(page) => setCurrentPage(page as AppPage)} 
+                  />
+                )}
 
-            {/* Registration Modal */}
-            <UserRegistrationModal 
-              isOpen={showRegistration} 
-              onClose={handleRegistrationComplete} 
-            />
+                {/* Registration Modal */}
+                <UserRegistrationModal 
+                  isOpen={showRegistration} 
+                  onClose={handleRegistrationComplete} 
+                />
 
-            {/* Import Friends Dialog */}
-            {user?.appUserId && (
-              <ImportFriendsDialog 
-                isOpen={showImportFriends}
-                onClose={handleImportFriendsClose}
-                appUserId={user.appUserId}
-                userEmail={user.email}
-                onNavigateToFriends={handleNavigateToFriends}
-              />
-            )}
+                {/* Import Friends Dialog */}
+                {user?.appUserId && (
+                  <ImportFriendsDialog 
+                    isOpen={showImportFriends}
+                    onClose={handleImportFriendsClose}
+                    appUserId={user.appUserId}
+                    userEmail={user.email}
+                    onNavigateToFriends={handleNavigateToFriends}
+                  />
+                )}
 
-            <Toaster />
-            <OfflineIndicator />
-          </div>
-          </TooltipProvider>
-        </QueryClientProvider>
+                <Toaster />
+                <OfflineIndicator />
+              </div>
+            </TooltipProvider>
+          </QueryClientProvider>
+        </PurchaseProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

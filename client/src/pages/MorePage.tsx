@@ -6,6 +6,9 @@ import { Capacitor } from '@capacitor/core';
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { usePurchase } from "@/contexts/PurchaseContext";
+import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
@@ -93,6 +96,9 @@ const getSettingsMenuItems = (t: any) => [
 
 export default function MorePage({ language, onNavigate, streakDays = 0 }: MorePageProps) {
   const t = useTranslations(language);
+  const { isPremium, restorePurchases } = usePurchase();
+  const [isRestoring, setIsRestoring] = useState(false);
+  const { toast } = useToast();
   
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
@@ -106,6 +112,25 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
     const allItems = [...mainMenuItems, ...settingsMenuItems];
     if (!allItems.find(item => item.id === id)?.comingSoon) {
       onNavigate?.(id);
+    }
+  };
+
+  const handleRestorePurchases = async () => {
+    setIsRestoring(true);
+    try {
+      await restorePurchases();
+      toast({
+        title: "Purchases Restored",
+        description: "Your premium access has been restored successfully.",
+      });
+    } catch (error) {
+      toast({
+        title: "Restore Failed",
+        description: "No previous purchases found. If you believe this is an error, please contact support.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsRestoring(false);
     }
   };
 
@@ -179,6 +204,53 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
       </div>
 
       <div className="max-w-sm mx-auto space-y-3 px-4">
+        {/* Purchase Status Card */}
+        <div className="mt-4 mb-6">
+          <Card className={`${
+            isPremium 
+              ? 'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 border-green-200 dark:border-green-800' 
+              : 'bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 border-amber-200 dark:border-amber-800'
+          }`}>
+            <CardContent className="p-4">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex-1">
+                  <div className="flex items-center gap-2 mb-1">
+                    <DollarSign className={`w-5 h-5 ${isPremium ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`} />
+                    <h3 className="font-semibold" data-testid="text-purchase-status">
+                      {isPremium ? "Premium Member" : "Free Version"}
+                    </h3>
+                  </div>
+                  <p className="text-sm text-muted-foreground">
+                    {isPremium 
+                      ? "You have full access to all premium features" 
+                      : "Unlock all features for $3.99 one-time"}
+                  </p>
+                </div>
+                <div className="flex flex-col gap-2">
+                  {!isPremium && (
+                    <Button
+                      size="sm"
+                      onClick={() => onNavigate?.('paywall')}
+                      data-testid="button-upgrade"
+                    >
+                      Upgrade
+                    </Button>
+                  )}
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={handleRestorePurchases}
+                    disabled={isRestoring}
+                    data-testid="button-restore"
+                  >
+                    {isRestoring ? "Restoring..." : "Restore"}
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Main Menu Items */}
         {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {
