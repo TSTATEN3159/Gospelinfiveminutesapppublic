@@ -46,6 +46,8 @@ Preferred communication style: Simple, everyday language.
 ### Core Features & Implementation
 - **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, and copying.
 - **AI Pastor Chat**: Professional UI for AI-powered Q&A (premium).
+- **Plain Meaning (AI Verse Simplifier)**: AI-powered feature that transforms any Bible verse into simple, everyday language while maintaining theological integrity. Uses OpenAI to bridge between Bible text and daily understanding. Accessible via Daily tab.
+- **Instant Application (Try This Today)**: AI-powered feature that generates specific, actionable steps to live out any Bible verse today. Creates practical, 24-hour doable actions to move Scripture from reading to doing. Accessible via Daily tab.
 - **Feelings & Scripture**: Emotion-based guidance.
 - **Scripture Memory Helper**: Interactive memorization.
 - **Saved Verses Page**: Dedicated page for bookmarked verses.
@@ -72,7 +74,7 @@ Preferred communication style: Simple, everyday language.
 
 ### External APIs
 - **Bible API Integration**: For verses, cross-references, and translations.
-- **OpenAI API**: AI-powered pastor responses and Q&A.
+- **OpenAI API**: AI-powered pastor responses, Q&A, verse simplification (Plain Meaning), and practical application generation (Instant Application). Uses GPT-4o-mini model for cost-effective, high-quality responses.
 - **Translation Services**: For multi-language support.
 - **Christian Context API** (GetContext.xyz): Provides sermon videos, Christian advice content, and biblical commentary.
 - **BibleProject** (bibleproject.com): Provides animated Bible teaching videos via YouTube.
