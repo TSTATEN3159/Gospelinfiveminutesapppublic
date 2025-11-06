@@ -1,4 +1,4 @@
-import { Home, Book, Search, Calendar, MoreHorizontal, Crown } from "lucide-react";
+import { Home, Book, Search, Calendar, MoreHorizontal } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type NavPage = "home" | "ask" | "search" | "daily" | "more";
@@ -10,11 +10,11 @@ interface BottomNavigationProps {
 
 export default function BottomNavigation({ currentPage, onPageChange }: BottomNavigationProps) {
   const navItems = [
-    { id: "home" as const, icon: Home, label: "Home", isPremium: false },
-    { id: "ask" as const, icon: Book, label: "Ask", isPremium: true },
-    { id: "search" as const, icon: Search, label: "Search", isPremium: false },
-    { id: "daily" as const, icon: Calendar, label: "Daily", isPremium: false },
-    { id: "more" as const, icon: MoreHorizontal, label: "More", isPremium: false },
+    { id: "home" as const, icon: Home, label: "Home" },
+    { id: "ask" as const, icon: Book, label: "Ask" },
+    { id: "search" as const, icon: Search, label: "Search" },
+    { id: "daily" as const, icon: Calendar, label: "Daily" },
+    { id: "more" as const, icon: MoreHorizontal, label: "More" },
   ];
 
   return (
@@ -30,11 +30,8 @@ export default function BottomNavigation({ currentPage, onPageChange }: BottomNa
             data-testid={`nav-${item.id}`}
           >
             <item.icon className="w-5 h-5" />
-            <span className="text-xs flex items-center gap-0.5">
+            <span className="text-xs">
               {item.label}
-              {item.isPremium && (
-                <Crown className="w-2.5 h-2.5 text-amber-500" />
-              )}
             </span>
           </Button>
         ))}
