@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, DollarSign, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck, Calendar, Book, Crown } from "lucide-react";
+import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck, Calendar, Book } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
@@ -210,53 +210,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
       </div>
 
       <div className="max-w-sm mx-auto space-y-3 px-4">
-        {/* Purchase Status Card */}
-        <div className="mt-4 mb-6">
-          <Card className={`${
-            isPremium 
-              ? 'bg-gradient-to-br from-green-50 to-emerald-50 dark:from-green-950 dark:to-emerald-950 border-green-200 dark:border-green-800' 
-              : 'bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950 dark:to-orange-950 border-amber-200 dark:border-amber-800'
-          }`}>
-            <CardContent className="p-4">
-              <div className="flex items-start justify-between gap-3">
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-1">
-                    <DollarSign className={`w-5 h-5 ${isPremium ? 'text-green-600 dark:text-green-400' : 'text-amber-600 dark:text-amber-400'}`} />
-                    <h3 className="font-semibold" data-testid="text-purchase-status">
-                      {isPremium ? "Premium Member" : "Free Version"}
-                    </h3>
-                  </div>
-                  <p className="text-sm text-muted-foreground">
-                    {isPremium 
-                      ? "You have full access to all premium features" 
-                      : "Unlock all features for $3.99 one-time"}
-                  </p>
-                </div>
-                <div className="flex flex-col gap-2">
-                  {!isPremium && (
-                    <Button
-                      size="sm"
-                      onClick={() => onNavigate?.('paywall')}
-                      data-testid="button-upgrade"
-                    >
-                      Upgrade
-                    </Button>
-                  )}
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={handleRestorePurchases}
-                    disabled={isRestoring}
-                    data-testid="button-restore"
-                  >
-                    {isRestoring ? "Restoring..." : "Restore"}
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-
         {/* Main Menu Items */}
         {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {
@@ -330,12 +283,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                       <div className="flex-1">
                         <h3 className="font-bold text-sm text-gray-800 flex items-center gap-1">
                           {item.title}
-                          {item.isPremium && (
-                            <span className="inline-flex items-center gap-1 text-[10px] bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-1.5 py-0.5 rounded-full font-bold shadow-sm">
-                              <Crown className="w-2.5 h-2.5" />
-                              Premium
-                            </span>
-                          )}
                           {item.comingSoon && (
                             <span className={`text-xs ${tileImage.iconBg} text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm`}>
                               {t.comingSoon}
@@ -383,12 +330,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                     <div className="flex-1">
                       <h3 className="font-bold text-base text-gray-800 flex items-center gap-2">
                         {item.title}
-                        {item.isPremium && (
-                          <span className="inline-flex items-center gap-1 text-[10px] bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2 py-0.5 rounded-full font-bold shadow-sm">
-                            <Crown className="w-3 h-3" />
-                            Premium
-                          </span>
-                        )}
                         {item.comingSoon && (
                           <span className="text-xs bg-white/90 text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm">
                             {t.comingSoon}
