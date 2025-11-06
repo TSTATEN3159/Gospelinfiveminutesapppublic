@@ -1009,6 +1009,126 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Plain Meaning - Verse Simplifier
+  const plainMeaningSchema = z.object({
+    verse: z.string().min(1).max(1000),
+    reference: z.string().optional(),
+  });
+
+  app.post("/api/verse-plain-meaning", async (req, res) => {
+    try {
+      const { verse, reference } = plainMeaningSchema.parse(req.body);
+      console.log("Plain Meaning request for:", reference || "unknown reference");
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: `You are a Bible teacher who explains Scripture in clear, simple language. 
+            When given a Bible verse:
+            1. Rewrite it in everyday, conversational language that anyone can understand
+            2. Keep the full theological meaning and integrity intact
+            3. Use parallel verses for additional context where helpful
+            4. Make it relatable to modern life while staying faithful to the original meaning
+            5. Keep your response to 1-2 sentences - brief and clear
+            6. Don't add commentary or explanation, just the simplified meaning`
+          },
+          {
+            role: "user",
+            content: `Verse: ${verse}${reference ? `\nReference: ${reference}` : ''}`
+          }
+        ],
+        max_completion_tokens: 150
+      });
+
+      const content = response.choices[0].message.content;
+      if (!content) {
+        throw new Error("No response content from OpenAI");
+      }
+      
+      res.json({
+        success: true,
+        plainMeaning: content.trim()
+      });
+
+    } catch (error) {
+      console.error("Plain Meaning API error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid verse format. Please provide a valid verse."
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: "I'm having trouble simplifying this verse right now. Please try again in a moment."
+      });
+    }
+  });
+
+  // Instant Application - Try This Today
+  const instantApplicationSchema = z.object({
+    verse: z.string().min(1).max(1000),
+    reference: z.string().optional(),
+  });
+
+  app.post("/api/verse-instant-application", async (req, res) => {
+    try {
+      const { verse, reference } = instantApplicationSchema.parse(req.body);
+      console.log("Instant Application request for:", reference || "unknown reference");
+
+      const response = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          {
+            role: "system",
+            content: `You are a practical Christian life coach who helps people apply Scripture to daily life.
+            When given a Bible verse:
+            1. Create ONE specific, actionable step someone can do TODAY to live out this verse
+            2. Make it practical and doable within the next 24 hours
+            3. Keep it simple, clear, and concrete
+            4. Start with an action verb (e.g., "Pray about...", "Text a friend to...", "Spend 5 minutes...")
+            5. Keep your response to 1 sentence - one clear action
+            6. Make it personal and relatable to modern life`
+          },
+          {
+            role: "user",
+            content: `Verse: ${verse}${reference ? `\nReference: ${reference}` : ''}`
+          }
+        ],
+        max_completion_tokens: 100
+      });
+
+      const content = response.choices[0].message.content;
+      if (!content) {
+        throw new Error("No response content from OpenAI");
+      }
+      
+      res.json({
+        success: true,
+        application: content.trim()
+      });
+
+    } catch (error) {
+      console.error("Instant Application API error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid verse format. Please provide a valid verse."
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: "I'm having trouble creating an application right now. Please try again in a moment."
+      });
+    }
+  });
+
   // Bible Trivia Route - Using curated questions with Bible API verses
   const bibleTriviaSchema = z.object({
     difficulty: z.enum(['easy', 'medium', 'difficult']),

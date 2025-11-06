@@ -43,6 +43,8 @@ import ReadingPlanDetailPage from "./pages/ReadingPlanDetailPage";
 import ScreenshotToolPage from "./pages/ScreenshotToolPage";
 import PaywallPage from "./pages/PaywallPage";
 import PurchaseGate from "./components/PurchaseGate";
+import PlainMeaningPage from "./pages/PlainMeaningPage";
+import InstantApplicationPage from "./pages/InstantApplicationPage";
 
 interface User {
   firstName: string;
@@ -54,7 +56,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "paywall";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "paywall" | "plain-meaning" | "instant-application";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -175,7 +177,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "paywall"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "paywall", "plain-meaning", "instant-application"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -255,6 +257,10 @@ function App() {
               return <ReadingPlansPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} userId={user?.appUserId || ""} />;
             case "reading-plan-detail":
               return <ReadingPlanDetailPage onBack={handleBackFromLegal} userId={user?.appUserId || ""} />;
+            case "plain-meaning":
+              return <PlainMeaningPage onNavigate={handleNavigateToLegal} />;
+            case "instant-application":
+              return <InstantApplicationPage onNavigate={handleNavigateToLegal} />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
           }
@@ -279,7 +285,7 @@ function App() {
                 </main>
 
                 {/* Bottom Navigation - Hide on legal pages and friends page */}
-                {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail"].includes(currentPage) && (
+                {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application"].includes(currentPage) && (
                   <BottomNavigation 
                     currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
                     onPageChange={(page) => setCurrentPage(page as AppPage)} 

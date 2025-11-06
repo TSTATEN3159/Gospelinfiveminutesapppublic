@@ -1,7 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, BookOpen, ChevronRight } from "lucide-react";
+import { Calendar, BookOpen, ChevronRight, Lightbulb, CheckCircle } from "lucide-react";
 import dailyDevotionsImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
 import readingPlansImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
+import plainMeaningImage from '@assets/generated_images/Plain_meaning_verse_simplifier_9d1a382e.png';
+import instantApplicationImage from '@assets/generated_images/Instant_application_try_today_e2051d9a.png';
 
 interface DailyPageProps {
   onNavigate: (page: string) => void;
@@ -33,6 +35,32 @@ const dailyFeatures = [
     iconBorder: 'border-emerald-200/60',
     iconRing: 'ring-emerald-300/50',
     iconColor: 'text-emerald-700'
+  },
+  {
+    id: "plain-meaning",
+    title: "Plain Meaning",
+    description: "Transform any verse into simple, everyday language that keeps theological integrity",
+    icon: Lightbulb,
+    image: plainMeaningImage,
+    overlay: 'from-blue-900/70 via-blue-600/20',
+    border: 'border-blue-200',
+    iconBg: 'bg-blue-100',
+    iconBorder: 'border-blue-200/60',
+    iconRing: 'ring-blue-300/50',
+    iconColor: 'text-blue-700'
+  },
+  {
+    id: "instant-application",
+    title: "Instant Application",
+    description: "Get a simple 'Try This Today' action to live out any verse in practical terms",
+    icon: CheckCircle,
+    image: instantApplicationImage,
+    overlay: 'from-purple-900/70 via-purple-600/20',
+    border: 'border-purple-200',
+    iconBg: 'bg-purple-100',
+    iconBorder: 'border-purple-200/60',
+    iconRing: 'ring-purple-300/50',
+    iconColor: 'text-purple-700'
   }
 ];
 
