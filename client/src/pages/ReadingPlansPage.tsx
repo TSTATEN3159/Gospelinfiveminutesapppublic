@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, BookOpen, Calendar, Check } from "lucide-react";
+import { ArrowLeft, BookOpen, Calendar, Check, Crown } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { apiUrl } from "@/lib/api-config";
 import { appStore } from "@/lib/appStore";
@@ -100,6 +100,12 @@ export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPag
       {/* Header */}
       <div className="bg-gradient-to-br from-primary/5 via-background to-primary/10 px-4 py-6 border-b border-border ios-safe-top">
         <div className="max-w-2xl mx-auto">
+          <div className="flex justify-end mb-2">
+            <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
+              <Crown className="w-3.5 h-3.5" />
+              Premium
+            </div>
+          </div>
           <div className="flex items-center gap-3 mb-4">
             <button
               onClick={onBack}

@@ -6,7 +6,7 @@ import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
 import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_background_2b3bbc13.png';
-import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
+import { Facebook, Instagram, Heart, Flame, Share, Crown } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Capacitor } from '@capacitor/core';
 import { useTranslations } from '@/lib/translations';
@@ -26,8 +26,12 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
-        {/* Streak Badge - Top Right */}
-        <div className="flex justify-end mb-6">
+        {/* Top Right Badges: Premium + Streak */}
+        <div className="flex justify-end items-center gap-2 mb-6">
+          <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
+            <Crown className="w-3.5 h-3.5" />
+            Premium
+          </div>
           <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
             <Flame className="w-4 h-4 text-red-600 fill-red-600" />
             <span className="text-sm font-bold text-red-700">{streakDays}</span>

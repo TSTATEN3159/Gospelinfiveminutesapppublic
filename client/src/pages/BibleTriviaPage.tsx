@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Brain, Trophy, BookOpen, Star, RotateCcw, Clock } from "lucide-react";
+import { ArrowLeft, Brain, Trophy, BookOpen, Star, RotateCcw, Clock, Crown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
 
@@ -361,6 +361,12 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
       {/* Header */}
       <div className="bg-white dark:bg-gray-900 px-4 py-6 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
+        <div className="flex justify-end mb-2">
+          <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
+            <Crown className="w-3.5 h-3.5" />
+            Premium
+          </div>
+        </div>
         <div className="flex items-center gap-3 mb-4">
           <Button
             variant="ghost"

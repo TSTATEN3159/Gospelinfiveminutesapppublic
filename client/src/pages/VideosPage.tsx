@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink } from "lucide-react";
+import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink, Crown } from "lucide-react";
 import { videoService, type VideoItem } from "@/services/videoService";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { useToast } from "@/hooks/use-toast";
@@ -126,6 +126,12 @@ export default function VideosPage({ onNavigate, streakDays = 0, language = "en"
     <div className="min-h-screen bg-white dark:bg-gray-900 pb-20">
       {/* Professional Header Section */}
       <div className="bg-white dark:bg-gray-900 px-6 py-8 border-b border-slate-200 dark:border-slate-800 ios-safe-top">
+        <div className="flex justify-end mb-2">
+          <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
+            <Crown className="w-3.5 h-3.5" />
+            Premium
+          </div>
+        </div>
         <div className="flex items-center mb-8">
           <Button
             variant="ghost"

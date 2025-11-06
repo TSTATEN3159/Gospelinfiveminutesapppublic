@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft } from "lucide-react";
+import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft, Crown } from "lucide-react";
 import { useTranslations } from "@/lib/translations";
 
 interface BibleStudyProps {
@@ -185,6 +185,12 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-background dark:to-muted/20">
       {/* Header */}
       <div className="bg-white dark:bg-background px-4 py-6 border-b border-gray-100 dark:border-border ios-safe-top shadow-sm">
+        <div className="flex justify-end mb-2">
+          <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
+            <Crown className="w-3.5 h-3.5" />
+            Premium
+          </div>
+        </div>
         <div className="flex items-center mb-4">
           <Button
             variant="ghost"
