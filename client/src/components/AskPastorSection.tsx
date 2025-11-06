@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Send, MessageSquare, Book, BookOpenCheck, ShieldCheck, Copy, Trash2 } from "lucide-react";
+import { Send, MessageSquare, Book, BookOpenCheck, ShieldCheck, Copy, Trash2, Crown } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
 import { apiRequest } from "@/lib/queryClient";
@@ -136,6 +136,12 @@ export default function AskPastorSection({ backgroundImage, language = "en" }: A
       )}
       
       <CardHeader className={cn("relative z-10 flex-shrink-0 border-b py-4 px-6", backgroundImage ? "bg-gradient-to-r from-gray-500/10 to-transparent" : "bg-gray-700")}>
+        <div className="absolute top-3 right-3 z-20">
+          <div className="inline-flex items-center gap-1 text-xs bg-gradient-to-r from-amber-500 to-yellow-500 text-white px-2.5 py-1 rounded-full font-bold shadow-md">
+            <Crown className="w-3.5 h-3.5" />
+            Premium
+          </div>
+        </div>
         <div className="flex items-center gap-5">
           <Avatar className="h-14 w-14 border-2 border-gray-200">
             <AvatarFallback className="bg-gray-100 text-gray-600">

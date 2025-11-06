@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft, Crown } from "lucide-react";
 import { useTranslations } from "@/lib/translations";
+import PurchaseGate from "@/components/PurchaseGate";
 
 interface BibleStudyProps {
   currentUserId: string;
@@ -182,6 +183,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
   };
 
   return (
+    <PurchaseGate>
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-background dark:to-muted/20">
       {/* Header */}
       <div className="bg-white dark:bg-background px-4 py-6 border-b border-gray-100 dark:border-border ios-safe-top shadow-sm">
@@ -629,5 +631,6 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
         </DialogContent>
       </Dialog>
     </div>
+    </PurchaseGate>
   );
 }

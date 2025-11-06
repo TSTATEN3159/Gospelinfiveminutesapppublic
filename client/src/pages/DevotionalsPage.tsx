@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Flame, Calendar, ChevronLeft, ChevronRight, Crown } from "lucide-react";
 import { apiUrl } from "@/lib/api-config";
+import PurchaseGate from "@/components/PurchaseGate";
 
 type DevotionalEntry = {
   day: number;
@@ -144,6 +145,7 @@ export default function DevotionalsPage({ onBack }: DevotionalsPageProps) {
   };
 
   return (
+    <PurchaseGate>
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800">
       {/* Header */}
       <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700 sticky top-0 z-10">
@@ -296,5 +298,6 @@ export default function DevotionalsPage({ onBack }: DevotionalsPageProps) {
         )}
       </div>
     </div>
+    </PurchaseGate>
   );
 }

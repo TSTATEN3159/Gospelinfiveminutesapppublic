@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Brain, Trophy, BookOpen, Star, RotateCcw, Clock, Crown } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
+import PurchaseGate from "@/components/PurchaseGate";
 
 interface TriviaQuestion {
   id: number;
@@ -178,6 +179,7 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
   if (gameState === 'results') {
     const finalLevel = getScoreLevel(score, t);
     return (
+      <PurchaseGate>
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
         {/* Header */}
         <div className="bg-white dark:bg-gray-900 px-4 py-6 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
@@ -247,11 +249,13 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
           </div>
         </div>
       </div>
+      </PurchaseGate>
     );
   }
 
   if (gameState === 'playing' && currentQuestion) {
     return (
+      <PurchaseGate>
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
         {/* Header */}
         <div className="bg-white dark:bg-gray-900 px-4 py-6 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
@@ -353,11 +357,13 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
           </Button>
         </div>
       </div>
+      </PurchaseGate>
     );
   }
 
   // Setup screen
   return (
+    <PurchaseGate>
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
       {/* Header */}
       <div className="bg-white dark:bg-gray-900 px-4 py-6 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
@@ -501,5 +507,6 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
         </Button>
       </div>
     </div>
+    </PurchaseGate>
   );
 }

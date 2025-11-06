@@ -5,6 +5,7 @@ import { ArrowLeft, BookOpen, Calendar, Check, Crown } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { apiUrl } from "@/lib/api-config";
 import { appStore } from "@/lib/appStore";
+import PurchaseGate from "@/components/PurchaseGate";
 
 type PlanType = "1yr-whole" | "6mo-ot" | "6mo-nt";
 
@@ -96,6 +97,7 @@ export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPag
   };
 
   return (
+    <PurchaseGate>
     <div className="min-h-screen pb-20 bg-background">
       {/* Header */}
       <div className="bg-gradient-to-br from-primary/5 via-background to-primary/10 px-4 py-6 border-b border-border ios-safe-top">
@@ -213,5 +215,6 @@ export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPag
         </div>
       </div>
     </div>
+    </PurchaseGate>
   );
 }

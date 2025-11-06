@@ -3,6 +3,7 @@ import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import ScriptureMemorySection from "../components/ScriptureMemorySection";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
+import PurchaseGate from "../components/PurchaseGate";
 import shepherdImage from '@assets/generated_images/Peaceful_pastoral_shepherd_scene_d43b4770.png';
 import handsImage from '@assets/generated_images/Caring_hands_emotional_support_20faad6c.png';
 import bibleMemoryImage from '@assets/generated_images/Bible_scripture_memory_background_2b3bbc13.png';
@@ -97,17 +98,19 @@ export default function AskPage({ onNavigate, streakDays = 0, language = "en" }:
 
       <div className="px-4 py-4 space-y-6 ios-safe-bottom">
         <div className="max-w-md mx-auto space-y-6">
-          {/* Ask Pastor Section */}
-          <div className="relative">
-            <AskPastorSection backgroundImage={shepherdImage} language={language} />
-          </div>
+          {/* Ask Pastor Section - PREMIUM */}
+          <PurchaseGate>
+            <div className="relative">
+              <AskPastorSection backgroundImage={shepherdImage} language={language} />
+            </div>
+          </PurchaseGate>
 
-          {/* Feelings & Scripture Section */}
+          {/* Feelings & Scripture Section - FREE */}
           <div className="relative">
             <EmotionScriptureSection backgroundImage={handsImage} />
           </div>
 
-          {/* Scripture Memory Helper Section */}
+          {/* Scripture Memory Helper Section - FREE */}
           <div className="relative">
             <ScriptureMemorySection backgroundImage={bibleMemoryImage} />
           </div>
