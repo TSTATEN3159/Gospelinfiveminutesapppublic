@@ -1,0 +1,8 @@
+{
+  "assetPath": "resources",
+  "ios": {
+    "icon": {
+      "sources": ["icon.png"]
+    }
+  }
+}
