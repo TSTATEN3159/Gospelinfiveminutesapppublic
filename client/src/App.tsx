@@ -286,9 +286,9 @@ function App() {
             case "devotionals":
               return <DailyDevotionsPage onBack={handleBackFromLegal} />;
             case "reading-plans":
-              return <ReadingPlansPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} userId={user?.appUserId || ""} />;
+              return <ReadingPlansPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} />;
             case "reading-plan-detail":
-              return <ReadingPlanDetailPage onBack={handleBackFromLegal} userId={user?.appUserId || ""} />;
+              return <ReadingPlanDetailPage onBack={handleBackFromLegal} />;
             case "plain-meaning":
               return <PlainMeaningPage onNavigate={handleNavigateToLegal} />;
             case "instant-application":
