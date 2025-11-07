@@ -36,8 +36,8 @@ export function PurchaseProvider({ children }: PurchaseProviderProps) {
       }
 
       try {
-        // Enable debug logging in development
-        await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
+        // Enable verbose logging for debugging purchase flows
+        await Purchases.setLogLevel({ level: LOG_LEVEL.VERBOSE });
 
         // Configure RevenueCat with iOS API key from environment
         const RC_KEY = import.meta.env.VITE_RC_IOS_API_KEY;
