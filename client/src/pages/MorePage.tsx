@@ -9,6 +9,7 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { usePurchase } from "@/contexts/PurchaseContext";
 import { useState } from "react";
 import { useToast } from "@/hooks/use-toast";
+import { useTestFlight } from "@/hooks/useTestFlight";
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
@@ -89,6 +90,7 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
   const { isPremium, restorePurchases } = usePurchase();
   const [isRestoring, setIsRestoring] = useState(false);
   const { toast } = useToast();
+  const { isTestFlight } = useTestFlight();
   
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
@@ -128,9 +130,15 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
-        {/* Top Bar: Streak Badge */}
-        <div className="flex justify-end items-center mb-6">
-          <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 dark:from-red-950 dark:to-red-900 px-2.5 py-1 rounded-full border border-red-200/50 dark:border-red-800/50 shadow-sm">
+        {/* Top Bar: TestFlight Badge & Streak Badge */}
+        <div className="flex justify-between items-center mb-6">
+          {isTestFlight && (
+            <div className="flex items-center gap-1.5 bg-gradient-to-br from-blue-50 to-blue-100/70 dark:from-blue-950 dark:to-blue-900 px-2.5 py-1 rounded-full border border-blue-200/50 dark:border-blue-800/50 shadow-sm">
+              <TrendingUp className="w-3.5 h-3.5 text-blue-600 dark:text-blue-400" />
+              <span className="text-xs font-semibold text-blue-700 dark:text-blue-300">TestFlight</span>
+            </div>
+          )}
+          <div className={`flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 dark:from-red-950 dark:to-red-900 px-2.5 py-1 rounded-full border border-red-200/50 dark:border-red-800/50 shadow-sm ${!isTestFlight ? 'ml-auto' : ''}`}>
             <Flame className="w-4 h-4 text-red-600 dark:text-red-400 fill-red-600 dark:fill-red-400" />
             <span className="text-sm font-bold text-red-700 dark:text-red-300" data-testid="text-streak-count">{streakDays}</span>
           </div>
