@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { Purchases, LOG_LEVEL, CustomerInfo, PurchasesOfferings } from '@revenuecat/purchases-capacitor';
+import { Purchases, LOG_LEVEL, CustomerInfo, PurchasesOfferings, PRODUCT_CATEGORY } from '@revenuecat/purchases-capacitor';
 import { Capacitor } from '@capacitor/core';
 
 interface PurchaseContextType {
@@ -94,28 +94,26 @@ export function PurchaseProvider({ children }: PurchaseProviderProps) {
 
   // Purchase the premium product
   async function purchaseProduct() {
-    if (!offerings?.current) {
-      console.error('[RevenueCat] No offerings available');
-      throw new Error('Product offerings are not available. Please try again later.');
-    }
-
     try {
       setIsLoading(true);
 
-      // Get the lifetime package
-      const lifetimePackage = offerings.current.availablePackages.find(
-        pkg => pkg.identifier === '$rc_lifetime' || pkg.packageType === 'LIFETIME'
-      );
+      // Fetch the product object first
+      const { products } = await Purchases.getProducts({
+        productIdentifiers: ['01version01'],
+        type: PRODUCT_CATEGORY.NON_SUBSCRIPTION
+      });
 
-      if (!lifetimePackage) {
-        console.error('[RevenueCat] Lifetime package not found');
+      if (products.length === 0) {
+        console.error('[RevenueCat] Product not found');
         setIsLoading(false);
         throw new Error('Product not found. Please contact support.');
       }
 
-      // Make the purchase
-      const { customerInfo: info } = await Purchases.purchasePackage({
-        aPackage: lifetimePackage
+      const productToBuy = products[0];
+
+      // Make the purchase using the product object
+      const { customerInfo: info } = await Purchases.purchaseStoreProduct({ 
+        product: productToBuy 
       });
 
       // Update premium status
