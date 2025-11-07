@@ -99,7 +99,7 @@ export function PurchaseProvider({ children }: PurchaseProviderProps) {
 
       // Fetch the product object first
       const { products } = await Purchases.getProducts({
-        productIdentifiers: ['01version01'],
+        productIdentifiers: ['01version101'],
         type: PRODUCT_CATEGORY.NON_SUBSCRIPTION
       });
 
