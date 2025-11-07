@@ -1,24 +1,15 @@
 #!/bin/sh
+set -euo pipefail
 
-# Xcode Cloud Post-Clone Script
-# This script runs after the repository is cloned in Xcode Cloud
-# Purpose: Install CocoaPods dependencies for iOS build
+# Move into the iOS project folder
+cd ios
 
-set -e
-
-echo "📦 Installing CocoaPods dependencies..."
-
-# Navigate to iOS directory
-cd ios/App
-
-# Install CocoaPods if not already installed
-if ! command -v pod &> /dev/null; then
-    echo "Installing CocoaPods..."
-    gem install cocoapods
+# Install CocoaPods
+if [ -f "Gemfile" ]; then
+  echo "Using Bundler to install CocoaPods…"
+  bundle install
+  bundle exec pod install --repo-update
+else
+  echo "Installing Pods with system CocoaPods…"
+  pod install --repo-update
 fi
-
-# Install iOS dependencies
-echo "Running pod install..."
-pod install
-
-echo "✅ CocoaPods dependencies installed successfully"
