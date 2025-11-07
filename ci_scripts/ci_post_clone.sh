@@ -1,16 +1,8 @@
 #!/bin/sh
 set -euo pipefail
+echo ">>> ci_post_clone.sh running in $(pwd)"
 
-# Find the Podfile location (handles ios/App, ios, etc.)
-PODFILE_DIR="$(git ls-files | grep -E '(^|/)Podfile$' | head -n1 | xargs dirname)"
-
-if [ -z "${PODFILE_DIR}" ]; then
-  echo "❌ No Podfile found in repo."
-  exit 1
-fi
-
-echo "➡️ Running CocoaPods in: ${PODFILE_DIR}"
-cd "${PODFILE_DIR}"
+cd ios/App
 
 if [ -f "Gemfile" ]; then
   echo "Using Bundler to install CocoaPods…"
@@ -20,3 +12,6 @@ else
   echo "Installing Pods with system CocoaPods…"
   pod install --repo-update
 fi
+
+echo ">>> Finished pod install in $(pwd)"
+ls -1
