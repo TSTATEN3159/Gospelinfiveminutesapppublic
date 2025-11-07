@@ -5,14 +5,21 @@ import PaywallPage from '@/pages/PaywallPage';
 interface PurchaseGateProps {
   children: ReactNode;
   fallback?: ReactNode;
+  isTestFlight?: boolean;
 }
 
 /**
  * Component that shows paywall if user hasn't purchased,
  * otherwise renders children
+ * TestFlight builds bypass the paywall automatically
  */
-export default function PurchaseGate({ children, fallback }: PurchaseGateProps) {
+export default function PurchaseGate({ children, fallback, isTestFlight = false }: PurchaseGateProps) {
   const { isPremium, isLoading } = usePurchase();
+
+  // TestFlight bypass - always show content
+  if (isTestFlight) {
+    return <>{children}</>;
+  }
 
   // Show loading state
   if (isLoading) {

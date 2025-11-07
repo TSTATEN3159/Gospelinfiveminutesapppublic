@@ -244,9 +244,9 @@ function App() {
       }
     }
 
-    // All other content requires purchase
+    // All other content requires purchase (except TestFlight - auto-unlocked)
     return (
-      <PurchaseGate>
+      <PurchaseGate isTestFlight={isTestFlight}>
         {(() => {
           switch (currentPage) {
             case "home":
