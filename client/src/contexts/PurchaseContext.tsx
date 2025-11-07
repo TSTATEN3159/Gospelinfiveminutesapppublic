@@ -39,13 +39,10 @@ export function PurchaseProvider({ children }: PurchaseProviderProps) {
         // Enable debug logging in development
         await Purchases.setLogLevel({ level: LOG_LEVEL.DEBUG });
 
-        // Configure RevenueCat with iOS API key
-        const apiKey = Capacitor.getPlatform() === 'ios' 
-          ? 'test_mZBsTTZeGjtGTtjLdKoaczHLTAj'
-          : 'test_mZBsTTZeGjtGTtjLdKoaczHLTAj';
-
+        // Configure RevenueCat with iOS API key from environment
+        const RC_KEY = import.meta.env.VITE_RC_IOS_API_KEY;
         await Purchases.configure({
-          apiKey: apiKey,
+          apiKey: RC_KEY,
           appUserID: undefined // Let RevenueCat generate anonymous ID
         });
 
