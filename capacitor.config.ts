@@ -36,6 +36,11 @@ const config: CapacitorConfig = {
       channel: 'Production',
       autoUpdateMethod: 'background',
       maxVersions: 2
+    },
+    TestFlightFlag: {
+      ios: {
+        src: 'TestFlightFlag'
+      }
     }
   }
 };

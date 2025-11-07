@@ -65,9 +65,36 @@ function App() {
   const [currentPage, setCurrentPage] = useState<AppPage>("home");
   const [streakDays, setStreakDays] = useState(0);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [isTestFlight, setIsTestFlight] = useState(false);
   
   // App is English-only (per Apple guidelines - iOS Settings handles language)
   const language = "en";
+
+  // Detect TestFlight early in app startup
+  useEffect(() => {
+    const detectTestFlight = async () => {
+      const { TestFlightFlag } = (window as any).Capacitor?.Plugins ?? {};
+      
+      if (!TestFlightFlag) {
+        console.log('[TestFlight] Plugin not available');
+        return;
+      }
+
+      try {
+        const res = await TestFlightFlag.isTestFlight();
+        const isTF = !!res?.isTestFlight;
+        setIsTestFlight(isTF);
+        
+        if (isTF) {
+          console.log('[TestFlight] Running in TestFlight - premium features unlocked');
+        }
+      } catch (error) {
+        console.log('[TestFlight] Detection failed:', error);
+      }
+    };
+
+    detectTestFlight();
+  }, []);
 
   // Check if user is registered on first visit
   useEffect(() => {
@@ -277,7 +304,7 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="system" storageKey="gospel-app-theme">
-        <PurchaseProvider>
+        <PurchaseProvider isTestFlight={isTestFlight}>
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <div className="min-h-screen bg-background">

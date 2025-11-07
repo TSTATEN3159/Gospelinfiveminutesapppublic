@@ -15,9 +15,10 @@ const PurchaseContext = createContext<PurchaseContextType | undefined>(undefined
 
 interface PurchaseProviderProps {
   children: ReactNode;
+  isTestFlight?: boolean;
 }
 
-export function PurchaseProvider({ children }: PurchaseProviderProps) {
+export function PurchaseProvider({ children, isTestFlight = false }: PurchaseProviderProps) {
   const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [offerings, setOfferings] = useState<PurchasesOfferings | null>(null);
@@ -26,6 +27,14 @@ export function PurchaseProvider({ children }: PurchaseProviderProps) {
   // Initialize RevenueCat
   useEffect(() => {
     async function initializeRevenueCat() {
+      // TestFlight bypass: grant premium for testing
+      if (isTestFlight) {
+        console.log('[RevenueCat] TestFlight detected - granting premium access for testing');
+        setIsPremium(true);
+        setIsLoading(false);
+        return;
+      }
+
       // Only initialize on native platforms
       if (!Capacitor.isNativePlatform()) {
         console.log('[RevenueCat] Web platform detected - skipping initialization');
@@ -60,7 +69,7 @@ export function PurchaseProvider({ children }: PurchaseProviderProps) {
     }
 
     initializeRevenueCat();
-  }, []);
+  }, [isTestFlight]);
 
   // Check if user has purchased premium
   async function checkPurchaseStatus() {
