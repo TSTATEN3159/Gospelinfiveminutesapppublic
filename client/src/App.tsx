@@ -95,22 +95,27 @@ function App() {
       try {
         // Register event to fire each time user resumes the app
         CapacitorApp.addListener('resume', async () => {
-          // Don't reload during critical operations (login, registration, etc.)
-          if (localStorage.getItem('shouldBlockReload') === 'true') {
-            console.log('[LiveUpdates] Reload blocked - critical operation in progress');
-            return;
-          }
-
-          if (localStorage.getItem('shouldReloadApp') === 'true') {
-            console.log('[LiveUpdates] Reloading app with new update');
-            await LiveUpdates.reload();
-          } else {
-            console.log('[LiveUpdates] Checking for updates on resume');
-            const result = await LiveUpdates.sync();
-            localStorage.setItem('shouldReloadApp', String(result.activeApplicationPathChanged));
-            if (result.activeApplicationPathChanged) {
-              console.log('[LiveUpdates] Update downloaded, will reload on next resume');
+          try {
+            // Don't reload during critical operations (login, registration, etc.)
+            if (localStorage.getItem('shouldBlockReload') === 'true') {
+              console.log('[LiveUpdates] Reload blocked - critical operation in progress');
+              return;
             }
+
+            if (localStorage.getItem('shouldReloadApp') === 'true') {
+              console.log('[LiveUpdates] Reloading app with new update');
+              await LiveUpdates.reload();
+            } else {
+              console.log('[LiveUpdates] Checking for updates on resume');
+              const result = await LiveUpdates.sync();
+              localStorage.setItem('shouldReloadApp', String(result.activeApplicationPathChanged));
+              if (result.activeApplicationPathChanged) {
+                console.log('[LiveUpdates] Update downloaded, will reload on next resume');
+              }
+            }
+          } catch (error) {
+            // Silently handle errors (e.g., web browser where LiveUpdates isn't available)
+            console.log('[LiveUpdates] Error during resume sync:', error);
           }
         });
 
