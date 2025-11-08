@@ -16,7 +16,7 @@ const dailyFeatures = [
     description: "Daily scripture, devotion, and practical application for spiritual growth",
     icon: Calendar,
     image: dailyDevotionsImage,
-    overlay: 'from-amber-600/80 via-orange-500/40',
+    overlay: 'from-transparent via-transparent to-amber-950/60',
     border: 'border-amber-200/50',
     gradientFrom: 'from-amber-500',
     gradientTo: 'to-orange-500',
@@ -30,7 +30,7 @@ const dailyFeatures = [
     description: "1-year whole Bible, 6-month OT & NT plans with progress tracking",
     icon: BookOpen,
     image: readingPlansImage,
-    overlay: 'from-emerald-600/80 via-green-500/40',
+    overlay: 'from-transparent via-transparent to-emerald-950/60',
     border: 'border-emerald-200/50',
     gradientFrom: 'from-emerald-500',
     gradientTo: 'to-green-500',
@@ -44,7 +44,7 @@ const dailyFeatures = [
     description: "Scripture in everyday language while preserving theological integrity",
     icon: Lightbulb,
     image: plainMeaningImage,
-    overlay: 'from-blue-600/80 via-cyan-500/40',
+    overlay: 'from-transparent via-transparent to-blue-950/60',
     border: 'border-blue-200/50',
     gradientFrom: 'from-blue-500',
     gradientTo: 'to-cyan-500',
@@ -58,7 +58,7 @@ const dailyFeatures = [
     description: "Get one simple action to live out any verse today",
     icon: CheckCircle,
     image: instantApplicationImage,
-    overlay: 'from-purple-600/80 via-pink-500/40',
+    overlay: 'from-transparent via-transparent to-purple-950/60',
     border: 'border-purple-200/50',
     gradientFrom: 'from-purple-500',
     gradientTo: 'to-pink-500',
@@ -107,20 +107,25 @@ export default function DailyPage({ onNavigate }: DailyPageProps) {
               {/* Glass shimmer overlay */}
               <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent opacity-50 pointer-events-none"></div>
               
-              {/* Image Header with Glass Overlay */}
-              <div className="relative h-36 overflow-hidden">
+              {/* Image Header - Vivid & Sharp */}
+              <div className="relative h-40 overflow-hidden">
                 <img 
                   src={feature.image}
                   alt={feature.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-105 contrast-110 saturate-110"
+                  style={{ 
+                    imageRendering: 'crisp-edges',
+                    WebkitFontSmoothing: 'antialiased'
+                  }}
                 />
-                <div className={`absolute inset-0 bg-gradient-to-br ${feature.overlay} to-transparent backdrop-blur-[2px]`} />
+                {/* Subtle bottom gradient for icon visibility */}
+                <div className={`absolute inset-0 bg-gradient-to-t ${feature.overlay}`} />
                 
                 {/* Glass icon badge */}
                 <div className="absolute bottom-3 right-3">
-                  <div className={`w-12 h-12 ${feature.iconBg} rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden`}>
+                  <div className={`w-14 h-14 ${feature.iconBg} rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden ring-2 ring-white/50`}>
                     <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
-                    <feature.icon className={`w-6 h-6 ${feature.iconColor} relative z-10 drop-shadow-lg`} />
+                    <feature.icon className={`w-7 h-7 ${feature.iconColor} relative z-10 drop-shadow-lg`} />
                     <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"></div>
                   </div>
                 </div>
