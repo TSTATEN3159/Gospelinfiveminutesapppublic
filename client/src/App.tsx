@@ -68,12 +68,18 @@ function AppContent() {
         <div className="text-center">
           <div className="text-lg text-muted-foreground">Loading...</div>
         </div>
+        <Toaster />
       </div>
     );
   }
 
   if (!isPremium) {
-    return <PaywallPage />;
+    return (
+      <>
+        <PaywallPage />
+        <Toaster />
+      </>
+    );
   }
 
   return <MainApp />;

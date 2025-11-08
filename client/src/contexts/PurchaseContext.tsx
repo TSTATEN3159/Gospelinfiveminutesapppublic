@@ -23,7 +23,7 @@ interface PurchaseContextType {
   isLoading: boolean;
   products: ProductInfo[];
   purchaseProduct: (productId: string) => Promise<'success' | 'pending' | 'cancelled' | 'unknown'>;
-  restorePurchases: () => Promise<void>;
+  restorePurchases: () => Promise<{ success: boolean; message: string }>;
 }
 
 const PurchaseContext = createContext<PurchaseContextType | undefined>(undefined);
@@ -77,10 +77,8 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
   async function purchaseProduct(productId: string) {
     try {
       if (!Capacitor.isNativePlatform()) {
-        console.log('[Purchase] Web platform - simulating purchase');
-        localStorage.setItem(STORAGE_KEY, 'true');
-        setIsPremium(true);
-        return 'success' as const;
+        console.log('[Purchase] Web platform - not available');
+        throw new Error('Purchases are only available in the iOS app. Please download from the App Store.');
       }
 
       const status = await purchase(productId);
@@ -105,10 +103,11 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
   async function restorePurchases() {
     try {
       if (!Capacitor.isNativePlatform()) {
-        console.log('[Purchase] Web platform - checking local storage');
-        const localPurchase = localStorage.getItem(STORAGE_KEY);
-        setIsPremium(localPurchase === 'true');
-        return;
+        console.log('[Purchase] Web platform - not available');
+        return {
+          success: false,
+          message: 'Purchase restoration is only available in the iOS app. Download from the App Store to make a purchase.'
+        };
       }
 
       const ents = await restore();
@@ -117,6 +116,15 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
       
       if (active) {
         localStorage.setItem(STORAGE_KEY, 'true');
+        return {
+          success: true,
+          message: 'Your previous purchase has been restored successfully.'
+        };
+      } else {
+        return {
+          success: false,
+          message: 'No previous purchases found on this Apple ID.'
+        };
       }
     } catch (error) {
       console.error('[Purchase] Restore error:', error);

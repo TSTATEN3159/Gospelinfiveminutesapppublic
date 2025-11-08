@@ -21,17 +21,17 @@ export default function PaywallPage() {
   ];
 
   async function handlePurchase() {
-    if (!products || products.length === 0) {
-      toast({
-        title: 'Products not loaded',
-        description: 'Please wait a moment and try again',
-        variant: 'destructive',
-      });
-      return;
-    }
-
     setIsPurchasing(true);
     try {
+      if (!products || products.length === 0) {
+        toast({
+          title: 'Products not loaded',
+          description: 'This feature is only available in the iOS app. Download from the App Store to purchase.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
       const status = await purchaseProduct(products[0].id);
       
       if (status === 'success') {
@@ -50,11 +50,11 @@ export default function PaywallPage() {
           description: 'Your purchase is being processed. Please check back soon.',
         });
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error('[Paywall] Purchase error:', error);
       toast({
-        title: 'Purchase failed',
-        description: 'Something went wrong. Please try again.',
+        title: 'Purchase Unavailable',
+        description: error?.message || 'Purchases are only available in the iOS app.',
         variant: 'destructive',
       });
     } finally {
@@ -65,16 +65,25 @@ export default function PaywallPage() {
   async function handleRestore() {
     setIsRestoring(true);
     try {
-      await restorePurchases();
-      toast({
-        title: 'Purchases restored',
-        description: 'Your previous purchase has been restored.',
-      });
+      const result = await restorePurchases();
+      
+      if (result.success) {
+        toast({
+          title: 'Purchases restored',
+          description: result.message,
+        });
+      } else {
+        toast({
+          title: 'Unable to restore',
+          description: result.message,
+          variant: 'destructive',
+        });
+      }
     } catch (error) {
       console.error('[Paywall] Restore error:', error);
       toast({
         title: 'Restore failed',
-        description: 'No previous purchases found or something went wrong.',
+        description: 'Something went wrong. Please try again.',
         variant: 'destructive',
       });
     } finally {
@@ -121,7 +130,7 @@ export default function PaywallPage() {
 
           <Button
             onClick={handlePurchase}
-            disabled={isPurchasing || !product}
+            disabled={isPurchasing}
             className="w-full"
             size="lg"
             data-testid="button-purchase"
