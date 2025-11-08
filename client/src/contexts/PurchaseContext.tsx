@@ -22,6 +22,7 @@ interface Entitlement {
 interface PurchaseContextType {
   isPremium: boolean;
   isLoading: boolean;
+  isTestFlight: boolean;
   products: ProductInfo[];
   purchaseProduct: (productId: string) => Promise<'success' | 'pending' | 'cancelled' | 'unknown'>;
   restorePurchases: () => Promise<{ success: boolean; message: string }>;
@@ -32,10 +33,19 @@ const PurchaseContext = createContext<PurchaseContextType | undefined>(undefined
 export function PurchaseProvider({ children }: { children: ReactNode }) {
   const [isPremium, setIsPremium] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const [isTestFlight, setIsTestFlight] = useState(false);
   const [products, setProducts] = useState<ProductInfo[]>([]);
 
   useEffect(() => {
     initializePurchases();
+    
+    // Check if running in TestFlight
+    isTestFlightBuild().then(isTF => {
+      setIsTestFlight(isTF);
+      if (isTF) {
+        console.log('[Purchase] TestFlight detected - purchases will use sandbox (free for testing)');
+      }
+    });
   }, []);
 
   async function initializePurchases() {
@@ -48,19 +58,7 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
         return;
       }
 
-      // Auto-grant premium access in TestFlight builds for testing
-      const isTestFlight = await isTestFlightBuild();
-      if (isTestFlight) {
-        console.log('[Purchase] TestFlight build detected - granting premium access for testing');
-        setIsPremium(true);
-        localStorage.setItem(STORAGE_KEY, 'true');
-        // Still load products so purchase flow can be tested if desired
-        const prods = await loadProducts([PRODUCT_ID]);
-        setProducts(prods);
-        setIsLoading(false);
-        return;
-      }
-
+      // Check for existing entitlements (works in both TestFlight and Production)
       const ents = await getEntitlements();
       const active = isActiveEntitlement(ents);
       setIsPremium(active);
@@ -69,6 +67,7 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
         localStorage.setItem(STORAGE_KEY, 'true');
       }
 
+      // Load products (TestFlight uses sandbox pricing, Production uses real pricing)
       const prods = await loadProducts([PRODUCT_ID]);
       setProducts(prods);
     } catch (error) {
@@ -147,7 +146,7 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <PurchaseContext.Provider value={{ isPremium, isLoading, products, purchaseProduct, restorePurchases }}>
+    <PurchaseContext.Provider value={{ isPremium, isLoading, isTestFlight, products, purchaseProduct, restorePurchases }}>
       {children}
     </PurchaseContext.Provider>
   );

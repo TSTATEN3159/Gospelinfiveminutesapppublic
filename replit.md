@@ -10,8 +10,8 @@
 - **Payment Processing**: Native iOS StoreKit 2 (no third-party services)
 - **Product ID**: `01version101` (matches App Store Connect)
 - **Apple ID**: 675500734
-- **TestFlight Bypass**: TestFlight builds automatically grant premium access for testing (paywall bypassed)
-- **Production**: App Store builds require purchase (paywall enforced)
+- **TestFlight Testing**: TestFlight builds show paywall with visual indicator that purchases are FREE using sandbox Apple IDs (allows testing full purchase flow)
+- **Production**: App Store builds require real $3.99 purchase (paywall enforced)
 - **Features After Purchase**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, videos, Bible studies, trivia, full search, bookmarks & notes
 
 ## User Preferences
@@ -63,8 +63,8 @@ Preferred communication style: Simple, everyday language.
 - **Bible Videos & Studies**: Integrated video teaching and Bible studies (premium)
 - **Bible Trivia**: Interactive Bible trivia game (premium)
 - **StoreKit Integration**: Native iOS StoreKit 2 bridge for purchases, TypeScript wrapper, one-time purchase support, transaction verification
-- **TestFlight Detection**: Swift Capacitor plugin detects TestFlight builds, auto-grants premium access for testing, shows visual indicator on More page
-- **TestFlight Bypass**: Automatic premium unlock in TestFlight so testers can access all features without purchasing (purchase flow still testable)
+- **TestFlight Detection**: Swift Capacitor plugin detects TestFlight builds, shows visual banner on paywall indicating sandbox pricing ($0)
+- **Sandbox Purchase Testing**: TestFlight users can test full purchase flow using sandbox Apple IDs - purchases are FREE but flow is identical to production
 - **Data Management**: User data export (JSON) and full account deletion capabilities (premium)
 - **Apple Store Compliance**: Live Privacy Policy and Terms of Service hosted at `/privacy` and `/terms` endpoints. One-time $3.99 purchase model complies with App Store guidelines
 

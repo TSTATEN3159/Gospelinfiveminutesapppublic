@@ -3,10 +3,10 @@ import { usePurchase } from '@/contexts/PurchaseContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Check, Sparkles, BookOpen, Heart, MessageCircle, Video, Calendar } from 'lucide-react';
+import { Check, Sparkles, BookOpen, Heart, MessageCircle, Video, Calendar, TestTube } from 'lucide-react';
 
 export default function PaywallPage() {
-  const { products, purchaseProduct, restorePurchases } = usePurchase();
+  const { products, purchaseProduct, restorePurchases, isTestFlight } = usePurchase();
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
   const { toast } = useToast();
@@ -97,6 +97,14 @@ export default function PaywallPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background to-muted/20 flex items-center justify-center p-4">
       <Card className="w-full max-w-md">
+        {isTestFlight && (
+          <div className="bg-blue-500/10 border-b border-blue-500/20 p-3 flex items-center gap-2" data-testid="testflight-banner">
+            <TestTube className="w-4 h-4 text-blue-500" />
+            <div className="text-sm text-blue-700 dark:text-blue-300">
+              <strong>TestFlight Preview:</strong> Purchase is FREE for testing using sandbox Apple ID
+            </div>
+          </div>
+        )}
         <CardHeader className="text-center space-y-2">
           <div className="mx-auto w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mb-2">
             <Sparkles className="w-8 h-8 text-primary" />
@@ -124,8 +132,19 @@ export default function PaywallPage() {
 
           <div className="bg-muted/50 rounded-lg p-4 text-center">
             <div className="text-sm text-muted-foreground mb-1">One-time payment</div>
-            <div className="text-3xl font-bold text-primary">{price}</div>
-            <div className="text-xs text-muted-foreground mt-1">Lifetime access • No subscriptions</div>
+            <div className="text-3xl font-bold text-primary">
+              {isTestFlight ? (
+                <>
+                  <span className="line-through opacity-50">{price}</span>{' '}
+                  <span className="text-green-600 dark:text-green-400">FREE</span>
+                </>
+              ) : (
+                price
+              )}
+            </div>
+            <div className="text-xs text-muted-foreground mt-1">
+              {isTestFlight ? 'Sandbox testing • No actual charge' : 'Lifetime access • No subscriptions'}
+            </div>
           </div>
 
           <Button
@@ -149,8 +168,11 @@ export default function PaywallPage() {
           </Button>
 
           <p className="text-xs text-center text-muted-foreground">
-            Payment will be charged to your Apple ID account. 
-            One-time purchase with lifetime access.
+            {isTestFlight ? (
+              <>TestFlight sandbox: Sign in with a sandbox Apple ID to test the purchase flow. No actual charge will occur.</>
+            ) : (
+              <>Payment will be charged to your Apple ID account. One-time purchase with lifetime access.</>
+            )}
           </p>
         </CardContent>
       </Card>
