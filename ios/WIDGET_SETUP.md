@@ -58,21 +58,71 @@ This guide walks you through setting up the iOS Home Screen and Lock Screen widg
 
 ### 4. Add Widget Updater Plugin
 
-1. The `WidgetUpdater.swift` file should already be in `ios/App/App/Plugins/`
-2. **Right-click** the `Plugins` folder in Xcode
-3. Select **Add Files to "App"**
-4. Navigate to `ios/App/App/Plugins/WidgetUpdater.swift`
-5. Ensure **"App" target** is checked
-6. Click **Add**
+1. The plugin files should already be in `ios/App/App/Plugins/`:
+   - `WidgetUpdater.swift`
+   - `WidgetUpdater.m` (Capacitor registration)
+2. **In Xcode**, verify both files are in the **App** target:
+   - Right-click `Plugins` folder → **Add Files to "App"**
+   - Select both `WidgetUpdater.swift` and `WidgetUpdater.m`
+   - Ensure **"App" target** is checked
+   - Click **Add**
+3. **Repeat** for Live Activity Manager:
+   - Add `LiveActivityManager.swift`
+   - Add `LiveActivityManager.m`
+   - Both must be in **App** target
 
-### 5. Register Plugin in Capacitor
+### 5. Verify Plugin Registration
 
-The plugin is already registered in the TypeScript wrapper at:
-`client/src/lib/widgetUpdater.ts`
+1. Open `ios/App/App/Plugins/` in Xcode
+2. You should see:
+   - ✅ `WidgetUpdater.swift`
+   - ✅ `WidgetUpdater.m`
+   - ✅ `LiveActivityManager.swift`
+   - ✅ `LiveActivityManager.m`
+3. Check **Build Phases** → **Compile Sources**:
+   - Both `.swift` files should be listed
+   - Both `.m` files should be listed
+4. If missing, manually add them to the target
 
-No additional registration needed!
+### 6. Enable Live Activities Capability (iOS 16.1+)
 
-### 6. Build & Run
+**CRITICAL STEPS - Live Activity will NOT work without these:**
+
+#### Option A: Using Xcode UI (Recommended)
+1. Select the **App** target in Xcode
+2. Go to **Signing & Capabilities** tab
+3. Click **+ Capability** button
+4. Search for and add **Push Notifications**
+5. Click **+ Capability** again
+6. Scroll to find **Background Modes**, add it
+7. In Background Modes, check **Remote notifications**
+8. **MOST IMPORTANT**: Xcode 14.1+ should show a **"Supports Live Activities"** toggle
+   - If visible, turn it **ON**
+   - This adds `com.apple.developer.usernotifications.activities` entitlement
+
+#### Option B: Manual Entitlements (If Option A doesn't work)
+1. Open `ios/App/App/App.entitlements` in Xcode
+2. Ensure these keys exist:
+   ```xml
+   <key>com.apple.security.application-groups</key>
+   <array>
+       <string>group.com.gospelapp.shared</string>
+   </array>
+   <key>com.apple.developer.usernotifications.time-sensitive</key>
+   <true/>
+   <key>com.apple.developer.usernotifications.activities</key>
+   <true/>
+   ```
+
+#### Verification
+After enabling capabilities, verify in `App.entitlements`:
+- ✅ `com.apple.security.application-groups` with your group ID
+- ✅ `com.apple.developer.usernotifications.activities` set to `true`
+- ✅ App target **Build Settings** → **CODE_SIGN_ENTITLEMENTS** points to `App/App.entitlements`
+
+**Without the `activities` entitlement, `ActivityAuthorizationInfo().areActivitiesEnabled` returns `false` and Live Activity will fail silently!**
+
+### 7. Build & Run
 
 1. Select the **App** scheme (not GospelWidget)
 2. Build and run on a physical device or simulator
@@ -178,11 +228,12 @@ Live Activity shows a **countdown to midnight** on:
    - File is located at `ios/App/GospelWidget/LiveActivityWidget.swift`
    - Should be included in **GospelWidget** target
 
-2. **Enable Live Activities Capability**
+2. **Enable Required Capabilities**
    - Select **App** target
    - Go to **Signing & Capabilities**
-   - Under **App Groups**, ensure it's configured
-   - Supports Live Activities: **YES** (automatic)
+   - Ensure **App Groups** is configured
+   - Ensure **Push Notifications** is added (for Live Activities)
+   - Ensure **Background Modes** → **Remote notifications** is checked
 
 3. **Add Live Activity Manager Plugin**
    - File: `ios/App/App/Plugins/LiveActivityManager.swift`
@@ -245,8 +296,12 @@ Before App Store submission:
 - [ ] App Groups are configured in App Store Connect
 - [ ] Widget updates automatically at midnight
 - [ ] Theme colors display correctly
+- [ ] Live Activity countdown works on iOS 16.1+ devices
+- [ ] All plugin files (.swift and .m) are in App target Build Phases
+- [ ] Push Notifications capability is enabled
+- [ ] Background Modes → Remote notifications is checked
 - [ ] Privacy Policy mentions widget data usage
-- [ ] Screenshots include widget examples
+- [ ] Screenshots include widget and Live Activity examples
 
 ---
 
