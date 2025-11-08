@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
 import { Check, Sparkles, BookOpen, Heart, MessageCircle, Video, Calendar, TestTube } from 'lucide-react';
+import appIcon from '@assets/../app_store_assets/app_store_icon_1024x1024.png';
 
 export default function PaywallPage() {
   const { products, purchaseProduct, restorePurchases, isTestFlight } = usePurchase();
@@ -109,8 +110,8 @@ export default function PaywallPage() {
           
           {/* Header with gradient */}
           <div className="bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-950 dark:to-orange-950 p-8 text-center border-b border-amber-200/50 dark:border-amber-900/30">
-            <div className="mx-auto w-20 h-20 bg-gradient-to-br from-amber-400 to-orange-500 dark:from-amber-600 dark:to-orange-700 rounded-full flex items-center justify-center mb-4 shadow-lg">
-              <Sparkles className="w-10 h-10 text-white" />
+            <div className="mx-auto w-24 h-24 mb-4 rounded-3xl shadow-2xl overflow-hidden border-2 border-white dark:border-amber-800">
+              <img src={appIcon} alt="The Gospel in 5 Minutes" className="w-full h-full object-cover" />
             </div>
             <h1 className="text-2xl font-serif font-bold text-amber-900 dark:text-amber-100 mb-2">
               The Gospel in 5 Minutes
