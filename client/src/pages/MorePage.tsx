@@ -6,9 +6,6 @@ import { Capacitor } from '@capacitor/core';
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { usePurchase } from "@/contexts/PurchaseContext";
-import { useState } from "react";
-import { useToast } from "@/hooks/use-toast";
 import { useTestFlight } from "@/hooks/useTestFlight";
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
@@ -28,36 +25,32 @@ const getMainMenuItems = (t: any, isIOS = false) => {
       title: "Saved Verses",
       description: "View your bookmarked scripture passages",
       icon: BookmarkCheck,
-      comingSoon: false,
-      isPremium: false
+      comingSoon: false
     },
   {
     id: "videos",
     title: t.faithVideos,
     description: t.faithVideosDesc,
     icon: Play,
-    comingSoon: false,
-    isPremium: true
+    comingSoon: false
   },
   {
     id: "blog",
     title: t.christianBlog,
     description: t.christianBlogDesc,
     icon: BookOpen,
-    comingSoon: false,
-    isPremium: false
+    comingSoon: false
     },
     {
       id: "friends",
       title: t.friends,
       description: t.friendsDesc,
       icon: Users,
-      comingSoon: false,
-      isPremium: false
+      comingSoon: false
     }
   ];
   
-  // Apple Pay now enabled - all items available on iOS
+  // All content is now freely accessible
   return items;
 };
 
@@ -87,9 +80,6 @@ const getSettingsMenuItems = (t: any) => [
 
 export default function MorePage({ language, onNavigate, streakDays = 0 }: MorePageProps) {
   const t = useTranslations(language);
-  const { isPremium, restorePurchases } = usePurchase();
-  const [isRestoring, setIsRestoring] = useState(false);
-  const { toast } = useToast();
   const { isTestFlight } = useTestFlight();
   
   // iOS platform detection for Apple Store compliance
@@ -104,25 +94,6 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
     const allItems = [...mainMenuItems, ...settingsMenuItems];
     if (!allItems.find(item => item.id === id)?.comingSoon) {
       onNavigate?.(id);
-    }
-  };
-
-  const handleRestorePurchases = async () => {
-    setIsRestoring(true);
-    try {
-      await restorePurchases();
-      toast({
-        title: "Purchases Restored",
-        description: "Your premium access has been restored successfully.",
-      });
-    } catch (error) {
-      toast({
-        title: "Restore Failed",
-        description: "No previous purchases found. If you believe this is an error, please contact support.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsRestoring(false);
     }
   };
 

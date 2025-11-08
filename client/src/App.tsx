@@ -14,7 +14,6 @@ import OfflineIndicator from "./components/OfflineIndicator";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NetworkStatus from "./components/NetworkStatus";
 import { ThemeProvider } from "./components/ThemeProvider";
-import { PurchaseProvider } from "./contexts/PurchaseContext";
 
 // Initialize auto-recovery services
 import { silentLogger } from "./services/silentLogger";
@@ -41,8 +40,6 @@ import DailyPage from "./pages/DailyPage";
 import ReadingPlansPage from "./pages/ReadingPlansPage";
 import ReadingPlanDetailPage from "./pages/ReadingPlanDetailPage";
 import ScreenshotToolPage from "./pages/ScreenshotToolPage";
-import PaywallPage from "./pages/PaywallPage";
-import PurchaseGate from "./components/PurchaseGate";
 import PlainMeaningPage from "./pages/PlainMeaningPage";
 import InstantApplicationPage from "./pages/InstantApplicationPage";
 
@@ -56,7 +53,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "paywall" | "plain-meaning" | "instant-application";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application";
 
 function App() {
   const [user, setUser] = useState<User | null>(null);
@@ -65,36 +62,9 @@ function App() {
   const [currentPage, setCurrentPage] = useState<AppPage>("home");
   const [streakDays, setStreakDays] = useState(0);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [isTestFlight, setIsTestFlight] = useState(false);
   
   // App is English-only (per Apple guidelines - iOS Settings handles language)
   const language = "en";
-
-  // Detect TestFlight early in app startup
-  useEffect(() => {
-    const detectTestFlight = async () => {
-      const { TestFlightFlag } = (window as any).Capacitor?.Plugins ?? {};
-      
-      if (!TestFlightFlag) {
-        console.log('[TestFlight] Plugin not available');
-        return;
-      }
-
-      try {
-        const res = await TestFlightFlag.isTestFlight();
-        const isTF = !!res?.isTestFlight;
-        setIsTestFlight(isTF);
-        
-        if (isTF) {
-          console.log('[TestFlight] Running in TestFlight - premium features unlocked');
-        }
-      } catch (error) {
-        console.log('[TestFlight] Detection failed:', error);
-      }
-    };
-
-    detectTestFlight();
-  }, []);
 
   // Check if user is registered on first visit
   useEffect(() => {
@@ -209,7 +179,7 @@ function App() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "paywall", "plain-meaning", "instant-application"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -232,23 +202,18 @@ function App() {
   };
 
   const renderCurrentPage = () => {
-    // Legal pages and paywall are always accessible (App Store requirement)
-    if (["privacy", "terms", "paywall"].includes(currentPage)) {
+    // Legal pages are always accessible (App Store requirement)
+    if (["privacy", "terms"].includes(currentPage)) {
       switch (currentPage) {
         case "privacy":
           return <PrivacyPolicyPage onBack={handleBackFromLegal} language={language} />;
         case "terms":
           return <TermsOfServicePage onBack={handleBackFromLegal} language={language} />;
-        case "paywall":
-          return <PaywallPage onClose={() => setCurrentPage("home")} />;
       }
     }
 
-    // All other content requires purchase (except TestFlight - auto-unlocked)
-    return (
-      <PurchaseGate isTestFlight={isTestFlight}>
-        {(() => {
-          switch (currentPage) {
+    // All content is now freely accessible
+    switch (currentPage) {
             case "home":
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
             case "ask":
@@ -291,21 +256,17 @@ function App() {
               return <ReadingPlanDetailPage onBack={handleBackFromLegal} />;
             case "plain-meaning":
               return <PlainMeaningPage onNavigate={handleNavigateToLegal} />;
-            case "instant-application":
-              return <InstantApplicationPage onNavigate={handleNavigateToLegal} />;
-            default:
-              return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
-          }
-        })()}
-      </PurchaseGate>
-    );
+      case "instant-application":
+        return <InstantApplicationPage onNavigate={handleNavigateToLegal} />;
+      default:
+        return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
+    }
   };
 
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="system" storageKey="gospel-app-theme">
-        <PurchaseProvider isTestFlight={isTestFlight}>
-          <QueryClientProvider client={queryClient}>
+        <QueryClientProvider client={queryClient}>
             <TooltipProvider>
               <div className="min-h-screen bg-background">
                 {/* Network Status - Apple-compliant auto-recovery */}
@@ -346,7 +307,6 @@ function App() {
               </div>
             </TooltipProvider>
           </QueryClientProvider>
-        </PurchaseProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );
