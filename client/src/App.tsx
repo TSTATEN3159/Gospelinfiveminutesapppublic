@@ -77,6 +77,7 @@ function AppContent() {
 }
 
 function MainApp() {
+  const { isPremium } = usePurchase();
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showImportFriends, setShowImportFriends] = useState(false);
@@ -233,7 +234,12 @@ function MainApp() {
       }
     }
 
-    // All content is now freely accessible
+    // Show paywall if user hasn't purchased
+    if (!isPremium) {
+      return <PaywallPage />;
+    }
+
+    // Premium content (requires purchase)
     switch (currentPage) {
             case "home":
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
