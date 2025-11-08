@@ -20,6 +20,7 @@ import { bibleService, type DailyVerse } from "../services/bibleService";
 import { videoService, type VideoItem } from "../services/videoService";
 import { useTranslations } from "../lib/translations";
 import { widgetUpdater } from "../lib/widgetUpdater";
+import { liveActivity } from "../lib/liveActivity";
 
 // Images
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
@@ -91,6 +92,13 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
             theme: theme
           });
           console.log(`[Widget] Updated with ${verse.reference} (theme: ${theme})`);
+          
+          // Start/Update Live Activity countdown to midnight
+          const liveActivitySupport = await liveActivity.isSupported();
+          if (liveActivitySupport.supported && liveActivitySupport.enabled) {
+            await liveActivity.startCountdown(verse.text, verse.reference);
+            console.log('[LiveActivity] Midnight countdown started');
+          }
         }
         
         // Get daily Gospel video using Christian Context API

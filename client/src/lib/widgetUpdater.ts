@@ -1,4 +1,4 @@
-import { Capacitor } from '@capacitor/core';
+import { Capacitor, registerPlugin } from '@capacitor/core';
 
 interface WidgetData {
   verse: string;
@@ -20,8 +20,21 @@ interface WidgetDataResponse {
   lastUpdated: number;
 }
 
+interface WidgetUpdaterPlugin {
+  updateDailyVerse(data: WidgetData): Promise<WidgetUpdateResponse>;
+  scheduleNextUpdate(): Promise<WidgetUpdateResponse>;
+  getWidgetData(): Promise<WidgetDataResponse>;
+}
+
+const WidgetUpdater = registerPlugin<WidgetUpdaterPlugin>('WidgetUpdaterPlugin', {
+  web: () => ({
+    updateDailyVerse: async () => ({ success: false, message: 'Not available on web' }),
+    scheduleNextUpdate: async () => ({ success: false, message: 'Not available on web' }),
+    getWidgetData: async () => ({ verse: '', reference: '', theme: 'faith', lastUpdated: 0 }),
+  }),
+});
+
 class WidgetUpdaterService {
-  private pluginName = 'WidgetUpdaterPlugin';
 
   /**
    * Update the iOS widget with new daily verse
@@ -33,14 +46,7 @@ class WidgetUpdaterService {
     }
 
     try {
-      const { WidgetUpdaterPlugin } = Capacitor.Plugins as any;
-      
-      if (!WidgetUpdaterPlugin) {
-        console.warn('[WidgetUpdater] Plugin not available');
-        return { success: false, message: 'Plugin not available' };
-      }
-
-      const result = await WidgetUpdaterPlugin.updateDailyVerse({
+      const result = await WidgetUpdater.updateDailyVerse({
         verse: data.verse,
         reference: data.reference,
         theme: data.theme || 'faith'
@@ -64,14 +70,7 @@ class WidgetUpdaterService {
     }
 
     try {
-      const { WidgetUpdaterPlugin } = Capacitor.Plugins as any;
-      
-      if (!WidgetUpdaterPlugin) {
-        console.warn('[WidgetUpdater] Plugin not available');
-        return { success: false, message: 'Plugin not available' };
-      }
-
-      const result = await WidgetUpdaterPlugin.scheduleNextUpdate();
+      const result = await WidgetUpdater.scheduleNextUpdate();
       console.log('[WidgetUpdater] Next update scheduled:', result);
       return result;
     } catch (error) {
@@ -90,14 +89,7 @@ class WidgetUpdaterService {
     }
 
     try {
-      const { WidgetUpdaterPlugin } = Capacitor.Plugins as any;
-      
-      if (!WidgetUpdaterPlugin) {
-        console.warn('[WidgetUpdater] Plugin not available');
-        return null;
-      }
-
-      const result = await WidgetUpdaterPlugin.getWidgetData();
+      const result = await WidgetUpdater.getWidgetData();
       return result;
     } catch (error) {
       console.error('[WidgetUpdater] Get data error:', error);

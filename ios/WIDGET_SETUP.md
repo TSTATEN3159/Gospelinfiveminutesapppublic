@@ -164,6 +164,54 @@ Load different verses to see theme changes:
 
 ---
 
+## Live Activity Setup (iOS 16.1+)
+
+### What is Live Activity?
+Live Activity shows a **countdown to midnight** on:
+- **Lock Screen**: Persistent banner with verse and countdown
+- **Dynamic Island** (iPhone 14 Pro+): Interactive countdown display
+- Updates in real-time without opening the app
+
+### Setup Steps
+
+1. **Add Live Activity File**
+   - File is located at `ios/App/GospelWidget/LiveActivityWidget.swift`
+   - Should be included in **GospelWidget** target
+
+2. **Enable Live Activities Capability**
+   - Select **App** target
+   - Go to **Signing & Capabilities**
+   - Under **App Groups**, ensure it's configured
+   - Supports Live Activities: **YES** (automatic)
+
+3. **Add Live Activity Manager Plugin**
+   - File: `ios/App/App/Plugins/LiveActivityManager.swift`
+   - Should be in **App** target
+
+4. **Test Live Activity**
+   - Open app on iOS 16.1+ device
+   - Daily verse loads automatically
+   - Live Activity starts countdown to midnight
+   - Check Lock Screen for countdown banner
+   - Check Dynamic Island (iPhone 14 Pro+) for compact view
+
+### How It Works
+
+**Automatic Activation:**
+- App launches → Daily verse loads
+- Widget updates with verse
+- Live Activity starts countdown
+- Updates every minute until midnight
+- At midnight, refreshes with new verse
+
+**User Experience:**
+- **Lock Screen**: Full verse with countdown timer
+- **Dynamic Island - Compact**: Book icon + time remaining
+- **Dynamic Island - Expanded**: Current verse + countdown
+- **Tap**: Opens app to full verse
+
+---
+
 ## Advanced Features
 
 ### Custom Themes
@@ -173,6 +221,13 @@ Edit `themeColors()` function in `GospelWidget.swift` to customize gradient colo
 Widget updates at midnight by default. To change:
 - Edit `getTimeline()` in `Provider` struct
 - Modify the `nextDate` calculation
+
+### Live Activity Customization
+Edit `LiveActivityWidget.swift` to customize:
+- Countdown format
+- Display layout
+- Colors and fonts
+- Dynamic Island presentation
 
 ### Background Refresh
 For more frequent updates, enable:
