@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { CheckCircle, ArrowLeft, Target, Loader2, BookOpen } from "lucide-react";
+import { ArrowLeft, Target, Loader2, BookOpen, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface InstantApplicationPageProps {
@@ -44,7 +44,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
       
       toast({
         title: "Verse Loaded",
-        description: "You can now get your application step.",
+        description: "Ready to create your action step.",
       });
     } catch (error) {
       console.error('Verse fetch error:', error);
@@ -103,50 +103,74 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
   };
 
   return (
-    <div className="min-h-screen pb-20 bg-background">
+    <div className="min-h-screen pb-20 bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-950 dark:via-purple-950/20 dark:to-gray-950">
+      {/* Animated Background Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute top-40 -right-20 w-72 h-72 bg-pink-300 dark:bg-pink-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-20 left-20 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '4s' }}></div>
+      </div>
+
       {/* Header */}
-      <div className="bg-gradient-to-br from-purple-500/10 via-background to-purple-600/10 px-4 py-8 border-b border-border ios-safe-top">
+      <div className="relative backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 px-4 py-6 border-b border-purple-200/20 dark:border-purple-800/20 ios-safe-top">
         <div className="max-w-sm mx-auto">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onNavigate('daily')}
-            className="mb-4 -ml-2"
+            className="mb-6 -ml-2 hover-elevate active-elevate-2"
             data-testid="button-back"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Daily
+            Back
           </Button>
           
           <div className="text-center">
-            <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-purple-500/10 border-2 border-purple-500/20 mb-4 shadow-lg">
-              <CheckCircle className="w-8 h-8 text-purple-600" />
+            {/* Glass Icon */}
+            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-purple-500 to-pink-500 mb-4 shadow-2xl relative overflow-hidden">
+              <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
+              <Target className="w-10 h-10 text-white relative z-10 drop-shadow-lg" />
+              <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"></div>
             </div>
-            <h1 className="text-3xl font-bold text-foreground mb-2">Instant Application</h1>
-            <p className="text-muted-foreground text-sm">
-              Get one simple action to live out God's Word today
+            
+            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
+              Instant Application
+            </h1>
+            <p className="text-base text-gray-600 dark:text-gray-400 font-medium">
+              Transform Scripture into Action
             </p>
           </div>
         </div>
       </div>
 
       {/* Content */}
-      <div className="max-w-sm mx-auto px-4 py-6 space-y-4">
-        {/* Verse Input Card */}
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <BookOpen className="w-5 h-5 text-purple-600" />
-              Enter Bible Verse Reference
-            </CardTitle>
+      <div className="relative max-w-sm mx-auto px-4 py-8 space-y-6">
+        {/* Verse Input - Liquid Glass Card */}
+        <div 
+          className="relative rounded-3xl overflow-hidden backdrop-blur-2xl bg-white/40 dark:bg-gray-900/40 border border-white/50 dark:border-gray-700/50 shadow-2xl transition-all duration-500 hover:shadow-purple-500/20 hover:scale-[1.02]"
+          style={{
+            boxShadow: '0 8px 32px 0 rgba(147, 51, 234, 0.1), inset 0 1px 0 0 rgba(255, 255, 255, 0.5)'
+          }}
+        >
+          {/* Shimmer effect */}
+          <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent opacity-50"></div>
+          
+          <CardHeader className="relative z-10">
+            <div className="flex items-center gap-3">
+              <div className="p-2 rounded-xl bg-gradient-to-br from-purple-500 to-pink-500 shadow-lg">
+                <BookOpen className="w-5 h-5 text-white" />
+              </div>
+              <h2 className="text-xl font-semibold text-gray-900 dark:text-white">Enter Verse</h2>
+            </div>
           </CardHeader>
-          <CardContent className="space-y-4">
-            <div>
-              <label className="text-sm font-medium text-muted-foreground mb-2 block">
-                Verse Reference
+          
+          <CardContent className="relative z-10 space-y-4">
+            <div className="space-y-2">
+              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
+                Reference
               </label>
               <Input
-                placeholder="e.g., John 3:16 or Philippians 4:6-7"
+                placeholder="Philippians 4:6-7"
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 onKeyDown={(e) => {
@@ -154,6 +178,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
                     handleFetchVerse();
                   }
                 }}
+                className="h-14 text-lg backdrop-blur-xl bg-white/60 dark:bg-gray-800/60 border-white/50 dark:border-gray-700/50 rounded-2xl shadow-lg focus:shadow-purple-500/30 transition-all duration-300 font-medium"
                 data-testid="input-reference"
               />
             </div>
@@ -161,105 +186,138 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
             <Button
               onClick={handleFetchVerse}
               disabled={isLoadingVerse || !reference.trim()}
-              className="w-full"
+              className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
               data-testid="button-fetch-verse"
             >
               {isLoadingVerse ? (
                 <>
-                  <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                  <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                   Fetching Verse...
                 </>
               ) : (
                 <>
-                  <BookOpen className="w-4 h-4 mr-2" />
+                  <BookOpen className="w-5 h-5 mr-3" />
                   Fetch Verse
                 </>
               )}
             </Button>
           </CardContent>
-        </Card>
+        </div>
 
-        {/* Verse Text Display */}
+        {/* Verse Text Display - Premium Glass Card */}
         {verseText && (
-          <Card className="border-purple-200 bg-purple-50/30 dark:bg-purple-950/10">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2 text-purple-700 dark:text-purple-400">
-                <BookOpen className="w-5 h-5" />
-                {reference}
-              </CardTitle>
+          <div 
+            className="relative rounded-3xl overflow-hidden backdrop-blur-2xl bg-gradient-to-br from-purple-500/10 via-white/40 to-pink-500/10 dark:from-purple-900/20 dark:via-gray-900/40 dark:to-pink-900/20 border border-purple-200/50 dark:border-purple-700/50 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-700"
+            style={{
+              boxShadow: '0 8px 32px 0 rgba(147, 51, 234, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.6)'
+            }}
+          >
+            {/* Glass reflection */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/70 via-white/20 to-transparent opacity-60"></div>
+            
+            <CardHeader className="relative z-10 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-gradient-to-br from-purple-600 to-pink-600 shadow-lg">
+                  <Sparkles className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-lg font-bold bg-gradient-to-r from-purple-700 to-pink-700 bg-clip-text text-transparent">
+                  {reference}
+                </h3>
+              </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-base leading-relaxed text-foreground italic" data-testid="text-verse">
-                "{verseText}"
-              </p>
+            
+            <CardContent className="relative z-10 space-y-4">
+              <div className="p-6 rounded-2xl bg-white/50 dark:bg-gray-900/50 backdrop-blur-xl border border-white/60 dark:border-gray-700/60 shadow-lg">
+                <p className="text-lg leading-relaxed text-gray-800 dark:text-gray-100 font-serif italic" data-testid="text-verse">
+                  "{verseText}"
+                </p>
+              </div>
               
               <Button
                 onClick={handleGetApplication}
                 disabled={isLoadingApplication}
-                className="w-full mt-4"
+                className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
                 data-testid="button-get-application"
               >
                 {isLoadingApplication ? (
                   <>
-                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                     Creating Action...
                   </>
                 ) : (
                   <>
-                    <Target className="w-4 h-4 mr-2" />
+                    <Target className="w-5 h-5 mr-3" />
                     Get Action Step
                   </>
                 )}
               </Button>
             </CardContent>
-          </Card>
+          </div>
         )}
 
-        {/* Application Result Card */}
+        {/* Application Result - Delightful Glass Card */}
         {application && (
-          <Card className="border-purple-200 bg-purple-50/50 dark:bg-purple-950/20">
-            <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2 text-purple-700 dark:text-purple-400">
-                <Target className="w-5 h-5" />
-                Try This Today
-              </CardTitle>
+          <div 
+            className="relative rounded-3xl overflow-hidden backdrop-blur-2xl bg-gradient-to-br from-green-500/10 via-white/50 to-blue-500/10 dark:from-green-900/20 dark:via-gray-900/50 dark:to-blue-900/20 border border-green-200/50 dark:border-green-700/50 shadow-2xl animate-in fade-in slide-in-from-bottom-4 duration-700"
+            style={{
+              boxShadow: '0 8px 32px 0 rgba(34, 197, 94, 0.2), inset 0 1px 0 0 rgba(255, 255, 255, 0.7)'
+            }}
+          >
+            {/* Premium shimmer */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-white/30 to-transparent opacity-70"></div>
+            
+            <CardHeader className="relative z-10 pb-3">
+              <div className="flex items-center gap-3">
+                <div className="p-2 rounded-xl bg-gradient-to-br from-green-500 to-blue-500 shadow-lg">
+                  <Target className="w-5 h-5 text-white" />
+                </div>
+                <h3 className="text-lg font-bold bg-gradient-to-r from-green-700 to-blue-700 bg-clip-text text-transparent">
+                  Try This Today
+                </h3>
+              </div>
             </CardHeader>
-            <CardContent>
-              <p className="text-base leading-relaxed text-foreground font-medium" data-testid="text-application">
-                {application}
-              </p>
+            
+            <CardContent className="relative z-10">
+              <div className="p-6 rounded-2xl bg-white/60 dark:bg-gray-900/60 backdrop-blur-xl border border-white/70 dark:border-gray-700/70 shadow-lg">
+                <p className="text-lg leading-relaxed text-gray-900 dark:text-gray-50 font-semibold" data-testid="text-application">
+                  {application}
+                </p>
+              </div>
             </CardContent>
-          </Card>
+          </div>
         )}
 
-        {/* Info Card */}
-        <Card className="bg-muted/50">
-          <CardContent className="pt-6">
-            <h3 className="font-semibold text-sm mb-2">How it works:</h3>
-            <ul className="space-y-2 text-xs text-muted-foreground">
-              <li className="flex gap-2">
-                <span className="text-purple-600">•</span>
-                <span>Enter any Bible verse reference</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-purple-600">•</span>
-                <span>The verse text is fetched and displayed</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-purple-600">•</span>
-                <span>Creates one specific, actionable step based 100% on God's Word</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-purple-600">•</span>
-                <span>Practical and doable within 24 hours</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-purple-600">•</span>
-                <span>Moves Scripture from reading to doing</span>
-              </li>
-            </ul>
-          </CardContent>
-        </Card>
+        {/* Info Card - Subtle Glass */}
+        {!verseText && (
+          <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/30 dark:bg-gray-900/30 border border-white/40 dark:border-gray-700/40 p-6 shadow-lg">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent opacity-50"></div>
+            
+            <div className="relative z-10">
+              <h3 className="font-bold text-sm mb-3 text-gray-900 dark:text-white flex items-center gap-2">
+                <Sparkles className="w-4 h-4 text-purple-600" />
+                How it works
+              </h3>
+              <ul className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+                <li className="flex gap-3 items-start">
+                  <span className="text-purple-600 font-bold">1.</span>
+                  <span>Enter any Bible verse reference</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-purple-600 font-bold">2.</span>
+                  <span>The verse text is fetched and displayed</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-purple-600 font-bold">3.</span>
+                  <span>Get one specific action based 100% on God's Word</span>
+                </li>
+                <li className="flex gap-3 items-start">
+                  <span className="text-purple-600 font-bold">4.</span>
+                  <span>Live it out today!</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
