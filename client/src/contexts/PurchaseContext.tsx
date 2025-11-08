@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Capacitor } from '@capacitor/core';
 import { loadProducts, getEntitlements, purchase, restore } from '@/lib/storekit';
+import { isTestFlightBuild } from '@/lib/testflight';
 
 const PRODUCT_ID = '01version101';
 const STORAGE_KEY = 'gospel_premium_purchased';
@@ -43,6 +44,19 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
         console.log('[Purchase] Web platform - skipping StoreKit');
         const localPurchase = localStorage.getItem(STORAGE_KEY);
         setIsPremium(localPurchase === 'true');
+        setIsLoading(false);
+        return;
+      }
+
+      // Auto-grant premium access in TestFlight builds for testing
+      const isTestFlight = await isTestFlightBuild();
+      if (isTestFlight) {
+        console.log('[Purchase] TestFlight build detected - granting premium access for testing');
+        setIsPremium(true);
+        localStorage.setItem(STORAGE_KEY, 'true');
+        // Still load products so purchase flow can be tested if desired
+        const prods = await loadProducts([PRODUCT_ID]);
+        setProducts(prods);
         setIsLoading(false);
         return;
       }
