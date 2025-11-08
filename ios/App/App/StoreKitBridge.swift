@@ -80,8 +80,6 @@ public class StoreKitBridge: CAPPlugin {
     }
   }
 
-  // MARK: helpers
-
   private func verify<T>(_ result: VerificationResult<T>) throws -> T {
     switch result {
     case .unverified(_, let error): throw error
