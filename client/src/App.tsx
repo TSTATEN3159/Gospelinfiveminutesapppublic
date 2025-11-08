@@ -19,6 +19,9 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { silentLogger } from "./services/silentLogger";
 import { performanceMonitor } from "./services/performanceMonitor";
 
+// Purchase System
+import { PurchaseProvider, usePurchase } from "./contexts/PurchaseContext";
+
 // Pages
 import HomePage from "./pages/HomePage";
 import AskPage from "./pages/BiblePage";
@@ -42,6 +45,7 @@ import ReadingPlanDetailPage from "./pages/ReadingPlanDetailPage";
 import ScreenshotToolPage from "./pages/ScreenshotToolPage";
 import PlainMeaningPage from "./pages/PlainMeaningPage";
 import InstantApplicationPage from "./pages/InstantApplicationPage";
+import PaywallPage from "./pages/PaywallPage";
 
 interface User {
   firstName: string;
@@ -55,7 +59,27 @@ interface User {
 
 type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application";
 
-function App() {
+function AppContent() {
+  const { isPremium, isLoading } = usePurchase();
+  
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="text-center">
+          <div className="text-lg text-muted-foreground">Loading...</div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isPremium) {
+    return <PaywallPage />;
+  }
+
+  return <MainApp />;
+}
+
+function MainApp() {
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showImportFriends, setShowImportFriends] = useState(false);
@@ -267,48 +291,56 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider defaultTheme="system" storageKey="gospel-app-theme">
         <QueryClientProvider client={queryClient}>
-            <TooltipProvider>
-              <div className="min-h-screen bg-background">
-                {/* Network Status - Apple-compliant auto-recovery */}
-                <NetworkStatus onRetry={() => window.location.reload()} />
-                
-                {/* Current Page Content */}
-                <main className="min-h-screen bg-background">
-                  {renderCurrentPage()}
-                </main>
+          <TooltipProvider>
+            <div className="min-h-screen bg-background">
+              {/* Network Status - Apple-compliant auto-recovery */}
+              <NetworkStatus onRetry={() => window.location.reload()} />
+              
+              {/* Current Page Content */}
+              <main className="min-h-screen bg-background">
+                {renderCurrentPage()}
+              </main>
 
-                {/* Bottom Navigation - Hide on legal pages and friends page */}
-                {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application"].includes(currentPage) && (
-                  <BottomNavigation 
-                    currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
-                    onPageChange={(page) => setCurrentPage(page as AppPage)} 
-                  />
-                )}
-
-                {/* Registration Modal */}
-                <UserRegistrationModal 
-                  isOpen={showRegistration} 
-                  onClose={handleRegistrationComplete} 
+              {/* Bottom Navigation - Hide on legal pages and friends page */}
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application"].includes(currentPage) && (
+                <BottomNavigation 
+                  currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
+                  onPageChange={(page) => setCurrentPage(page as AppPage)} 
                 />
+              )}
 
-                {/* Import Friends Dialog */}
-                {user?.appUserId && (
-                  <ImportFriendsDialog 
-                    isOpen={showImportFriends}
-                    onClose={handleImportFriendsClose}
-                    appUserId={user.appUserId}
-                    userEmail={user.email}
-                    onNavigateToFriends={handleNavigateToFriends}
-                  />
-                )}
+              {/* Registration Modal */}
+              <UserRegistrationModal 
+                isOpen={showRegistration} 
+                onClose={handleRegistrationComplete} 
+              />
 
-                <Toaster />
-                <OfflineIndicator />
-              </div>
-            </TooltipProvider>
-          </QueryClientProvider>
+              {/* Import Friends Dialog */}
+              {user?.appUserId && (
+                <ImportFriendsDialog 
+                  isOpen={showImportFriends}
+                  onClose={handleImportFriendsClose}
+                  appUserId={user.appUserId}
+                  userEmail={user.email}
+                  onNavigateToFriends={handleNavigateToFriends}
+                />
+              )}
+
+              <Toaster />
+              <OfflineIndicator />
+            </div>
+          </TooltipProvider>
+        </QueryClientProvider>
       </ThemeProvider>
     </ErrorBoundary>
+  );
+}
+
+function App() {
+  return (
+    <PurchaseProvider>
+      <AppContent />
+    </PurchaseProvider>
   );
 }
 

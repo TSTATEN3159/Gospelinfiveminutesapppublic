@@ -4,10 +4,12 @@
 "The Gospel in 5 Minutes" is a mobile-first spiritual wellness application delivering daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. It aims to combine the peaceful aesthetic of wellness apps with the functionality of Bible apps, offering meaningful spiritual content in digestible 5-minute sessions. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, gamified streak tracking, and comprehensive Bible reading plans.
 
 ## Monetization
-- **Business Model**: Completely FREE - All features accessible to all users
-- **No In-App Purchases**: App is fully free with no paywalls or premium content
-- **Revenue Model**: Currently exploring alternative monetization strategies
-- **All Features Included**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, videos, Bible studies, trivia, full search, bookmarks & notes - all free
+- **Business Model**: One-time $3.99 unlock for lifetime access
+- **Download**: Free to download from App Store
+- **Paywall**: App requires one-time purchase on first launch
+- **Payment Processing**: Native iOS StoreKit 2 (no third-party services)
+- **Product ID**: `com.thegospelin5minutes.premium`
+- **Features After Purchase**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, videos, Bible studies, trivia, full search, bookmarks & notes
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
@@ -43,22 +45,24 @@ Preferred communication style: Simple, everyday language.
 - **Session Management**: Backend prepared for session-based authentication.
 
 ### Core Features & Implementation
-- **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, and copying.
-- **AI Pastor Chat**: Professional UI for AI-powered Q&A - FREE for all users.
-- **Plain Meaning (AI Verse Simplifier)**: AI-powered feature that transforms any Bible verse into simple, everyday language while maintaining theological integrity. Uses OpenAI to bridge between Bible text and daily understanding. Accessible via Daily tab - FREE.
-- **Instant Application (Try This Today)**: AI-powered feature that generates specific, actionable steps to live out any Bible verse today. Creates practical, 24-hour doable actions to move Scripture from reading to doing. Accessible via Daily tab - FREE.
-- **Feelings & Scripture**: Emotion-based guidance.
-- **Scripture Memory Helper**: Interactive memorization.
-- **Saved Verses Page**: Dedicated page for bookmarked verses.
-- **Notes Feature**: CRUD operations for personal reflections on verses.
-- **Streak Tracking**: Consecutive days counter with localStorage persistence.
-- **Devotional Progress Tracking**: API to mark devotional days complete, track progress, and calculate streaks. Includes content for 365 days - FREE.
-- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, real-time UI synchronization via custom events, and on-demand NIV Scripture text display. Users can expand/collapse to read the full Bible text for each day's reading without leaving the app - FREE.
-- **Bible Videos & Studies**: Integrated video teaching and Bible studies - FREE.
-- **Bible Trivia**: Interactive Bible trivia game - FREE.
-- **TestFlight Detection**: Swift Capacitor plugin detects TestFlight builds, shows visual indicator on More page.
-- **Data Management**: User data export (JSON) and full account deletion capabilities.
-- **Apple Store Compliance**: Live Privacy Policy and Terms of Service hosted at `/privacy` and `/terms` endpoints. All content freely accessible with no in-app purchases.
+- **Paywall System**: PaywallPage shown on first launch, PurchaseContext manages state, restore purchases on MorePage
+- **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, and copying (premium)
+- **AI Pastor Chat**: Professional UI for AI-powered Q&A (premium)
+- **Plain Meaning (AI Verse Simplifier)**: AI-powered feature that transforms any Bible verse into simple, everyday language while maintaining theological integrity. Uses OpenAI to bridge between Bible text and daily understanding. Accessible via Daily tab (premium)
+- **Instant Application (Try This Today)**: AI-powered feature that generates specific, actionable steps to live out any Bible verse today. Creates practical, 24-hour doable actions to move Scripture from reading to doing. Accessible via Daily tab (premium)
+- **Feelings & Scripture**: Emotion-based guidance (premium)
+- **Scripture Memory Helper**: Interactive memorization (premium)
+- **Saved Verses Page**: Dedicated page for bookmarked verses (premium)
+- **Notes Feature**: CRUD operations for personal reflections on verses (premium)
+- **Streak Tracking**: Consecutive days counter with localStorage persistence (premium)
+- **Devotional Progress Tracking**: API to mark devotional days complete, track progress, and calculate streaks. Includes content for 365 days (premium)
+- **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, real-time UI synchronization via custom events, and on-demand NIV Scripture text display. Users can expand/collapse to read the full Bible text for each day's reading without leaving the app (premium)
+- **Bible Videos & Studies**: Integrated video teaching and Bible studies (premium)
+- **Bible Trivia**: Interactive Bible trivia game (premium)
+- **StoreKit Integration**: Native iOS StoreKit 2 bridge for purchases, TypeScript wrapper, one-time purchase support, transaction verification
+- **TestFlight Detection**: Swift Capacitor plugin detects TestFlight builds, shows visual indicator on More page
+- **Data Management**: User data export (JSON) and full account deletion capabilities (premium)
+- **Apple Store Compliance**: Live Privacy Policy and Terms of Service hosted at `/privacy` and `/terms` endpoints. One-time $3.99 purchase model complies with App Store guidelines
 
 ## External Dependencies
 

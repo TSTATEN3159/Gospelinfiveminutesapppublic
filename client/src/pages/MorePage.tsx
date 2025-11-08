@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck } from "lucide-react";
+import { Users, User, Shield, FileText, Scale, HeadphonesIcon, ChevronRight, Heart, Flame, Facebook, Instagram, Share, Settings, Play, BookOpen, TrendingUp, Cross, BookmarkCheck, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
+import { usePurchase } from "@/contexts/PurchaseContext";
+import { useToast } from "@/hooks/use-toast";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -81,6 +84,9 @@ const getSettingsMenuItems = (t: any) => [
 export default function MorePage({ language, onNavigate, streakDays = 0 }: MorePageProps) {
   const t = useTranslations(language);
   const { isTestFlight } = useTestFlight();
+  const { restorePurchases } = usePurchase();
+  const { toast } = useToast();
+  const [isRestoring, setIsRestoring] = useState(false);
   
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
@@ -96,6 +102,26 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
       onNavigate?.(id);
     }
   };
+
+  async function handleRestorePurchases() {
+    setIsRestoring(true);
+    try {
+      await restorePurchases();
+      toast({
+        title: 'Purchase Restored! 🎉',
+        description: 'Your premium access has been restored successfully.',
+      });
+    } catch (error) {
+      console.error('[MorePage] Restore error:', error);
+      toast({
+        title: 'Restore Failed',
+        description: 'No previous purchases found or something went wrong.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsRestoring(false);
+    }
+  }
 
   return (
     <div className="min-h-screen pb-20">
@@ -362,6 +388,49 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
             </Card>
           )
         })}
+
+        {/* Purchase Management Section */}
+        <Card className={`
+          relative bg-gradient-to-br from-emerald-50 to-green-50 
+          border-4 border-emerald-200 
+          transition-all duration-300 
+          shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] 
+          before:absolute before:inset-0 before:rounded-lg 
+          before:bg-gradient-to-br before:from-white/30 before:to-transparent 
+          before:pointer-events-none
+          ring-4 ring-white/40 ring-inset hover:ring-white/60
+          outline outline-2 outline-gray-400/30 outline-offset-2
+          backdrop-blur-sm transform hover:scale-[1.01] hover:-translate-y-0.5
+        `}>
+          <CardContent className="relative p-3 z-10">
+            <h2 className="font-bold text-base text-gray-800 mb-3 flex items-center justify-center gap-2">
+              <div className="w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-lg border-2 border-white/60 ring-1 ring-gray-200/50">
+                <RefreshCw className="w-4 h-4 text-emerald-600 stroke-[1.5]" />
+              </div>
+              Account
+            </h2>
+            <div className="space-y-4">
+              <Button 
+                variant="ghost"
+                size="default"
+                className="w-full justify-between bg-white/80 hover:bg-white text-gray-800 border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 ring-2 ring-emerald-200/50 hover:ring-emerald-300/70"
+                onClick={handleRestorePurchases}
+                disabled={isRestoring}
+                data-testid="button-restore-purchases"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-emerald-100 p-2 rounded-full">
+                    <RefreshCw className={`w-5 h-5 text-emerald-600 ${isRestoring ? 'animate-spin' : ''}`} />
+                  </div>
+                  <span className="font-medium text-gray-800 text-base">
+                    {isRestoring ? 'Restoring...' : 'Restore Purchases'}
+                  </span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* Legal & Support Section */}
         <Card className={`
