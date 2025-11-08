@@ -23,7 +23,7 @@ import { widgetUpdater } from "../lib/widgetUpdater";
 import { liveActivity } from "../lib/liveActivity";
 
 // Images
-import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
+import warmBibleDeskImage from '@assets/generated_images/Warm_Bible_study_desk_scene_c9f030cb.png';
 import mountainLakeImage from '@assets/generated_images/Mountain_lake_sunrise_scripture_98ce5cc4.png';
 import forestPathImage from '@assets/generated_images/Forest_path_study_plans_fab1c678.png';
 import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
@@ -419,7 +419,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           {dailyVerse && !loading ? (
             <DailyVerseCard 
               verse={dailyVerse} 
-              backgroundImage={sunriseImage} 
+              backgroundImage={warmBibleDeskImage} 
               onNavigate={(page, searchQuery) => {
                 setShowVerseModal(false); // Close the modal
                 onNavigate?.(page, searchQuery);
