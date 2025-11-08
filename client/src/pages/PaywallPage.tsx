@@ -101,7 +101,7 @@ export default function PaywallPage() {
           <div className="bg-blue-500/10 border-b border-blue-500/20 p-3 flex items-center gap-2" data-testid="testflight-banner">
             <TestTube className="w-4 h-4 text-blue-500" />
             <div className="text-sm text-blue-700 dark:text-blue-300">
-              <strong>TestFlight Preview:</strong> Purchase is FREE for testing using sandbox Apple ID
+              <strong>TestFlight Sandbox:</strong> Purchases use Apple's sandbox—no real charges.
             </div>
           </div>
         )}
