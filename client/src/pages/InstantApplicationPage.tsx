@@ -1,9 +1,8 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Textarea } from "@/components/ui/textarea";
 import { Input } from "@/components/ui/input";
-import { CheckCircle, ArrowLeft, Target, Loader2 } from "lucide-react";
+import { CheckCircle, ArrowLeft, Target, Loader2, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
 interface InstantApplicationPageProps {
@@ -11,23 +10,66 @@ interface InstantApplicationPageProps {
 }
 
 export default function InstantApplicationPage({ onNavigate }: InstantApplicationPageProps) {
-  const [verse, setVerse] = useState("");
   const [reference, setReference] = useState("");
+  const [verseText, setVerseText] = useState("");
   const [application, setApplication] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingVerse, setIsLoadingVerse] = useState(false);
+  const [isLoadingApplication, setIsLoadingApplication] = useState(false);
   const { toast } = useToast();
 
-  const handleGetApplication = async () => {
-    if (!verse.trim()) {
+  const handleFetchVerse = async () => {
+    if (!reference.trim()) {
       toast({
-        title: "Verse Required",
-        description: "Please enter a Bible verse to get an application.",
+        title: "Reference Required",
+        description: "Please enter a Bible verse reference (e.g., John 3:16).",
         variant: "destructive"
       });
       return;
     }
 
-    setIsLoading(true);
+    setIsLoadingVerse(true);
+    setVerseText("");
+    setApplication("");
+
+    try {
+      const response = await fetch(`/api/bible-passage?reference=${encodeURIComponent(reference)}`);
+      const data = await response.json();
+
+      if (!data.success) {
+        throw new Error(data.error || 'Failed to fetch verse');
+      }
+
+      // Extract just the verse text without the reference header
+      const text = data.text.replace(/^.+?\n\n/, '').trim();
+      setVerseText(text);
+      
+      toast({
+        title: "Verse Loaded",
+        description: "You can now get your application step.",
+      });
+    } catch (error) {
+      console.error('Verse fetch error:', error);
+      toast({
+        title: "Error",
+        description: error instanceof Error ? error.message : "Failed to fetch verse. Please check your reference and try again.",
+        variant: "destructive"
+      });
+    } finally {
+      setIsLoadingVerse(false);
+    }
+  };
+
+  const handleGetApplication = async () => {
+    if (!verseText.trim()) {
+      toast({
+        title: "Verse Text Required",
+        description: "Please fetch a verse first to get an application.",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setIsLoadingApplication(true);
     setApplication("");
 
     try {
@@ -36,7 +78,10 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ verse, reference })
+        body: JSON.stringify({ 
+          verse: verseText, 
+          reference 
+        })
       });
 
       const data = await response.json();
@@ -54,7 +99,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
         variant: "destructive"
       });
     } finally {
-      setIsLoading(false);
+      setIsLoadingApplication(false);
     }
   };
 
@@ -80,7 +125,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
             </div>
             <h1 className="text-3xl font-bold text-foreground mb-2">Instant Application</h1>
             <p className="text-muted-foreground text-sm">
-              Get one simple action to live out any verse today
+              Get one simple action to live out God's Word today
             </p>
           </div>
         </div>
@@ -88,63 +133,90 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
 
       {/* Content */}
       <div className="max-w-sm mx-auto px-4 py-6 space-y-4">
-        {/* Input Card */}
+        {/* Verse Input Card */}
         <Card>
           <CardHeader>
             <CardTitle className="text-lg flex items-center gap-2">
-              <Target className="w-5 h-5 text-purple-600" />
-              Enter a Bible Verse
+              <BookOpen className="w-5 h-5 text-purple-600" />
+              Enter Bible Verse Reference
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div>
               <label className="text-sm font-medium text-muted-foreground mb-2 block">
-                Reference (optional)
+                Verse Reference
               </label>
               <Input
-                placeholder="e.g., Philippians 4:6"
+                placeholder="e.g., John 3:16 or Philippians 4:6-7"
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !isLoadingVerse) {
+                    handleFetchVerse();
+                  }
+                }}
                 data-testid="input-reference"
-              />
-            </div>
-            
-            <div>
-              <label className="text-sm font-medium text-muted-foreground mb-2 block">
-                Verse Text
-              </label>
-              <Textarea
-                placeholder='e.g., "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God."'
-                value={verse}
-                onChange={(e) => setVerse(e.target.value)}
-                rows={5}
-                className="resize-none"
-                data-testid="input-verse"
               />
             </div>
 
             <Button
-              onClick={handleGetApplication}
-              disabled={isLoading || !verse.trim()}
+              onClick={handleFetchVerse}
+              disabled={isLoadingVerse || !reference.trim()}
               className="w-full"
-              data-testid="button-get-application"
+              data-testid="button-fetch-verse"
             >
-              {isLoading ? (
+              {isLoadingVerse ? (
                 <>
                   <Loader2 className="w-4 h-4 mr-2 animate-spin" />
-                  Creating Action...
+                  Fetching Verse...
                 </>
               ) : (
                 <>
-                  <CheckCircle className="w-4 h-4 mr-2" />
-                  Get Action Step
+                  <BookOpen className="w-4 h-4 mr-2" />
+                  Fetch Verse
                 </>
               )}
             </Button>
           </CardContent>
         </Card>
 
-        {/* Result Card */}
+        {/* Verse Text Display */}
+        {verseText && (
+          <Card className="border-purple-200 bg-purple-50/30 dark:bg-purple-950/10">
+            <CardHeader>
+              <CardTitle className="text-lg flex items-center gap-2 text-purple-700 dark:text-purple-400">
+                <BookOpen className="w-5 h-5" />
+                {reference}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-base leading-relaxed text-foreground italic" data-testid="text-verse">
+                "{verseText}"
+              </p>
+              
+              <Button
+                onClick={handleGetApplication}
+                disabled={isLoadingApplication}
+                className="w-full mt-4"
+                data-testid="button-get-application"
+              >
+                {isLoadingApplication ? (
+                  <>
+                    <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+                    Creating Action...
+                  </>
+                ) : (
+                  <>
+                    <Target className="w-4 h-4 mr-2" />
+                    Get Action Step
+                  </>
+                )}
+              </Button>
+            </CardContent>
+          </Card>
+        )}
+
+        {/* Application Result Card */}
         {application && (
           <Card className="border-purple-200 bg-purple-50/50 dark:bg-purple-950/20">
             <CardHeader>
@@ -168,7 +240,15 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
             <ul className="space-y-2 text-xs text-muted-foreground">
               <li className="flex gap-2">
                 <span className="text-purple-600">•</span>
-                <span>Creates one specific, actionable step for today</span>
+                <span>Enter any Bible verse reference</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-purple-600">•</span>
+                <span>The verse text is fetched and displayed</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-purple-600">•</span>
+                <span>Creates one specific, actionable step based 100% on God's Word</span>
               </li>
               <li className="flex gap-2">
                 <span className="text-purple-600">•</span>
@@ -177,10 +257,6 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
               <li className="flex gap-2">
                 <span className="text-purple-600">•</span>
                 <span>Moves Scripture from reading to doing</span>
-              </li>
-              <li className="flex gap-2">
-                <span className="text-purple-600">•</span>
-                <span>Helps you live out what you read</span>
               </li>
             </ul>
           </CardContent>

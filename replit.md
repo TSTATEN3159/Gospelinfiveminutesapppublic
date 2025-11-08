@@ -52,7 +52,7 @@ Preferred communication style: Simple, everyday language.
 - **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, and copying (premium)
 - **AI Pastor Chat**: Professional UI for AI-powered Q&A (premium)
 - **Plain Meaning (AI Verse Simplifier)**: AI-powered feature that transforms any Bible verse into simple, everyday language while maintaining theological integrity. Uses OpenAI to bridge between Bible text and daily understanding. Accessible via Daily tab (premium)
-- **Instant Application (Try This Today)**: AI-powered feature that generates specific, actionable steps to live out any Bible verse today. Creates practical, 24-hour doable actions to move Scripture from reading to doing. Accessible via Daily tab (premium)
+- **Instant Application (Try This Today)**: AI-powered feature where users enter a verse reference (e.g., "John 3:16"), the app fetches and displays the verse text from API.Bible, then generates specific, actionable steps to live out that verse today. Creates practical, 24-hour doable actions 100% rooted in God's Word and biblical teaching. Accessible via Daily tab (premium)
 - **Feelings & Scripture**: Emotion-based guidance (premium)
 - **Scripture Memory Helper**: Interactive memorization (premium)
 - **Saved Verses Page**: Dedicated page for bookmarked verses (premium)
