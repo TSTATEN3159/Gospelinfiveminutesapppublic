@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, ReactNode } from 'react
 import { Capacitor } from '@capacitor/core';
 import { loadProducts, getEntitlements, purchase, restore } from '@/lib/storekit';
 
-const PRODUCT_ID = 'com.thegospelin5minutes.premium';
+const PRODUCT_ID = 'com.tstaten.gospelin5minutes.lifetime_unlock';
 const STORAGE_KEY = 'gospel_premium_purchased';
 
 interface ProductInfo {

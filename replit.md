@@ -8,7 +8,8 @@
 - **Download**: Free to download from App Store
 - **Paywall**: App requires one-time purchase on first launch
 - **Payment Processing**: Native iOS StoreKit 2 (no third-party services)
-- **Product ID**: `com.thegospelin5minutes.premium`
+- **Product ID**: `com.tstaten.gospelin5minutes.lifetime_unlock` (matches App Store Connect)
+- **Apple ID**: 675500734
 - **Features After Purchase**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, videos, Bible studies, trivia, full search, bookmarks & notes
 
 ## User Preferences
