@@ -1202,8 +1202,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   // Bible Trivia Route - Using curated questions with Bible API verses
   const bibleTriviaSchema = z.object({
-    difficulty: z.enum(['easy', 'medium', 'difficult']),
-    count: z.number().min(1).max(10).default(10)
+    level: z.enum(['beginner', 'student', 'scholar', 'expert']).default('beginner'),
+    count: z.number().min(1).max(10).default(10),
+    useAI: z.boolean().default(true)
   });
 
   // Curated Bible trivia questions organized by difficulty
@@ -1398,52 +1399,92 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   app.post("/api/bible-trivia", async (req, res) => {
     try {
-      const { difficulty, count } = bibleTriviaSchema.parse(req.body);
-      console.log("Bible Trivia - Difficulty:", difficulty, "Count:", count);
+      const { level, count, useAI } = bibleTriviaSchema.parse(req.body);
+      console.log("Bible Trivia - Level:", level, "Count:", count, "AI:", useAI);
 
-      // Get questions for the specified difficulty
-      const questionPool = triviaQuestions[difficulty];
-      
-      // Shuffle and select the requested number of questions
-      const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
-      const selectedQuestions = shuffled.slice(0, Math.min(count, questionPool.length));
+      let questions: any[];
 
-      // Fetch actual verse text from Bible API for questions that have verse references
-      const questionsWithVerses = await Promise.all(
-        selectedQuestions.map(async (q, index) => {
-          let verseReference = null;
-          let verseText = null;
-          
-          if (q.verse) {
-            try {
-              const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
-              if (verseData) {
-                verseReference = verseData.reference;
-                // Clean the HTML tags from the verse content
-                verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
+      if (useAI) {
+        // Use AI to generate dynamic questions
+        const { generateAITriviaQuestions } = await import('./ai-trivia-generator.js');
+        const aiQuestions = await generateAITriviaQuestions(level, count);
+        
+        // Fetch verse text from Bible API
+        questions = await Promise.all(
+          aiQuestions.map(async (q, index) => {
+            let verseText = null;
+            
+            if (q.verse) {
+              try {
+                const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
+                if (verseData) {
+                  verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
+                }
+              } catch (error) {
+                console.log(`Could not fetch verse ${q.verse}:`, error);
               }
-            } catch (error) {
-              console.log(`Could not fetch verse ${q.verse} from Bible API:`, error);
-              // Fallback to verse ID
-              verseReference = q.verse;
             }
-          }
 
-          return {
-            id: index + 1,
-            question: q.question,
-            options: q.options,
-            correctAnswer: q.correctAnswer,
-            verse: verseReference || q.verse,
-            verseText: verseText,
-            difficulty: difficulty
-          };
-        })
-      );
+            return {
+              id: index + 1,
+              question: q.question,
+              options: q.options,
+              correctAnswer: q.correctAnswer,
+              verse: q.verse,
+              verseText: verseText,
+              explanation: q.explanation,
+              level: level
+            };
+          })
+        );
+      } else {
+        // Fallback to static questions (map old difficulty to new levels)
+        const difficultyMap: Record<string, 'easy' | 'medium' | 'difficult'> = {
+          beginner: 'easy',
+          student: 'medium',
+          scholar: 'difficult',
+          expert: 'difficult'
+        };
+        const difficulty = difficultyMap[level];
+        const questionPool = triviaQuestions[difficulty];
+        
+        const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
+        const selectedQuestions = shuffled.slice(0, Math.min(count, questionPool.length));
+
+        questions = await Promise.all(
+          selectedQuestions.map(async (q, index) => {
+            let verseReference = null;
+            let verseText = null;
+            
+            if (q.verse) {
+              try {
+                const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
+                if (verseData) {
+                  verseReference = verseData.reference;
+                  verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
+                }
+              } catch (error) {
+                console.log(`Could not fetch verse ${q.verse}:`, error);
+                verseReference = q.verse;
+              }
+            }
+
+            return {
+              id: index + 1,
+              question: q.question,
+              options: q.options,
+              correctAnswer: q.correctAnswer,
+              verse: verseReference || q.verse,
+              verseText: verseText,
+              level: level
+            };
+          })
+        );
+      }
 
       res.json({
         success: true,
-        questions: questionsWithVerses
+        questions
       });
 
     } catch (error) {
@@ -1452,7 +1493,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (error instanceof z.ZodError) {
         return res.status(400).json({
           success: false,
-          error: "Invalid request format. Please specify difficulty and count."
+          error: "Invalid request format."
         });
       }
 
