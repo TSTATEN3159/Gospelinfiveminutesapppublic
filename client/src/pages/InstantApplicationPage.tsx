@@ -39,9 +39,8 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
         throw new Error(data.error || 'Failed to fetch verse');
       }
 
-      // Extract just the verse text without the reference header
-      const text = data.text.replace(/^.+?\n\n/, '').trim();
-      setVerseText(text);
+      // Set the verse text from API response
+      setVerseText(data.text.trim());
       
       toast({
         title: "Verse Loaded",

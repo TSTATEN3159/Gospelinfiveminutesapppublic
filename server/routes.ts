@@ -315,16 +315,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(500).json({ success: false, error: 'API key not configured' });
       }
 
-      // Parse reference (e.g., "Genesis 1-3" or "Matthew 5")
-      const parseReference = (ref: string): { book: string; startChapter: number; endChapter?: number } | null => {
-        const match = ref.match(/^(.+?)\s+(\d+)(?:-(\d+))?$/);
-        if (!match) return null;
+      // Parse reference - supports multiple formats:
+      // "Philippians 4:6-7" (verse range)
+      // "John 3:16" (single verse)
+      // "Genesis 1-3" (chapter range)
+      // "Matthew 5" (single chapter)
+      const parseReference = (ref: string): { 
+        book: string; 
+        chapter?: number;
+        startVerse?: number;
+        endVerse?: number;
+        startChapter?: number; 
+        endChapter?: number;
+        type: 'verse' | 'chapter';
+      } | null => {
+        // Try verse format first: "Philippians 4:6-7" or "John 3:16"
+        const verseMatch = ref.match(/^(.+?)\s+(\d+):(\d+)(?:-(\d+))?$/);
+        if (verseMatch) {
+          return {
+            book: verseMatch[1].trim(),
+            chapter: parseInt(verseMatch[2]),
+            startVerse: parseInt(verseMatch[3]),
+            endVerse: verseMatch[4] ? parseInt(verseMatch[4]) : parseInt(verseMatch[3]),
+            type: 'verse'
+          };
+        }
         
-        return {
-          book: match[1].trim(),
-          startChapter: parseInt(match[2]),
-          endChapter: match[3] ? parseInt(match[3]) : undefined
-        };
+        // Try chapter format: "Genesis 1-3" or "Matthew 5"
+        const chapterMatch = ref.match(/^(.+?)\s+(\d+)(?:-(\d+))?$/);
+        if (chapterMatch) {
+          return {
+            book: chapterMatch[1].trim(),
+            startChapter: parseInt(chapterMatch[2]),
+            endChapter: chapterMatch[3] ? parseInt(chapterMatch[3]) : undefined,
+            type: 'chapter'
+          };
+        }
+        
+        return null;
       };
 
       // Map book names to API.Bible book IDs
@@ -351,7 +379,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!parsed) {
         return res.status(400).json({ 
           success: false, 
-          error: 'Invalid reference format. Use format like "Genesis 1-3" or "Matthew 5"' 
+          error: 'Invalid reference format. Use "John 3:16", "Philippians 4:6-7", "Genesis 1-3", or "Matthew 5"' 
         });
       }
 
@@ -363,16 +391,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Fetch chapters
-      const endChapter = parsed.endChapter || parsed.startChapter;
-      const chapters: string[] = [];
-      
-      for (let chapterNum = parsed.startChapter; chapterNum <= endChapter; chapterNum++) {
-        const chapterId = `${bookId}.${chapterNum}`;
+      let text = '';
+
+      // Handle verse references (e.g., "Philippians 4:6-7" or "John 3:16")
+      if (parsed.type === 'verse') {
+        const verseId = `${bookId}.${parsed.chapter}.${parsed.startVerse}-${bookId}.${parsed.chapter}.${parsed.endVerse}`;
         
         try {
           const response = await fetch(
-            `https://api.scripture.api.bible/v1/bibles/${bibleId}/chapters/${chapterId}`,
+            `https://api.scripture.api.bible/v1/bibles/${bibleId}/verses/${verseId}?content-type=text`,
             {
               headers: { 'api-key': API_KEY }
             }
@@ -380,32 +407,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           if (response.ok) {
             const data = await response.json();
-            // Strip HTML and clean up the text
+            // Clean up the text
             const cleanText = data.data.content
               .replace(/<\/?[^>]+(>|$)/g, '') // Remove HTML tags
-              .replace(/\[.*?\]/g, '') // Remove verse numbers in brackets
+              .replace(/\[\d+\]/g, '') // Remove verse numbers in brackets
               .replace(/\n{3,}/g, '\n\n') // Clean up excessive newlines
               .trim();
             
-            chapters.push(`${parsed.book} ${chapterNum}\n\n${cleanText}`);
+            text = cleanText;
+          } else {
+            throw new Error(`API returned ${response.status}`);
           }
         } catch (err) {
-          console.error(`Failed to fetch chapter ${chapterId}:`, err);
+          console.error(`Failed to fetch verse ${verseId}:`, err);
+          return res.status(404).json({ 
+            success: false, 
+            error: 'Failed to fetch verse. Please check your reference and try again.' 
+          });
         }
-      }
+      } 
+      // Handle chapter references (e.g., "Genesis 1-3" or "Matthew 5")
+      else {
+        const endChapter = parsed.endChapter || parsed.startChapter;
+        const chapters: string[] = [];
+        
+        for (let chapterNum = parsed.startChapter!; chapterNum <= endChapter; chapterNum++) {
+          const chapterId = `${bookId}.${chapterNum}`;
+          
+          try {
+            const response = await fetch(
+              `https://api.scripture.api.bible/v1/bibles/${bibleId}/chapters/${chapterId}`,
+              {
+                headers: { 'api-key': API_KEY }
+              }
+            );
+            
+            if (response.ok) {
+              const data = await response.json();
+              // Strip HTML and clean up the text
+              const cleanText = data.data.content
+                .replace(/<\/?[^>]+(>|$)/g, '') // Remove HTML tags
+                .replace(/\[.*?\]/g, '') // Remove verse numbers in brackets
+                .replace(/\n{3,}/g, '\n\n') // Clean up excessive newlines
+                .trim();
+              
+              chapters.push(`${parsed.book} ${chapterNum}\n\n${cleanText}`);
+            }
+          } catch (err) {
+            console.error(`Failed to fetch chapter ${chapterId}:`, err);
+          }
+        }
 
-      if (chapters.length === 0) {
-        return res.status(404).json({ 
-          success: false, 
-          error: 'Failed to fetch any chapters' 
-        });
+        if (chapters.length === 0) {
+          return res.status(404).json({ 
+            success: false, 
+            error: 'Failed to fetch any chapters' 
+          });
+        }
+
+        text = chapters.join('\n\n---\n\n');
       }
 
       res.json({
         success: true,
         reference: reference as string,
-        content: chapters.join('\n\n---\n\n'),
-        chapters: chapters.length
+        text: text
       });
       
     } catch (error: any) {
