@@ -1,0 +1,251 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+echo "=== iOS StoreKit 2 setup (no-Xcode) ==="
+
+# 1) Basic project checks
+if [ ! -f package.json ]; then
+  echo "ERROR: No package.json found. Run this from your project root."
+  exit 1
+fi
+
+# 2) Ensure Capacitor deps
+need_install=""
+jq -e '.dependencies["@capacitor/core"]' package.json >/dev/null 2>&1 || need_install="yes"
+jq -e '.devDependencies["@capacitor/cli"]' package.json >/dev/null 2>&1 || need_install="yes"
+
+if [ "${need_install:-}" = "yes" ]; then
+  echo "Installing Capacitor deps..."
+  npm i -D @capacitor/cli >/dev/null 2>&1 || npm i -D @capacitor/cli
+  npm i @capacitor/core >/dev/null 2>&1 || npm i @capacitor/core
+else
+  echo "Capacitor already present."
+fi
+
+# 3) Ensure iOS platform exists
+if [ ! -d ios ]; then
+  echo "Adding iOS platform..."
+  npx cap add ios
+else
+  echo "iOS platform already exists."
+fi
+
+# 4) Write StoreKit bridge (Swift) in correct path
+SWIFT_PATH="ios/App/App/StoreKitBridge.swift"
+mkdir -p "$(dirname "$SWIFT_PATH")"
+
+cat > "$SWIFT_PATH" <<'SWIFT'
+import Foundation
+import StoreKit
+import Capacitor
+
+@objc(StoreKitBridge)
+public class StoreKitBridge: CAPPlugin {
+
+  private var products: [Product] = []
+
+  @objc func loadProducts(_ call: CAPPluginCall) {
+    guard let ids = call.getArray("productIds", String.self), !ids.isEmpty else {
+      call.reject("Missing productIds"); return
+    }
+    Task {
+      do {
+        let fetched = try await Product.products(for: ids)
+        self.products = fetched
+        let result = fetched.map { p in [
+          "id": p.id,
+          "displayName": p.displayName,
+          "description": p.description,
+          "price": p.displayPrice,
+          "type": p.type == .autoRenewable ? "autoRenewable" :
+                   (p.type == .nonConsumable ? "nonConsumable" :
+                    (p.type == .nonRenewable ? "nonRenewable" : "consumable"))
+        ] }
+        call.resolve(["products": result])
+      } catch {
+        call.reject("loadProducts failed: \(error.localizedDescription)")
+      }
+    }
+  }
+
+  @objc func purchase(_ call: CAPPluginCall) {
+    let productId = call.getString("productId") ?? ""
+    guard let product = products.first(where: { $0.id == productId }) else {
+      call.reject("Unknown productId \(productId). Call loadProducts first."); return
+    }
+    Task {
+      do {
+        let result = try await product.purchase()
+        switch result {
+        case .success(let verification):
+          let transaction = try self.verify(verification)
+          await transaction.finish()
+          call.resolve(["status": "success", "productId": productId])
+        case .userCancelled:
+          call.resolve(["status": "cancelled"])
+        case .pending:
+          call.resolve(["status": "pending"])
+        @unknown default:
+          call.resolve(["status": "unknown"])
+        }
+      } catch {
+        call.reject("purchase failed: \(error.localizedDescription)")
+      }
+    }
+  }
+
+  @objc func restore(_ call: CAPPluginCall) {
+    Task {
+      do {
+        try await AppStore.sync()
+        let active = try await self.currentEntitlements()
+        call.resolve(["entitlements": active])
+      } catch {
+        call.reject("restore failed: \(error.localizedDescription)")
+      }
+    }
+  }
+
+  @objc func getEntitlements(_ call: CAPPluginCall) {
+    Task {
+      do {
+        let active = try await self.currentEntitlements()
+        call.resolve(["entitlements": active])
+      } catch {
+        call.reject("getEntitlements failed: \(error.localizedDescription)")
+      }
+    }
+  }
+
+  private func verify<T>(_ result: VerificationResult<T>) throws -> T {
+    switch result {
+    case .unverified(_, let error): throw error
+    case .verified(let safe): return safe
+    }
+  }
+
+  private func currentEntitlements() async throws -> [[String: Any]] {
+    var out: [[String: Any]] = []
+    for await ent in Transaction.currentEntitlements {
+      let t = try verify(ent)
+      out.append([
+        "productId": t.productID,
+        "revocationDate": t.revocationDate?.timeIntervalSince1970 as Any,
+        "expirationDate": t.expirationDate?.timeIntervalSince1970 as Any,
+        "isUpgraded": t.isUpgraded,
+        "ownershipType": t.ownershipType == .familyShared ? "familyShared" : "purchased"
+      ])
+    }
+    return out
+  }
+
+  public override func load() {
+    Task.detached { [weak self] in
+      for await update in Transaction.updates {
+        do {
+          let t = try self?.verify(update)
+          await t?.finish()
+        } catch { /* ignore */ }
+      }
+    }
+  }
+}
+SWIFT
+
+echo "Wrote $SWIFT_PATH"
+
+# 5) Write TS glue (safe to overwrite)
+JS_PATH="src/lib/storekit.ts"
+mkdir -p "$(dirname "$JS_PATH")"
+
+cat > "$JS_PATH" <<'TS'
+import { Capacitor } from '@capacitor/core';
+
+type ProductInfo = { id: string; displayName: string; description: string; price: string; type: string };
+type Entitlement = { productId: string; expirationDate?: number | null; revocationDate?: number | null; ownershipType?: string };
+
+const plugin =
+  (Capacitor as any).Plugins?.StoreKitBridge ||
+  (window as any).Capacitor?.Plugins?.StoreKitBridge;
+
+function assertPlugin() {
+  if (!plugin) throw new Error('StoreKitBridge not found (iOS build only). Did you run: npx cap sync ios ?');
+}
+
+export async function loadProducts(productIds: string[]): Promise<ProductInfo[]> {
+  assertPlugin();
+  const res = await plugin.loadProducts({ productIds });
+  return res.products as ProductInfo[];
+}
+
+export async function purchase(productId: string): Promise<'success'|'pending'|'cancelled'|'unknown'> {
+  assertPlugin();
+  const res = await plugin.purchase({ productId });
+  return res.status as any;
+}
+
+export async function restore(): Promise<Entitlement[]> {
+  assertPlugin();
+  const res = await plugin.restore({});
+  return res.entitlements as Entitlement[];
+}
+
+export async function getEntitlements(): Promise<Entitlement[]> {
+  assertPlugin();
+  const res = await plugin.getEntitlements({});
+  return res.entitlements as Entitlement[];
+}
+TS
+
+echo "Wrote $JS_PATH"
+
+# 6) Ensure package.json has a handy script
+if ! jq -e '.scripts' package.json >/dev/null 2>&1; then
+  tmp=$(mktemp)
+  jq '. + {scripts: { "sync:ios": "npx cap sync ios" }}' package.json > "$tmp" && mv "$tmp" package.json
+elif ! jq -e '.scripts["sync:ios"]' package.json >/dev/null 2>&1; then
+  tmp=$(mktemp)
+  jq '.scripts += { "sync:ios": "npx cap sync ios" }' package.json > "$tmp" && mv "$tmp" package.json
+fi
+echo "Added npm script: npm run sync:ios"
+
+# 7) Sync iOS so the Swift plugin is compiled into the Xcode project files
+echo "Running: npx cap sync ios"
+npx cap sync ios
+
+# 8) Post-sync verification
+PLUGIN_HDR="ios/App/App.xcodeproj/project.pbxproj"
+if grep -q "StoreKitBridge.swift" "$PLUGIN_HDR"; then
+  echo "✅ StoreKitBridge.swift is referenced in the iOS project."
+else
+  echo "❌ StoreKitBridge.swift not referenced in Xcode project. Re-run: npx cap sync ios"
+  exit 1
+fi
+
+# 9) Tips to avoid common gotchas
+cat <<'TIP'
+
+=== Next steps / sanity checks ===
+1) Use these EXACT product IDs from App Store Connect in your React code:
+   const PRODUCT_IDS = ['com.yourapp.monthly', 'com.yourapp.annual'];
+
+2) Before testing purchases on device:
+   - Build → upload to TestFlight via your cloud CI (Appflow/Codemagic/etc).
+   - On your device, sign in with a *Sandbox Tester* Apple ID.
+   - Install the TestFlight build and try: loadProducts → purchase → getEntitlements.
+
+3) If products come back empty:
+   - Double-check identifiers & product state (must be Ready to Submit/Use) in App Store Connect.
+   - Ensure your bundle id matches the one with those products.
+
+4) If JS says “StoreKitBridge not found”:
+   - You’re running in the web browser or didn’t sync the native project.
+   - Run: npm run sync:ios
+   - Rebuild the iOS app in the cloud.
+
+5) Always include a Restore button anywhere you sell access (App Review requirement).
+
+All set. Commit & push, then kick your cloud iOS build.
+TIP
+
+echo "Done."
