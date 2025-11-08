@@ -133,17 +133,10 @@ export default function PaywallPage() {
           <div className="bg-muted/50 rounded-lg p-4 text-center">
             <div className="text-sm text-muted-foreground mb-1">One-time payment</div>
             <div className="text-3xl font-bold text-primary">
-              {isTestFlight ? (
-                <>
-                  <span className="line-through opacity-50">{price}</span>{' '}
-                  <span className="text-green-600 dark:text-green-400">FREE</span>
-                </>
-              ) : (
-                price
-              )}
+              {price}
             </div>
             <div className="text-xs text-muted-foreground mt-1">
-              {isTestFlight ? 'Sandbox testing • No actual charge' : 'Lifetime access • No subscriptions'}
+              {isTestFlight ? 'TestFlight (Sandbox) • No real charges' : 'Lifetime access • No subscriptions'}
             </div>
           </div>
 
