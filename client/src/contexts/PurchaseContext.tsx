@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { Capacitor } from '@capacitor/core';
-import { loadProducts, getEntitlements, purchase, restore } from '@/lib/storekit';
+import { loadProducts, getEntitlements, purchase, restore, presentOfferCodeRedemption } from '@/lib/storekit';
 import { isTestFlightBuild } from '@/lib/testflight';
 
 const PRODUCT_ID = '01version101';
@@ -26,6 +26,7 @@ interface PurchaseContextType {
   products: ProductInfo[];
   purchaseProduct: (productId: string) => Promise<'success' | 'pending' | 'cancelled' | 'unknown'>;
   restorePurchases: () => Promise<{ success: boolean; message: string }>;
+  redeemOfferCode: () => Promise<void>;
 }
 
 const PurchaseContext = createContext<PurchaseContextType | undefined>(undefined);
@@ -148,8 +149,48 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
     }
   }
 
+  async function redeemOfferCode() {
+    try {
+      if (!Capacitor.isNativePlatform()) {
+        console.log('[Purchase] Web platform - offer code redemption not available');
+        throw new Error('Offer code redemption is only available in the iOS app. Please download from the App Store.');
+      }
+
+      // Present Apple's native offer code redemption sheet
+      await presentOfferCodeRedemption();
+      
+      // After user enters code and redeems, check for new entitlements
+      // Note: There may be a delay, so we retry a few times
+      await new Promise(resolve => setTimeout(resolve, 1000));
+      
+      for (let i = 0; i < 3; i++) {
+        const ents = await getEntitlements();
+        const active = isActiveEntitlement(ents);
+        
+        if (active) {
+          setIsPremium(true);
+          localStorage.setItem(STORAGE_KEY, 'true');
+          console.log('[Purchase] Offer code redeemed successfully');
+          return;
+        }
+        
+        // Wait before next check
+        if (i < 2) {
+          await new Promise(resolve => setTimeout(resolve, 1500));
+        }
+      }
+      
+      // Even if we don't detect it yet, the user may have redeemed it
+      // The transaction listener will pick it up
+      console.log('[Purchase] Offer code sheet presented');
+    } catch (error) {
+      console.error('[Purchase] Offer code redemption error:', error);
+      throw error;
+    }
+  }
+
   return (
-    <PurchaseContext.Provider value={{ isPremium, isLoading, isTestFlight, products, purchaseProduct, restorePurchases }}>
+    <PurchaseContext.Provider value={{ isPremium, isLoading, isTestFlight, products, purchaseProduct, restorePurchases, redeemOfferCode }}>
       {children}
     </PurchaseContext.Provider>
   );

@@ -34,3 +34,8 @@ export async function getEntitlements(): Promise<Entitlement[]> {
   const res = await plugin.getEntitlements({});
   return res.entitlements as Entitlement[];
 }
+
+export async function presentOfferCodeRedemption(): Promise<void> {
+  assertPlugin();
+  await plugin.presentOfferCodeRedemption({});
+}

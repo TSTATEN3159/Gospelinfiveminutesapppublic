@@ -86,6 +86,31 @@ public class StoreKitBridge: CAPPlugin {
     }
   }
 
+  // presentOfferCodeRedemption()
+  @objc func presentOfferCodeRedemption(_ call: CAPPluginCall) {
+    DispatchQueue.main.async {
+      if #available(iOS 16.0, *) {
+        Task {
+          do {
+            guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene else {
+              call.reject("No window scene available")
+              return
+            }
+            try await AppStore.presentOfferCodeRedeemSheet(in: scene)
+            call.resolve(["status": "presented"])
+          } catch {
+            call.reject("presentOfferCodeRedemption failed: \(error.localizedDescription)")
+          }
+        }
+      } else if #available(iOS 14.0, *) {
+        SKPaymentQueue.default().presentCodeRedemptionSheet()
+        call.resolve(["status": "presented"])
+      } else {
+        call.reject("Offer code redemption requires iOS 14.0 or later")
+      }
+    }
+  }
+
   // MARK: - Helpers
 
   /// Verifies a StoreKit 2 VerificationResult and returns the verified payload or throws.

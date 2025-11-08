@@ -3,13 +3,14 @@ import { usePurchase } from '@/contexts/PurchaseContext';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
-import { Check, Sparkles, BookOpen, Heart, MessageCircle, Video, Calendar, TestTube } from 'lucide-react';
+import { Check, Sparkles, BookOpen, Heart, MessageCircle, Video, Calendar, TestTube, Gift } from 'lucide-react';
 import appIcon from '@assets/../app_store_assets/app_store_icon_1024x1024.png';
 
 export default function PaywallPage() {
-  const { products, purchaseProduct, restorePurchases, isTestFlight } = usePurchase();
+  const { products, purchaseProduct, restorePurchases, redeemOfferCode, isTestFlight } = usePurchase();
   const [isPurchasing, setIsPurchasing] = useState(false);
   const [isRestoring, setIsRestoring] = useState(false);
+  const [isRedeeming, setIsRedeeming] = useState(false);
   const { toast } = useToast();
 
   const features = [
@@ -92,6 +93,26 @@ export default function PaywallPage() {
     }
   }
 
+  async function handleRedeemCode() {
+    setIsRedeeming(true);
+    try {
+      await redeemOfferCode();
+      toast({
+        title: 'Offer code redemption',
+        description: 'If you entered a valid code, your access will be activated shortly.',
+      });
+    } catch (error: any) {
+      console.error('[Paywall] Redeem error:', error);
+      toast({
+        title: 'Redemption Unavailable',
+        description: error?.message || 'Offer code redemption is only available in the iOS app.',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsRedeeming(false);
+    }
+  }
+
   const product = products?.[0];
   const price = product?.price || '$3.99';
 
@@ -170,6 +191,37 @@ export default function PaywallPage() {
                 <span className="flex items-center gap-2">
                   <Sparkles className="w-4 h-4" />
                   Unlock for {price}
+                </span>
+              )}
+            </Button>
+
+            {/* Divider */}
+            <div className="relative">
+              <div className="absolute inset-0 flex items-center">
+                <div className="w-full border-t border-amber-200 dark:border-amber-800"></div>
+              </div>
+              <div className="relative flex justify-center text-xs uppercase">
+                <span className="bg-background px-2 text-muted-foreground">Or</span>
+              </div>
+            </div>
+
+            {/* Redeem Code Button */}
+            <Button
+              onClick={handleRedeemCode}
+              disabled={isRedeeming}
+              variant="outline"
+              className="w-full border-amber-300 dark:border-amber-700 text-amber-700 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-950"
+              data-testid="button-redeem-code"
+            >
+              {isRedeeming ? (
+                <span className="flex items-center gap-2">
+                  <Gift className="w-4 h-4 animate-pulse" />
+                  Opening...
+                </span>
+              ) : (
+                <span className="flex items-center gap-2">
+                  <Gift className="w-4 h-4" />
+                  Redeem Offer Code
                 </span>
               )}
             </Button>
