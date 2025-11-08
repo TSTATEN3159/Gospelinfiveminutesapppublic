@@ -192,12 +192,12 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
               {isLoadingVerse ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />
-                  Fetching Verse...
+                  Loading Verse...
                 </>
               ) : (
                 <>
                   <BookOpen className="w-5 h-5 mr-3" />
-                  Fetch Verse
+                  Load Verse
                 </>
               )}
             </Button>

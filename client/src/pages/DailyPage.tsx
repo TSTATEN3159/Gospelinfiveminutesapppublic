@@ -13,54 +13,58 @@ const dailyFeatures = [
   {
     id: "devotionals",
     title: "365 Daily Devotionals",
-    description: "Daily scripture, devotion, and practical application for your spiritual growth",
+    description: "Daily scripture, devotion, and practical application for spiritual growth",
     icon: Calendar,
     image: dailyDevotionsImage,
-    overlay: 'from-amber-900/70 via-amber-600/20',
-    border: 'border-amber-200',
-    iconBg: 'bg-amber-100',
-    iconBorder: 'border-amber-200/60',
-    iconRing: 'ring-amber-300/50',
-    iconColor: 'text-amber-700'
+    overlay: 'from-amber-600/80 via-orange-500/40',
+    border: 'border-amber-200/50',
+    gradientFrom: 'from-amber-500',
+    gradientTo: 'to-orange-500',
+    iconBg: 'bg-gradient-to-br from-amber-500 to-orange-500',
+    iconColor: 'text-white',
+    glowColor: 'rgba(245, 158, 11, 0.2)'
   },
   {
     id: "reading-plans",
     title: "Bible Reading Plans",
-    description: "1-year whole Bible, 6-month OT, and 6-month NT plans with progress tracking",
+    description: "1-year whole Bible, 6-month OT & NT plans with progress tracking",
     icon: BookOpen,
     image: readingPlansImage,
-    overlay: 'from-emerald-900/70 via-emerald-600/20',
-    border: 'border-emerald-200',
-    iconBg: 'bg-emerald-100',
-    iconBorder: 'border-emerald-200/60',
-    iconRing: 'ring-emerald-300/50',
-    iconColor: 'text-emerald-700'
+    overlay: 'from-emerald-600/80 via-green-500/40',
+    border: 'border-emerald-200/50',
+    gradientFrom: 'from-emerald-500',
+    gradientTo: 'to-green-500',
+    iconBg: 'bg-gradient-to-br from-emerald-500 to-green-500',
+    iconColor: 'text-white',
+    glowColor: 'rgba(16, 185, 129, 0.2)'
   },
   {
     id: "plain-meaning",
     title: "Plain Meaning",
-    description: "Transform any verse into simple, everyday language that keeps theological integrity",
+    description: "Scripture in everyday language while preserving theological integrity",
     icon: Lightbulb,
     image: plainMeaningImage,
-    overlay: 'from-blue-900/70 via-blue-600/20',
-    border: 'border-blue-200',
-    iconBg: 'bg-blue-100',
-    iconBorder: 'border-blue-200/60',
-    iconRing: 'ring-blue-300/50',
-    iconColor: 'text-blue-700'
+    overlay: 'from-blue-600/80 via-cyan-500/40',
+    border: 'border-blue-200/50',
+    gradientFrom: 'from-blue-500',
+    gradientTo: 'to-cyan-500',
+    iconBg: 'bg-gradient-to-br from-blue-500 to-cyan-500',
+    iconColor: 'text-white',
+    glowColor: 'rgba(59, 130, 246, 0.2)'
   },
   {
     id: "instant-application",
     title: "Instant Application",
-    description: "Get a simple 'Try This Today' action to live out any verse in practical terms",
+    description: "Get one simple action to live out any verse today",
     icon: CheckCircle,
     image: instantApplicationImage,
-    overlay: 'from-purple-900/70 via-purple-600/20',
-    border: 'border-purple-200',
-    iconBg: 'bg-purple-100',
-    iconBorder: 'border-purple-200/60',
-    iconRing: 'ring-purple-300/50',
-    iconColor: 'text-purple-700'
+    overlay: 'from-purple-600/80 via-pink-500/40',
+    border: 'border-purple-200/50',
+    gradientFrom: 'from-purple-500',
+    gradientTo: 'to-pink-500',
+    iconBg: 'bg-gradient-to-br from-purple-500 to-pink-500',
+    iconColor: 'text-white',
+    glowColor: 'rgba(147, 51, 234, 0.2)'
   }
 ];
 
@@ -84,45 +88,64 @@ export default function DailyPage({ onNavigate }: DailyPageProps) {
         </div>
       </div>
 
-      {/* Feature Tiles */}
-      <div className="max-w-sm mx-auto space-y-4 px-4 py-6">
+      {/* Feature Tiles - Premium Liquid Glass */}
+      <div className="max-w-sm mx-auto space-y-5 px-4 py-6">
         {dailyFeatures.map((feature) => (
-          <Card 
+          <div
             key={feature.id}
-            className={`bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 ${feature.border} cursor-pointer transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 ring-4 ring-white/50 hover:ring-white/70 backdrop-blur-sm`}
+            className="relative cursor-pointer group"
             onClick={() => handleFeatureClick(feature.id)}
             data-testid={`tile-${feature.id}`}
           >
-            {/* Image Header */}
-            <div className="relative h-32">
-              <img 
-                src={feature.image}
-                alt={feature.title}
-                className="w-full h-full object-cover"
-              />
-              <div className={`absolute inset-0 bg-gradient-to-t ${feature.overlay} to-transparent`} />
-            </div>
-
-            {/* Content */}
-            <CardContent className="p-4">
-              <div className="flex items-center justify-between min-h-[40px]">
-                <div className="flex items-center gap-3 flex-1">
-                  <div className={`w-10 h-10 ${feature.iconBg} rounded-full flex items-center justify-center shadow-lg border-2 ${feature.iconBorder} ring-1 ${feature.iconRing}`}>
-                    <feature.icon className={`w-5 h-5 ${feature.iconColor} stroke-[1.5]`} />
+            {/* Liquid Glass Card */}
+            <Card 
+              className={`relative rounded-3xl overflow-hidden backdrop-blur-2xl bg-white/40 dark:bg-gray-900/40 border ${feature.border} dark:border-gray-700/50 shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_20px_60px_-15px] group-hover:-translate-y-1`}
+              style={{
+                boxShadow: `0 8px 32px 0 ${feature.glowColor}, inset 0 1px 0 0 rgba(255, 255, 255, 0.5)`
+              }}
+            >
+              {/* Glass shimmer overlay */}
+              <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent opacity-50 pointer-events-none"></div>
+              
+              {/* Image Header with Glass Overlay */}
+              <div className="relative h-36 overflow-hidden">
+                <img 
+                  src={feature.image}
+                  alt={feature.title}
+                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-br ${feature.overlay} to-transparent backdrop-blur-[2px]`} />
+                
+                {/* Glass icon badge */}
+                <div className="absolute bottom-3 right-3">
+                  <div className={`w-12 h-12 ${feature.iconBg} rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden`}>
+                    <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
+                    <feature.icon className={`w-6 h-6 ${feature.iconColor} relative z-10 drop-shadow-lg`} />
+                    <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"></div>
                   </div>
-                  <div className="flex-1">
-                    <h3 className="font-bold text-base text-gray-800 mb-1">
+                </div>
+              </div>
+
+              {/* Content with Glass Background */}
+              <CardContent className="relative p-5 backdrop-blur-xl bg-white/50 dark:bg-gray-900/50">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 pr-3">
+                    <h3 className={`font-bold text-lg bg-gradient-to-r ${feature.gradientFrom} ${feature.gradientTo} bg-clip-text text-transparent mb-1.5 drop-shadow-sm`}>
                       {feature.title}
                     </h3>
-                    <p className="text-xs text-gray-700 leading-relaxed">
+                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
                       {feature.description}
                     </p>
                   </div>
+                  <div className="flex-shrink-0">
+                    <div className="w-10 h-10 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl flex items-center justify-center shadow-lg group-hover:bg-white/80 dark:group-hover:bg-gray-800/80 transition-all duration-300">
+                      <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:translate-x-0.5 transition-transform duration-300" />
+                    </div>
+                  </div>
                 </div>
-                <ChevronRight className="w-5 h-5 text-gray-500 flex-shrink-0 ml-2" />
-              </div>
-            </CardContent>
-          </Card>
+              </CardContent>
+            </Card>
+          </div>
         ))}
       </div>
 
