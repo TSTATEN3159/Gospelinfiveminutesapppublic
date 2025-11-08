@@ -19,6 +19,7 @@ import { Capacitor } from '@capacitor/core';
 import { bibleService, type DailyVerse } from "../services/bibleService";
 import { videoService, type VideoItem } from "../services/videoService";
 import { useTranslations } from "../lib/translations";
+import { widgetUpdater } from "../lib/widgetUpdater";
 
 // Images
 import sunriseImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
@@ -80,6 +81,17 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         
         const verse = await bibleService.getDailyVerse(bibleVersion);
         setDailyVerse(verse);
+        
+        // Update iOS widget with daily verse
+        if (verse) {
+          const theme = widgetUpdater.determineTheme(verse.text, verse.reference);
+          await widgetUpdater.updateDailyVerse({
+            verse: verse.text,
+            reference: verse.reference,
+            theme: theme
+          });
+          console.log(`[Widget] Updated with ${verse.reference} (theme: ${theme})`);
+        }
         
         // Get daily Gospel video using Christian Context API
         const video = await videoService.getDailyGospelVideo();
