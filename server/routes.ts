@@ -395,7 +395,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Handle verse references (e.g., "Philippians 4:6-7" or "John 3:16")
       if (parsed.type === 'verse') {
-        const verseId = `${bookId}.${parsed.chapter}.${parsed.startVerse}-${bookId}.${parsed.chapter}.${parsed.endVerse}`;
+        // API.Bible expects different formats for single verses vs ranges:
+        // Single verse: "JHN.3.16"
+        // Verse range: "JHN.3.16-JHN.3.18"
+        const verseId = parsed.startVerse === parsed.endVerse
+          ? `${bookId}.${parsed.chapter}.${parsed.startVerse}`
+          : `${bookId}.${parsed.chapter}.${parsed.startVerse}-${bookId}.${parsed.chapter}.${parsed.endVerse}`;
         
         try {
           const response = await fetch(
