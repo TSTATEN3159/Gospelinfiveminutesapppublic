@@ -37,15 +37,18 @@ export function PurchaseProvider({ children }: { children: ReactNode }) {
   const [products, setProducts] = useState<ProductInfo[]>([]);
 
   useEffect(() => {
-    initializePurchases();
-    
-    // Check if running in TestFlight
-    isTestFlightBuild().then(isTF => {
-      setIsTestFlight(isTF);
-      if (isTF) {
-        console.log('[Purchase] TestFlight detected - purchases will use sandbox (free for testing)');
-      }
-    });
+    (async () => {
+      // Initialize purchases normally (no bypass in TestFlight)
+      await initializePurchases();
+
+      // TestFlight flag only for UI messaging
+      isTestFlightBuild().then(isTF => {
+        setIsTestFlight(isTF);
+        if (isTF) {
+          console.log('[Purchase] TestFlight detected - purchases will use sandbox (free for testing)');
+        }
+      });
+    })();
   }, []);
 
   async function initializePurchases() {
