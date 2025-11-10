@@ -254,7 +254,7 @@ function MainApp() {
                 onSearchUsed={() => setSearchQuery("")}
               />;
             case "daily":
-              return <DailyPage onNavigate={handleNavigateToLegal} />;
+              return <DailyPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
             case "more":
               return <MorePage language={language} onNavigate={handleNavigateToLegal} streakDays={streakDays} />;
             case "support":

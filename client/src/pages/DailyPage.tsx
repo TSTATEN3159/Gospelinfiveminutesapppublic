@@ -1,5 +1,9 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Calendar, BookOpen, ChevronRight, Lightbulb, CheckCircle } from "lucide-react";
+import { Calendar, BookOpen, ChevronRight, Lightbulb, CheckCircle, Flame, Facebook, Instagram, Share } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import AppLogo from "../components/AppLogo";
+import PersonalizedGreeting from "../components/PersonalizedGreeting";
+import { useTranslations } from "@/lib/translations";
 import dailyDevotionsImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
 import readingPlansImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
 import plainMeaningImage from '@assets/generated_images/Plain_meaning_verse_simplifier_9d1a382e.png';
@@ -7,6 +11,8 @@ import instantApplicationImage from '@assets/generated_images/Instant_applicatio
 
 interface DailyPageProps {
   onNavigate: (page: string) => void;
+  streakDays?: number;
+  language?: string;
 }
 
 const dailyFeatures = [
@@ -68,23 +74,79 @@ const dailyFeatures = [
   }
 ];
 
-export default function DailyPage({ onNavigate }: DailyPageProps) {
+export default function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPageProps) {
+  const t = useTranslations(language);
+  
   const handleFeatureClick = (id: string) => {
     onNavigate(id);
   };
 
   return (
     <div className="min-h-screen pb-20 bg-background">
-      {/* Header */}
-      <div className="bg-gradient-to-br from-primary/5 via-background to-primary/10 px-4 py-8 border-b border-border ios-safe-top">
-        <div className="max-w-sm mx-auto text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 border-2 border-primary/20 mb-4 shadow-lg">
-            <Calendar className="w-8 h-8 text-primary" />
+      {/* Professional Marketing Header */}
+      <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
+        {/* Streak Badge - Top Right */}
+        <div className="flex justify-end mb-6">
+          <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 dark:from-red-950 dark:to-red-900 px-2.5 py-1 rounded-full border border-red-200/50 dark:border-red-800/50 shadow-sm">
+            <Flame className="w-4 h-4 text-red-600 dark:text-red-400 fill-red-600 dark:fill-red-400" />
+            <span className="text-sm font-bold text-red-700 dark:text-red-300">{streakDays}</span>
           </div>
-          <h1 className="text-3xl font-bold text-foreground mb-2">Daily</h1>
-          <p className="text-muted-foreground text-sm">
-            Start your day with God's Word through devotions and reading plans
-          </p>
+        </div>
+        
+        {/* Professional Logo - Centered Above Social Buttons */}
+        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        
+        {/* Personalized Greeting */}
+        <PersonalizedGreeting language={language} />
+        
+        {/* Action Buttons - Refined & Professional */}
+        <div className="flex items-center justify-center gap-2 flex-wrap">
+          {/* Smaller Social Buttons */}
+          <a 
+            href="https://www.facebook.com/TheGospelIn5Minutes" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
+            data-testid="button-facebook-daily"
+            aria-label="Follow us on Facebook - Opens in new window"
+          >
+            <Facebook className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>{t.follow}</span>
+          </a>
+          <a 
+            href="https://www.instagram.com/thegospelinfiveminutes/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
+            data-testid="button-instagram-daily"
+            aria-label="Follow us on Instagram - Opens in new window"
+          >
+            <Instagram className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>{t.follow}</span>
+          </a>
+          
+          {/* Share Button - Professional Green */}
+          <Button 
+            className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
+            data-testid="button-share-daily"
+            aria-label="Share The Gospel in 5 Minutes with friends"
+            onClick={() => {
+              if (navigator.share) {
+                navigator.share({
+                  title: 'The Gospel in 5 Minutes',
+                  text: 'Start your day with God\'s Word! Check out The Gospel in 5 Minutes app.',
+                  url: 'https://www.thegospelin5minutes.org'
+                }).catch(console.error);
+              } else {
+                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
+                  console.log('Link copied to clipboard');
+                }).catch(console.error);
+              }
+            }}
+          >
+            <Share className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>{t.share}</span>
+          </Button>
         </div>
       </div>
 
