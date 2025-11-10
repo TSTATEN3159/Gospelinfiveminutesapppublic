@@ -53,7 +53,6 @@ export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) 
   const firstName = profile.firstName?.trim() || "friend";
   const streakKey = useMemo(() => `streak:${profile.id ?? "anon"}`, [profile.id]);
 
-  const [gender, setGender] = useState<Gender>("men");
   const [day, setDay] = useState<number>(1);
   const [data, setData] = useState<Devotional | null>(null);
   const [loading, setLoading] = useState(false);
@@ -64,18 +63,19 @@ export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) 
     pingPlan().catch(() => void 0);
   }, []);
 
-  // Load initial (men, day 1)
+  // Load initial (day 1)
   useEffect(() => {
     void load();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function load(targetGender = gender, targetDay = day) {
+  async function load(targetDay = day) {
     setLoading(true);
     setErr("");
     try {
       if (targetDay < 1 || targetDay > 365) throw new Error("Pick a day between 1 and 365");
-      const devo = await fetchDevotional(targetGender, targetDay);
+      // Use "men" as default content (gender-neutral devotionals)
+      const devo = await fetchDevotional("men", targetDay);
       setData(devo);
       // streak logic: mark a "read" when we successfully load a day (you can move to a separate "Mark as Read" if preferred)
       const tKey = todayKey();
@@ -136,24 +136,8 @@ export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) 
         {/* Controls Card */}
         <Card className="border-amber-200/50 dark:border-amber-800/50 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl">
           <CardContent className="p-6">
-            <div className="flex flex-wrap items-end gap-4">
-              <div className="flex-1 min-w-[140px]">
-                <label className="text-sm font-semibold text-amber-900 dark:text-amber-100 mb-2 block flex items-center gap-2">
-                  <Heart className="w-4 h-4" />
-                  Audience
-                </label>
-                <select
-                  className="w-full border border-amber-200 dark:border-amber-800 rounded-lg px-4 py-2.5 bg-white dark:bg-gray-900 text-foreground focus:ring-2 focus:ring-amber-500 focus:border-transparent transition-all"
-                  value={gender}
-                  onChange={(e) => setGender(e.target.value as Gender)}
-                  data-testid="select-gender"
-                >
-                  <option value="men">Men</option>
-                  <option value="women">Women</option>
-                </select>
-              </div>
-
-              <div className="flex-1 min-w-[140px]">
+            <div className="flex items-end gap-4">
+              <div className="flex-1">
                 <label className="text-sm font-semibold text-amber-900 dark:text-amber-100 mb-2 block flex items-center gap-2">
                   <Calendar className="w-4 h-4" />
                   Day (1-365)
@@ -202,7 +186,7 @@ export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) 
                     <BookOpen className="w-5 h-5" />
                     <span className="font-semibold" data-testid="text-scripture-ref">{data.scriptureRef}</span>
                   </div>
-                  <span className="text-sm text-white/80">Day {data.day} • {gender === "men" ? "Men" : "Women"}</span>
+                  <span className="text-sm text-white/80">Day {data.day} • All</span>
                 </div>
               </div>
               <CardContent className="p-6">
@@ -253,7 +237,7 @@ export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) 
                 onClick={() => {
                   const prev = Math.max(1, day - 1);
                   setDay(prev);
-                  void load(gender, prev);
+                  void load(prev);
                 }}
                 disabled={day <= 1}
                 data-testid="button-prev-day"
@@ -266,7 +250,7 @@ export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) 
                 onClick={() => {
                   const next = Math.min(365, day + 1);
                   setDay(next);
-                  void load(gender, next);
+                  void load(next);
                 }}
                 disabled={day >= 365}
                 data-testid="button-next-day"
