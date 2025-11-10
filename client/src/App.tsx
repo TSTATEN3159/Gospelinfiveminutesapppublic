@@ -234,12 +234,12 @@ function MainApp() {
       }
     }
 
-    // Show paywall if user hasn't purchased
-    if (!isPremium) {
-      return <PaywallPage />;
-    }
+    // PAYWALL REMOVED - All content is now free
+    // if (!isPremium) {
+    //   return <PaywallPage />;
+    // }
 
-    // Premium content (requires purchase)
+    // All content (now free for everyone)
     switch (currentPage) {
             case "home":
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
