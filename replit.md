@@ -4,15 +4,13 @@
 "The Gospel in 5 Minutes" is a mobile-first spiritual wellness application delivering daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. It aims to combine the peaceful aesthetic of wellness apps with the functionality of Bible apps, offering meaningful spiritual content in digestible 5-minute sessions. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, gamified streak tracking, and comprehensive Bible reading plans.
 
 ## Monetization
-- **Business Model**: One-time $3.99 unlock for lifetime access
+- **Business Model**: Completely FREE (no paywall, no purchases required)
 - **Download**: Free to download from App Store
-- **Paywall**: App requires one-time purchase on first launch
-- **Payment Processing**: Native iOS StoreKit 2 (no third-party services)
-- **Product ID**: `01version101` (matches App Store Connect)
+- **Access**: All features available immediately upon download
+- **Previous IAP System**: StoreKit 2 integration code remains in codebase (PaywallPage.tsx, PurchaseContext.tsx) but is disabled
+- **Product ID**: `01version101` (configured but not actively used)
 - **Apple ID**: 675500734
-- **TestFlight Testing**: TestFlight builds show paywall with visual indicator that purchases are FREE using sandbox Apple IDs (allows testing full purchase flow)
-- **Production**: App Store builds require real $3.99 purchase (paywall enforced)
-- **Features After Purchase**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, videos, Bible studies, trivia, full search, bookmarks & notes
+- **All Features Free**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, videos, Bible studies, trivia, full search, bookmarks & notes, Plain Meaning, Instant Application
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
