@@ -1,8 +1,8 @@
 import { useState, useEffect, useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent } from "@/components/ui/card";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, ChevronLeft, ChevronRight, Check, BookOpen, ChevronDown, ChevronUp, Loader2 } from "lucide-react";
+import { ArrowLeft, ChevronLeft, ChevronRight, Check, BookOpen, ChevronDown, ChevronUp, Loader2, Flame, Calendar } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { apiUrl } from "@/lib/api-config";
@@ -182,7 +182,7 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
 
   if (isLoading) {
     return (
-      <div className="min-h-screen pb-20 bg-background flex items-center justify-center">
+      <div className="min-h-screen pb-20 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 dark:from-zinc-900 dark:via-stone-900 dark:to-neutral-900 flex items-center justify-center">
         <p className="text-muted-foreground">Loading plan...</p>
       </div>
     );
@@ -190,7 +190,7 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
 
   if (!planData) {
     return (
-      <div className="min-h-screen pb-20 bg-background flex items-center justify-center">
+      <div className="min-h-screen pb-20 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 dark:from-zinc-900 dark:via-stone-900 dark:to-neutral-900 flex items-center justify-center">
         <p className="text-muted-foreground">Plan not found</p>
       </div>
     );
@@ -200,53 +200,61 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
   const isCurrentDayComplete = !!localProgress[currentDay];
 
   return (
-    <div className="min-h-screen pb-20 bg-background">
+    <div className="min-h-screen pb-20 bg-gradient-to-br from-emerald-50 via-green-50 to-teal-50 dark:from-zinc-900 dark:via-stone-900 dark:to-neutral-900">
       {/* Header */}
-      <div className="bg-gradient-to-br from-primary/5 via-background to-primary/10 px-4 py-6 border-b border-border ios-safe-top">
-        <div className="max-w-2xl mx-auto">
+      <div className="bg-gradient-to-br from-emerald-100/80 to-green-100/80 dark:from-emerald-950/80 dark:to-green-950/80 backdrop-blur-xl border-b border-emerald-200/50 dark:border-emerald-900/30 ios-safe-top">
+        <div className="max-w-2xl mx-auto px-4 py-6">
           <div className="flex items-center gap-3 mb-4">
-            <button
+            <Button
               onClick={onBack}
-              className="p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-full transition-colors"
+              variant="ghost"
+              size="icon"
+              className="hover:bg-emerald-200/50 dark:hover:bg-emerald-900/50"
               aria-label="Go back"
               data-testid="button-back"
             >
               <ArrowLeft className="w-5 h-5" />
-            </button>
-            <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 border-2 border-primary/20">
-              <BookOpen className="w-6 h-6 text-primary" />
+            </Button>
+            <div className="flex-1">
+              <h1 className="text-2xl font-serif font-bold text-emerald-900 dark:text-emerald-100 flex items-center gap-2">
+                <BookOpen className="w-6 h-6" />
+                {plan.title}
+              </h1>
             </div>
           </div>
-          <h1 className="text-2xl font-bold text-foreground mb-2">{plan.title}</h1>
-          <p className="text-muted-foreground text-sm">{plan.description}</p>
+          <div className="bg-white/60 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl p-4 border border-emerald-200/50 dark:border-emerald-800/50 shadow-lg">
+            <p className="text-emerald-900 dark:text-emerald-100 font-medium text-sm">
+              {plan.description}
+            </p>
+          </div>
         </div>
       </div>
 
       {/* Progress Summary */}
       <div className="max-w-2xl mx-auto px-4 py-4">
-        <Card>
-          <CardContent className="pt-6">
-            <div className="space-y-4">
-              <div className="flex items-center justify-between text-sm">
-                <span className="text-muted-foreground">Progress</span>
-                <span className="font-semibold text-foreground">
-                  {progressStats.completedCount} of {plan.durationDays} days
-                </span>
+        <Card className="border-emerald-200/50 dark:border-emerald-800/50 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl overflow-hidden">
+          <div className="h-1.5 bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-700 dark:to-green-700" />
+          <CardContent className="pt-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-semibold text-emerald-900 dark:text-emerald-100">Your Progress</span>
+              <div className="flex items-center gap-2">
+                <span className="font-bold text-lg text-foreground">{progressStats.completedCount}</span>
+                <span className="text-sm text-muted-foreground">/ {plan.durationDays} days</span>
               </div>
-              <Progress value={progressStats.percentComplete} className="h-2" />
-              <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">
-                    {Math.round(progressStats.percentComplete)}% complete
-                  </span>
+            </div>
+            <div className="relative">
+              <Progress value={progressStats.percentComplete} className="h-3 bg-emerald-100 dark:bg-emerald-950" />
+            </div>
+            <div className="flex items-center justify-between">
+              <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
+                {Math.round(progressStats.percentComplete)}% Complete
+              </span>
+              {progressStats.streak > 0 && (
+                <div className="flex items-center gap-1.5 px-3 py-1.5 bg-gradient-to-r from-orange-500 to-red-500 text-white rounded-full shadow-md">
+                  <Flame className="w-4 h-4" />
+                  <span className="font-bold text-sm">{progressStats.streak} day{progressStats.streak !== 1 ? 's' : ''}</span>
                 </div>
-                {progressStats.streak > 0 && (
-                  <div className="flex items-center gap-1 text-sm text-primary font-medium">
-                    <span className="text-lg">🔥</span>
-                    <span>{progressStats.streak} day streak</span>
-                  </div>
-                )}
-              </div>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -302,11 +310,13 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
 
       {/* Today's Reading */}
       <div className="max-w-2xl mx-auto px-4 pb-6">
-        <Card className={isCurrentDayComplete ? "border-primary/50 bg-primary/5" : ""}>
+        <Card className={`border-emerald-200/50 dark:border-emerald-800/50 shadow-xl bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl overflow-hidden ${isCurrentDayComplete ? "ring-2 ring-emerald-500/50" : ""}`}>
+          <div className="h-1.5 bg-gradient-to-r from-emerald-600 to-green-600 dark:from-emerald-700 dark:to-green-700" />
           <CardContent className="pt-6 space-y-4">
             <div className="flex items-start justify-between gap-4">
               <div className="flex-1">
-                <h2 className="text-lg font-semibold text-foreground mb-2">
+                <h2 className="text-xl font-bold bg-gradient-to-r from-emerald-700 to-green-700 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent mb-3 flex items-center gap-2">
+                  <BookOpen className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
                   Today's Reading
                 </h2>
                 {todayReading ? (
@@ -377,14 +387,14 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
               {todayReading && (
                 <button
                   onClick={() => handleDayToggle(currentDay)}
-                  className={`flex-shrink-0 w-10 h-10 rounded-full flex items-center justify-center transition-all ${
+                  className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all shadow-lg ${
                     isCurrentDayComplete
-                      ? "bg-primary text-primary-foreground shadow-md"
-                      : "bg-muted hover:bg-muted/80"
+                      ? "bg-gradient-to-r from-emerald-500 to-green-500 text-white hover:from-emerald-600 hover:to-green-600 scale-110"
+                      : "bg-emerald-100 dark:bg-emerald-950 hover:bg-emerald-200 dark:hover:bg-emerald-900 border-2 border-emerald-300 dark:border-emerald-700"
                   }`}
                   data-testid={`button-toggle-day-${currentDay}`}
                 >
-                  {isCurrentDayComplete && <Check className="w-5 h-5" />}
+                  {isCurrentDayComplete && <Check className="w-6 h-6" />}
                 </button>
               )}
             </div>
@@ -392,7 +402,7 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
             {todayReading && !isCurrentDayComplete && (
               <Button
                 onClick={() => handleDayToggle(currentDay)}
-                className="w-full"
+                className="w-full bg-gradient-to-r from-emerald-600 to-green-600 hover:from-emerald-700 hover:to-green-700 dark:from-emerald-700 dark:to-green-700 dark:hover:from-emerald-800 dark:hover:to-green-800 text-white shadow-lg"
                 data-testid="button-mark-complete"
               >
                 <Check className="w-4 h-4 mr-2" />
@@ -401,9 +411,9 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
             )}
 
             {todayReading && isCurrentDayComplete && (
-              <div className="flex items-center gap-2 text-sm text-primary">
-                <Check className="w-4 h-4" />
-                <span className="font-medium">Completed</span>
+              <div className="flex items-center gap-2 px-4 py-2 bg-emerald-100 dark:bg-emerald-950/50 rounded-lg border border-emerald-300 dark:border-emerald-700">
+                <Check className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+                <span className="font-bold text-emerald-900 dark:text-emerald-100">Completed! Great job! 🎉</span>
               </div>
             )}
           </CardContent>
@@ -412,17 +422,23 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
 
       {/* Quick Stats */}
       <div className="max-w-2xl mx-auto px-4 pb-6">
-        <div className="grid grid-cols-2 gap-3">
-          <Card>
-            <CardContent className="pt-4 text-center">
-              <p className="text-2xl font-bold text-primary">{progressStats.completedCount}</p>
-              <p className="text-xs text-muted-foreground mt-1">Days Complete</p>
+        <div className="grid grid-cols-2 gap-4">
+          <Card className="border-emerald-200/50 dark:border-emerald-800/50 shadow-lg bg-gradient-to-br from-emerald-50/80 to-green-50/80 dark:from-emerald-950/30 dark:to-green-950/30 backdrop-blur-xl">
+            <CardContent className="pt-5 text-center">
+              <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-lg">
+                <Check className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-3xl font-bold bg-gradient-to-r from-emerald-700 to-green-700 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent">{progressStats.completedCount}</p>
+              <p className="text-xs font-semibold text-emerald-900 dark:text-emerald-100 mt-1">Days Complete</p>
             </CardContent>
           </Card>
-          <Card>
-            <CardContent className="pt-4 text-center">
-              <p className="text-2xl font-bold text-primary">{plan.durationDays - progressStats.completedCount}</p>
-              <p className="text-xs text-muted-foreground mt-1">Days Remaining</p>
+          <Card className="border-emerald-200/50 dark:border-emerald-800/50 shadow-lg bg-gradient-to-br from-emerald-50/80 to-green-50/80 dark:from-emerald-950/30 dark:to-green-950/30 backdrop-blur-xl">
+            <CardContent className="pt-5 text-center">
+              <div className="w-12 h-12 mx-auto mb-2 rounded-full bg-gradient-to-br from-emerald-500 to-green-500 flex items-center justify-center shadow-lg">
+                <Calendar className="w-6 h-6 text-white" />
+              </div>
+              <p className="text-3xl font-bold bg-gradient-to-r from-emerald-700 to-green-700 dark:from-emerald-400 dark:to-green-400 bg-clip-text text-transparent">{plan.durationDays - progressStats.completedCount}</p>
+              <p className="text-xs font-semibold text-emerald-900 dark:text-emerald-100 mt-1">Days Remaining</p>
             </CardContent>
           </Card>
         </div>
