@@ -19,9 +19,6 @@ import { ThemeProvider } from "./components/ThemeProvider";
 import { silentLogger } from "./services/silentLogger";
 import { performanceMonitor } from "./services/performanceMonitor";
 
-// Purchase System
-import { PurchaseProvider, usePurchase } from "./contexts/PurchaseContext";
-
 // Pages
 import HomePage from "./pages/HomePage";
 import AskPage from "./pages/BiblePage";
@@ -45,7 +42,6 @@ import ReadingPlanDetailPage from "./pages/ReadingPlanDetailPage";
 import ScreenshotToolPage from "./pages/ScreenshotToolPage";
 import PlainMeaningPage from "./pages/PlainMeaningPage";
 import InstantApplicationPage from "./pages/InstantApplicationPage";
-import PaywallPage from "./pages/PaywallPage";
 
 interface User {
   firstName: string;
@@ -57,27 +53,9 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "paywall";
-
-function AppContent() {
-  const { isLoading } = usePurchase();
-  
-  if (isLoading) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-lg text-muted-foreground">Loading...</div>
-        </div>
-        <Toaster />
-      </div>
-    );
-  }
-
-  return <MainApp />;
-}
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application";
 
 function MainApp() {
-  const { isPremium } = usePurchase();
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
   const [showImportFriends, setShowImportFriends] = useState(false);
@@ -285,8 +263,6 @@ function MainApp() {
               return <PlainMeaningPage onNavigate={handleNavigateToLegal} />;
             case "instant-application":
               return <InstantApplicationPage onNavigate={handleNavigateToLegal} />;
-            case "paywall":
-              return <PaywallPage />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -307,7 +283,7 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "paywall"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application"].includes(currentPage) && (
                 <BottomNavigation 
                   currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
@@ -341,12 +317,6 @@ function MainApp() {
   );
 }
 
-function App() {
-  return (
-    <PurchaseProvider>
-      <AppContent />
-    </PurchaseProvider>
-  );
+export default function App() {
+  return <MainApp />;
 }
-
-export default App;

@@ -7,9 +7,7 @@
 - **Business Model**: Completely FREE (no paywall, no purchases required)
 - **Download**: Free to download from App Store
 - **Access**: All features available immediately upon download
-- **Previous IAP System**: StoreKit 2 integration code remains in codebase (PaywallPage.tsx, PurchaseContext.tsx) but is disabled
-- **Product ID**: `01version101` (configured but not actively used)
-- **Apple ID**: 675500734
+- **IAP System**: Completely removed - all StoreKit code, purchase UI, and paywall logic have been deleted from the codebase (November 2025)
 - **All Features Free**: AI Pastor chat, Bible Reading Plans, 365-day devotionals, videos, Bible studies, trivia, full search, bookmarks & notes, Plain Meaning, Instant Application
 
 ## User Preferences
