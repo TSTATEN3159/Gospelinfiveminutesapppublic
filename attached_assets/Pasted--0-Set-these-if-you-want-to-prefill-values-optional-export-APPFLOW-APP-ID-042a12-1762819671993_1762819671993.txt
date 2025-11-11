@@ -1,0 +1,105 @@
+# ====== 0) Set these if you want to prefill values (optional) ======
+export APPFLOW_APP_ID="042a1261"        # <-- your Appflow App ID from Appflow > App Overview
+export LIVE_CHANNEL="Production"         # e.g., Production / Beta / Staging
+export UPDATE_METHOD="background"        # background | none | force (we'll wire background by default)
+export MAX_VERSIONS="3"
+
+# ====== 1) Make sure we’re in the project root ======
+ls -la
+
+# ====== 2) Confirm Capacitor is installed (v5+) ======
+npx cap --version || npm i -D @capacitor/cli
+npx cap --version
+
+# (If you see v4 or lower, migrate first: https://capacitorjs.com/docs/updating/5-0)
+
+# ====== 3) Install Live Updates + helpers (App plugin helps with "Always Latest" flows) ======
+npm i @capacitor/live-updates @capacitor/app
+
+# (Optional, only if you plan to use the Force Update splash strategy)
+# npm i @capacitor/splash-screen
+
+# ====== 4) Sync native projects after installing plugins ======
+npm run build || echo "Skip if you don't have a build script yet"
+npx cap sync
+
+# ====== 5) Create a tiny helper you can import in your app (src/liveUpdates.ts) ======
+# - Default behavior: safe "Background" updater (no interruptions)
+# - Also includes an opt-in 'always-latest' flow guarded by a reload-block flag
+mkdir -p src
+cat > src/liveUpdates.ts <<'TS'
+import { App } from '@capacitor/app';
+import * as LiveUpdates from '@capacitor/live-updates';
+
+/**
+ * Call this once during app startup (e.g., in main.ts / main.tsx).
+ * Default: background mode (no extra code needed).
+ * If you switch to manual mode (autoUpdateMethod: 'none'), this enables the "Always Latest—with guardrails" approach.
+ */
+export async function initializeLiveUpdates(manualMode = false) {
+  if (!manualMode) return; // In background mode, SDK handles checks; nothing else to do.
+
+  // Manual mode ("Always Latest"): check once on load, then on each resume.
+  const syncAndFlag = async () => {
+    const r = await LiveUpdates.sync();
+    localStorage.shouldReloadApp = String(r.activeApplicationPathChanged);
+  };
+
+  await syncAndFlag();
+
+  App.addListener('resume', async () => {
+    const shouldReload = localStorage.shouldReloadApp === 'true';
+    const block = localStorage.shouldBlockReload === 'true';
+    if (shouldReload && !block) {
+      await LiveUpdates.reload();
+    } else {
+      await syncAndFlag();
+    }
+  });
+}
+
+/** Set to true during sensitive flows (login/purchase), false afterwards */
+export function setReloadBlocked(block: boolean) {
+  localStorage.shouldBlockReload = String(block);
+}
+TS
+
+# ====== 6) Try to auto-wire the helper into your app entry (best effort) ======
+if [ -f src/main.tsx ]; then
+  if ! grep -q "initializeLiveUpdates" src/main.tsx; then
+    echo "Patching src/main.tsx to call initializeLiveUpdates(false) (background mode)…"
+    # add import at top if not present
+    sed -i '1i import { initializeLiveUpdates } from "./liveUpdates";' src/main.tsx
+    # call it near the top (safe no-op if background mode)
+    sed -i '1a initializeLiveUpdates(false);' src/main.tsx
+  fi
+elif [ -f src/main.ts ]; then
+  if ! grep -q "initializeLiveUpdates" src/main.ts; then
+    echo "Patching src/main.ts to call initializeLiveUpdates(false) (background mode)…"
+    sed -i '1i import { initializeLiveUpdates } from "./liveUpdates";' src/main.ts
+    sed -i '1a initializeLiveUpdates(false);' src/main.ts
+  fi
+else
+  echo "No src/main.tsx or src/main.ts found. You can import initializeLiveUpdates(false) in your app entry."
+fi
+
+# ====== 7) Show you the exact capacitor config snippet you need to paste ======
+echo "------------------------------------------------------------"
+echo "Paste the following into capacitor.config.ts (or .json) under 'plugins':"
+cat <<EOF
+
+plugins: {
+  LiveUpdates: {
+    appId: '${APPFLOW_APP_ID}',
+    channel: '${LIVE_CHANNEL}',
+    autoUpdateMethod: '${UPDATE_METHOD}',  // 'background' recommended for Production
+    maxVersions: ${MAX_VERSIONS},
+    enabled: true
+  }
+}
+EOF
+echo "------------------------------------------------------------"
+
+# ====== 8) Reminder to build + sync after you edit the config ======
+echo "After you paste & save the config, run:"
+echo "  npm run build && npx cap sync"
