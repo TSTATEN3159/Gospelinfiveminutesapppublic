@@ -32,10 +32,10 @@ const config: CapacitorConfig = {
   },
   plugins: {
     LiveUpdates: {
-      appId: '042a1261',
+      appId: 'f26e02e6',
       channel: 'Production',
       autoUpdateMethod: 'background',
-      maxVersions: 2
+      maxVersions: 3
     },
     TestFlightFlag: {
       ios: {

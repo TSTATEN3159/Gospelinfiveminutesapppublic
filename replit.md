@@ -87,3 +87,12 @@ Preferred communication style: Simple, everyday language.
 - **ESBuild**: High-performance server-side bundling.
 - **TypeScript**: Full type safety.
 - **TanStack Query**: Robust data fetching and caching.
+
+### Deployment & Updates
+- **Capacitor Live Updates**: Over-the-air (OTA) updates via Ionic Appflow
+  - **App ID**: f26e02e6
+  - **Channel**: Production
+  - **Update Method**: background (non-intrusive updates)
+  - **Max Versions**: 3 (keeps last 3 update versions cached)
+  - **Implementation**: Background sync on app resume with smart reload blocking during critical operations (login, registration)
+  - **Configuration**: capacitor.config.ts plugins.LiveUpdates section
