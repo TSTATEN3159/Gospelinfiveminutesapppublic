@@ -96,8 +96,9 @@ Preferred communication style: Simple, everyday language.
   - FileReader lifecycle: Proper cleanup on unmount, abort handling, readyState checks
   - Error handling: Storage quota failures, permissions errors, invalid file types
   - Privacy compliance: Photos stored locally only, not linked to user identity, full delete capability
-  - UI: Avatar with camera overlay on hover, remove button with confirmation dialog
-  - Accessibility: shadcn Button components (variant="ghost", variant="destructive"), ARIA labels, focus indicators
+  - UI: Avatar with camera overlay on hover; clicking avatar shows options dialog (Upload Photo, Delete Photo if exists, Cancel)
+  - Interaction pattern: No separate delete button - all actions accessed through single tap on picture with two-step deletion confirmation
+  - Accessibility: 44px avatar tap target, keyboard navigation, ARIA labels, focus indicators
   - app-privacy.json: Photos category marked as "not linked to user" and "not used for tracking"
 
 ### Browser Capability Checks & Safe Wrappers
