@@ -1,13 +1,65 @@
-import { createContext, useContext, useState, useEffect, ReactNode } from "react";
+1️⃣ Make sure the whole app is wrapped in TextScaleProvider
+
+Open src/main.tsx (or whatever file calls ReactDOM.createRoot).
+
+Make it look like this (adjust imports if your paths differ):
+
+// src/main.tsx
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { TextScaleProvider } from "./context/TextScaleContext";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <TextScaleProvider>
+      <App />
+    </TextScaleProvider>
+  </React.StrictMode>
+);
+
+
+If you have more than one ReactDOM.createRoot(...) (for example a special root for modals, or a separate widget), wrap each top-level component the same way:
+
+ReactDOM.createRoot(document.getElementById("another-root") as HTMLElement).render(
+  <TextScaleProvider>
+    <AnotherApp />
+  </TextScaleProvider>
+);
+
+
+That alone might fix your Settings page error.
+
+2️⃣ Make useTextScale safe (no crash if provider is missing)
+
+Now update your TextScaleContext.tsx so that the hook does not throw if the provider is missing, but instead falls back to a default scale of 1 and a no-op setter.
+
+Replace your current file with this:
+
+// src/context/TextScaleContext.tsx
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
 
 type TextScaleContextValue = {
   scale: number;
   setScale: (value: number) => void;
 };
 
+const MIN_SCALE = 0.8;
+const MAX_SCALE = 1.6;
+const STEP = 0.02;
+
+// ✅ Safe default context so app never crashes if provider is missing
 const defaultContext: TextScaleContextValue = {
   scale: 1,
   setScale: (value: number) => {
+    // This will only run if TextScaleProvider is missing
     console.warn(
       "[TextScale] TextScaleProvider is not mounted. Ignoring setScale(",
       value,
@@ -18,17 +70,14 @@ const defaultContext: TextScaleContextValue = {
 
 const TextScaleContext = createContext<TextScaleContextValue>(defaultContext);
 
-const MIN_SCALE = 0.8;
-const MAX_SCALE = 1.6;
-const STEP = 0.02;
-
 export const TextScaleProvider: React.FC<{ children: ReactNode }> = ({
   children,
 }) => {
   const [scale, setScaleState] = useState<number>(() => {
-    const stored = typeof window !== "undefined"
-      ? window.localStorage.getItem("text-scale")
-      : null;
+    const stored =
+      typeof window !== "undefined"
+        ? window.localStorage.getItem("text-scale")
+        : null;
     return stored ? Number(stored) || 1 : 1;
   });
 
@@ -37,7 +86,10 @@ export const TextScaleProvider: React.FC<{ children: ReactNode }> = ({
     setScaleState(clamped);
     if (typeof window !== "undefined") {
       window.localStorage.setItem("text-scale", String(clamped));
-      document.documentElement.style.setProperty("--text-scale", String(clamped));
+      document.documentElement.style.setProperty(
+        "--text-scale",
+        String(clamped)
+      );
     }
   };
 
@@ -73,10 +125,8 @@ export const TextScaleProvider: React.FC<{ children: ReactNode }> = ({
       }
     };
 
-    const onTouchEnd = (e: TouchEvent) => {
-      if (e.touches.length < 2) {
-        lastDistance = null;
-      }
+    const onTouchEnd = () => {
+      lastDistance = null;
     };
 
     window.addEventListener("touchstart", onTouchStart, { passive: true });
@@ -97,6 +147,14 @@ export const TextScaleProvider: React.FC<{ children: ReactNode }> = ({
   );
 };
 
+// ✅ No more throwing – just returns the context (or the safe default)
 export const useTextScale = () => {
   return useContext(TextScaleContext);
 };
+
+
+Now:
+
+If the Settings tile (or any other page) accidentally renders outside TextScaleProvider, it won’t crash the app; it will just behave as if scale = 1 and log a warning in the console.
+
+Once everything is properly wrapped, TextSizeControls will work normally and control the global text size.
