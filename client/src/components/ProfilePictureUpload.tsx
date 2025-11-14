@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { Camera, User, X } from "lucide-react";
+import { Camera, User, Upload, Trash2 } from "lucide-react";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { useToast } from "@/hooks/use-toast";
@@ -24,7 +24,8 @@ interface ProfilePictureUploadProps {
 export default function ProfilePictureUpload({ className, size = "md" }: ProfilePictureUploadProps) {
   const [profilePicture, setProfilePicture] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const [showRemoveDialog, setShowRemoveDialog] = useState(false);
+  const [showOptionsDialog, setShowOptionsDialog] = useState(false);
+  const [showDeleteConfirmDialog, setShowDeleteConfirmDialog] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const fileReaderRef = useRef<FileReader | null>(null);
   const { toast } = useToast();
@@ -78,6 +79,7 @@ export default function ProfilePictureUpload({ className, size = "md" }: Profile
     }
 
     setIsLoading(true);
+    setShowOptionsDialog(false);
 
     try {
       const reader = new FileReader();
@@ -145,28 +147,33 @@ export default function ProfilePictureUpload({ className, size = "md" }: Profile
     event.target.value = '';
   };
 
-  const handleClick = () => {
+  const handleAvatarClick = () => {
+    setShowOptionsDialog(true);
+  };
+
+  const handleUploadClick = () => {
+    setShowOptionsDialog(false);
     fileInputRef.current?.click();
   };
 
-  const handleRemoveClick = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    setShowRemoveDialog(true);
+  const handleDeleteClick = () => {
+    setShowOptionsDialog(false);
+    setShowDeleteConfirmDialog(true);
   };
 
-  const handleRemoveConfirm = () => {
+  const handleDeleteConfirm = () => {
     try {
       const removeResult = safeLocalStorage.removeItem("gospelAppProfilePicture");
       
       if (removeResult === true) {
         setProfilePicture(null);
-        setShowRemoveDialog(false);
+        setShowDeleteConfirmDialog(false);
         toast({
           title: "Profile picture removed",
           description: "Your profile picture has been deleted",
         });
       } else {
-        setShowRemoveDialog(false);
+        setShowDeleteConfirmDialog(false);
         toast({
           title: "Removal failed",
           description: "Unable to remove profile picture. Storage may be restricted.",
@@ -174,7 +181,7 @@ export default function ProfilePictureUpload({ className, size = "md" }: Profile
         });
       }
     } catch (error) {
-      setShowRemoveDialog(false);
+      setShowDeleteConfirmDialog(false);
       toast({
         title: "Removal failed",
         description: "Unable to remove profile picture due to storage error.",
@@ -190,11 +197,11 @@ export default function ProfilePictureUpload({ className, size = "md" }: Profile
           type="button"
           variant="ghost"
           size="icon"
-          onClick={handleClick}
+          onClick={handleAvatarClick}
           className="relative group h-10 w-10 rounded-full p-0"
           disabled={isLoading}
           data-testid="button-profile-picture-upload"
-          aria-label={profilePicture ? "Change profile picture" : "Upload profile picture"}
+          aria-label={profilePicture ? "Manage profile picture" : "Upload profile picture"}
         >
           <Avatar className={cn(sizeClasses[size])}>
             {profilePicture ? (
@@ -221,21 +228,6 @@ export default function ProfilePictureUpload({ className, size = "md" }: Profile
           )}
         </Button>
 
-        {/* Remove button when picture exists - small visual but accessible tap target */}
-        {profilePicture && !isLoading && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon"
-            onClick={handleRemoveClick}
-            className="absolute -top-0.5 -right-0.5 h-7 w-7 rounded-full p-0 bg-black/60 hover:bg-black/80 text-white flex items-center justify-center focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-1"
-            data-testid="button-remove-profile-picture"
-            aria-label="Remove profile picture"
-          >
-            <X className="w-3 h-3" />
-          </Button>
-        )}
-
         <input
           ref={fileInputRef}
           type="file"
@@ -247,23 +239,60 @@ export default function ProfilePictureUpload({ className, size = "md" }: Profile
         />
       </div>
 
-      {/* Remove confirmation dialog */}
-      <AlertDialog open={showRemoveDialog} onOpenChange={setShowRemoveDialog}>
-        <AlertDialogContent data-testid="dialog-remove-profile-picture">
+      {/* Options dialog */}
+      <AlertDialog open={showOptionsDialog} onOpenChange={setShowOptionsDialog}>
+        <AlertDialogContent data-testid="dialog-profile-picture-options">
           <AlertDialogHeader>
-            <AlertDialogTitle>Remove profile picture?</AlertDialogTitle>
+            <AlertDialogTitle>Profile Picture</AlertDialogTitle>
+            <AlertDialogDescription>
+              Choose an action for your profile picture
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <div className="flex flex-col gap-2">
+            <Button
+              onClick={handleUploadClick}
+              className="w-full justify-start"
+              variant="outline"
+              data-testid="button-upload-photo"
+            >
+              <Upload className="w-4 h-4 mr-2" />
+              {profilePicture ? "Upload New Photo" : "Upload Photo"}
+            </Button>
+            {profilePicture && (
+              <Button
+                onClick={handleDeleteClick}
+                className="w-full justify-start"
+                variant="outline"
+                data-testid="button-delete-photo"
+              >
+                <Trash2 className="w-4 h-4 mr-2" />
+                Delete Photo
+              </Button>
+            )}
+          </div>
+          <AlertDialogFooter>
+            <AlertDialogCancel data-testid="button-cancel-options">Cancel</AlertDialogCancel>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+
+      {/* Delete confirmation dialog */}
+      <AlertDialog open={showDeleteConfirmDialog} onOpenChange={setShowDeleteConfirmDialog}>
+        <AlertDialogContent data-testid="dialog-delete-confirmation">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete profile picture?</AlertDialogTitle>
             <AlertDialogDescription>
               This will delete your profile picture. You can upload a new one anytime.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel data-testid="button-cancel-remove">Cancel</AlertDialogCancel>
+            <AlertDialogCancel data-testid="button-cancel-delete">Cancel</AlertDialogCancel>
             <AlertDialogAction 
-              onClick={handleRemoveConfirm}
+              onClick={handleDeleteConfirm}
               className="bg-destructive hover:bg-destructive/90"
-              data-testid="button-confirm-remove"
+              data-testid="button-confirm-delete"
             >
-              Remove
+              Delete
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
