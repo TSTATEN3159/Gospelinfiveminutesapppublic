@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Lightbulb, ArrowLeft, Sparkles, Loader2, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useVersePassageMutation, usePlainMeaningMutation } from "@/hooks/useVerseInsights";
 
 interface PlainMeaningPageProps {
   onNavigate: (page: string) => void;
@@ -13,9 +14,10 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
   const [reference, setReference] = useState("");
   const [verseText, setVerseText] = useState("");
   const [plainMeaning, setPlainMeaning] = useState("");
-  const [isLoadingVerse, setIsLoadingVerse] = useState(false);
-  const [isLoadingMeaning, setIsLoadingMeaning] = useState(false);
   const { toast } = useToast();
+
+  const versePassageMutation = useVersePassageMutation();
+  const plainMeaningMutation = usePlainMeaningMutation();
 
   const handleLoadVerse = async () => {
     if (!reference.trim()) {
@@ -27,18 +29,11 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
       return;
     }
 
-    setIsLoadingVerse(true);
     setVerseText("");
     setPlainMeaning("");
 
     try {
-      const response = await fetch(`/api/bible-passage?reference=${encodeURIComponent(reference)}`);
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to load verse');
-      }
-
+      const data = await versePassageMutation.mutateAsync(reference);
       setVerseText(data.text.trim());
       
       toast({
@@ -52,8 +47,6 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
         description: error instanceof Error ? error.message : "Failed to load verse. Please check your reference and try again.",
         variant: "destructive"
       });
-    } finally {
-      setIsLoadingVerse(false);
     }
   };
 
@@ -67,24 +60,10 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
       return;
     }
 
-    setIsLoadingMeaning(true);
     setPlainMeaning("");
 
     try {
-      const response = await fetch('/api/verse-plain-meaning', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ verse: verseText, reference })
-      });
-
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to get plain meaning');
-      }
-
+      const data = await plainMeaningMutation.mutateAsync({ verse: verseText, reference });
       setPlainMeaning(data.plainMeaning);
     } catch (error) {
       console.error('Plain Meaning error:', error);
@@ -93,8 +72,6 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
         description: error instanceof Error ? error.message : "Failed to simplify verse. Please try again.",
         variant: "destructive"
       });
-    } finally {
-      setIsLoadingMeaning(false);
     }
   };
 
@@ -170,7 +147,7 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !isLoadingVerse) {
+                  if (e.key === 'Enter' && !versePassageMutation.isPending) {
                     handleLoadVerse();
                   }
                 }}
@@ -181,11 +158,11 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
 
             <Button
               onClick={handleLoadVerse}
-              disabled={isLoadingVerse || !reference.trim()}
+              disabled={versePassageMutation.isPending || !reference.trim()}
               className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
               data-testid="button-fetch-verse"
             >
-              {isLoadingVerse ? (
+              {versePassageMutation.isPending ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                   Loading Verse...
@@ -231,11 +208,11 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
               
               <Button
                 onClick={handleGetPlainMeaning}
-                disabled={isLoadingMeaning}
+                disabled={plainMeaningMutation.isPending}
                 className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-700 hover:via-cyan-700 hover:to-blue-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
                 data-testid="button-get-plain-meaning"
               >
-                {isLoadingMeaning ? (
+                {plainMeaningMutation.isPending ? (
                   <>
                     <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                     Simplifying...

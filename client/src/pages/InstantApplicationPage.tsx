@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ArrowLeft, Target, Loader2, BookOpen, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useVersePassageMutation, useInstantApplicationMutation } from "@/hooks/useVerseInsights";
 
 interface InstantApplicationPageProps {
   onNavigate: (page: string) => void;
@@ -13,9 +14,10 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
   const [reference, setReference] = useState("");
   const [verseText, setVerseText] = useState("");
   const [application, setApplication] = useState("");
-  const [isLoadingVerse, setIsLoadingVerse] = useState(false);
-  const [isLoadingApplication, setIsLoadingApplication] = useState(false);
   const { toast } = useToast();
+
+  const versePassageMutation = useVersePassageMutation();
+  const instantApplicationMutation = useInstantApplicationMutation();
 
   const handleFetchVerse = async () => {
     if (!reference.trim()) {
@@ -27,19 +29,11 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
       return;
     }
 
-    setIsLoadingVerse(true);
     setVerseText("");
     setApplication("");
 
     try {
-      const response = await fetch(`/api/bible-passage?reference=${encodeURIComponent(reference)}`);
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to fetch verse');
-      }
-
-      // Set the verse text from API response
+      const data = await versePassageMutation.mutateAsync(reference);
       setVerseText(data.text.trim());
       
       toast({
@@ -53,8 +47,6 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
         description: error instanceof Error ? error.message : "Failed to fetch verse. Please check your reference and try again.",
         variant: "destructive"
       });
-    } finally {
-      setIsLoadingVerse(false);
     }
   };
 
@@ -68,27 +60,10 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
       return;
     }
 
-    setIsLoadingApplication(true);
     setApplication("");
 
     try {
-      const response = await fetch('/api/verse-instant-application', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          verse: verseText, 
-          reference 
-        })
-      });
-
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to get application');
-      }
-
+      const data = await instantApplicationMutation.mutateAsync({ verse: verseText, reference });
       setApplication(data.application);
     } catch (error) {
       console.error('Instant Application error:', error);
@@ -97,8 +72,6 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
         description: error instanceof Error ? error.message : "Failed to create application. Please try again.",
         variant: "destructive"
       });
-    } finally {
-      setIsLoadingApplication(false);
     }
   };
 
@@ -174,7 +147,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
                 value={reference}
                 onChange={(e) => setReference(e.target.value)}
                 onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !isLoadingVerse) {
+                  if (e.key === 'Enter' && !versePassageMutation.isPending) {
                     handleFetchVerse();
                   }
                 }}
@@ -185,11 +158,11 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
 
             <Button
               onClick={handleFetchVerse}
-              disabled={isLoadingVerse || !reference.trim()}
+              disabled={versePassageMutation.isPending || !reference.trim()}
               className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
               data-testid="button-fetch-verse"
             >
-              {isLoadingVerse ? (
+              {versePassageMutation.isPending ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                   Loading Verse...
@@ -235,11 +208,11 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
               
               <Button
                 onClick={handleGetApplication}
-                disabled={isLoadingApplication}
+                disabled={instantApplicationMutation.isPending}
                 className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
                 data-testid="button-get-application"
               >
-                {isLoadingApplication ? (
+                {instantApplicationMutation.isPending ? (
                   <>
                     <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                     Creating Action...
