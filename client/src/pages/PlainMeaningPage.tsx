@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Lightbulb, ArrowLeft, Sparkles, Loader2, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useVersePassageMutation, usePlainMeaningMutation } from "@/hooks/useVerseInsights";
+import { runSafely } from "@/utils/featureGuard";
 
 interface PlainMeaningPageProps {
   onNavigate: (page: string) => void;
@@ -32,22 +33,28 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
     setVerseText("");
     setPlainMeaning("");
 
-    try {
-      const data = await versePassageMutation.mutateAsync(reference);
-      setVerseText(data.text.trim());
-      
-      toast({
-        title: "Verse Loaded",
-        description: "Ready to simplify into everyday language.",
-      });
-    } catch (error) {
-      console.error('Verse load error:', error);
+    const result = await runSafely(
+      {
+        featureName: "Load Verse",
+        userMessage: "Sorry, I couldn't load that verse. Please check the reference and try again."
+      },
+      async () => await versePassageMutation.mutateAsync(reference)
+    );
+
+    if (!result) {
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to load verse. Please check your reference and try again.",
+        description: "Sorry, I couldn't load that verse. Please check the reference and try again.",
         variant: "destructive"
       });
+      return;
     }
+
+    setVerseText(result.text.trim());
+    toast({
+      title: "Verse Loaded",
+      description: "Ready to simplify into everyday language.",
+    });
   };
 
   const handleGetPlainMeaning = async () => {
