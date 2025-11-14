@@ -338,6 +338,7 @@ export default function BibleTriviaPage({
         setScore(0);
       } finally {
         setLoading(false);
+        fetchInProgressRef.current = false;
       }
     },
     [triviaMutation, toast]
@@ -414,6 +415,30 @@ export default function BibleTriviaPage({
     fetchQuestionsForLevel(nextLevel);
   };
 
+
+  const handleResetGlobalStats = () => {
+    if (window.confirm("Reset all your trivia progress? This cannot be undone.")) {
+      // Clear from localStorage
+      if (typeof window !== "undefined") {
+        window.localStorage.removeItem(STORAGE_KEY_GLOBAL_STATS);
+      }
+      
+      // Reset state to initial values
+      setGlobalStats({
+        totalCorrect: 0,
+        totalQuestions: 0,
+        currentLevel: "beginner",
+        nextLevel: "student",
+        progressPercent: 0,
+        questionsUntilNext: GLOBAL_LEVELS.student.questionsRequired,
+      });
+
+      toast({
+        title: "Progress Reset",
+        description: "Your trivia stats have been cleared.",
+      });
+    }
+  };
   // -------------------------
   // Unlock next level on finish
   // -------------------------
@@ -503,10 +528,22 @@ export default function BibleTriviaPage({
           {/* Global Progress Card */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-lg flex items-center gap-2">
-                <Trophy className="w-5 h-5 text-yellow-500" />
-                Overall Progress
-              </CardTitle>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg flex items-center gap-2">
+                  <Trophy className="w-5 h-5 text-yellow-500" />
+                  Overall Progress
+                </CardTitle>
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={handleResetGlobalStats}
+                  className="text-xs text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400"
+                  data-testid="button-reset-stats"
+                >
+                  <RotateCcw className="w-4 h-4 mr-1" />
+                  Reset
+                </Button>
+              </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 Your lifetime Bible trivia progress on this device.
               </p>

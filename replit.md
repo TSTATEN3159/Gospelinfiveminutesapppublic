@@ -75,7 +75,7 @@ Preferred communication style: Simple, everyday language.
 - **Devotional Progress Tracking**: API to mark devotional days complete, track progress, and calculate streaks. Includes content for 365 days (premium)
 - **Bible Reading Plans**: Implemented three plans (1-Year Whole Bible, 6-Month Old Testament, 6-Month New Testament) with localStorage-based progress tracking (no authentication required), streak calculation, auto-advancing to incomplete days, real-time UI synchronization via custom events, and on-demand NIV Scripture text display. Users can expand/collapse to read the full Bible text for each day's reading without leaving the app (premium)
 - **Bible Videos & Studies**: Integrated video teaching and Bible studies (premium)
-- **Bible Trivia**: Interactive Bible trivia game (premium)
+- **Bible Trivia**: Interactive Bible trivia game with global progress tracking (lifetime stats), randomized questions (Fisher-Yates front-end shuffle + AI server-side variety), React Strict Mode safeguards (ref guards prevent double-fetch), and reset capability for stats (premium)
 - **StoreKit Integration**: Native iOS StoreKit 2 bridge for purchases, TypeScript wrapper, one-time purchase support, transaction verification
 - **TestFlight Detection**: Swift Capacitor plugin detects TestFlight builds, shows visual banner on paywall indicating sandbox pricing ($0)
 - **Sandbox Purchase Testing**: TestFlight users can test full purchase flow using sandbox Apple IDs - purchases are FREE but flow is identical to production
