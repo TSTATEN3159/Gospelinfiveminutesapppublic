@@ -43,6 +43,24 @@ Preferred communication style: Simple, everyday language.
 - **User Registration**: Modal-based registration for personalized experiences.
 - **Session Management**: Backend prepared for session-based authentication.
 
+### Notification System Architecture
+- **Unified Notification System**: Platform-aware notification management with automatic adapter selection (November 2025)
+  - **ReminderManager**: Orchestration layer (`client/src/services/reminders/index.ts`) that auto-detects platform and routes to appropriate adapter
+  - **Native Adapter**: Uses Capacitor Local Notifications for iOS/Android (`nativeNotifications.ts`)
+  - **Web Adapter**: Uses Browser Notification API with permission handling (`webNotifications.ts`)
+  - **Platform Detection**: Automatic via `capabilities.capacitorNotifications` (checks `window.Capacitor.getPlatform()`)
+- **Reminder Channels**: Daily verse and Bible reading plan reminders with independent schedules
+- **State Management**: 
+  - Atomic scheduling (creates new timer before clearing old one)
+  - Only persists enabled state after successful scheduling
+  - Batched storage writes to prevent thrashing
+  - Permission-aware initialization (disables reminders if permission revoked)
+- **Storage**: Separate localStorage key (`REMINDER_PREFS_KEY`) for reminder preferences
+- **UI Component**: ReminderSettings component in SettingsPage for managing reminders
+- **Permission Flow**: Requests permission only during user toggle action, never during app initialization
+- **Error Handling**: Graceful degradation with user feedback via toast notifications
+- **Critical Pattern**: State always matches actual scheduled notifications (no drift)
+
 ### Core Features & Implementation
 - **Paywall System**: PaywallPage shown on first launch, PurchaseContext manages state, restore purchases on MorePage
 - **Daily Scripture**: Card-based display with bookmarking, personal notes, sharing, and copying (premium)
