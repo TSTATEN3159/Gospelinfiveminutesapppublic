@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { useTranslations } from "@/lib/translations";
 import { useDeleteUserMutation } from "@/hooks/useUser";
+import { useToast } from "@/hooks/use-toast";
 
 interface SupportPageProps {
   onBack: () => void;
@@ -13,11 +14,12 @@ interface SupportPageProps {
 
 export default function SupportPage({ onBack, onNavigate, language = "en" }: SupportPageProps) {
   const t = useTranslations(language);
+  const { toast } = useToast();
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const deleteUserMutation = useDeleteUserMutation();
 
   const handleDeleteData = async () => {
-    if (showDeleteConfirm) {
+    if (showDeleteConfirm && !deleteUserMutation.isPending) {
       try {
         // Get user data to extract appUserId
         const userData = localStorage.getItem("gospelAppUser");
@@ -33,30 +35,43 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
               // Server deletion successful, now clear local storage
               localStorage.clear();
               
-              // Show confirmation
-              alert(t.accountDeletedSuccess);
+              // Show confirmation via toast
+              toast({
+                title: t.accountDeleted || "Account Deleted",
+                description: t.accountDeletedSuccess,
+              });
               
-              // Reload the app to reset state
-              window.location.reload();
+              // Reload the app to reset state after short delay
+              setTimeout(() => window.location.reload(), 1000);
             }
           } else {
             // No server account exists, just clear local data
             localStorage.clear();
-            alert(t.localDataDeleted);
-            window.location.reload();
+            toast({
+              title: t.dataDeleted || "Data Deleted",
+              description: t.localDataDeleted,
+            });
+            setTimeout(() => window.location.reload(), 1000);
           }
         } else {
           // No user data exists
           localStorage.clear();
-          alert(t.noUserDataFound);
-          window.location.reload();
+          toast({
+            title: t.dataDeleted || "Data Deleted",
+            description: t.noUserDataFound,
+          });
+          setTimeout(() => window.location.reload(), 1000);
         }
       } catch (error) {
         console.error("Error deleting user account:", error);
-        alert(t.errorDeletingAccount);
+        toast({
+          title: t.error || "Error",
+          description: t.errorDeletingAccount,
+          variant: "destructive",
+        });
         setShowDeleteConfirm(false);
       }
-    } else {
+    } else if (!showDeleteConfirm) {
       setShowDeleteConfirm(true);
     }
   };
