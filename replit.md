@@ -63,6 +63,14 @@ Preferred communication style: Simple, everyday language.
 - **Sandbox Purchase Testing**: TestFlight users can test full purchase flow using sandbox Apple IDs - purchases are FREE but flow is identical to production
 - **Data Management**: User data export (JSON) and full account deletion capabilities (premium)
 - **Apple Store Compliance**: Live Privacy Policy and Terms of Service hosted at `/privacy` and `/terms` endpoints. One-time $3.99 purchase model complies with App Store guidelines
+- **Microphone Usage Disclosure** (November 2024):
+  - Privacy policy includes comprehensive microphone usage disclosure
+  - app-privacy.json Audio Data section: Usage purpose "Product Personalization" and "App Functionality", not linked to user identity, not used for tracking
+  - User-facing permission dialog with privacy explanation before browser prompt
+  - Voice search marked as optional with clear opt-in flow ("Keep Using Text Search" vs "Allow & Start Listening")
+  - Local voice processing only - no recording, no server transmission
+  - Graceful degradation: voice button hidden on unsupported browsers, text search always available
+  - Compliance messaging: "If your device or browser doesn't support speech recognition, you can keep using text search"
 
 ### Browser Capability Checks & Safe Wrappers
 **Critical Development Pattern**: Always check if a browser API exists before using it. Never assume a capability is available.
