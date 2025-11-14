@@ -55,6 +55,7 @@ export const useSpeechRecognition = (
 ) => {
   const { lang = "en-US", continuous = false } = options;
 
+  const [initialized, setInitialized] = useState(false);
   const [supported, setSupported] = useState(false);
   const [listening, setListening] = useState(false);
   const [transcript, setTranscript] = useState("");
@@ -68,10 +69,12 @@ export const useSpeechRecognition = (
 
     if (!SpeechRecognitionCtor) {
       setSupported(false);
+      setInitialized(true);
       return;
     }
 
     setSupported(true);
+    setInitialized(true);
 
     const recognition = new SpeechRecognitionCtor();
     recognition.lang = lang;
@@ -117,6 +120,7 @@ export const useSpeechRecognition = (
   }, [supported]);
 
   return {
+    initialized,
     supported,
     listening,
     transcript,

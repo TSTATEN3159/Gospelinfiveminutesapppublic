@@ -78,6 +78,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
   const speechLang = SPEECH_LANG_MAP[language] || 'en-US';
   const { 
+    initialized: speechInitialized,
     supported: speechSupported, 
     listening, 
     transcript, 
@@ -120,14 +121,14 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
 
   // Show toast if speech recognition is not supported
   useEffect(() => {
-    if (!speechSupported) {
+    if (speechInitialized && !speechSupported) {
       toast({
         title: "Voice Search Unavailable",
         description: t.voiceSearchNotSupported,
         variant: "default"
       });
     }
-  }, [speechSupported, t.voiceSearchNotSupported, toast]);
+  }, [speechInitialized, speechSupported, t.voiceSearchNotSupported, toast]);
 
   // Listen for Bible version changes from Settings
   useEffect(() => {
