@@ -3,11 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX } from "lucide-react";
+import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { useTranslations } from "@/lib/translations";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 import { appStore } from "@/lib/appStore";
@@ -51,6 +52,17 @@ interface BibleSearchSectionProps {
   language?: string;
 }
 
+// Language code mapping for speech recognition
+const SPEECH_LANG_MAP: Record<string, string> = {
+  'en': 'en-US',
+  'es': 'es-ES',
+  'fr': 'fr-FR',
+  'pt': 'pt-PT',
+  'zh': 'zh-CN',
+  'ar': 'ar-SA',
+  'hi': 'hi-IN'
+};
+
 export default function BibleSearchSection({ backgroundImage, initialSearchQuery, onSearchUsed, language = "en" }: BibleSearchSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVersion, setSelectedVersion] = useState(() => {
@@ -64,6 +76,15 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const { toast } = useToast();
   const t = useTranslations(language);
   const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
+  const speechLang = SPEECH_LANG_MAP[language] || 'en-US';
+  const { 
+    supported: speechSupported, 
+    listening, 
+    transcript, 
+    error: speechError,
+    startListening, 
+    stopListening 
+  } = useSpeechRecognition({ lang: speechLang });
   const ranInitial = useRef<string | null>(null);
   const hasShownTTSWarning = useRef(false);
 
@@ -78,6 +99,35 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
       });
     }
   }, [ttsInitialized, ttsSupported, t.ttsNotSupported, toast]);
+
+  // Handle speech recognition transcript
+  useEffect(() => {
+    if (transcript) {
+      setSearchQuery(transcript);
+    }
+  }, [transcript]);
+
+  // Handle speech recognition errors
+  useEffect(() => {
+    if (speechError) {
+      toast({
+        title: "Voice Search Error",
+        description: speechError,
+        variant: "destructive"
+      });
+    }
+  }, [speechError, toast]);
+
+  // Show toast if speech recognition is not supported
+  useEffect(() => {
+    if (!speechSupported) {
+      toast({
+        title: "Voice Search Unavailable",
+        description: t.voiceSearchNotSupported,
+        variant: "default"
+      });
+    }
+  }, [speechSupported, t.voiceSearchNotSupported, toast]);
 
   // Listen for Bible version changes from Settings
   useEffect(() => {
@@ -251,6 +301,25 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
               className="flex-1"
               data-testid="input-search"
             />
+            {speechSupported && (
+              <Button
+                variant="outline"
+                size="icon"
+                onClick={listening ? stopListening : startListening}
+                disabled={isLoading}
+                className={cn(
+                  listening && "bg-red-50 border-red-200 text-red-600 hover:bg-red-100"
+                )}
+                data-testid="button-voice-search"
+                aria-label={listening ? t.stopVoiceSearch : t.startVoiceSearch}
+              >
+                {listening ? (
+                  <MicOff className="w-4 h-4" />
+                ) : (
+                  <Mic className="w-4 h-4" />
+                )}
+              </Button>
+            )}
             <Button 
               onClick={() => handleSearch()} 
               disabled={!searchQuery.trim() || isLoading}
@@ -261,6 +330,12 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
               Search
             </Button>
           </div>
+          {listening && (
+            <p className="text-sm text-green-700 font-medium animate-pulse flex items-center gap-2">
+              <Mic className="w-4 h-4" />
+              {t.listening}
+            </p>
+          )}
         </div>
 
         {isLoading && (
