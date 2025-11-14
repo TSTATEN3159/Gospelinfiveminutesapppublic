@@ -1,28 +1,25 @@
 import { apiUrl } from '@/lib/api-config';
 
 export interface TriviaQuestion {
+  id: number;
   question: string;
-  correctAnswer: string;
-  wrongAnswers: string[];
-  explanation: string;
-  scripture: string;
+  options: string[];
+  correctAnswer: number;
+  verse?: string | null;
+  verseText?: string | null;
+  explanation?: string;
+  level: string;
 }
 
 export interface TriviaGenerateParams {
-  level?: number;
+  level?: string;
   count?: number;
   useAI?: boolean;
-  difficulty?: string;
 }
 
 export interface TriviaResponse {
   success: boolean;
   questions?: TriviaQuestion[];
-  question?: string;
-  correctAnswer?: string;
-  wrongAnswers?: string[];
-  explanation?: string;
-  scripture?: string;
   error?: string;
 }
 
