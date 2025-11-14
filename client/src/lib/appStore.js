@@ -1,17 +1,57 @@
-// Simple on-device storage using localStorage (works offline)
+// Simple on-device storage using localStorage with in-memory fallback
+// Safe for restricted contexts (private mode, disabled storage, etc.)
+
+import { safeLocalStorage } from '../utils/capabilities.ts';
 
 const KEY_TODAY = 'dg_todayReading';
 const KEY_BOOKMARKS = 'dg_bookmarks';
 const KEY_NOTES = 'dg_notes';
-const KEY_PROFILE = 'dg_profile'; // name, email, birthdate
+const KEY_PROFILE = 'dg_profile';
+const KEY_READING_PROGRESS = 'dg_readingProgress';
+
+let hasWarnedAboutStorage = false;
+
+const warnStorageUnavailable = () => {
+  if (!hasWarnedAboutStorage) {
+    console.warn('[appStore] localStorage unavailable - using in-memory fallback. Data will not persist.');
+    hasWarnedAboutStorage = true;
+  }
+};
+
+const memoryCache = {};
+
+const safeGetItem = (key) => {
+  const value = safeLocalStorage.getItem(key);
+  if (value === null && memoryCache[key] !== undefined) {
+    warnStorageUnavailable();
+    return memoryCache[key];
+  }
+  return value;
+};
+
+const safeSetItem = (key, value) => {
+  const success = safeLocalStorage.setItem(key, value);
+  if (!success) {
+    warnStorageUnavailable();
+    memoryCache[key] = value;
+  }
+};
+
+const safeRemoveItem = (key) => {
+  const success = safeLocalStorage.removeItem(key);
+  if (!success) {
+    warnStorageUnavailable();
+    delete memoryCache[key];
+  }
+};
 
 export const appStore = {
   // TODAY'S READING
   saveToday(content) {
-    localStorage.setItem(KEY_TODAY, JSON.stringify({ content, savedAt: Date.now() }));
+    safeSetItem(KEY_TODAY, JSON.stringify({ content, savedAt: Date.now() }));
   },
   loadToday() {
-    const raw = localStorage.getItem(KEY_TODAY);
+    const raw = safeGetItem(KEY_TODAY);
     return raw ? JSON.parse(raw).content : null;
   },
 
@@ -19,14 +59,15 @@ export const appStore = {
   addBookmark(ref) {
     const list = appStore.getBookmarks();
     if (!list.includes(ref)) list.push(ref);
-    localStorage.setItem(KEY_BOOKMARKS, JSON.stringify(list));
+    safeSetItem(KEY_BOOKMARKS, JSON.stringify(list));
   },
   getBookmarks() {
-    return JSON.parse(localStorage.getItem(KEY_BOOKMARKS) || '[]');
+    const raw = safeGetItem(KEY_BOOKMARKS);
+    return raw ? JSON.parse(raw) : [];
   },
   removeBookmark(ref) {
     const list = appStore.getBookmarks().filter(x => x !== ref);
-    localStorage.setItem(KEY_BOOKMARKS, JSON.stringify(list));
+    safeSetItem(KEY_BOOKMARKS, JSON.stringify(list));
   },
 
   // NOTES
@@ -35,45 +76,43 @@ export const appStore = {
     const existingIndex = notes.findIndex(note => note.ref === ref);
     
     if (existingIndex >= 0) {
-      // Update existing note, preserve original createdAt
       notes[existingIndex] = { 
         ...notes[existingIndex],
         text, 
         updatedAt: Date.now() 
       };
     } else {
-      // Add new note
       notes.push({ ref, text, createdAt: Date.now() });
     }
     
-    localStorage.setItem(KEY_NOTES, JSON.stringify(notes));
+    safeSetItem(KEY_NOTES, JSON.stringify(notes));
   },
   getNotes() {
-    return JSON.parse(localStorage.getItem(KEY_NOTES) || '[]');
+    const raw = safeGetItem(KEY_NOTES);
+    return raw ? JSON.parse(raw) : [];
   },
   deleteNote(index) {
-    const notes = store.getNotes();
+    const notes = appStore.getNotes();
     notes.splice(index, 1);
-    localStorage.setItem(KEY_NOTES, JSON.stringify(notes));
+    safeSetItem(KEY_NOTES, JSON.stringify(notes));
   },
 
   // PROFILE (name, email, birthdate)
   saveProfile({ name, email, birthdate }) {
-    localStorage.setItem(KEY_PROFILE, JSON.stringify({ name, email, birthdate }));
+    safeSetItem(KEY_PROFILE, JSON.stringify({ name, email, birthdate }));
   },
   loadProfile() {
-    const raw = localStorage.getItem(KEY_PROFILE);
+    const raw = safeGetItem(KEY_PROFILE);
     return raw ? JSON.parse(raw) : { name: '', email: '', birthdate: '' };
   },
   deleteProfile() {
-    localStorage.removeItem(KEY_PROFILE);
+    safeRemoveItem(KEY_PROFILE);
   },
 
   // READING PLAN PROGRESS
-  // Format: { planType: { dayNumber: { completedAt: ISO timestamp }, ... } }
   markDayComplete(planType, dayNumber) {
-    const KEY_READING_PROGRESS = 'dg_readingProgress';
-    const progress = JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
+    const raw = safeGetItem(KEY_READING_PROGRESS);
+    const progress = raw ? JSON.parse(raw) : {};
     
     if (!progress[planType]) {
       progress[planType] = {};
@@ -83,46 +122,48 @@ export const appStore = {
       completedAt: new Date().toISOString()
     };
     
-    localStorage.setItem(KEY_READING_PROGRESS, JSON.stringify(progress));
+    safeSetItem(KEY_READING_PROGRESS, JSON.stringify(progress));
     
-    // Dispatch custom event to notify UI of progress change
-    window.dispatchEvent(new CustomEvent('readingProgressChanged', { 
-      detail: { planType, dayNumber } 
-    }));
-  },
-  
-  markDayIncomplete(planType, dayNumber) {
-    const KEY_READING_PROGRESS = 'dg_readingProgress';
-    const progress = JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
-    
-    if (progress[planType] && progress[planType][dayNumber]) {
-      delete progress[planType][dayNumber];
-      localStorage.setItem(KEY_READING_PROGRESS, JSON.stringify(progress));
-      
-      // Dispatch custom event to notify UI of progress change
+    if (typeof window !== 'undefined') {
       window.dispatchEvent(new CustomEvent('readingProgressChanged', { 
         detail: { planType, dayNumber } 
       }));
     }
   },
   
+  markDayIncomplete(planType, dayNumber) {
+    const raw = safeGetItem(KEY_READING_PROGRESS);
+    const progress = raw ? JSON.parse(raw) : {};
+    
+    if (progress[planType] && progress[planType][dayNumber]) {
+      delete progress[planType][dayNumber];
+      safeSetItem(KEY_READING_PROGRESS, JSON.stringify(progress));
+      
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('readingProgressChanged', { 
+          detail: { planType, dayNumber } 
+        }));
+      }
+    }
+  },
+  
   getReadingProgress(planType) {
-    const KEY_READING_PROGRESS = 'dg_readingProgress';
-    const progress = JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
+    const raw = safeGetItem(KEY_READING_PROGRESS);
+    const progress = raw ? JSON.parse(raw) : {};
     return progress[planType] || {};
   },
   
   getAllReadingProgress() {
-    const KEY_READING_PROGRESS = 'dg_readingProgress';
-    return JSON.parse(localStorage.getItem(KEY_READING_PROGRESS) || '{}');
+    const raw = safeGetItem(KEY_READING_PROGRESS);
+    return raw ? JSON.parse(raw) : {};
   },
 
   // GENERIC GET/SET
   get(key) {
-    const raw = localStorage.getItem(key);
+    const raw = safeGetItem(key);
     return raw ? JSON.parse(raw) : null;
   },
   set(key, value) {
-    localStorage.setItem(key, JSON.stringify(value));
+    safeSetItem(key, JSON.stringify(value));
   }
 };

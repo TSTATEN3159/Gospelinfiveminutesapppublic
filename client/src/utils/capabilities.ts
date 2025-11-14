@@ -20,6 +20,7 @@ export const capabilities = {
    * Some browsers block it in private mode or have it disabled
    */
   get localStorage(): boolean {
+    if (typeof window === 'undefined') return false;
     try {
       const test = '__storage_test__';
       window.localStorage.setItem(test, test);
@@ -34,6 +35,7 @@ export const capabilities = {
    * Check if sessionStorage is available
    */
   get sessionStorage(): boolean {
+    if (typeof window === 'undefined') return false;
     try {
       const test = '__storage_test__';
       window.sessionStorage.setItem(test, test);
@@ -212,27 +214,28 @@ export const safeClipboard = {
 
 /**
  * Safe wrapper for share API
+ * Returns: 'shared' | 'copied' | 'failed'
  */
-export const safeShare = async (data: ShareData): Promise<boolean> => {
+export const safeShare = async (data: ShareData): Promise<'shared' | 'copied' | 'failed'> => {
   if (!capabilities.share) {
     console.warn('Share API not available, falling back to clipboard');
     
     // Fallback to clipboard if available
-    if (data.url) {
-      return await safeClipboard.writeText(data.url);
-    } else if (data.text) {
-      return await safeClipboard.writeText(data.text);
+    const textToCopy = data.url || data.text;
+    if (textToCopy) {
+      const copied = await safeClipboard.writeText(textToCopy);
+      return copied ? 'copied' : 'failed';
     }
     
-    return false;
+    return 'failed';
   }
 
   try {
     await navigator.share(data);
-    return true;
+    return 'shared';
   } catch (error) {
     // User cancelled share or error occurred
     console.error('Share failed:', error);
-    return false;
+    return 'failed';
   }
 };

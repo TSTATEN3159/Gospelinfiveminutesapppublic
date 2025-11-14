@@ -7,6 +7,8 @@ import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTestFlight } from "@/hooks/useTestFlight";
+import { safeShare } from "@/utils/capabilities";
+import { useToast } from "@/hooks/use-toast";
 import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
 import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
 import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
@@ -80,6 +82,7 @@ const getSettingsMenuItems = (t: any) => [
 
 export default function MorePage({ language, onNavigate, streakDays = 0 }: MorePageProps) {
   const t = useTranslations(language);
+  const { toast } = useToast();
   const { isTestFlight } = useTestFlight();
   
   // iOS platform detection for Apple Store compliance
@@ -153,17 +156,29 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
             data-testid="button-share-more"
             aria-label="Share The Gospel in 5 Minutes with friends"
-            onClick={() => {
-              if (navigator.share) {
-                navigator.share({
-                  title: 'The Gospel in 5 Minutes',
-                  text: 'Discover daily Bible verses and spiritual guidance with The Gospel in 5 Minutes app!',
-                  url: 'https://www.thegospelin5minutes.org'
-                }).catch(console.error);
+            onClick={async () => {
+              const result = await safeShare({
+                title: 'The Gospel in 5 Minutes',
+                text: 'Discover daily Bible verses and spiritual guidance with The Gospel in 5 Minutes app!',
+                url: 'https://www.thegospelin5minutes.org'
+              });
+              
+              if (result === 'shared') {
+                toast({
+                  title: "Shared!",
+                  description: "Link shared successfully",
+                });
+              } else if (result === 'copied') {
+                toast({
+                  title: "Link Copied",
+                  description: "Link copied to clipboard",
+                });
               } else {
-                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
-                  console.log('Link copied to clipboard');
-                }).catch(console.error);
+                toast({
+                  title: "Sharing unavailable",
+                  description: "Sharing is not available on this device",
+                  variant: "destructive"
+                });
               }
             }}
           >

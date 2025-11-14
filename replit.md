@@ -64,6 +64,46 @@ Preferred communication style: Simple, everyday language.
 - **Data Management**: User data export (JSON) and full account deletion capabilities (premium)
 - **Apple Store Compliance**: Live Privacy Policy and Terms of Service hosted at `/privacy` and `/terms` endpoints. One-time $3.99 purchase model complies with App Store guidelines
 
+### Browser Capability Checks & Safe Wrappers
+**Critical Development Pattern**: Always check if a browser API exists before using it. Never assume a capability is available.
+
+**Implementation** (`client/src/utils/capabilities.ts`):
+- **Capability Detection**: 10+ browser APIs including localStorage, Share, Clipboard, TTS, Speech Recognition, Notifications, Geolocation, Camera, Microphone, Service Worker, IndexedDB
+- **Safe Wrappers**: 
+  - `safeLocalStorage`: localStorage operations with in-memory fallback (prevents crashes in private mode/restricted contexts)
+  - `safeClipboard`: Clipboard operations with capability checks
+  - `safeShare`: Share API with automatic clipboard fallback when unavailable
+- **appStore Integration**: All localStorage operations routed through `safeLocalStorage` with in-memory cache fallback and console warnings
+
+**Usage Guidelines**:
+1. **Always Check First**: Use `capabilities` object to verify API availability before exposing UI features
+2. **Hide Unsupported Features**: Conditionally render UI based on `supported` flags from hooks
+3. **User Feedback**: Show toast notifications when features are unavailable
+4. **Graceful Degradation**: Provide fallbacks (e.g., Share API → Clipboard → user notification)
+
+**Example Pattern**:
+```typescript
+// Hook-based capability check (TTS, Speech Recognition)
+const { supported, speak } = useTextToSpeech();
+{supported && <Button onClick={() => speak(text)}>Listen</Button>}
+
+// Direct API wrapper (Share, Clipboard)
+import { safeShare } from '@/utils/capabilities';
+const success = await safeShare({ url: '...' });
+if (!success) toast({ title: "Sharing unavailable", variant: "destructive" });
+
+// Storage with fallback
+import { safeLocalStorage } from '@/utils/capabilities';
+const value = safeLocalStorage.getItem('key'); // Returns null if unavailable
+```
+
+**Decision Tree for New Features**:
+1. Does feature depend on browser API? → Check if capability exists in `capabilities.ts`
+2. Not listed? → Add detection function to `capabilities.ts` first
+3. Create hook wrapper (if stateful) or use direct safe wrapper (if simple)
+4. Always conditionally render UI based on `supported` flag
+5. Show user-friendly error message when unavailable
+
 ## External Dependencies
 
 ### Third-Party UI Libraries

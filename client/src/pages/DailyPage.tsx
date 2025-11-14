@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { useTranslations } from "@/lib/translations";
+import { safeShare } from "@/utils/capabilities";
+import { useToast } from "@/hooks/use-toast";
 import dailyDevotionsImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
 import readingPlansImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
 import plainMeaningImage from '@assets/generated_images/Plain_meaning_verse_simplifier_9d1a382e.png';
@@ -76,6 +78,7 @@ const dailyFeatures = [
 
 export default function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPageProps) {
   const t = useTranslations(language);
+  const { toast } = useToast();
   
   const handleFeatureClick = (id: string) => {
     onNavigate(id);
@@ -130,17 +133,29 @@ export default function DailyPage({ onNavigate, streakDays = 0, language = "en" 
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
             data-testid="button-share-daily"
             aria-label="Share The Gospel in 5 Minutes with friends"
-            onClick={() => {
-              if (navigator.share) {
-                navigator.share({
-                  title: 'The Gospel in 5 Minutes',
-                  text: 'Start your day with God\'s Word! Check out The Gospel in 5 Minutes app.',
-                  url: 'https://www.thegospelin5minutes.org'
-                }).catch(console.error);
+            onClick={async () => {
+              const result = await safeShare({
+                title: 'The Gospel in 5 Minutes',
+                text: 'Start your day with God\'s Word! Check out The Gospel in 5 Minutes app.',
+                url: 'https://www.thegospelin5minutes.org'
+              });
+              
+              if (result === 'shared') {
+                toast({
+                  title: "Shared!",
+                  description: "Link shared successfully",
+                });
+              } else if (result === 'copied') {
+                toast({
+                  title: "Link Copied",
+                  description: "Link copied to clipboard",
+                });
               } else {
-                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
-                  console.log('Link copied to clipboard');
-                }).catch(console.error);
+                toast({
+                  title: "Sharing unavailable",
+                  description: "Sharing is not available on this device",
+                  variant: "destructive"
+                });
               }
             }}
           >
