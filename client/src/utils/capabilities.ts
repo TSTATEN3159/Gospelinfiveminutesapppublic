@@ -14,6 +14,16 @@
  * ```
  */
 
+// Explicit import to prevent tree-shaking in native builds
+// This ensures @capacitor/core stays in the bundle for iOS/Android
+import type { CapacitorGlobal } from '@capacitor/core';
+
+declare global {
+  interface Window {
+    Capacitor?: CapacitorGlobal;
+  }
+}
+
 export const capabilities = {
   /**
    * Check if localStorage is available

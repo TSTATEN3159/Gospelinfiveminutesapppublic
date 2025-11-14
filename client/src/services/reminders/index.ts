@@ -63,10 +63,10 @@ class ReminderManager {
     enabled: boolean,
     time: string
   ): Promise<{ success: boolean; message: string }> {
-    this.preferences[channel] = { enabled, time };
-    this.savePreferences();
-
+    // Handle disabling first
     if (!enabled) {
+      this.preferences[channel] = { enabled: false, time };
+      this.savePreferences();
       const canceled = await this.adapter.cancelReminder(channel);
       return {
         success: canceled,
@@ -74,12 +74,11 @@ class ReminderManager {
       };
     }
 
+    // For enabling, check permission first
     const permission = await this.adapter.checkPermission();
     if (permission !== 'granted') {
       const granted = await this.adapter.requestPermission();
       if (granted !== 'granted') {
-        this.preferences[channel].enabled = false;
-        this.savePreferences();
         return {
           success: false,
           message: 'Notification permission not granted',
@@ -91,6 +90,7 @@ class ReminderManager {
     const hour = parseInt(hourStr, 10);
     const minute = parseInt(minuteStr, 10);
 
+    // Try to schedule the new reminder WITHOUT canceling the old one first
     const scheduled = await this.adapter.scheduleReminder({
       channel,
       title: channel === 'dailyVerse' ? 'Daily Verse' : 'Bible Reading Plan',
@@ -102,12 +102,21 @@ class ReminderManager {
       minute,
     });
 
-    return {
-      success: scheduled,
-      message: scheduled
-        ? `${channel} reminder scheduled for ${time}`
-        : `Failed to schedule ${channel} reminder`,
-    };
+    // Only persist enabled state if scheduling succeeded
+    // Note: scheduleReminder internally cancels the old timer before setting new one
+    if (scheduled) {
+      this.preferences[channel] = { enabled: true, time };
+      this.savePreferences();
+      return {
+        success: true,
+        message: `${channel} reminder scheduled for ${time}`,
+      };
+    } else {
+      return {
+        success: false,
+        message: `Failed to schedule ${channel} reminder`,
+      };
+    }
   }
 
   async cancelReminder(channel: NotificationChannel): Promise<boolean> {
@@ -143,11 +152,46 @@ class ReminderManager {
   }
 
   async initializeFromStorage(): Promise<void> {
+    // Restore reminders - check permission first before attempting to schedule
+    const permission = await this.adapter.checkPermission();
+    let preferencesChanged = false;
+    
     for (const channel of ['dailyVerse', 'readingPlan'] as NotificationChannel[]) {
       const pref = this.preferences[channel];
       if (pref.enabled) {
-        await this.upsertReminder(channel, true, pref.time);
+        // If permission not granted, disable the preference
+        if (permission !== 'granted') {
+          this.preferences[channel].enabled = false;
+          preferencesChanged = true;
+          continue;
+        }
+        
+        const [hourStr, minuteStr] = pref.time.split(':');
+        const hour = parseInt(hourStr, 10);
+        const minute = parseInt(minuteStr, 10);
+        
+        const scheduled = await this.adapter.scheduleReminder({
+          channel,
+          title: channel === 'dailyVerse' ? 'Daily Verse' : 'Bible Reading Plan',
+          body:
+            channel === 'dailyVerse'
+              ? 'Your verse of the day is ready. Tap to read and meditate.'
+              : 'Time for your daily Bible reading. Stay on track with your plan!',
+          hour,
+          minute,
+        });
+
+        // If scheduling fails, disable the preference to keep state consistent
+        if (!scheduled) {
+          this.preferences[channel].enabled = false;
+          preferencesChanged = true;
+        }
       }
+    }
+    
+    // Only save if preferences actually changed
+    if (preferencesChanged) {
+      this.savePreferences();
     }
   }
 

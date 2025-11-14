@@ -40,12 +40,28 @@ export class WebNotificationAdapter implements INotificationAdapter {
 
   async scheduleReminder(params: ScheduleReminderParams): Promise<boolean> {
     try {
-      const permission = await this.checkPermission();
-      if (permission !== 'granted') {
+      // Verify notification API is available
+      if (!('Notification' in window)) {
+        console.warn('Web Notifications not supported in this browser');
         return false;
       }
 
-      this.cancelReminder(params.channel);
+      // Check and request permission if needed
+      let permission = await this.checkPermission();
+      if (permission !== 'granted') {
+        // Try to request permission
+        permission = await this.requestPermission();
+        if (permission !== 'granted') {
+          console.warn(`Cannot schedule reminder: permission is ${permission}`);
+          return false;
+        }
+      }
+
+      // Final verification that permission is actually granted
+      if (Notification.permission !== 'granted') {
+        console.warn('Permission check mismatch - aborting schedule');
+        return false;
+      }
 
       const now = new Date();
       const nextNotification = new Date();
@@ -58,6 +74,11 @@ export class WebNotificationAdapter implements INotificationAdapter {
       const timeUntilNext = nextNotification.getTime() - now.getTime();
 
       const showNotification = () => {
+        // Final permission check before showing notification
+        if (Notification.permission !== 'granted') {
+          console.warn('Permission revoked - cannot show notification');
+          return;
+        }
         new Notification(params.title, {
           body: params.body,
           icon: '/favicon.ico',
@@ -76,6 +97,13 @@ export class WebNotificationAdapter implements INotificationAdapter {
         this.scheduledTimers.set(params.channel, intervalId);
       }, timeUntilNext);
 
+      // Only clear old timer AFTER new one is successfully scheduled
+      const oldTimerId = this.scheduledTimers.get(params.channel);
+      if (oldTimerId) {
+        clearTimeout(oldTimerId);
+        clearInterval(oldTimerId);
+      }
+      
       this.scheduledTimers.set(params.channel, timeoutId);
       return true;
     } catch (error) {
