@@ -133,6 +133,21 @@ export const capabilities = {
   get onlineStatus(): boolean {
     return typeof navigator !== 'undefined' && 'onLine' in navigator;
   },
+
+  /**
+   * Check if Capacitor Local Notifications are available (native iOS/Android)
+   */
+  get capacitorNotifications(): boolean {
+    try {
+      if (typeof window === 'undefined') return false;
+      if (typeof (window as any).Capacitor === 'undefined') return false;
+      
+      const platform = (window as any).Capacitor.getPlatform();
+      return platform === 'ios' || platform === 'android';
+    } catch {
+      return false;
+    }
+  },
 };
 
 /**

@@ -6,13 +6,13 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, TestTube, Download, Trash2 } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { notificationService } from "../services/notificationService";
 import { bibleService } from "../services/bibleService";
 import { appStore } from "@/lib/appStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TextSizeControls } from "@/components/TextSizeControls";
+import { ReminderSettings } from "@/components/settings/ReminderSettings";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -129,18 +129,13 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
     );
   };
 
-  // Load preferences from localStorage and restore notifications on mount
+  // Load preferences from localStorage on mount
   useEffect(() => {
     const savedPreferences = localStorage.getItem("gospelAppPreferences");
     if (savedPreferences) {
       try {
         const prefs = JSON.parse(savedPreferences);
         setPreferences(prefs);
-        
-        // Restore scheduled notifications if enabled
-        if (prefs.dailyReminders) {
-          notificationService.restoreScheduledReminders(prefs);
-        }
       } catch (error) {
         console.error("Error loading preferences:", error);
       }
@@ -303,9 +298,6 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
       localStorage.setItem('gospelAppPreferences', JSON.stringify(emptyPreferences));
       localStorage.setItem('gospelAppStreakData', JSON.stringify({ streak: 0, lastVisit: null }));
 
-      // Clear notifications
-      notificationService.clearScheduledReminders();
-
       toast({
         title: t.accountDataDeleted,
         description: t.allDataRemovedFromDevice,
@@ -324,60 +316,15 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
   };
 
   const handlePreferenceChange = async (key: keyof AppPreferences, value: any) => {
-    // Handle daily reminders specifically with permission check first
-    if (key === 'dailyReminders') {
-      if (value) {
-        const permission = await notificationService.requestPermission();
-        if (permission === 'granted') {
-          const newPreferences = { ...preferences, [key]: value };
-          setPreferences(newPreferences);
-          localStorage.setItem("gospelAppPreferences", JSON.stringify(newPreferences));
-          
-          notificationService.scheduleDailyReminders(newPreferences);
-          toast({
-            title: t.dailyRemindersEnabled,
-            description: `${t.dailyReminderConfirmation} ${newPreferences.reminderTime}.`,
-          });
-        } else {
-          // Keep the setting as false and don't save to localStorage
-          toast({
-            title: t.permissionRequired,
-            description: t.notificationPermissionMessage,
-            variant: "destructive",
-          });
-          return; // Don't update preferences or localStorage
-        }
-      } else {
-        const newPreferences = { ...preferences, [key]: value };
-        setPreferences(newPreferences);
-        localStorage.setItem("gospelAppPreferences", JSON.stringify(newPreferences));
-        
-        notificationService.clearScheduledReminders();
-        toast({
-          title: t.dailyRemindersDisabled,
-          description: t.noMoreDailyReminders,
-        });
-      }
-    } else {
-      // Handle all other preference changes normally
-      const newPreferences = { ...preferences, [key]: value };
-      setPreferences(newPreferences);
-      localStorage.setItem("gospelAppPreferences", JSON.stringify(newPreferences));
-      
-      if (key === 'reminderTime' && newPreferences.dailyReminders) {
-        // Reschedule with new time
-        notificationService.scheduleDailyReminders(newPreferences);
-        toast({
-          title: t.reminderTimeUpdated,
-          description: `${t.reminderTimeConfirmation} ${value}.`,
-        });
-      } else {
-        toast({
-          title: t.settingsUpdated,
-          description: t.preferencesSaved,
-        });
-      }
-    }
+    // Handle all preference changes (except daily reminders which are now managed by ReminderSettings)
+    const newPreferences = { ...preferences, [key]: value };
+    setPreferences(newPreferences);
+    localStorage.setItem("gospelAppPreferences", JSON.stringify(newPreferences));
+    
+    toast({
+      title: t.settingsUpdated,
+      description: t.preferencesSaved,
+    });
   };
 
   return (
@@ -528,52 +475,31 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <Label htmlFor="dailyReminders" className="font-medium">{t.dailyReminders}</Label>
-                <p className="text-sm text-muted-foreground">{t.reminderToReadDailyVerse}</p>
-              </div>
-              <Switch
-                id="dailyReminders"
-                checked={preferences.dailyReminders}
-                onCheckedChange={(checked) => handlePreferenceChange('dailyReminders', checked)}
-                data-testid="switch-daily-reminders"
-              />
-            </div>
+            <ReminderSettings
+              onSuccess={(message) => {
+                toast({
+                  title: t.success || "Success",
+                  description: message,
+                });
+              }}
+              onError={(message) => {
+                toast({
+                  title: t.error || "Error",
+                  description: message,
+                  variant: "destructive",
+                });
+              }}
+              labels={{
+                dailyVerse: t.dailyReminders,
+                dailyVerseDesc: t.reminderToReadDailyVerse,
+                readingPlan: "Bible Reading Plan",
+                readingPlanDesc: "Daily reminder for your reading plan",
+                reminderTime: t.reminderTime,
+                testNotification: t.testNotification,
+              }}
+            />
 
-            {preferences.dailyReminders && (
-              <div className="space-y-3">
-                <div>
-                  <Label htmlFor="reminderTime">{t.reminderTime}</Label>
-                  <Input
-                    id="reminderTime"
-                    type="time"
-                    value={preferences.reminderTime}
-                    onChange={(e) => handlePreferenceChange('reminderTime', e.target.value)}
-                    data-testid="input-reminder-time"
-                  />
-                </div>
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={async () => {
-                    const result = await notificationService.testNotification();
-                    toast({
-                      title: result.success ? "Success" : "Error",
-                      description: result.message,
-                      variant: result.success ? "default" : "destructive"
-                    });
-                  }}
-                  className="w-full"
-                  data-testid="button-test-notification"
-                >
-                  <TestTube className="w-4 h-4 mr-2" />
-                  {t.testNotification}
-                </Button>
-              </div>
-            )}
-
-            <div className="flex items-center justify-between">
+            <div className="flex items-center justify-between pt-4 border-t">
               <div>
                 <Label htmlFor="streakNotifications" className="font-medium">{t.streakNotifications}</Label>
                 <p className="text-sm text-muted-foreground">{t.celebrateReadingStreaks}</p>
