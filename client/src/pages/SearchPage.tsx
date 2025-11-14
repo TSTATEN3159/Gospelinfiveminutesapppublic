@@ -108,6 +108,7 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             backgroundImage={bibleImage}
             initialSearchQuery={initialSearchQuery}
             onSearchUsed={onSearchUsed}
+            language={language}
           />
           
           {/* Topical Search Section */}

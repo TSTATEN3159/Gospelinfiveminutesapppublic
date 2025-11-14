@@ -3,10 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Copy, Book, BookOpen, Sparkles, ScrollText } from "lucide-react";
+import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useTranslations } from "@/lib/translations";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 import { appStore } from "@/lib/appStore";
 
@@ -46,9 +48,10 @@ interface BibleSearchSectionProps {
   backgroundImage?: string;
   initialSearchQuery?: string;
   onSearchUsed?: () => void;
+  language?: string;
 }
 
-export default function BibleSearchSection({ backgroundImage, initialSearchQuery, onSearchUsed }: BibleSearchSectionProps) {
+export default function BibleSearchSection({ backgroundImage, initialSearchQuery, onSearchUsed, language = "en" }: BibleSearchSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedVersion, setSelectedVersion] = useState(() => {
     // Get Bible version from user preferences, default to KJV
@@ -59,7 +62,22 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const { toast } = useToast();
+  const t = useTranslations(language);
+  const { supported: ttsSupported, isSpeaking, speak, cancel } = useTextToSpeech();
   const ranInitial = useRef<string | null>(null);
+  const hasShownTTSWarning = useRef(false);
+
+  // Show toast once if TTS is not supported
+  useEffect(() => {
+    if (!ttsSupported && !hasShownTTSWarning.current) {
+      hasShownTTSWarning.current = true;
+      toast({
+        title: "Text-to-Speech Unavailable",
+        description: t.ttsNotSupported,
+        variant: "destructive"
+      });
+    }
+  }, [ttsSupported, t.ttsNotSupported, toast]);
 
   // Listen for Bible version changes from Settings
   useEffect(() => {
@@ -153,6 +171,17 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
       });
     } catch (err) {
       console.log("Copy failed:", err);
+    }
+  };
+
+  const handleTTSClick = () => {
+    if (!searchResult) return;
+    
+    if (isSpeaking) {
+      cancel();
+    } else {
+      const textToSpeak = `${searchResult.text}. ${searchResult.reference}`;
+      speak(textToSpeak, language);
     }
   };
 
@@ -263,7 +292,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
               </blockquote>
             </div>
 
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-2">
               <Button 
                 onClick={copyVerse}
                 className="bg-green-600 text-white"
@@ -272,6 +301,27 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
                 <Copy className="w-4 h-4 mr-2" />
                 Copy Verse
               </Button>
+              {ttsSupported && (
+                <Button
+                  onClick={handleTTSClick}
+                  variant="outline"
+                  disabled={!searchResult || isLoading}
+                  data-testid="button-tts-search-verse"
+                  aria-label={isSpeaking ? t.stopListening : t.listenToVerse}
+                >
+                  {isSpeaking ? (
+                    <>
+                      <VolumeX className="w-4 h-4 mr-2 text-blue-600" />
+                      {t.stopListening}
+                    </>
+                  ) : (
+                    <>
+                      <Volume2 className="w-4 h-4 mr-2" />
+                      {t.listenToVerse}
+                    </>
+                  )}
+                </Button>
+              )}
             </div>
           </div>
         )}

@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, type MouseEvent } from "react";
 import GreetingHeader from "../components/GreetingHeader";
 import DailyVerseCard from "../components/DailyVerseCard";
 import StreakCounter from "../components/StreakCounter";
@@ -11,7 +11,8 @@ import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Book, FileText, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen } from "lucide-react";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { Book, FileText, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen, Volume2, VolumeX } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 
@@ -47,6 +48,7 @@ interface HomePageProps {
 export default function HomePage({ user, onNavigate, onStreakUpdate, language = "en" }: HomePageProps) {
   const { toast } = useToast();
   const t = useTranslations(language);
+  const { supported: ttsSupported, isSpeaking, speak, cancel } = useTextToSpeech();
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showStudyPlans, setShowStudyPlans] = useState(false);
@@ -60,6 +62,18 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
+  
+  const handleTTSClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (!dailyVerse) return;
+    
+    if (isSpeaking) {
+      cancel();
+    } else {
+      const textToSpeak = `${dailyVerse.text}. ${dailyVerse.reference}`;
+      speak(textToSpeak, language);
+    }
+  };
 
   // Load daily verse from Bible API and daily video
   useEffect(() => {
@@ -236,9 +250,27 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
                 </div>
               ) : dailyVerse ? (
                 <>
-                  <p className="text-sm text-gray-700 mb-1 line-clamp-2">
-                    "{dailyVerse.text}"
-                  </p>
+                  <div className="flex items-start gap-2 mb-1">
+                    <p className="text-sm text-gray-700 flex-1 line-clamp-2">
+                      "{dailyVerse.text}"
+                    </p>
+                    {ttsSupported && (
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        className="flex-shrink-0"
+                        onClick={handleTTSClick}
+                        data-testid="button-tts-daily-verse"
+                        aria-label={isSpeaking ? t.stopListening : t.listenToVerse}
+                      >
+                        {isSpeaking ? (
+                          <VolumeX className="w-4 h-4 text-blue-600" />
+                        ) : (
+                          <Volume2 className="w-4 h-4 text-gray-600" />
+                        )}
+                      </Button>
+                    )}
+                  </div>
                   <p className="text-xs text-gray-500 font-medium">
                     {dailyVerse.reference}
                   </p>

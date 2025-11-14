@@ -119,6 +119,9 @@ export interface Translations {
   scripture: string;
   bibleVerse: string;
   noVerseContentAvailable: string;
+  listenToVerse: string;
+  stopListening: string;
+  ttsNotSupported: string;
   
   // Support Page
   supportAndPrivacy: string;
@@ -756,6 +759,9 @@ export const translations: Record<string, Translations> = {
     scripture: "Scripture",
     bibleVerse: "Bible Verse",
     noVerseContentAvailable: "No verse content available",
+    listenToVerse: "Listen to Verse",
+    stopListening: "Stop Listening",
+    ttsNotSupported: "Text-to-speech not supported in your browser",
     
     // Support Page
     supportAndPrivacy: "Support & Privacy",
@@ -1356,6 +1362,9 @@ export const translations: Record<string, Translations> = {
     scripture: "Escritura",
     bibleVerse: "Versículo Bíblico",
     noVerseContentAvailable: "No hay contenido del versículo disponible",
+    listenToVerse: "Escuchar Versículo",
+    stopListening: "Detener Lectura",
+    ttsNotSupported: "Texto a voz no compatible con su navegador",
     
     // Support Page
     supportAndPrivacy: "Soporte y Privacidad",
@@ -1956,6 +1965,9 @@ export const translations: Record<string, Translations> = {
     scripture: "Écriture",
     bibleVerse: "Verset Biblique",
     noVerseContentAvailable: "Aucun contenu de verset disponible",
+    listenToVerse: "Écouter le Verset",
+    stopListening: "Arrêter la Lecture",
+    ttsNotSupported: "Synthèse vocale non prise en charge par votre navigateur",
     
     // Support Page
     supportAndPrivacy: "Support et Confidentialité",
@@ -2556,6 +2568,9 @@ export const translations: Record<string, Translations> = {
     scripture: "Escritura",
     bibleVerse: "Versículo Bíblico",
     noVerseContentAvailable: "Nenhum conteúdo de versículo disponível",
+    listenToVerse: "Ouvir Versículo",
+    stopListening: "Parar Leitura",
+    ttsNotSupported: "Texto-para-fala não suportado no seu navegador",
     
     // Support Page
     supportAndPrivacy: "Suporte e Privacidade",
@@ -3156,6 +3171,9 @@ export const translations: Record<string, Translations> = {
     scripture: "经文",
     bibleVerse: "圣经经文",
     noVerseContentAvailable: "无可用的经文内容",
+    listenToVerse: "聆听经文",
+    stopListening: "停止朗读",
+    ttsNotSupported: "您的浏览器不支持文本转语音",
     
     // Support Page
     supportAndPrivacy: "支持与隐私",
@@ -3756,6 +3774,9 @@ export const translations: Record<string, Translations> = {
     scripture: "كتاب مقدس",
     bibleVerse: "آية من الكتاب المقدس",
     noVerseContentAvailable: "لا يوجد محتوى آية متاح",
+    listenToVerse: "الاستماع إلى الآية",
+    stopListening: "إيقاف الاستماع",
+    ttsNotSupported: "تحويل النص إلى كلام غير مدعوم في متصفحك",
     
     // Support Page
     supportAndPrivacy: "الدعم والخصوصية",
@@ -4356,6 +4377,9 @@ export const translations: Record<string, Translations> = {
     scripture: "धर्मग्रंथ",
     bibleVerse: "बाइबल श्लोक",
     noVerseContentAvailable: "कोई श्लोक सामग्री उपलब्ध नहीं",
+    listenToVerse: "श्लोक सुनें",
+    stopListening: "सुनना बंद करें",
+    ttsNotSupported: "आपके ब्राउज़र में टेक्स्ट-टू-स्पीच समर्थित नहीं है",
     
     // Support Page
     supportAndPrivacy: "सहायता और गोपनीयता",

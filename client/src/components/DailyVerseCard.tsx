@@ -2,8 +2,10 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote } from "lucide-react";
+import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useTranslations } from "@/lib/translations";
 import { appStore } from "@/lib/appStore";
 import {
   Dialog,
@@ -28,10 +30,13 @@ interface DailyVerseCardProps {
   verse: Verse;
   backgroundImage?: string;
   onNavigate?: (page: string, searchQuery?: string) => void;
+  language?: string;
 }
 
-export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: DailyVerseCardProps) {
+export default function DailyVerseCard({ verse, backgroundImage, onNavigate, language = "en" }: DailyVerseCardProps) {
   const { toast } = useToast();
+  const t = useTranslations(language);
+  const { supported: ttsSupported, isSpeaking, speak, cancel } = useTextToSpeech();
   const [isSharing, setIsSharing] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
   const [noteText, setNoteText] = useState("");
@@ -158,6 +163,17 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
     });
   };
 
+  const handleTTSClick = () => {
+    if (!verse) return;
+    
+    if (isSpeaking) {
+      cancel();
+    } else {
+      const textToSpeak = `${verse.text}. ${verse.reference}`;
+      speak(textToSpeak, language);
+    }
+  };
+
   // todo: Replace with API call to get meaning and application
   const getMeaning = () => {
     return verse.meaning || "This verse teaches us about trusting God completely rather than relying on our own understanding. It emphasizes surrendering our will to God's wisdom and allowing Him to guide our paths. When we acknowledge God in all our decisions, He promises to direct our steps toward righteousness.";
@@ -281,6 +297,29 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate }: D
             <Copy className="w-4 h-4 mr-2" />
             Copy
           </Button>
+          
+          {ttsSupported && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleTTSClick}
+              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+              data-testid="button-tts-verse"
+              aria-label={isSpeaking ? t.stopListening : t.listenToVerse}
+            >
+              {isSpeaking ? (
+                <>
+                  <VolumeX className="w-4 h-4 mr-2" />
+                  {t.stopListening}
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 mr-2" />
+                  {t.listenToVerse}
+                </>
+              )}
+            </Button>
+          )}
           
           <Button
             variant="outline"
