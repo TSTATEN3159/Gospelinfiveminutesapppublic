@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp, boolean, pgEnum, unique, uniqueIndex, check, integer } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, boolean, pgEnum, unique, uniqueIndex, index, check, integer } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -236,3 +236,101 @@ export const insertDevotionalProgressSchema = createInsertSchema(devotionalProgr
 
 export type InsertDevotionalProgress = z.infer<typeof insertDevotionalProgressSchema>;
 export type DevotionalProgress = typeof devotionalProgress.$inferSelect;
+
+// Text position enum for verse images
+export const textPositionEnum = pgEnum('text_position', ['top', 'center', 'bottom']);
+
+// Verse Image Templates - Stores compact render settings for generated Scripture images
+export const verseImages = pgTable("verse_images", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => appUsers.id, { onDelete: 'cascade' }), // Optional - null if anonymous/guest
+  verseText: text("verse_text").notNull(),
+  verseReference: text("verse_reference").notNull(),
+  backgroundId: text("background_id").notNull(), // e.g., 'mountain', 'ocean', 'storm', 'sky', 'bridge', 'lake'
+  textPosition: textPositionEnum("text_position").notNull().default('center'),
+  textColor: text("text_color").notNull().default('#FFFFFF'),
+  fontSize: integer("font_size").notNull().default(32),
+  fontFamily: text("font_family").notNull().default('Crimson Text'),
+  textShadow: boolean("text_shadow").notNull().default(true),
+  imageUrl: text("image_url"), // PNG URL if generated and stored
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    userIdCreatedAtIdx: index('verse_images_user_created_idx').on(table.userId, table.createdAt),
+  };
+});
+
+export const insertVerseImageSchema = createInsertSchema(verseImages).pick({
+  userId: true,
+  verseText: true,
+  verseReference: true,
+  backgroundId: true,
+  textPosition: true,
+  textColor: true,
+  fontSize: true,
+  fontFamily: true,
+  textShadow: true,
+  imageUrl: true,
+});
+
+export type InsertVerseImage = z.infer<typeof insertVerseImageSchema>;
+export type VerseImage = typeof verseImages.$inferSelect;
+
+// Community Posts - Public feed of shared verse images (opt-in only)
+export const communityPosts = pgTable("community_posts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").references(() => appUsers.id, { onDelete: 'cascade' }), // Optional - null if anonymous
+  userName: text("user_name"), // Display name for anonymous users
+  verseImageId: varchar("verse_image_id").notNull().references(() => verseImages.id, { onDelete: 'cascade' }),
+  caption: text("caption"), // Optional user caption/reflection
+  isPublic: boolean("is_public").notNull().default(false), // User must opt-in
+  userConsent: boolean("user_consent").notNull().default(false), // Explicit consent to share
+  consentAt: timestamp("consent_at"), // When user gave consent (for audit trail)
+  viewCount: integer("view_count").notNull().default(0),
+  likeCount: integer("like_count").notNull().default(0),
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  expiresAt: timestamp("expires_at").notNull().default(sql`now() + interval '30 days'`), // 30-day retention
+  isReported: boolean("is_reported").notNull().default(false), // Abuse flag
+}, (table) => {
+  return {
+    publicExpiresIdx: index('community_posts_public_expires_idx').on(table.isPublic, table.expiresAt),
+    userCreatedIdx: index('community_posts_user_created_idx').on(table.userId, table.createdAt),
+    // CHECK: is_public requires user_consent
+    publicRequiresConsent: check('public_requires_consent', sql`(NOT ${table.isPublic}) OR ${table.userConsent}`),
+    // CHECK: anonymous posts must supply user_name
+    anonymousRequiresName: check('anonymous_requires_name', sql`${table.userId} IS NOT NULL OR ${table.userName} IS NOT NULL`),
+  };
+});
+
+export const insertCommunityPostSchema = createInsertSchema(communityPosts).pick({
+  userId: true,
+  userName: true,
+  verseImageId: true,
+  caption: true,
+  isPublic: true,
+  userConsent: true,
+  consentAt: true,
+});
+
+export type InsertCommunityPost = z.infer<typeof insertCommunityPostSchema>;
+export type CommunityPost = typeof communityPosts.$inferSelect;
+
+// Abuse Reports - Track reports on community posts for moderation
+export const abuseReports = pgTable("abuse_reports", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  communityPostId: varchar("community_post_id").notNull().references(() => communityPosts.id, { onDelete: 'cascade' }),
+  reporterId: varchar("reporter_id").references(() => appUsers.id, { onDelete: 'set null' }), // Optional - can be anonymous
+  reason: text("reason").notNull(), // e.g., 'inappropriate', 'spam', 'offensive'
+  details: text("details"), // Additional context from reporter
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+});
+
+export const insertAbuseReportSchema = createInsertSchema(abuseReports).pick({
+  communityPostId: true,
+  reporterId: true,
+  reason: true,
+  details: true,
+});
+
+export type InsertAbuseReport = z.infer<typeof insertAbuseReportSchema>;
+export type AbuseReport = typeof abuseReports.$inferSelect;
