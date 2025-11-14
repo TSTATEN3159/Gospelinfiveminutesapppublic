@@ -5,6 +5,16 @@ import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
@@ -74,6 +84,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
+  const [showVoicePermissionDialog, setShowVoicePermissionDialog] = useState(false);
   const { toast } = useToast();
   const t = useTranslations(language);
   const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
@@ -89,6 +100,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   } = useSpeechRecognition({ lang: speechLang });
   const ranInitial = useRef<string | null>(null);
   const hasShownTTSWarning = useRef(false);
+  const voicePermissionGranted = useRef(false);
 
   // Show toast once if TTS is not supported
   useEffect(() => {
@@ -231,7 +243,36 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     }
   };
 
+  const handleVoiceSearchClick = () => {
+    if (listening) {
+      stopListening();
+    } else {
+      // Show permission dialog on first use
+      if (!voicePermissionGranted.current) {
+        setShowVoicePermissionDialog(true);
+      } else {
+        startListening();
+      }
+    }
+  };
+
+  const handleVoicePermissionAccept = () => {
+    voicePermissionGranted.current = true;
+    setShowVoicePermissionDialog(false);
+    startListening();
+  };
+
+  const handleVoicePermissionDecline = () => {
+    setShowVoicePermissionDialog(false);
+    toast({
+      title: "Voice search declined",
+      description: "You can continue using text search to find Bible verses.",
+      duration: 3000,
+    });
+  };
+
   return (
+    <>
     <Card className="relative overflow-hidden min-h-[400px] shadow-lg border-2" data-testid="card-bibleSearch">
       {backgroundImage && (
         <>
@@ -295,7 +336,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
               <Button
                 variant="outline"
                 size="icon"
-                onClick={listening ? stopListening : startListening}
+                onClick={handleVoiceSearchClick}
                 disabled={isLoading}
                 className={cn(
                   listening && "bg-red-50 border-red-200 text-red-600 hover:bg-red-100"
@@ -428,5 +469,49 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
         )}
       </CardContent>
     </Card>
+
+    <AlertDialog open={showVoicePermissionDialog} onOpenChange={setShowVoicePermissionDialog}>
+      <AlertDialogContent data-testid="dialog-voice-permission">
+        <AlertDialogHeader>
+          <AlertDialogTitle className="flex items-center gap-2">
+            <Mic className="w-5 h-5 text-green-600" />
+            Microphone Permission
+          </AlertDialogTitle>
+          <AlertDialogDescription className="space-y-3">
+            <p>
+              Voice search lets you speak Bible verses instead of typing. For example, say "John 3:16" and we'll search for it.
+            </p>
+            <div className="bg-blue-50 dark:bg-blue-950 p-3 rounded-lg space-y-2 text-sm">
+              <p className="font-medium text-blue-900 dark:text-blue-100">Your Privacy:</p>
+              <ul className="list-disc list-inside space-y-1 text-blue-800 dark:text-blue-200">
+                <li>Your voice is processed locally by your device</li>
+                <li>No audio is sent to our servers</li>
+                <li>We don't record or store your voice</li>
+                <li>You can revoke permission anytime in your browser settings</li>
+              </ul>
+            </div>
+            <p className="text-sm text-muted-foreground">
+              Your browser will ask for microphone permission next. If your device or browser doesn't support speech recognition, you can keep using text search.
+            </p>
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+        <AlertDialogFooter>
+          <AlertDialogCancel 
+            onClick={handleVoicePermissionDecline}
+            data-testid="button-voice-permission-cancel"
+          >
+            Keep Using Text Search
+          </AlertDialogCancel>
+          <AlertDialogAction 
+            onClick={handleVoicePermissionAccept}
+            className="bg-green-600 hover:bg-green-700"
+            data-testid="button-voice-permission-accept"
+          >
+            Allow & Start Listening
+          </AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+    </>
   );
 }

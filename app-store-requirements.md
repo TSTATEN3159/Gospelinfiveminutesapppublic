@@ -83,9 +83,16 @@ Start each day with God's Word through The Gospel in 5 Minutes - your personal s
 • Progressive learning with daily readings
 
 🔍 BIBLE SEARCH
-• Search through Scripture by keywords
+• Search through Scripture by keywords or voice (optional)
+• Voice search: Speak Bible verses instead of typing
 • Find verses by topic, emotion, or situation
 • Comprehensive Bible reference tool
+
+♿️ ACCESSIBILITY FEATURES
+• Pinch-to-zoom text scaling for comfortable reading
+• Text-to-speech support for audio Bible reading
+• Voice search for hands-free Scripture lookup
+• VoiceOver and high contrast support
 
 ✨ TRACK YOUR JOURNEY  
 • Daily streak counter to build consistent habits
@@ -96,7 +103,7 @@ Start each day with God's Word through The Gospel in 5 Minutes - your personal s
 • Available in English, Spanish, French, Portuguese, Chinese, Arabic, and Hindi
 • Culturally appropriate translations and content
 
-Privacy-focused with complete data control - export or delete your information anytime. Connect with us on Facebook @TheGospelIn5Minutes for community and support.
+Privacy-focused with complete data control - export or delete your information anytime. Your voice is processed locally - never recorded or stored. Connect with us on Facebook @TheGospelIn5Minutes for community and support.
 ```
 
 ### Keywords
@@ -149,6 +156,16 @@ The app helps users build consistent Bible reading habits with personalized cont
 - [x] Screenshots captured for all device sizes  
 - [x] App Store Connect metadata completed
 - [x] **HOST LIVE PRIVACY POLICY & TERMS URLs** ✅ COMPLETED
+- [x] **MICROPHONE USAGE DISCLOSURE** ✅ COMPLETED
+  - Privacy policy updated with microphone usage disclosure
+  - app-privacy.json includes Audio Data section
+  - User-facing permission dialog with privacy explanation
+  - Voice search marked as optional with clear opt-in flow
+- [x] **ACCESSIBILITY FEATURES HIGHLIGHTED** ✅ COMPLETED
+  - Pinch-to-zoom text scaling documented in app store
+  - Text-to-speech support listed
+  - Voice search for hands-free access mentioned
+  - All features degrade gracefully when unavailable
 - [ ] TestFlight build uploaded and tested
 - [ ] Network error handling for API calls (Ask Pastor, Bible features)
 

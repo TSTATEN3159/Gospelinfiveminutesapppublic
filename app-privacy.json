@@ -72,6 +72,23 @@
         ]
       },
       {
+        "category": "Audio Data",
+        "types": [
+          {
+            "dataType": "Audio",
+            "description": "Voice input for Bible search (speech-to-text conversion)",
+            "purposes": ["App Functionality"],
+            "linkedToUser": false,
+            "usedForTracking": false,
+            "dataSource": "User",
+            "optional": true,
+            "processing": "Processed locally by device's built-in speech recognition (Web Speech API)",
+            "storage": "Not recorded or stored - only converted to text for search",
+            "notes": "User must explicitly tap microphone button and grant browser permission. Feature degrades gracefully if unsupported."
+          }
+        ]
+      },
+      {
         "category": "Identifiers",
         "types": [
           {
@@ -121,7 +138,7 @@
     "contentRating": "4+",
     "keywords": "Bible, Gospel, Daily Devotional, Scripture, Christianity, Faith, Spiritual Growth, Prayer",
     "subtitle": "Daily Bible verses and spiritual guidance",
-    "description": "Start each day with God's Word. The Gospel in 5 Minutes delivers daily Bible verses with meaningful explanations, AI-powered pastoral guidance, and 3-day study plans to deepen your faith journey.",
-    "whatsNew": "• Beautiful nature-themed design with vivid imagery\n• Enhanced daily streak tracking with consecutive day counter\n• Improved privacy controls and data management\n• Direct support access and feedback options\n• Optimized for iOS performance and accessibility"
+    "description": "Start each day with God's Word. The Gospel in 5 Minutes delivers daily Bible verses with meaningful explanations, AI-powered pastoral guidance, and 3-day study plans to deepen your faith journey. Features voice search for hands-free Scripture lookup and pinch-to-zoom text scaling for comfortable reading.",
+    "whatsNew": "• Voice search: Speak Bible verses instead of typing (optional)\n• Pinch-to-zoom text scaling for comfortable reading\n• Text-to-speech support for audio Bible reading\n• Enhanced accessibility features (VoiceOver, high contrast)\n• Improved privacy controls and data management"
   }
 }
