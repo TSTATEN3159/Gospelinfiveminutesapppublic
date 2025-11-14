@@ -202,9 +202,6 @@ export default function BibleTriviaPage({
   const [gameState, setGameState] = useState<GameState>("idle");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  // Ref to guard against double-invocation in Strict Mode
-  const fetchInProgressRef = useRef(false);
-
 
   // -------------------------
   // Load persisted state
@@ -287,10 +284,6 @@ export default function BibleTriviaPage({
   // -------------------------
   const fetchQuestionsForLevel = useCallback(
     async (level: LevelKey) => {
-      // Guard against double-invocation in Strict Mode
-      if (fetchInProgressRef.current) return;
-      fetchInProgressRef.current = true;
-
       setLoading(true);
       setError(null);
       setJustUnlockedLevel(null);
@@ -373,7 +366,7 @@ export default function BibleTriviaPage({
 
     const nextIndex = currentIndex + 1;
     const reachedEnd =
-      nextIndex >= questions.length;
+      nextIndex >= QUESTIONS_PER_GAME || nextIndex >= questions.length;
 
     if (reachedEnd) {
       setGameState("finished");
@@ -449,7 +442,7 @@ export default function BibleTriviaPage({
   // -------------------------
   const currentQuestion = questions[currentIndex];
   const isLastQuestion =
-    currentIndex >= questions.length - 1 ||
+    currentIndex >= QUESTIONS_PER_GAME - 1 ||
     currentIndex >= questions.length - 1;
 
   const passed = score >= PASSING_SCORE;
@@ -462,7 +455,7 @@ export default function BibleTriviaPage({
 
   const questionProgressPercent =
     questions.length > 0
-      ? ((currentIndex + 1) / questions.length) * 100
+      ? ((currentIndex + 1) / QUESTIONS_PER_GAME) * 100
       : 0;
 
   const globalNextLevelName =
@@ -672,7 +665,7 @@ export default function BibleTriviaPage({
               </Button>
               <div>
                 <span className="text-sm font-medium">
-                  Question {currentIndex + 1}/{questions.length}
+                  Question {currentIndex + 1}/{QUESTIONS_PER_GAME}
                 </span>
                 <Badge
                   className={levelConfig.color}
@@ -858,7 +851,7 @@ export default function BibleTriviaPage({
                 {passed ? "Great Job! 🎉" : "Keep Going! 💪"}
               </CardTitle>
               <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                {score}/{questions.length}
+                {score}/{QUESTIONS_PER_GAME}
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
                 {passed
@@ -878,7 +871,7 @@ export default function BibleTriviaPage({
                 <h2 className="text-xl font-bold mb-2">Congratulations!</h2>
                 <p className="text-sm opacity-90 mb-2">
                   You passed the {levelConfig.name} level with a score of{" "}
-                  {score}/{questions.length}!
+                  {score}/{QUESTIONS_PER_GAME}!
                 </p>
                 {justUnlockedLevel && nextLevelRes === justUnlockedLevel && (
                   <p className="text-sm font-semibold opacity-95 mt-3 pt-3 border-t border-white/30">
