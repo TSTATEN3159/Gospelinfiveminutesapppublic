@@ -54,91 +54,74 @@ const LEVEL_MAP: Record<LevelKey, string> = {
   advanced: "expert",
 };
 
-const GLOBAL_LEVELS: Record<
-  GlobalLevelKey,
-  { name: string; questionsRequired: number; nextLevel: GlobalLevelKey | null }
-> = {
-  beginner: {
-    name: "Beginner",
-    questionsRequired: 20,
-    nextLevel: "student",
-  },
-  student: {
-    name: "Student",
-    questionsRequired: 40,
-    nextLevel: "scholar",
-  },
-  scholar: {
-    name: "Scholar",
-    questionsRequired: 60,
-    nextLevel: "expert",
-  },
-  expert: {
-    name: "Expert",
-    questionsRequired: Infinity,
-    nextLevel: null,
-  },
+// Global rank progression: aligned with game levels
+// Map game level to rank earned by beating it
+const LEVEL_TO_RANK: Record<LevelKey, GlobalLevelKey> = {
+  beginner: "student",       // Beat Beginner → earn Student rank
+  intermediate: "scholar",   // Beat Intermediate → earn Scholar rank
+  advanced: "expert",        // Beat Advanced → earn Expert rank
 };
 
-function calculateGlobalLevel(totalCorrect: number): GlobalLevelKey {
-  if (totalCorrect >= GLOBAL_LEVELS.scholar.questionsRequired) return "expert";
-  if (totalCorrect >= GLOBAL_LEVELS.student.questionsRequired) return "scholar";
-  if (totalCorrect >= GLOBAL_LEVELS.beginner.questionsRequired) return "student";
+// Rank display names
+const RANK_NAMES: Record<GlobalLevelKey, string> = {
+  beginner: "Beginner",
+  student: "Student",
+  scholar: "Scholar",
+  expert: "Expert",
+};
+
+// Level display names for UI
+const LEVEL_NAMES: Record<LevelKey, string> = {
+  beginner: "Beginner",
+  intermediate: "Intermediate",
+  advanced: "Advanced",
+};
+
+function calculateGlobalRank(levelsBeaten: LevelKey[]): GlobalLevelKey {
+  const beatenSet = new Set(levelsBeaten);
+  if (beatenSet.has("advanced")) return "expert";
+  if (beatenSet.has("intermediate")) return "scholar";
+  if (beatenSet.has("beginner")) return "student";
   return "beginner";
 }
 
-function getGlobalProgress(totalCorrect: number) {
-  const currentLevel = calculateGlobalLevel(totalCorrect);
-  const levelConfig = GLOBAL_LEVELS[currentLevel];
-  const nextLevel = levelConfig.nextLevel;
-
-  if (!nextLevel) {
-    return {
-      currentLevel,
-      nextLevel: null,
-      progress: 100,
-      questionsUntilNext: 0,
-    };
+function getNextRankInfo(currentRank: GlobalLevelKey): {
+  nextRank: GlobalLevelKey | null;
+  requiredLevel: LevelKey | null;
+} {
+  const rankOrder: GlobalLevelKey[] = ["beginner", "student", "scholar", "expert"];
+  const levelOrder: LevelKey[] = ["beginner", "intermediate", "advanced"];
+  const currentIndex = rankOrder.indexOf(currentRank);
+  
+  if (currentIndex === rankOrder.length - 1) {
+    return { nextRank: null, requiredLevel: null };
   }
+  
+  const nextRank = rankOrder[currentIndex + 1];
+  const requiredLevel = levelOrder[currentIndex];
+  
+  return { nextRank, requiredLevel };
+}
 
-  const nextLevelConfig = GLOBAL_LEVELS[nextLevel];
-  const questionsUntilNext = Math.max(
-    0,
-    nextLevelConfig.questionsRequired - totalCorrect
-  );
-
-  const currentLevelStart =
-    currentLevel === "beginner"
-      ? 0
-      : GLOBAL_LEVELS[
-          currentLevel === "student"
-            ? "beginner"
-            : currentLevel === "scholar"
-            ? "student"
-            : "scholar"
-        ].questionsRequired;
-
-  const rawProgress =
-    (totalCorrect - currentLevelStart) /
-    (nextLevelConfig.questionsRequired - currentLevelStart || 1);
-
-  const progress = Math.min(100, Math.max(0, Math.round(rawProgress * 100)));
-
-  return {
-    currentLevel,
-    nextLevel,
-    progress,
-    questionsUntilNext,
-  };
+// Migrate legacy data: infer beaten levels from totalCorrect
+function migrateLegacyStats(totalCorrect: number): LevelKey[] {
+  if (totalCorrect >= 60) {
+    return ["beginner", "intermediate", "advanced"];
+  } else if (totalCorrect >= 40) {
+    return ["beginner", "intermediate"];
+  } else if (totalCorrect >= 20) {
+    return ["beginner"];
+  }
+  return [];
 }
 
 type GlobalStats = {
-  totalCorrect: number;
-  totalQuestions: number;
-  currentLevel: GlobalLevelKey;
-  nextLevel: GlobalLevelKey | null;
-  progressPercent: number;
-  questionsUntilNext: number;
+  totalCorrect: number;      // Keep for display
+  totalQuestions: number;    // Keep for display
+  levelsBeaten: LevelKey[];  // NEW: track which levels beaten
+  currentRank: GlobalLevelKey; // Derived from levelsBeaten
+  nextRank: GlobalLevelKey | null; // Next rank to earn
+  nextRequiredLevel: LevelKey | null; // Level needed to earn next rank
 };
 
 const LEVEL_CONFIG = {
@@ -187,12 +170,11 @@ export default function BibleTriviaPage({
   const [globalStats, setGlobalStats] = useState<GlobalStats>({
     totalCorrect: 0,
     totalQuestions: 0,
-    currentLevel: "beginner",
-    nextLevel: "student",
-    progressPercent: 0,
-    questionsUntilNext: GLOBAL_LEVELS.student.questionsRequired,
+    levelsBeaten: [],
+    currentRank: "beginner",
+    nextRank: "student",
+    nextRequiredLevel: "beginner",
   });
-
   // Game state
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -205,44 +187,62 @@ export default function BibleTriviaPage({
   // Ref to guard against double-invocation in Strict Mode
   const fetchInProgressRef = useRef(false);
 
-
   // -------------------------
   // Load persisted state
   // -------------------------
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Highest unlocked level determines locks, but we do NOT auto-change currentLevel
+    // Highest unlocked level determines locks
     const storedLevel = window.localStorage.getItem(STORAGE_KEY_UNLOCKED);
     if (storedLevel && (LEVEL_ORDER as string[]).includes(storedLevel)) {
       setHighestUnlockedLevel(storedLevel as LevelKey);
     }
 
-    // Global stats
+    // Global stats with migration support
     const storedStats = window.localStorage.getItem(STORAGE_KEY_GLOBAL_STATS);
     if (storedStats) {
       try {
         const parsed = JSON.parse(storedStats) as {
           totalCorrect?: number;
           totalQuestions?: number;
+          levelsBeaten?: LevelKey[];
         };
+        
         const totalCorrect = parsed.totalCorrect ?? 0;
         const totalQuestions = parsed.totalQuestions ?? 0;
-        const progressInfo = getGlobalProgress(totalCorrect);
+        
+        // Migration: if levelsBeaten missing, infer from totalCorrect
+        let levelsBeaten: LevelKey[] = parsed.levelsBeaten ?? migrateLegacyStats(totalCorrect);
+        
+        const currentRank = calculateGlobalRank(levelsBeaten);
+        const { nextRank, requiredLevel } = getNextRankInfo(currentRank);
+        
         setGlobalStats({
           totalCorrect,
           totalQuestions,
-          currentLevel: progressInfo.currentLevel,
-          nextLevel: progressInfo.nextLevel,
-          progressPercent: progressInfo.progress,
-          questionsUntilNext: progressInfo.questionsUntilNext,
+          levelsBeaten,
+          currentRank,
+          nextRank,
+          nextRequiredLevel: requiredLevel,
         });
+        
+        // Save migrated format if it was legacy data
+        if (!parsed.levelsBeaten) {
+          window.localStorage.setItem(
+            STORAGE_KEY_GLOBAL_STATS,
+            JSON.stringify({
+              totalCorrect,
+              totalQuestions,
+              levelsBeaten,
+            })
+          );
+        }
       } catch {
         // ignore bad stored data
       }
     }
   }, []);
-
   const saveUnlockedLevel = useCallback((level: LevelKey) => {
     setHighestUnlockedLevel(level);
     if (typeof window !== "undefined") {
@@ -255,23 +255,21 @@ export default function BibleTriviaPage({
       setGlobalStats((prev) => {
         const totalCorrect = prev.totalCorrect + correctIncrement;
         const totalQuestions = prev.totalQuestions + questionsIncrement;
-        const progressInfo = getGlobalProgress(totalCorrect);
 
         const updated: GlobalStats = {
+          ...prev,
           totalCorrect,
           totalQuestions,
-          currentLevel: progressInfo.currentLevel,
-          nextLevel: progressInfo.nextLevel,
-          progressPercent: progressInfo.progress,
-          questionsUntilNext: progressInfo.questionsUntilNext,
         };
 
+        // Save to localStorage
         if (typeof window !== "undefined") {
           window.localStorage.setItem(
             STORAGE_KEY_GLOBAL_STATS,
             JSON.stringify({
               totalCorrect: updated.totalCorrect,
               totalQuestions: updated.totalQuestions,
+              levelsBeaten: updated.levelsBeaten,
             })
           );
         }
@@ -281,6 +279,42 @@ export default function BibleTriviaPage({
     },
     []
   );
+
+  // Mark a level as beaten (called when game completes with passing score)
+  const markLevelBeaten = useCallback((level: LevelKey) => {
+    setGlobalStats((prev) => {
+      const beatenSet = new Set(prev.levelsBeaten);
+      if (beatenSet.has(level)) {
+        return prev; // Already beaten, no change
+      }
+
+      const levelsBeaten = [...prev.levelsBeaten, level];
+      const currentRank = calculateGlobalRank(levelsBeaten);
+      const { nextRank, requiredLevel } = getNextRankInfo(currentRank);
+
+      const updated: GlobalStats = {
+        ...prev,
+        levelsBeaten,
+        currentRank,
+        nextRank,
+        nextRequiredLevel: requiredLevel,
+      };
+
+      // Save to localStorage
+      if (typeof window !== "undefined") {
+        window.localStorage.setItem(
+          STORAGE_KEY_GLOBAL_STATS,
+          JSON.stringify({
+            totalCorrect: updated.totalCorrect,
+            totalQuestions: updated.totalQuestions,
+            levelsBeaten: updated.levelsBeaten,
+          })
+        );
+      }
+
+      return updated;
+    });
+  }, []);
 
   // -------------------------
   // Fetch questions for level
@@ -424,15 +458,15 @@ export default function BibleTriviaPage({
       }
       
       // Reset state to initial values
+      // Reset state to initial values
       setGlobalStats({
         totalCorrect: 0,
         totalQuestions: 0,
-        currentLevel: "beginner",
-        nextLevel: "student",
-        progressPercent: 0,
-        questionsUntilNext: GLOBAL_LEVELS.student.questionsRequired,
+        levelsBeaten: [],
+        currentRank: "beginner",
+        nextRank: "student",
+        nextRequiredLevel: "beginner",
       });
-
       toast({
         title: "Progress Reset",
         description: "Your trivia stats have been cleared.",
@@ -454,6 +488,9 @@ export default function BibleTriviaPage({
       return;
     }
 
+    // Mark level as beaten (earns next rank)
+    markLevelBeaten(currentLevel);
+    
     const nextLevel = LEVEL_ORDER[currentIndexInOrder + 1];
     if (!nextLevel) {
       setJustUnlockedLevel(null);
@@ -489,11 +526,8 @@ export default function BibleTriviaPage({
     questions.length > 0
       ? ((currentIndex + 1) / questions.length) * 100
       : 0;
-
-  const globalNextLevelName =
-    globalStats.nextLevel && GLOBAL_LEVELS[globalStats.nextLevel]
-      ? GLOBAL_LEVELS[globalStats.nextLevel].name
-      : null;
+  const globalNextRankName = globalStats.nextRank ? RANK_NAMES[globalStats.nextRank] : null;
+  const requiredLevelName = globalStats.nextRequiredLevel ? LEVEL_NAMES[globalStats.nextRequiredLevel] : null;
 
   // -------------------------
   // IDLE (SETUP) SCREEN
@@ -563,26 +597,37 @@ export default function BibleTriviaPage({
                 <span>
                   Global Rank:{" "}
                   <strong>
-                    {GLOBAL_LEVELS[globalStats.currentLevel].name}
+                    {RANK_NAMES[globalStats.currentRank]}
                   </strong>
                 </span>
-                {globalNextLevelName && globalStats.questionsUntilNext > 0 ? (
+                {globalNextRankName && requiredLevelName ? (
                   <span className="text-xs text-gray-600 dark:text-gray-400 text-right">
-                    {globalStats.questionsUntilNext} more correct to reach{" "}
-                    {globalNextLevelName}
+                    Beat {requiredLevelName} level to reach {globalNextRankName}
                   </span>
                 ) : (
                   <span className="text-xs text-gray-600 dark:text-gray-400 text-right">
-                    You’ve reached the highest rank
+                    You've reached the highest rank!
                   </span>
                 )}
               </div>
 
-              <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-                <div
-                  className="h-full bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 transition-all duration-300"
-                  style={{ width: `${globalStats.progressPercent}%` }}
-                />
+              {/* Progress: Show levels beaten */}
+              <div className="flex gap-2 items-center">
+                {LEVEL_ORDER.map((level) => {
+                  const isBeaten = globalStats.levelsBeaten.includes(level);
+                  const earnedRank = LEVEL_TO_RANK[level];
+                  return (
+                    <div
+                      key={level}
+                      className={`flex-1 h-2 rounded-full transition-all duration-300 ${
+                        isBeaten
+                          ? "bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500"
+                          : "bg-gray-200 dark:bg-gray-700"
+                      }`}
+                      title={`${LEVEL_NAMES[level]} → ${RANK_NAMES[earnedRank]}`}
+                    />
+                  );
+                })}
               </div>
             </CardContent>
           </Card>
