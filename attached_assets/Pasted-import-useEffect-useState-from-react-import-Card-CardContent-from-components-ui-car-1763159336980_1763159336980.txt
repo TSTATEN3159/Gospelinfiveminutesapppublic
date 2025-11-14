@@ -1,0 +1,271 @@
+import { useEffect, useState } from "react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { useTranslations } from "@/lib/translations";
+
+interface BlogArticle {
+  id: string;
+  title: string;
+  excerpt: string;
+  content: string;
+  author: string;
+  publishDate: string;
+  readTime: number;
+  views: number;
+  category: string;  // this will be normalized/sanitized
+}
+
+// ✅ Visible category names in your UI
+const CATEGORY_LABELS = [
+  "Faith & Trust",
+  "Prayer & Devotion",
+  "Mental Health & Faith",
+  "Evangelism",
+  "Theology",
+  "Christian Living",
+] as const;
+
+type CategoryLabel = (typeof CATEGORY_LABELS)[number];
+
+// ✅ Normalizer – ignores case and punctuation (spaces, &, etc)
+const normalize = (str: string) =>
+  str.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+// ✅ Map any raw category string from backend into one of your visible labels
+function sanitizeCategory(raw: string): CategoryLabel {
+  const normalizedRaw = normalize(raw);
+
+  const found = CATEGORY_LABELS.find(
+    (label) => normalize(label) === normalizedRaw
+  );
+
+  // If nothing matches, you can choose a default bucket:
+  return found ?? "Christian Living";
+}
+
+export default function BlogPage() {
+  const t = useTranslations("en"); // or your language logic
+
+  // =============================
+  //        STATE MANAGEMENT
+  // =============================
+  const [articles, setArticles] = useState<BlogArticle[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  const [selectedArticle, setSelectedArticle] =
+    useState<BlogArticle | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+
+  // =============================
+  //      LOAD & SANITIZE DATA
+  // =============================
+  useEffect(() => {
+    const loadArticles = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // ⬇️ Replace this with your actual fetch call
+        const response = await fetch("/api/blog-articles");
+        if (!response.ok) throw new Error("Failed to load articles");
+        const data: BlogArticle[] = await response.json();
+
+        // Sanitize categories so they match the UI labels
+        const cleaned = data.map((a) => ({
+          ...a,
+          category: sanitizeCategory(a.category),
+        }));
+
+        setArticles(cleaned);
+      } catch (err: any) {
+        console.error(err);
+        setError(err.message || "Error loading articles");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadArticles();
+  }, []);
+
+  // =============================
+  //       HANDLER FUNCTIONS
+  // =============================
+
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+    setSelectedArticle(null); // dont keep old featured when switching topics
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleClearFilter = () => {
+    setSelectedCategory(null);
+    setSelectedArticle(null);
+  };
+
+  const handleArticleClick = (article: BlogArticle) => {
+    setSelectedArticle(article);
+    // optional scroll or other behavior here
+  };
+
+  // =============================
+  //      FILTERED ARTICLES
+  // =============================
+
+  const filteredArticles = selectedCategory
+    ? articles.filter(
+        (article) =>
+          normalize(article.category) === normalize(selectedCategory)
+      )
+    : articles;
+
+  // Used where you show counts per category tile
+  const getCategoryCount = (category: string) =>
+    articles.filter(
+      (a) => normalize(a.category) === normalize(category)
+    ).length;
+
+  // =============================
+  //          RENDER
+  // =============================
+
+  if (loading) {
+    return <div className="p-6">{t.loading ?? "Loading..."}</div>;
+  }
+
+  if (error) {
+    return <div className="p-6 text-red-600">{error}</div>;
+  }
+
+  return (
+    <div className="p-4 md:p-6 space-y-6">
+      {/* Active Filter / Clear */}
+      {selectedCategory && (
+        <div className="flex justify-center mb-2">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleClearFilter}
+            data-testid="button-clear-filter"
+          >
+            {t.showAllArticles ?? "Show All Articles"}
+          </Button>
+        </div>
+      )}
+
+      {/* =============================
+          CATEGORY TILES WITH FILTER
+         ============================= */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+        {CATEGORY_LABELS.map((category) => (
+          <Card
+            key={category}
+            className={`cursor-pointer shadow-2xl border-0 hover-elevate transition-all duration-300 ${
+              selectedCategory === category
+                ? "bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/40 dark:to-indigo-900/40 ring-2 ring-blue-500 dark:ring-blue-400"
+                : "bg-white dark:bg-gray-800"
+            }`}
+            onClick={() => handleCategoryClick(category)}
+            data-testid={`tile-category-${category
+              .toLowerCase()
+              .replace(/\s+/g, "-")}`}
+          >
+            <CardContent className="p-5 text-center">
+              <div
+                className={`text-base font-bold mb-2 ${
+                  selectedCategory === category
+                    ? "text-blue-700 dark:text-blue-300"
+                    : "text-slate-800 dark:text-slate-200"
+                }`}
+              >
+                {category}
+              </div>
+              <div
+                className={`text-sm font-medium px-3 py-1 rounded-full inline-block ${
+                  selectedCategory === category
+                    ? "bg-blue-100 dark:bg-blue-800/50 text-blue-700 dark:text-blue-300"
+                    : "bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400"
+                }`}
+              >
+                {/* ✅ real count, no random fallback */}
+                {getCategoryCount(category)} {t.articles ?? "articles"}
+              </div>
+            </CardContent>
+          </Card>
+        ))}
+      </div>
+
+      {/* =============================
+          FEATURED + ARTICLE LIST
+         ============================= */}
+
+      {/* Example Featured Article using filteredArticles */}
+      {filteredArticles.length > 0 && (
+        <div className="mb-6">
+          <h2 className="text-xl font-bold mb-3">
+            {t.featuredArticle ?? "Featured Article"}
+          </h2>
+          <Card
+            className="cursor-pointer"
+            onClick={() => handleArticleClick(filteredArticles[0])}
+          >
+            <CardContent className="p-4">
+              <h3 className="text-lg font-semibold mb-1">
+                {filteredArticles[0].title}
+              </h3>
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                {filteredArticles[0].excerpt}
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      )}
+
+      {/* Recent / Remaining Articles */}
+      <div className="space-y-3">
+        {filteredArticles.slice(1).map((article) => (
+          <Card
+            key={article.id}
+            className="cursor-pointer"
+            onClick={() => handleArticleClick(article)}
+          >
+            <CardContent className="p-4">
+              <h3 className="text-base font-semibold mb-1">
+                {article.title}
+              </h3>
+              <p className="text-xs text-slate-500 mb-1">
+                {article.category} • {article.readTime} min
+              </p>
+              <p className="text-sm text-slate-700 dark:text-slate-300">
+                {article.excerpt}
+              </p>
+            </CardContent>
+          </Card>
+        ))}
+
+        {filteredArticles.length === 0 && (
+          <p className="text-center text-sm text-slate-500">
+            {t.noArticlesInCategory ??
+              "No articles found in this category yet."}
+          </p>
+        )}
+      </div>
+
+      {/* Optional: Selected article detail view */}
+      {selectedArticle && (
+        <div className="mt-8">
+          <h2 className="text-xl font-bold mb-2">
+            {selectedArticle.title}
+          </h2>
+          <p className="text-xs text-slate-500 mb-4">
+            {selectedArticle.author} • {selectedArticle.publishDate}
+          </p>
+          <div className="prose dark:prose-invert max-w-none text-sm">
+            {selectedArticle.content}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}

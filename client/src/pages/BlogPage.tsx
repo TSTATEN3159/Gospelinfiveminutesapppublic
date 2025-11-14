@@ -97,6 +97,8 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
         const data = await response.json();
         
         if (data.success && data.articles) {
+          // Debug: Log actual category values from API
+          console.log('[BlogPage] Sample article categories:', data.articles.slice(0, 3).map(a => a.category));
           setArticles(data.articles);
         } else {
           throw new Error(data.error || 'Failed to load articles');
@@ -133,6 +135,9 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
   };
 
   const handleCategoryClick = (category: string) => {
+    console.log('[BlogPage] Category clicked:', category);
+    console.log('[BlogPage] Current articles:', articles.length);
+    console.log('[BlogPage] Articles in this category:', articles.filter(a => a.category === category).length);
     setSelectedCategory(category);
   };
 
