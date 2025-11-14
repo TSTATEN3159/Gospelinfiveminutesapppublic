@@ -71,6 +71,16 @@ Preferred communication style: Simple, everyday language.
   - Local voice processing only - no recording, no server transmission
   - Graceful degradation: voice button hidden on unsupported browsers, text search always available
   - Compliance messaging: "If your device or browser doesn't support speech recognition, you can keep using text search"
+- **Profile Picture Upload** (November 2025):
+  - Component: ProfilePictureUpload displays next to streak badge on HomePage
+  - Storage: Base64 images stored in localStorage (key: "gospelAppProfilePicture")
+  - Size limit: 5MB per image with type validation (image/* only)
+  - FileReader lifecycle: Proper cleanup on unmount, abort handling, readyState checks
+  - Error handling: Storage quota failures, permissions errors, invalid file types
+  - Privacy compliance: Photos stored locally only, not linked to user identity, full delete capability
+  - UI: Avatar with camera overlay on hover, remove button with confirmation dialog
+  - Accessibility: shadcn Button components (variant="ghost", variant="destructive"), ARIA labels, focus indicators
+  - app-privacy.json: Photos category marked as "not linked to user" and "not used for tracking"
 
 ### Browser Capability Checks & Safe Wrappers
 **Critical Development Pattern**: Always check if a browser API exists before using it. Never assume a capability is available.
