@@ -13,17 +13,28 @@ const LANGUAGE_VOICE_MAP: Record<string, string> = {
 export const useTextToSpeech = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [supported, setSupported] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     if (typeof window !== "undefined" && "speechSynthesis" in window) {
       setSupported(true);
-    }
-    
-    return () => {
-      if (typeof window !== "undefined" && "speechSynthesis" in window) {
+      setIsInitialized(true);
+      
+      const loadVoices = () => {
+        window.speechSynthesis.getVoices();
+      };
+      
+      loadVoices();
+      window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
+      
+      return () => {
+        window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
         window.speechSynthesis.cancel();
-      }
-    };
+      };
+    } else {
+      setSupported(false);
+      setIsInitialized(true);
+    }
   }, []);
 
   const cancel = useCallback(() => {
@@ -53,5 +64,5 @@ export const useTextToSpeech = () => {
     [supported]
   );
 
-  return { supported, isSpeaking, speak, cancel };
+  return { supported, isSpeaking, speak, cancel, isInitialized };
 };

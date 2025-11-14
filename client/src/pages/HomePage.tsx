@@ -1,4 +1,4 @@
-import { useState, useEffect, type MouseEvent } from "react";
+import { useState, useEffect, useRef, type MouseEvent } from "react";
 import GreetingHeader from "../components/GreetingHeader";
 import DailyVerseCard from "../components/DailyVerseCard";
 import StreakCounter from "../components/StreakCounter";
@@ -48,7 +48,8 @@ interface HomePageProps {
 export default function HomePage({ user, onNavigate, onStreakUpdate, language = "en" }: HomePageProps) {
   const { toast } = useToast();
   const t = useTranslations(language);
-  const { supported: ttsSupported, isSpeaking, speak, cancel } = useTextToSpeech();
+  const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
+  const hasShownTTSWarning = useRef(false);
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
   const [showStudyPlans, setShowStudyPlans] = useState(false);
@@ -76,6 +77,17 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   };
 
   // Load daily verse from Bible API and daily video
+  useEffect(() => {
+    if (ttsInitialized && !ttsSupported && !hasShownTTSWarning.current) {
+      hasShownTTSWarning.current = true;
+      toast({
+        title: "Text-to-Speech Unavailable",
+        description: t.ttsNotSupported,
+        variant: "destructive",
+      });
+    }
+  }, [ttsInitialized, ttsSupported, toast, t.ttsNotSupported]);
+
   useEffect(() => {
     const loadDailyContent = async () => {
       try {

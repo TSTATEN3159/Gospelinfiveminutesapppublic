@@ -63,13 +63,13 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const [hasSearched, setHasSearched] = useState(false);
   const { toast } = useToast();
   const t = useTranslations(language);
-  const { supported: ttsSupported, isSpeaking, speak, cancel } = useTextToSpeech();
+  const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
   const ranInitial = useRef<string | null>(null);
   const hasShownTTSWarning = useRef(false);
 
   // Show toast once if TTS is not supported
   useEffect(() => {
-    if (!ttsSupported && !hasShownTTSWarning.current) {
+    if (ttsInitialized && !ttsSupported && !hasShownTTSWarning.current) {
       hasShownTTSWarning.current = true;
       toast({
         title: "Text-to-Speech Unavailable",
@@ -77,7 +77,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
         variant: "destructive"
       });
     }
-  }, [ttsSupported, t.ttsNotSupported, toast]);
+  }, [ttsInitialized, ttsSupported, t.ttsNotSupported, toast]);
 
   // Listen for Bible version changes from Settings
   useEffect(() => {
