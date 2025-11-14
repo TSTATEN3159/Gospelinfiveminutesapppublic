@@ -25,6 +25,13 @@ export async function runSafely<T>(
     console.error(`[${options.featureName}] Error:`, error);
     console.error(`User message: ${options.userMessage}`);
     
+    // Dispatch global error event for centralized error banner
+    window.dispatchEvent(
+      new CustomEvent("app-error", {
+        detail: { message: options.userMessage }
+      })
+    );
+    
     // Return null to indicate failure
     // Calling code should handle showing the user message via toast
     return null;

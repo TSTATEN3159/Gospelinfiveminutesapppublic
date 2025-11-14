@@ -14,6 +14,7 @@ import OfflineIndicator from "./components/OfflineIndicator";
 import ErrorBoundary from "./components/ErrorBoundary";
 import NetworkStatus from "./components/NetworkStatus";
 import { ThemeProvider } from "./components/ThemeProvider";
+import { GlobalErrorBanner } from "./components/GlobalErrorBanner";
 
 // Initialize auto-recovery services
 import { silentLogger } from "./services/silentLogger";
@@ -273,6 +274,7 @@ function MainApp() {
       <ThemeProvider defaultTheme="system" storageKey="gospel-app-theme">
         <QueryClientProvider client={queryClient}>
           <TooltipProvider>
+            <GlobalErrorBanner />
             <div className="min-h-screen bg-background">
               {/* Network Status - Apple-compliant auto-recovery */}
               <NetworkStatus onRetry={() => window.location.reload()} />
