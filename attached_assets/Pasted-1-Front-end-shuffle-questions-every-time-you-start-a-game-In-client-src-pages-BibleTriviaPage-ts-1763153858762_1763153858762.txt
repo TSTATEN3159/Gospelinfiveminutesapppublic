@@ -1,0 +1,169 @@
+1️⃣ Front-end: shuffle questions every time you start a game
+
+In client/src/pages/BibleTriviaPage.tsx, find your fetchQuestionsForLevel function.
+
+Right now you have this inside the try block:
+
+if (!result.success || !result.questions || result.questions.length === 0) {
+  throw new Error("No questions were returned.");
+}
+setQuestions(result.questions);
+setCurrentIndex(0);
+setSelectedIndex(null);
+setScore(0);
+setGameState("playing");
+
+
+Replace that block with this shuffling version:
+
+if (!result.success || !result.questions || result.questions.length === 0) {
+  throw new Error("No questions were returned.");
+}
+
+// Shuffle the questions so they’re in a different order every time
+const shuffled = [...result.questions];
+for (let i = shuffled.length - 1; i > 0; i--) {
+  const j = Math.floor(Math.random() * (i + 1));
+  [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+}
+
+setQuestions(shuffled);
+setCurrentIndex(0);
+setSelectedIndex(null);
+setScore(0);
+setGameState("playing");
+
+
+That alone makes each beginner game feel different, because the very first question won’t always be the same anymore.
+
+2️⃣ Server: make the AI generate more varied questions
+
+Now we’ll tweak server/ai-trivia-generator.ts so the AI is nudged to cover a wider variety and not keep falling back to the same few canonical beginner questions.
+
+Replace your entire generateAITriviaQuestions function with this version:
+
+export async function generateAITriviaQuestions(
+  level: string,
+  count: number = 10
+): Promise<TriviaQuestion[]> {
+  const levelConfig = TRIVIA_LEVELS[level] || TRIVIA_LEVELS.beginner;
+
+  // Add a random “session id” so each call has a different context
+  const sessionSeed = Math.random().toString(36).slice(2, 10);
+
+  const prompt = `You are a Biblical scholar creating trivia questions based solely on the Christian Bible (Old and New Testament). Generate ${count} multiple-choice questions at the ${levelConfig.name} level.
+
+SESSION_ID: ${sessionSeed}
+
+LEVEL: ${levelConfig.name}
+DIFFICULTY: ${levelConfig.difficulty}
+
+STRICT REQUIREMENTS:
+1. ALL questions must be based ONLY on the Holy Bible (66 books of Protestant Canon)
+2. Questions must be factually accurate according to Scripture
+3. Include specific Bible verse references in OSIS format (Book.Chapter.Verse, e.g., "JHN.3.16")
+4. Each question has exactly 4 options (A, B, C, D)
+5. Only ONE correct answer
+6. Provide a brief explanation citing the specific verse
+7. DISTRIBUTION: Cover a variety of books and a mix of Old and New Testament. Do NOT cluster questions around the same story or chapter.
+8. VARIETY: For different SESSION_ID values at the same level, you must produce noticeably different combinations of questions, topics, and wording. Avoid reusing the same exact questions or explanations.
+
+DIFFICULTY GUIDELINES BY LEVEL:
+- Beginner: Well-known stories, main characters, famous verses (e.g., Noah's ark, 10 Commandments)
+- Student: Specific events, lesser-known characters, context (e.g., Who wrote Philippians? What city was Lydia from?)
+- Scholar: Theological concepts, prophecy fulfillment, cross-references (e.g., How many years between Abraham and Moses?)
+- Expert: Original language nuances, detailed chronology, obscure facts (e.g., How many stones did David pick for Goliath?)
+
+FORMAT YOUR RESPONSE AS VALID JSON ARRAY:
+[
+  {
+    "question": "Who led the Israelites out of Egypt?",
+    "options": ["Moses", "Joshua", "Aaron", "David"],
+    "correctAnswer": 0,
+    "verse": "EXO.3.10",
+    "explanation": "God called Moses to lead His people out of Egyptian bondage (Exodus 3:10)."
+  }
+]
+
+Generate ${count} questions now. Return ONLY the JSON array, no additional text.`;
+
+  try {
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content:
+            "You are a Biblical scholar who creates accurate, engaging Bible trivia questions based solely on Scripture. You always respond with valid JSON arrays.",
+        },
+        {
+          role: "user",
+          content: prompt,
+        },
+      ],
+      // Slightly higher temperature and top_p for more variety
+      temperature: 0.9,
+      top_p: 0.95,
+      max_tokens: 2000,
+    });
+
+    const responseText = completion.choices[0]?.message?.content?.trim();
+
+    if (!responseText) {
+      throw new Error("No response from AI");
+    }
+
+    // Extract JSON from response (handle potential markdown code blocks)
+    let jsonText = responseText;
+    if (responseText.includes("```json")) {
+      const match = responseText.match(/```json\n?([\s\S]*?)\n?```/);
+      if (match) {
+        jsonText = match[1];
+      }
+    } else if (responseText.includes("```")) {
+      const match = responseText.match(/```\n?([\s\S]*?)\n?```/);
+      if (match) {
+        jsonText = match[1];
+      }
+    }
+
+    const questions = JSON.parse(jsonText) as TriviaQuestion[];
+
+    // Validate structure
+    if (!Array.isArray(questions) || questions.length === 0) {
+      throw new Error("Invalid questions format");
+    }
+
+    for (const q of questions) {
+      if (
+        !q.question ||
+        !Array.isArray(q.options) ||
+        q.options.length !== 4 ||
+        typeof q.correctAnswer !== "number" ||
+        q.correctAnswer < 0 ||
+        q.correctAnswer > 3
+      ) {
+        throw new Error("Invalid question structure");
+      }
+    }
+
+    return questions.slice(0, count);
+  } catch (error) {
+    console.error("AI Trivia Generation Error:", error);
+    throw new Error("Failed to generate trivia questions");
+  }
+}
+
+What this change does
+
+The SESSION_ID and the extra variety rules tell the model:
+
+“Each time I call you (with a different seed), mix it up. Don’t just give me the same beginner questions.”
+
+temperature: 0.9 and top_p: 0.95 increase randomness while still staying accurate.
+
+Combine that with the front-end shuffle, and your beginner level should feel much less predictable:
+
+First question won’t always be the same.
+
+The set of 10 questions is more likely to vary between sessions.
