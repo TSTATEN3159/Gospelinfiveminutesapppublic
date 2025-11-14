@@ -39,6 +39,7 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<BlogArticle | null>(null);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const handleSubscribe = async () => {
     if (!subscribeForm.email) {
@@ -131,6 +132,19 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
     });
   };
 
+  const handleCategoryClick = (category: string) => {
+    setSelectedCategory(category);
+  };
+
+  const handleClearFilter = () => {
+    setSelectedCategory(null);
+  };
+
+  // Filter articles based on selected category
+  const filteredArticles = selectedCategory
+    ? articles.filter(article => article.category === selectedCategory)
+    : articles;
+
   return (
     <div className="min-h-screen pb-20 bg-white dark:bg-gray-900">
       {/* Professional Header Section */}
@@ -160,8 +174,30 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
       </div>
 
       <div className="px-4 py-8 space-y-8 max-w-4xl mx-auto">
+        {/* Filter Status Indicator */}
+        {selectedCategory && (
+          <div className="flex items-center justify-between bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+            <div className="flex items-center gap-2">
+              <Badge className="bg-gradient-to-r from-slate-500 to-blue-500 text-white border-0 shadow-lg">
+                {selectedCategory}
+              </Badge>
+              <span className="text-sm text-slate-600 dark:text-slate-400 font-medium">
+                {filteredArticles.length} {t.articles}
+              </span>
+            </div>
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={handleClearFilter}
+              data-testid="button-clear-category-filter"
+            >
+              {t.showAll || 'Show All'}
+            </Button>
+          </div>
+        )}
+
         {/* Professional Featured Article */}
-        {articles.length > 0 && (
+        {filteredArticles.length > 0 && (
           <Card className="shadow-2xl border-0 bg-white dark:bg-gray-800 hover-elevate">
             <div className="bg-gradient-to-r from-slate-600 via-blue-600 to-indigo-600 p-1.5 shadow-xl">
               <div className="bg-white dark:bg-gray-800 rounded-t-lg">
@@ -184,29 +220,29 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
             <CardContent className="p-8 bg-white dark:bg-gray-800">
               <div className="text-center mb-6">
                 <Badge className="bg-gradient-to-r from-slate-500 to-blue-500 text-white border-0 shadow-lg px-4 py-2 text-sm font-semibold" variant="secondary">
-                  {articles[0].category}
+                  {filteredArticles[0].category}
                 </Badge>
               </div>
-              <h3 className="font-bold text-slate-800 dark:text-slate-200 mt-4 mb-4 text-2xl text-center leading-tight">{articles[0].title}</h3>
-              <p className="text-slate-600 dark:text-slate-400 text-base mb-6 leading-relaxed text-center font-medium">{articles[0].excerpt}</p>
+              <h3 className="font-bold text-slate-800 dark:text-slate-200 mt-4 mb-4 text-2xl text-center leading-tight">{filteredArticles[0].title}</h3>
+              <p className="text-slate-600 dark:text-slate-400 text-base mb-6 leading-relaxed text-center font-medium">{filteredArticles[0].excerpt}</p>
               <div className="flex flex-wrap items-center justify-center gap-4 text-sm text-slate-600 dark:text-slate-400 font-medium mb-4">
-                <span className="bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">{t.by} {articles[0].author}</span>
+                <span className="bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">{t.by} {filteredArticles[0].author}</span>
                 <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
                   <Clock className="w-4 h-4" />
-                  {articles[0].readTime} {t.minRead}
+                  {filteredArticles[0].readTime} {t.minRead}
                 </span>
                 <span className="flex items-center gap-1 bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full">
                   <Eye className="w-4 h-4" />
-                  {articles[0].views.toLocaleString()} {t.views}
+                  {filteredArticles[0].views.toLocaleString()} {t.views}
                 </span>
               </div>
               <div className="text-sm text-slate-500 dark:text-slate-500 text-center mb-6 font-medium">
-                {t.published} {formatDate(articles[0].publishDate)}
+                {t.published} {formatDate(filteredArticles[0].publishDate)}
               </div>
               <div className="text-center">
                 <Button 
                   className="bg-gradient-to-r from-slate-600 via-blue-600 to-indigo-600 text-white border-0 shadow-xl px-8 py-3 text-base font-semibold"
-                  onClick={() => handleArticleClick(articles[0])}
+                  onClick={() => handleArticleClick(filteredArticles[0])}
                   data-testid="button-read-featured"
                 >
                   {t.readFullArticle}
@@ -221,7 +257,7 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
           <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">{t.recentArticles}</h2>
           <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">{t.latestInsightsToStrengthen}</p>
           <div className="space-y-6">
-            {articles.slice(1).map((article) => (
+            {filteredArticles.slice(1).map((article) => (
               <Card 
                 key={article.id} 
                 className="cursor-pointer shadow-2xl border-0 bg-white dark:bg-gray-800 hover-elevate"
@@ -276,10 +312,29 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
           <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">{t.exploreContentByThemes}</p>
           <div className="grid grid-cols-2 gap-4">
             {['Faith & Trust', 'Prayer & Devotion', 'Mental Health & Faith', 'Evangelism', 'Theology', 'Christian Living'].map((category) => (
-              <Card key={category} className="cursor-pointer shadow-2xl border-0 bg-white dark:bg-gray-800 hover-elevate">
-                <CardContent className="p-5 text-center bg-white dark:bg-gray-800">
-                  <div className="text-base font-bold text-slate-800 dark:text-slate-200 mb-2">{category}</div>
-                  <div className="text-sm text-slate-600 dark:text-slate-400 font-medium bg-slate-100 dark:bg-slate-700 px-3 py-1 rounded-full inline-block">
+              <Card 
+                key={category} 
+                className={`cursor-pointer shadow-2xl border-0 hover-elevate transition-all duration-300 ${
+                  selectedCategory === category
+                    ? 'bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-blue-900/40 dark:to-indigo-900/40 ring-2 ring-blue-500 dark:ring-blue-400'
+                    : 'bg-white dark:bg-gray-800'
+                }`}
+                onClick={() => handleCategoryClick(category)}
+                data-testid={`tile-category-${category.toLowerCase().replace(/\s+/g, '-')}`}
+              >
+                <CardContent className="p-5 text-center">
+                  <div className={`text-base font-bold mb-2 ${
+                    selectedCategory === category
+                      ? 'text-blue-700 dark:text-blue-300'
+                      : 'text-slate-800 dark:text-slate-200'
+                  }`}>
+                    {category}
+                  </div>
+                  <div className={`text-sm font-medium px-3 py-1 rounded-full inline-block ${
+                    selectedCategory === category
+                      ? 'bg-blue-100 dark:bg-blue-800/50 text-blue-700 dark:text-blue-300'
+                      : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400'
+                  }`}>
                     {articles.filter(a => a.category === category).length || Math.floor(Math.random() * 8) + 3} {t.articles}
                   </div>
                 </CardContent>
