@@ -97,8 +97,6 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
         const data = await response.json();
         
         if (data.success && data.articles) {
-          // Debug: Log actual category values from API
-          console.log('[BlogPage] Sample article categories:', data.articles.slice(0, 3).map(a => a.category));
           setArticles(data.articles);
         } else {
           throw new Error(data.error || 'Failed to load articles');
@@ -135,9 +133,6 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
   };
 
   const handleCategoryClick = (category: string) => {
-    console.log('[BlogPage] Category clicked:', category);
-    console.log('[BlogPage] Current articles:', articles.length);
-    console.log('[BlogPage] Articles in this category:', articles.filter(a => a.category === category).length);
     setSelectedCategory(category);
   };
 
@@ -149,6 +144,19 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
   const filteredArticles = selectedCategory
     ? articles.filter(article => article.category === selectedCategory)
     : articles;
+
+  // Get unique categories that actually have articles (in preferred order)
+  const preferredCategoryOrder = ['Faith & Trust', 'Prayer & Devotion', 'Mental Health & Faith', 'Evangelism', 'Theology', 'Christian Living'];
+  const uniqueCategories = Array.from(new Set(articles.map(a => a.category)))
+    .filter(cat => articles.filter(a => a.category === cat).length > 0)
+    .sort((a, b) => {
+      const indexA = preferredCategoryOrder.indexOf(a);
+      const indexB = preferredCategoryOrder.indexOf(b);
+      if (indexA === -1 && indexB === -1) return 0;
+      if (indexA === -1) return 1;
+      if (indexB === -1) return -1;
+      return indexA - indexB;
+    });
 
   return (
     <div className="min-h-screen pb-20 bg-white dark:bg-gray-900">
@@ -316,7 +324,7 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
           <h2 className="text-2xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-6 text-center">{t.browseByTopic}</h2>
           <p className="text-slate-600 dark:text-slate-400 font-medium text-center mb-8">{t.exploreContentByThemes}</p>
           <div className="grid grid-cols-2 gap-4">
-            {['Faith & Trust', 'Prayer & Devotion', 'Mental Health & Faith', 'Evangelism', 'Theology', 'Christian Living'].map((category) => (
+            {uniqueCategories.map((category) => (
               <Card 
                 key={category} 
                 className={`cursor-pointer shadow-2xl border-0 hover-elevate transition-all duration-300 ${
