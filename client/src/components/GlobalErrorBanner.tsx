@@ -3,7 +3,7 @@ import { AlertCircle, X } from "lucide-react";
 
 export const GlobalErrorBanner = () => {
   const [message, setMessage] = useState<string | null>(null);
-  const timeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     const handler = (event: Event) => {
@@ -55,7 +55,7 @@ export const GlobalErrorBanner = () => {
         <AlertCircle className="w-5 h-5 mt-0.5 flex-shrink-0" />
         <div className="flex-1 min-w-0">
           <div className="font-semibold mb-1">Error</div>
-          <div className="text-sm text-white/90 break-words">{message}</div>
+          <div className="text-sm text-white/90 break-words" data-testid="text-error-message">{message}</div>
         </div>
         <button
           onClick={handleDismiss}
