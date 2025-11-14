@@ -93,7 +93,7 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
         setError(null);
         
         const { apiUrl } = await import('@/lib/api-config');
-        const response = await fetch(apiUrl('/api/blog-articles?limit=5'));
+        const response = await fetch(apiUrl('/api/blog-articles'));
         const data = await response.json();
         
         if (data.success && data.articles) {
@@ -340,7 +340,7 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
                       ? 'bg-blue-100 dark:bg-blue-800/50 text-blue-700 dark:text-blue-300'
                       : 'bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-400'
                   }`}>
-                    {articles.filter(a => a.category === category).length || Math.floor(Math.random() * 8) + 3} {t.articles}
+                    {articles.filter(a => a.category === category).length} {t.articles}
                   </div>
                 </CardContent>
               </Card>
