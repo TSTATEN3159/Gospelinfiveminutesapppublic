@@ -52,7 +52,16 @@ export async function generateAITriviaQuestions(
 ): Promise<TriviaQuestion[]> {
   const levelConfig = TRIVIA_LEVELS[level] || TRIVIA_LEVELS.beginner;
   
+  // Add a random session seed so each call has a different context
+  const sessionSeed = typeof crypto !== 'undefined' && crypto.randomUUID 
+    ? crypto.randomUUID()
+    : Math.random().toString(36).slice(2, 10);
+
+  console.log(`[AI Trivia] Generating ${count} ${level} questions with session: ${sessionSeed}`);
+
   const prompt = `You are a Biblical scholar creating trivia questions based solely on the Christian Bible (Old and New Testament). Generate ${count} multiple-choice questions at the ${levelConfig.name} level.
+
+SESSION_ID: ${sessionSeed}
 
 LEVEL: ${levelConfig.name}
 DIFFICULTY: ${levelConfig.difficulty}
@@ -60,10 +69,12 @@ DIFFICULTY: ${levelConfig.difficulty}
 STRICT REQUIREMENTS:
 1. ALL questions must be based ONLY on the Holy Bible (66 books of Protestant Canon)
 2. Questions must be factually accurate according to Scripture
-3. Include specific Bible verse references (Book.Chapter.Verse format, e.g., "JHN.3.16")
+3. Include specific Bible verse references in OSIS format (Book.Chapter.Verse, e.g., "JHN.3.16")
 4. Each question has exactly 4 options (A, B, C, D)
 5. Only ONE correct answer
 6. Provide a brief explanation citing the specific verse
+7. DISTRIBUTION: Cover a variety of books and a mix of Old and New Testament. Do NOT cluster questions around the same story or chapter.
+8. VARIETY: For different SESSION_ID values at the same level, you must produce noticeably different combinations of questions, topics, and wording. Avoid reusing the same exact questions or explanations.
 
 DIFFICULTY GUIDELINES BY LEVEL:
 - Beginner: Well-known stories, main characters, famous verses (e.g., Noah's ark, 10 Commandments)
@@ -78,7 +89,7 @@ FORMAT YOUR RESPONSE AS VALID JSON ARRAY:
     "options": ["Moses", "Joshua", "Aaron", "David"],
     "correctAnswer": 0,
     "verse": "EXO.3.10",
-    "explanation": "God called Moses to lead His people out of Egyptian bondage (Exodus 3:10)"
+    "explanation": "God called Moses to lead His people out of Egyptian bondage (Exodus 3:10)."
   }
 ]
 
@@ -97,7 +108,9 @@ Generate ${count} questions now. Return ONLY the JSON array, no additional text.
           content: prompt
         }
       ],
-      temperature: 0.8,
+      // Slightly higher temperature and top_p for more variety while maintaining accuracy
+      temperature: 0.9,
+      top_p: 0.95,
       max_tokens: 2000,
     });
 

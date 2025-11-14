@@ -316,7 +316,14 @@ export default function BibleTriviaPage({
           throw new Error("No questions were returned.");
         }
 
-        setQuestions(result.questions);
+        // Shuffle the questions using Fisher-Yates algorithm so they're in a different order every time
+        const shuffled = [...result.questions];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+
+        setQuestions(shuffled);
         setCurrentIndex(0);
         setSelectedIndex(null);
         setScore(0);
