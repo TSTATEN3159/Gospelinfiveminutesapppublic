@@ -503,15 +503,20 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
             </CardHeader>
           </Card>
 
-          {/* Level Up Message */}
-          {justUnlockedLevel && (
-            <Card className={`mb-6 bg-gradient-to-br ${LEVEL_CONFIG[justUnlockedLevel].gradient} text-white border-0`}>
+          {/* Congratulations for Completing Level */}
+          {passed && (
+            <Card className={`mb-6 bg-gradient-to-br ${levelConfig.gradient} text-white border-0`}>
               <CardContent className="p-6 text-center">
                 <Trophy className="w-12 h-12 mx-auto mb-3" />
-                <h2 className="text-xl font-bold mb-2">Level Unlocked!</h2>
-                <p className="text-sm opacity-90">
-                  You've unlocked the {LEVEL_CONFIG[justUnlockedLevel].name} level!
+                <h2 className="text-xl font-bold mb-2">Congratulations!</h2>
+                <p className="text-sm opacity-90 mb-2">
+                  You passed the {levelConfig.name} level with a score of {score}/{QUESTIONS_PER_GAME}!
                 </p>
+                {justUnlockedLevel && (
+                  <p className="text-sm font-semibold opacity-95 mt-3 pt-3 border-t border-white/30">
+                    🎉 You've unlocked the {LEVEL_CONFIG[justUnlockedLevel].name} level!
+                  </p>
+                )}
               </CardContent>
             </Card>
           )}
