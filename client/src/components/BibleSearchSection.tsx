@@ -10,6 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { useTranslations } from "@/lib/translations";
+import { parseReference } from "@/utils/bibleReference";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 import { appStore } from "@/lib/appStore";
 
@@ -165,6 +166,18 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const handleSearch = async (q?: string) => {
     const query = (q ?? searchQuery).trim();
     if (!query) return;
+
+    // Validate reference format before searching
+    try {
+      parseReference(query);
+    } catch (validationError: any) {
+      toast({
+        title: "Invalid Reference",
+        description: validationError.message || 'Please use a format like "John 3:16".',
+        variant: "destructive"
+      });
+      return;
+    }
 
     setIsLoading(true);
     setHasSearched(true);
