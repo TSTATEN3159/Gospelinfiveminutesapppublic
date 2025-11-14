@@ -10,7 +10,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { useTranslations } from "@/lib/translations";
-import { parseReference } from "@/utils/bibleReference";
+import { fetchVerseText } from "@/services/bibleService";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 import { appStore } from "@/lib/appStore";
 
@@ -167,60 +167,34 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     const query = (q ?? searchQuery).trim();
     if (!query) return;
 
-    // Validate reference format before searching
-    try {
-      parseReference(query);
-    } catch (validationError: any) {
-      toast({
-        title: "Invalid Reference",
-        description: validationError.message || 'Please use a format like "John 3:16".',
-        variant: "destructive"
-      });
-      return;
-    }
-
     setIsLoading(true);
     setHasSearched(true);
 
     try {
-      const { apiUrl } = await import('@/lib/api-config');
-      const response = await fetch(apiUrl('/api/bible-search'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: query,
-          version: selectedVersion
-        }),
-      });
-
-      const data = await response.json();
-
-      if (!data.success) {
-        throw new Error(data.error || 'Failed to retrieve Bible text');
-      }
+      // Use the centralized Bible service with validation and friendly errors
+      const result = await fetchVerseText(query, selectedVersion);
 
       setSearchResult({
-        text: data.text,
-        reference: data.reference,
-        version: data.version
+        text: result.text,
+        reference: result.reference,
+        version: result.version
       });
 
-    } catch (error) {
+    } catch (error: any) {
       console.error('Bible search error:', error);
       
-      // Fallback to a helpful message if API fails
+      // The service already provides friendly error messages
+      toast({
+        title: "Search Error",
+        description: error.message || "Unable to retrieve Bible text. Please try again.",
+        variant: "destructive"
+      });
+      
+      // Show a helpful fallback message in the UI
       setSearchResult({
         text: `Sorry, I'm having trouble retrieving "${query}" right now. Please try again in a moment, or try a different Bible reference like "John 3:16" or "Psalm 23".`,
         reference: query,
         version: selectedVersion
-      });
-      
-      toast({
-        title: "Search Error",
-        description: "Unable to retrieve Bible text. Please try again.",
-        variant: "destructive"
       });
     } finally {
       setIsLoading(false);

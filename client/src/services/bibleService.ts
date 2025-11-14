@@ -1,3 +1,5 @@
+import { parseReference, ParsedReference } from "@/utils/bibleReference";
+
 export interface BibleVerse {
   text: string;
   reference: string;
@@ -400,3 +402,82 @@ export const getBibleVerse = (version?: string) => {
   }
   return bibleService.getDailyVerse(version);
 };
+
+// Bible search wrapper with friendly error messages
+export async function fetchVerseText(
+  referenceInput: string,
+  version: string = "KJV"
+): Promise<{
+  parsed: ParsedReference;
+  text: string;
+  reference: string;
+  version: string;
+}> {
+  // 1. Parse & validate on the client
+  const parsed = parseReference(referenceInput);
+
+  // 2. Make API call to backend
+  const { apiUrl } = await import('@/lib/api-config');
+  
+  let response: Response;
+  
+  try {
+    response = await fetch(apiUrl('/api/bible-search'), {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: referenceInput,
+        version: version
+      }),
+    });
+  } catch (networkError) {
+    // Network-level error (offline, DNS failure, etc.)
+    console.error("Network error:", networkError);
+    throw new Error(
+      'Sorry, I couldn\'t load that verse. Check that the reference is correct (e.g. "John 3:16") and try again.'
+    );
+  }
+
+  // HTTP error (4xx, 5xx)
+  if (!response.ok) {
+    let body: any = null;
+    try {
+      body = await response.json();
+    } catch {
+      // ignore
+    }
+
+    // Log real error for developer
+    console.error("Bible API error", {
+      status: response.status,
+      body,
+    });
+
+    throw new Error(
+      'Sorry, I couldn\'t load that verse. Check that the reference is correct (e.g. "John 3:16") and try again.'
+    );
+  }
+
+  const data = await response.json();
+
+  if (!data.success) {
+    throw new Error(data.error || 'Failed to retrieve Bible text');
+  }
+
+  const text = data.text;
+
+  if (!text) {
+    throw new Error(
+      'I couldn\'t find that verse. Try a different reference like "John 3:16".'
+    );
+  }
+
+  return {
+    parsed,
+    text: data.text,
+    reference: data.reference,
+    version: data.version
+  };
+}

@@ -1,0 +1,73 @@
+ible API call wrapper with friendly error messages
+
+Now wrap your existing “get verse from API” logic so any error is converted to a human-readable message.
+
+Create:
+
+src/services/bibleService.ts
+import { parseReference, ParsedReference } from "../utils/bibleReference";
+
+const BIBLE_API_BASE_URL = import.meta.env.VITE_BIBLE_API_BASE_URL;
+const BIBLE_API_KEY = import.meta.env.VITE_BIBLE_API_KEY;
+
+// Adjust this fetch to match YOUR actual Bible API.
+// This example assumes a “q=John+3:16” style endpoint.
+export async function fetchVerseText(referenceInput: string): Promise<{
+  parsed: ParsedReference;
+  text: string;
+}> {
+  // 1. Parse & validate on the client
+  const parsed = parseReference(referenceInput);
+  const { book, chapter, verses } = parsed;
+
+  const queryString = encodeURIComponent(`${book} ${chapter}:${verses}`);
+
+  const url = `${BIBLE_API_BASE_URL}?q=${queryString}`;
+
+  const response = await fetch(url, {
+    headers: {
+      "Content-Type": "application/json",
+      ...(BIBLE_API_KEY ? { Authorization: `Token ${BIBLE_API_KEY}` } : {}),
+    },
+  });
+
+  // Network or HTTP error
+  if (!response.ok) {
+    let body: any = null;
+    try {
+      body = await response.json();
+    } catch {
+      // ignore
+    }
+
+    // Log real error for you (developer) – user sees a nicer message.
+    console.error("Bible API error", {
+      status: response.status,
+      body,
+    });
+
+    throw new Error(
+      "Sorry, I couldn’t load that verse. Check that the reference is correct (e.g. “John 3:16”) and try again."
+    );
+  }
+
+  const data = await response.json();
+
+  // Adjust according to your API shape – this is an example:
+  const text =
+    data?.passages?.[0]?.text ||
+    data?.verses?.[0]?.text ||
+    data?.text ||
+    "";
+
+  if (!text) {
+    throw new Error(
+      "I couldn’t find that verse. Try a different reference like “John 3:16”."
+    );
+  }
+
+  return { parsed, text };
+}
+
+
+🔧 You only need to change BIBLE_API_BASE_URL, auth header, and how you read text to match the actual API you use. Everything else is generic and safe.
