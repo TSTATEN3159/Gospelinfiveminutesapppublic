@@ -1,0 +1,153 @@
+Global two-finger “expand text” (pinch-to-zoom for all text)
+
+Goal: anywhere in the app, using two fingers to pinch out/in will increase/decrease the global text size.
+
+Step 1: Create a TextScaleProvider
+
+File: src/context/TextScaleContext.tsx
+
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+} from "react";
+
+type TextScaleContextValue = {
+  scale: number;
+  setScale: (value: number) => void;
+};
+
+const TextScaleContext = createContext<TextScaleContextValue | undefined>(
+  undefined
+);
+
+const MIN_SCALE = 0.8;  // 80% of base size
+const MAX_SCALE = 1.6;  // 160% of base size
+const STEP = 0.02;      // how sensitive pinch is
+
+export const TextScaleProvider: React.FC<{ children: ReactNode }> = ({
+  children,
+}) => {
+  const [scale, setScaleState] = useState<number>(() => {
+    // try to restore user preference
+    const stored = typeof window !== "undefined"
+      ? window.localStorage.getItem("text-scale")
+      : null;
+    return stored ? Number(stored) || 1 : 1;
+  });
+
+  const setScale = (value: number) => {
+    const clamped = Math.min(MAX_SCALE, Math.max(MIN_SCALE, value));
+    setScaleState(clamped);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem("text-scale", String(clamped));
+      document.documentElement.style.setProperty("--text-scale", String(clamped));
+    }
+  };
+
+  useEffect(() => {
+    // Initialize CSS variable on first mount
+    document.documentElement.style.setProperty("--text-scale", String(scale));
+  }, []);
+
+  useEffect(() => {
+    let lastDistance: number | null = null;
+
+    const getDistance = (touches: TouchList) => {
+      const [t1, t2] = [touches[0], touches[1]];
+      const dx = t2.clientX - t1.clientX;
+      const dy = t2.clientY - t1.clientY;
+      return Math.hypot(dx, dy);
+    };
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 2) {
+        lastDistance = getDistance(e.touches);
+      }
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (e.touches.length === 2 && lastDistance !== null) {
+        const distance = getDistance(e.touches);
+        const delta = distance - lastDistance;
+
+        // positive delta = fingers moving apart → increase scale
+        const nextScale = scale + (delta * STEP) / 100;
+        setScale(nextScale);
+
+        lastDistance = distance;
+      }
+    };
+
+    const onTouchEnd = (e: TouchEvent) => {
+      if (e.touches.length < 2) {
+        lastDistance = null;
+      }
+    };
+
+    window.addEventListener("touchstart", onTouchStart, { passive: true });
+    window.addEventListener("touchmove", onTouchMove, { passive: true });
+    window.addEventListener("touchend", onTouchEnd);
+
+    return () => {
+      window.removeEventListener("touchstart", onTouchStart);
+      window.removeEventListener("touchmove", onTouchMove);
+      window.removeEventListener("touchend", onTouchEnd);
+    };
+  }, [scale]); // re-bind when scale changes so closure has latest value
+
+  return (
+    <TextScaleContext.Provider value={{ scale, setScale }}>
+      {children}
+    </TextScaleContext.Provider>
+  );
+};
+
+export const useTextScale = () => {
+  const ctx = useContext(TextScaleContext);
+  if (!ctx) {
+    throw new Error("useTextScale must be used within a TextScaleProvider");
+  }
+  return ctx;
+};
+
+Step 2: Apply scaling via a global CSS variable
+
+In your main CSS (e.g. src/index.css or src/styles.css):
+
+:root {
+  --text-scale: 1;
+}
+
+/* Most global base text size */
+body {
+  font-size: calc(16px * var(--text-scale));
+}
+
+/* If you want headings to scale as well: */
+h1, h2, h3, h4, h5, h6, p, span, button, input, textarea, label {
+  font-size: calc(1em * var(--text-scale));
+}
+
+
+(Adjust to fit your design; the important part is using var(--text-scale).)
+
+Step 3: Wrap your whole app with the provider
+
+File: src/main.tsx
+
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { TextScaleProvider } from "./context/TextScaleContext";
+import "./index.css";
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
+  <React.StrictMode>
+    <TextScaleProvider>
+      <App />
+    </TextScaleProvider>
+  </React.StrictMode>
+);
