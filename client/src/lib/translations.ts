@@ -122,6 +122,11 @@ export interface Translations {
   listenToVerse: string;
   stopListening: string;
   ttsNotSupported: string;
+  startVoiceSearch: string;
+  stopVoiceSearch: string;
+  voiceSearchNotSupported: string;
+  listening: string;
+  speakNow: string;
   
   // Support Page
   supportAndPrivacy: string;
@@ -762,6 +767,11 @@ export const translations: Record<string, Translations> = {
     listenToVerse: "Listen to Verse",
     stopListening: "Stop Listening",
     ttsNotSupported: "Text-to-speech not supported in your browser",
+    startVoiceSearch: "Start Voice Search",
+    stopVoiceSearch: "Stop Voice Search",
+    voiceSearchNotSupported: "Voice search not supported in your browser",
+    listening: "Listening...",
+    speakNow: "Speak now",
     
     // Support Page
     supportAndPrivacy: "Support & Privacy",
@@ -1365,6 +1375,11 @@ export const translations: Record<string, Translations> = {
     listenToVerse: "Escuchar Versículo",
     stopListening: "Detener Lectura",
     ttsNotSupported: "Texto a voz no compatible con su navegador",
+    startVoiceSearch: "Iniciar Búsqueda por Voz",
+    stopVoiceSearch: "Detener Búsqueda por Voz",
+    voiceSearchNotSupported: "Búsqueda por voz no compatible con su navegador",
+    listening: "Escuchando...",
+    speakNow: "Habla ahora",
     
     // Support Page
     supportAndPrivacy: "Soporte y Privacidad",
@@ -1968,6 +1983,11 @@ export const translations: Record<string, Translations> = {
     listenToVerse: "Écouter le Verset",
     stopListening: "Arrêter la Lecture",
     ttsNotSupported: "Synthèse vocale non prise en charge par votre navigateur",
+    startVoiceSearch: "Démarrer la Recherche Vocale",
+    stopVoiceSearch: "Arrêter la Recherche Vocale",
+    voiceSearchNotSupported: "Recherche vocale non prise en charge par votre navigateur",
+    listening: "Écoute...",
+    speakNow: "Parlez maintenant",
     
     // Support Page
     supportAndPrivacy: "Support et Confidentialité",
@@ -2571,6 +2591,11 @@ export const translations: Record<string, Translations> = {
     listenToVerse: "Ouvir Versículo",
     stopListening: "Parar Leitura",
     ttsNotSupported: "Texto-para-fala não suportado no seu navegador",
+    startVoiceSearch: "Iniciar Busca por Voz",
+    stopVoiceSearch: "Parar Busca por Voz",
+    voiceSearchNotSupported: "Busca por voz não suportada no seu navegador",
+    listening: "Ouvindo...",
+    speakNow: "Fale agora",
     
     // Support Page
     supportAndPrivacy: "Suporte e Privacidade",
@@ -3174,6 +3199,11 @@ export const translations: Record<string, Translations> = {
     listenToVerse: "聆听经文",
     stopListening: "停止朗读",
     ttsNotSupported: "您的浏览器不支持文本转语音",
+    startVoiceSearch: "开始语音搜索",
+    stopVoiceSearch: "停止语音搜索",
+    voiceSearchNotSupported: "您的浏览器不支持语音搜索",
+    listening: "正在聆听...",
+    speakNow: "现在说话",
     
     // Support Page
     supportAndPrivacy: "支持与隐私",
@@ -3777,6 +3807,11 @@ export const translations: Record<string, Translations> = {
     listenToVerse: "الاستماع إلى الآية",
     stopListening: "إيقاف الاستماع",
     ttsNotSupported: "تحويل النص إلى كلام غير مدعوم في متصفحك",
+    startVoiceSearch: "بدء البحث الصوتي",
+    stopVoiceSearch: "إيقاف البحث الصوتي",
+    voiceSearchNotSupported: "البحث الصوتي غير مدعوم في متصفحك",
+    listening: "الاستماع...",
+    speakNow: "تحدث الآن",
     
     // Support Page
     supportAndPrivacy: "الدعم والخصوصية",
@@ -4380,6 +4415,11 @@ export const translations: Record<string, Translations> = {
     listenToVerse: "श्लोक सुनें",
     stopListening: "सुनना बंद करें",
     ttsNotSupported: "आपके ब्राउज़र में टेक्स्ट-टू-स्पीच समर्थित नहीं है",
+    startVoiceSearch: "वॉइस सर्च शुरू करें",
+    stopVoiceSearch: "वॉइस सर्च बंद करें",
+    voiceSearchNotSupported: "आपके ब्राउज़र में वॉइस सर्च समर्थित नहीं है",
+    listening: "सुन रहे हैं...",
+    speakNow: "अब बोलें",
     
     // Support Page
     supportAndPrivacy: "सहायता और गोपनीयता",

@@ -1,0 +1,96 @@
+Use the microphone to search for Scriptures (voice input)
+
+Here we’ll use the Web Speech Recognition API (where available). On iOS 17+ Safari it exists as webkitSpeechRecognition. In the Capacitor webview, it may or may not be available; we’ll feature-detect and fall back to normal typing.
+
+Step 1: Add TS declarations and hook
+
+File: src/hooks/useSpeechRecognition.ts
+
+import { useCallback, useEffect, useRef, useState } from "react";
+
+declare global {
+  interface Window {
+    webkitSpeechRecognition?: any;
+  }
+}
+
+type UseSpeechRecognitionOptions = {
+  lang?: string;
+  continuous?: boolean;
+};
+
+export const useSpeechRecognition = (
+  options: UseSpeechRecognitionOptions = {}
+) => {
+  const { lang = "en-US", continuous = false } = options;
+
+  const [supported, setSupported] = useState(false);
+  const [listening, setListening] = useState(false);
+  const [transcript, setTranscript] = useState("");
+  const [error, setError] = useState<string | null>(null);
+
+  const recognitionRef = useRef<SpeechRecognition | null>(null);
+
+  useEffect(() => {
+    const SpeechRecognitionCtor =
+      (window as any).SpeechRecognition || window.webkitSpeechRecognition;
+
+    if (!SpeechRecognitionCtor) {
+      setSupported(false);
+      return;
+    }
+
+    setSupported(true);
+
+    const recognition = new SpeechRecognitionCtor();
+    recognition.lang = lang;
+    recognition.continuous = continuous;
+    recognition.interimResults = false;
+
+    recognition.onstart = () => {
+      setListening(true);
+      setError(null);
+    };
+
+    recognition.onend = () => {
+      setListening(false);
+    };
+
+    recognition.onerror = (event: any) => {
+      setError(event.error || "Speech recognition error");
+      setListening(false);
+    };
+
+    recognition.onresult = (event: any) => {
+      const result = event.results[0][0].transcript;
+      setTranscript(result);
+    };
+
+    recognitionRef.current = recognition;
+
+    return () => {
+      recognition.stop();
+    };
+  }, [lang, continuous]);
+
+  const startListening = useCallback(() => {
+    if (!supported || !recognitionRef.current) return;
+    setTranscript("");
+    setError(null);
+    recognitionRef.current.start();
+  }, [supported]);
+
+  const stopListening = useCallback(() => {
+    if (!supported || !recognitionRef.current) return;
+    recognitionRef.current.stop();
+  }, [supported]);
+
+  return {
+    supported,
+    listening,
+    transcript,
+    error,
+    startListening,
+    stopListening,
+  };
+};
