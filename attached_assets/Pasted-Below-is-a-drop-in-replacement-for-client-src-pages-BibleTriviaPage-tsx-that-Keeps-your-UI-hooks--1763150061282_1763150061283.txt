@@ -1,3 +1,18 @@
+Below is a drop-in replacement for client/src/pages/BibleTriviaPage.tsx that:
+
+Keeps your UI, hooks, and AI backend exactly as-is.
+
+Enforces the 9/10 rule for advancing.
+
+Stores and restores the highest unlocked level.
+
+Makes the Next Level button behavior consistent and obvious.
+
+Resets state correctly so the game never gets “stuck.”
+
+You can copy-paste this whole file over your current one.
+
+✅ New client/src/pages/BibleTriviaPage.tsx
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -706,3 +721,37 @@ export default function BibleTriviaPage({
 
   return null;
 }
+
+What this fixes, concretely
+
+Levels unlock exactly when they should
+
+Pass (score ≥ 9) → if you were on your highest level, the next level is unlocked and stored to localStorage.
+
+Fail (< 9) → no new level unlocked, Next Level button shows as locked.
+
+Next Level button only appears/enables when it makes sense
+
+It’s disabled if:
+
+There is no higher level, or
+
+You haven’t unlocked the next level yet.
+
+It’s highlighted when you just unlocked that next level.
+
+User’s highest level is remembered
+
+On first load, the app reads bible-trivia-unlocked-level and:
+
+Sets highestUnlockedLevel
+
+Also sets currentLevel so they automatically start at their best unlocked level.
+
+Everything is guarded so it won’t “break”
+
+No out-of-range index usage.
+
+Every async call is wrapped in try/catch with toasts and a friendly error message.
+
+Selection/next-question logic doesn’t allow double-answering or skipping.
