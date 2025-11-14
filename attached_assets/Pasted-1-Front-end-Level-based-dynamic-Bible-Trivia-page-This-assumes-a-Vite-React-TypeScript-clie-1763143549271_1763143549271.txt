@@ -1,0 +1,447 @@
+1️⃣ Front-end: Level-based, dynamic Bible Trivia page
+
+This assumes a Vite + React + TypeScript client at src/pages/BibleTriviaPage.tsx.
+
+It does not care how questions are created; it just calls /api/trivia.
+
+// src/pages/BibleTriviaPage.tsx
+import React, { useCallback, useEffect, useState } from "react";
+import { Button } from "../components/ui/Button"; // adjust import to your Button
+// If you don't have a Button component, just use <button> instead.
+
+type LevelKey = "beginner" | "intermediate" | "advanced";
+
+type TriviaQuestion = {
+  id: string;
+  level: LevelKey;
+  question: string;
+  options: string[];
+  correctIndex: number;
+  reference?: string;
+};
+
+type GameState = "idle" | "playing" | "finished";
+
+const LEVEL_ORDER: LevelKey[] = ["beginner", "intermediate", "advanced"];
+const QUESTIONS_PER_GAME = 10;
+const PASSING_SCORE = 9;
+
+const STORAGE_KEY_UNLOCKED = "bible-trivia-unlocked-level";
+
+const BibleTriviaPage: React.FC = () => {
+  const [currentLevel, setCurrentLevel] = useState<LevelKey>("beginner");
+  const [highestUnlockedLevel, setHighestUnlockedLevel] =
+    useState<LevelKey>("beginner");
+
+  const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [score, setScore] = useState(0);
+
+  const [gameState, setGameState] = useState<GameState>("idle");
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Load stored highest unlocked level
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const stored = window.localStorage.getItem(STORAGE_KEY_UNLOCKED);
+    if (stored && (LEVEL_ORDER as string[]).includes(stored)) {
+      setHighestUnlockedLevel(stored as LevelKey);
+      setCurrentLevel(stored as LevelKey);
+    }
+  }, []);
+
+  const saveUnlockedLevel = (level: LevelKey) => {
+    setHighestUnlockedLevel(level);
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(STORAGE_KEY_UNLOCKED, level);
+    }
+  };
+
+  // --- API call to get questions dynamically ---
+  const fetchQuestionsForLevel = useCallback(
+    async (level: LevelKey) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = new URLSearchParams({
+          level,
+          count: String(QUESTIONS_PER_GAME),
+        });
+
+        const res = await fetch(`/api/trivia?${params.toString()}`);
+        if (!res.ok) {
+          throw new Error(`Server returned ${res.status}`);
+        }
+        const data: TriviaQuestion[] = await res.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          throw new Error("No questions were returned.");
+        }
+
+        setQuestions(data);
+        setCurrentIndex(0);
+        setSelectedIndex(null);
+        setScore(0);
+        setGameState("playing");
+      } catch (err: any) {
+        console.error("Error fetching trivia questions:", err);
+        setError(
+          "Sorry, I couldn’t load questions right now. Please try again in a moment."
+        );
+        setGameState("idle");
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
+
+  const handleStartGame = () => {
+    fetchQuestionsForLevel(currentLevel);
+  };
+
+  const handleSelectOption = (index: number) => {
+    if (gameState !== "playing") return;
+    setSelectedIndex(index);
+  };
+
+  const handleNextQuestion = () => {
+    if (selectedIndex === null) return;
+
+    const currentQuestion = questions[currentIndex];
+    if (!currentQuestion) return;
+
+    if (selectedIndex === currentQuestion.correctIndex) {
+      setScore((prev) => prev + 1);
+    }
+
+    const nextIndex = currentIndex + 1;
+
+    if (nextIndex >= QUESTIONS_PER_GAME || nextIndex >= questions.length) {
+      // Game finished
+      setGameState("finished");
+    } else {
+      setCurrentIndex(nextIndex);
+      setSelectedIndex(null);
+    }
+  };
+
+  const handlePlayAgainSameLevel = () => {
+    fetchQuestionsForLevel(currentLevel);
+  };
+
+  const handleGoToNextLevelIfUnlocked = () => {
+    const currentLevelIndex = LEVEL_ORDER.indexOf(currentLevel);
+    if (currentLevelIndex < 0) return;
+
+    const nextLevel = LEVEL_ORDER[currentLevelIndex + 1];
+    if (!nextLevel) return;
+
+    setCurrentLevel(nextLevel);
+    fetchQuestionsForLevel(nextLevel);
+  };
+
+  // After finishing, decide whether to unlock the next level
+  useEffect(() => {
+    if (gameState !== "finished") return;
+
+    const passed = score >= PASSING_SCORE;
+    const currentIndexInOrder = LEVEL_ORDER.indexOf(currentLevel);
+    const highestIndexInOrder = LEVEL_ORDER.indexOf(highestUnlockedLevel);
+
+    if (passed && currentIndexInOrder >= highestIndexInOrder) {
+      const nextLevel = LEVEL_ORDER[currentIndexInOrder + 1];
+      if (nextLevel) {
+        saveUnlockedLevel(nextLevel);
+      }
+    }
+  }, [gameState, score, currentLevel, highestUnlockedLevel]);
+
+  // UI helpers
+  const currentQuestion = questions[currentIndex];
+  const isLastQuestion =
+    currentIndex >= QUESTIONS_PER_GAME - 1 || currentIndex >= questions.length - 1;
+
+  const passed = score >= PASSING_SCORE;
+  const canAdvanceToNextLevel =
+    passed &&
+    LEVEL_ORDER.indexOf(currentLevel) <
+      LEVEL_ORDER.indexOf(highestUnlockedLevel);
+
+  return (
+    <div className="p-4 space-y-4">
+      <h1 className="text-2xl font-bold mb-2">Bible Trivia</h1>
+
+      {/* Level selector */}
+      <div className="flex gap-2 mb-4">
+        {LEVEL_ORDER.map((level) => {
+          const locked =
+            LEVEL_ORDER.indexOf(level) >
+            LEVEL_ORDER.indexOf(highestUnlockedLevel);
+          return (
+            <button
+              key={level}
+              disabled={locked || loading || gameState === "playing"}
+              onClick={() => setCurrentLevel(level)}
+              className={`px-3 py-2 rounded-full text-sm font-semibold ${
+                currentLevel === level
+                  ? "bg-black text-white"
+                  : "bg-gray-200 text-gray-800"
+              } ${locked ? "opacity-40 cursor-not-allowed" : ""}`}
+            >
+              {level === "beginner"
+                ? "Beginner"
+                : level === "intermediate"
+                ? "Intermediate"
+                : "Advanced"}
+              {locked && " 🔒"}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Error banner */}
+      {error && (
+        <div className="bg-red-600 text-white rounded-lg p-3">
+          <strong>Error</strong>
+          <div>{error}</div>
+        </div>
+      )}
+
+      {/* Start / Loading section */}
+      {gameState === "idle" && (
+        <div className="space-y-3">
+          <p className="text-sm text-gray-700">
+            Answer {QUESTIONS_PER_GAME} questions. Score {PASSING_SCORE} or more
+            to unlock the next level.
+          </p>
+          <Button
+            onClick={handleStartGame}
+            disabled={loading}
+            className="w-full h-14 text-lg font-semibold"
+            data-testid="button-start-game"
+          >
+            {loading ? "Preparing Questions..." : "Start Trivia"}
+          </Button>
+        </div>
+      )}
+
+      {/* Question section */}
+      {gameState === "playing" && currentQuestion && (
+        <div className="space-y-4">
+          <div className="flex justify-between items-center text-sm text-gray-600">
+            <span>
+              Level:{" "}
+              {currentLevel === "beginner"
+                ? "Beginner"
+                : currentLevel === "intermediate"
+                ? "Intermediate"
+                : "Advanced"}
+            </span>
+            <span>
+              Question {currentIndex + 1} of {QUESTIONS_PER_GAME}
+            </span>
+          </div>
+
+          <div className="bg-white rounded-xl shadow-sm p-4">
+            <p className="font-semibold mb-3">{currentQuestion.question}</p>
+            <div className="space-y-2">
+              {currentQuestion.options.map((opt, i) => {
+                const isSelected = selectedIndex === i;
+                return (
+                  <button
+                    key={i}
+                    onClick={() => handleSelectOption(i)}
+                    className={`w-full text-left px-3 py-2 rounded-lg border ${
+                      isSelected
+                        ? "border-black bg-gray-100"
+                        : "border-gray-300"
+                    }`}
+                  >
+                    {opt}
+                  </button>
+                );
+              })}
+            </div>
+            {currentQuestion.reference && (
+              <p className="mt-3 text-xs text-gray-500">
+                Hint: {currentQuestion.reference}
+              </p>
+            )}
+          </div>
+
+          <div className="flex justify-between items-center">
+            <span className="text-sm">
+              Score: <strong>{score}</strong>
+            </span>
+            <Button
+              onClick={handleNextQuestion}
+              disabled={selectedIndex === null}
+              className="px-4 py-2 text-sm font-semibold"
+            >
+              {isLastQuestion ? "Finish" : "Next Question"}
+            </Button>
+          </div>
+        </div>
+      )}
+
+      {/* Results section */}
+      {gameState === "finished" && (
+        <div className="space-y-4">
+          <div className="bg-white rounded-xl shadow-sm p-4 text-center">
+            <h2 className="text-xl font-bold mb-2">Game Finished!</h2>
+            <p className="mb-2">
+              You scored <strong>{score}</strong> out of{" "}
+              {QUESTIONS_PER_GAME}.
+            </p>
+            <p className="text-sm text-gray-700">
+              {passed
+                ? "Great job! You passed this level."
+                : `Keep going! You need at least ${PASSING_SCORE} correct to pass this level.`}
+            </p>
+          </div>
+
+          <div className="space-y-2">
+            <Button
+              onClick={handlePlayAgainSameLevel}
+              className="w-full h-12 font-semibold"
+            >
+              Play Again – Same Level
+            </Button>
+
+            <Button
+              onClick={handleStartGame}
+              className="w-full h-12 font-semibold"
+            >
+              New Questions – Same Level
+            </Button>
+
+            <Button
+              onClick={handleGoToNextLevelIfUnlocked}
+              disabled={
+                !passed ||
+                LEVEL_ORDER.indexOf(currentLevel) >=
+                  LEVEL_ORDER.indexOf(highestUnlockedLevel)
+              }
+              className="w-full h-12 font-semibold"
+            >
+              {passed &&
+              LEVEL_ORDER.indexOf(currentLevel) <
+                LEVEL_ORDER.indexOf(highestUnlockedLevel)
+                ? "Go to Next Level"
+                : "Next Level Locked"}
+            </Button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default BibleTriviaPage;
+
+
+This page:
+
+Has loading state so disabled={loading} never crashes.
+
+Wraps all network errors in try/catch and shows a friendly banner.
+
+Enforces the 9/10 rule and stores the highest unlocked level.
+
+2️⃣ Back-end: dynamic trivia endpoint (/api/trivia)
+
+Now the “dynamic” part: instead of hard-coded questions, you make the server decide what questions to send.
+
+This can be:
+
+From a database (Mongo, Postgres, etc.)
+
+From a big JSON file that you rotate
+
+Generated via OpenAI (e.g. call the ChatGPT API)
+
+Any other dynamic source
+
+Here’s a simple Express route you can put in your Replit Node server:
+
+// server/triviaRoute.ts (example)
+
+import express from "express";
+
+const router = express.Router();
+
+/**
+ * GET /api/trivia?level=beginner&count=10
+ * Returns an array of TriviaQuestion objects.
+ */
+router.get("/trivia", async (req, res) => {
+  try {
+    const level = (req.query.level as string) || "beginner";
+    const count = parseInt((req.query.count as string) || "10", 10);
+
+    if (!["beginner", "intermediate", "advanced"].includes(level)) {
+      return res.status(400).json({ error: "Invalid level" });
+    }
+
+    // TODO: replace this with your REAL dynamic source
+    // e.g., database query, OpenAI, etc.
+    // For now we’ll just mock dynamic questions with random content.
+    const questions = Array.from({ length: count }).map((_, i) => ({
+      id: `${level}-${Date.now()}-${i}`,
+      level,
+      question: `Sample ${level} question #${i + 1}`,
+      options: ["Option A", "Option B", "Option C", "Option D"],
+      correctIndex: Math.floor(Math.random() * 4),
+      reference: undefined,
+    }));
+
+    return res.json(questions);
+  } catch (err) {
+    console.error("Error in /api/trivia:", err);
+    return res.status(500).json({ error: "Failed to generate trivia" });
+  }
+});
+
+export default router;
+
+
+And in your main server file:
+
+// server/index.ts (or app.ts)
+import express from "express";
+import triviaRoute from "./triviaRoute";
+
+const app = express();
+
+app.use(express.json());
+app.use("/api", triviaRoute);
+
+// ... your existing static file / Vite config, etc.
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log("Server running on port", PORT);
+});
+
+Making it truly dynamic
+
+Inside that route, swap the mock array for your real question source, e.g.:
+
+Database: query questions where level = ?, random order, limit count.
+
+OpenAI: call your model to “generate 10 multiple-choice Bible trivia questions for the beginner level” and format them into the TriviaQuestion shape.
+
+The front-end code stays the same no matter how you generate.
+
+Quick recap
+
+✔️ The trivia is dynamic: every game calls /api/trivia?level=....
+
+✔️ Levels are enforced, and the 9/10 rule gates progression.
+
+✔️ loading is defined and used so the game doesn’t break when starting.
+
+✔️ Errors are caught and shown in a friendly banner instead of crashing the page.
