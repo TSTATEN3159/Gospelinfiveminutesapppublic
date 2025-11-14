@@ -1,0 +1,125 @@
+What’s happening here is actually very simple:
+
+disabled={loading}
+
+
+…but loading doesn’t exist anywhere in your component, so React throws:
+
+[plugin:runtime-error-plugin] loading is not defined
+
+We’ll fix this in two steps:
+
+Create a loading state in BibleTriviaPage.
+
+Wrap your generateQuestions function so it sets loading on/off and never crashes the app.
+
+1️⃣ Add loading state to BibleTriviaPage.tsx
+
+At the top of your component, where your other useState hooks live, add this:
+
+// at the top of BibleTriviaPage.tsx
+import React, { useState, useEffect, useCallback } from "react";
+// ...your other imports
+
+// inside BibleTriviaPage component:
+const BibleTriviaPage: React.FC = () => {
+  // 👇 add this line near your other useState declarations
+  const [loading, setLoading] = useState(false);
+
+  // ...rest of your state & logic
+
+
+Now loading exists, so disabled={loading} won’t blow up.
+
+2️⃣ Wrap generateQuestions so it can’t “break” the page
+
+Find your current generateQuestions function in BibleTriviaPage.tsx.
+Replace it with this safer version (keep your existing question-creation logic where indicated):
+
+const generateQuestions = async () => {
+  setLoading(true);
+
+  try {
+    // 🔒 SAFETY WRAP: any error in here will be caught
+    // ------------------------------------------------
+    // 👉 Put your existing question generation code here.
+    // Example structure (replace with your real logic):
+
+    /*
+    const newQuestions = await fetchTriviaQuestionsFromApi();
+    setQuestions(newQuestions);
+    setCurrentQuestionIndex(0);
+    setScore(0);
+    setGameState("playing");
+    */
+
+  } catch (error) {
+    console.error("Error starting Bible Trivia game:", error);
+
+    // Optional: show a friendly message instead of crashing
+    if (typeof window !== "undefined") {
+      window.alert(
+        "Sorry, something went wrong starting the Bible Trivia game. Please try again."
+      );
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+Now your button:
+
+<Button
+  onClick={generateQuestions}
+  disabled={loading}
+  className="w-full h-14 text-lg font-semibold"
+  data-testid="button-start-game"
+>
+  {loading ? "Preparing Questions..." : "Start Trivia"}
+</Button>
+
+
+will:
+
+Be disabled while questions are generating
+
+Show a nice loading label (optional)
+
+Never crash if something inside generateQuestions fails—error is caught and logged
+
+Drop-in summary for Replit
+
+In BibleTriviaPage.tsx:
+
+Import/use state
+
+import React, { useState /*, ... */ } from "react";
+
+const BibleTriviaPage: React.FC = () => {
+  const [loading, setLoading] = useState(false);
+  // ...
+
+
+Safe generateQuestions
+
+const generateQuestions = async () => {
+  setLoading(true);
+  try {
+    // your original logic here
+  } catch (error) {
+    console.error("Error starting Bible Trivia game:", error);
+    if (typeof window !== "undefined") {
+      window.alert(
+        "Sorry, something went wrong starting the Bible Trivia game. Please try again."
+      );
+    }
+  } finally {
+    setLoading(false);
+  }
+};
+
+
+Use disabled={loading} exactly as you already have it.
+
+If you paste this structure into Replit around your existing trivia logic, the error [plugin:runtime-error-plugin] loading is not defined will be gone and the feature will fail gracefully instead of breaking the page.

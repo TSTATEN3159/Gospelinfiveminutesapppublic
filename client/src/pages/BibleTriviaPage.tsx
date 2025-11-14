@@ -13,9 +13,9 @@ interface TriviaQuestion {
   question: string;
   options: string[];
   correctAnswer: number;
-  verse?: string;
-  verseText?: string;
-  explanation?: string;
+  verse?: string | null;
+  verseText?: string | null;
+  explanation?: string | null;
   level: 'beginner' | 'student' | 'scholar' | 'expert';
 }
 
@@ -79,6 +79,7 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
   const { toast } = useToast();
   const triviaMutation = useBibleTriviaMutation();
   
+  const [loading, setLoading] = useState(false);
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'results'>('setup');
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
@@ -134,33 +135,46 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
   }, [showLevelUp]);
 
   const generateQuestions = async () => {
-    const result = await runSafely(
-      {
-        featureName: "Bible Trivia",
-        userMessage: "Sorry, I couldn't generate trivia questions. Please try again."
-      },
-      async () => await triviaMutation.mutateAsync({
-        level: progress.currentLevel,
-        count: 10,
-        useAI: true
-      })
-    );
+    setLoading(true);
 
-    if (!result) {
+    try {
+      const result = await runSafely(
+        {
+          featureName: "Bible Trivia",
+          userMessage: "Sorry, I couldn't generate trivia questions. Please try again."
+        },
+        async () => await triviaMutation.mutateAsync({
+          level: progress.currentLevel,
+          count: 10,
+          useAI: true
+        })
+      );
+
+      if (!result) {
+        toast({
+          title: "Error",
+          description: "Sorry, I couldn't generate trivia questions. Please try again.",
+          variant: "destructive",
+        });
+        return;
+      }
+
+      if (result.questions) {
+        setQuestions(result.questions);
+        setGameState('playing');
+        setCurrentQuestionIndex(0);
+        setAnswers([]);
+        setTimeLeft(30);
+      }
+    } catch (error) {
+      console.error("Error starting Bible Trivia game:", error);
       toast({
         title: "Error",
-        description: "Sorry, I couldn't generate trivia questions. Please try again.",
+        description: "Sorry, something went wrong starting the Bible Trivia game. Please try again.",
         variant: "destructive",
       });
-      return;
-    }
-
-    if (result.questions) {
-      setQuestions(result.questions);
-      setGameState('playing');
-      setCurrentQuestionIndex(0);
-      setAnswers([]);
-      setTimeLeft(30);
+    } finally {
+      setLoading(false);
     }
   };
 
