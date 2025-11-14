@@ -1,11 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
-import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail, AlertCircle, Loader2 } from "lucide-react";
+import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail, AlertCircle, Loader2, RefreshCw } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useTranslations } from '@/lib/translations';
@@ -40,6 +40,9 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
   const [error, setError] = useState<string | null>(null);
   const [selectedArticle, setSelectedArticle] = useState<BlogArticle | null>(null);
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+  const [lastUpdated, setLastUpdated] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const autoRefreshTimerRef = useRef<NodeJS.Timeout | null>(null);
 
   const handleSubscribe = async () => {
     if (!subscribeForm.email) {
@@ -86,34 +89,71 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
   };
 
   // Fetch articles from Christian Context API
-  useEffect(() => {
-    const loadArticles = async () => {
-      try {
+  const loadArticles = async (isManualRefresh = false, isAutoRefresh = false) => {
+    try {
+      if (isManualRefresh) {
+        setIsRefreshing(true);
+      } else if (!isAutoRefresh) {
         setLoading(true);
-        setError(null);
+      }
+      setError(null);
+      
+      const { apiUrl } = await import('@/lib/api-config');
+      const response = await fetch(apiUrl('/api/blog-articles'));
+      const data = await response.json();
+      
+      if (data.success && data.articles) {
+        setArticles(data.articles);
+        setLastUpdated(data.lastUpdated || new Date().toISOString());
         
-        const { apiUrl } = await import('@/lib/api-config');
-        const response = await fetch(apiUrl('/api/blog-articles'));
-        const data = await response.json();
-        
-        if (data.success && data.articles) {
-          setArticles(data.articles);
-        } else {
-          throw new Error(data.error || 'Failed to load articles');
+        if (isManualRefresh) {
+          toast({
+            title: "Content refreshed",
+            description: data.cached ? "Showing cached content" : "Fresh content loaded",
+            variant: "default"
+          });
         }
-      } catch (err) {
-        console.error('Error loading blog articles:', err);
-        setError(t.unableToLoadArticles);
-        
-        // Fallback to ensure app doesn't break
-        setArticles([]);
-      } finally {
+      } else {
+        throw new Error(data.error || 'Failed to load articles');
+      }
+    } catch (err) {
+      console.error('Error loading blog articles:', err);
+      setError(t.unableToLoadArticles);
+      
+      // Fallback to ensure app doesn't break
+      setArticles([]);
+    } finally {
+      if (!isAutoRefresh) {
         setLoading(false);
       }
-    };
+      if (isManualRefresh) {
+        setIsRefreshing(false);
+      }
+    }
+  };
 
-    loadArticles();
+  // Initial load and auto-refresh setup
+  useEffect(() => {
+    loadArticles(false, false);
+
+    // Set up auto-refresh every 30 minutes
+    autoRefreshTimerRef.current = setInterval(() => {
+      console.log('[BlogPage] Auto-refreshing content...');
+      loadArticles(false, true);
+    }, 30 * 60 * 1000); // 30 minutes
+
+    // Clean up timer on unmount
+    return () => {
+      if (autoRefreshTimerRef.current) {
+        clearInterval(autoRefreshTimerRef.current);
+      }
+    };
   }, []);
+
+  // Manual refresh handler
+  const handleManualRefresh = () => {
+    loadArticles(true, false);
+  };
 
   const handleArticleClick = (article: BlogArticle) => {
     setSelectedArticle(article);
@@ -183,7 +223,23 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
             <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">{t.blogPageSubtitle}</p>
             <div className="w-24 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-indigo-500 mx-auto mt-3 rounded-full shadow-lg"></div>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={handleManualRefresh}
+            disabled={isRefreshing}
+            className="ml-3 shadow-lg bg-gradient-to-br from-slate-100 to-blue-100 dark:from-slate-700 dark:to-blue-700"
+            data-testid="button-refresh-blog"
+            aria-label="Refresh content"
+          >
+            <RefreshCw className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
+          </Button>
         </div>
+        {lastUpdated && (
+          <div className="text-center text-xs text-slate-500 dark:text-slate-400 mb-4">
+            Last updated: {new Date(lastUpdated).toLocaleString()}
+          </div>
+        )}
       </div>
 
       <div className="px-4 py-8 space-y-8 max-w-4xl mx-auto">

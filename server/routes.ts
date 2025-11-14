@@ -1758,9 +1758,28 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Blog articles cache (2 hour TTL)
+  let blogArticlesCache: { data: any[], timestamp: number } | null = null;
+  const BLOG_CACHE_TTL = 2 * 60 * 60 * 1000; // 2 hours in milliseconds
+
   // Blog articles endpoint using Christian Context API
   app.get("/api/blog-articles", async (req, res) => {
     try {
+      // Check cache first
+      const now = Date.now();
+      if (blogArticlesCache && (now - blogArticlesCache.timestamp) < BLOG_CACHE_TTL) {
+        console.log('[BlogAPI] Returning cached articles');
+        const timestamp = new Date(blogArticlesCache.timestamp).toISOString();
+        return res.json({
+          success: true,
+          articles: blogArticlesCache.data,
+          cached: true,
+          lastUpdated: timestamp,
+          cachedAt: timestamp,
+          fetchedAt: timestamp
+        });
+      }
+
       const { limit = 5 } = req.query;
 
       // Christian blog themes for diverse content
@@ -1874,9 +1893,22 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       });
 
+      // Cache the fresh articles
+      const timestamp = new Date().toISOString();
+      blogArticlesCache = {
+        data: articles,
+        timestamp: Date.now()
+      };
+
+      console.log(`[BlogAPI] Fetched and cached ${articles.length} fresh articles`);
+
       res.json({
         success: true,
-        articles: articles as any[]
+        articles: articles as any[],
+        cached: false,
+        lastUpdated: timestamp,
+        cachedAt: timestamp,
+        fetchedAt: timestamp
       });
 
     } catch (error) {
