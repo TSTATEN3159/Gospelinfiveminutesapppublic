@@ -1,3 +1,7 @@
+Below is a full updated BibleTriviaPage.tsx with global progress integrated.
+You can replace your existing file with this version.
+
+✅ Updated client/src/pages/BibleTriviaPage.tsx (with global progress)
 import { useState, useEffect, useCallback } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -929,3 +933,14 @@ export default function BibleTriviaPage({
 
   return null;
 }
+
+
+Now your trivia has two layers of progression:
+
+Per-level game progression (Beginner → Intermediate → Advanced)
+
+9/10 correct to unlock the next level.
+
+Global “lifetime” rank (Beginner → Student → Scholar → Expert)
+
+Based on total correct answers across all games, matching your server’s thresholds.
