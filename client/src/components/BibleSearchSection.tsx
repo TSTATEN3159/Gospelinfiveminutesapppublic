@@ -101,10 +101,12 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     }
   }, [ttsInitialized, ttsSupported, t.ttsNotSupported, toast]);
 
-  // Handle speech recognition transcript
+  // Handle speech recognition transcript - auto-search when voice input received
   useEffect(() => {
-    if (transcript) {
+    if (transcript && transcript.trim()) {
       setSearchQuery(transcript);
+      // Auto-trigger search for seamless voice experience
+      handleSearch(transcript.trim());
     }
   }, [transcript]);
 

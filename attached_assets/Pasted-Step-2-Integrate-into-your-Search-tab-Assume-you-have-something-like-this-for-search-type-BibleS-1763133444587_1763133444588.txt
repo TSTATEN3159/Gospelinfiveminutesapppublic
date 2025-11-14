@@ -1,0 +1,117 @@
+Step 2: Integrate into your Search tab
+
+Assume you have something like this for search:
+
+type BibleSearchProps = {
+  onSearch: (query: string) => void;
+};
+
+
+Modify it to include mic support.
+
+File: src/components/BibleSearch.tsx
+
+import React, { useEffect, useState } from "react";
+import { useSpeechRecognition } from "../hooks/useSpeechRecognition";
+
+type BibleSearchProps = {
+  onSearch: (query: string) => void;
+};
+
+export const BibleSearch: React.FC<BibleSearchProps> = ({ onSearch }) => {
+  const [query, setQuery] = useState("");
+  const {
+    supported,
+    listening,
+    transcript,
+    error,
+    startListening,
+    stopListening,
+  } = useSpeechRecognition({ lang: "en-US", continuous: false });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!query.trim()) return;
+    onSearch(query.trim());
+  };
+
+  // When new transcript arrives, update input and trigger search
+  useEffect(() => {
+    if (transcript) {
+      setQuery(transcript);
+      onSearch(transcript);
+    }
+  }, [transcript, onSearch]);
+
+  const handleMicClick = () => {
+    if (!supported) return;
+    if (listening) {
+      stopListening();
+    } else {
+      startListening();
+    }
+  };
+
+  return (
+    <div className="bible-search">
+      <form onSubmit={handleSubmit}>
+        <label htmlFor="search-input">Search Scripture</label>
+        <div className="search-input-row">
+          <input
+            id="search-input"
+            type="text"
+            value={query}
+            placeholder="e.g. John 3:16 or 'God so loved the world'"
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          {supported && (
+            <button
+              type="button"
+              onClick={handleMicClick}
+              aria-pressed={listening}
+              aria-label="Search by voice"
+            >
+              {listening ? "🎙️ Stop" : "🎤 Voice"}
+            </button>
+          )}
+        </div>
+        <button type="submit">Search</button>
+      </form>
+
+      {error && (
+        <p style={{ color: "red", fontSize: "0.85em" }}>
+          Speech error: {error}
+        </p>
+      )}
+
+      {!supported && (
+        <p style={{ fontSize: "0.85em", opacity: 0.7 }}>
+          Voice search not supported on this device.
+        </p>
+      )}
+    </div>
+  );
+};
+
+
+Now your users can:
+
+Tap the mic button
+
+Speak: “John three sixteen” or “God so loved the world”
+
+The app fills the search box with the recognized text and runs the search.
+
+Quick checklist for you
+
+ Add TextScaleProvider and wrap your app → global two-finger text expansion.
+
+ Use CSS var(--text-scale) to scale text in all screens.
+
+ Add useTextToSpeech + “Listen” buttons:
+
+Verse of the Day
+
+Search results
+
+ Add useSpeechRecognition + mic button in Search tab.
