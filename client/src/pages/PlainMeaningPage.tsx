@@ -69,17 +69,24 @@ export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) 
 
     setPlainMeaning("");
 
-    try {
-      const data = await plainMeaningMutation.mutateAsync({ verse: verseText, reference });
-      setPlainMeaning(data.plainMeaning);
-    } catch (error) {
-      console.error('Plain Meaning error:', error);
+    const result = await runSafely(
+      {
+        featureName: "Plain Meaning",
+        userMessage: "Sorry, I couldn't simplify that verse. Please try again."
+      },
+      async () => await plainMeaningMutation.mutateAsync({ verse: verseText, reference })
+    );
+
+    if (!result) {
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to simplify verse. Please try again.",
+        description: "Sorry, I couldn't simplify that verse. Please try again.",
         variant: "destructive"
       });
+      return;
     }
+
+    setPlainMeaning(result.plainMeaning);
   };
 
   return (

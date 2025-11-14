@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
 import { useAskPastorMutation } from "@/hooks/usePastor";
+import { runSafely } from "@/utils/featureGuard";
 
 interface Message {
   id: string;
@@ -33,19 +34,15 @@ export default function AskPastorSection({ backgroundImage, language = "en" }: A
   const askPastorMutation = useAskPastorMutation();
 
   const handleAskPastor = async (question: string) => {
-    try {
-      const data = await askPastorMutation.mutateAsync(question);
-      const pastorMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        role: "pastor",
-        content: data.message,
-        timestamp: new Date(),
-        scriptureRef: data.scriptures?.[0]
-      };
-      setMessages(prev => [...prev, pastorMessage]);
-    } catch (error) {
-      console.error("Ask Pastor error:", error);
-      
+    const result = await runSafely(
+      {
+        featureName: "AI Pastor",
+        userMessage: "Sorry, I'm having trouble connecting to the AI Pastor right now. Please try again in a moment."
+      },
+      async () => await askPastorMutation.mutateAsync(question)
+    );
+
+    if (!result) {
       // Add error message to chat history
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -60,7 +57,17 @@ export default function AskPastorSection({ backgroundImage, language = "en" }: A
         description: t.connectionTrouble,
         variant: "destructive"
       });
+      return;
     }
+
+    const pastorMessage: Message = {
+      id: (Date.now() + 1).toString(),
+      role: "pastor",
+      content: result.message,
+      timestamp: new Date(),
+      scriptureRef: result.scriptures?.[0]
+    };
+    setMessages(prev => [...prev, pastorMessage]);
   };
 
   const handleSendMessage = () => {

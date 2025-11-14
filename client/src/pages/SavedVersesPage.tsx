@@ -13,6 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { useBibleSearchMutation } from "@/hooks/useBibleSearch";
+import { runSafely } from "@/utils/featureGuard";
 
 interface SavedVersesPageProps {
   onBack?: () => void;
@@ -50,19 +51,30 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
   const fetchAndDisplayVerse = async (reference: string) => {
     setIsDialogOpen(true);
 
-    try {
-      const data = await searchMutation.mutateAsync(reference);
+    const result = await runSafely(
+      {
+        featureName: "Load Saved Verse",
+        userMessage: "Sorry, I couldn't load that verse. Please try again."
+      },
+      async () => await searchMutation.mutateAsync(reference)
+    );
 
-      if (data.results && data.results.length > 0) {
-        setSelectedVerse({
-          text: data.results[0].text,
-          reference: data.results[0].reference,
-        });
-      } else {
-        throw new Error('Failed to fetch verse');
-      }
-    } catch (error) {
-      console.error('Error fetching verse:', error);
+    if (!result) {
+      toast({
+        title: t.errorLoadingVerse,
+        description: t.couldNotLoadVerse,
+        variant: "destructive",
+      });
+      setIsDialogOpen(false);
+      return;
+    }
+
+    if (result.results && result.results.length > 0) {
+      setSelectedVerse({
+        text: result.results[0].text,
+        reference: result.results[0].reference,
+      });
+    } else {
       toast({
         title: t.errorLoadingVerse,
         description: t.couldNotLoadVerse,

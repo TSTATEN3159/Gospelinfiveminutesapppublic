@@ -6,6 +6,7 @@ import { ArrowLeft, Brain, Trophy, BookOpen, Star, RotateCcw, Clock, Sparkles, A
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
 import { useBibleTriviaMutation } from "@/hooks/useTrivia";
+import { runSafely } from "@/utils/featureGuard";
 
 interface TriviaQuestion {
   id: number;
@@ -133,27 +134,33 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
   }, [showLevelUp]);
 
   const generateQuestions = async () => {
-    try {
-      const data = await triviaMutation.mutateAsync({
+    const result = await runSafely(
+      {
+        featureName: "Bible Trivia",
+        userMessage: "Sorry, I couldn't generate trivia questions. Please try again."
+      },
+      async () => await triviaMutation.mutateAsync({
         level: progress.currentLevel,
         count: 10,
         useAI: true
-      });
-      
-      if (data.questions) {
-        setQuestions(data.questions);
-        setGameState('playing');
-        setCurrentQuestionIndex(0);
-        setAnswers([]);
-        setTimeLeft(30);
-      }
-    } catch (error) {
-      console.error('Error generating questions:', error);
+      })
+    );
+
+    if (!result) {
       toast({
         title: "Error",
-        description: "Failed to generate trivia questions. Please try again.",
+        description: "Sorry, I couldn't generate trivia questions. Please try again.",
         variant: "destructive",
       });
+      return;
+    }
+
+    if (result.questions) {
+      setQuestions(result.questions);
+      setGameState('playing');
+      setCurrentQuestionIndex(0);
+      setAnswers([]);
+      setTimeLeft(30);
     }
   };
 

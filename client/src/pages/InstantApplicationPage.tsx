@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowLeft, Target, Loader2, BookOpen, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useVersePassageMutation, useInstantApplicationMutation } from "@/hooks/useVerseInsights";
+import { runSafely } from "@/utils/featureGuard";
 
 interface InstantApplicationPageProps {
   onNavigate: (page: string) => void;
@@ -32,22 +33,28 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
     setVerseText("");
     setApplication("");
 
-    try {
-      const data = await versePassageMutation.mutateAsync(reference);
-      setVerseText(data.text.trim());
-      
-      toast({
-        title: "Verse Loaded",
-        description: "Ready to create your action step.",
-      });
-    } catch (error) {
-      console.error('Verse fetch error:', error);
+    const result = await runSafely(
+      {
+        featureName: "Load Verse for Application",
+        userMessage: "Sorry, I couldn't load that verse. Please check the reference and try again."
+      },
+      async () => await versePassageMutation.mutateAsync(reference)
+    );
+
+    if (!result) {
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to fetch verse. Please check your reference and try again.",
+        description: "Sorry, I couldn't load that verse. Please check the reference and try again.",
         variant: "destructive"
       });
+      return;
     }
+
+    setVerseText(result.text.trim());
+    toast({
+      title: "Verse Loaded",
+      description: "Ready to create your action step.",
+    });
   };
 
   const handleGetApplication = async () => {
@@ -62,17 +69,24 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
 
     setApplication("");
 
-    try {
-      const data = await instantApplicationMutation.mutateAsync({ verse: verseText, reference });
-      setApplication(data.application);
-    } catch (error) {
-      console.error('Instant Application error:', error);
+    const result = await runSafely(
+      {
+        featureName: "Instant Application",
+        userMessage: "Sorry, I couldn't create an application for that verse. Please try again."
+      },
+      async () => await instantApplicationMutation.mutateAsync({ verse: verseText, reference })
+    );
+
+    if (!result) {
       toast({
         title: "Error",
-        description: error instanceof Error ? error.message : "Failed to create application. Please try again.",
+        description: "Sorry, I couldn't create an application for that verse. Please try again.",
         variant: "destructive"
       });
+      return;
     }
+
+    setApplication(result.application);
   };
 
   return (

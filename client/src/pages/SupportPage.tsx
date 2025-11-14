@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useTranslations } from "@/lib/translations";
 import { useDeleteUserMutation } from "@/hooks/useUser";
 import { useToast } from "@/hooks/use-toast";
+import { runSafely } from "@/utils/featureGuard";
 
 interface SupportPageProps {
   onBack: () => void;
@@ -28,8 +29,24 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
           const user = JSON.parse(userData);
           
           if (user.appUserId) {
-            // Make API call to delete user account from server using service
-            const result = await deleteUserMutation.mutateAsync(user.appUserId);
+            // Make API call to delete user account from server using service with runSafely
+            const result = await runSafely(
+              {
+                featureName: "Delete User Account",
+                userMessage: "Sorry, I couldn't delete your account. Please try again or contact support."
+              },
+              async () => await deleteUserMutation.mutateAsync(user.appUserId)
+            );
+            
+            if (!result) {
+              toast({
+                title: t.error || "Error",
+                description: "Sorry, I couldn't delete your account. Please try again or contact support.",
+                variant: "destructive",
+              });
+              setShowDeleteConfirm(false);
+              return;
+            }
             
             if (result.success) {
               // Server deletion successful, now clear local storage
