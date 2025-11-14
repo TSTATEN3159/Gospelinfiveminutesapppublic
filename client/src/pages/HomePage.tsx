@@ -7,6 +7,7 @@ import BadgeNotification from "../components/BadgeNotification";
 import { VideoPlayer } from "../components/VideoPlayer";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
+import ProfilePictureUpload from "../components/ProfilePictureUpload";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -155,12 +156,13 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
     <div className="min-h-screen pb-20">
       {/* Professional Marketing Header */}
       <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
-        {/* Streak Badge - Top Right */}
-        <div className="flex justify-end mb-6">
+        {/* Streak Badge & Profile Picture - Top Right */}
+        <div className="flex justify-end items-center gap-2 mb-6">
           <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
             <Flame className="w-4 h-4 text-red-600 fill-red-600" />
             <span className="text-sm font-bold text-red-700">{streakDays}</span>
           </div>
+          <ProfilePictureUpload size="md" />
         </div>
         
         {/* Professional Logo - Centered Above Social Buttons */}

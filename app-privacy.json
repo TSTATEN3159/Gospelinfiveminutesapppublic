@@ -89,6 +89,23 @@
         ]
       },
       {
+        "category": "Photos and Videos",
+        "types": [
+          {
+            "dataType": "Photos",
+            "description": "Optional profile picture for account personalization",
+            "purposes": ["App Functionality", "Product Personalization"],
+            "linkedToUser": false,
+            "usedForTracking": false,
+            "dataSource": "User",
+            "optional": true,
+            "storage": "Stored locally on user's device only - not uploaded to servers",
+            "processing": "Not used for identification, facial recognition, or any analysis",
+            "notes": "Profile pictures are strictly for in-app personalization. Users can upload, change, or remove at any time. Not shared with third parties or used for advertising."
+          }
+        ]
+      },
+      {
         "category": "Identifiers",
         "types": [
           {
