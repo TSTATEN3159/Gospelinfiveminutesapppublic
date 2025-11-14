@@ -5,11 +5,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Send, MessageSquare, Book, BookOpenCheck, ShieldCheck, Copy, Trash2, Crown } from "lucide-react";
-import { useMutation } from "@tanstack/react-query";
 import { cn } from "@/lib/utils";
-import { apiRequest } from "@/lib/queryClient";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
+import { useAskPastorMutation } from "@/hooks/usePastor";
 
 interface Message {
   id: string;
@@ -30,45 +29,21 @@ export default function AskPastorSection({ backgroundImage, language = "en" }: A
   const { toast } = useToast();
   const t = useTranslations(language);
 
-  // OpenAI Pastor API Integration  
-  const askPastorMutation = useMutation({
-    mutationFn: async (question: string) => {
-      const { apiUrl } = await import('@/lib/api-config');
-      const response = await fetch(apiUrl("/api/ask-pastor"), {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question }),
-      });
-      return response.json();
-    },
-    onSuccess: (data: any, question) => {
-      if (data.success) {
-        const pastorMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: "pastor",
-          content: data.response,
-          timestamp: new Date(),
-          scriptureRef: data.scriptureRef
-        };
-        setMessages(prev => [...prev, pastorMessage]);
-      } else {
-        // Show both toast and add message to chat history
-        const errorMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          role: "pastor",
-          content: t.connectionTrouble,
-          timestamp: new Date()
-        };
-        setMessages(prev => [...prev, errorMessage]);
-        
-        toast({
-          title: t.aiPastorUnavailable,
-          description: t.connectionTrouble,
-          variant: "destructive"
-        });
-      }
-    },
-    onError: (error) => {
+  // OpenAI Pastor API Integration using service hook
+  const askPastorMutation = useAskPastorMutation();
+
+  const handleAskPastor = async (question: string) => {
+    try {
+      const data = await askPastorMutation.mutateAsync(question);
+      const pastorMessage: Message = {
+        id: (Date.now() + 1).toString(),
+        role: "pastor",
+        content: data.message,
+        timestamp: new Date(),
+        scriptureRef: data.scriptures?.[0]
+      };
+      setMessages(prev => [...prev, pastorMessage]);
+    } catch (error) {
       console.error("Ask Pastor error:", error);
       
       // Add error message to chat history
@@ -86,7 +61,7 @@ export default function AskPastorSection({ backgroundImage, language = "en" }: A
         variant: "destructive"
       });
     }
-  });
+  };
 
   const handleSendMessage = () => {
     if (!currentMessage.trim() || askPastorMutation.isPending) return;
@@ -102,8 +77,8 @@ export default function AskPastorSection({ backgroundImage, language = "en" }: A
     setMessages(prev => [...prev, userMessage]);
     setCurrentMessage("");
     
-    // Call OpenAI API via server route
-    askPastorMutation.mutate(questionToSend);
+    // Call OpenAI API via service hook
+    handleAskPastor(questionToSend);
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
