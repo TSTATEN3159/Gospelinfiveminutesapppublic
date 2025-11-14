@@ -12,6 +12,7 @@ import { notificationService } from "../services/notificationService";
 import { bibleService } from "../services/bibleService";
 import { appStore } from "@/lib/appStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { TextSizeControls } from "@/components/TextSizeControls";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -617,6 +618,15 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
               </div>
               <ThemeToggle />
             </div>
+            
+            {/* Text Size Controls */}
+            <TextSizeControls 
+              textSizeLabel={t.textSize}
+              textSizeDescription={t.adjustTextSizeDesc}
+              decreaseLabel={t.decreaseTextSize}
+              increaseLabel={t.increaseTextSize}
+            />
+            
             <div className="flex items-center justify-between">
               <div>
                 <Label htmlFor="soundEnabled" className="font-medium">{t.soundEffects}</Label>

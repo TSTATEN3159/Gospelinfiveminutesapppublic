@@ -338,6 +338,10 @@ export interface Translations {
   appSettings: string;
   soundEffects: string;
   enableAppSounds: string;
+  textSize: string;
+  adjustTextSizeDesc: string;
+  decreaseTextSize: string;
+  increaseTextSize: string;
   appLanguage: string;
   dataPrivacy: string;
   viewPrivacyPolicy: string;
@@ -971,6 +975,10 @@ export const translations: Record<string, Translations> = {
     appSettings: "App Settings",
     soundEffects: "Sound Effects",
     enableAppSounds: "Enable app sounds and notifications",
+    textSize: "Text Size",
+    adjustTextSizeDesc: "Adjust text size for better readability",
+    decreaseTextSize: "Decrease text size",
+    increaseTextSize: "Increase text size",
     appLanguage: "App Language",
     dataPrivacy: "Data & Privacy",
     viewPrivacyPolicy: "View Privacy Policy",
@@ -1567,6 +1575,10 @@ export const translations: Record<string, Translations> = {
     appSettings: "Configuración de la App",
     soundEffects: "Efectos de Sonido",
     enableAppSounds: "Activar sonidos y notificaciones de la app",
+    textSize: "Tamaño del Texto",
+    adjustTextSizeDesc: "Ajustar el tamaño del texto para mejor legibilidad",
+    decreaseTextSize: "Disminuir tamaño del texto",
+    increaseTextSize: "Aumentar tamaño del texto",
     appLanguage: "Idioma de la App",
     dataPrivacy: "Datos y Privacidad",
     viewPrivacyPolicy: "Ver Política de Privacidad",
@@ -2163,6 +2175,10 @@ export const translations: Record<string, Translations> = {
     appSettings: "Paramètres de l'App",
     soundEffects: "Effets Sonores",
     enableAppSounds: "Activer les sons et notifications de l'app",
+    textSize: "Taille du Texte",
+    adjustTextSizeDesc: "Ajuster la taille du texte pour une meilleure lisibilité",
+    decreaseTextSize: "Diminuer la taille du texte",
+    increaseTextSize: "Augmenter la taille du texte",
     appLanguage: "Langue de l'App",
     dataPrivacy: "Données et Confidentialité",
     viewPrivacyPolicy: "Voir la Politique de Confidentialité",
@@ -2759,6 +2775,10 @@ export const translations: Record<string, Translations> = {
     appSettings: "Configurações do App",
     soundEffects: "Efeitos Sonoros",
     enableAppSounds: "Ativar sons e notificações do app",
+    textSize: "Tamanho do Texto",
+    adjustTextSizeDesc: "Ajustar o tamanho do texto para melhor legibilidade",
+    decreaseTextSize: "Diminuir tamanho do texto",
+    increaseTextSize: "Aumentar tamanho do texto",
     appLanguage: "Idioma do App",
     dataPrivacy: "Dados e Privacidade",
     viewPrivacyPolicy: "Ver Política de Privacidade",
@@ -3355,6 +3375,10 @@ export const translations: Record<string, Translations> = {
     appSettings: "应用设置",
     soundEffects: "音效",
     enableAppSounds: "启用应用声音和通知",
+    textSize: "文本大小",
+    adjustTextSizeDesc: "调整文本大小以提高可读性",
+    decreaseTextSize: "减小文本大小",
+    increaseTextSize: "增大文本大小",
     appLanguage: "应用语言",
     dataPrivacy: "数据与隐私",
     viewPrivacyPolicy: "查看隐私政策",
@@ -3951,6 +3975,10 @@ export const translations: Record<string, Translations> = {
     appSettings: "إعدادات التطبيق",
     soundEffects: "المؤثرات الصوتية",
     enableAppSounds: "تفعيل أصوات التطبيق والإشعارات",
+    textSize: "حجم النص",
+    adjustTextSizeDesc: "ضبط حجم النص لسهولة القراءة",
+    decreaseTextSize: "تصغير حجم النص",
+    increaseTextSize: "تكبير حجم النص",
     appLanguage: "لغة التطبيق",
     dataPrivacy: "البيانات والخصوصية",
     viewPrivacyPolicy: "عرض سياسة الخصوصية",
@@ -4547,6 +4575,10 @@ export const translations: Record<string, Translations> = {
     appSettings: "ऐप सेटिंग्स",
     soundEffects: "ध्वनि प्रभाव",
     enableAppSounds: "ऐप ध्वनियां और सूचनाएं सक्षम करें",
+    textSize: "पाठ का आकार",
+    adjustTextSizeDesc: "बेहतर पठनीयता के लिए पाठ का आकार समायोजित करें",
+    decreaseTextSize: "पाठ का आकार घटाएं",
+    increaseTextSize: "पाठ का आकार बढ़ाएं",
     appLanguage: "ऐप भाषा",
     dataPrivacy: "डेटा और गोपनीयता",
     viewPrivacyPolicy: "गोपनीयता नीति देखें",
