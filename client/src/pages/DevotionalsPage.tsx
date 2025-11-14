@@ -4,16 +4,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { ArrowLeft, Flame, Calendar, ChevronLeft, ChevronRight } from "lucide-react";
-import { apiUrl } from "@/lib/api-config";
+import { useDevotionalPlanQuery } from "@/hooks/useDevotionals";
+import { devotionalsService, DevotionalEntry, DevotionalPlan } from "@/services/devotionalsService";
 
-type DevotionalEntry = {
-  day: number;
-  scriptureRef: string;
-  scriptureText: string;
-  devotion: string;
-  application: string;
-};
-type Plan = { men: Record<string, DevotionalEntry>; women: Record<string, DevotionalEntry> };
+type Plan = DevotionalPlan;
 type Gender = "men" | "women";
 
 // ---- local fallback seed (safe if network down) ----
@@ -56,10 +50,9 @@ export default function DevotionalsPage({ onBack }: DevotionalsPageProps) {
   const [gender, setGender] = useState<Gender>("men");
   const [day, setDay] = useState<number>(1);
 
-  // Remote plan loader --------------------------
-  const [plan, setPlan] = useState<Plan | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [netErr, setNetErr] = useState<string | null>(null);
+  // Remote plan loader using service hook
+  const { data: plan, isLoading: loading, error } = useDevotionalPlanQuery();
+  const netErr = error ? "Using offline devotional (network issue)." : null;
 
   // Load user basics & streak from localStorage
   useEffect(() => {
@@ -93,34 +86,6 @@ export default function DevotionalsPage({ onBack }: DevotionalsPageProps) {
       } catch {}
     }
   }, [lastOpenedISO, streak]);
-
-  // Fetch dynamic plan from backend
-  useEffect(() => {
-    let cancelled = false;
-    async function load() {
-      setLoading(true);
-      setNetErr(null);
-      try {
-        const url = apiUrl("/api/devotionals/365");
-        const res = await fetch(url, { method: "GET" });
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const data = (await res.json()) as Plan;
-        if (!cancelled) setPlan(data);
-      } catch (e: any) {
-        console.error("[Devotional] fetch failed:", e?.message || e);
-        if (!cancelled) {
-          setPlan(null);
-          setNetErr("Using offline devotional (network issue).");
-        }
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-    load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
 
   const effectivePlan = plan ?? localFallback;
   const entry = useMemo<DevotionalEntry | null>(() => {

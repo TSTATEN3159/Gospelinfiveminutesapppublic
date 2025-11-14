@@ -5,6 +5,7 @@ import { Badge } from "@/components/ui/badge";
 import { ArrowLeft, Brain, Trophy, BookOpen, Star, RotateCcw, Clock, Sparkles, Award } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
+import { useBibleTriviaMutation } from "@/hooks/useTrivia";
 
 interface TriviaQuestion {
   id: number;
@@ -75,12 +76,13 @@ function calculateLevel(totalCorrect: number): 'beginner' | 'student' | 'scholar
 export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaProps) {
   const t = useTranslations(language);
   const { toast } = useToast();
+  const triviaMutation = useBibleTriviaMutation();
+  
   const [gameState, setGameState] = useState<'setup' | 'playing' | 'results'>('setup');
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answers, setAnswers] = useState<number[]>([]);
-  const [loading, setLoading] = useState(false);
   const [timeLeft, setTimeLeft] = useState(30);
   const [showLevelUp, setShowLevelUp] = useState(false);
   const [newLevel, setNewLevel] = useState<string | null>(null);
@@ -131,34 +133,19 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
   }, [showLevelUp]);
 
   const generateQuestions = async () => {
-    setLoading(true);
     try {
-      const { apiUrl } = await import('@/lib/api-config');
-      const response = await fetch(apiUrl('/api/bible-trivia'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ 
-          level: progress.currentLevel,
-          count: 10,
-          useAI: true
-        }),
+      const data = await triviaMutation.mutateAsync({
+        level: progress.currentLevel,
+        count: 10,
+        useAI: true
       });
-
-      if (!response.ok) {
-        throw new Error('Failed to generate questions');
-      }
-
-      const data = await response.json();
-      if (data.success) {
+      
+      if (data.questions) {
         setQuestions(data.questions);
         setGameState('playing');
         setCurrentQuestionIndex(0);
         setAnswers([]);
         setTimeLeft(30);
-      } else {
-        throw new Error(data.error || 'Failed to generate questions');
       }
     } catch (error) {
       console.error('Error generating questions:', error);
@@ -167,8 +154,6 @@ export default function BibleTriviaPage({ onNavigate, language = "en" }: BibleTr
         description: "Failed to generate trivia questions. Please try again.",
         variant: "destructive",
       });
-    } finally {
-      setLoading(false);
     }
   };
 

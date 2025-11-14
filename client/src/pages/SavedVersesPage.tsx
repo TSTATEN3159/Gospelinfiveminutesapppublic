@@ -12,6 +12,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { useBibleSearchMutation } from "@/hooks/useBibleSearch";
 
 interface SavedVersesPageProps {
   onBack?: () => void;
@@ -26,10 +27,10 @@ interface VerseContent {
 export default function SavedVersesPage({ onBack, language = "en" }: SavedVersesPageProps) {
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [selectedVerse, setSelectedVerse] = useState<VerseContent | null>(null);
-  const [isLoading, setIsLoading] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const { toast } = useToast();
   const t = useTranslations(language);
+  const searchMutation = useBibleSearchMutation();
 
   useEffect(() => {
     // Load bookmarks when page opens
@@ -47,34 +48,15 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
   };
 
   const fetchAndDisplayVerse = async (reference: string) => {
-    setIsLoading(true);
     setIsDialogOpen(true);
 
     try {
-      const { apiUrl } = await import('@/lib/api-config');
-      const response = await fetch(apiUrl('/api/bible-search'), {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: reference,
-          version: 'NIV'
-        }),
-      });
+      const data = await searchMutation.mutateAsync(reference);
 
-      const data = await response.json();
-
-      if (data.success && data.verses && data.verses.length > 0) {
+      if (data.results && data.results.length > 0) {
         setSelectedVerse({
-          text: data.verses[0].text,
-          reference: data.verses[0].reference,
-        });
-      } else if (data.success && data.text) {
-        // OpenAI fallback response
-        setSelectedVerse({
-          text: data.text,
-          reference: reference,
+          text: data.results[0].text,
+          reference: data.results[0].reference,
         });
       } else {
         throw new Error('Failed to fetch verse');
@@ -87,8 +69,6 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
         variant: "destructive",
       });
       setIsDialogOpen(false);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -193,7 +173,7 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
             </DialogDescription>
           </DialogHeader>
           <div className="py-4">
-            {isLoading ? (
+            {searchMutation.isPending ? (
               <div className="flex items-center justify-center py-8">
                 <Loader2 className="w-8 h-8 animate-spin text-blue-600" />
               </div>

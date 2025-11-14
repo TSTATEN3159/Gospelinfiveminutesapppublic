@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
 import { useTranslations } from "@/lib/translations";
-import { apiUrl } from "@/lib/api-config";
+import { useDeleteUserMutation } from "@/hooks/useUser";
 
 interface SupportPageProps {
   onBack: () => void;
@@ -14,12 +14,10 @@ interface SupportPageProps {
 export default function SupportPage({ onBack, onNavigate, language = "en" }: SupportPageProps) {
   const t = useTranslations(language);
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const deleteUserMutation = useDeleteUserMutation();
 
   const handleDeleteData = async () => {
     if (showDeleteConfirm) {
-      setIsDeleting(true);
-      
       try {
         // Get user data to extract appUserId
         const userData = localStorage.getItem("gospelAppUser");
@@ -28,15 +26,8 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
           const user = JSON.parse(userData);
           
           if (user.appUserId) {
-            // Make API call to delete user account from server
-            const response = await fetch(apiUrl(`/api/users/${user.appUserId}`), {
-              method: 'DELETE',
-              headers: {
-                'Content-Type': 'application/json',
-              },
-            });
-            
-            const result = await response.json();
+            // Make API call to delete user account from server using service
+            const result = await deleteUserMutation.mutateAsync(user.appUserId);
             
             if (result.success) {
               // Server deletion successful, now clear local storage
@@ -47,12 +38,6 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
               
               // Reload the app to reset state
               window.location.reload();
-            } else {
-              // Server deletion failed
-              console.error("Server deletion failed:", result.error);
-              alert(t.failedToDeleteAccount);
-              setIsDeleting(false);
-              setShowDeleteConfirm(false);
             }
           } else {
             // No server account exists, just clear local data
@@ -69,7 +54,6 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
       } catch (error) {
         console.error("Error deleting user account:", error);
         alert(t.errorDeletingAccount);
-        setIsDeleting(false);
         setShowDeleteConfirm(false);
       }
     } else {
@@ -227,11 +211,11 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
                   variant={showDeleteConfirm ? "destructive" : "outline"}
                   size="sm" 
                   onClick={handleDeleteData}
-                  disabled={isDeleting}
+                  disabled={deleteUserMutation.isPending}
                   data-testid="button-delete-data"
                 >
                   <Trash2 className="w-4 h-4 mr-2" />
-                  {isDeleting ? t.deleting : showDeleteConfirm ? t.confirmDelete : t.deleteData}
+                  {deleteUserMutation.isPending ? t.deleting : showDeleteConfirm ? t.confirmDelete : t.deleteData}
                 </Button>
               </div>
 
