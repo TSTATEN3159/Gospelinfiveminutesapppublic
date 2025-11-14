@@ -221,14 +221,14 @@ export default function ProfilePictureUpload({ className, size = "md" }: Profile
           )}
         </Button>
 
-        {/* Remove button when picture exists */}
+        {/* Remove button when picture exists - small visual but accessible tap target */}
         {profilePicture && !isLoading && (
           <Button
             type="button"
-            variant="destructive"
+            variant="ghost"
             size="icon"
             onClick={handleRemoveClick}
-            className="absolute -top-1 -right-1 h-5 w-5 rounded-full p-0"
+            className="absolute -top-0.5 -right-0.5 h-7 w-7 rounded-full p-0 bg-black/60 hover:bg-black/80 text-white flex items-center justify-center focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-1"
             data-testid="button-remove-profile-picture"
             aria-label="Remove profile picture"
           >
