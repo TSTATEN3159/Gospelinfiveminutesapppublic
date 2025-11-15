@@ -109,25 +109,28 @@ export function useImageGenerator() {
       const referenceLines = wrapText(ctx, settings.verseReference, maxTextWidth);
       
       const lineHeight = settings.fontSize * 1.4;
-      const totalTextHeight = (verseLines.length * lineHeight) + (lineHeight * 0.8) + (referenceLines.length * lineHeight * 0.9);
+      const referenceLineHeight = lineHeight * 0.9;
+      const gapBetweenVerseAndReference = lineHeight * 0.5;
+      const totalTextHeight = (verseLines.length * lineHeight) + 
+        (referenceLines.length > 0 ? gapBetweenVerseAndReference + (referenceLines.length * referenceLineHeight) : 0);
 
       let startY: number;
       switch (settings.textPosition) {
         case 'top':
-          startY = canvas.height * 0.2 + lineHeight;
+          startY = canvas.height * 0.2;
           break;
         case 'bottom':
-          startY = canvas.height * 0.8 - totalTextHeight + lineHeight;
+          startY = canvas.height * 0.8 - totalTextHeight;
           break;
         case 'center':
         default:
-          startY = (canvas.height - totalTextHeight) / 2 + lineHeight;
+          startY = (canvas.height - totalTextHeight) / 2;
           break;
       }
 
       ctx.fillStyle = settings.textColor;
       ctx.textAlign = 'center';
-      ctx.textBaseline = 'middle';
+      ctx.textBaseline = 'top';
 
       if (settings.textShadow) {
         ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
@@ -144,13 +147,15 @@ export function useImageGenerator() {
         currentY += lineHeight;
       });
 
-      currentY += lineHeight * 0.5;
-      
-      ctx.font = `italic ${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
-      referenceLines.forEach((line) => {
-        ctx.fillText(line, canvas.width / 2, currentY);
-        currentY += lineHeight * 0.9;
-      });
+      if (referenceLines.length > 0) {
+        currentY += gapBetweenVerseAndReference;
+        
+        ctx.font = `italic ${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
+        referenceLines.forEach((line) => {
+          ctx.fillText(line, canvas.width / 2, currentY);
+          currentY += referenceLineHeight;
+        });
+      }
 
       const dataUrl = canvas.toDataURL('image/png', 0.95);
       
