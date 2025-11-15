@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff } from "lucide-react";
+import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff, Image as ImageIcon } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   AlertDialog,
@@ -23,6 +23,7 @@ import { useTranslations } from "@/lib/translations";
 import { fetchVerseText } from "@/services/bibleService";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 import { appStore } from "@/lib/appStore";
+import ScriptureImageGenerator from "./ScriptureImageGenerator";
 
 interface SearchResult {
   text: string;
@@ -85,6 +86,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [showVoicePermissionDialog, setShowVoicePermissionDialog] = useState(false);
+  const [isImageGeneratorOpen, setIsImageGeneratorOpen] = useState(false);
   const { toast } = useToast();
   const t = useTranslations(language);
   const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
@@ -398,7 +400,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
               </blockquote>
             </div>
 
-            <div className="flex justify-center gap-2">
+            <div className="flex justify-center gap-2 flex-wrap">
               <Button 
                 onClick={copyVerse}
                 className="bg-green-600 text-white"
@@ -407,6 +409,16 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
                 <Copy className="w-4 h-4 mr-2" />
                 Copy Verse
               </Button>
+              
+              <Button
+                onClick={() => setIsImageGeneratorOpen(true)}
+                variant="outline"
+                data-testid="button-create-image-search"
+              >
+                <ImageIcon className="w-4 h-4 mr-2" />
+                Create Image
+              </Button>
+              
               {ttsSupported && (
                 <Button
                   onClick={handleTTSClick}
@@ -429,6 +441,16 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
                 </Button>
               )}
             </div>
+            
+            {/* Scripture Image Generator */}
+            {searchResult && (
+              <ScriptureImageGenerator
+                open={isImageGeneratorOpen}
+                onOpenChange={setIsImageGeneratorOpen}
+                initialVerse={searchResult.text}
+                initialReference={searchResult.reference}
+              />
+            )}
           </div>
         )}
 
