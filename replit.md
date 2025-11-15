@@ -36,6 +36,7 @@ Preferred communication style: Simple, everyday language.
 - **AI Instant Application (Try This Today)**: Generates actionable steps from Bible verses using OpenAI.
 - **Feelings & Scripture**: Emotion-based guidance.
 - **Scripture Memory Helper**: Interactive memorization.
+- **Premium Text-to-Speech**: Capacitor TTS plugin with intelligent voice selection (iOS: Siri Female/Samantha Enhanced; Android: Google Female/Wavenet). Automatically selects the highest quality natural female voice with warm, caring tone (rate: 0.95, pitch: 1.05).
 - **Saved Verses & Notes**: Dedicated pages for bookmarked verses and personal reflections.
 - **Streak Tracking**: Consecutive days counter.
 - **Devotional Progress Tracking**: Tracks progress for 365 days of devotionals.

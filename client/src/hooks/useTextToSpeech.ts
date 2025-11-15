@@ -1,4 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
+import { speak as voicePlayerSpeak, stopSpeaking, isTextToSpeechSupported } from "@/utils/voicePlayer";
 
 const LANGUAGE_VOICE_MAP: Record<string, string> = {
   'en': 'en-US',
@@ -10,56 +11,49 @@ const LANGUAGE_VOICE_MAP: Record<string, string> = {
   'hi': 'hi-IN'
 };
 
+/**
+ * Hook for text-to-speech functionality
+ * Uses Capacitor TTS plugin with premium female voices:
+ * - iOS: Siri Female, Samantha Enhanced
+ * - Android: Google Female, Wavenet
+ */
 export const useTextToSpeech = () => {
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [supported, setSupported] = useState(false);
   const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
-    if (typeof window !== "undefined" && "speechSynthesis" in window) {
-      setSupported(true);
+    const checkSupport = async () => {
+      const isSupported = await isTextToSpeechSupported();
+      setSupported(isSupported);
       setIsInitialized(true);
-      
-      const loadVoices = () => {
-        window.speechSynthesis.getVoices();
-      };
-      
-      loadVoices();
-      window.speechSynthesis.addEventListener('voiceschanged', loadVoices);
-      
-      return () => {
-        window.speechSynthesis.removeEventListener('voiceschanged', loadVoices);
-        window.speechSynthesis.cancel();
-      };
-    } else {
-      setSupported(false);
-      setIsInitialized(true);
-    }
+    };
+    
+    checkSupport();
   }, []);
 
-  const cancel = useCallback(() => {
+  const cancel = useCallback(async () => {
     if (!supported) return;
-    window.speechSynthesis.cancel();
+    await stopSpeaking();
     setIsSpeaking(false);
   }, [supported]);
 
   const speak = useCallback(
-    (text: string, langCode: string = "en") => {
+    async (text: string, langCode: string = "en") => {
       if (!supported || !text) return;
 
-      window.speechSynthesis.cancel();
+      await stopSpeaking();
+      setIsSpeaking(true);
 
       const voiceLang = LANGUAGE_VOICE_MAP[langCode] || 'en-US';
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = voiceLang;
-      utterance.rate = 1.0;
-      utterance.pitch = 1.0;
-
-      utterance.onstart = () => setIsSpeaking(true);
-      utterance.onend = () => setIsSpeaking(false);
-      utterance.onerror = () => setIsSpeaking(false);
-
-      window.speechSynthesis.speak(utterance);
+      
+      try {
+        await voicePlayerSpeak(text, voiceLang);
+        setIsSpeaking(false);
+      } catch (err) {
+        console.error("TTS error:", err);
+        setIsSpeaking(false);
+      }
     },
     [supported]
   );
