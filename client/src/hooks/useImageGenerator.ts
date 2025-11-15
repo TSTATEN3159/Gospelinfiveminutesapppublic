@@ -101,50 +101,42 @@ export function useImageGenerator() {
         ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
       }
 
-      const maxTextWidth = canvas.width * 0.85;
-      ctx.font = `${settings.fontSize}px ${settings.fontFamily}`;
+      const maxTextWidth = canvas.width * 0.8;
+      ctx.font = `${settings.fontSize}px "${settings.fontFamily}"`;
       const verseLines = wrapText(ctx, settings.verseText, maxTextWidth);
       
-      ctx.font = `${settings.fontSize * 0.8}px ${settings.fontFamily}`;
+      ctx.font = `${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
       const referenceLines = wrapText(ctx, settings.verseReference, maxTextWidth);
       
-      const lineHeight = settings.fontSize * 1.5;
-      const totalTextHeight = (verseLines.length + referenceLines.length + 1) * lineHeight;
-      const padding = 40;
+      const lineHeight = settings.fontSize * 1.4;
+      const totalTextHeight = (verseLines.length * lineHeight) + (lineHeight * 0.8) + (referenceLines.length * lineHeight * 0.9);
 
       let startY: number;
       switch (settings.textPosition) {
         case 'top':
-          startY = canvas.height * 0.15;
+          startY = canvas.height * 0.2 + lineHeight;
           break;
         case 'bottom':
-          startY = canvas.height * 0.85 - totalTextHeight;
+          startY = canvas.height * 0.8 - totalTextHeight + lineHeight;
           break;
         case 'center':
         default:
-          startY = (canvas.height - totalTextHeight) / 2;
+          startY = (canvas.height - totalTextHeight) / 2 + lineHeight;
           break;
       }
 
-      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
-      ctx.fillRect(
-        0,
-        startY - padding,
-        canvas.width,
-        totalTextHeight + padding * 2
-      );
-
-      ctx.font = `bold ${settings.fontSize}px ${settings.fontFamily}`;
       ctx.fillStyle = settings.textColor;
       ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
 
       if (settings.textShadow) {
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
-        ctx.shadowBlur = 15;
-        ctx.shadowOffsetX = 3;
-        ctx.shadowOffsetY = 3;
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.7)';
+        ctx.shadowBlur = 8;
+        ctx.shadowOffsetX = 2;
+        ctx.shadowOffsetY = 2;
       }
 
+      ctx.font = `${settings.fontSize}px "${settings.fontFamily}"`;
       let currentY = startY;
       
       verseLines.forEach((line) => {
@@ -154,10 +146,10 @@ export function useImageGenerator() {
 
       currentY += lineHeight * 0.5;
       
-      ctx.font = `${settings.fontSize * 0.75}px ${settings.fontFamily}`;
+      ctx.font = `italic ${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
       referenceLines.forEach((line) => {
         ctx.fillText(line, canvas.width / 2, currentY);
-        currentY += lineHeight;
+        currentY += lineHeight * 0.9;
       });
 
       const dataUrl = canvas.toDataURL('image/png', 0.95);

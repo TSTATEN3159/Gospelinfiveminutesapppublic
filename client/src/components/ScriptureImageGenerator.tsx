@@ -51,7 +51,7 @@ export default function ScriptureImageGenerator({
     backgroundId: 'sunset',
     textPosition: 'center',
     textColor: '#FFFFFF',
-    fontSize: 48,
+    fontSize: 36,
     fontFamily: 'Crimson Text',
     textShadow: true,
   });
