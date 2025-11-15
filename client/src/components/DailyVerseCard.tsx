@@ -7,6 +7,7 @@ import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
 import { appStore } from "@/lib/appStore";
+import { toggleSpeech, getIsSpeaking } from "@/utils/speechEngine";
 import {
   Dialog,
   DialogContent,
@@ -44,6 +45,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   const [isNoteDialogOpen, setIsNoteDialogOpen] = useState(false);
   const [hasExistingNote, setHasExistingNote] = useState(false);
   const [isImageGeneratorOpen, setIsImageGeneratorOpen] = useState(false);
+  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const bookmarks = appStore.getBookmarks();
@@ -198,10 +200,44 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
       <CardContent className="relative z-10 p-6 text-white space-y-6">
         {/* Verse Section */}
         <div className="text-center space-y-4">
-          <h2 className="text-2xl font-bold">Today's Verse</h2>
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="text-2xl font-bold">Today's Verse</h2>
+            <Volume2 className="w-4 h-4 text-white/60" />
+          </div>
+          <p className="text-xs text-white/60">Tap verse to listen</p>
           
-          <blockquote className="text-lg leading-relaxed font-serif italic">
-            "{verse.text}"
+          <blockquote 
+            className="text-lg leading-relaxed font-serif italic cursor-pointer hover:bg-white/10 transition-all rounded-lg p-3 select-none"
+            onClick={() => {
+              toggleSpeech(verse.text, (wordIndex: number) => {
+                setHighlightedWordIndex(wordIndex);
+              });
+              // Clear highlighting when speech ends
+              if (getIsSpeaking()) {
+                setHighlightedWordIndex(null);
+              }
+            }}
+            data-testid="text-verse-tap-to-read"
+          >
+            "
+            {highlightedWordIndex !== null ? (
+              verse.text.split(" ").map((word, i) => (
+                <span 
+                  key={i} 
+                  className={`${
+                    i === highlightedWordIndex 
+                      ? "bg-yellow-300 text-gray-900 px-1 rounded transition-all" 
+                      : ""
+                  }`}
+                >
+                  {word}
+                  {" "}
+                </span>
+              ))
+            ) : (
+              verse.text
+            )}
+            "
           </blockquote>
           
           <cite className="text-sm font-semibold not-italic">
