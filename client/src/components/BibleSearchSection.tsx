@@ -18,6 +18,7 @@ import {
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { toggleSpeech, getIsSpeaking } from "@/utils/speechEngine";
 import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { useTranslations } from "@/lib/translations";
 import { fetchVerseText } from "@/services/bibleService";
@@ -87,6 +88,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const [hasSearched, setHasSearched] = useState(false);
   const [showVoicePermissionDialog, setShowVoicePermissionDialog] = useState(false);
   const [isImageGeneratorOpen, setIsImageGeneratorOpen] = useState(false);
+  const [highlightedWordIndex, setHighlightedWordIndex] = useState<number | null>(null);
   const { toast } = useToast();
   const t = useTranslations(language);
   const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
@@ -388,15 +390,50 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
         {searchResult && !isLoading && (
           <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-sm space-y-4" data-testid="search-result">
             <div className="flex justify-between items-start">
-              <h3 className="font-semibold text-lg text-gray-900">{searchResult.reference}</h3>
+              <div className="flex items-center gap-2">
+                <h3 className="font-semibold text-lg text-gray-900">{searchResult.reference}</h3>
+                <Volume2 className="w-4 h-4 text-gray-500" />
+              </div>
               <span className="text-sm text-green-700 bg-green-100 px-3 py-1 rounded-full font-medium">
                 {searchResult.version}
               </span>
             </div>
             
+            <p className="text-xs text-gray-500 text-center">Tap verse to listen</p>
+            
             <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
-              <blockquote className="text-lg leading-relaxed font-serif italic text-gray-800">
-                "{searchResult.text}"
+              <blockquote 
+                className="text-lg leading-relaxed font-serif italic text-gray-800 cursor-pointer hover:bg-green-100/50 transition-all rounded-lg p-3 select-none"
+                onClick={() => {
+                  toggleSpeech(searchResult.text, (wordIndex: number) => {
+                    setHighlightedWordIndex(wordIndex);
+                  });
+                  // Clear highlighting when speech ends
+                  if (getIsSpeaking()) {
+                    setHighlightedWordIndex(null);
+                  }
+                }}
+                data-testid="text-verse-tap-to-read-search"
+              >
+                "
+                {highlightedWordIndex !== null ? (
+                  searchResult.text.split(" ").map((word, i) => (
+                    <span 
+                      key={i} 
+                      className={`${
+                        i === highlightedWordIndex 
+                          ? "bg-yellow-300 text-gray-900 px-1 rounded transition-all" 
+                          : ""
+                      }`}
+                    >
+                      {word}
+                      {" "}
+                    </span>
+                  ))
+                ) : (
+                  searchResult.text
+                )}
+                "
               </blockquote>
             </div>
 

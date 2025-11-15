@@ -201,10 +201,10 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
         {/* Verse Section */}
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
-            <h2 className="text-2xl font-bold">Today's Verse</h2>
-            <Volume2 className="w-4 h-4 text-white/60" />
+            <h2 className="text-2xl font-bold">Daily Verse</h2>
+            <Volume2 className="w-4 h-4 text-white/70" />
           </div>
-          <p className="text-xs text-white/60">Tap verse to listen</p>
+          <p className="text-xs text-white/70">Tap to listen</p>
           
           <blockquote 
             className="text-lg leading-relaxed font-serif italic cursor-pointer hover:bg-white/10 transition-all rounded-lg p-3 select-none"
