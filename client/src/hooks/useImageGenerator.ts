@@ -108,11 +108,27 @@ export function useImageGenerator() {
       ctx.font = `${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
       const referenceLines = wrapText(ctx, settings.verseReference, maxTextWidth);
       
-      const lineHeight = settings.fontSize * 1.4;
-      const referenceLineHeight = lineHeight * 0.9;
-      const gapBetweenVerseAndReference = lineHeight * 0.5;
-      const totalTextHeight = (verseLines.length * lineHeight) + 
-        (referenceLines.length > 0 ? gapBetweenVerseAndReference + (referenceLines.length * referenceLineHeight) : 0);
+      let totalTextHeight = 0;
+      
+      ctx.font = `${settings.fontSize}px "${settings.fontFamily}"`;
+      verseLines.forEach(line => {
+        const metrics = ctx.measureText(line);
+        const lineHeight = (metrics.actualBoundingBoxAscent || settings.fontSize * 0.8) + 
+                          (metrics.actualBoundingBoxDescent || settings.fontSize * 0.2);
+        totalTextHeight += lineHeight * 1.2;
+      });
+      
+      if (referenceLines.length > 0) {
+        totalTextHeight += settings.fontSize * 0.5;
+        
+        ctx.font = `${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
+        referenceLines.forEach(line => {
+          const metrics = ctx.measureText(line);
+          const lineHeight = (metrics.actualBoundingBoxAscent || settings.fontSize * 0.56) + 
+                            (metrics.actualBoundingBoxDescent || settings.fontSize * 0.14);
+          totalTextHeight += lineHeight * 1.2;
+        });
+      }
 
       let startY: number;
       switch (settings.textPosition) {
@@ -120,11 +136,11 @@ export function useImageGenerator() {
           startY = canvas.height * 0.1;
           break;
         case 'bottom':
-          startY = canvas.height * 0.9 - totalTextHeight;
+          startY = Math.max(canvas.height * 0.1, canvas.height * 0.9 - totalTextHeight);
           break;
         case 'center':
         default:
-          startY = (canvas.height - totalTextHeight) / 2;
+          startY = Math.max(canvas.height * 0.1, (canvas.height - totalTextHeight) / 2);
           break;
       }
 
@@ -144,16 +160,22 @@ export function useImageGenerator() {
       
       verseLines.forEach((line) => {
         ctx.fillText(line, canvas.width / 2, currentY);
-        currentY += lineHeight;
+        const metrics = ctx.measureText(line);
+        const lineHeight = (metrics.actualBoundingBoxAscent || settings.fontSize * 0.8) + 
+                          (metrics.actualBoundingBoxDescent || settings.fontSize * 0.2);
+        currentY += lineHeight * 1.2;
       });
 
       if (referenceLines.length > 0) {
-        currentY += gapBetweenVerseAndReference;
+        currentY += settings.fontSize * 0.5;
         
         ctx.font = `italic ${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
         referenceLines.forEach((line) => {
           ctx.fillText(line, canvas.width / 2, currentY);
-          currentY += referenceLineHeight;
+          const metrics = ctx.measureText(line);
+          const lineHeight = (metrics.actualBoundingBoxAscent || settings.fontSize * 0.56) + 
+                            (metrics.actualBoundingBoxDescent || settings.fontSize * 0.14);
+          currentY += lineHeight * 1.2;
         });
       }
 

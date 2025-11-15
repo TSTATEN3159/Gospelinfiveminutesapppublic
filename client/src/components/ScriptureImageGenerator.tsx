@@ -275,13 +275,8 @@ export default function ScriptureImageGenerator({
                 </TabsList>
 
                 <TabsContent value="backgrounds" className="space-y-6 mt-6">
-                  <div className="space-y-6">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground flex items-center gap-2">
-                          📤 Upload Your Image
-                        </h3>
-                      </div>
+                  <div className="space-y-4">
+                    <div className="space-y-3">
                       <input
                         ref={fileInputRef}
                         type="file"
@@ -294,6 +289,7 @@ export default function ScriptureImageGenerator({
                         onClick={() => fileInputRef.current?.click()}
                         disabled={isUploading}
                         variant="outline"
+                        size="sm"
                         className="w-full"
                         data-testid="button-upload-image"
                       >
@@ -309,8 +305,8 @@ export default function ScriptureImageGenerator({
                           </>
                         )}
                       </Button>
-                      <p className="text-xs text-muted-foreground">
-                        Max 10 images, 3.5MB total storage. Images will be resized to 1080×1080px.
+                      <p className="text-xs text-muted-foreground text-center">
+                        Max 10 images, 3.5MB total storage
                       </p>
                     </div>
 
@@ -319,7 +315,7 @@ export default function ScriptureImageGenerator({
                         <h3 className="text-sm font-semibold mb-3 uppercase tracking-wide text-muted-foreground flex items-center gap-2">
                           📷 My Images
                         </h3>
-                        <div className="grid grid-cols-5 gap-3">
+                        <div className="grid grid-cols-5 gap-3 mb-4">
                           {customBackgrounds.map((bg) => (
                             <div key={bg.id} className="relative group aspect-square">
                               <button
