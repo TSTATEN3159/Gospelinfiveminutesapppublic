@@ -25,6 +25,7 @@ import { fetchVerseText } from "@/services/bibleService";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
 import { appStore } from "@/lib/appStore";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
+import ScriptureSelector from "./ScriptureSelector";
 
 interface SearchResult {
   text: string;
@@ -371,6 +372,11 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
               {t.listening}
             </p>
           )}
+          
+          <div className="pt-4 border-t">
+            <p className="text-sm font-medium mb-3 text-gray-700">Or select a verse:</p>
+            <ScriptureSelector onReferenceSelected={(ref) => handleSearch(ref)} />
+          </div>
         </div>
 
         {isLoading && (
