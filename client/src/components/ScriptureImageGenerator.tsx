@@ -152,96 +152,126 @@ export default function ScriptureImageGenerator({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
+      <DialogContent className="max-w-6xl max-h-[95vh] overflow-hidden flex flex-col">
         <DialogHeader>
-          <DialogTitle>Create Scripture Image</DialogTitle>
-          <DialogDescription>
-            Customize your verse image with beautiful backgrounds and share it with others.
+          <DialogTitle>Create Your Scripture Image</DialogTitle>
+          <DialogDescription className="text-base">
+            👇 Click any image below to see your verse on it. Try different backgrounds until you find the perfect one!
           </DialogDescription>
         </DialogHeader>
 
-        <div className="flex-1 overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="flex flex-col gap-4">
-            <div className="relative aspect-square bg-muted rounded-md overflow-hidden border">
-              {isGenerating && (
-                <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10">
-                  <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                </div>
-              )}
-              {previewUrl && (
-                <img
-                  src={previewUrl}
-                  alt="Scripture preview"
-                  className="w-full h-full object-cover"
-                />
-              )}
-            </div>
-
-            <div className="flex gap-2">
-              <Button
-                onClick={handleShare}
-                disabled={!previewUrl || isGenerating}
-                className="flex-1"
-                data-testid="button-share-image"
-              >
-                <Share2 className="h-4 w-4 mr-2" />
-                Share
-              </Button>
-              <Button
-                onClick={handleDownload}
-                disabled={!previewUrl || isGenerating}
-                variant="outline"
-                className="flex-1"
-                data-testid="button-download-image"
-              >
-                <Download className="h-4 w-4 mr-2" />
-                Download
-              </Button>
-            </div>
+        <div className="flex-1 overflow-hidden flex flex-col gap-4">
+          {/* Large Preview Section */}
+          <div className="relative aspect-video bg-muted rounded-lg overflow-hidden border-2 border-border shadow-lg">
+            {isGenerating && (
+              <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10">
+                <Loader2 className="h-12 w-12 animate-spin text-primary" />
+              </div>
+            )}
+            {previewUrl && (
+              <img
+                src={previewUrl}
+                alt="Scripture preview"
+                className="w-full h-full object-cover"
+              />
+            )}
+            {!isGenerating && previewUrl && (
+              <div className="absolute top-4 right-4 bg-black/50 backdrop-blur-sm text-white px-3 py-1.5 rounded-full text-sm font-medium">
+                {settings.verseReference}
+              </div>
+            )}
           </div>
 
-          <ScrollArea className="h-full pr-4">
-            <Tabs defaultValue="background" className="w-full">
-              <TabsList className="grid w-full grid-cols-3">
-                <TabsTrigger value="background" data-testid="tab-background">
-                  <ImageIcon className="h-4 w-4 mr-2" />
-                  Background
+          {/* Action Buttons */}
+          <div className="flex gap-2 justify-center">
+            <Button
+              onClick={handleShare}
+              disabled={!previewUrl || isGenerating}
+              size="lg"
+              className="min-w-[140px]"
+              data-testid="button-share-image"
+            >
+              <Share2 className="h-4 w-4 mr-2" />
+              Share Image
+            </Button>
+            <Button
+              onClick={handleDownload}
+              disabled={!previewUrl || isGenerating}
+              variant="outline"
+              size="lg"
+              className="min-w-[140px]"
+              data-testid="button-download-image"
+            >
+              <Download className="h-4 w-4 mr-2" />
+              Download
+            </Button>
+          </div>
+
+          {/* Image Gallery & Customization */}
+          <ScrollArea className="flex-1">
+            <Tabs defaultValue="backgrounds" className="w-full">
+              <TabsList className="grid w-full grid-cols-2 mb-4">
+                <TabsTrigger value="backgrounds" data-testid="tab-background" className="text-base">
+                  <ImageIcon className="h-5 w-5 mr-2" />
+                  Choose Background
                 </TabsTrigger>
-                <TabsTrigger value="text" data-testid="tab-text">
-                  <Type className="h-4 w-4 mr-2" />
-                  Text
-                </TabsTrigger>
-                <TabsTrigger value="colors" data-testid="tab-colors">
-                  <Palette className="h-4 w-4 mr-2" />
-                  Colors
+                <TabsTrigger value="customize" data-testid="tab-customize" className="text-base">
+                  <Palette className="h-5 w-5 mr-2" />
+                  Customize Text
                 </TabsTrigger>
               </TabsList>
 
-              <TabsContent value="background" className="space-y-4 mt-4">
-                <div className="space-y-4">
+              <TabsContent value="backgrounds" className="space-y-6 mt-2">
+                <div className="bg-blue-50 dark:bg-blue-950 border border-blue-200 dark:border-blue-800 rounded-lg p-3 text-sm text-blue-900 dark:text-blue-100">
+                  💡 <strong>Tip:</strong> Click any image to instantly see your verse on it. Keep clicking until you find your favorite!
+                </div>
+                
+                <div className="space-y-6">
                   {(['nature', 'water', 'sky', 'spiritual', 'solid'] as const).map((category) => {
                     const backgrounds = getBackgroundsByCategory(category);
                     if (backgrounds.length === 0) return null;
 
                     return (
                       <div key={category}>
-                        <h3 className="text-sm font-semibold mb-2 capitalize">{category}</h3>
-                        <div className="grid grid-cols-3 gap-2">
+                        <h3 className="text-lg font-bold mb-3 capitalize flex items-center gap-2">
+                          {category === 'nature' && '🏔️'}
+                          {category === 'water' && '🌊'}
+                          {category === 'sky' && '☁️'}
+                          {category === 'spiritual' && '✝️'}
+                          {category === 'solid' && '🎨'}
+                          {category} Backgrounds
+                        </h3>
+                        <div className="grid grid-cols-4 gap-3">
                           {backgrounds.map((bg) => (
                             <button
                               key={bg.id}
                               onClick={() => setSettings({ ...settings, backgroundId: bg.id })}
-                              className={`aspect-square rounded-md overflow-hidden border-2 transition-all hover-elevate ${
+                              className={`group relative aspect-square rounded-lg overflow-hidden border-2 transition-all hover:scale-105 hover:shadow-xl ${
                                 settings.backgroundId === bg.id
-                                  ? 'border-primary ring-2 ring-primary ring-offset-2'
-                                  : 'border-border'
+                                  ? 'border-primary ring-4 ring-primary/30 scale-105 shadow-xl'
+                                  : 'border-border hover:border-primary/50'
                               }`}
                               data-testid={`bg-${bg.id}`}
+                              title={`Click to preview: ${bg.name}`}
                             >
                               {bg.type === 'solid-color' ? (
                                 <div className="w-full h-full" style={{ backgroundColor: bg.color }} />
                               ) : (
                                 <img src={bg.url} alt={bg.name} className="w-full h-full object-cover" />
+                              )}
+                              {settings.backgroundId === bg.id && (
+                                <div className="absolute inset-0 bg-primary/20 backdrop-blur-[1px] flex items-center justify-center">
+                                  <div className="bg-primary text-primary-foreground px-3 py-1.5 rounded-full text-sm font-bold shadow-lg">
+                                    ✓ Selected
+                                  </div>
+                                </div>
+                              )}
+                              {settings.backgroundId !== bg.id && (
+                                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                  <div className="bg-white/90 text-gray-900 px-3 py-1.5 rounded-full text-sm font-medium shadow-lg">
+                                    Click to preview
+                                  </div>
+                                </div>
                               )}
                             </button>
                           ))}
@@ -252,10 +282,10 @@ export default function ScriptureImageGenerator({
                 </div>
               </TabsContent>
 
-              <TabsContent value="text" className="space-y-4 mt-4">
-                <div className="space-y-4">
-                  <div className="space-y-2">
-                    <Label>Text Position</Label>
+              <TabsContent value="customize" className="space-y-6 mt-2">
+                <div className="space-y-6">
+                  <div className="space-y-4">
+                    <Label className="text-base font-semibold">Text Position</Label>
                     <div className="grid grid-cols-3 gap-2">
                       {(['top', 'center', 'bottom'] as const).map((pos) => (
                         <Button
@@ -271,8 +301,8 @@ export default function ScriptureImageGenerator({
                     </div>
                   </div>
 
-                  <div className="space-y-2">
-                    <Label>Font Size: {settings.fontSize}px</Label>
+                  <div className="space-y-4">
+                    <Label className="text-base font-semibold">Font Size: {settings.fontSize}px</Label>
                     <Slider
                       value={[settings.fontSize]}
                       onValueChange={([value]) => setSettings({ ...settings, fontSize: value })}
@@ -283,8 +313,8 @@ export default function ScriptureImageGenerator({
                     />
                   </div>
 
-                  <div className="space-y-2">
-                    <Label>Font Family</Label>
+                  <div className="space-y-4">
+                    <Label className="text-base font-semibold">Font Family</Label>
                     <div className="grid grid-cols-1 gap-2">
                       {FONT_FAMILIES.map((font) => (
                         <Button
@@ -301,36 +331,34 @@ export default function ScriptureImageGenerator({
                     </div>
                   </div>
 
-                  <div className="flex items-center justify-between">
-                    <Label htmlFor="text-shadow">Text Shadow</Label>
+                  <div className="space-y-4">
+                    <Label className="text-base font-semibold">Text Color</Label>
+                    <div className="grid grid-cols-6 gap-2">
+                      {TEXT_COLORS.map((color) => (
+                        <button
+                          key={color.value}
+                          onClick={() => setSettings({ ...settings, textColor: color.value })}
+                          className={`h-12 rounded-md border-2 transition-all hover:scale-110 ${
+                            settings.textColor === color.value
+                              ? 'border-primary ring-4 ring-primary/30 scale-110'
+                              : 'border-border'
+                          }`}
+                          style={{ backgroundColor: color.value }}
+                          title={color.name}
+                          data-testid={`color-${color.name.replace(/\s+/g, '-').toLowerCase()}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                    <Label htmlFor="text-shadow" className="text-base font-semibold">Text Shadow</Label>
                     <Switch
                       id="text-shadow"
                       checked={settings.textShadow}
                       onCheckedChange={(checked) => setSettings({ ...settings, textShadow: checked })}
                       data-testid="switch-text-shadow"
                     />
-                  </div>
-                </div>
-              </TabsContent>
-
-              <TabsContent value="colors" className="space-y-4 mt-4">
-                <div className="space-y-2">
-                  <Label>Text Color</Label>
-                  <div className="grid grid-cols-3 gap-2">
-                    {TEXT_COLORS.map((color) => (
-                      <button
-                        key={color.value}
-                        onClick={() => setSettings({ ...settings, textColor: color.value })}
-                        className={`h-12 rounded-md border-2 transition-all hover-elevate ${
-                          settings.textColor === color.value
-                            ? 'border-primary ring-2 ring-primary ring-offset-2'
-                            : 'border-border'
-                        }`}
-                        style={{ backgroundColor: color.value }}
-                        title={color.name}
-                        data-testid={`color-${color.name.replace(/\s+/g, '-').toLowerCase()}`}
-                      />
-                    ))}
                   </div>
                 </div>
               </TabsContent>
