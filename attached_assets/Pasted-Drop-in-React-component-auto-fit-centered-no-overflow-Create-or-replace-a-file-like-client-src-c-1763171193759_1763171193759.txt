@@ -1,0 +1,158 @@
+Drop-in React component: auto-fit, centered, no overflow
+Create or replace a file like:
+client/src/components/VerseImageComposer.tsx with this:
+import React, { useEffect, useRef, useState } from "react";
+
+interface VerseImageComposerProps {
+  verseText: string;
+  reference?: string;
+  backgroundUrl: string;
+  /** user-selected max font size in px (e.g. from a slider) */
+  userFontSize?: number;
+}
+
+export const VerseImageComposer: React.FC<VerseImageComposerProps> = ({
+  verseText,
+  reference,
+  backgroundUrl,
+  userFontSize = 32,
+}) => {
+  const boxRef = useRef<HTMLDivElement | null>(null);
+  const textRef = useRef<HTMLDivElement | null>(null);
+
+  // This is the *actual* font size we apply after fitting
+  const [fittedFontSize, setFittedFontSize] = useState(userFontSize);
+
+  // Whenever the verse, image, or user max size changes,
+  // recompute a font size that fits inside the box.
+  useEffect(() => {
+    if (!boxRef.current || !textRef.current) return;
+
+    const box = boxRef.current;
+    const textEl = textRef.current;
+
+    // Start from user max font size
+    let size = userFontSize;
+    textEl.style.fontSize = `${size}px`;
+    textEl.style.whiteSpace = "normal";       // allow wrapping
+    textEl.style.wordBreak = "break-word";    // prevent long words from overflowing
+
+    // Give browser a layout pass first
+    const fits = () =>
+      textEl.scrollWidth <= box.clientWidth &&
+      textEl.scrollHeight <= box.clientHeight;
+
+    // Shrink until it fits or we hit a minimum size
+    while (!fits() && size > 10) {
+      size -= 1;
+      textEl.style.fontSize = `${size}px`;
+    }
+
+    setFittedFontSize(size);
+  }, [verseText, backgroundUrl, userFontSize]);
+
+  return (
+    <div className="w-full max-w-md mx-auto">
+      {/* Fixed 9:16 aspect ratio image + overlay */}
+      <div className="relative w-full aspect-[9/16] overflow-hidden rounded-xl shadow-xl bg-black">
+        {/* Background image */}
+        <img
+          src={backgroundUrl}
+          alt="Verse background"
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+
+        {/* Dark overlay to improve text contrast (optional) */}
+        <div className="absolute inset-0 bg-black/35" />
+
+        {/* Verse text container: centered + padded + constrained */}
+        <div
+          ref={boxRef}
+          className="
+            absolute inset-8
+            flex flex-col items-center justify-center
+          "
+        >
+          <div
+            ref={textRef}
+            style={{ fontSize: `${fittedFontSize}px` }}
+            className="
+              text-center
+              text-white
+              leading-snug
+              max-w-[90%]
+              mx-auto
+              whitespace-normal
+              break-words
+            "
+          >
+            {verseText}
+          </div>
+
+          {reference && (
+            <div className="mt-4 text-white/90 text-sm font-semibold text-center">
+              {reference}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+};
+How this fixes your issues
+Default auto-fits text to the image
+The useEffect starts at userFontSize (e.g. 32px), and if the text doesn’t fit inside the overlay box (boxRef), it steps the font down until both scrollWidth and scrollHeight are within bounds.
+That means on first render, the verse always fits on the image and wraps as needed.
+Text is always centered and never runs off the edges
+text-center, max-w-[90%], whitespace-normal, and break-words ensure:
+Centered text
+Max width limited to 90% of the overlay box
+Long lines wrap
+Long words break instead of overflow
+When the user adjusts font size, text still can’t break the image
+Treat the slider as a maximum:
+userFontSize = 42; // e.g. from your slider
+The hook tries 42px, but if that makes the text overflow the box, it shrinks it down until it fits. So:
+The user can make text bigger, but not so big that it breaks the layout.
+If they make it smaller, it will re-fit using that smaller max.
+🔌 How to hook it up to your existing slider
+Wherever you currently let the user change font size, you probably have something like:
+const [fontSize, setFontSize] = useState(32);
+
+// Slider
+<input
+  type="range"
+  min={12}
+  max={48}
+  value={fontSize}
+  onChange={(e) => setFontSize(Number(e.target.value))}
+/>
+
+// Old text overlay...
+Replace your old overlay with:
+<VerseImageComposer
+  verseText={currentVerseText}
+  reference={currentReference}
+  backgroundUrl={selectedBackgroundUrl}
+  userFontSize={fontSize}
+/>
+This way:
+The slider updates userFontSize.
+The component re-runs the fitting logic and keeps the verse inside the image.
+🧩 One more important note
+If you have other CSS that conflicts (for example, on a global level):
+* {
+  white-space: nowrap;
+}
+or:
+.text-overlay {
+  white-space: nowrap;
+}
+that will fight against wrapping. The component above explicitly sets:
+textEl.style.whiteSpace = "normal";
+textEl.style.wordBreak = "break-word";
+to override that for the verse text box.
+If you paste this component into Replit and hook it up to your existing verse image screen, your defaults will:
+Auto fit the verse to the image
+Keep things centered
+Prevent text from running off the edges even when the user plays with font size

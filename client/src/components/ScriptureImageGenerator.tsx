@@ -7,11 +7,12 @@ import { Switch } from '@/components/ui/switch';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { useImageGenerator, type ImageSettings } from '@/hooks/useImageGenerator';
-import { BACKGROUND_IMAGES, getBackgroundsByCategory } from '@/config/backgroundImages';
+import { BACKGROUND_IMAGES, getBackgroundsByCategory, getBackgroundById } from '@/config/backgroundImages';
 import { useCustomBackgrounds } from '@/hooks/useCustomBackgrounds';
 import { safeShare } from '@/utils/capabilities';
 import { Download, Share2, Loader2, Palette, Type, Image as ImageIcon, Upload, X } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { VerseImageComposer } from '@/components/VerseImageComposer';
 
 interface ScriptureImageGeneratorProps {
   open: boolean;
@@ -157,8 +158,12 @@ export default function ScriptureImageGenerator({
 
   useEffect(() => {
     if (open) {
-      handleGeneratePreview();
       refreshCustomBackgrounds();
+      // Generate high-quality canvas version for download/share
+      const timer = setTimeout(() => {
+        handleGenerateForDownload();
+      }, 300); // Debounce to avoid generating on every keystroke
+      return () => clearTimeout(timer);
     }
   }, [settings, open, refreshCustomBackgrounds]);
 
@@ -237,16 +242,17 @@ export default function ScriptureImageGenerator({
     }
   };
 
-  const handleGeneratePreview = async () => {
+  // Generate high-quality canvas version for download/share
+  const handleGenerateForDownload = async () => {
     try {
       const result = await generateImage(settings);
       setPreviewUrl(result.dataUrl);
       setGeneratedBlob(result.blob);
     } catch (err) {
-      console.error('Preview generation failed:', err);
+      console.error('Canvas generation failed:', err);
       toast({
-        title: 'Preview generation failed',
-        description: 'Unable to generate image preview. Please try again.',
+        title: 'Canvas generation failed',
+        description: 'Unable to generate high-quality image. Please try again.',
         variant: 'destructive',
       });
     }
@@ -332,7 +338,7 @@ export default function ScriptureImageGenerator({
               {/* Preview & Actions Section */}
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
-                  <h3 className="text-lg font-semibold">Your Preview</h3>
+                  <h3 className="text-lg font-semibold">Live Preview</h3>
                   <div className="flex gap-2">
                     <Button
                       onClick={handleShare}
@@ -354,22 +360,26 @@ export default function ScriptureImageGenerator({
                   </div>
                 </div>
                 
-                <div className="relative aspect-square max-w-sm bg-muted rounded-lg overflow-hidden border-2 border-border shadow-md">
+                {/* Live React-based preview with auto-fitting text */}
+                <div className="relative">
+                  <VerseImageComposer
+                    verseText={settings.verseText}
+                    reference={settings.verseReference}
+                    backgroundUrl={getBackgroundById(settings.backgroundId)?.url || ''}
+                    textColor={settings.textColor}
+                    fontFamily={settings.fontFamily}
+                    textPosition={settings.textPosition}
+                    textAlign={settings.textAlign}
+                    showTextPanel={settings.showTextPanel}
+                    textShadow={settings.textShadow}
+                    userFontSize={settings.fontSize}
+                  />
                   {isGenerating && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10">
-                      <Loader2 className="h-8 w-8 animate-spin text-primary" />
-                    </div>
-                  )}
-                  {previewUrl && (
-                    <img
-                      src={previewUrl}
-                      alt="Scripture preview"
-                      className="w-full h-full object-cover"
-                    />
-                  )}
-                  {!isGenerating && previewUrl && (
-                    <div className="absolute bottom-3 left-3 right-3 bg-black/60 backdrop-blur-sm text-white px-3 py-2 rounded-md text-sm font-medium text-center">
-                      {settings.verseReference}
+                    <div className="absolute inset-0 flex items-center justify-center bg-background/80 backdrop-blur-sm z-10 rounded-lg">
+                      <div className="flex flex-col items-center gap-2">
+                        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        <p className="text-sm text-muted-foreground">Preparing download...</p>
+                      </div>
                     </div>
                   )}
                 </div>
