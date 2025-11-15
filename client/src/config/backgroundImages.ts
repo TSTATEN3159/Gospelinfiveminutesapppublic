@@ -19,6 +19,12 @@ import greenValley from '@assets/stock_images/lush_green_valley_mo_bd7303e6.jpg'
 import eagle from '@assets/stock_images/majestic_eagle_soari_7a8606d5.jpg';
 import wheatField from '@assets/stock_images/wheat_field_golden_h_fa612f71.jpg';
 import cross from '@assets/stock_images/cross_silhouette_sun_9382d340.jpg';
+import snowyMountain1 from '@assets/stock_images/snowy_mountain_peaks_90b9d8c2.jpg';
+import snowyMountain2 from '@assets/stock_images/snowy_mountain_peaks_25a05d00.jpg';
+import woodenCross from '@assets/stock_images/wooden_cross_sunset__ea9ca9d4.jpg';
+import christianCross from '@assets/stock_images/christian_cross_dram_c4edf2b4.jpg';
+import familyWalking from '@assets/stock_images/family_holding_hands_e0106914.jpg';
+import prayerHands from '@assets/stock_images/peaceful_prayer_hand_0c8506a2.jpg';
 
 export type BackgroundType = 'image' | 'solid-color';
 
@@ -46,6 +52,8 @@ export const SOLID_COLORS: BackgroundImage[] = [
 
 export const BACKGROUND_IMAGES: BackgroundImage[] = [
   { id: 'mountain-peak', name: 'Mountain Peak', type: 'image', url: mountainPeak, category: 'nature' },
+  { id: 'snowy-mountain-1', name: 'Snowy Mountain Peak', type: 'image', url: snowyMountain1, category: 'nature' },
+  { id: 'snowy-mountain-2', name: 'Snowy Summit', type: 'image', url: snowyMountain2, category: 'nature' },
   { id: 'ocean-waves', name: 'Ocean Waves', type: 'image', url: oceanWaves, category: 'water' },
   { id: 'storm-clouds', name: 'Storm Clouds', type: 'image', url: stormClouds, category: 'sky' },
   { id: 'blue-sky', name: 'Blue Sky', type: 'image', url: blueSky, category: 'sky' },
@@ -66,6 +74,10 @@ export const BACKGROUND_IMAGES: BackgroundImage[] = [
   { id: 'eagle', name: 'Soaring Eagle', type: 'image', url: eagle, category: 'spiritual' },
   { id: 'wheat-field', name: 'Wheat Field', type: 'image', url: wheatField, category: 'nature' },
   { id: 'cross', name: 'Cross at Sunset', type: 'image', url: cross, category: 'spiritual' },
+  { id: 'wooden-cross', name: 'Wooden Cross', type: 'image', url: woodenCross, category: 'spiritual' },
+  { id: 'christian-cross', name: 'Christian Cross', type: 'image', url: christianCross, category: 'spiritual' },
+  { id: 'family-walking', name: 'Family Together', type: 'image', url: familyWalking, category: 'spiritual' },
+  { id: 'prayer-hands', name: 'Prayer Hands', type: 'image', url: prayerHands, category: 'spiritual' },
   ...SOLID_COLORS,
 ];
 
