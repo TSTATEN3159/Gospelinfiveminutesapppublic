@@ -101,23 +101,16 @@ export function useImageGenerator() {
         ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
       }
 
-      ctx.font = `${settings.fontSize}px ${settings.fontFamily}`;
-      ctx.fillStyle = settings.textColor;
-      ctx.textAlign = 'center';
-
-      if (settings.textShadow) {
-        ctx.shadowColor = 'rgba(0, 0, 0, 0.8)';
-        ctx.shadowBlur = 10;
-        ctx.shadowOffsetX = 2;
-        ctx.shadowOffsetY = 2;
-      }
-
       const maxTextWidth = canvas.width * 0.85;
+      ctx.font = `${settings.fontSize}px ${settings.fontFamily}`;
       const verseLines = wrapText(ctx, settings.verseText, maxTextWidth);
+      
+      ctx.font = `${settings.fontSize * 0.8}px ${settings.fontFamily}`;
       const referenceLines = wrapText(ctx, settings.verseReference, maxTextWidth);
       
       const lineHeight = settings.fontSize * 1.5;
       const totalTextHeight = (verseLines.length + referenceLines.length + 1) * lineHeight;
+      const padding = 40;
 
       let startY: number;
       switch (settings.textPosition) {
@@ -133,6 +126,25 @@ export function useImageGenerator() {
           break;
       }
 
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+      ctx.fillRect(
+        0,
+        startY - padding,
+        canvas.width,
+        totalTextHeight + padding * 2
+      );
+
+      ctx.font = `bold ${settings.fontSize}px ${settings.fontFamily}`;
+      ctx.fillStyle = settings.textColor;
+      ctx.textAlign = 'center';
+
+      if (settings.textShadow) {
+        ctx.shadowColor = 'rgba(0, 0, 0, 0.9)';
+        ctx.shadowBlur = 15;
+        ctx.shadowOffsetX = 3;
+        ctx.shadowOffsetY = 3;
+      }
+
       let currentY = startY;
       
       verseLines.forEach((line) => {
@@ -142,7 +154,7 @@ export function useImageGenerator() {
 
       currentY += lineHeight * 0.5;
       
-      ctx.font = `${settings.fontSize * 0.8}px ${settings.fontFamily}`;
+      ctx.font = `${settings.fontSize * 0.75}px ${settings.fontFamily}`;
       referenceLines.forEach((line) => {
         ctx.fillText(line, canvas.width / 2, currentY);
         currentY += lineHeight;
