@@ -42,7 +42,7 @@ Preferred communication style: Simple, everyday language.
 - **Bible Reading Plans**: Three plans (1-Year Whole Bible, 6-Month Old/New Testament) with localStorage-based progress, streak calculation, and NIV text display.
 - **Bible Trivia**: Interactive game with randomized questions and global progress tracking.
 - **Profile Picture Upload**: LocalStorage-based profile picture management with privacy compliance and UI for upload/deletion.
-- **Scripture Image Generator**: Hybrid system (React for live preview, canvas for high-quality export) for creating shareable verse images. Features auto-sizing, 5 professional presets, custom backgrounds, and text customization.
+- **Scripture Image Generator**: Hybrid system (React for live preview, canvas for high-quality export) for creating shareable verse images. Features auto-sizing text (8-48px with 10px minimum), 5 professional presets (Shareable, Bible Study, Verse of the Day, Classic, Impact), custom backgrounds (10 image limit, drag-and-drop), text customization (position, alignment, color, font family, shadow, optional panel), and 33+ curated backgrounds across 5 categories (Spiritual: crosses, Bible, golden light, clouds, ocean sunrise, mountain mist; Nature: mountains, forests, valleys; Water: ocean, lakes, beaches; Sky: sunrise, sunset, starry night; Solid colors: 10 options).
 
 ### Browser Capability Checks & Safe Wrappers
 - **Critical Pattern**: All features dependent on browser APIs utilize `capabilities.ts` for detection and `safe` wrappers (e.g., `safeLocalStorage`, `safeShare`) to ensure graceful degradation and provide fallbacks. UI elements are conditionally rendered based on API availability.

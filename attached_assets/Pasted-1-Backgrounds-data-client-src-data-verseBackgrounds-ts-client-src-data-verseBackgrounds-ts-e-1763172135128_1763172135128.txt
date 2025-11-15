@@ -1,0 +1,201 @@
+1️⃣ Backgrounds data – client/src/data/verseBackgrounds.ts
+// client/src/data/verseBackgrounds.ts
+
+export interface VerseBackground {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  thumbnailUrl?: string;
+}
+
+/**
+ * NOTE:
+ * These URLs are example spiritual images. For production:
+ * 1) Download the images you like.
+ * 2) Place them in /public/verse-backgrounds/ in your project.
+ * 3) Replace imageUrl with your own paths (e.g. "/verse-backgrounds/cross-sunrise.jpg").
+ */
+export const VERSE_BACKGROUNDS: VerseBackground[] = [
+  {
+    id: "cross-sunrise",
+    name: "Cross at Sunrise",
+    description: "Silhouette of the cross at sunrise – classic Christian imagery.",
+    imageUrl:
+      "https://cdn.vectorstock.com/i/1000v/30/10/sunrise-christian-cross-silhouette-vector-42143010.jpg",
+  },
+  {
+    id: "forest-golden-light",
+    name: "Golden Forest Light",
+    description: "Sunrays through a forest – warm, peaceful, spiritual.",
+    imageUrl:
+      "https://w0.peakpx.com/wallpaper/1006/941/HD-wallpaper-sunrays-in-the-woods-forest-dawn-sun-golden-woods-dusk-sunrays-gold-nature-sunrise-morning-light.jpg",
+  },
+  {
+    id: "clouds-sunrays",
+    name: "Heavenly Clouds",
+    description: "Sun’s rays breaking through clouds – hope and glory.",
+    imageUrl:
+      "https://www.mediastorehouse.com/t/173/suns-rays-breaking-clouds-6375779.jpg.webp",
+  },
+  {
+    id: "ocean-sunrise",
+    name: "Ocean Sunrise",
+    description: "Calm ocean, sunrise reflection – stillness before God.",
+    imageUrl:
+      "https://anunexpectedjournal.com/wp-content/uploads/2023/10/beach_kavadzic-e1696911789521.jpg",
+  },
+  {
+    id: "mountain-mist",
+    name: "Mountain Mist",
+    description: "Mountains and morning mist – majesty of God’s creation.",
+    imageUrl:
+      "https://w0.peakpx.com/wallpaper/381/344/HD-wallpaper-sunrise-beautiful-creation-twilight-prayer-spiritual-fog-mountain-green-god-beauty-morning-exotic-fantastic-soft-sky-weather-mist-tree-cool-plants-awesome-nature-meditation.jpg",
+  },
+  {
+    id: "abstract-light-rays",
+    name: "Abstract Light Rays",
+    description: "Abstract rays of light – modern and worshipful.",
+    imageUrl:
+      "https://i.pinimg.com/1200x/b3/c5/dd/b3c5dd1ebf2b3ba221805c7290a3917b.jpg",
+  },
+];
+2️⃣ Background picker component – client/src/components/VerseBackgroundPicker.tsx
+// client/src/components/VerseBackgroundPicker.tsx
+
+import React from "react";
+import { VERSE_BACKGROUNDS, VerseBackground } from "@/data/verseBackgrounds";
+
+interface VerseBackgroundPickerProps {
+  selectedId: string;
+  onChange: (background: VerseBackground) => void;
+}
+
+export const VerseBackgroundPicker: React.FC<VerseBackgroundPickerProps> = ({
+  selectedId,
+  onChange,
+}) => {
+  return (
+    <div className="w-full">
+      <h3 className="text-sm font-semibold mb-2 text-slate-700 dark:text-slate-200">
+        Choose Background
+      </h3>
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-3">
+        {VERSE_BACKGROUNDS.map((bg) => {
+          const isSelected = bg.id === selectedId;
+          return (
+            <button
+              key={bg.id}
+              type="button"
+              onClick={() => onChange(bg)}
+              className={`
+                relative group rounded-lg overflow-hidden border
+                ${isSelected ? "border-blue-500 ring-2 ring-blue-400" : "border-slate-200 dark:border-slate-700"}
+              `}
+            >
+              <div className="aspect-[9/16] w-full overflow-hidden">
+                <img
+                  src={bg.thumbnailUrl || bg.imageUrl}
+                  alt={bg.name}
+                  className={`
+                    w-full h-full object-cover transition-transform duration-300
+                    group-hover:scale-105
+                  `}
+                />
+                <div className="absolute inset-0 bg-black/25 group-hover:bg-black/35 transition-colors" />
+              </div>
+              <div className="absolute bottom-0 left-0 right-0 px-2 py-1 bg-black/50 text-[0.7rem] text-white text-center">
+                {bg.name}
+              </div>
+            </button>
+          );
+        })}
+      </div>
+    </div>
+  );
+};
+3️⃣ Example screen that wires everything together
+This assumes you already have the VerseImageComposer component we discussed earlier.
+Here’s a full example screen that:
+Lets the user change font size
+Lets the user pick one of the spiritual backgrounds
+Renders the verse + reference centered and auto-fitted on the chosen image
+// client/src/pages/VerseImageScreen.tsx
+
+import React, { useState } from "react";
+import { VerseImageComposer } from "@/components/VerseImageComposer";
+import { VerseBackgroundPicker } from "@/components/VerseBackgroundPicker";
+import { VERSE_BACKGROUNDS } from "@/data/verseBackgrounds";
+
+export default function VerseImageScreen() {
+  // Example verse – wire this to your real Verse of the Day state
+  const [verseText] = useState<string>(
+    "The LORD is my shepherd; I shall not want."
+  );
+  const [reference] = useState<string>("Psalm 23:1");
+
+  const [fontSize, setFontSize] = useState<number>(32);
+
+  const [selectedBg, setSelectedBg] = useState(VERSE_BACKGROUNDS[0]);
+
+  return (
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 px-4 py-6 pb-24">
+      <div className="max-w-md mx-auto space-y-6">
+        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-2">
+          Share Verse Image
+        </h1>
+        <p className="text-sm text-slate-600 dark:text-slate-300 mb-4">
+          Choose a background and adjust the text size. The verse will
+          automatically fit inside the image and stay centered.
+        </p>
+
+        {/* Background Picker */}
+        <VerseBackgroundPicker
+          selectedId={selectedBg.id}
+          onChange={(bg) => setSelectedBg(bg)}
+        />
+
+        {/* Font size slider */}
+        <div className="mt-4">
+          <label className="text-sm font-semibold text-slate-700 dark:text-slate-200 flex justify-between mb-1">
+            <span>Text Size</span>
+            <span className="text-xs text-slate-500 dark:text-slate-400">
+              {fontSize}px
+            </span>
+          </label>
+          <input
+            type="range"
+            min={16}
+            max={48}
+            value={fontSize}
+            onChange={(e) => setFontSize(Number(e.target.value))}
+            className="w-full"
+          />
+        </div>
+
+        {/* Verse image composer */}
+        <VerseImageComposer
+          verseText={verseText}
+          reference={reference}
+          backgroundUrl={selectedBg.imageUrl}
+          userFontSize={fontSize}
+        />
+      </div>
+    </div>
+  );
+}
+How to plug this into Replit (quick checklist)
+Create the data file
+client/src/data/verseBackgrounds.ts — paste the first block.
+Create the picker component
+client/src/components/VerseBackgroundPicker.tsx — paste the second block.
+Add the screen
+client/src/pages/VerseImageScreen.tsx — paste the third block.
+Add a route or navigation entry pointing to VerseImageScreen (e.g., from your “More” tab or Verse of the Day screen).
+(Optional but recommended)
+Download each of those images and put them in public/verse-backgrounds/.
+Update imageUrl in VERSE_BACKGROUNDS to local paths like:
+imageUrl: "/verse-backgrounds/cross-sunrise.jpg"
+Once that’s in, you’ll have:
+A clean, professional set of spiritual image choices inside your app.
+Text that auto-fits, stays centered, and doesn’t run off the edges.

@@ -25,6 +25,12 @@ import woodenCross from '@assets/stock_images/wooden_cross_sunset__ea9ca9d4.jpg'
 import christianCross from '@assets/stock_images/christian_cross_dram_c4edf2b4.jpg';
 import familyWalking from '@assets/stock_images/family_holding_hands_e0106914.jpg';
 import prayerHands from '@assets/stock_images/peaceful_prayer_hand_0c8506a2.jpg';
+import forestGoldenLight from '@assets/stock_images/forest_golden_sunlig_d1e56134.jpg';
+import heavenlyClouds from '@assets/stock_images/dramatic_sun_rays_br_2ba02acd.jpg';
+import oceanSunrise from '@assets/stock_images/calm_ocean_sunrise_r_dd965e19.jpg';
+import mountainMist from '@assets/stock_images/mountain_peaks_morni_5fadbac9.jpg';
+import abstractLightRays from '@assets/stock_images/abstract_light_rays__4bf3f8b3.jpg';
+import openBible from '@assets/stock_images/open_bible_pages_hol_ec935652.jpg';
 
 export type BackgroundType = 'image' | 'solid-color';
 
@@ -78,6 +84,12 @@ export const BACKGROUND_IMAGES: BackgroundImage[] = [
   { id: 'christian-cross', name: 'Christian Cross', type: 'image', url: christianCross, category: 'spiritual' },
   { id: 'family-walking', name: 'Family Together', type: 'image', url: familyWalking, category: 'spiritual' },
   { id: 'prayer-hands', name: 'Prayer Hands', type: 'image', url: prayerHands, category: 'spiritual' },
+  { id: 'forest-golden-light', name: 'Forest Golden Light', type: 'image', url: forestGoldenLight, category: 'spiritual' },
+  { id: 'heavenly-clouds', name: 'Heavenly Clouds', type: 'image', url: heavenlyClouds, category: 'spiritual' },
+  { id: 'ocean-sunrise-spiritual', name: 'Ocean Sunrise', type: 'image', url: oceanSunrise, category: 'spiritual' },
+  { id: 'mountain-mist', name: 'Mountain Mist', type: 'image', url: mountainMist, category: 'spiritual' },
+  { id: 'abstract-light-rays', name: 'Abstract Light', type: 'image', url: abstractLightRays, category: 'spiritual' },
+  { id: 'open-bible', name: 'Open Bible', type: 'image', url: openBible, category: 'spiritual' },
   ...SOLID_COLORS,
 ];
 
