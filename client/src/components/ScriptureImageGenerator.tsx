@@ -37,6 +37,88 @@ const FONT_FAMILIES = [
   { name: 'Helvetica', value: 'Helvetica' },
 ];
 
+type PresetId = 'shareable' | 'bible-study' | 'verse-of-the-day' | 'classic' | 'impact';
+
+interface ScripturePreset {
+  id: PresetId;
+  name: string;
+  description: string;
+  overrides: Partial<ImageSettings>;
+}
+
+const SCRIPTURE_PRESETS: ScripturePreset[] = [
+  {
+    id: 'shareable',
+    name: 'Shareable',
+    description: 'Centered devotional style with a subtle panel – perfect for social sharing.',
+    overrides: {
+      textPosition: 'center',
+      textAlign: 'center',
+      showTextPanel: true,
+      textShadow: true,
+      fontFamily: 'Crimson Text',
+      fontSize: 28,
+      textColor: '#FFFFFF',
+    },
+  },
+  {
+    id: 'bible-study',
+    name: 'Bible Study',
+    description: 'Top-left teaching layout ideal for study notes and lesson slides.',
+    overrides: {
+      textPosition: 'top',
+      textAlign: 'left',
+      showTextPanel: true,
+      textShadow: false,
+      fontFamily: 'Georgia',
+      fontSize: 24,
+      textColor: '#FFFFFF',
+    },
+  },
+  {
+    id: 'verse-of-the-day',
+    name: 'Verse of the Day',
+    description: 'Larger verse text with a smaller reference, great for daily highlights.',
+    overrides: {
+      textPosition: 'center',
+      textAlign: 'center',
+      showTextPanel: true,
+      textShadow: true,
+      fontFamily: 'Crimson Text',
+      fontSize: 32,
+      textColor: '#FFFACD',
+    },
+  },
+  {
+    id: 'classic',
+    name: 'Classic',
+    description: 'Minimalist, no panel, clean centered type over your background.',
+    overrides: {
+      textPosition: 'center',
+      textAlign: 'center',
+      showTextPanel: false,
+      textShadow: false,
+      fontFamily: 'Times New Roman',
+      fontSize: 26,
+      textColor: '#FFFFFF',
+    },
+  },
+  {
+    id: 'impact',
+    name: 'Impact',
+    description: 'Lower-third layout designed for maximum impact and readability.',
+    overrides: {
+      textPosition: 'bottom',
+      textAlign: 'center',
+      showTextPanel: true,
+      textShadow: true,
+      fontFamily: 'Helvetica',
+      fontSize: 30,
+      textColor: '#FFFFFF',
+    },
+  },
+];
+
 export default function ScriptureImageGenerator({
   open,
   onOpenChange,
@@ -120,6 +202,20 @@ export default function ScriptureImageGenerator({
   const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
     event.preventDefault();
     event.stopPropagation();
+  };
+
+  const applyPreset = (preset: ScripturePreset) => {
+    setSettings((prev) => ({
+      ...prev,
+      ...preset.overrides,
+      verseText: prev.verseText,
+      verseReference: prev.verseReference,
+      backgroundId: prev.backgroundId,
+    }));
+    toast({
+      title: `${preset.name} preset applied`,
+      description: 'You can still fine-tune settings in the Customize tab.',
+    });
   };
 
   const handleDeleteCustomBackground = (id: string) => {
@@ -280,17 +376,69 @@ export default function ScriptureImageGenerator({
               </div>
 
               {/* Tabs for Background & Customization */}
-              <Tabs defaultValue="backgrounds" className="w-full">
-                <TabsList className="grid w-full grid-cols-2">
+              <Tabs defaultValue="presets" className="w-full">
+                <TabsList className="grid w-full grid-cols-3">
+                  <TabsTrigger value="presets" data-testid="tab-presets">
+                    <Type className="h-4 w-4 mr-2" />
+                    Presets
+                  </TabsTrigger>
                   <TabsTrigger value="backgrounds" data-testid="tab-background">
                     <ImageIcon className="h-4 w-4 mr-2" />
-                    Choose Background
+                    Backgrounds
                   </TabsTrigger>
                   <TabsTrigger value="customize" data-testid="tab-customize">
                     <Palette className="h-4 w-4 mr-2" />
                     Customize
                   </TabsTrigger>
                 </TabsList>
+
+                <TabsContent value="presets" className="space-y-6 mt-6">
+                  <div className="space-y-4">
+                    <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+                      Style Presets
+                    </h3>
+                    <p className="text-xs text-muted-foreground">
+                      Choose a starting style for your Scripture image. You can still tweak fonts, colors, and alignment in the Customize tab.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-4">
+                      {SCRIPTURE_PRESETS.map((preset) => (
+                        <div
+                          key={preset.id}
+                          className="flex flex-col justify-between rounded-lg border bg-card p-4 shadow-sm"
+                          data-testid={`preset-${preset.id}`}
+                        >
+                          <div className="space-y-1">
+                            <h4 className="font-semibold text-sm">{preset.name}</h4>
+                            <p className="text-xs text-muted-foreground">{preset.description}</p>
+                          </div>
+
+                          <div className="mt-3 flex items-center justify-between">
+                            <div className="flex flex-col text-[11px] text-muted-foreground">
+                              <span>
+                                Position: <span className="font-medium capitalize">{preset.overrides.textPosition ?? settings.textPosition}</span>
+                              </span>
+                              <span>
+                                Align: <span className="font-medium capitalize">{preset.overrides.textAlign ?? settings.textAlign}</span>
+                              </span>
+                              <span>
+                                Panel: <span className="font-medium">{preset.overrides.showTextPanel ? 'On' : 'Off'}</span>
+                              </span>
+                            </div>
+
+                            <Button
+                              size="sm"
+                              onClick={() => applyPreset(preset)}
+                              data-testid={`button-apply-${preset.id}`}
+                            >
+                              Apply
+                            </Button>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </TabsContent>
 
                 <TabsContent value="backgrounds" className="space-y-6 mt-6">
                   <div className="space-y-4">

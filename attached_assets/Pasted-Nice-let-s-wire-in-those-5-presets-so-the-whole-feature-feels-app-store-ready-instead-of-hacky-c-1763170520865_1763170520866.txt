@@ -1,0 +1,269 @@
+Nice, let’s wire in those 5 presets so the whole feature feels “app-store ready” instead of “hacky canvas demo.” We’ll keep everything you already have and layer presets on top.
+I’ll treat your five presets as:
+Shareable – (Devotional style)
+Bible Study – (Teaching Slide style)
+Verse of the Day – (Focus Scripture style)
+Classic – (Minimalist style)
+Impact – (Story-ish lower-third style)
+Below are concrete code edits you can paste in.
+1️⃣ Make sure ImageSettings supports alignment + panel
+If you haven’t already done the previous changes, make sure your ImageSettings in useImageGenerator.ts looks like this (extra fields at the bottom):
+export interface ImageSettings {
+  verseText: string;
+  verseReference: string;
+  backgroundId: string;
+  textPosition: 'top' | 'center' | 'bottom';
+  textColor: string;
+  fontSize: number;       // Used as a MAX font size
+  fontFamily: string;
+  textShadow: boolean;
+  textAlign: 'left' | 'center' | 'right';  // NEW
+  showTextPanel: boolean;                  // NEW
+}
+And your ScriptureImageGenerator default state includes those:
+const [settings, setSettings] = useState<ImageSettings>({
+  verseText: initialVerse,
+  verseReference: initialReference,
+  backgroundId: 'sunset',
+  textPosition: 'center',
+  textColor: '#FFFFFF',
+  fontSize: 24,
+  fontFamily: 'Crimson Text',
+  textShadow: true,
+  textAlign: 'center',   // NEW
+  showTextPanel: true,   // NEW
+});
+2️⃣ Define your 5 presets in ScriptureImageGenerator.tsx
+At the top of ScriptureImageGenerator.tsx, just under the imports (after FONT_FAMILIES is a good spot), add this:
+type PresetId = 'shareable' | 'bible-study' | 'verse-of-the-day' | 'classic' | 'impact';
+
+interface ScripturePreset {
+  id: PresetId;
+  name: string;
+  description: string;
+  overrides: Partial<ImageSettings>;
+}
+
+const SCRIPTURE_PRESETS: ScripturePreset[] = [
+  {
+    id: 'shareable',
+    name: 'Shareable',
+    description: 'Centered devotional style with a subtle panel – perfect for social sharing.',
+    overrides: {
+      textPosition: 'center',
+      textAlign: 'center',
+      showTextPanel: true,
+      textShadow: true,
+      fontFamily: 'Crimson Text',
+      fontSize: 28,
+      textColor: '#FFFFFF',
+    },
+  },
+  {
+    id: 'bible-study',
+    name: 'Bible Study',
+    description: 'Top-left teaching layout ideal for study notes and lesson slides.',
+    overrides: {
+      textPosition: 'top',
+      textAlign: 'left',
+      showTextPanel: true,
+      textShadow: false,
+      fontFamily: 'Georgia',
+      fontSize: 24,
+      textColor: '#FFFFFF',
+    },
+  },
+  {
+    id: 'verse-of-the-day',
+    name: 'Verse of the Day',
+    description: 'Larger verse text with a smaller reference, great for daily highlights.',
+    overrides: {
+      textPosition: 'center',
+      textAlign: 'center',
+      showTextPanel: true,
+      textShadow: true,
+      fontFamily: 'Crimson Text',
+      fontSize: 32,
+      textColor: '#FFFACD', // cream
+    },
+  },
+  {
+    id: 'classic',
+    name: 'Classic',
+    description: 'Minimalist, no panel, clean centered type over your background.',
+    overrides: {
+      textPosition: 'center',
+      textAlign: 'center',
+      showTextPanel: false,
+      textShadow: false,
+      fontFamily: 'Times New Roman',
+      fontSize: 26,
+      textColor: '#FFFFFF',
+    },
+  },
+  {
+    id: 'impact',
+    name: 'Impact',
+    description: 'Lower-third layout designed for maximum impact and readability.',
+    overrides: {
+      textPosition: 'bottom',
+      textAlign: 'center',
+      showTextPanel: true,
+      textShadow: true,
+      fontFamily: 'Helvetica',
+      fontSize: 30,
+      textColor: '#FFFFFF',
+    },
+  },
+];
+These presets only change layout and styling; they don’t touch verseText, verseReference, or backgroundId.
+3️⃣ Add preset application logic
+Inside ScriptureImageGenerator (in the component body, near the other handlers like handleFileUpload, handleGeneratePreview, etc.), add:
+  const applyPreset = (preset: ScripturePreset) => {
+    setSettings((prev) => ({
+      ...prev,
+      ...preset.overrides,
+      // Keep verse, reference, and background as the user already chose
+      verseText: prev.verseText,
+      verseReference: prev.verseReference,
+      backgroundId: prev.backgroundId,
+    }));
+    toast({
+      title: `${preset.name} preset applied`,
+      description: 'You can still fine-tune settings in the Customize tab.',
+    });
+  };
+4️⃣ Update the Tabs to include a “Presets” tab
+Right now you have:
+<Tabs defaultValue="backgrounds" className="w-full">
+  <TabsList className="grid w-full grid-cols-2">
+    <TabsTrigger value="backgrounds">
+      <ImageIcon className="h-4 w-4 mr-2" />
+      Choose Background
+    </TabsTrigger>
+    <TabsTrigger value="customize">
+      <Palette className="h-4 w-4 mr-2" />
+      Customize
+    </TabsTrigger>
+  </TabsList>
+  {/* ...TabsContent blocks... */}
+</Tabs>
+Change it to three tabs and make presets the default:
+<Tabs defaultValue="presets" className="w-full">
+  <TabsList className="grid w-full grid-cols-3">
+    <TabsTrigger value="presets">
+      <Type className="h-4 w-4 mr-2" />
+      Presets
+    </TabsTrigger>
+    <TabsTrigger value="backgrounds">
+      <ImageIcon className="h-4 w-4 mr-2" />
+      Backgrounds
+    </TabsTrigger>
+    <TabsTrigger value="customize">
+      <Palette className="h-4 w-4 mr-2" />
+      Customize
+    </TabsTrigger>
+  </TabsList>
+(You already import Type from lucide-react at the top; if not, add it to the import list.)
+5️⃣ Add the new TabsContent for presets
+Under those tabs, but before your existing TabsContent value="backgrounds" section, add:
+  <TabsContent value="presets" className="space-y-6 mt-6">
+    <div className="space-y-4">
+      <h3 className="text-sm font-semibold uppercase tracking-wide text-muted-foreground">
+        Style Presets
+      </h3>
+      <p className="text-xs text-muted-foreground">
+        Choose a starting style for your Scripture image. You can still tweak fonts, colors, and alignment in the Customize tab.
+      </p>
+
+      <div className="grid md:grid-cols-2 gap-4">
+        {SCRIPTURE_PRESETS.map((preset) => (
+          <div
+            key={preset.id}
+            className="flex flex-col justify-between rounded-lg border bg-card p-4 shadow-sm"
+          >
+            <div className="space-y-1">
+              <h4 className="font-semibold text-sm">{preset.name}</h4>
+              <p className="text-xs text-muted-foreground">{preset.description}</p>
+            </div>
+
+            <div className="mt-3 flex items-center justify-between">
+              <div className="flex flex-col text-[11px] text-muted-foreground">
+                <span>
+                  Position: <span className="font-medium capitalize">{preset.overrides.textPosition ?? settings.textPosition}</span>
+                </span>
+                <span>
+                  Align: <span className="font-medium capitalize">{preset.overrides.textAlign ?? settings.textAlign}</span>
+                </span>
+                <span>
+                  Panel: <span className="font-medium">{preset.overrides.showTextPanel ? 'On' : 'Off'}</span>
+                </span>
+              </div>
+
+              <Button
+                size="sm"
+                onClick={() => applyPreset(preset)}
+              >
+                Apply
+              </Button>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </TabsContent>
+Your existing TabsContent value="backgrounds" and TabsContent value="customize" blocks can stay exactly where they are, just below this.
+6️⃣ Where the polished upload UX fits
+From the earlier answer, your upload section in the Backgrounds tab should now look like this:
+{/* Upload Section */}
+<div className="space-y-3">
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    onChange={handleFileUpload}
+    className="hidden"
+  />
+
+  <div
+    onClick={() => fileInputRef.current?.click()}
+    onDrop={handleDrop}
+    onDragOver={handleDragOver}
+    className="group border-2 border-dashed border-border hover:border-primary/60 rounded-xl px-4 py-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-muted/40 hover:bg-muted/70"
+  >
+    {isUploading ? (
+      <>
+        <Loader2 className="h-6 w-6 mb-2 animate-spin" />
+        <p className="text-sm font-medium">Uploading image…</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          Please wait while we prepare your background.
+        </p>
+      </>
+    ) : (
+      <>
+        <Upload className="h-6 w-6 mb-2 opacity-80 group-hover:opacity-100" />
+        <p className="text-sm font-medium">
+          Click to upload or drag &amp; drop
+        </p>
+        <p className="text-xs text-muted-foreground mt-1">
+          JPEG or PNG • up to 5MB • auto-formatted to square
+        </p>
+      </>
+    )}
+  </div>
+
+  <p className="text-xs text-muted-foreground text-center">
+    {customBackgrounds.length} of 10 personal images used · Total custom storage limited to 3.5MB
+  </p>
+</div>
+Paired with useCustomBackgrounds, this ensures:
+User images are always 1080×1080, like your stock images.
+Held in localStorage until the user deletes them.
+Upload UX looks deliberate and modern.
+End result for your users
+From their perspective, the Scripture image feature now feels like:
+Tap Create Scripture Image.
+Select a preset style (Shareable, Bible Study, Verse of the Day, Classic, Impact).
+Optionally switch background to one of your curated images or their own.
+Fine-tune if they want (font size, color, alignment, panel).
+Share/download a clean, readable, professional verse card.
