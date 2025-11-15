@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import bibleStructure from "@/data/bibleStructure.json";
+import { BOOK_NAME_MAP } from "@/data/bookNames";
 
 interface ScriptureSelectorProps {
   onReferenceSelected: (ref: string) => void;
@@ -10,8 +11,11 @@ export default function ScriptureSelector({ onReferenceSelected }: ScriptureSele
   const [selectedBook, setSelectedBook] = useState("Genesis");
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
   const [selectedVerse, setSelectedVerse] = useState<number>(1);
+  const [useAbbreviations, setUseAbbreviations] = useState(false);
 
-  const books = Object.keys(bibleStructure);
+  const displayBookList = useAbbreviations
+    ? BOOK_NAME_MAP.map(b => b.abbr)
+    : BOOK_NAME_MAP.map(b => b.full);
 
   const chapterCount = bibleStructure[selectedBook as keyof typeof bibleStructure]?.chapters?.length || 1;
   const versesInChapter = bibleStructure[selectedBook as keyof typeof bibleStructure]?.chapters[selectedChapter - 1] || 1;
@@ -32,16 +36,26 @@ export default function ScriptureSelector({ onReferenceSelected }: ScriptureSele
   return (
     <div className="p-4 space-y-3 rounded-lg bg-card border" data-testid="scripture-selector">
       <div className="space-y-2">
-        <label className="text-sm font-semibold">Book</label>
+        <div className="flex items-center justify-between mb-2">
+          <label className="text-sm font-semibold">Book</label>
+          <button
+            type="button"
+            className="text-blue-600 text-xs underline hover:text-blue-700 transition-colors"
+            onClick={() => setUseAbbreviations(!useAbbreviations)}
+            data-testid="button-toggle-abbreviations"
+          >
+            {useAbbreviations ? "Full Names" : "Abbreviations"}
+          </button>
+        </div>
         <select
           value={selectedBook}
           onChange={(e) => setSelectedBook(e.target.value)}
           className="w-full border rounded-lg p-2 bg-background text-foreground"
           data-testid="select-book"
         >
-          {books.map((book) => (
-            <option key={book} value={book}>
-              {book}
+          {displayBookList.map((label, i) => (
+            <option key={i} value={BOOK_NAME_MAP[i].full}>
+              {label}
             </option>
           ))}
         </select>

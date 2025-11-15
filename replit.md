@@ -36,7 +36,7 @@ Preferred communication style: Simple, everyday language.
 - **AI Instant Application (Try This Today)**: Generates actionable steps from Bible verses using OpenAI.
 - **Feelings & Scripture**: Emotion-based guidance.
 - **Scripture Memory Helper**: Interactive memorization.
-- **Scripture Selector**: Visual dropdown interface for selecting Book → Chapter → Verse with automatic list updates and no typing required. All 66 books with accurate chapter/verse counts stored locally for instant access.
+- **Scripture Selector**: Visual dropdown interface for selecting Book → Chapter → Verse with automatic list updates and no typing required. All 66 books with accurate chapter/verse counts stored locally for instant access. Features toggle between full book names and abbreviations (e.g., "Genesis" ↔ "Gen").
 - **Premium Text-to-Speech with Tap-to-Read**: Capacitor TTS plugin with intelligent voice selection (iOS: Siri Female/Samantha Enhanced; Android: Google Female/Wavenet). Features: automatic selection of highest quality natural female voice (rate: 0.95, pitch: 1.05), user-selectable voices in Voice Settings, tap-to-read on scripture text, and word-by-word highlighting during playback.
 - **Saved Verses & Notes**: Dedicated pages for bookmarked verses and personal reflections.
 - **Streak Tracking**: Consecutive days counter.
