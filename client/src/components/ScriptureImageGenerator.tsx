@@ -51,7 +51,7 @@ export default function ScriptureImageGenerator({
     backgroundId: 'sunset',
     textPosition: 'center',
     textColor: '#FFFFFF',
-    fontSize: 36,
+    fontSize: 24,
     fontFamily: 'Crimson Text',
     textShadow: true,
   });
@@ -298,9 +298,9 @@ export default function ScriptureImageGenerator({
                     <Slider
                       value={[settings.fontSize]}
                       onValueChange={([value]) => setSettings({ ...settings, fontSize: value })}
-                      min={20}
-                      max={64}
-                      step={2}
+                      min={8}
+                      max={48}
+                      step={1}
                       data-testid="slider-font-size"
                     />
                   </div>

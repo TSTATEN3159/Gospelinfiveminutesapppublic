@@ -117,10 +117,10 @@ export function useImageGenerator() {
       let startY: number;
       switch (settings.textPosition) {
         case 'top':
-          startY = canvas.height * 0.2;
+          startY = canvas.height * 0.1;
           break;
         case 'bottom':
-          startY = canvas.height * 0.8 - totalTextHeight;
+          startY = canvas.height * 0.9 - totalTextHeight;
           break;
         case 'center':
         default:
