@@ -1,3 +1,5 @@
+Here is the full updated hook (you can replace your existing useImageGenerator file with this):
+// client/src/hooks/useImageGenerator.ts
 import { useState, useCallback, useRef } from 'react';
 import { getBackgroundById } from '@/config/backgroundImages';
 
@@ -372,3 +374,100 @@ export function useImageGenerator() {
     canvasRef: canvasRef.current,
   };
 }
+2. Update ScriptureImageGenerator initial settings
+We now need to give defaults for textAlign and showTextPanel.
+Find in File 3:
+  const [settings, setSettings] = useState<ImageSettings>({
+    verseText: initialVerse,
+    verseReference: initialReference,
+    backgroundId: 'sunset',
+    textPosition: 'center',
+    textColor: '#FFFFFF',
+    fontSize: 24,
+    fontFamily: 'Crimson Text',
+    textShadow: true,
+  });
+Replace with:
+  const [settings, setSettings] = useState<ImageSettings>({
+    verseText: initialVerse,
+    verseReference: initialReference,
+    backgroundId: 'sunset',
+    textPosition: 'center',
+    textColor: '#FFFFFF',
+    fontSize: 24,
+    fontFamily: 'Crimson Text',
+    textShadow: true,
+    textAlign: 'center',     // NEW
+    showTextPanel: true,     // NEW
+  });
+The useEffect that updates verse/reference can stay exactly as it is; the rest of the settings are preserved via the spread.
+3. Add “Text Align” controls to Customize tab
+Inside the Customize tab (TabsContent value="customize"), after “Text Position” is a nice place.
+Find this TabsContent section:
+<TabsContent value="customize" className="space-y-6 mt-2">
+  <div className="space-y-6">
+    {/* Text Position */}
+    <div className="space-y-4">
+      <Label className="text-base font-semibold">Text Position</Label>
+      <div className="grid grid-cols-3 gap-2">
+        {(['top', 'center', 'bottom'] as const).map((pos) => (
+          <Button
+            key={pos}
+            onClick={() => setSettings({ ...settings, textPosition: pos })}
+            variant={settings.textPosition === pos ? 'default' : 'outline'}
+            className="capitalize"
+          >
+            {pos}
+          </Button>
+        ))}
+      </div>
+    </div>
+    {/* Font Size */}
+Right after that block, insert this new block:
+    {/* Text Align */}
+    <div className="space-y-4">
+      <Label className="text-base font-semibold">Text Align</Label>
+      <div className="grid grid-cols-3 gap-2">
+        {(['left', 'center', 'right'] as const).map((align) => (
+          <Button
+            key={align}
+            onClick={() => setSettings({ ...settings, textAlign: align })}
+            variant={settings.textAlign === align ? 'default' : 'outline'}
+            className="capitalize"
+          >
+            {align}
+          </Button>
+        ))}
+      </div>
+    </div>
+Now users can pick Left / Center / Right. This will directly drive the canvas alignment.
+4. Add “Text Panel” toggle next to Text Shadow
+You already have a nice card for “Text Shadow”:
+    {/* Text Shadow */}
+    <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+      <Label htmlFor="text-shadow" className="text-base font-semibold">Text Shadow</Label>
+      <Switch
+        id="text-shadow"
+        checked={settings.textShadow}
+        onCheckedChange={(checked) => setSettings({ ...settings, textShadow: checked })}
+      />
+    </div>
+Underneath it, add:
+    {/* Text Panel */}
+    <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+      <Label htmlFor="text-panel" className="text-base font-semibold">Background Panel</Label>
+      <Switch
+        id="text-panel"
+        checked={settings.showTextPanel}
+        onCheckedChange={(checked) => setSettings({ ...settings, showTextPanel: checked })}
+      />
+    </div>
+Now power users can turn the translucent panel on/off.
+What you should see after these changes
+When you choose Top, the entire verse block hugs the upper safe margin (with padding), not floating in the center.
+Long Scripture passages auto-shrink to fit gracefully inside the 1080×1080 image with margins.
+The verse never runs off the edges or collapses into a weird single line.
+You can create:
+Centered devotional cards (center / center / panel ON).
+Left-aligned teaching cards (top / left / panel ON).
+Minimalist designs (any alignment, panel OFF, maybe no shadow).

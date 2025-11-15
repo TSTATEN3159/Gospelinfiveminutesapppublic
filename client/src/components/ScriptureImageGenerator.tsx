@@ -57,6 +57,8 @@ export default function ScriptureImageGenerator({
     fontSize: 24,
     fontFamily: 'Crimson Text',
     textShadow: true,
+    textAlign: 'center',
+    showTextPanel: true,
   });
 
   const [previewUrl, setPreviewUrl] = useState<string | null>(null);
@@ -423,6 +425,23 @@ export default function ScriptureImageGenerator({
                   </div>
 
                   <div className="space-y-4">
+                    <Label className="text-base font-semibold">Text Align</Label>
+                    <div className="grid grid-cols-3 gap-2">
+                      {(['left', 'center', 'right'] as const).map((align) => (
+                        <Button
+                          key={align}
+                          onClick={() => setSettings({ ...settings, textAlign: align })}
+                          variant={settings.textAlign === align ? 'default' : 'outline'}
+                          className="capitalize"
+                          data-testid={`align-${align}`}
+                        >
+                          {align}
+                        </Button>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="space-y-4">
                     <Label className="text-base font-semibold">Font Size: {settings.fontSize}px</Label>
                     <Slider
                       value={[settings.fontSize]}
@@ -479,6 +498,16 @@ export default function ScriptureImageGenerator({
                       checked={settings.textShadow}
                       onCheckedChange={(checked) => setSettings({ ...settings, textShadow: checked })}
                       data-testid="switch-text-shadow"
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between p-4 bg-muted rounded-lg">
+                    <Label htmlFor="text-panel" className="text-base font-semibold">Background Panel</Label>
+                    <Switch
+                      id="text-panel"
+                      checked={settings.showTextPanel}
+                      onCheckedChange={(checked) => setSettings({ ...settings, showTextPanel: checked })}
+                      data-testid="switch-text-panel"
                     />
                   </div>
                 </div>
