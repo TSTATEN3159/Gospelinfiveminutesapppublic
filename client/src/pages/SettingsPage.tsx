@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2 } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { bibleService } from "../services/bibleService";
 import { appStore } from "@/lib/appStore";
@@ -570,6 +570,16 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
               value={preferences.bibleVersion}
               onChange={(value) => handlePreferenceChange('bibleVersion', value)}
             />
+            
+            <Button 
+              variant="outline" 
+              className="w-full mt-4" 
+              onClick={() => onNavigate?.('voice-settings')}
+              data-testid="button-voice-settings"
+            >
+              <Volume2 className="w-4 h-4 mr-2" />
+              Voice Settings
+            </Button>
           </CardContent>
         </Card>
 

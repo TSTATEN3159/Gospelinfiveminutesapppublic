@@ -1,14 +1,29 @@
 import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { safeLocalStorage } from '@/utils/capabilities';
 
 /**
  * Premium Voice Player for iOS and Android
- * Automatically selects the best natural female voice:
+ * Supports user-selected voices or automatically selects the best natural female voice:
  * - iOS: Siri Female, Samantha Enhanced, or best available female
  * - Android: Google Female, Wavenet, or best available female
  */
 
 let cachedVoices: SpeechSynthesisVoice[] | null = null;
 let bestFemaleVoiceIndex: number | undefined = undefined;
+
+/**
+ * Get all available voices for the device
+ */
+export async function getAvailableVoices(): Promise<SpeechSynthesisVoice[]> {
+  try {
+    const { voices } = await TextToSpeech.getSupportedVoices();
+    cachedVoices = voices;
+    return voices || [];
+  } catch (err) {
+    console.error("Error getting voices:", err);
+    return [];
+  }
+}
 
 /**
  * Find the best natural female voice available
@@ -101,7 +116,22 @@ async function getBestFemaleVoice(lang: string = 'en-US'): Promise<number | unde
 
 export async function speak(text: string, lang: string = 'en-US') {
   try {
-    const voiceIndex = await getBestFemaleVoice(lang);
+    // Check if user has a preferred voice selected
+    const preferredVoiceIndex = safeLocalStorage.getItem("preferredVoiceIndex");
+    let voiceIndex: number | undefined;
+
+    if (preferredVoiceIndex !== null) {
+      const index = parseInt(preferredVoiceIndex, 10);
+      if (!isNaN(index)) {
+        voiceIndex = index;
+        console.log(`Using user-selected voice: index ${voiceIndex}`);
+      }
+    }
+
+    // If no user preference, auto-select best female voice
+    if (voiceIndex === undefined) {
+      voiceIndex = await getBestFemaleVoice(lang);
+    }
 
     await TextToSpeech.speak({
       text,

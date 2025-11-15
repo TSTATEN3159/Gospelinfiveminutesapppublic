@@ -15,6 +15,7 @@ import ErrorBoundary from "./components/ErrorBoundary";
 import NetworkStatus from "./components/NetworkStatus";
 import { ThemeProvider } from "./components/ThemeProvider";
 import { GlobalErrorBanner } from "./components/GlobalErrorBanner";
+import { VoiceSettingsProvider } from "./context/VoiceSettingsContext";
 
 // Initialize auto-recovery services
 import { silentLogger } from "./services/silentLogger";
@@ -43,6 +44,7 @@ import ReadingPlanDetailPage from "./pages/ReadingPlanDetailPage";
 import ScreenshotToolPage from "./pages/ScreenshotToolPage";
 import PlainMeaningPage from "./pages/PlainMeaningPage";
 import InstantApplicationPage from "./pages/InstantApplicationPage";
+import VoiceSettingsPage from "./pages/VoiceSettingsPage";
 
 interface User {
   firstName: string;
@@ -54,7 +56,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings";
 
 function MainApp() {
   const [user, setUser] = useState<User | null>(null);
@@ -180,7 +182,7 @@ function MainApp() {
   };
 
   const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "paywall"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "paywall"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       if (searchQuery) {
@@ -264,6 +266,8 @@ function MainApp() {
               return <PlainMeaningPage onNavigate={handleNavigateToLegal} />;
             case "instant-application":
               return <InstantApplicationPage onNavigate={handleNavigateToLegal} />;
+            case "voice-settings":
+              return <VoiceSettingsPage />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -272,8 +276,9 @@ function MainApp() {
   return (
     <ErrorBoundary>
       <ThemeProvider defaultTheme="system" storageKey="gospel-app-theme">
-        <QueryClientProvider client={queryClient}>
-          <TooltipProvider>
+        <VoiceSettingsProvider>
+          <QueryClientProvider client={queryClient}>
+            <TooltipProvider>
             <GlobalErrorBanner />
             <div className="min-h-screen bg-background">
               {/* Network Status - Apple-compliant auto-recovery */}
@@ -285,7 +290,7 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings"].includes(currentPage) && (
                 <BottomNavigation 
                   currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
@@ -314,6 +319,7 @@ function MainApp() {
             </div>
           </TooltipProvider>
         </QueryClientProvider>
+        </VoiceSettingsProvider>
       </ThemeProvider>
     </ErrorBoundary>
   );

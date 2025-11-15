@@ -1,0 +1,119 @@
+Create Voice Settings Context
+
+📌 client/src/context/VoiceSettingsContext.tsx
+
+import React, { createContext, useContext, useState, useEffect } from "react";
+
+interface VoiceSettings {
+  voice: string;
+  setVoice: (v: string) => void;
+}
+
+const VoiceSettingsContext = createContext<VoiceSettings | undefined>(undefined);
+
+export const VoiceSettingsProvider: React.FC<{ children: any }> = ({ children }) => {
+  const [voice, setVoiceState] = useState("default");
+
+  useEffect(() => {
+    const stored = localStorage.getItem("preferredVoice");
+    if (stored) setVoiceState(stored);
+  }, []);
+
+  const setVoice = (v: string) => {
+    setVoiceState(v);
+    localStorage.setItem("preferredVoice", v);
+  };
+
+  return (
+    <VoiceSettingsContext.Provider value={{ voice, setVoice }}>
+      {children}
+    </VoiceSettingsContext.Provider>
+  );
+};
+
+export const useVoiceSettings = () => {
+  const ctx = useContext(VoiceSettingsContext);
+  if (!ctx) throw new Error("useVoiceSettings must be inside VoiceSettingsProvider");
+  return ctx;
+};
+
+2️⃣ Use the Voice Setting in Your TTS Player
+
+📌 client/src/utils/voicePlayer.ts
+
+import { TextToSpeech } from '@capacitor-community/text-to-speech';
+import { useVoiceSettings } from '@/context/VoiceSettingsContext';
+
+export async function speak(text: string) {
+  const defaultVoice = localStorage.getItem("preferredVoice") || "default";
+
+  await TextToSpeech.speak({
+    text,
+    lang: "en-US",
+    rate: 1.0,
+    pitch: 1.0,
+    volume: 1.0,
+    voice: defaultVoice === "default" ? undefined : defaultVoice,
+    category: "playback",
+  });
+}
+
+3️⃣ Build a Voice Selection Screen
+
+📌 client/src/pages/VoiceSettingsPage.tsx
+
+import { useVoiceSettings } from "@/context/VoiceSettingsContext";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+const VOICE_OPTIONS = [
+  { id: "com.apple.ttsbundle.Siri_Female_en-US_premium", label: "Female — Warm US" },
+  { id: "com.apple.ttsbundle.Siri_Male_en-US_premium", label: "Male — Deep US" },
+  { id: "en-GB_female", label: "British Female — Soft Accent" },
+  { id: "en-GB_male", label: "British Male — Classic Narrator" },
+  { id: "en-US-AA_female", label: "African-American English Female" }, // Only if available
+  { id: "default", label: "System Default" },
+];
+
+export default function VoiceSettingsPage() {
+  const { voice, setVoice } = useVoiceSettings();
+
+  return (
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Preferred Voice</h1>
+
+      {VOICE_OPTIONS.map(v => (
+        <Card
+          key={v.id}
+          className={`p-4 mb-2 cursor-pointer border-2 ${
+            voice === v.id ? "border-blue-500" : "border-gray-200"
+          }`}
+          onClick={() => setVoice(v.id)}
+        >
+          {v.label}
+        </Card>
+      ))}
+
+      <Button
+        className="w-full mt-4"
+        onClick={() => alert("Voice preference saved!")}
+      >
+        Save Voice
+      </Button>
+    </div>
+  );
+}
+
+4️⃣ Wrap the Entire App with Provider
+
+📌 client/src/App.tsx
+
+import { VoiceSettingsProvider } from "@/context/VoiceSettingsContext";
+
+function App() {
+  return (
+    <VoiceSettingsProvider>
+      {/* your app pages */}
+    </VoiceSettingsProvider>
+  );
+}
