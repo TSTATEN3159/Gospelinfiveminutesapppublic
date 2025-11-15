@@ -101,9 +101,20 @@ export function useImageGenerator() {
         ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
       }
 
-      const maxTextWidth = canvas.width * 0.8;
       ctx.font = `${settings.fontSize}px "${settings.fontFamily}"`;
-      const verseLines = wrapText(ctx, settings.verseText, maxTextWidth);
+      
+      let maxTextWidth = canvas.width * 0.7;
+      let verseLines = wrapText(ctx, settings.verseText, maxTextWidth);
+      
+      if (settings.verseText.length > 50 && verseLines.length === 1) {
+        maxTextWidth = canvas.width * 0.6;
+        verseLines = wrapText(ctx, settings.verseText, maxTextWidth);
+      }
+      
+      if (settings.verseText.length > 80 && verseLines.length < 3) {
+        maxTextWidth = canvas.width * 0.55;
+        verseLines = wrapText(ctx, settings.verseText, maxTextWidth);
+      }
       
       ctx.font = `${settings.fontSize * 0.7}px "${settings.fontFamily}"`;
       const referenceLines = wrapText(ctx, settings.verseReference, maxTextWidth);
