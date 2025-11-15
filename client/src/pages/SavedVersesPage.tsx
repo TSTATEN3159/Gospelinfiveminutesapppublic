@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { BookmarkCheck, BookmarkX, ChevronLeft, Book, Loader2 } from "lucide-react";
+import { BookmarkCheck, BookmarkX, ChevronLeft, Book, Loader2, Image as ImageIcon } from "lucide-react";
 import { appStore } from "@/lib/appStore";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/dialog";
 import { useBibleSearchMutation } from "@/hooks/useBibleSearch";
 import { runSafely } from "@/utils/featureGuard";
+import ScriptureImageGenerator from "@/components/ScriptureImageGenerator";
 
 interface SavedVersesPageProps {
   onBack?: () => void;
@@ -29,6 +30,7 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
   const [bookmarks, setBookmarks] = useState<string[]>([]);
   const [selectedVerse, setSelectedVerse] = useState<VerseContent | null>(null);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isImageGeneratorOpen, setIsImageGeneratorOpen] = useState(false);
   const { toast } = useToast();
   const t = useTranslations(language);
   const searchMutation = useBibleSearchMutation();
@@ -197,6 +199,20 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
                 <p className="text-sm font-semibold text-gray-600">
                   - {selectedVerse.reference}
                 </p>
+                <div className="pt-2">
+                  <Button
+                    onClick={() => {
+                      setIsDialogOpen(false);
+                      setIsImageGeneratorOpen(true);
+                    }}
+                    variant="outline"
+                    className="w-full"
+                    data-testid="button-create-image"
+                  >
+                    <ImageIcon className="w-4 h-4 mr-2" />
+                    Create Image
+                  </Button>
+                </div>
               </div>
             ) : (
               <p className="text-gray-500 text-center py-4">
@@ -206,6 +222,16 @@ export default function SavedVersesPage({ onBack, language = "en" }: SavedVerses
           </div>
         </DialogContent>
       </Dialog>
+
+      {/* Scripture Image Generator */}
+      {selectedVerse && (
+        <ScriptureImageGenerator
+          open={isImageGeneratorOpen}
+          onOpenChange={setIsImageGeneratorOpen}
+          initialVerse={selectedVerse.text}
+          initialReference={selectedVerse.reference}
+        />
+      )}
     </div>
   );
 }
