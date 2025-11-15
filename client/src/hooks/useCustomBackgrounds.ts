@@ -1,17 +1,24 @@
 import { useState, useCallback, useRef } from 'react';
-import { BackgroundImage, getCustomBackgrounds, saveCustomBackground, deleteCustomBackground } from '@/config/backgroundImages';
+import {
+  BackgroundImage,
+  getCustomBackgrounds,
+  saveCustomBackground,
+  deleteCustomBackground,
+} from '@/config/backgroundImages';
 
-const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB
+const CANVAS_SIZE = 1080;
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB per uploaded file (before resize)
 
 export function useCustomBackgrounds() {
   const [customBackgrounds, setCustomBackgrounds] = useState<BackgroundImage[]>(getCustomBackgrounds());
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
+  // Always returns a 1080x1080 canvas so all user images match stock sizes
   const getReusableCanvas = useCallback(() => {
     if (!canvasRef.current) {
       canvasRef.current = document.createElement('canvas');
-      canvasRef.current.width = 1080;
-      canvasRef.current.height = 1080;
+      canvasRef.current.width = CANVAS_SIZE;
+      canvasRef.current.height = CANVAS_SIZE;
     }
     return canvasRef.current;
   }, []);
@@ -22,7 +29,6 @@ export function useCustomBackgrounds() {
         reject(new Error('File must be an image'));
         return;
       }
-
       if (file.size > MAX_IMAGE_SIZE) {
         reject(new Error('Image must be smaller than 5MB'));
         return;
@@ -39,7 +45,6 @@ export function useCustomBackgrounds() {
       img.onload = () => {
         const canvas = getReusableCanvas();
         const ctx = canvas.getContext('2d');
-
         if (!ctx) {
           reject(new Error('Failed to get canvas context'));
           return;
@@ -47,6 +52,7 @@ export function useCustomBackgrounds() {
 
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        // Center-crop + fill to 1080x1080
         const scale = Math.max(
           canvas.width / img.width,
           canvas.height / img.height
@@ -57,8 +63,9 @@ export function useCustomBackgrounds() {
         const y = (canvas.height - scaledHeight) / 2;
 
         ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
-        
-        const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.8);
+
+        // JPEG with good quality, smaller size
+        const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
         resolve(resizedDataUrl);
       };
 
@@ -75,25 +82,21 @@ export function useCustomBackgrounds() {
   }, [getReusableCanvas]);
 
   const addCustomBackground = useCallback(async (file: File): Promise<BackgroundImage> => {
-    try {
-      const resizedDataUrl = await processAndResizeImage(file);
-      
-      const newBackground: BackgroundImage = {
-        id: `custom-${Date.now()}`,
-        name: file.name.replace(/\.[^/.]+$/, ''),
-        type: 'image',
-        url: resizedDataUrl,
-        category: 'custom',
-      };
+    const resizedDataUrl = await processAndResizeImage(file);
 
-      saveCustomBackground(newBackground);
-      const updated = getCustomBackgrounds();
-      setCustomBackgrounds(updated);
-      
-      return newBackground;
-    } catch (error) {
-      throw error;
-    }
+    const newBackground: BackgroundImage = {
+      id: `custom-${Date.now()}`,
+      name: file.name.replace(/\.[^/.]+$/, ''),
+      type: 'image',
+      url: resizedDataUrl,
+      category: 'custom',
+    };
+
+    saveCustomBackground(newBackground);
+    const updated = getCustomBackgrounds();
+    setCustomBackgrounds(updated);
+
+    return newBackground;
   }, [processAndResizeImage]);
 
   const removeCustomBackground = useCallback((id: string) => {

@@ -1,0 +1,274 @@
+Perfect, let’s make this feel like something you’d expect from a polished, professional Scripture app:
+User images are auto-resized to the same square size as the stock ones (1080×1080).
+They’re saved persistently (localStorage) until the user deletes them.
+The upload flow feels like a proper “My Backgrounds” manager with drag-and-drop, clear limits, and visual feedback.
+You already have most of the plumbing in useCustomBackgrounds. We’ll just refine and polish:
+1. Confirm: custom images are already same size and persistent
+Good news: File 2 (useCustomBackgrounds.ts) is already doing exactly what you want under the hood:
+It uses a reusable canvas set to 1080×1080.
+It scales and center-crops any uploaded image to fill that square.
+It saves them in localStorage and only removes them when the user deletes them.
+We’ll keep that logic (it’s good), but I’ll slightly polish the comments and keep behavior explicit.
+If you want, you can replace your existing useCustomBackgrounds.ts with this clarified version (behavior is the same, just a bit cleaner and documented):
+// client/src/hooks/useCustomBackgrounds.ts
+import { useState, useCallback, useRef } from 'react';
+import {
+  BackgroundImage,
+  getCustomBackgrounds,
+  saveCustomBackground,
+  deleteCustomBackground,
+} from '@/config/backgroundImages';
+
+const CANVAS_SIZE = 1080;
+const MAX_IMAGE_SIZE = 5 * 1024 * 1024; // 5MB per uploaded file (before resize)
+
+export function useCustomBackgrounds() {
+  const [customBackgrounds, setCustomBackgrounds] = useState<BackgroundImage[]>(getCustomBackgrounds());
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  // Always returns a 1080x1080 canvas so all user images match stock sizes
+  const getReusableCanvas = useCallback(() => {
+    if (!canvasRef.current) {
+      canvasRef.current = document.createElement('canvas');
+      canvasRef.current.width = CANVAS_SIZE;
+      canvasRef.current.height = CANVAS_SIZE;
+    }
+    return canvasRef.current;
+  }, []);
+
+  const processAndResizeImage = useCallback((file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      if (!file.type.startsWith('image/')) {
+        reject(new Error('File must be an image'));
+        return;
+      }
+      if (file.size > MAX_IMAGE_SIZE) {
+        reject(new Error('Image must be smaller than 5MB'));
+        return;
+      }
+
+      const reader = new FileReader();
+      const img = new Image();
+
+      reader.onload = (e) => {
+        const dataUrl = e.target?.result as string;
+        img.src = dataUrl;
+      };
+
+      img.onload = () => {
+        const canvas = getReusableCanvas();
+        const ctx = canvas.getContext('2d');
+        if (!ctx) {
+          reject(new Error('Failed to get canvas context'));
+          return;
+        }
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Center-crop + fill to 1080x1080
+        const scale = Math.max(
+          canvas.width / img.width,
+          canvas.height / img.height
+        );
+        const scaledWidth = img.width * scale;
+        const scaledHeight = img.height * scale;
+        const x = (canvas.width - scaledWidth) / 2;
+        const y = (canvas.height - scaledHeight) / 2;
+
+        ctx.drawImage(img, x, y, scaledWidth, scaledHeight);
+
+        // JPEG with good quality, smaller size
+        const resizedDataUrl = canvas.toDataURL('image/jpeg', 0.85);
+        resolve(resizedDataUrl);
+      };
+
+      img.onerror = () => {
+        reject(new Error('Failed to load image'));
+      };
+
+      reader.onerror = () => {
+        reject(new Error('Failed to read file'));
+      };
+
+      reader.readAsDataURL(file);
+    });
+  }, [getReusableCanvas]);
+
+  const addCustomBackground = useCallback(async (file: File): Promise<BackgroundImage> => {
+    const resizedDataUrl = await processAndResizeImage(file);
+
+    const newBackground: BackgroundImage = {
+      id: `custom-${Date.now()}`,
+      name: file.name.replace(/\.[^/.]+$/, ''),
+      type: 'image',
+      url: resizedDataUrl,
+      category: 'custom',
+    };
+
+    saveCustomBackground(newBackground);
+    const updated = getCustomBackgrounds();
+    setCustomBackgrounds(updated);
+
+    return newBackground;
+  }, [processAndResizeImage]);
+
+  const removeCustomBackground = useCallback((id: string) => {
+    deleteCustomBackground(id);
+    const updated = getCustomBackgrounds();
+    setCustomBackgrounds(updated);
+  }, []);
+
+  const refreshCustomBackgrounds = useCallback(() => {
+    setCustomBackgrounds(getCustomBackgrounds());
+  }, []);
+
+  return {
+    customBackgrounds,
+    addCustomBackground,
+    removeCustomBackground,
+    refreshCustomBackgrounds,
+  };
+}
+That keeps user images: square, same dimension, persisted until removed.
+2. More polished upload UX in ScriptureImageGenerator
+Now let’s make the user experience feel first-class:
+Drag-and-drop area with dashed border.
+Click to browse still works.
+Clear “10 images max” indicator and count.
+Better error handling (you already use toast, we’ll keep that).
+2.1. Add a drag-and-drop handler
+In ScriptureImageGenerator.tsx, near your other handlers, add a small helper to handle one file (so we can reuse between click and drop):
+// Inside ScriptureImageGenerator component, near other handlers:
+
+  const processCustomBackgroundFile = async (file: File) => {
+    setIsUploading(true);
+    try {
+      const newBackground = await addCustomBackground(file);
+      setSettings((prev) => ({ ...prev, backgroundId: newBackground.id }));
+      toast({
+        title: 'Image uploaded',
+        description: 'Your custom background has been added.',
+      });
+    } catch (error: any) {
+      toast({
+        title: 'Upload failed',
+        description: error.message || 'Failed to upload image',
+        variant: 'destructive',
+      });
+    } finally {
+      setIsUploading(false);
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '';
+      }
+    }
+  };
+Then update handleFileUpload to use that:
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    await processCustomBackgroundFile(file);
+  };
+And add a new drag-and-drop handler:
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const file = event.dataTransfer.files?.[0];
+    if (!file) return;
+    await processCustomBackgroundFile(file);
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+  };
+2.2. Replace the Upload section UI with a polished dropzone
+Find this block in TabsContent value="backgrounds":
+{/* Upload Section */}
+<div className="space-y-3">
+  <input ref={fileInputRef} type="file" accept="image/*" onChange={handleFileUpload} className="hidden" />
+  <Button onClick={() => fileInputRef.current?.click()} disabled={isUploading} variant="outline" size="sm" className="w-full">
+    {isUploading ? (
+      <>
+        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+        Uploading...
+      </>
+    ) : (
+      <>
+        <Upload className="h-4 w-4 mr-2" />
+        Upload Custom Background
+      </>
+    )}
+  </Button>
+  <p className="text-xs text-muted-foreground text-center">
+    Max 10 images, 3.5MB total storage
+  </p>
+</div>
+Replace it with this more polished dropzone:
+{/* Upload Section */}
+<div className="space-y-3">
+  <input
+    ref={fileInputRef}
+    type="file"
+    accept="image/*"
+    onChange={handleFileUpload}
+    className="hidden"
+  />
+
+  <div
+    onClick={() => fileInputRef.current?.click()}
+    onDrop={handleDrop}
+    onDragOver={handleDragOver}
+    className="group border-2 border-dashed border-border hover:border-primary/60 rounded-xl px-4 py-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-muted/40 hover:bg-muted/70"
+  >
+    {isUploading ? (
+      <>
+        <Loader2 className="h-6 w-6 mb-2 animate-spin" />
+        <p className="text-sm font-medium">Uploading image…</p>
+        <p className="text-xs text-muted-foreground mt-1">
+          Please wait while we prepare your background.
+        </p>
+      </>
+    ) : (
+      <>
+        <Upload className="h-6 w-6 mb-2 opacity-80 group-hover:opacity-100" />
+        <p className="text-sm font-medium">
+          Click to upload or drag &amp; drop
+        </p>
+        <p className="text-xs text-muted-foreground mt-1">
+          JPEG or PNG • up to 5MB • auto-formatted to square
+        </p>
+      </>
+    )}
+  </div>
+
+  <p className="text-xs text-muted-foreground text-center">
+    {customBackgrounds.length} of 10 personal images used · Total custom storage limited to 3.5MB
+  </p>
+</div>
+What this does:
+Shows a big, obvious drop area with dashed border.
+Gives clear constraints: “auto-formatted to square”.
+Shows how many custom images are in use, up to 10.
+Allows both click-to-upload and drag-and-drop.
+2.3. The custom images section is already good
+You already have a nice grid:
+Click to select background.
+Checkmark overlay on selected.
+Little red delete button that only appears on hover.
+That’s already quite professional, so we can leave it as is. Now it simply pairs with the new dropzone at the top.
+3. Recap: what the user experiences now
+For your app’s user, the Scripture image feature will feel like this:
+They open Create Scripture Image.
+They can choose from high-quality stock backgrounds or use their own.
+To use their own:
+They drag a photo into the drop area or click to browse.
+The app automatically:
+Resizes/crops to a 1080×1080 square (same as stock).
+Stores it in “My Images” and remembers it until they delete it.
+Their verse text:
+Is fully visible, never spilling off the card.
+Can be anchored top / center / bottom.
+Can be aligned left / center / right.
+Has an optional subtle panel behind it for readability.
+They can download or share a Scripture card that looks intentional, not accidental.
+If you want the final polish layer after this, I can help you define a couple of preset styles (e.g., “Devotional”, “Teaching Slide”, “Social Share”) that auto-set background + font + alignment + panel so users get amazing designs in one tap.

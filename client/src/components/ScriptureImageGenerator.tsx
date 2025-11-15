@@ -80,14 +80,11 @@ export default function ScriptureImageGenerator({
     }
   }, [settings, open, refreshCustomBackgrounds]);
 
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
+  const processCustomBackgroundFile = async (file: File) => {
     setIsUploading(true);
     try {
       const newBackground = await addCustomBackground(file);
-      setSettings({ ...settings, backgroundId: newBackground.id });
+      setSettings((prev) => ({ ...prev, backgroundId: newBackground.id }));
       toast({
         title: 'Image uploaded',
         description: 'Your custom background has been added.',
@@ -104,6 +101,25 @@ export default function ScriptureImageGenerator({
         fileInputRef.current.value = '';
       }
     }
+  };
+
+  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    await processCustomBackgroundFile(file);
+  };
+
+  const handleDrop = async (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
+    const file = event.dataTransfer.files?.[0];
+    if (!file) return;
+    await processCustomBackgroundFile(file);
+  };
+
+  const handleDragOver = (event: React.DragEvent<HTMLDivElement>) => {
+    event.preventDefault();
+    event.stopPropagation();
   };
 
   const handleDeleteCustomBackground = (id: string) => {
@@ -287,28 +303,37 @@ export default function ScriptureImageGenerator({
                         className="hidden"
                         data-testid="input-upload-image"
                       />
-                      <Button
+
+                      <div
                         onClick={() => fileInputRef.current?.click()}
-                        disabled={isUploading}
-                        variant="outline"
-                        size="sm"
-                        className="w-full"
-                        data-testid="button-upload-image"
+                        onDrop={handleDrop}
+                        onDragOver={handleDragOver}
+                        className="group border-2 border-dashed border-border hover:border-primary/60 rounded-xl px-4 py-6 flex flex-col items-center justify-center text-center cursor-pointer transition-colors bg-muted/40 hover:bg-muted/70"
+                        data-testid="dropzone-upload"
                       >
                         {isUploading ? (
                           <>
-                            <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                            Uploading...
+                            <Loader2 className="h-6 w-6 mb-2 animate-spin" />
+                            <p className="text-sm font-medium">Uploading image…</p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              Please wait while we prepare your background.
+                            </p>
                           </>
                         ) : (
                           <>
-                            <Upload className="h-4 w-4 mr-2" />
-                            Upload Custom Background
+                            <Upload className="h-6 w-6 mb-2 opacity-80 group-hover:opacity-100" />
+                            <p className="text-sm font-medium">
+                              Click to upload or drag &amp; drop
+                            </p>
+                            <p className="text-xs text-muted-foreground mt-1">
+                              JPEG or PNG • up to 5MB • auto-formatted to square
+                            </p>
                           </>
                         )}
-                      </Button>
+                      </div>
+
                       <p className="text-xs text-muted-foreground text-center">
-                        Max 10 images, 3.5MB total storage
+                        {customBackgrounds.length} of 10 personal images used · Total custom storage limited to 3.5MB
                       </p>
                     </div>
 
