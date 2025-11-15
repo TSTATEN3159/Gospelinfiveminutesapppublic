@@ -73,3 +73,4 @@ Preferred communication style: Simple, everyday language.
 
 ### Deployment & Updates
 - **Capacitor Live Updates**: Over-the-air (OTA) updates via Ionic Appflow (background updates, 3 cached versions).
+- **iOS Version Management**: Automated version control script (`scripts/version.js`) that synchronizes version numbers across package.json and Info.plist. Supports semantic versioning (major.minor.patch), auto-incrementing build numbers, and provides commands for showing, incrementing, setting, and syncing versions. See VERSION_MANAGEMENT.md for complete usage guide.
