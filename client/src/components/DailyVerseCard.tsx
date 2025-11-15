@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX } from "lucide-react";
+import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX, Image as ImageIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
@@ -16,6 +16,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
+import ScriptureImageGenerator from "./ScriptureImageGenerator";
 
 interface Verse {
   text: string;
@@ -42,6 +43,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   const [noteText, setNoteText] = useState("");
   const [isNoteDialogOpen, setIsNoteDialogOpen] = useState(false);
   const [hasExistingNote, setHasExistingNote] = useState(false);
+  const [isImageGeneratorOpen, setIsImageGeneratorOpen] = useState(false);
 
   useEffect(() => {
     const bookmarks = appStore.getBookmarks();
@@ -336,6 +338,17 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
           <Button
             variant="outline"
             size="sm"
+            onClick={() => setIsImageGeneratorOpen(true)}
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            data-testid="button-create-image-daily"
+          >
+            <ImageIcon className="w-4 h-4 mr-2" />
+            Create Image
+          </Button>
+          
+          <Button
+            variant="outline"
+            size="sm"
             onClick={goToChapter}
             className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
             data-testid="button-chapter"
@@ -345,6 +358,14 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
           </Button>
         </div>
       </CardContent>
+      
+      {/* Scripture Image Generator */}
+      <ScriptureImageGenerator
+        open={isImageGeneratorOpen}
+        onOpenChange={setIsImageGeneratorOpen}
+        initialVerse={verse.text}
+        initialReference={verse.reference}
+      />
     </Card>
   );
 }
