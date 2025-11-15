@@ -22,6 +22,7 @@ Preferred communication style: Simple, everyday language.
 - **State Management**: React hooks for local state, TanStack Query for server state and caching.
 - **Navigation**: Custom bottom navigation (Home, Ask, Search, More).
 - **Mobile-First Design**: Responsive layout optimized for mobile, gesture-friendly interfaces, PWA-ready, and performance-optimized.
+- **Native Pinch Zoom**: Enabled via viewport meta tag (`user-scalable=yes, minimum-scale=1, maximum-scale=5`) and CSS touch-action (`pan-x pan-y`) for iOS-native two-finger pinch zoom across entire app (November 2025).
 - **Accessibility**: Full iOS compliance including 44pt tap targets, safe area support, VoiceOver, high contrast, and reduced motion adaptations.
 - **Internationalization**: ALL 17 pages fully support 7 languages (English, Spanish, French, Portuguese, Chinese, Arabic, Hindi) with 200+ translation keys.
 - **Offline Functionality**: Network status indicator, bookmarks, and notes persistence.

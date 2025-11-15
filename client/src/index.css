@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  /* IMPORTANT: allow native scroll & pinch */
+  touch-action: pan-x pan-y;
+}
+
 /* LIGHT MODE */
 :root {
   --text-scale: 1;
