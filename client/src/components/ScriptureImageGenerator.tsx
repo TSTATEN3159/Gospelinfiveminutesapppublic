@@ -310,7 +310,7 @@ export default function ScriptureImageGenerator({
                         )}
                       </Button>
                       <p className="text-xs text-muted-foreground">
-                        Max 10 images, 5MB each. Images will be resized to 1080×1080px.
+                        Max 10 images, 3.5MB total storage. Images will be resized to 1080×1080px.
                       </p>
                     </div>
 

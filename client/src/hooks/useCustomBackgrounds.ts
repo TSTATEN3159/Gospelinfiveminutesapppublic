@@ -81,7 +81,7 @@ export function useCustomBackgrounds() {
       const newBackground: BackgroundImage = {
         id: `custom-${Date.now()}`,
         name: file.name.replace(/\.[^/.]+$/, ''),
-        type: 'custom',
+        type: 'image',
         url: resizedDataUrl,
         category: 'custom',
       };

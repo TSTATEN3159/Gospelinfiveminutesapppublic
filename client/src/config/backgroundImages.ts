@@ -20,7 +20,7 @@ import eagle from '@assets/stock_images/majestic_eagle_soari_7a8606d5.jpg';
 import wheatField from '@assets/stock_images/wheat_field_golden_h_fa612f71.jpg';
 import cross from '@assets/stock_images/cross_silhouette_sun_9382d340.jpg';
 
-export type BackgroundType = 'image' | 'solid-color' | 'custom';
+export type BackgroundType = 'image' | 'solid-color';
 
 export interface BackgroundImage {
   id: string;
