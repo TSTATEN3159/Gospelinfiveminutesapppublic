@@ -20,7 +20,7 @@ import eagle from '@assets/stock_images/majestic_eagle_soari_7a8606d5.jpg';
 import wheatField from '@assets/stock_images/wheat_field_golden_h_fa612f71.jpg';
 import cross from '@assets/stock_images/cross_silhouette_sun_9382d340.jpg';
 
-export type BackgroundType = 'image' | 'solid-color';
+export type BackgroundType = 'image' | 'solid-color' | 'custom';
 
 export interface BackgroundImage {
   id: string;
@@ -28,7 +28,7 @@ export interface BackgroundImage {
   type: BackgroundType;
   url?: string;
   color?: string;
-  category: 'nature' | 'water' | 'sky' | 'spiritual' | 'solid';
+  category: 'nature' | 'water' | 'sky' | 'spiritual' | 'solid' | 'custom';
 }
 
 export const SOLID_COLORS: BackgroundImage[] = [
@@ -70,9 +70,56 @@ export const BACKGROUND_IMAGES: BackgroundImage[] = [
 ];
 
 export const getBackgroundById = (id: string): BackgroundImage | undefined => {
-  return BACKGROUND_IMAGES.find(bg => bg.id === id);
+  const standardBg = BACKGROUND_IMAGES.find(bg => bg.id === id);
+  if (standardBg) return standardBg;
+  
+  const customBgs = getCustomBackgrounds();
+  return customBgs.find(bg => bg.id === id);
 };
 
 export const getBackgroundsByCategory = (category: BackgroundImage['category']): BackgroundImage[] => {
   return BACKGROUND_IMAGES.filter(bg => bg.category === category);
+};
+
+const MAX_CUSTOM_IMAGES = 10;
+const MAX_TOTAL_SIZE_MB = 3.5;
+
+export const getCustomBackgrounds = (): BackgroundImage[] => {
+  if (typeof window === 'undefined') return [];
+  try {
+    const stored = localStorage.getItem('customBackgrounds');
+    if (!stored) return [];
+    return JSON.parse(stored);
+  } catch {
+    return [];
+  }
+};
+
+export const saveCustomBackground = (image: BackgroundImage): void => {
+  if (typeof window === 'undefined') throw new Error('Storage unavailable');
+  
+  const customs = getCustomBackgrounds();
+  
+  if (customs.length >= MAX_CUSTOM_IMAGES) {
+    throw new Error(`Maximum ${MAX_CUSTOM_IMAGES} custom images allowed`);
+  }
+  
+  const newData = JSON.stringify([...customs, image]);
+  const sizeInMB = new Blob([newData]).size / (1024 * 1024);
+  
+  if (sizeInMB > MAX_TOTAL_SIZE_MB) {
+    throw new Error(`Total image storage exceeds ${MAX_TOTAL_SIZE_MB}MB limit`);
+  }
+  
+  try {
+    localStorage.setItem('customBackgrounds', newData);
+  } catch (e) {
+    throw new Error('Storage quota exceeded - please delete some images');
+  }
+};
+
+export const deleteCustomBackground = (id: string): void => {
+  if (typeof window === 'undefined') return;
+  const customs = getCustomBackgrounds().filter(bg => bg.id !== id);
+  localStorage.setItem('customBackgrounds', JSON.stringify(customs));
 };
