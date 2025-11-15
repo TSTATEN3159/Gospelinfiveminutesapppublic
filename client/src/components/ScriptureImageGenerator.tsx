@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { Label } from '@/components/ui/label';
 import { Slider } from '@/components/ui/slider';
@@ -60,6 +60,14 @@ export default function ScriptureImageGenerator({
   const [generatedBlob, setGeneratedBlob] = useState<Blob | null>(null);
 
   useEffect(() => {
+    setSettings(prev => ({
+      ...prev,
+      verseText: initialVerse,
+      verseReference: initialReference,
+    }));
+  }, [initialVerse, initialReference]);
+
+  useEffect(() => {
     if (open) {
       handleGeneratePreview();
     }
@@ -72,6 +80,11 @@ export default function ScriptureImageGenerator({
       setGeneratedBlob(result.blob);
     } catch (err) {
       console.error('Preview generation failed:', err);
+      toast({
+        title: 'Preview generation failed',
+        description: 'Unable to generate image preview. Please try again.',
+        variant: 'destructive',
+      });
     }
   };
 
@@ -142,6 +155,9 @@ export default function ScriptureImageGenerator({
       <DialogContent className="max-w-4xl max-h-[90vh] overflow-hidden flex flex-col">
         <DialogHeader>
           <DialogTitle>Create Scripture Image</DialogTitle>
+          <DialogDescription>
+            Customize your verse image with beautiful backgrounds and share it with others.
+          </DialogDescription>
         </DialogHeader>
 
         <div className="flex-1 overflow-hidden grid grid-cols-1 md:grid-cols-2 gap-4">
