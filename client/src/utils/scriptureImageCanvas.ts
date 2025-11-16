@@ -22,6 +22,32 @@ function wrapText(
   let current = "";
 
   for (const w of words) {
+    // Check if single word is too long
+    const wordMetrics = ctx.measureText(w);
+    if (wordMetrics.width > maxWidth) {
+      // If we have accumulated text, push it first
+      if (current) {
+        lines.push(current);
+        current = "";
+      }
+      // Split the long word character by character
+      let chunk = "";
+      for (const char of w) {
+        const testChunk = chunk + char;
+        const chunkMetrics = ctx.measureText(testChunk);
+        if (chunkMetrics.width > maxWidth && chunk) {
+          lines.push(chunk);
+          chunk = char;
+        } else {
+          chunk = testChunk;
+        }
+      }
+      if (chunk) {
+        current = chunk;
+      }
+      continue;
+    }
+
     const test = current ? current + " " + w : w;
     const metrics = ctx.measureText(test);
     if (metrics.width > maxWidth && current) {
@@ -72,10 +98,10 @@ export async function drawScriptureImage(
   // Draw background (if loaded)
   ctx.clearRect(0, 0, width, height);
   if (img.width && img.height) {
-    // cover behavior
+    // cover behavior - center the image properly
     const scale = Math.max(width / img.width, height / img.height);
     const x = (width / 2) - (img.width * scale) / 2;
-    const y = (width / 2) - (img.height * scale) / 2;
+    const y = (height / 2) - (img.height * scale) / 2;
     ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
   } else {
     ctx.fillStyle = "#111827";

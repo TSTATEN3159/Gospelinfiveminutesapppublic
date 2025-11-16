@@ -46,7 +46,21 @@ export default function ScriptureImagePage({
   // Redraw whenever main inputs change
   useEffect(() => {
     if (!canvasRef.current || !background) return;
-    if (!verseText || !reference) return;
+
+    // Show validation state if inputs are empty
+    if (!verseText || !reference) {
+      const ctx = canvasRef.current.getContext("2d");
+      if (ctx) {
+        ctx.fillStyle = "#1e293b";
+        ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
+        ctx.fillStyle = "#64748b";
+        ctx.font = "24px system-ui";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText("Enter verse text and reference to preview", CANVAS_WIDTH / 2, CANVAS_HEIGHT / 2);
+      }
+      return;
+    }
 
     let canceled = false;
 
