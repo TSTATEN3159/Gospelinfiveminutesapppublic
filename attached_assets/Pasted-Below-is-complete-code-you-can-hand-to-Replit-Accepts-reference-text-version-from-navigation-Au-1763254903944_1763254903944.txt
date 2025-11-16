@@ -1,0 +1,541 @@
+Below is complete code you can hand to Replit:
+
+Accepts reference, text, version from navigation
+
+Auto-fits the text inside the image (no running off edges)
+
+Centers text by default
+
+Uses curated spiritual backgrounds
+
+Lets the user tweak size, color, & background
+
+Exports a crisp PNG
+
+1️⃣ Spiritual background config
+
+File: client/src/config/scriptureBackgrounds.ts
+
+// client/src/config/scriptureBackgrounds.ts
+
+export interface ScriptureBackground {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;       // Local or remote
+}
+
+export const SCRIPTURE_BACKGROUNDS: ScriptureBackground[] = [
+  {
+    id: "sunrise-mountains",
+    name: "Sunrise over Mountains",
+    description: "Soft sunrise light over distant hills.",
+    imageUrl: "/images/scripture/sunrise-mountains.jpg"
+  },
+  {
+    id: "forest-path",
+    name: "Forest Path",
+    description: "Quiet path through a green forest.",
+    imageUrl: "/images/scripture/forest-path.jpg"
+  },
+  {
+    id: "ocean-horizon",
+    name: "Ocean Horizon",
+    description: "Calm sea and glowing horizon.",
+    imageUrl: "/images/scripture/ocean-horizon.jpg"
+  },
+  {
+    id: "clouds-heaven",
+    name: "Heavenly Clouds",
+    description: "Light breaking through soft clouds.",
+    imageUrl: "/images/scripture/clouds-heaven.jpg"
+  },
+  {
+    id: "wheat-field",
+    name: "Wheat Field",
+    description: "Golden harvest field in warm light.",
+    imageUrl: "/images/scripture/wheat-field.jpg"
+  },
+  {
+    id: "cross-hill",
+    name: "Cross on Hill",
+    description: "Silhouette of a cross at sunset.",
+    imageUrl: "/images/scripture/cross-hill.jpg"
+  },
+  {
+    id: "city-lights",
+    name: "City Lights",
+    description: "Soft bokeh city lights at night.",
+    imageUrl: "/images/scripture/city-lights.jpg"
+  },
+  {
+    id: "desert-dunes",
+    name: "Desert Dunes",
+    description: "Sand dunes with long shadows.",
+    imageUrl: "/images/scripture/desert-dunes.jpg"
+  }
+];
+
+
+🔧 Replit can replace imageUrl paths with whatever matches your project (/public/... or imported assets).
+
+2️⃣ Canvas text auto-fit helper
+
+This is the core that prevents your verse from collapsing into one line or running off the edges. It:
+
+Wraps text into multiple lines
+
+Shrinks font until it fits within a padded box
+
+Keeps everything centered
+
+File: client/src/utils/scriptureImageCanvas.ts
+
+// client/src/utils/scriptureImageCanvas.ts
+
+interface DrawOptions {
+  verseText: string;
+  reference: string;
+  version?: string;
+  backgroundUrl: string;
+  width: number;
+  height: number;
+  baseFontSize: number;      // Max starting size from slider
+  minFontSize?: number;
+  textColor?: string;
+}
+
+function wrapText(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  maxWidth: number
+): string[] {
+  const words = text.split(/\s+/);
+  const lines: string[] = [];
+  let current = "";
+
+  for (const w of words) {
+    const test = current ? current + " " + w : w;
+    const metrics = ctx.measureText(test);
+    if (metrics.width > maxWidth && current) {
+      lines.push(current);
+      current = w;
+    } else {
+      current = test;
+    }
+  }
+  if (current) lines.push(current);
+  return lines;
+}
+
+export async function drawScriptureImage(
+  canvas: HTMLCanvasElement,
+  opts: DrawOptions
+): Promise<void> {
+  const {
+    verseText,
+    reference,
+    version,
+    backgroundUrl,
+    width,
+    height,
+    baseFontSize,
+    minFontSize = 18,
+    textColor = "#ffffff"
+  } = opts;
+
+  const ctx = canvas.getContext("2d");
+  if (!ctx) return;
+
+  canvas.width = width;
+  canvas.height = height;
+
+  // Load background image
+  const img = new Image();
+  img.crossOrigin = "anonymous"; // helpful for remote images
+  img.src = backgroundUrl;
+
+  await new Promise<void>((resolve, reject) => {
+    img.onload = () => resolve();
+    img.onerror = () => reject();
+  }).catch(() => {
+    // fallback: solid background if image fails
+  });
+
+  // Draw background (if loaded)
+  ctx.clearRect(0, 0, width, height);
+  if (img.width && img.height) {
+    // cover behavior
+    const scale = Math.max(width / img.width, height / img.height);
+    const x = (width / 2) - (img.width * scale) / 2;
+    const y = (height / 2) - (img.height * scale) / 2;
+    ctx.drawImage(img, x, y, img.width * scale, img.height * scale);
+  } else {
+    ctx.fillStyle = "#111827";
+    ctx.fillRect(0, 0, width, height);
+  }
+
+  // Optional dark overlay for text contrast
+  ctx.fillStyle = "rgba(0,0,0,0.35)";
+  ctx.fillRect(0, 0, width, height);
+
+  // Text box padding
+  const paddingX = Math.floor(width * 0.08);
+  const paddingTop = Math.floor(height * 0.18);
+  const paddingBottom = Math.floor(height * 0.20);
+
+  const textBoxWidth = width - paddingX * 2;
+  const textBoxHeight = height - paddingTop - paddingBottom;
+
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+
+  // Auto-fit font size
+  let fontSize = baseFontSize;
+  let lines: string[] = [];
+  while (fontSize >= minFontSize) {
+    ctx.font = `500 ${fontSize}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+    lines = wrapText(ctx, verseText, textBoxWidth);
+
+    const lineHeight = fontSize * 1.3;
+    const totalTextHeight = lines.length * lineHeight;
+
+    if (totalTextHeight <= textBoxHeight) {
+      break;
+    }
+    fontSize -= 1;
+  }
+
+  // Draw main verse text
+  ctx.fillStyle = textColor;
+  const lineHeight = fontSize * 1.3;
+  const textBlockHeight = lines.length * lineHeight;
+  let currentY = paddingTop + textBoxHeight / 2 - textBlockHeight / 2;
+
+  for (const line of lines) {
+    ctx.fillText(line, width / 2, currentY);
+    currentY += lineHeight;
+  }
+
+  // Draw reference + version below
+  const refFontSize = Math.max(18, Math.floor(fontSize * 0.7));
+  ctx.font = `600 ${refFontSize}px system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+  ctx.fillStyle = "rgba(255,255,255,0.9)";
+
+  const refLine = version ? `${reference} (${version})` : reference;
+  ctx.fillText(refLine, width / 2, height - Math.floor(height * 0.08));
+}
+
+
+This is the piece that guarantees:
+
+Multi-line wrapping
+
+Font shrinks until it fits inside a safe box
+
+Centered horizontally and vertically
+
+Reference stays nicely anchored at the bottom
+
+3️⃣ Scripture Image Page (receives verse from Search / Topics)
+
+This page:
+
+Accepts initial reference, text, version from navigation params
+
+Lets user switch backgrounds & tweak font size
+
+Auto-redraws image
+
+Can download PNG
+
+File: client/src/pages/ScriptureImagePage.tsx
+
+// client/src/pages/ScriptureImagePage.tsx
+import { useEffect, useRef, useState } from "react";
+import { SCRIPTURE_BACKGROUNDS } from "@/config/scriptureBackgrounds";
+import { drawScriptureImage } from "@/utils/scriptureImageCanvas";
+import { BibleVersionCode, getInitialBibleVersion } from "@/config/bibleVersions";
+import { BibleVersionSelector } from "@/components/BibleVersionSelector";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import { Download, Image as ImageIcon } from "lucide-react";
+
+interface ScriptureImagePageProps {
+  // These come from onNavigate("image-scripture", { reference, text, version })
+  initialReference?: string;
+  initialText?: string;
+  initialVersion?: BibleVersionCode;
+  onNavigate?: (page: string) => void;
+}
+
+const CANVAS_WIDTH = 1290;
+const CANVAS_HEIGHT = 2796;
+
+export default function ScriptureImagePage({
+  initialReference = "",
+  initialText = "",
+  initialVersion,
+  onNavigate
+}: ScriptureImagePageProps) {
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
+
+  const [verseText, setVerseText] = useState(initialText);
+  const [reference, setReference] = useState(initialReference);
+  const [version, setVersion] = useState<BibleVersionCode>(
+    initialVersion ?? getInitialBibleVersion()
+  );
+
+  const [backgroundId, setBackgroundId] = useState<string>(
+    SCRIPTURE_BACKGROUNDS[0]?.id ?? ""
+  );
+
+  const [baseFontSize, setBaseFontSize] = useState<number>(72);
+  const [textColor, setTextColor] = useState<string>("#ffffff");
+  const [isRendering, setIsRendering] = useState(false);
+
+  const background = SCRIPTURE_BACKGROUNDS.find((b) => b.id === backgroundId) ?? SCRIPTURE_BACKGROUNDS[0];
+
+  // Redraw whenever main inputs change
+  useEffect(() => {
+    if (!canvasRef.current || !background) return;
+    if (!verseText || !reference) return;
+
+    let canceled = false;
+
+    const doDraw = async () => {
+      setIsRendering(true);
+      try {
+        await drawScriptureImage(canvasRef.current!, {
+          verseText,
+          reference,
+          version,
+          backgroundUrl: background.imageUrl,
+          width: CANVAS_WIDTH,
+          height: CANVAS_HEIGHT,
+          baseFontSize,
+          textColor
+        });
+      } catch (err) {
+        console.error("Error drawing scripture image", err);
+      } finally {
+        if (!canceled) {
+          setIsRendering(false);
+        }
+      }
+    };
+
+    void doDraw();
+
+    return () => {
+      canceled = true;
+    };
+  }, [verseText, reference, backgroundId, baseFontSize, textColor, version, background]);
+
+  const handleDownload = () => {
+    if (!canvasRef.current) return;
+    const link = document.createElement("a");
+    link.download = `${reference.replace(/\s+/g, "_")}.png`;
+    link.href = canvasRef.current.toDataURL("image/png");
+    link.click();
+  };
+
+  const handleBackgroundChange = (id: string) => {
+    setBackgroundId(id);
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 pb-20">
+      {/* Header */}
+      <div className="px-4 pt-6 pb-4 border-b border-slate-800 flex items-center justify-between gap-3">
+        <div>
+          <h1 className="text-2xl font-bold flex items-center gap-2">
+            <ImageIcon className="w-6 h-6 text-amber-400" />
+            Scripture Image
+          </h1>
+          <p className="text-xs text-slate-400">
+            Your verse is auto-fitted and centered. You can fine-tune below.
+          </p>
+        </div>
+        {onNavigate && (
+          <Button variant="outline" size="sm" onClick={() => onNavigate("home")}>
+            Home
+          </Button>
+        )}
+      </div>
+
+      <div className="p-4 max-w-6xl mx-auto grid gap-4 lg:grid-cols-[minmax(0,2fr),minmax(0,1.4fr)]">
+        {/* Left: Canvas preview */}
+        <Card className="bg-slate-900 border-slate-800">
+          <CardHeader>
+            <CardTitle className="text-sm text-slate-200">
+              Preview (1290 x 2796)
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="flex flex-col items-center gap-3">
+            <div className="relative bg-slate-950 rounded-[2.5rem] p-3 shadow-2xl">
+              <div className="w-[280px] h-[600px] rounded-[2rem] overflow-hidden bg-black">
+                <canvas
+                  ref={canvasRef}
+                  className="w-full h-full block"
+                  aria-label="Scripture image preview"
+                />
+              </div>
+              {isRendering && (
+                <div className="absolute inset-0 flex items-center justify-center bg-black/40 text-xs">
+                  Rendering…
+                </div>
+              )}
+            </div>
+
+            <div className="flex gap-2">
+              <Button size="sm" onClick={handleDownload} disabled={!verseText || !reference}>
+                <Download className="w-4 h-4 mr-1" />
+                Download PNG
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Right: Controls */}
+        <Card className="bg-slate-900 border-slate-800">
+          <CardHeader>
+            <CardTitle className="text-sm text-slate-200">
+              Verse & Design Settings
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            {/* Verse fields (pre-filled but editable) */}
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-slate-400">
+                Reference
+              </label>
+              <input
+                className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-sm"
+                value={reference}
+                onChange={(e) => setReference(e.target.value)}
+                placeholder="e.g. John 3:16"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-xs font-semibold text-slate-400">
+                Verse Text
+              </label>
+              <textarea
+                className="w-full px-3 py-2 rounded-lg bg-slate-950 border border-slate-700 text-sm min-h-[80px]"
+                value={verseText}
+                onChange={(e) => setVerseText(e.target.value)}
+                placeholder="Enter or paste your verse text here..."
+              />
+            </div>
+
+            {/* Version */}
+            <BibleVersionSelector
+              label="Version (display-only label)"
+              value={version}
+              onChange={(v) => setVersion(v)}
+            />
+
+            {/* Font size slider */}
+            <div className="space-y-1 pt-2">
+              <div className="flex items-center justify-between text-xs text-slate-400">
+                <span className="font-semibold">Base Font Size</span>
+                <span>{baseFontSize}px</span>
+              </div>
+              <Slider
+                value={[baseFontSize]}
+                min={30}
+                max={96}
+                step={2}
+                onValueChange={(val) => setBaseFontSize(val[0])}
+              />
+              <p className="text-[11px] text-slate-500">
+                This is the maximum size. The app will shrink it automatically if needed so
+                the verse never runs off the edges.
+              </p>
+            </div>
+
+            {/* Text color */}
+            <div className="space-y-2 pt-2">
+              <label className="text-xs font-semibold text-slate-400">
+                Text Color
+              </label>
+              <div className="flex items-center gap-2">
+                <input
+                  type="color"
+                  value={textColor}
+                  onChange={(e) => setTextColor(e.target.value)}
+                  className="w-10 h-8 rounded-md border border-slate-700 bg-slate-950"
+                />
+                <span className="text-xs text-slate-400">{textColor}</span>
+              </div>
+            </div>
+
+            {/* Background picker */}
+            <div className="space-y-2 pt-2">
+              <label className="text-xs font-semibold text-slate-400">
+                Background
+              </label>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                {SCRIPTURE_BACKGROUNDS.map((bg) => (
+                  <button
+                    key={bg.id}
+                    type="button"
+                    onClick={() => handleBackgroundChange(bg.id)}
+                    className={`relative group rounded-xl overflow-hidden border ${
+                      bg.id === backgroundId
+                        ? "border-amber-400 ring-2 ring-amber-400/60"
+                        : "border-slate-700"
+                    }`}
+                  >
+                    <div className="aspect-[3/2] bg-slate-800">
+                      <img
+                        src={bg.imageUrl}
+                        alt={bg.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-2">
+                      <div className="text-[11px] font-semibold text-white line-clamp-1">
+                        {bg.name}
+                      </div>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+
+4️⃣ Hook navigation from Search & Topical into this page
+
+You already set up:
+
+onNavigate("image-scripture", { reference, text, version })
+
+
+In your main router/switch:
+
+{currentPage === "image-scripture" && (
+  <ScriptureImagePage
+    initialReference={navParams?.reference}
+    initialText={navParams?.text}
+    initialVersion={navParams?.version}
+    onNavigate={handleNavigate}
+  />
+)}
+
+
+Now:
+
+From Scripture Finder → “Create Scripture Image”
+
+From Topical Bible Search → “Make Image”
+
+Both land here with the verse pre-filled and correctly auto-fitted, centered, and beautiful.
