@@ -131,13 +131,7 @@ export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVe
 
   return (
     <div className="max-w-3xl mx-auto">
-      <div className="text-center mb-8">
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <Book className="w-8 h-8 text-amber-600 dark:text-amber-500" />
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-50">
-            Topical Bible Search
-          </h1>
-        </div>
+      <div className="text-center mb-6">
         <p className="text-gray-600 dark:text-gray-400">
           Explore {TOPICAL_BIBLE_TOPICS.length}+ Biblical topics with curated scriptures in multiple versions
         </p>
