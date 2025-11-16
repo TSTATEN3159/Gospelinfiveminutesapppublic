@@ -190,19 +190,21 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
       </div>
 
       <div className="max-w-sm mx-auto space-y-3 px-4">
-        {/* Disciples of Christ Tile */}
-        <DisciplesOfChristTile
-          verseRef="James 1:5"
-          verseText="If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
-          step="Before your next decision today, pause for three seconds and whisper, 'Lord, give me wisdom.'"
-          onClick={() => {
-            // Navigate to full devotion page (future implementation)
-            console.log("Disciples of Christ tile clicked");
-          }}
-        />
-
         {/* Main Menu Items */}
-        {mainMenuItems.map((item) => {
+        {mainMenuItems.map((item, index) => {
+          // Insert Disciples of Christ tile after Faith Videos (videos is at index 1)
+          const disciplesTile = item.id === 'videos' && index === 1 ? (
+            <DisciplesOfChristTile
+              key="disciples-of-christ"
+              verseRef="James 1:5"
+              verseText="If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
+              step="Before your next decision today, pause for three seconds and whisper, 'Lord, give me wisdom.'"
+              onClick={() => {
+                // Navigate to full devotion page (future implementation)
+                console.log("Disciples of Christ tile clicked");
+              }}
+            />
+          ) : null;
           const getItemColors = (id: string) => {
             switch(id) {
               case 'videos': return {
@@ -248,50 +250,8 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
           
           const tileImage = getTileImage(item.id);
           
-          // Special layout for tiles with background images
-          if (tileImage) {
-            return (
-              <Card 
-                key={item.id}
-                className={`bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 ${tileImage.border} cursor-pointer transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 ring-4 ring-white/50 hover:ring-white/70 backdrop-blur-sm`}
-                onClick={() => item.comingSoon ? null : handleMenuClick(item.id)}
-                data-testid={`menu-${item.id}`}
-              >
-                <div className="relative h-24">
-                  <img 
-                    src={tileImage.image}
-                    alt={item.title}
-                    className="w-full h-full object-cover"
-                  />
-                  <div className={`absolute inset-0 bg-gradient-to-t ${tileImage.overlay} to-transparent`} />
-                </div>
-                <CardContent className="p-3">
-                  <div className="flex items-center justify-between min-h-[32px]">
-                    <div className="flex items-center gap-2">
-                      <div className={`w-8 h-8 ${tileImage.iconBg} rounded-full flex items-center justify-center shadow-lg border-2 ${tileImage.iconBorder} ring-1 ${tileImage.iconRing}`}>
-                        <item.icon className={`w-4 h-4 ${tileImage.iconColor} stroke-[1.5]`} />
-                      </div>
-                      <div className="flex-1">
-                        <h3 className="font-bold text-sm text-gray-800 flex items-center gap-1">
-                          {item.title}
-                          {item.comingSoon && (
-                            <span className={`text-xs ${tileImage.iconBg} text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm`}>
-                              {t.comingSoon}
-                            </span>
-                          )}
-                        </h3>
-                        <p className="text-xs text-gray-700 leading-relaxed">{item.description}</p>
-                      </div>
-                    </div>
-                    {!item.comingSoon && <ChevronRight className="w-4 h-4 text-gray-500" />}
-                  </div>
-                </CardContent>
-              </Card>
-            );
-          }
-          
           // Regular tile layout for other items
-          return (
+          const regularTile = (
             <Card 
               key={item.id} 
               className={`
@@ -334,7 +294,50 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                 </div>
               </CardContent>
             </Card>
-          )
+          );
+
+          // Render the tile with proper key
+          const mainTile = tileImage ? (
+            <Card 
+              key={item.id}
+              className={`bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 ${tileImage.border} cursor-pointer transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 ring-4 ring-white/50 hover:ring-white/70 backdrop-blur-sm`}
+              onClick={() => item.comingSoon ? null : handleMenuClick(item.id)}
+              data-testid={`menu-${item.id}`}
+            >
+              <div className="relative h-24">
+                <img 
+                  src={tileImage.image}
+                  alt={item.title}
+                  className="w-full h-full object-cover"
+                />
+                <div className={`absolute inset-0 bg-gradient-to-t ${tileImage.overlay} to-transparent`} />
+              </div>
+              <CardContent className="p-3">
+                <div className="flex items-center justify-between min-h-[32px]">
+                  <div className="flex items-center gap-2">
+                    <div className={`w-8 h-8 ${tileImage.iconBg} rounded-full flex items-center justify-center shadow-lg border-2 ${tileImage.iconBorder} ring-1 ${tileImage.iconRing}`}>
+                      <item.icon className={`w-4 h-4 ${tileImage.iconColor} stroke-[1.5]`} />
+                    </div>
+                    <div className="flex-1">
+                      <h3 className="font-bold text-sm text-gray-800 flex items-center gap-1">
+                        {item.title}
+                        {item.comingSoon && (
+                          <span className={`text-xs ${tileImage.iconBg} text-gray-600 px-2 py-1 rounded-full font-medium shadow-sm`}>
+                            {t.comingSoon}
+                          </span>
+                        )}
+                      </h3>
+                      <p className="text-xs text-gray-700 leading-relaxed">{item.description}</p>
+                    </div>
+                  </div>
+                  {!item.comingSoon && <ChevronRight className="w-4 h-4 text-gray-500" />}
+                </div>
+              </CardContent>
+            </Card>
+          ) : regularTile;
+
+          // Return items array (including Disciples tile after videos)
+          return disciplesTile ? [mainTile, disciplesTile] : mainTile;
         })}
 
         {/* Settings & Account Section */}
