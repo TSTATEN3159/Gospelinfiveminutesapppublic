@@ -47,6 +47,8 @@ import PlainMeaningPage from "./pages/PlainMeaningPage";
 import InstantApplicationPage from "./pages/InstantApplicationPage";
 import VoiceSettingsPage from "./pages/VoiceSettingsPage";
 import TopicSearchPage from "./pages/TopicSearchPage";
+import ScriptureImagePage from "./pages/ScriptureImagePage";
+import { BibleVersionCode } from "./config/bibleVersions";
 
 interface User {
   firstName: string;
@@ -58,7 +60,13 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture";
+
+// Type-safe navigation params for each page
+type AppPageParams = {
+  search?: { query?: string };
+  "image-scripture"?: { reference?: string; text?: string; version?: BibleVersionCode };
+};
 
 function MainApp() {
   const [user, setUser] = useState<User | null>(null);
@@ -67,6 +75,7 @@ function MainApp() {
   const [currentPage, setCurrentPage] = useState<AppPage>("home");
   const [streakDays, setStreakDays] = useState(0);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [pageParams, setPageParams] = useState<Partial<AppPageParams>>({});
   
   // App is English-only (per Apple guidelines - iOS Settings handles language)
   const language = "en";
@@ -183,14 +192,26 @@ function MainApp() {
     setShowRegistration(false);
   };
 
-  const handleNavigateToLegal = (page: string, searchQuery?: string) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "paywall"];
+  const handleNavigate = (page: string, params?: any) => {
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
-      if (searchQuery) {
-        setSearchQuery(searchQuery);
+      
+      // Store typed params for the page
+      if (params) {
+        setPageParams(prev => ({ ...prev, [page]: params }));
+      }
+      
+      // Legacy searchQuery support (migrate to params)
+      if (page === "search" && params?.query) {
+        setSearchQuery(params.query);
       }
     }
+  };
+
+  // Legacy function for backward compatibility
+  const handleNavigateToLegal = (page: string, searchQuery?: string) => {
+    handleNavigate(page, searchQuery ? { query: searchQuery } : undefined);
   };
 
   const handleBackFromLegal = () => {
@@ -273,7 +294,15 @@ function MainApp() {
             case "voice-settings":
               return <VoiceSettingsPage />;
             case "topic-search":
-              return <TopicSearchPage onNavigate={handleNavigateToLegal} />;
+              return <TopicSearchPage onNavigate={handleNavigate} />;
+            case "image-scripture":
+              const imageParams = pageParams["image-scripture"] || {};
+              return <ScriptureImagePage 
+                initialReference={imageParams.reference}
+                initialText={imageParams.text}
+                initialVersion={imageParams.version}
+                onNavigate={handleNavigate}
+              />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -296,7 +325,7 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks"].includes(currentPage) && (
                 <BottomNavigation 
                   currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
