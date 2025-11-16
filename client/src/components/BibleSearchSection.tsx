@@ -157,9 +157,12 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   // Listen for Bible version changes from Settings
   useEffect(() => {
     const handleStorageChange = () => {
-      const prefs = appStore.get('gospelAppPreferences');
-      if (prefs?.bibleVersion && prefs.bibleVersion !== selectedVersion) {
-        setSelectedVersion(prefs.bibleVersion);
+      const prefsStr = localStorage.getItem('gospelAppPreferences');
+      if (prefsStr) {
+        const prefs = JSON.parse(prefsStr);
+        if (prefs?.bibleVersion && prefs.bibleVersion !== selectedVersion) {
+          setSelectedVersion(prefs.bibleVersion);
+        }
       }
     };
 

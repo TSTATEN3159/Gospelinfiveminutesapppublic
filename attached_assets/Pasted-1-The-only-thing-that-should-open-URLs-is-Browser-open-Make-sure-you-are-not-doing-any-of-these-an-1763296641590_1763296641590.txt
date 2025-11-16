@@ -1,0 +1,118 @@
+1. The only thing that should open URLs is Browser.open
+
+Make sure you are not doing any of these anywhere for the NIV links:
+
+window.open(url, "_blank")
+
+window.location.href = url
+
+<a href={url} target="_blank" ...>
+
+Capacitor.openUrl({ url })
+
+All of those will happily punt to Safari.
+
+You want only this pattern for the external translations:
+
+import { Browser } from "@capacitor/browser";
+
+await Browser.open({
+  url,
+  presentationStyle: "fullscreen",
+});
+
+
+Double-check your MoreTranslations (or whatever you named it) component and confirm that the click handler is only calling Browser.open, nothing else.
+
+2. Make sure the plugin is installed and synced
+
+In your Replit shell (you probably already did this, but let’s confirm):
+
+npm install @capacitor/browser
+npx cap sync
+
+
+Then rebuild your iOS app in Xcode / Appflow and send a new build to TestFlight.
+If the plugin isn’t properly synced, Browser.open can fall back to system behavior (opening Safari).
+
+3. Example of the component wired correctly
+
+Here’s a minimal, “known good” version of the component:
+
+// client/src/components/MoreTranslations.tsx
+import { Browser } from "@capacitor/browser";
+import { buildBibleGatewayUrl } from "@/utils/externalBibleLinks";
+import { Button } from "@/components/ui/button";
+
+type ExternalTranslationCode = "NIV" | "NLT" | "NKJV" | "NASB1995" | "MSG";
+
+const EXTERNAL_TRANSLATIONS: { code: ExternalTranslationCode; label: string }[] =
+  [
+    { code: "NIV", label: "NIV" },
+    { code: "NLT", label: "NLT" },
+    { code: "NKJV", label: "NKJV" },
+    { code: "NASB1995", label: "NASB 1995" },
+    { code: "MSG", label: "The Message" },
+  ];
+
+interface MoreTranslationsProps {
+  reference: string; // "John 3:16"
+}
+
+export function MoreTranslations({ reference }: MoreTranslationsProps) {
+  const handleOpen = async (code: ExternalTranslationCode) => {
+    const url = buildBibleGatewayUrl(reference, code);
+
+    // IMPORTANT: use Capacitor Browser, not window.open
+    await Browser.open({
+      url,
+      presentationStyle: "fullscreen", // iOS: SFSafariViewController overlay
+    });
+  };
+
+  return (
+    <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+      <div className="text-xs font-semibold text-slate-500 mb-1">
+        More translations
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {EXTERNAL_TRANSLATIONS.map((t) => (
+          <Button
+            key={t.code}
+            size="sm"
+            variant="outline"
+            className="text-xs"
+            onClick={() => handleOpen(t.code)}
+          >
+            {t.label}
+          </Button>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+
+If you see any <a href=...> wrapping those buttons, remove that anchor.
+
+4. What it should look like on iOS
+
+When this is working correctly:
+
+You tap NIV.
+
+The screen slides up with a Safari-looking bar at the top (URL / domain + Done button), but:
+
+There’s a “Done” or “Close” button in the upper corner.
+
+When you tap Done, you’re instantly back to your DailyGospel screen.
+
+You never see the full Safari app UI or app switcher.
+
+If you are instead:
+
+Seeing Safari appear as a separate app, or
+
+Returning to Home screen with Safari open,
+
+that means something is still using window.open / href / Capacitor.openUrl instead of Browser.open.
