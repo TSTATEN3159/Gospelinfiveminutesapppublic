@@ -1,0 +1,132 @@
+1️⃣ Add Version Preference (Persistent)
+
+📄 Create → client/src/store/versionPrefs.ts
+
+const VERSION_KEY = "preferredBibleVersion";
+
+export function getVersion(): string {
+  return localStorage.getItem(VERSION_KEY) || "KJV";
+}
+
+export function setVersion(version: string) {
+  localStorage.setItem(VERSION_KEY, version);
+}
+
+2️⃣ Add UI for Version Selection Tabs
+
+📄 Modify → BibleSearchPage.tsx
+
+import { getVersion, setVersion } from "@/store/versionPrefs";
+
+const VERSIONS = ["KJV", "WEB", "BBE", "ASV"];
+
+const [selectedVersion, setSelectedVersionState] = useState(getVersion());
+const [compareVersion, setCompareVersion] = useState<string | null>(null);
+
+function changeVersion(v: string) {
+  setSelectedVersionState(v);
+  setVersion(v);
+  // auto re-search when switching
+  if (currentReference) searchScripture(currentReference, v);
+}
+
+
+Add tabs UI:
+
+<div className="flex gap-2 overflow-x-auto pb-2">
+  {VERSIONS.map(v => (
+    <button
+      key={v}
+      onClick={() => changeVersion(v)}
+      className={`px-3 py-1 rounded-full font-semibold text-sm border ${
+        selectedVersion === v
+          ? "bg-blue-600 text-white"
+          : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-400"
+      }`}
+    >
+      {v}
+    </button>
+  ))}
+</div>
+
+3️⃣ Add Compare Mode Toggle
+<div className="flex justify-end mt-2">
+  <label className="flex gap-2 text-xs items-center cursor-pointer">
+    <input
+      type="checkbox"
+      checked={!!compareVersion}
+      onChange={() =>
+        setCompareVersion(compareVersion ? null : "WEB")
+      }
+    />
+    Compare Version
+  </label>
+</div>
+
+
+📌 First compare is automatically WEB (user can choose later).
+
+4️⃣ Display Area with Both View Modes
+User toggle UI:
+const [sideBySide, setSideBySide] = useState(false);
+
+<div className="flex justify-end gap-2 text-xs pt-1">
+  <button onClick={() => setSideBySide(false)} className={!sideBySide ? "font-bold underline" : ""}>
+    Vertical
+  </button>
+  <button onClick={() => setSideBySide(true)} className={sideBySide ? "font-bold underline" : ""}>
+    Side-by-Side
+  </button>
+</div>
+
+Scripture Display Component
+Vertical Mode (Stacked)
+{!sideBySide && (
+  <div className="space-y-4 mt-4">
+    <ScriptureCard text={primaryText} version={selectedVersion} />
+    {compareVersion && <ScriptureCard text={compareText} version={compareVersion} />}
+  </div>
+)}
+
+Side-By-Side Mode (Columns)
+{sideBySide && (
+  <div className="grid grid-cols-2 gap-4 mt-4">
+    <ScriptureCard text={primaryText} version={selectedVersion} />
+    {compareVersion && <ScriptureCard text={compareText} version={compareVersion} />}
+  </div>
+)}
+
+5️⃣ Reusable ScriptureCard With Tap-to-Read
+
+📄 Create → client/src/components/ScriptureCard.tsx
+
+import { toggleSpeech } from "@/utils/speechEngine";
+
+export default function ScriptureCard({ text, version }: { text: string; version: string }) {
+  if (!text) return null;
+
+  return (
+    <div
+      className="rounded-lg border p-4 bg-white dark:bg-gray-800"
+      onClick={() => toggleSpeech(text)}
+    >
+      <div className="text-xs text-gray-500 mb-1">{version}</div>
+      <div className="text-lg leading-relaxed">{text}</div>
+    </div>
+  );
+}
+
+
+✔ Tap any displayed text → instantly read aloud
+✔ Uses your new professional voice system
+
+🎯 Final Feature Summary
+Feature	Status
+Book / Chapter / Verse Dropdown	✔ Done
+Abbreviation Switch	✔ Done
+Version Tabs (KJV, WEB, BBE, ASV)	✔ Done
+Default Version Saved	✔ Done
+Side-by-Side Translation	✔ Done
+Vertical Comparison	✔ Done
+Seamless version switching auto-loads new text	✔ Done
+Read Aloud everywhere	✔ Done

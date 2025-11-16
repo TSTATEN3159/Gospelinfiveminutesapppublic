@@ -26,6 +26,8 @@ import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.
 import { appStore } from "@/lib/appStore";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ScriptureSelector from "./ScriptureSelector";
+import ScriptureCard from "./ScriptureCard";
+import { getVersion, setVersion } from "@/store/versionPrefs";
 
 interface SearchResult {
   text: string;
@@ -33,12 +35,7 @@ interface SearchResult {
   version: string;
 }
 
-const bibleVersions = [
-  { value: "KJV", label: "King James Version (KJV)" },
-  { value: "WEB", label: "World English Bible (WEB)" },
-  { value: "ASV", label: "American Standard Version (ASV)" },
-  { value: "BBE", label: "Bible in Basic English (BBE)" }
-];
+const VERSIONS = ["KJV", "WEB", "BBE", "ASV"];
 
 // todo: remove mock functionality - replace with real Bible API
 const mockSearchResults: Record<string, SearchResult> = {
@@ -79,12 +76,12 @@ const SPEECH_LANG_MAP: Record<string, string> = {
 
 export default function BibleSearchSection({ backgroundImage, initialSearchQuery, onSearchUsed, language = "en" }: BibleSearchSectionProps) {
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedVersion, setSelectedVersion] = useState(() => {
-    // Get Bible version from user preferences, default to KJV
-    const prefs = appStore.get('gospelAppPreferences');
-    return prefs?.bibleVersion || 'KJV';
-  });
+  const [selectedVersion, setSelectedVersion] = useState(getVersion());
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
+  const [compareVersion, setCompareVersion] = useState<string | null>(null);
+  const [compareResult, setCompareResult] = useState<SearchResult | null>(null);
+  const [sideBySide, setSideBySide] = useState(false);
+  const [currentReference, setCurrentReference] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [showVoicePermissionDialog, setShowVoicePermissionDialog] = useState(false);
@@ -180,22 +177,49 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     }
   }, [initialSearchQuery]);
 
-  const handleSearch = async (q?: string) => {
+  const changeVersion = (v: string) => {
+    setSelectedVersion(v);
+    setVersion(v);
+    
+    // Auto re-search when switching versions if we have a current reference
+    if (currentReference) {
+      handleSearch(currentReference, v);
+    }
+  };
+
+  const handleSearch = async (q?: string, versionOverride?: string) => {
     const query = (q ?? searchQuery).trim();
     if (!query) return;
 
     setIsLoading(true);
     setHasSearched(true);
+    setCurrentReference(query);
 
     try {
-      // Use the centralized Bible service with validation and friendly errors
-      const result = await fetchVerseText(query, selectedVersion);
+      // Fetch primary version
+      const primaryVersion = versionOverride || selectedVersion;
+      const result = await fetchVerseText(query, primaryVersion);
 
       setSearchResult({
         text: result.text,
         reference: result.reference,
         version: result.version
       });
+
+      // Fetch compare version if enabled
+      if (compareVersion) {
+        try {
+          const compareResult = await fetchVerseText(query, compareVersion);
+          setCompareResult({
+            text: compareResult.text,
+            reference: compareResult.reference,
+            version: compareResult.version
+          });
+        } catch (error) {
+          console.error('Compare version error:', error);
+          setCompareResult(null);
+        }
+      }
 
     } catch (error: any) {
       console.error('Bible search error:', error);
@@ -211,7 +235,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
       setSearchResult({
         text: `Sorry, I'm having trouble retrieving "${query}" right now. Please try again in a moment, or try a different Bible reference like "John 3:16" or "Psalm 23".`,
         reference: query,
-        version: selectedVersion
+        version: versionOverride || selectedVersion
       });
     } finally {
       setIsLoading(false);
@@ -310,22 +334,48 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
 
       <CardContent className="relative z-10 space-y-6 p-6">
         <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-sm space-y-4">
+          {/* Version Tabs */}
           <div>
-            <label htmlFor="version-select" className="text-sm font-medium mb-2 block text-gray-900">
+            <label className="text-sm font-medium mb-2 block text-gray-900">
               Bible Version
             </label>
-            <Select value={selectedVersion} onValueChange={setSelectedVersion}>
-              <SelectTrigger id="version-select" data-testid="select-version">
-                <SelectValue />
-              </SelectTrigger>
-              <SelectContent>
-                {bibleVersions.map(version => (
-                  <SelectItem key={version.value} value={version.value}>
-                    {version.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="flex gap-2 overflow-x-auto pb-2" data-testid="version-tabs">
+              {VERSIONS.map(v => (
+                <button
+                  key={v}
+                  onClick={() => changeVersion(v)}
+                  className={`px-3 py-1 rounded-full font-semibold text-sm border transition-all ${
+                    selectedVersion === v
+                      ? "bg-blue-600 text-white border-blue-600"
+                      : "bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border-gray-400 hover:border-blue-400"
+                  }`}
+                  data-testid={`button-version-${v.toLowerCase()}`}
+                >
+                  {v}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Compare Mode Toggle */}
+          <div className="flex justify-end">
+            <label className="flex gap-2 text-xs items-center cursor-pointer hover:text-blue-600 transition-colors" data-testid="label-compare-toggle">
+              <input
+                type="checkbox"
+                checked={!!compareVersion}
+                onChange={() => {
+                  const newCompareVersion = compareVersion ? null : "WEB";
+                  setCompareVersion(newCompareVersion);
+                  // If enabling compare and we have results, fetch comparison
+                  if (newCompareVersion && currentReference) {
+                    handleSearch(currentReference);
+                  }
+                }}
+                className="w-4 h-4 rounded"
+                data-testid="checkbox-compare-version"
+              />
+              <span>Compare Version</span>
+            </label>
           </div>
 
           <div className="flex gap-2">
@@ -395,53 +445,62 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
 
         {searchResult && !isLoading && (
           <div className="bg-white/95 backdrop-blur-sm rounded-xl p-6 shadow-sm space-y-4" data-testid="search-result">
-            <div className="flex justify-between items-start">
-              <div className="flex items-center gap-2">
-                <h3 className="font-semibold text-lg text-gray-900">{searchResult.reference}</h3>
-                <Volume2 className="w-4 h-4 text-gray-500" />
-              </div>
-              <span className="text-sm text-green-700 bg-green-100 px-3 py-1 rounded-full font-medium">
-                {searchResult.version}
-              </span>
+            <div className="flex justify-between items-center">
+              <p className="text-xs text-gray-500">Tap verse to listen</p>
+              
+              {/* View Mode Toggle (Only show if comparing) */}
+              {compareVersion && compareResult && (
+                <div className="flex gap-2 text-xs">
+                  <button 
+                    onClick={() => setSideBySide(false)} 
+                    className={`px-2 py-1 rounded ${!sideBySide ? "font-bold underline text-blue-600" : "text-gray-600 hover:text-blue-600"}`}
+                    data-testid="button-view-vertical"
+                  >
+                    Vertical
+                  </button>
+                  <button 
+                    onClick={() => setSideBySide(true)} 
+                    className={`px-2 py-1 rounded ${sideBySide ? "font-bold underline text-blue-600" : "text-gray-600 hover:text-blue-600"}`}
+                    data-testid="button-view-sidebyside"
+                  >
+                    Side-by-Side
+                  </button>
+                </div>
+              )}
             </div>
             
-            <p className="text-xs text-gray-500 text-center">Tap verse to listen</p>
-            
-            <div className="bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl p-6 border border-green-200">
-              <blockquote 
-                className="text-lg leading-relaxed font-serif italic text-gray-800 cursor-pointer hover:bg-green-100/50 transition-all rounded-lg p-3 select-none"
-                onClick={() => {
-                  toggleSpeech(searchResult.text, (wordIndex: number) => {
-                    setHighlightedWordIndex(wordIndex);
-                  });
-                  // Clear highlighting when speech ends
-                  if (getIsSpeaking()) {
-                    setHighlightedWordIndex(null);
-                  }
-                }}
-                data-testid="text-verse-tap-to-read-search"
-              >
-                "
-                {highlightedWordIndex !== null ? (
-                  searchResult.text.split(" ").map((word, i) => (
-                    <span 
-                      key={i} 
-                      className={`${
-                        i === highlightedWordIndex 
-                          ? "bg-yellow-300 text-gray-900 px-1 rounded transition-all" 
-                          : ""
-                      }`}
-                    >
-                      {word}
-                      {" "}
-                    </span>
-                  ))
-                ) : (
-                  searchResult.text
+            {/* Scripture Display */}
+            {!sideBySide && (
+              <div className="space-y-4" data-testid="display-vertical">
+                <ScriptureCard 
+                  text={searchResult.text} 
+                  version={searchResult.version} 
+                  reference={searchResult.reference}
+                />
+                {compareVersion && compareResult && (
+                  <ScriptureCard 
+                    text={compareResult.text} 
+                    version={compareResult.version}
+                    reference={compareResult.reference}
+                  />
                 )}
-                "
-              </blockquote>
-            </div>
+              </div>
+            )}
+            
+            {sideBySide && compareVersion && compareResult && (
+              <div className="grid grid-cols-2 gap-4" data-testid="display-sidebyside">
+                <ScriptureCard 
+                  text={searchResult.text} 
+                  version={searchResult.version}
+                  reference={searchResult.reference}
+                />
+                <ScriptureCard 
+                  text={compareResult.text} 
+                  version={compareResult.version}
+                  reference={compareResult.reference}
+                />
+              </div>
+            )}
 
             <div className="flex justify-center gap-2 flex-wrap">
               <Button 
