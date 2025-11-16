@@ -1,0 +1,236 @@
+1️⃣ Server: call your Bible API for topical verses
+
+I’ll assume you already have a Bible API and key (that’s what VITE_API_BIBLE_KEY is for).
+Replace the BIBLE_API_BASE_URL and query params with whatever your provider requires.
+
+a. Server env variables (Replit)
+In your server (Node) environment, add:
+BIBLE_API_BASE_URL=https://your-bible-api-here.com   # change this
+BIBLE_API_KEY=your-real-api-key                      # secret key
+
+
+These go in your server’s .env / Replit “Secrets” – not in Appflow.
+
+
+b. server/topicalBibleApi.ts
+Create a proper API helper that actually calls the Bible API:
+// server/topicalBibleApi.ts
+import fetch from "node-fetch";
+
+export interface TopicalVerse {
+  reference: string;
+  text: string;
+}
+
+const BIBLE_API_BASE_URL = process.env.BIBLE_API_BASE_URL!;
+const BIBLE_API_KEY = process.env.BIBLE_API_KEY!;
+
+/**
+ * Calls the external Bible API for verses related to a given topical id.
+ * Adjust URL and params so they match your provider.
+ */
+export async function fetchTopicalVersesFromApi(
+  topicId: string,
+  version: string
+): Promise<TopicalVerse[]> {
+  if (!BIBLE_API_BASE_URL || !BIBLE_API_KEY) {
+    console.error("BIBLE_API_BASE_URL or BIBLE_API_KEY is missing");
+    throw new Error("Bible API is not configured");
+  }
+
+  // 🔁 Example URL – change path / query params to your provider’s format
+  const url = new URL("/topical", BIBLE_API_BASE_URL);
+  url.searchParams.set("topic", topicId);      // e.g. "holy-spirit"
+  url.searchParams.set("version", version);    // e.g. "ASV"
+
+  const response = await fetch(url.toString(), {
+    headers: {
+      Authorization: `Token ${BIBLE_API_KEY}`, // or `Bearer`, or `?key=`
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    const body = await response.text();
+    console.error("Bible API error:", response.status, body);
+    throw new Error(`Bible API error: ${response.status}`);
+  }
+
+  const json = await response.json();
+
+  // 🔁 Map the API’s response into { reference, text }
+  // Adjust this based on the actual structure you get back
+  const verses: TopicalVerse[] = (json.verses || json.data || []).map((v: any) => ({
+    reference: v.reference ?? v.ref ?? "",
+    text: v.text ?? v.content ?? "",
+  }));
+
+  return verses;
+}
+
+
+The key thing: this is now a real API call, not a hard-coded array.
+
+
+c. server/routes.ts
+Wire your client-facing route to that helper:
+// server/routes.ts
+import express from "express";
+import { fetchTopicalVersesFromApi } from "./topicalBibleApi";
+
+const router = express.Router();
+
+// …other routes…
+
+router.get("/api/topical-verses", async (req, res) => {
+  const topicId = String(req.query.topicId ?? "");
+  const version = String(req.query.version ?? "ASV");
+
+  if (!topicId) {
+    return res.status(400).json({ error: "topicId is required" });
+  }
+
+  try {
+    const verses = await fetchTopicalVersesFromApi(topicId, version);
+    res.json({ verses });
+  } catch (err: any) {
+    console.error("Error in /api/topical-verses:", err);
+    res.status(500).json({ error: err.message || "Failed to load topical verses" });
+  }
+});
+
+export default router;
+
+Now your own backend endpoint /api/topical-verses is just a clean wrapper around the external Bible API.
+
+2️⃣ Frontend: still use /api/topical-verses (but show real errors)
+Your existing front-end call can stay almost the same; I’ll tweak it to distinguish an API error from “0 results”.
+client/src/services/bibleSearchService.ts
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL; // your Replit server
+
+export interface TopicalVerseDto {
+  reference: string;
+  text: string;
+}
+
+export async function fetchTopicalVerses(
+  topicId: string,
+  versionCode: string
+): Promise<TopicalVerseDto[]> {
+  const url = new URL("/api/topical-verses", API_BASE_URL);
+  url.searchParams.set("topicId", topicId);
+  url.searchParams.set("version", versionCode);
+
+  const response = await fetch(url.toString());
+
+  if (!response.ok) {
+    const body = await response.text();
+    console.error("Topical verses HTTP error:", response.status, body);
+    throw new Error("Failed to load topical verses");
+  }
+
+  const data = await response.json();
+  return data.verses ?? [];
+}
+
+client/src/components/TopicalBibleSearchCard.tsx
+Key part (effect + rendering states):
+useEffect(() => {
+  if (!selectedTopicId) return;
+
+  setLoading(true);
+  setError(null);
+
+  fetchTopicalVerses(selectedTopicId, selectedVersionCode)
+    .then(setVerses)
+    .catch((err) => {
+      console.error(err);
+      setError("We couldn’t reach the Bible server. Please check your internet or try again.");
+      setVerses([]);
+    })
+    .finally(() => setLoading(false));
+}, [selectedTopicId, selectedVersionCode]);
+
+// …
+
+{loading && (
+  <div className="flex items-center justify-center py-10 text-slate-500 text-sm">
+    Loading verses…
+  </div>
+)}
+
+{error && !loading && (
+  <div className="rounded-2xl bg-red-50 border border-red-200 px-4 py-6 text-center text-sm text-red-700">
+    {error}
+  </div>
+)}
+
+{!loading && !error && verses.length === 0 && (
+  <div className="rounded-2xl bg-slate-100 px-4 py-6 text-center text-sm text-slate-600">
+    No verses found for this topic. Try a different topic.
+  </div>
+)}
+
+{!loading && !error && verses.length > 0 && (
+  <ul className="space-y-3 mt-2">
+    {verses.map((v) => (
+      <li key={v.reference} className="rounded-2xl bg-white shadow-sm px-4 py-3 text-sm">
+        <div className="font-semibold text-emerald-600 mb-1">{v.reference}</div>
+        <div>{v.text}</div>
+      </li>
+    ))}
+  </ul>
+)}
+
+
+3️⃣ Why it didn’t work before & why API matters
+
+
+Before: I gave you a “local data” version so we could prove the UI wiring. That means you were never actually talking to the Bible API, so any configuration problem with the API would be invisible.
+
+
+Now:
+
+
+Your client → server call is /api/topical-verses.
+
+
+Your server → Bible API call uses BIBLE_API_BASE_URL + BIBLE_API_KEY.
+
+
+If the API is mis-configured, you’ll see a red error card, not a fake “No verses found”.
+
+
+
+
+So yes, for a real app like yours we should be using API calls here; this is that wiring.
+
+Quick sanity checklist
+After you drop this in:
+
+
+In Replit, open Server logs when you click a topic:
+
+
+If you see “Bible API error: …” → fix BIBLE_API_BASE_URL / BIBLE_API_KEY / URL path.
+
+
+
+
+In the browser DevTools → Network tab:
+
+
+Click the topic → click topical-verses request:
+
+
+Status should be 200.
+
+
+Response JSON should contain verses: [ … ].
+
+
+
+
+
+
+If you want, you can paste one actual JSON response from your Bible provider’s topical endpoint next time, and I’ll tailor the mapping exactly so the references and texts line up with how your API returns them.

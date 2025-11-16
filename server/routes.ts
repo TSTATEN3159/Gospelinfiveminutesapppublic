@@ -1404,7 +1404,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Topic Application - "How to Live This Today"
-  app.post("/api/topic-application", async (req, res) => {
+  const topicApplicationHandler = async (req: express.Request, res: express.Response) => {
     try {
       const { topic, references, translation = "KJV" } = req.body as {
         topic: string;
@@ -1454,7 +1454,11 @@ Return only the application paragraph.
         error: "I wasn't able to generate an application just now. Please try again in a moment."
       });
     }
-  });
+  };
+
+  // Register both /api/topic-application and /api/topical-application (alias)
+  app.post("/api/topic-application", topicApplicationHandler);
+  app.post("/api/topical-application", topicApplicationHandler);
 
   // Bible Trivia Route - Using curated questions with Bible API verses
   const bibleTriviaSchema = z.object({
