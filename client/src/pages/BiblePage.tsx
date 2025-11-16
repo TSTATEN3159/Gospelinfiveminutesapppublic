@@ -3,7 +3,7 @@ import EmotionScriptureSection from "../components/EmotionScriptureSection";
 import ScriptureMemorySection from "../components/ScriptureMemorySection";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
-import shepherdImage from '@assets/stock_images/shepherd_with_sheep__459f555a.jpg';
+import shepherdImage from '@assets/stock_images/modern_american_past_9b82fb80.jpg';
 import handsImage from '@assets/stock_images/hands_holding_bible__e746cbec.jpg';
 import bibleMemoryImage from '@assets/stock_images/open_bible_pages_scr_9e863514.jpg';
 import { Facebook, Instagram, Heart, Flame, Share } from "lucide-react";
