@@ -54,7 +54,7 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
               
               // Show confirmation via toast
               toast({
-                title: t.accountDeleted || "Account Deleted",
+                title: t.accountDataDeleted || "Account Deleted",
                 description: t.accountDeletedSuccess,
               });
               
@@ -65,7 +65,7 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
             // No server account exists, just clear local data
             localStorage.clear();
             toast({
-              title: t.dataDeleted || "Data Deleted",
+              title: t.accountDataDeleted || "Data Deleted",
               description: t.localDataDeleted,
             });
             setTimeout(() => window.location.reload(), 1000);
@@ -74,7 +74,7 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
           // No user data exists
           localStorage.clear();
           toast({
-            title: t.dataDeleted || "Data Deleted",
+            title: t.accountDataDeleted || "Data Deleted",
             description: t.noUserDataFound,
           });
           setTimeout(() => window.location.reload(), 1000);

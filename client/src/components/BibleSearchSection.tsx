@@ -27,6 +27,7 @@ import appStore from "@/lib/appStore";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ScriptureSelector from "./ScriptureSelector";
 import ScriptureCard from "./ScriptureCard";
+import { MoreTranslations } from "./MoreTranslations";
 import { getVersion, setVersion } from "@/store/versionPrefs";
 import { getNextReference, getPrevReference, getBookIndexByName, formatReference } from "@/utils/scriptureUtils";
 import bibleStructure from "@/data/bibleStructure.json";
@@ -578,6 +579,9 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
                 />
               </div>
             )}
+
+            {/* More Translations Section */}
+            <MoreTranslations reference={searchResult.reference} />
 
             <div className="flex justify-center gap-2 flex-wrap">
               <Button 

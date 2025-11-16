@@ -1,0 +1,258 @@
+Phase 1 – Implement the hybrid “More translations” flow
+0. Install Capacitor Browser (for in-app webview)
+
+Capacitor’s Browser plugin opens a system browser overlay (on iOS it uses SFSafariViewController over your app). 
+Capacitor
++1
+
+In your Replit terminal:
+
+npm install @capacitor/browser
+npx cap sync
+
+
+That’s it. No extra native code for basic usage.
+
+1. Decide where the in-app Bibles live
+
+You already have KJV in the app. Phase 1 adds WEB (World English Bible, public domain) so you can offer:
+
+Inside app: KJV, WEB
+
+External view: NIV, NLT, NKJV, NASB1995, MSG
+
+However you currently fetch KJV (local JSON file, or an API), you’ll just add WEB as another option there. For now I’ll keep it abstract:
+
+// client/src/services/scriptureService.ts
+export type InternalTranslationCode = "KJV" | "WEB";
+
+export async function fetchVerseInternal(
+  reference: string,
+  translation: InternalTranslationCode
+): Promise<{ text: string }> {
+  // TODO: hook this to your real source
+  // Example shape only:
+  if (translation === "KJV") {
+    // fetch from your existing KJV source
+  } else {
+    // fetch from WEB source (public domain)
+  }
+  throw new Error("Not implemented");
+}
+
+
+We’ll focus our concrete code on the “More translations” external part.
+
+2. Build a URL helper for BibleGateway / Bible.com
+
+We’ll use BibleGateway first because it supports all your desired versions and has a simple URL pattern:
+
+https://www.biblegateway.com/passage/?search=John+3:16&version=NIV 
+Bible Gateway
++2
+Bible Gateway
++2
+
+Create a helper file:
+
+// client/src/utils/externalBibleLinks.ts
+
+export type ExternalTranslationCode =
+  | "NIV"
+  | "NLT"
+  | "NKJV"
+  | "NASB1995"
+  | "MSG";
+
+const BIBLEGATEWAY_CODES: Record<ExternalTranslationCode, string> = {
+  NIV: "NIV",
+  NLT: "NLT",
+  NKJV: "NKJV",
+  NASB1995: "NASB1995", // BibleGateway uses NASB1995 code
+  MSG: "MSG",
+};
+
+/**
+ * Build a BibleGateway URL for a reference like "John 3:16" or "Psalm 23:1-3".
+ */
+export function buildBibleGatewayUrl(
+  reference: string,
+  translation: ExternalTranslationCode
+): string {
+  const versionCode = BIBLEGATEWAY_CODES[translation];
+  const encodedRef = encodeURIComponent(reference.trim());
+  return `https://www.biblegateway.com/passage/?search=${encodedRef}&version=${versionCode}`;
+}
+
+
+If later you prefer Bible.com (YouVersion), their pattern looks like:
+
+https://www.bible.com/bible/{version_id}/{book}.{chapter}.{verse} 
+Pushpay Support
++1
+
+We can add those later; starting with BibleGateway keeps it simple.
+
+3. Create a “MoreTranslations” UI component
+
+This component:
+
+Receives the reference string you already use (e.g. "John 3:16").
+
+Shows a small list or dropdown of translations.
+
+When tapped, opens a Capacitor Browser overlay to BibleGateway on that verse.
+
+// client/src/components/MoreTranslations.tsx
+import { Browser } from "@capacitor/browser";
+import {
+  buildBibleGatewayUrl,
+  type ExternalTranslationCode,
+} from "@/utils/externalBibleLinks";
+import { Button } from "@/components/ui/button";
+// If you have icons, you can import one; otherwise text-only is fine.
+
+interface MoreTranslationsProps {
+  /** e.g. "John 3:16" or "Psalm 23:1-3" */
+  reference: string;
+}
+
+const EXTERNAL_TRANSLATIONS: { code: ExternalTranslationCode; label: string }[] =
+  [
+    { code: "NIV", label: "NIV" },
+    { code: "NLT", label: "NLT" },
+    { code: "NKJV", label: "NKJV" },
+    { code: "NASB1995", label: "NASB 1995" },
+    { code: "MSG", label: "The Message" },
+  ];
+
+export function MoreTranslations({ reference }: MoreTranslationsProps) {
+  const handleOpen = async (code: ExternalTranslationCode) => {
+    const url = buildBibleGatewayUrl(reference, code);
+
+    await Browser.open({
+      url,
+      presentationStyle: "fullscreen", // iOS: full-screen overlay (SFSafariViewController)
+    });
+  };
+
+  return (
+    <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50 px-3 py-2">
+      <div className="text-xs font-semibold text-slate-500 mb-1">
+        More translations (opens reader view)
+      </div>
+      <div className="flex flex-wrap gap-2">
+        {EXTERNAL_TRANSLATIONS.map((t) => (
+          <Button
+            key={t.code}
+            size="sm"
+            variant="outline"
+            className="text-xs"
+            onClick={() => handleOpen(t.code)}
+          >
+            {t.label}
+          </Button>
+        ))}
+      </div>
+      <p className="mt-1 text-[10px] text-slate-400">
+        Text shown in an external reader (BibleGateway). Your verse selection is
+        preserved.
+      </p>
+    </div>
+  );
+}
+
+
+What the user experiences:
+
+They’re in DailyGospel, see KJV/WEB text.
+
+They tap “NIV”.
+
+A full-screen browser sheet slides up showing BibleGateway with that verse in NIV. (On iOS this is SFSafariViewController over your app—not bouncing them to Safari.) 
+Capacitor
++1
+
+They tap “Done”/“Close” and they’re back in your verse screen.
+
+So: it feels like staying inside your app, but legally you’re just showing BibleGateway content.
+
+4. Drop it into your verse screen
+
+Wherever you render a verse (for example, your Daily Verse or Plain Meaning screen), you already know the reference string. You just plug MoreTranslations underneath.
+
+Example:
+
+// client/src/screens/DailyVerseScreen.tsx
+import { MoreTranslations } from "@/components/MoreTranslations";
+
+interface DailyVerseScreenProps {
+  reference: string; // e.g. "John 3:16"
+  text: string;      // current in-app translation text
+}
+
+export function DailyVerseScreen({ reference, text }: DailyVerseScreenProps) {
+  return (
+    <div className="px-4 py-4">
+      {/* Your existing header / date / etc. */}
+
+      <div className="mb-3 text-xs font-semibold text-slate-500">
+        {reference}
+      </div>
+
+      <p className="text-base leading-relaxed mb-4">{text}</p>
+
+      {/* Here is the new hybrid feature */}
+      <MoreTranslations reference={reference} />
+    </div>
+  );
+}
+
+
+You can repeat this pattern anywhere you display a verse.
+
+5. Optional: add in-app translation switching (KJV/WEB) for the main text
+
+To really match your original roadmap:
+
+Add a small translation toggle for KJV/WEB that changes the internal source.
+
+Keep the “More translations” card below it for NIV/NLT/etc.
+
+Example mini toggle:
+
+// client/src/components/InternalTranslationToggle.tsx
+import { Button } from "@/components/ui/button";
+import type { InternalTranslationCode } from "@/services/scriptureService";
+
+interface InternalTranslationToggleProps {
+  value: InternalTranslationCode;
+  onChange: (val: InternalTranslationCode) => void;
+}
+
+export function InternalTranslationToggle({
+  value,
+  onChange,
+}: InternalTranslationToggleProps) {
+  return (
+    <div className="inline-flex rounded-full bg-slate-100 p-1 text-xs">
+      {(["KJV", "WEB"] as InternalTranslationCode[]).map((code) => (
+        <button
+          key={code}
+          type="button"
+          onClick={() => onChange(code)}
+          className={`px-3 py-1 rounded-full transition ${
+            value === code
+              ? "bg-white text-slate-900 shadow-sm"
+              : "text-slate-500"
+          }`}
+        >
+          {code}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+
+Then your DailyVerseScreen can manage internalTranslation in state and call fetchVerseInternal(reference, internalTranslation).
