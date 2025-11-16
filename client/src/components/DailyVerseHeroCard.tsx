@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { apiUrl } from "@/lib/api-config";
 import { useToast } from "@/hooks/use-toast";
 import { safeShare } from "@/utils/capabilities";
-import { MoreTranslations } from "./MoreTranslations";
+import { MoreTranslationsCard } from "./MoreTranslationsCard";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
 
 interface DailyVerseHeroCardProps {
@@ -137,8 +137,8 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
         <span className="text-[11px] text-slate-500">Tap to explore</span>
       </div>
 
-      <div className="px-5 pb-4 bg-black/95">
-        <MoreTranslations reference={reference} />
+      <div className="bg-black/95">
+        <MoreTranslationsCard reference={reference} tone="dark" />
       </div>
     </div>
   );
