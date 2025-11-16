@@ -28,7 +28,7 @@ import { liveActivity } from "../lib/liveActivity";
 // Images
 import warmBibleDeskImage from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
 import mountainLakeImage from '@assets/stock_images/hands_holding_bible__58f7c786.jpg';
-import forestPathImage from '@assets/stock_images/modern_church_interi_1e9df37b.jpg';
+import forestPathImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
 import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
 
 interface User {
