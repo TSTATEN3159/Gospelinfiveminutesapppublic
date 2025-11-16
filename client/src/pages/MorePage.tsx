@@ -13,6 +13,7 @@ import holyBibleImage from '@assets/stock_images/open_bible_pages_scr_bfe91e5c.j
 import blogWritingImage from '@assets/stock_images/person_writing_journ_4816488f.jpg';
 import friendsFellowship from '@assets/stock_images/group_of_people_pray_1d87fafd.jpg';
 import dailyDevotionsImage from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
+import { DisciplesOfChristTile } from "@/components/DisciplesOfChristTile";
 
 interface MorePageProps {
   language: string;
@@ -189,6 +190,17 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
       </div>
 
       <div className="max-w-sm mx-auto space-y-3 px-4">
+        {/* Disciples of Christ Tile */}
+        <DisciplesOfChristTile
+          verseRef="James 1:5"
+          verseText="If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
+          step="Before your next decision today, pause for three seconds and whisper, 'Lord, give me wisdom.'"
+          onClick={() => {
+            // Navigate to full devotion page (future implementation)
+            console.log("Disciples of Christ tile clicked");
+          }}
+        />
+
         {/* Main Menu Items */}
         {mainMenuItems.map((item) => {
           const getItemColors = (id: string) => {
