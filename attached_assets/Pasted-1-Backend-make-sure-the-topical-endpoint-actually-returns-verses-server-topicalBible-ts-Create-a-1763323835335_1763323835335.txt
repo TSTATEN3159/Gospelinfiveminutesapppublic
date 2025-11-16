@@ -1,0 +1,215 @@
+1️⃣ Backend: make sure the topical endpoint actually returns verses
+server/topicalBible.ts
+
+Create a helper that knows which verses belong to each topic:
+
+// server/topicalBible.ts
+export interface TopicalVerse {
+  reference: string;
+  text: string;
+}
+
+const TOPICAL_VERSES: Record<string, TopicalVerse[]> = {
+  "holy-spirit": [
+    {
+      reference: "John 14:26",
+      text: "But the Comforter, even the Holy Spirit, whom the Father will send in my name, he shall teach you all things..."
+    },
+    {
+      reference: "Acts 1:8",
+      text: "But ye shall receive power, when the Holy Spirit is come upon you..."
+    },
+    {
+      reference: "Galatians 5:22–23",
+      text: "But the fruit of the Spirit is love, joy, peace, longsuffering, kindness, goodness, faithfulness..."
+    },
+  ],
+  // add other topics here: "faith", "grace", etc.
+};
+
+export async function getTopicalVerses(
+  topicId: string,
+  version: string
+): Promise<TopicalVerse[]> {
+  // If you later want to hit an external Bible API per reference,
+  // you can do that here using your VITE_API_BIBLE_KEY.
+  const verses = TOPICAL_VERSES[topicId] || [];
+  return verses;
+}
+
+server/routes.ts
+
+Add an Express route that the client can call:
+
+// server/routes.ts
+import express from "express";
+import { getTopicalVerses } from "./topicalBible";
+
+const router = express.Router();
+
+// ...your existing routes...
+
+router.get("/api/topical-verses", async (req, res) => {
+  const topicId = String(req.query.topicId ?? "");
+  const version = String(req.query.version ?? "ASV");
+
+  if (!topicId) {
+    return res.status(400).json({ error: "topicId is required" });
+  }
+
+  try {
+    const verses = await getTopicalVerses(topicId, version);
+    res.json({ verses });
+  } catch (err) {
+    console.error("Error in /api/topical-verses:", err);
+    res.status(500).json({ error: "Failed to load topical verses" });
+  }
+});
+
+export default router;
+
+
+Now your backend will actually return verses like:
+
+{
+  "verses": [
+    { "reference": "John 14:26", "text": "..." },
+    ...
+  ]
+}
+
+
+🔍 If this route isn’t in place (or returns []), your UI will always show “No verses found…”
+
+2️⃣ Frontend service: call the topical endpoint correctly
+client/src/services/bibleSearchService.ts
+
+Add a function to fetch topical verses:
+
+// client/src/services/bibleSearchService.ts
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+
+export interface TopicalVerseDto {
+  reference: string;
+  text: string;
+}
+
+export async function fetchTopicalVerses(
+  topicId: string,
+  versionCode: string
+): Promise<TopicalVerseDto[]> {
+  const url = new URL("/api/topical-verses", API_BASE_URL);
+  url.searchParams.set("topicId", topicId);
+  url.searchParams.set("version", versionCode);
+
+  const response = await fetch(url.toString());
+  if (!response.ok) {
+    console.error("Topical verses error:", response.status, await response.text());
+    throw new Error("Failed to load topical verses");
+  }
+
+  const data = await response.json();
+  return data.verses ?? [];
+}
+
+3️⃣ Frontend card: make sure you send the correct topic id
+
+In your Topical Bible Search card, you probably have a list like:
+
+const TOPICS = [
+  {
+    id: "holy-spirit",
+    label: "Holy Spirit",
+    description: "The Spirit's presence, power, and fruit.",
+  },
+  // ...
+];
+
+
+The important thing is that id matches the keys in TOPICAL_VERSES ("holy-spirit" in both places).
+
+client/src/components/TopicalBibleSearchCard.tsx (core logic)
+import { useEffect, useState } from "react";
+import { fetchTopicalVerses, TopicalVerseDto } from "@/services/bibleSearchService";
+import { TOPICS } from "@/config/topicalTopics";
+
+export default function TopicalBibleSearchCard() {
+  const [selectedTopicId, setSelectedTopicId] = useState<string | null>(TOPICS[0]?.id ?? null);
+  const [selectedVersionCode, setSelectedVersionCode] = useState("ASV");
+  const [verses, setVerses] = useState<TopicalVerseDto[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    if (!selectedTopicId) return;
+
+    setLoading(true);
+    setError(null);
+
+    fetchTopicalVerses(selectedTopicId, selectedVersionCode)
+      .then(setVerses)
+      .catch((err) => {
+        console.error(err);
+        setError("Unable to load verses right now.");
+        setVerses([]);
+      })
+      .finally(() => setLoading(false));
+  }, [selectedTopicId, selectedVersionCode]);
+
+  // ...render <select> or dropdown that calls setSelectedTopicId(topic.id)
+  // ...render Bible version selector that calls setSelectedVersionCode(code)
+
+  return (
+    <div className="rounded-3xl bg-amber-50 p-4">
+      {/* topic + version controls above... */}
+
+      {loading && (
+        <div className="flex items-center justify-center py-10 text-slate-500 text-sm">
+          Loading verses…
+        </div>
+      )}
+
+      {error && !loading && (
+        <div className="rounded-2xl bg-red-50 border border-red-200 px-4 py-6 text-center text-sm text-red-700">
+          {error}
+        </div>
+      )}
+
+      {!loading && !error && verses.length === 0 && (
+        <div className="rounded-2xl bg-slate-100 px-4 py-6 text-center text-sm text-slate-600">
+          No verses found for this topic. Please try another topic.
+        </div>
+      )}
+
+      {!loading && !error && verses.length > 0 && (
+        <ul className="space-y-3 mt-2">
+          {verses.map((v) => (
+            <li
+              key={v.reference}
+              className="rounded-2xl bg-white shadow-sm px-4 py-3 text-sm text-slate-800"
+            >
+              <div className="font-semibold text-emerald-600 mb-1">{v.reference}</div>
+              <div>{v.text}</div>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  );
+}
+
+4️⃣ Answering your direct question
+
+“Is this usually that API has not been set up?”
+
+If every topic for every version says “No verses found,” the most common causes are:
+
+The topical endpoint (/api/topical-verses) doesn’t exist or always returns [].
+
+The topic ids don’t match between frontend (id: "Holy Spirit") and backend ("holy-spirit").
+
+A missing Bible API key usually shows up as a network error / 401 / 403 (and you’d see it in the browser’s Network tab or server logs), not a clean “No verses found” message.
+
+So the fix is: make sure the backend topical route exists and returns real data for holy-spirit, and that your dropdown passes that exact id into fetchTopicalVerses.
+
+If you paste your existing TopicalBibleSearchCard and any topical service file next time, I can align these snippets exactly to your current structure.
