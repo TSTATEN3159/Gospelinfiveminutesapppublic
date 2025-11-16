@@ -1,0 +1,268 @@
+Perfect, this will look gorgeous in your app. Let’s set up:
+
+✅ A verse ticker that scrolls continuously
+
+✅ A static “featured” verse on the left
+
+✅ A high-def stock photo on the right
+
+✅ Step-by-step Replit install instructions
+
+✅ 25 ready-to-use verses wired into the component
+
+I’ll assume your front-end is React + Vite (same repo you’re building with Appflow).
+
+1. Install the ticker library in Replit
+
+Open your project in Replit.
+
+Open the Shell at the bottom.
+
+From the project root (where package.json lives), run:
+
+npm install react-ticker
+
+
+Replit will update package.json and install the library in node_modules.
+
+If your front-end code lives under client/ and you normally run commands from there, you can instead do:
+
+cd client
+npm install react-ticker
+
+
+(Use the same location where you normally do npm run dev.)
+
+2. Add a high-definition “Bible study” image
+
+You can either:
+
+Use a remote stock image URL (simplest), or
+
+Download a stock image into your assets folder (more robust for production).
+
+For now we’ll use a remote Pexels/Unsplash-style URL:
+
+const STUDY_IMAGE_URL =
+  "https://images.pexels.com/photos/2080960/pexels-photo-2080960.jpeg?auto=compress&cs=tinysrgb&w=1200";
+
+
+(You can swap this for any royalty-free HD Bible study / walking / prayer image you like.)
+
+If you want it local later, just download the image into client/src/assets/ and change to:
+
+import StudyImage from "@/assets/bible-study-01.jpg";
+
+
+and use src={StudyImage} instead of the URL.
+
+3. Create the Scripture Ticker component
+
+In your client code, create a new file, for example:
+
+client/src/components/ScriptureTickerPanel.tsx
+
+Paste this entire code:
+
+import { useMemo } from "react";
+import Ticker from "react-ticker";
+
+// If you later move this to a local file in /assets, import it instead.
+const STUDY_IMAGE_URL =
+  "https://images.pexels.com/photos/2080960/pexels-photo-2080960.jpeg?auto=compress&cs=tinysrgb&w=1200";
+
+type Verse = {
+  ref: string;
+  text: string;
+};
+
+const VERSES: Verse[] = [
+  { ref: "Psalm 23:1", text: "The Lord is my shepherd; I shall not want." },
+  { ref: "John 3:16", text: "For God so loved the world that he gave his one and only Son." },
+  { ref: "Romans 8:28", text: "And we know that in all things God works for the good of those who love him." },
+  { ref: "Proverbs 3:5–6", text: "Trust in the Lord with all your heart and lean not on your own understanding." },
+  { ref: "Philippians 4:6–7", text: "Do not be anxious about anything, but in every situation, present your requests to God." },
+  { ref: "Isaiah 41:10", text: "Fear not, for I am with you; be not dismayed, for I am your God." },
+  { ref: "Matthew 11:28", text: "Come to me, all you who are weary and burdened, and I will give you rest." },
+  { ref: "Romans 8:31", text: "If God is for us, who can be against us?" },
+  { ref: "Hebrews 11:1", text: "Now faith is confidence in what we hope for and assurance about what we do not see." },
+  { ref: "Galatians 2:20", text: "I live by faith in the Son of God, who loved me and gave himself for me." },
+  { ref: "2 Corinthians 5:17", text: "If anyone is in Christ, the new creation has come: The old has gone, the new is here!" },
+  { ref: "Ephesians 2:8–9", text: "It is by grace you have been saved, through faith—and this is the gift of God." },
+  { ref: "Psalm 119:105", text: "Your word is a lamp for my feet, a light on my path." },
+  { ref: "Joshua 1:9", text: "Be strong and courageous. Do not be afraid; for the Lord your God will be with you wherever you go." },
+  { ref: "Isaiah 40:31", text: "Those who hope in the Lord will renew their strength; they will soar on wings like eagles." },
+  { ref: "Romans 12:1–2", text: "Offer your bodies as a living sacrifice... Do not conform to the pattern of this world." },
+  { ref: "Colossians 3:16", text: "Let the word of Christ dwell in you richly." },
+  { ref: "1 Thessalonians 5:16–18", text: "Rejoice always, pray continually, give thanks in all circumstances." },
+  { ref: "Psalm 46:1", text: "God is our refuge and strength, an ever-present help in trouble." },
+  { ref: "John 15:5", text: "I am the vine; you are the branches. If you remain in me and I in you, you will bear much fruit." },
+  { ref: "James 1:5", text: "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault." },
+  { ref: "1 Peter 5:7", text: "Cast all your anxiety on him because he cares for you." },
+  { ref: "Psalm 37:4", text: "Take delight in the Lord, and he will give you the desires of your heart." },
+  { ref: "Micah 6:8", text: "Act justly, love mercy, and walk humbly with your God." },
+  { ref: "John 8:12", text: "I am the light of the world. Whoever follows me will never walk in darkness." },
+];
+
+export default function ScriptureTickerPanel() {
+  // Pick a single verse to feature statically on the left
+  const featuredVerse = useMemo(() => {
+    const idx = Math.floor(Math.random() * VERSES.length);
+    return VERSES[idx];
+  }, []);
+
+  return (
+    <section className="w-full rounded-3xl bg-slate-900 text-slate-100 shadow-[0_20px_60px_rgba(15,23,42,0.55)] overflow-hidden">
+      <div className="grid md:grid-cols-[2fr,1.5fr] gap-4 md:gap-6 items-stretch">
+        {/* LEFT SIDE: Static verse + ticker */}
+        <div className="p-4 md:p-6 flex flex-col justify-between">
+          {/* Static featured verse */}
+          <div>
+            <p className="text-xs uppercase tracking-[0.2em] text-emerald-300 mb-2">
+              Today&apos;s Focus Verse
+            </p>
+            <p className="text-lg md:text-2xl font-semibold leading-snug mb-3">
+              “{featuredVerse.text}”
+            </p>
+            <p className="text-sm md:text-base font-medium text-emerald-200">
+              {featuredVerse.ref}
+            </p>
+          </div>
+
+          {/* Scrolling ticker with many verses */}
+          <div className="mt-4 pt-3 border-t border-slate-700">
+            <p className="text-xs uppercase tracking-[0.2em] text-slate-400 mb-1">
+              Meditate as you move
+            </p>
+            <div className="h-8 md:h-10 overflow-hidden">
+              <Ticker speed={5} mode="smooth">
+                {({ index }) => {
+                  const v = VERSES[index % VERSES.length];
+                  return (
+                    <div className="flex items-center gap-3 pr-16">
+                      <span className="text-[10px] md:text-xs font-semibold text-emerald-300 uppercase tracking-wide">
+                        Verse
+                      </span>
+                      <span className="text-xs md:text-sm text-slate-100 whitespace-nowrap">
+                        {v.ref} — {v.text}
+                      </span>
+                    </div>
+                  );
+                }}
+              </Ticker>
+            </div>
+          </div>
+        </div>
+
+        {/* RIGHT SIDE: High-def photo */}
+        <div className="relative h-40 md:h-full">
+          <img
+            src={STUDY_IMAGE_URL}
+            alt="Person studying the Bible and walking with God"
+            className="w-full h-full object-cover md:rounded-l-none rounded-3xl md:rounded-3xl md:rounded-l-[0] md:rounded-r-3xl"
+          />
+          {/* Optional subtle overlay gradient for readability if text overlaps in future */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-slate-900/0 via-slate-900/10 to-slate-900/40" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+What this gives you
+
+Static, “hero-style” verse: big, readable, front and center.
+
+Ticker at the bottom: scrolls through all 25 verses continuously.
+
+HD photo on the right: someone studying/reading/walking with Scripture — very “Daily Gospel in motion”.
+
+You can drop this panel anywhere (home screen, devotional screen, etc.).
+
+4. Use the widget in your app (Home page, for example)
+
+Find the component that renders your home screen — something like:
+
+client/src/pages/HomePage.tsx
+
+or wherever you show the daily card.
+
+At the top of that file, add:
+
+import ScriptureTickerPanel from "@/components/ScriptureTickerPanel";
+
+
+Then in the JSX, place it where you want the widget to appear. For example:
+
+export default function HomePage() {
+  return (
+    <div className="px-4 pt-4 pb-20 space-y-4">
+      {/* Existing header / daily verse */}
+      {/* <HomeHeaderScriptureFocus /> */}
+
+      {/* New ticker widget */}
+      <ScriptureTickerPanel />
+
+      {/* Rest of your home content */}
+    </div>
+  );
+}
+
+
+You can:
+
+Put it right under your existing Daily Verse card to make the screen feel rich and “alive.”
+
+Or put it above to act as a “Scripture banner.”
+
+5. Run and test in Replit
+
+In Replit Shell, run:
+
+npm run dev
+
+
+(or whatever command you normally use to start the Vite dev server).
+
+Open the web preview:
+
+You should see the new panel:
+
+Static verse on the left.
+
+Ticker line slowly scrolling different verses.
+
+Image on the right.
+
+If it looks too fast/slow, adjust this line:
+
+<Ticker speed={5} mode="smooth">
+
+
+Lower number = slower scroll (e.g. 3), higher number = faster (e.g. 8).
+
+6. Make some verses static instead of all scrolling
+
+Right now:
+
+One verse is static (featuredVerse).
+
+All 25 verses feed the ticker.
+
+If you want some verses to stay static only and never scroll, you could:
+
+Split the list:
+
+const FEATURED_VERSES = [ /* 3–5 favorite ones */ ];
+const TICKER_VERSES = VERSES; // or a filtered copy
+
+
+Use FEATURED_VERSES for choosing featuredVerse, and TICKER_VERSES inside the ticker.
+
+That way, you can curate what stays “anchored” in front of the user vs. what rotates.
+
+If you’d like, next we can:
+
+Swap in local HD images and create a small image asset rotation (morning, evening, prayer, study).
+
+Make a dark/light mode aware style tweak so it always looks premium, App-Store-ready on both iOS and Android.

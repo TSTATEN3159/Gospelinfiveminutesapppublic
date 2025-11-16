@@ -9,6 +9,7 @@ import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import ProfilePictureUpload from "../components/ProfilePictureUpload";
 import { DailyVerseHeroCard } from "../components/DailyVerseHeroCard";
+import ScriptureTickerPanel from "../components/ScriptureTickerPanel";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -226,6 +227,9 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
       <div className="px-4 py-4 space-y-4 ios-safe-bottom">
         {/* Hero Daily Verse Card - Bible App Style */}
         <DailyVerseHeroCard onPress={() => setShowVerseModal(true)} />
+
+        {/* Scripture Ticker Panel - Scrolling Verses */}
+        <ScriptureTickerPanel />
 
         {/* Bible Study Section */}
         <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
