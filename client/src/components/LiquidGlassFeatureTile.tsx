@@ -63,10 +63,10 @@ export function LiquidGlassFeatureTile({
       <div className="relative p-5 sm:p-6 flex flex-col h-full gap-3">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 space-y-1">
-            <h2 className="text-lg sm:text-xl font-bold text-slate-900 dark:text-white drop-shadow-sm">
+            <h2 className="text-lg sm:text-xl font-bold text-white drop-shadow-lg">
               {title}
             </h2>
-            <p className="text-xs sm:text-sm text-slate-800 dark:text-slate-100 leading-snug">
+            <p className="text-xs sm:text-sm text-white/95 leading-snug drop-shadow-md">
               {subtitle}
             </p>
           </div>
@@ -92,12 +92,11 @@ export function LiquidGlassFeatureTile({
             className="
               flex items-center justify-center
               w-9 h-9 rounded-2xl
-              bg-white/75 dark:bg-slate-950/70
-              border border-white/80 dark:border-slate-700
-              shadow
-              text-slate-700 dark:text-slate-200
-              group-hover:bg-slate-900 group-hover:text-white
-              dark:group-hover:bg-white dark:group-hover:text-slate-900
+              bg-white/80
+              border border-white/90
+              shadow-lg
+              text-slate-900
+              group-hover:bg-white group-hover:text-slate-900
               transition-colors
             "
           >
