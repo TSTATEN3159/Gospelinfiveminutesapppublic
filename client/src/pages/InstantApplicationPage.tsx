@@ -1,18 +1,18 @@
 import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { ArrowLeft, Target, Loader2, BookOpen, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useVersePassageMutation, useInstantApplicationMutation } from "@/hooks/useVerseInsights";
 import { runSafely } from "@/utils/featureGuard";
+import { ScriptureReferencePicker, ScriptureReferenceSelection, buildReferenceString } from "@/components/ScriptureReferencePicker";
 
 interface InstantApplicationPageProps {
   onNavigate: (page: string) => void;
 }
 
 export default function InstantApplicationPage({ onNavigate }: InstantApplicationPageProps) {
-  const [reference, setReference] = useState("");
+  const [selection, setSelection] = useState<ScriptureReferenceSelection | null>(null);
   const [verseText, setVerseText] = useState("");
   const [application, setApplication] = useState("");
   const { toast } = useToast();
@@ -21,15 +21,16 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
   const instantApplicationMutation = useInstantApplicationMutation();
 
   const handleFetchVerse = async () => {
-    if (!reference.trim()) {
+    if (!selection) {
       toast({
         title: "Reference Required",
-        description: "Please enter a Bible verse reference (e.g., John 3:16).",
+        description: "Please select a Bible verse reference.",
         variant: "destructive"
       });
       return;
     }
 
+    const reference = buildReferenceString(selection);
     setVerseText("");
     setApplication("");
 
@@ -58,7 +59,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
   };
 
   const handleGetApplication = async () => {
-    if (!verseText.trim()) {
+    if (!verseText.trim() || !selection) {
       toast({
         title: "Verse Text Required",
         description: "Please fetch a verse first to get an application.",
@@ -67,6 +68,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
       return;
     }
 
+    const reference = buildReferenceString(selection);
     setApplication("");
 
     const result = await runSafely(
@@ -152,27 +154,15 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
           </CardHeader>
           
           <CardContent className="relative z-10 space-y-4">
-            <div className="space-y-2">
-              <label className="text-sm font-semibold text-gray-700 dark:text-gray-300">
-                Reference
-              </label>
-              <Input
-                placeholder="Philippians 4:6-7"
-                value={reference}
-                onChange={(e) => setReference(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && !versePassageMutation.isPending) {
-                    handleFetchVerse();
-                  }
-                }}
-                className="h-14 text-lg backdrop-blur-xl bg-white/60 dark:bg-gray-800/60 border-white/50 dark:border-gray-700/50 rounded-2xl shadow-lg focus:shadow-purple-500/30 transition-all duration-300 font-medium"
-                data-testid="input-reference"
-              />
-            </div>
+            <ScriptureReferencePicker
+              label="Select Scripture Reference"
+              value={selection ?? undefined}
+              onChange={setSelection}
+            />
 
             <Button
               onClick={handleFetchVerse}
-              disabled={versePassageMutation.isPending || !reference.trim()}
+              disabled={versePassageMutation.isPending || !selection}
               className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
               data-testid="button-fetch-verse"
             >
@@ -208,7 +198,7 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
                   <Sparkles className="w-5 h-5 text-white" />
                 </div>
                 <h3 className="text-lg font-bold bg-gradient-to-r from-purple-700 to-pink-700 bg-clip-text text-transparent">
-                  {reference}
+                  {selection ? buildReferenceString(selection) : ""}
                 </h3>
               </div>
             </CardHeader>
