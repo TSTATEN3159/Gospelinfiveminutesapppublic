@@ -1,0 +1,572 @@
+I don’t need more info—I’ll just build you a clean, modern Book / Chapter / Verse dropdown that you can plug straight into Plain Meaning and Instant Application.
+
+We’ll do it in 3 layers:
+
+📚 Bible book data (with chapter counts)
+
+🔽 A reusable <ScriptureReferencePicker /> component
+
+🧠 How to wire it into your Plain Meaning and Instant Application pages
+
+1️⃣ Bible book data (66 books + chapter counts)
+
+File (new): client/src/data/bibleBooks.ts
+
+// client/src/data/bibleBooks.ts
+
+export interface BibleBook {
+  id: string;       // short code, e.g. "GEN"
+  name: string;     // display, e.g. "Genesis"
+  chapters: number; // number of chapters in that book
+}
+
+export const BIBLE_BOOKS: BibleBook[] = [
+  // Old Testament
+  { id: "GEN", name: "Genesis", chapters: 50 },
+  { id: "EXO", name: "Exodus", chapters: 40 },
+  { id: "LEV", name: "Leviticus", chapters: 27 },
+  { id: "NUM", name: "Numbers", chapters: 36 },
+  { id: "DEU", name: "Deuteronomy", chapters: 34 },
+
+  { id: "JOS", name: "Joshua", chapters: 24 },
+  { id: "JDG", name: "Judges", chapters: 21 },
+  { id: "RUT", name: "Ruth", chapters: 4 },
+  { id: "1SA", name: "1 Samuel", chapters: 31 },
+  { id: "2SA", name: "2 Samuel", chapters: 24 },
+  { id: "1KI", name: "1 Kings", chapters: 22 },
+  { id: "2KI", name: "2 Kings", chapters: 25 },
+  { id: "1CH", name: "1 Chronicles", chapters: 29 },
+  { id: "2CH", name: "2 Chronicles", chapters: 36 },
+  { id: "EZR", name: "Ezra", chapters: 10 },
+  { id: "NEH", name: "Nehemiah", chapters: 13 },
+  { id: "EST", name: "Esther", chapters: 10 },
+
+  { id: "JOB", name: "Job", chapters: 42 },
+  { id: "PSA", name: "Psalms", chapters: 150 },
+  { id: "PRO", name: "Proverbs", chapters: 31 },
+  { id: "ECC", name: "Ecclesiastes", chapters: 12 },
+  { id: "SNG", name: "Song of Solomon", chapters: 8 },
+
+  { id: "ISA", name: "Isaiah", chapters: 66 },
+  { id: "JER", name: "Jeremiah", chapters: 52 },
+  { id: "LAM", name: "Lamentations", chapters: 5 },
+  { id: "EZK", name: "Ezekiel", chapters: 48 },
+  { id: "DAN", name: "Daniel", chapters: 12 },
+
+  { id: "HOS", name: "Hosea", chapters: 14 },
+  { id: "JOL", name: "Joel", chapters: 3 },
+  { id: "AMO", name: "Amos", chapters: 9 },
+  { id: "OBA", name: "Obadiah", chapters: 1 },
+  { id: "JON", name: "Jonah", chapters: 4 },
+  { id: "MIC", name: "Micah", chapters: 7 },
+  { id: "NAM", name: "Nahum", chapters: 3 },
+  { id: "HAB", name: "Habakkuk", chapters: 3 },
+  { id: "ZEP", name: "Zephaniah", chapters: 3 },
+  { id: "HAG", name: "Haggai", chapters: 2 },
+  { id: "ZEC", name: "Zechariah", chapters: 14 },
+  { id: "MAL", name: "Malachi", chapters: 4 },
+
+  // New Testament
+  { id: "MAT", name: "Matthew", chapters: 28 },
+  { id: "MRK", name: "Mark", chapters: 16 },
+  { id: "LUK", name: "Luke", chapters: 24 },
+  { id: "JHN", name: "John", chapters: 21 },
+  { id: "ACT", name: "Acts", chapters: 28 },
+
+  { id: "ROM", name: "Romans", chapters: 16 },
+  { id: "1CO", name: "1 Corinthians", chapters: 16 },
+  { id: "2CO", name: "2 Corinthians", chapters: 13 },
+  { id: "GAL", name: "Galatians", chapters: 6 },
+  { id: "EPH", name: "Ephesians", chapters: 6 },
+  { id: "PHP", name: "Philippians", chapters: 4 },
+  { id: "COL", name: "Colossians", chapters: 4 },
+  { id: "1TH", name: "1 Thessalonians", chapters: 5 },
+  { id: "2TH", name: "2 Thessalonians", chapters: 3 },
+  { id: "1TI", name: "1 Timothy", chapters: 6 },
+  { id: "2TI", name: "2 Timothy", chapters: 4 },
+  { id: "TIT", name: "Titus", chapters: 3 },
+  { id: "PHM", name: "Philemon", chapters: 1 },
+  { id: "HEB", name: "Hebrews", chapters: 13 },
+  { id: "JAS", name: "James", chapters: 5 },
+  { id: "1PE", name: "1 Peter", chapters: 5 },
+  { id: "2PE", name: "2 Peter", chapters: 3 },
+  { id: "1JN", name: "1 John", chapters: 5 },
+  { id: "2JN", name: "2 John", chapters: 1 },
+  { id: "3JN", name: "3 John", chapters: 1 },
+  { id: "JUD", name: "Jude", chapters: 1 },
+  { id: "REV", name: "Revelation", chapters: 22 }
+];
+
+// We won't try to be *perfect* about verse counts here —
+// we'll allow verses 1–176 (max in Psalm 119) and let your API handle invalid combos gracefully.
+export const MAX_VERSES_PER_CHAPTER = 176;
+
+2️⃣ Reusable Book / Chapter / Verse dropdown component
+
+This is the piece you’ll reuse for:
+
+📖 Plain Meaning
+
+⚡ Instant Application
+
+(and later if you want, other features)
+
+File (new): client/src/components/ScriptureReferencePicker.tsx
+
+// client/src/components/ScriptureReferencePicker.tsx
+
+import { useEffect, useState } from "react";
+import { BIBLE_BOOKS, BibleBook, MAX_VERSES_PER_CHAPTER } from "@/data/bibleBooks";
+import {
+  Select,
+  SelectTrigger,
+  SelectValue,
+  SelectContent,
+  SelectItem
+} from "@/components/ui/select";
+
+export interface ScriptureReferenceSelection {
+  bookId: string;
+  bookName: string;
+  chapter: number;
+  verseStart: number;
+  verseEnd?: number; // optional range support for later
+}
+
+interface ScriptureReferencePickerProps {
+  label?: string;
+  value?: ScriptureReferenceSelection;
+  onChange?: (value: ScriptureReferenceSelection) => void;
+  showRange?: boolean; // allow verse range selection
+}
+
+export function ScriptureReferencePicker({
+  label = "Scripture",
+  value,
+  onChange,
+  showRange = false
+}: ScriptureReferencePickerProps) {
+  const defaultBook: BibleBook = BIBLE_BOOKS[0];
+
+  const [bookId, setBookId] = useState<string>(value?.bookId ?? defaultBook.id);
+  const [chapter, setChapter] = useState<number>(value?.chapter ?? 1);
+  const [verseStart, setVerseStart] = useState<number>(value?.verseStart ?? 1);
+  const [verseEnd, setVerseEnd] = useState<number>(value?.verseEnd ?? value?.verseStart ?? 1);
+
+  const currentBook = BIBLE_BOOKS.find(b => b.id === bookId) ?? defaultBook;
+
+  // If external value changes, sync
+  useEffect(() => {
+    if (!value) return;
+    setBookId(value.bookId);
+    setChapter(value.chapter);
+    setVerseStart(value.verseStart);
+    setVerseEnd(value.verseEnd ?? value.verseStart);
+  }, [value?.bookId, value?.chapter, value?.verseStart, value?.verseEnd]);
+
+  const emitChange = (
+    nextBookId = bookId,
+    nextChapter = chapter,
+    nextVerseStart = verseStart,
+    nextVerseEnd = verseEnd
+  ) => {
+    const book = BIBLE_BOOKS.find(b => b.id === nextBookId) ?? defaultBook;
+    const normalizedEnd = showRange
+      ? Math.max(nextVerseStart, nextVerseEnd ?? nextVerseStart)
+      : nextVerseStart;
+
+    const selection: ScriptureReferenceSelection = {
+      bookId: nextBookId,
+      bookName: book.name,
+      chapter: nextChapter,
+      verseStart: nextVerseStart,
+      verseEnd: showRange ? normalizedEnd : undefined
+    };
+    onChange?.(selection);
+  };
+
+  const handleBookChange = (id: string) => {
+    setBookId(id);
+    // reset chapter when switching book
+    const book = BIBLE_BOOKS.find(b => b.id === id) ?? defaultBook;
+    const newChapter = 1;
+    const newVerseStart = 1;
+    const newVerseEnd = showRange ? 1 : newVerseStart;
+    setChapter(newChapter);
+    setVerseStart(newVerseStart);
+    setVerseEnd(newVerseEnd);
+    emitChange(id, newChapter, newVerseStart, newVerseEnd);
+  };
+
+  const handleChapterChange = (val: string) => {
+    const ch = Number(val) || 1;
+    setChapter(ch);
+    const newVerseStart = 1;
+    const newVerseEnd = showRange ? 1 : newVerseStart;
+    setVerseStart(newVerseStart);
+    setVerseEnd(newVerseEnd);
+    emitChange(bookId, ch, newVerseStart, newVerseEnd);
+  };
+
+  const handleVerseStartChange = (val: string) => {
+    const vs = Number(val) || 1;
+    setVerseStart(vs);
+    emitChange(bookId, chapter, vs, verseEnd);
+  };
+
+  const handleVerseEndChange = (val: string) => {
+    const ve = Number(val) || verseStart;
+    setVerseEnd(ve);
+    emitChange(bookId, chapter, verseStart, ve);
+  };
+
+  // Options
+  const chapterOptions = Array.from({ length: currentBook.chapters }, (_, i) => i + 1);
+  const verseOptions = Array.from({ length: MAX_VERSES_PER_CHAPTER }, (_, i) => i + 1);
+
+  return (
+    <div className="space-y-2">
+      {label && (
+        <div className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+          {label}
+        </div>
+      )}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+        {/* Book */}
+        <Select value={bookId} onValueChange={handleBookChange}>
+          <SelectTrigger className="w-full bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+            <SelectValue placeholder="Book" />
+          </SelectTrigger>
+          <SelectContent className="max-h-72">
+            {BIBLE_BOOKS.map(book => (
+              <SelectItem key={book.id} value={book.id}>
+                {book.name}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {/* Chapter */}
+        <Select value={String(chapter)} onValueChange={handleChapterChange}>
+          <SelectTrigger className="w-full bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+            <SelectValue placeholder="Chapter" />
+          </SelectTrigger>
+          <SelectContent className="max-h-60">
+            {chapterOptions.map(ch => (
+              <SelectItem key={ch} value={String(ch)}>
+                {ch}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+
+        {/* Verse or Verse Start */}
+        <Select value={String(verseStart)} onValueChange={handleVerseStartChange}>
+          <SelectTrigger className="w-full bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+            <SelectValue placeholder="Verse" />
+          </SelectTrigger>
+          <SelectContent className="max-h-60">
+            {verseOptions.map(v => (
+              <SelectItem key={v} value={String(v)}>
+                {v}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {showRange && (
+        <div className="grid grid-cols-[auto,1fr] gap-2 items-center pt-1">
+          <span className="text-xs text-slate-500 dark:text-slate-400 text-right">
+            to
+          </span>
+          <Select value={String(verseEnd)} onValueChange={handleVerseEndChange}>
+            <SelectTrigger className="w-full bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+              <SelectValue placeholder="End verse" />
+            </SelectTrigger>
+            <SelectContent className="max-h-60">
+              {verseOptions.map(v => (
+                <SelectItem key={v} value={String(v)}>
+                  {v}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Helper: build a human-readable reference like "John 3:16" or "John 3:16-18"
+export function buildReferenceString(sel: ScriptureReferenceSelection): string {
+  if (sel.verseEnd && sel.verseEnd > sel.verseStart) {
+    return `${sel.bookName} ${sel.chapter}:${sel.verseStart}-${sel.verseEnd}`;
+  }
+  return `${sel.bookName} ${sel.chapter}:${sel.verseStart}`;
+}
+
+
+👉 This component:
+
+Lets the user pick Book / Chapter / Verse
+
+Optionally supports a range (start–end) if you turn showRange on later
+
+Emits a ScriptureReferenceSelection back to the parent, which we’ll use for Plain Meaning and Instant Application.
+
+3️⃣ Wiring into Plain Meaning & Instant Application
+A. Plain Meaning page
+
+Assume you have something like PlainMeaningPage.tsx that used to ask the user to type the Scripture.
+
+We’re going to:
+
+Drop in the ScriptureReferencePicker
+
+On submit, build a reference string like "John 3:16"
+
+Send that to your existing backend route (or Replit can plug it in)
+
+File (example): client/src/pages/PlainMeaningPage.tsx
+
+import { useState } from "react";
+import { ScriptureReferencePicker, ScriptureReferenceSelection, buildReferenceString } from "@/components/ScriptureReferencePicker";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+interface PlainMeaningPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) {
+  const [selection, setSelection] = useState<ScriptureReferenceSelection | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [plainMeaning, setPlainMeaning] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    if (!selection) return;
+    const reference = buildReferenceString(selection);
+
+    setLoading(true);
+    setError(null);
+    setPlainMeaning(null);
+
+    try {
+      const res = await fetch("/api/plain-meaning", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference })
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to get plain meaning.");
+      }
+
+      const data = await res.json(); // { success: boolean, explanation?: string, error?: string }
+      if (!data.success || !data.explanation) {
+        throw new Error(data.error || "No explanation returned.");
+      }
+
+      setPlainMeaning(data.explanation);
+    } catch (err: any) {
+      console.error(err);
+      setError("Sorry, I couldn't explain that verse right now. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pb-20">
+      <div className="px-4 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-50">
+          Plain Meaning
+        </h1>
+        {onNavigate && (
+          <Button variant="outline" size="sm" onClick={() => onNavigate("home")}>
+            Home
+          </Button>
+        )}
+      </div>
+
+      <div className="p-4 max-w-3xl mx-auto space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">
+              Choose a Scripture
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <ScriptureReferencePicker
+              label="Book • Chapter • Verse"
+              onChange={setSelection}
+              showRange={false} // Plain Meaning could be single-verse-focused
+            />
+
+            <Button
+              className="w-full"
+              onClick={handleGenerate}
+              disabled={loading || !selection}
+            >
+              {loading ? "Explaining..." : "Show Plain Meaning"}
+            </Button>
+
+            {error && (
+              <p className="text-xs text-red-600 mt-2">{error}</p>
+            )}
+          </CardContent>
+        </Card>
+
+        {plainMeaning && (
+          <Card className="border-amber-200 dark:border-amber-500/40 bg-amber-50/60 dark:bg-amber-900/20">
+            <CardHeader>
+              <CardTitle className="text-sm">
+                Plain Meaning for {selection && buildReferenceString(selection)}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                {plainMeaning}
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+Replit can hook /api/plain-meaning up to your existing OpenAI-based logic that explains the text.
+
+B. Instant Application page
+
+Now we do the same idea, but the backend route is for Application instead of meaning.
+
+File (example): client/src/pages/InstantApplicationPage.tsx
+
+import { useState } from "react";
+import { ScriptureReferencePicker, ScriptureReferenceSelection, buildReferenceString } from "@/components/ScriptureReferencePicker";
+import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+interface InstantApplicationPageProps {
+  onNavigate?: (page: string) => void;
+}
+
+export default function InstantApplicationPage({ onNavigate }: InstantApplicationPageProps) {
+  const [selection, setSelection] = useState<ScriptureReferenceSelection | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [application, setApplication] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleGenerate = async () => {
+    if (!selection) return;
+    const reference = buildReferenceString(selection);
+
+    setLoading(true);
+    setError(null);
+    setApplication(null);
+
+    try {
+      const res = await fetch("/api/instant-application", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference })
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to get application.");
+      }
+
+      const data = await res.json(); // { success, application?, error? }
+      if (!data.success || !data.application) {
+        throw new Error(data.error || "No application returned.");
+      }
+
+      setApplication(data.application);
+    } catch (err: any) {
+      console.error(err);
+      setError("Sorry, I couldn't generate an application just now. Please try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-950 dark:to-slate-900 pb-20">
+      <div className="px-4 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800 flex items-center justify-between">
+        <h1 className="text-xl font-bold text-slate-900 dark:text-slate-50">
+          Instant Application
+        </h1>
+        {onNavigate && (
+          <Button variant="outline" size="sm" onClick={() => onNavigate("home")}>
+            Home
+          </Button>
+        )}
+      </div>
+
+      <div className="p-4 max-w-3xl mx-auto space-y-4">
+        <Card>
+          <CardHeader>
+            <CardTitle className="text-base">
+              Choose a Scripture
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <ScriptureReferencePicker
+              label="Book • Chapter • Verse"
+              onChange={setSelection}
+              showRange={true} // you may want range for application, e.g. Rom 12:1-2
+            />
+
+            <Button
+              className="w-full"
+              onClick={handleGenerate}
+              disabled={loading || !selection}
+            >
+              {loading ? "Praying over this..." : "Show Instant Application"}
+            </Button>
+
+            {error && (
+              <p className="text-xs text-red-600 mt-2">{error}</p>
+            )}
+          </CardContent>
+        </Card>
+
+        {application && (
+          <Card className="border-emerald-200 dark:border-emerald-500/40 bg-emerald-50/60 dark:bg-emerald-900/20">
+            <CardHeader>
+              <CardTitle className="text-sm">
+                Application for {selection && buildReferenceString(selection)}
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                {application}
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}
+
+
+Again, Replit can connect /api/instant-application to the OpenAI logic that returns a short, practical, Christ-centered application.
+
+What you hand to Replit
+
+You can literally say:
+
+Please add a Book / Chapter / Verse dropdown for both the Plain Meaning and Instant Application features using these files:
+
+client/src/data/bibleBooks.ts
+
+client/src/components/ScriptureReferencePicker.tsx
+
+Update PlainMeaningPage.tsx and InstantApplicationPage.tsx to use ScriptureReferencePicker instead of asking the user to type the Scripture.
+Use buildReferenceString to create references like “John 3:16” (or “Romans 8:28-30”) and send that to the existing AI endpoints.
