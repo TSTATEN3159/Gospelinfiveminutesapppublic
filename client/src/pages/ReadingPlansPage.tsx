@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, BookOpen, Calendar, Check, Flame, ChevronRight } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { apiUrl } from "@/lib/api-config";
-import { appStore } from "@/lib/appStore";
+import appStore from "@/lib/appStore";
+import { FeatureBoundary } from "@/components/FeatureBoundary";
 
 type PlanType = "1yr-whole" | "6mo-ot" | "6mo-nt";
 
@@ -28,7 +29,7 @@ interface ReadingPlansPageProps {
   onNavigate: (page: string, planType?: string) => void;
 }
 
-export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPageProps) {
+function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPageProps) {
   const [allProgress, setAllProgress] = useState<Record<string, Record<number, { completedAt: string }>>>({});
 
   // Fetch all reading plans
@@ -234,3 +235,10 @@ export default function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPag
     </div>
   );
 }
+
+// Wrap with FeatureBoundary for error isolation
+export default FeatureBoundary.with(
+  ReadingPlansPage,
+  "Bible Reading Plans",
+  (props) => () => props.onBack()
+);

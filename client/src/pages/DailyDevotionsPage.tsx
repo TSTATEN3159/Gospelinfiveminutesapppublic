@@ -6,6 +6,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 type Profile = { id?: string; firstName?: string };
+import { FeatureBoundary } from "@/components/FeatureBoundary";
 
 function getProfile(): Profile {
   try {
@@ -48,7 +49,7 @@ interface DailyDevotionsPageProps {
   onBack: () => void;
 }
 
-export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) {
+function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) {
   const profile = getProfile();
   const firstName = profile.firstName?.trim() || "friend";
   const streakKey = useMemo(() => `streak:${profile.id ?? "anon"}`, [profile.id]);
@@ -265,3 +266,10 @@ export default function DailyDevotionsPage({ onBack }: DailyDevotionsPageProps) 
     </div>
   );
 }
+
+// Wrap with FeatureBoundary for error isolation
+export default FeatureBoundary.with(
+  DailyDevotionsPage,
+  "Daily Devotions",
+  (props) => () => props.onBack()
+);

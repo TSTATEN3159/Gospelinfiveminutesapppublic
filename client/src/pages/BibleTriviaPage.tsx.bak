@@ -152,7 +152,7 @@ const LEVEL_CONFIG = {
   },
 } as const;
 
-function BibleTriviaPage({
+export default function BibleTriviaPage({
   onNavigate,
   language = "en",
 }: BibleTriviaProps) {
@@ -1031,5 +1031,5 @@ function BibleTriviaPage({
 export default FeatureBoundary.with(
   BibleTriviaPage,
   "Bible Trivia Game",
-  (props) => props.onNavigate ? () => props.onNavigate!('home') : undefined
+  (props) => () => props.onNavigate?.('home')
 );

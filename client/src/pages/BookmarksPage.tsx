@@ -15,12 +15,13 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { FolderPlus, Trash2, Edit2, BookOpen } from "lucide-react";
+import { FeatureBoundary } from "@/components/FeatureBoundary";
 
 interface BookmarksPageProps {
   onNavigate?: (page: string, searchQuery?: string) => void;
 }
 
-export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
+function BookmarksPage({ onNavigate }: BookmarksPageProps) {
   const [folders, setFolders] = useState<BookmarkFolder[]>([]);
   const [activeFolderId, setActiveFolderId] = useState<string | null>(null);
   const [bookmarks, setBookmarks] = useState<BookmarkItem[]>([]);
@@ -317,3 +318,10 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
     </div>
   );
 }
+
+// Wrap with FeatureBoundary for error isolation  
+export default FeatureBoundary.with(
+  BookmarksPage,
+  "Bookmarks & Notes",
+  (props) => props.onNavigate ? () => props.onNavigate!('search') : undefined
+);

@@ -5,6 +5,7 @@ import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { LiquidGlassFeatureTile } from "@/components/LiquidGlassFeatureTile";
 import { useTranslations } from "@/lib/translations";
+import { FeatureBoundary } from "@/components/FeatureBoundary";
 import { safeShare } from "@/utils/capabilities";
 import { useToast } from "@/hooks/use-toast";
 import dailyDevotionsImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
@@ -77,7 +78,7 @@ const dailyFeatures = [
   }
 ];
 
-export default function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPageProps) {
+function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPageProps) {
   const t = useTranslations(language);
   const { toast } = useToast();
   
@@ -245,3 +246,10 @@ export default function DailyPage({ onNavigate, streakDays = 0, language = "en" 
     </div>
   );
 }
+
+// Wrap with FeatureBoundary for error isolation
+export default FeatureBoundary.with(
+  DailyPage,
+  "Daily Scripture & Features",
+  (props) => props.onNavigate ? () => props.onNavigate('home') : undefined
+);

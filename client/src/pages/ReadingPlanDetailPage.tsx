@@ -6,6 +6,7 @@ import { ArrowLeft, ChevronLeft, ChevronRight, Check, BookOpen, ChevronDown, Che
 import { Progress } from "@/components/ui/progress";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { apiUrl } from "@/lib/api-config";
+import { FeatureBoundary } from "@/components/FeatureBoundary";
 import { appStore } from "@/lib/appStore";
 
 type PlanType = "1yr-whole" | "6mo-ot" | "6mo-nt";
@@ -29,7 +30,7 @@ interface ReadingPlanDetailPageProps {
   planType?: PlanType;
 }
 
-export default function ReadingPlanDetailPage({ onBack, planType: initialPlanType }: ReadingPlanDetailPageProps) {
+function ReadingPlanDetailPage({ onBack, planType: initialPlanType }: ReadingPlanDetailPageProps) {
   // Get plan type from props or localStorage
   const [planType] = useState<PlanType>(() => {
     return initialPlanType || (localStorage.getItem("selectedReadingPlan") as PlanType) || "1yr-whole";
@@ -446,3 +447,10 @@ export default function ReadingPlanDetailPage({ onBack, planType: initialPlanTyp
     </div>
   );
 }
+
+// Wrap with FeatureBoundary for error isolation
+export default FeatureBoundary.with(
+  ReadingPlanDetailPage,
+  "Reading Plan Details",
+  (props) => () => props.onBack()
+);
