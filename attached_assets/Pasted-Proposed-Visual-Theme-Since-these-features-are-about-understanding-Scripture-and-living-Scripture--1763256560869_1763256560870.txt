@@ -1,0 +1,85 @@
+Proposed Visual Theme
+
+Since these features are about understanding Scripture and living Scripture, here are my two branding concepts:
+
+Feature	Imagery Concept	Example Style
+Plain Meaning	Bible open + soft sunlight + modern objects that relate to daily life (coffee mug, glasses, phone)	Peaceful morning devotional
+Instant Application	Bible + journal + hand writing + sunrise over window (symbolizes taking action today)	Purposeful reflection
+
+Both can use:
+
+✨ Realistic depth-of-field
+✨ Golden-hour lighting
+✨ Soft pastel spiritual color overlays (matching your icon colors)
+
+🔥 The Images I Recommend (Fully Royalty-Free)
+
+These are professional stock-quality options that will perfectly match your Home page aesthetic:
+
+📌 Plain Meaning – Option A
+
+Morning sun shining on an open Bible with coffee & pen nearby
+
+URL (royalty-free)
+https://unsplash.com/photos/mwtN5HS6u3Q
+
+(credit: Aaron Burden / Unsplash)
+
+📌 Plain Meaning – Option B
+
+Warm devotional scene — everyday life + Scripture
+
+URL
+https://unsplash.com/photos/xrVDYZRGdw4
+
+(credit: Sixteen Miles Out / Unsplash)
+
+📌 Instant Application – Option A
+
+Journal + Bible + hand writing notes (action theme)
+
+URL
+https://unsplash.com/photos/QckxruozjRg
+
+(credit: Kelly Sikkema / Unsplash)
+
+📌 Instant Application – Option B
+
+Checklist + reflection + natural light
+
+URL
+https://unsplash.com/photos/8l8Yl2ruUsg
+
+(credit: Nick Morrison / Unsplash)
+
+These images are 100% free for commercial use
+(Unsplash License: No attribution required in app UI — allowed for apps)
+
+🧩 Next Step: Automatically Apply Liquid-Glass Style
+
+I will provide Replit code that:
+
+✔ Applies your Frosted / Liquid-Glass card background
+✔ Adds soft gradient masks matching your blue & purple icons
+✔ Sharpens text contrast
+✔ Maintains consistent padding & rounded corners (32px like your others)
+
+Example React/Tailwind snippet for Plain Meaning:
+
+<div className="relative rounded-3xl overflow-hidden shadow-2xl">
+  <img
+    src="/assets/images/plain-meaning.jpg"
+    className="absolute inset-0 w-full h-full object-cover"
+    alt="Plain Meaning"
+  />
+  
+  <div className="absolute inset-0 bg-gradient-to-br from-blue-400/50 to-blue-700/50 backdrop-blur-lg" />
+
+  <div className="relative p-6 text-white">
+    <h2 className="text-2xl font-bold mb-2">Plain Meaning</h2>
+    <p className="text-sm opacity-90">Scripture in everyday language while preserving theological integrity</p>
+  </div>
+</div>
+
+
+I will generate both cards for Replit in a clean drop-in format.
