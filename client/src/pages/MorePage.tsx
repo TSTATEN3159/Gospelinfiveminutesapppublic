@@ -9,10 +9,10 @@ import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTestFlight } from "@/hooks/useTestFlight";
 import { safeShare } from "@/utils/capabilities";
 import { useToast } from "@/hooks/use-toast";
-import holyBibleImage from '@assets/generated_images/Holy_Bible_peaceful_scripture_f5e43a22.png';
-import blogWritingImage from '@assets/generated_images/Christian_blog_writing_peaceful_d5bc4ecc.png';
-import friendsFellowship from '@assets/generated_images/Spiritual_friends_community_fellowship_c29d9bfe.png';
-import dailyDevotionsImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
+import holyBibleImage from '@assets/stock_images/open_bible_pages_scr_bfe91e5c.jpg';
+import blogWritingImage from '@assets/stock_images/person_writing_journ_4816488f.jpg';
+import friendsFellowship from '@assets/stock_images/group_of_people_pray_1d87fafd.jpg';
+import dailyDevotionsImage from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
 
 interface MorePageProps {
   language: string;

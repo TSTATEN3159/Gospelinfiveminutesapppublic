@@ -26,9 +26,9 @@ import { widgetUpdater } from "../lib/widgetUpdater";
 import { liveActivity } from "../lib/liveActivity";
 
 // Images
-import warmBibleDeskImage from '@assets/generated_images/Warm_Bible_study_desk_scene_c9f030cb.png';
-import mountainLakeImage from '@assets/generated_images/Mountain_lake_sunrise_scripture_98ce5cc4.png';
-import forestPathImage from '@assets/generated_images/Forest_path_study_plans_fab1c678.png';
+import warmBibleDeskImage from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
+import mountainLakeImage from '@assets/stock_images/hands_holding_bible__58f7c786.jpg';
+import forestPathImage from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
 import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
 
 interface User {

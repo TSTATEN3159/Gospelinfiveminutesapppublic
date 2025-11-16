@@ -3,6 +3,8 @@
 ## Overview
 "The Gospel in 5 Minutes" is a mobile-first spiritual wellness application designed to deliver daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. Its core purpose is to blend the serene aesthetic of wellness applications with the robust functionality of Bible study tools, providing meaningful spiritual content in concise, 5-minute sessions. The project aims to be a completely free platform, offering all features without paywalls or in-app purchases, making spiritual growth accessible to everyone. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, gamified streak tracking, and comprehensive Bible reading plans.
 
+**Design Philosophy:** Professional polish inspired by The Bible App, featuring exclusively high-resolution stock photography throughout the entire application. All UI sections use authentic, spiritually-appropriate imagery (Bible study scenes, prayer/fellowship, pastoral landscapes, scripture reading) to create a premium, trustworthy visual experience.
+
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 
