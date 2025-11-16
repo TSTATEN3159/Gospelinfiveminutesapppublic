@@ -63,20 +63,20 @@ export default function ScriptureTickerPanel() {
         {/* LEFT SIDE: Static verse + ticker */}
         <div className="p-4 md:p-6 flex flex-col justify-between">
           <div>
-            <p className="text-xs uppercase tracking-[0.2em] text-emerald-300 mb-2">
+            <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-300 mb-2">
               Today&apos;s Focus Verse
             </p>
-            <p className="text-lg md:text-2xl font-semibold leading-snug mb-3">
+            <p className="text-base md:text-xl font-semibold leading-snug mb-3 max-h-20 md:max-h-24 overflow-hidden break-words">
               &ldquo;{featuredVerse.text}&rdquo;
             </p>
-            <p className="text-sm md:text-base font-medium text-emerald-200">
+            <p className="text-xs md:text-sm font-medium text-emerald-200">
               {featuredVerse.ref}
             </p>
           </div>
 
           {/* Scrolling ticker with many verses */}
           <div className="mt-4 pt-3 border-t border-slate-700">
-            <p className="text-xs uppercase tracking-[0.2em] text-slate-400 mb-1">
+            <p className="text-[10px] uppercase tracking-[0.2em] text-slate-400 mb-1">
               Meditate as you move
             </p>
             <div className="h-8 md:h-10 overflow-hidden relative">
