@@ -1,7 +1,7 @@
 import { Heart, Share2, BookmarkPlus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { apiUrl } from "@/lib/api-config";
-import mountainPeakImage from '@assets/stock_images/snow_mountain_golden_8e42c176.jpg';
+import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
