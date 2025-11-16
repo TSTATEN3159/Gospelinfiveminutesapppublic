@@ -1,0 +1,197 @@
+1️⃣ Professional images to use
+
+Ask Replit to grab two high-quality photos (or you can) from a stock source like Unsplash / Pexels and save them in your project:
+
+public/images/plain-meaning-hero.jpg
+
+Concept: open Bible + coffee + pen on table, warm morning light
+
+public/images/instant-application-hero.jpg
+
+Concept: Bible + journal + hand writing, checklist / action feeling, sunrise light
+
+They don’t have to be these exact URLs, but here’s the style to look for:
+
+Plain Meaning: “devotional Bible reading with coffee, warm light”
+
+Instant Application: “Bible and journal with hand writing, checklist, bright morning”
+
+Big, landscape, photo-realistic, not illustrations.
+
+2️⃣ Liquid-glass tile components (drop-in code)
+
+Below is a ready-to-paste component file you can give Replit.
+
+File: client/src/components/FeatureTiles.tsx
+// client/src/components/FeatureTiles.tsx
+import { Lightbulb, CheckCircle2 } from "lucide-react";
+
+interface FeatureTileProps {
+  title: string;
+  subtitle: string;
+  imageSrc: string;
+  accentGradient: string; // e.g. "from-sky-400/70 to-indigo-500/70"
+  icon: React.ReactNode;
+  onClick?: () => void;
+  "data-testid"?: string;
+}
+
+function FeatureTile({
+  title,
+  subtitle,
+  imageSrc,
+  accentGradient,
+  icon,
+  onClick,
+  "data-testid": testId,
+}: FeatureTileProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      data-testid={testId}
+      className="
+        w-full relative overflow-hidden
+        rounded-[32px]
+        shadow-[0_20px_60px_rgba(15,23,42,0.35)]
+        transition-all duration-300
+        hover:-translate-y-1 hover:shadow-[0_26px_80px_rgba(15,23,42,0.55)]
+        text-left
+      "
+    >
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img
+          src={imageSrc}
+          alt={title}
+          className="w-full h-full object-cover"
+        />
+        {/* Blue / purple glass overlay */}
+        <div
+          className={`
+            absolute inset-0
+            bg-gradient-to-br ${accentGradient}
+            mix-blend-multiply
+          `}
+        />
+        {/* Frosted glass layer */}
+        <div className="absolute inset-0 bg-white/15 backdrop-blur-2xl" />
+      </div>
+
+      {/* Content */}
+      <div className="relative flex items-center justify-between px-6 py-5 sm:px-7 sm:py-6">
+        <div className="flex-1">
+          <h2 className="text-xl sm:text-2xl font-bold text-slate-900 mb-1">
+            {title}
+          </h2>
+          <p className="text-xs sm:text-sm text-slate-800/90 max-w-xs">
+            {subtitle}
+          </p>
+        </div>
+
+        {/* Icon + chevron cluster on right */}
+        <div className="flex flex-col items-center gap-3 ml-4">
+          <div
+            className="
+              w-11 h-11 sm:w-12 sm:h-12
+              rounded-2xl
+              bg-white/85
+              shadow-md
+              flex items-center justify-center
+            "
+          >
+            {icon}
+          </div>
+
+          <div
+            className="
+              w-9 h-9
+              rounded-2xl
+              bg-white/85
+              shadow
+              flex items-center justify-center
+              text-slate-600
+            "
+          >
+            <span className="text-lg leading-none">›</span>
+          </div>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+interface FeatureTilesProps {
+  onPlainMeaning?: () => void;
+  onInstantApplication?: () => void;
+}
+
+export function FeatureTiles({
+  onPlainMeaning,
+  onInstantApplication,
+}: FeatureTilesProps) {
+  return (
+    <div className="space-y-4">
+      {/* Plain Meaning – blue glass */}
+      <FeatureTile
+        title="Plain Meaning"
+        subtitle="Scripture in everyday language while preserving theological integrity."
+        imageSrc="/images/plain-meaning-hero.jpg"
+        accentGradient="from-sky-400/70 via-sky-500/70 to-indigo-500/70"
+        icon={<Lightbulb className="w-6 h-6 text-sky-500" />}
+        onClick={onPlainMeaning}
+        data-testid="tile-plain-meaning"
+      />
+
+      {/* Instant Application – purple glass */}
+      <FeatureTile
+        title="Instant Application"
+        subtitle="Get one simple action to live out any verse today."
+        imageSrc="/images/instant-application-hero.jpg"
+        accentGradient="from-fuchsia-400/70 via-fuchsia-500/70 to-violet-500/70"
+        icon={<CheckCircle2 className="w-6 h-6 text-fuchsia-500" />}
+        onClick={onInstantApplication}
+        data-testid="tile-instant-application"
+      />
+    </div>
+  );
+}
+
+3️⃣ Use these tiles on your home / more page
+
+Wherever you currently render those two cards (probably in your Home page or “More” tab), replace the existing Plain Meaning + Instant Application tile JSX with:
+
+// Example in HomePage.tsx or MorePage.tsx
+
+import { FeatureTiles } from "@/components/FeatureTiles";
+
+// inside your component's JSX:
+
+<FeatureTiles
+  onPlainMeaning={() => onNavigate?.("plain-meaning")}
+  onInstantApplication={() => onNavigate?.("instant-application")}
+/>
+
+
+Replit just has to ensure onNavigate matches your current navigation pattern (you’re already using it for other tiles).
+
+4️⃣ What to tell Replit (you can paste this)
+
+Download two high-quality devotional photos and save them as:
+
+public/images/plain-meaning-hero.jpg
+
+public/images/instant-application-hero.jpg
+(photo-realistic Bible + coffee/journal + warm light, no cartoons).
+
+Add client/src/components/FeatureTiles.tsx using the code I’ve provided.
+
+On the screen that currently shows the Plain Meaning and Instant Application tiles, remove the old tile JSX and render <FeatureTiles /> instead, wiring onPlainMeaning and onInstantApplication to the existing navigation.
+
+Once they do that, those two tiles will look:
+
+As sharp and professional as your forest image
+
+Consistent with your “liquid glass” style
+
+Clearly branded: blue = understanding the Word, purple = living it out.

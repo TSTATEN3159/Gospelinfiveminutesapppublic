@@ -9,8 +9,8 @@ import { safeShare } from "@/utils/capabilities";
 import { useToast } from "@/hooks/use-toast";
 import dailyDevotionsImage from '@assets/generated_images/Peaceful_sunrise_daily_verse_e2a3184e.png';
 import readingPlansImage from '@assets/generated_images/Open_Bible_study_scene_e3a19a6e.png';
-import plainMeaningImage from '@assets/generated_images/Plain_meaning_verse_simplifier_9d1a382e.png';
-import instantApplicationImage from '@assets/generated_images/Instant_application_try_today_e2051d9a.png';
+import plainMeaningImage from '@assets/stock_images/open_bible_with_coff_9ab4ad96.jpg';
+import instantApplicationImage from '@assets/stock_images/bible_and_journal_wi_4f18af22.jpg';
 
 interface DailyPageProps {
   onNavigate: (page: string) => void;
