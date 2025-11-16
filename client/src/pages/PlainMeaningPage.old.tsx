@@ -1,85 +1,61 @@
-/**
- * Plain Meaning Page (Refactored with Feature Sandbox)
- * 
- * This page is now wrapped in:
- * 1. FeatureBoundary - Catches and isolates errors
- * 2. PlainMeaningProvider - Manages feature-specific state
- * 3. Service Layer - Handles all API calls safely
- * 
- * If this feature crashes, it won't take down the whole app!
- */
-
-import { useEffect } from "react";
+import { useState } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Lightbulb, ArrowLeft, Sparkles, Loader2, BookOpen } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { ScriptureReferencePicker, buildReferenceString } from "@/components/ScriptureReferencePicker";
-import { PlainMeaningProvider, usePlainMeaning } from "@/context/PlainMeaningProvider";
-import { FeatureBoundary } from "@/components/FeatureBoundary";
+import { useVersePassageMutation, usePlainMeaningMutation } from "@/hooks/useVerseInsights";
+import { runSafely } from "@/utils/featureGuard";
+import { ScriptureReferencePicker, ScriptureReferenceSelection, buildReferenceString } from "@/components/ScriptureReferencePicker";
 
 interface PlainMeaningPageProps {
   onNavigate: (page: string) => void;
 }
 
-function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
+export default function PlainMeaningPage({ onNavigate }: PlainMeaningPageProps) {
+  const [selection, setSelection] = useState<ScriptureReferenceSelection | null>(null);
+  const [verseText, setVerseText] = useState("");
+  const [plainMeaning, setPlainMeaning] = useState("");
   const { toast } = useToast();
-  const {
-    selection,
-    verseText,
-    plainMeaning,
-    loadingVerse,
-    generatingPlainMeaning,
-    verseError,
-    plainMeaningError,
-    setSelection,
-    loadVerse,
-    generatePlainMeaning,
-    clearErrors,
-  } = usePlainMeaning();
 
-  // Show toast on errors
-  useEffect(() => {
-    if (verseError) {
-      toast({
-        title: "Error Loading Verse",
-        description: verseError,
-        variant: "destructive",
-      });
-      clearErrors();
-    }
-  }, [verseError, toast, clearErrors]);
-
-  useEffect(() => {
-    if (plainMeaningError) {
-      toast({
-        title: "Error Generating Plain Meaning",
-        description: plainMeaningError,
-        variant: "destructive",
-      });
-      clearErrors();
-    }
-  }, [plainMeaningError, toast, clearErrors]);
+  const versePassageMutation = useVersePassageMutation();
+  const plainMeaningMutation = usePlainMeaningMutation();
 
   const handleLoadVerse = async () => {
     if (!selection) {
       toast({
         title: "Reference Required",
         description: "Please select a Bible verse reference.",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
 
     const reference = buildReferenceString(selection);
-    const success = await loadVerse(reference);
+    setVerseText("");
+    setPlainMeaning("");
 
-    if (success) {
+    const result = await runSafely(
+      {
+        featureName: "Load Verse",
+        userMessage: "Sorry, I couldn't load that verse. Please check the reference and try again."
+      },
+      async () => await versePassageMutation.mutateAsync(reference)
+    );
+
+    if (!result) {
       toast({
-        title: "Verse Loaded",
-        description: "Ready to simplify into everyday language.",
+        title: "Error",
+        description: "Sorry, I couldn't load that verse. Please check the reference and try again.",
+        variant: "destructive"
       });
+      return;
     }
+
+    setVerseText(result.text.trim());
+    toast({
+      title: "Verse Loaded",
+      description: "Ready to simplify into everyday language.",
+    });
   };
 
   const handleGetPlainMeaning = async () => {
@@ -87,20 +63,32 @@ function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
       toast({
         title: "Verse Text Required",
         description: "Please load a verse first to simplify.",
-        variant: "destructive",
+        variant: "destructive"
       });
       return;
     }
 
     const reference = buildReferenceString(selection);
-    const success = await generatePlainMeaning(verseText, reference);
+    setPlainMeaning("");
 
-    if (success) {
+    const result = await runSafely(
+      {
+        featureName: "Plain Meaning",
+        userMessage: "Sorry, I couldn't simplify that verse. Please try again."
+      },
+      async () => await plainMeaningMutation.mutateAsync({ verse: verseText, reference })
+    );
+
+    if (!result) {
       toast({
-        title: "Plain Meaning Generated",
-        description: "Scripture simplified into everyday language!",
+        title: "Error",
+        description: "Sorry, I couldn't simplify that verse. Please try again.",
+        variant: "destructive"
       });
+      return;
     }
+
+    setPlainMeaning(result.plainMeaning);
   };
 
   return (
@@ -174,11 +162,11 @@ function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
 
             <Button
               onClick={handleLoadVerse}
-              disabled={loadingVerse || !selection}
+              disabled={versePassageMutation.isPending || !selection}
               className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
               data-testid="button-fetch-verse"
             >
-              {loadingVerse ? (
+              {versePassageMutation.isPending ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                   Loading Verse...
@@ -224,11 +212,11 @@ function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
               
               <Button
                 onClick={handleGetPlainMeaning}
-                disabled={generatingPlainMeaning}
+                disabled={plainMeaningMutation.isPending}
                 className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-blue-600 via-cyan-600 to-blue-600 hover:from-blue-700 hover:via-cyan-700 hover:to-blue-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
                 data-testid="button-get-plain-meaning"
               >
-                {generatingPlainMeaning ? (
+                {plainMeaningMutation.isPending ? (
                   <>
                     <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                     Simplifying...
@@ -309,19 +297,5 @@ function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
         )}
       </div>
     </div>
-  );
-}
-
-// Export the wrapped component with FeatureBoundary and Provider
-export default function PlainMeaningPage(props: PlainMeaningPageProps) {
-  return (
-    <FeatureBoundary 
-      featureName="Plain Meaning (AI Verse Simplifier)"
-      onBackHome={() => props.onNavigate('daily')}
-    >
-      <PlainMeaningProvider>
-        <PlainMeaningScreen {...props} />
-      </PlainMeaningProvider>
-    </FeatureBoundary>
   );
 }
