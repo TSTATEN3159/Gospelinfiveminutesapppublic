@@ -262,7 +262,7 @@ export function TopicalSearchSection({ onNavigateToScripture, onNavigateToTopicS
               data-testid="button-explore-topics"
             >
               <Lightbulb className="w-5 h-5 mr-2" />
-              Explore 40+ Biblical Topics
+              Click Me to Explore 40+ Biblical Topics
             </Button>
             <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
               Discover curated scriptures on Faith, Love, Prayer, Healing, and more
