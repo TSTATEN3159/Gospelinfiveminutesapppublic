@@ -22,7 +22,6 @@ export default function ScriptureCard({ text, version, reference }: ScriptureCar
   if (!text) return null;
 
   const handleTapToRead = (e: React.MouseEvent) => {
-    // Don't trigger TTS if clicking the bookmark button
     if ((e.target as HTMLElement).closest('[data-bookmark-button]')) {
       return;
     }
@@ -31,7 +30,6 @@ export default function ScriptureCard({ text, version, reference }: ScriptureCar
       setHighlightedWordIndex(wordIndex);
     });
     
-    // Clear highlighting when speech ends
     if (getIsSpeaking()) {
       setHighlightedWordIndex(null);
     }
@@ -40,8 +38,8 @@ export default function ScriptureCard({ text, version, reference }: ScriptureCar
   const handleToggleBookmark = (e: React.MouseEvent) => {
     e.stopPropagation();
     if (reference) {
-      const newState = toggleBookmark(reference, text, version);
-      setBookmarked(newState);
+      const result = toggleBookmark(reference, "default");
+      setBookmarked(result.added);
     }
   };
 

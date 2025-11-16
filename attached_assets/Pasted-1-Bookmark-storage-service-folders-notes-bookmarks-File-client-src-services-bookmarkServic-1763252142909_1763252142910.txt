@@ -1,3 +1,175 @@
+1️⃣ Bookmark storage service (folders + notes + bookmarks)
+
+File: client/src/services/bookmarkService.ts
+
+// client/src/services/bookmarkService.ts
+
+const STORAGE_KEY = "bibleBookmarks_v2";
+
+export interface BookmarkFolder {
+  id: string;
+  name: string;
+  createdAt: string;
+}
+
+export interface BookmarkItem {
+  id: string;
+  reference: string;      // e.g. "John 3:16-18"
+  folderId: string;
+  note: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+interface BookmarkState {
+  folders: BookmarkFolder[];
+  bookmarks: BookmarkItem[];
+}
+
+function loadState(): BookmarkState {
+  if (typeof window === "undefined") {
+    return { folders: [], bookmarks: [] };
+  }
+
+  const raw = window.localStorage.getItem(STORAGE_KEY);
+  if (!raw) {
+    // create a default folder on first run
+    const defaultFolder: BookmarkFolder = {
+      id: "default",
+      name: "My Verses",
+      createdAt: new Date().toISOString(),
+    };
+    const initial: BookmarkState = { folders: [defaultFolder], bookmarks: [] };
+    saveState(initial);
+    return initial;
+  }
+
+  try {
+    const parsed = JSON.parse(raw) as BookmarkState;
+    return {
+      folders: parsed.folders ?? [],
+      bookmarks: parsed.bookmarks ?? [],
+    };
+  } catch {
+    const fallback: BookmarkState = { folders: [], bookmarks: [] };
+    saveState(fallback);
+    return fallback;
+  }
+}
+
+function saveState(state: BookmarkState) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+export function getFolders(): BookmarkFolder[] {
+  return loadState().folders;
+}
+
+export function getBookmarksForFolder(folderId: string): BookmarkItem[] {
+  const state = loadState();
+  return state.bookmarks
+    .filter((b) => b.folderId === folderId)
+    .sort((a, b) => (a.createdAt < b.createdAt ? 1 : -1));
+}
+
+export function addFolder(name: string): BookmarkFolder {
+  const state = loadState();
+  const id = `folder-${Date.now()}`;
+
+  const folder: BookmarkFolder = {
+    id,
+    name: name.trim() || "New Folder",
+    createdAt: new Date().toISOString(),
+  };
+
+  state.folders.push(folder);
+  saveState(state);
+  return folder;
+}
+
+export function renameFolder(id: string, newName: string) {
+  const state = loadState();
+  const folder = state.folders.find((f) => f.id === id);
+  if (!folder) return;
+
+  folder.name = newName.trim() || folder.name;
+  saveState(state);
+}
+
+export function deleteFolder(id: string) {
+  const state = loadState();
+  state.folders = state.folders.filter((f) => f.id !== id);
+  state.bookmarks = state.bookmarks.filter((b) => b.folderId !== id);
+  saveState(state);
+}
+
+export function isBookmarked(reference: string, folderId?: string): boolean {
+  const state = loadState();
+  if (folderId) {
+    return state.bookmarks.some(
+      (b) => b.reference === reference && b.folderId === folderId
+    );
+  }
+  // any folder
+  return state.bookmarks.some((b) => b.reference === reference);
+}
+
+// Add or toggle bookmark in a given folder.
+// If a bookmark with same reference+folder exists → remove it.
+// If not → create it with optional note.
+export function toggleBookmark(
+  reference: string,
+  folderId: string,
+  initialNote: string = ""
+): { added: boolean; item?: BookmarkItem } {
+  const state = loadState();
+
+  const existing = state.bookmarks.find(
+    (b) => b.reference === reference && b.folderId === folderId
+  );
+
+  if (existing) {
+    state.bookmarks = state.bookmarks.filter((b) => b.id !== existing.id);
+    saveState(state);
+    return { added: false };
+  }
+
+  const item: BookmarkItem = {
+    id: `bm-${Date.now()}`,
+    reference,
+    folderId,
+    note: initialNote,
+    createdAt: new Date().toISOString(),
+    updatedAt: new Date().toISOString(),
+  };
+
+  state.bookmarks.push(item);
+  saveState(state);
+  return { added: true, item };
+}
+
+export function updateBookmarkNote(id: string, note: string) {
+  const state = loadState();
+  const item = state.bookmarks.find((b) => b.id === id);
+  if (!item) return;
+  item.note = note;
+  item.updatedAt = new Date().toISOString();
+  saveState(state);
+}
+
+export function deleteBookmark(id: string) {
+  const state = loadState();
+  state.bookmarks = state.bookmarks.filter((b) => b.id !== id);
+  saveState(state);
+}
+
+2️⃣ Bookmarks page with folders + notes
+
+This is a full page under your “More” tab.
+
+File: client/src/pages/BookmarksPage.tsx
+
 import { useEffect, useState } from "react";
 import {
   getFolders,
@@ -17,10 +189,10 @@ import { Textarea } from "@/components/ui/textarea";
 import { FolderPlus, Trash2, Edit2, BookOpen } from "lucide-react";
 
 interface BookmarksPageProps {
-  onNavigate?: (page: string, searchQuery?: string) => void;
+  onNavigateToReference?: (reference: string) => void;
 }
 
-export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
+export default function BookmarksPage({ onNavigateToReference }: BookmarksPageProps) {
   const [folders, setFolders] = useState<BookmarkFolder[]>([]);
   const [activeFolderId, setActiveFolderId] = useState<string | null>(null);
   const [bookmarks, setBookmarks] = useState<BookmarkItem[]>([]);
@@ -43,6 +215,7 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
 
   useEffect(() => {
     refresh();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
@@ -105,12 +278,6 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
     }
   };
 
-  const handleNavigateToReference = (reference: string) => {
-    if (onNavigate) {
-      onNavigate('search', reference);
-    }
-  };
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pb-20">
       <div className="px-4 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur">
@@ -123,6 +290,7 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
       </div>
 
       <div className="p-4 max-w-4xl mx-auto grid md:grid-cols-[240px,1fr] gap-4">
+        {/* Folders column */}
         <Card className="border-slate-200 dark:border-slate-800">
           <CardHeader className="pb-2">
             <CardTitle className="text-base">Folders</CardTitle>
@@ -133,11 +301,9 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
                 placeholder="New folder name"
                 value={newFolderName}
                 onChange={(e) => setNewFolderName(e.target.value)}
-                onKeyDown={(e) => e.key === "Enter" && handleAddFolder()}
                 className="text-sm"
-                data-testid="input-new-folder"
               />
-              <Button size="icon" onClick={handleAddFolder} data-testid="button-add-folder">
+              <Button size="icon" onClick={handleAddFolder}>
                 <FolderPlus className="w-4 h-4" />
               </Button>
             </div>
@@ -156,7 +322,6 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
                         : "bg-slate-100/70 dark:bg-slate-800/70 text-slate-800 dark:text-slate-100"
                     }`}
                     onClick={() => setActiveFolderId(folder.id)}
-                    data-testid={`folder-${folder.id}`}
                   >
                     <div className="flex flex-col">
                       {editingFolderId === folder.id ? (
@@ -171,7 +336,6 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
                           onBlur={saveFolderName}
                           onKeyDown={(e) => e.key === "Enter" && saveFolderName()}
                           autoFocus
-                          data-testid="input-edit-folder"
                         />
                       ) : (
                         <>
@@ -195,14 +359,12 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
                       <button
                         className="p-1 rounded-full hover:bg-black/10"
                         onClick={() => startEditFolder(folder)}
-                        data-testid="button-edit-folder"
                       >
                         <Edit2 className="w-3 h-3" />
                       </button>
                       <button
                         className="p-1 rounded-full hover:bg-black/10"
                         onClick={() => handleDeleteFolder(folder.id)}
-                        data-testid="button-delete-folder"
                       >
                         <Trash2 className="w-3 h-3" />
                       </button>
@@ -220,6 +382,7 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
           </CardContent>
         </Card>
 
+        {/* Bookmarks / notes column */}
         <Card className="border-slate-200 dark:border-slate-800">
           <CardHeader className="pb-2">
             <CardTitle className="text-base">
@@ -241,14 +404,14 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
               <div
                 key={bm.id}
                 className="rounded-lg border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-3"
-                data-testid={`bookmark-item-${bm.id}`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <div className="flex items-center gap-2">
                     <button
                       className="inline-flex items-center gap-1 text-xs font-semibold text-blue-600 dark:text-blue-300 hover:underline"
-                      onClick={() => handleNavigateToReference(bm.reference)}
-                      data-testid="button-load-bookmark"
+                      onClick={() =>
+                        onNavigateToReference && onNavigateToReference(bm.reference)
+                      }
                     >
                       <BookOpen className="w-3 h-3" />
                       {bm.reference}
@@ -257,7 +420,6 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
                   <button
                     className="p-1 rounded-full hover:bg-slate-100 dark:hover:bg-slate-800"
                     onClick={() => handleDeleteBookmark(bm.id)}
-                    data-testid="button-remove-bookmark"
                   >
                     <Trash2 className="w-4 h-4 text-slate-500" />
                   </button>
@@ -272,7 +434,6 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
                       onChange={(e) => setEditingNoteText(e.target.value)}
                       className="text-sm"
                       placeholder="Write what the Lord showed you in this passage..."
-                      data-testid="textarea-edit-note"
                     />
                     <div className="flex justify-end gap-2">
                       <Button
@@ -282,20 +443,18 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
                           setEditingNoteId(null);
                           setEditingNoteText("");
                         }}
-                        data-testid="button-cancel-note"
                       >
                         Cancel
                       </Button>
-                      <Button size="sm" onClick={saveNote} data-testid="button-save-note">
+                      <Button size="sm" onClick={saveNote}>
                         Save Note
                       </Button>
                     </div>
                   </div>
                 ) : (
                   <div
-                    className="text-sm text-slate-700 dark:text-slate-200 whitespace-pre-wrap cursor-pointer"
+                    className="text-sm text-slate-700 dark:text-slate-200 whitespace-pre-wrap"
                     onClick={() => startEditNote(bm)}
-                    data-testid="note-display"
                   >
                     {bm.note
                       ? bm.note
@@ -317,3 +476,74 @@ export default function BookmarksPage({ onNavigate }: BookmarksPageProps) {
     </div>
   );
 }
+
+3️⃣ Hook the ⭐ bookmark button in your Scripture view
+
+Wherever you render a reference (e.g. "John 3:16-18"), add a bookmark button that uses the service.
+
+Example inside your Scripture display component:
+
+import { toggleBookmark } from "@/services/bookmarkService";
+import { Star } from "lucide-react";
+import { useState } from "react";
+
+interface BookmarkStarProps {
+  reference: string;
+  folderId?: string; // optional; default "default"
+}
+
+export function BookmarkStar({ reference, folderId = "default" }: BookmarkStarProps) {
+  const [isOn, setIsOn] = useState(false);
+
+  const handleClick = () => {
+    const result = toggleBookmark(reference, folderId);
+    setIsOn(result.added);
+  };
+
+  return (
+    <button
+      onClick={handleClick}
+      className="ml-2 inline-flex items-center justify-center p-1 rounded-full hover:bg-yellow-50"
+      title={isOn ? "Remove bookmark" : "Save verse"}
+    >
+      <Star
+        className="w-4 h-4"
+        style={{ color: isOn ? "#eab308" : "#9ca3af" }} // yellow-500 / gray-400
+        fill={isOn ? "#eab308" : "none"}
+      />
+    </button>
+  );
+}
+
+
+Then near the reference label:
+
+<div className="flex items-center">
+  <span className="text-xs font-semibold text-slate-500">
+    {reference}
+  </span>
+  <BookmarkStar reference={reference} />
+</div>
+
+4️⃣ Add navigation route to Bookmarks page
+
+Where you build your “More” tab list:
+
+// example in More page
+<Button
+  className="w-full justify-between"
+  onClick={() => onNavigate("bookmarks")}
+>
+  <span>Bookmarks & Notes</span>
+  <span>⭐</span>
+</Button>
+
+
+And in your main router / page switch:
+
+{currentPage === "bookmarks" && (
+  <BookmarksPage onNavigateToReference={handleLoadReferenceFromBookmarks} />
+)}
+
+
+Where handleLoadReferenceFromBookmarks calls your existing Scripture search logic for that reference.
