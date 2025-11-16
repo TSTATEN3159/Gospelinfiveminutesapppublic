@@ -12,6 +12,9 @@ export default function ScriptureSelector({ onReferenceSelected }: ScriptureSele
   const [selectedChapter, setSelectedChapter] = useState<number>(1);
   const [selectedVerse, setSelectedVerse] = useState<number>(1);
   const [useAbbreviations, setUseAbbreviations] = useState(false);
+  const [selectionMode, setSelectionMode] = useState<"verse" | "range" | "chapter">("verse");
+  const [startVerse, setStartVerse] = useState(1);
+  const [endVerse, setEndVerse] = useState(1);
 
   const displayBookList = useAbbreviations
     ? BOOK_NAME_MAP.map(b => b.abbr)
@@ -23,14 +26,32 @@ export default function ScriptureSelector({ onReferenceSelected }: ScriptureSele
   useEffect(() => {
     setSelectedChapter(1);
     setSelectedVerse(1);
+    setStartVerse(1);
+    setEndVerse(1);
   }, [selectedBook]);
 
   useEffect(() => {
     setSelectedVerse(1);
+    setStartVerse(1);
+    setEndVerse(1);
   }, [selectedChapter]);
 
   const handleSubmit = () => {
-    onReferenceSelected(`${selectedBook} ${selectedChapter}:${selectedVerse}`);
+    let ref = "";
+
+    if (selectionMode === "verse") {
+      ref = `${selectedBook} ${selectedChapter}:${selectedVerse}`;
+    }
+
+    if (selectionMode === "range") {
+      ref = `${selectedBook} ${selectedChapter}:${startVerse}-${endVerse}`;
+    }
+
+    if (selectionMode === "chapter") {
+      ref = `${selectedBook} ${selectedChapter}`;
+    }
+
+    onReferenceSelected(ref);
   };
 
   return (
@@ -61,21 +82,60 @@ export default function ScriptureSelector({ onReferenceSelected }: ScriptureSele
         </select>
       </div>
 
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <label className="text-sm font-semibold">Chapter</label>
-          <select
-            value={selectedChapter}
-            onChange={(e) => setSelectedChapter(Number(e.target.value))}
-            className="w-full border rounded-lg p-2 bg-background text-foreground"
-            data-testid="select-chapter"
-          >
-            {Array.from({ length: chapterCount }, (_, i) => i + 1).map((c) => (
-              <option key={c} value={c}>{c}</option>
-            ))}
-          </select>
-        </div>
+      {/* Mode Selection */}
+      <div className="flex gap-2 text-xs font-semibold justify-center border-t border-b py-2">
+        <button 
+          onClick={() => setSelectionMode("verse")}
+          className={`px-3 py-1 rounded transition-colors ${
+            selectionMode === "verse" 
+              ? "underline text-blue-600" 
+              : "text-gray-600 hover:text-blue-600"
+          }`}
+          data-testid="button-mode-verse"
+        >
+          Verse
+        </button>
+        <button 
+          onClick={() => setSelectionMode("range")}
+          className={`px-3 py-1 rounded transition-colors ${
+            selectionMode === "range" 
+              ? "underline text-blue-600" 
+              : "text-gray-600 hover:text-blue-600"
+          }`}
+          data-testid="button-mode-range"
+        >
+          Range
+        </button>
+        <button 
+          onClick={() => setSelectionMode("chapter")}
+          className={`px-3 py-1 rounded transition-colors ${
+            selectionMode === "chapter" 
+              ? "underline text-blue-600" 
+              : "text-gray-600 hover:text-blue-600"
+          }`}
+          data-testid="button-mode-chapter"
+        >
+          Chapter
+        </button>
+      </div>
 
+      {/* Chapter Selection */}
+      <div>
+        <label className="text-sm font-semibold">Chapter</label>
+        <select
+          value={selectedChapter}
+          onChange={(e) => setSelectedChapter(Number(e.target.value))}
+          className="w-full border rounded-lg p-2 bg-background text-foreground"
+          data-testid="select-chapter"
+        >
+          {Array.from({ length: chapterCount }, (_, i) => i + 1).map((c) => (
+            <option key={c} value={c}>{c}</option>
+          ))}
+        </select>
+      </div>
+
+      {/* Verse Selection - Only show in Verse mode */}
+      {selectionMode === "verse" && (
         <div>
           <label className="text-sm font-semibold">Verse</label>
           <select
@@ -89,10 +149,51 @@ export default function ScriptureSelector({ onReferenceSelected }: ScriptureSele
             ))}
           </select>
         </div>
-      </div>
+      )}
+
+      {/* Range Selection - Only show in Range mode */}
+      {selectionMode === "range" && (
+        <div className="grid grid-cols-2 gap-3">
+          <div>
+            <label className="text-sm font-semibold">Start Verse</label>
+            <select
+              className="w-full p-2 border rounded-lg bg-background text-foreground"
+              value={startVerse}
+              onChange={(e) => setStartVerse(Number(e.target.value))}
+              data-testid="select-start-verse"
+            >
+              {Array.from({ length: versesInChapter }, (_, i) => i + 1).map(v => (
+                <option key={v} value={v}>{v}</option>
+              ))}
+            </select>
+          </div>
+          <div>
+            <label className="text-sm font-semibold">End Verse</label>
+            <select
+              className="w-full p-2 border rounded-lg bg-background text-foreground"
+              value={endVerse}
+              onChange={(e) => setEndVerse(Number(e.target.value))}
+              data-testid="select-end-verse"
+            >
+              {Array.from({ length: versesInChapter }, (_, i) => i + 1).map(v => (
+                <option key={v} value={v}>{v}</option>
+              ))}
+            </select>
+          </div>
+        </div>
+      )}
+
+      {/* Chapter Mode - Show info message */}
+      {selectionMode === "chapter" && (
+        <p className="text-sm text-gray-500 pt-2 text-center italic" data-testid="text-chapter-mode-info">
+          Entire chapter will be loaded
+        </p>
+      )}
 
       <Button className="w-full bg-green-600 hover:bg-green-700 text-white" onClick={handleSubmit} data-testid="button-search-verse-selector">
-        Search Verse
+        {selectionMode === "verse" && "Search Verse"}
+        {selectionMode === "range" && "Search Range"}
+        {selectionMode === "chapter" && "Search Chapter"}
       </Button>
     </div>
   );

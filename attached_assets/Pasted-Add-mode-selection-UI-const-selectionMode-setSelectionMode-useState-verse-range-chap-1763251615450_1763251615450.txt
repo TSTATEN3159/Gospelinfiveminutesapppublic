@@ -1,0 +1,90 @@
+Add mode selection UI:
+
+const [selectionMode, setSelectionMode] = useState<"verse" | "range" | "chapter">("verse");
+
+<div className="flex gap-2 text-xs font-semibold mt-2">
+  <button 
+    onClick={() => setSelectionMode("verse")}
+    className={selectionMode === "verse" ? "underline" : ""}
+  >
+    Verse
+  </button>
+  <button 
+    onClick={() => setSelectionMode("range")}
+    className={selectionMode === "range" ? "underline" : ""}
+  >
+    Range
+  </button>
+  <button 
+    onClick={() => setSelectionMode("chapter")}
+    className={selectionMode === "chapter" ? "underline" : ""}
+  >
+    Chapter
+  </button>
+</div>
+
+🔹 Add Range Select Inputs
+
+Place under the Verse dropdown area:
+
+{selectionMode === "range" && (
+  <div className="grid grid-cols-2 gap-3">
+    <div>
+      <label className="text-sm">Start Verse</label>
+      <select
+        className="w-full p-2 border rounded-lg"
+        value={startVerse}
+        onChange={(e) => setStartVerse(Number(e.target.value))}
+      >
+        {Array.from({ length: versesInChapter }, (_, i) => i + 1).map(v => (
+          <option key={v}>{v}</option>
+        ))}
+      </select>
+    </div>
+    <div>
+      <label className="text-sm">End Verse</label>
+      <select
+        className="w-full p-2 border rounded-lg"
+        value={endVerse}
+        onChange={(e) => setEndVerse(Number(e.target.value))}
+      >
+        {Array.from({ length: versesInChapter }, (_, i) => i + 1).map(v => (
+          <option key={v}>{v}</option>
+        ))}
+      </select>
+    </div>
+  </div>
+)}
+
+
+Initialize state:
+
+const [startVerse, setStartVerse] = useState(1);
+const [endVerse, setEndVerse] = useState(1);
+
+🔹 Chapter Mode (no verse dropdown)
+{selectionMode === "chapter" && (
+  <p className="text-sm text-gray-500 pt-2">
+    Entire chapter will be loaded
+  </p>
+)}
+
+🔹 Build Reference Output
+
+Add this to handleSubmit():
+
+let ref = "";
+
+if (selectionMode === "verse") {
+  ref = `${selectedBook} ${selectedChapter}:${selectedVerse}`;
+}
+
+if (selectionMode === "range") {
+  ref = `${selectedBook} ${selectedChapter}:${startVerse}-${endVerse}`;
+}
+
+if (selectionMode === "chapter") {
+  ref = `${selectedBook} ${selectedChapter}`;
+}
+
+onReferenceSelected(ref);
