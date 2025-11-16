@@ -1,38 +1,16 @@
-import { useState, useEffect } from "react";
 import { Heart, Share2, BookmarkPlus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { apiUrl } from "@/lib/api-config";
-import sunriseImage1 from '@assets/stock_images/peaceful_sunrise_ove_65443c94.jpg';
-import sunriseImage2 from '@assets/stock_images/peaceful_sunrise_ove_7c163e3c.jpg';
-import bibleImage1 from '@assets/stock_images/open_bible_on_wooden_95d8fbf5.jpg';
-import bibleImage2 from '@assets/stock_images/open_bible_on_wooden_fed6c919.jpg';
-import forestImage1 from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
-import forestImage2 from '@assets/stock_images/forest_path_sunlight_c1195fdf.jpg';
-
-const HERO_IMAGES = [
-  sunriseImage1,
-  sunriseImage2,
-  bibleImage1,
-  bibleImage2,
-  forestImage1,
-  forestImage2,
-];
+import mountainPeakImage from '@assets/stock_images/mountain_peaks_morni_5fadbac9.jpg';
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
 }
 
 export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
-  const [heroImage, setHeroImage] = useState(HERO_IMAGES[0]);
-
   const { data: verseData } = useQuery<{ verse: { reference: string; text: string } }>({
     queryKey: ["/api/daily-verse"],
   });
-
-  useEffect(() => {
-    const randomImage = HERO_IMAGES[Math.floor(Math.random() * HERO_IMAGES.length)];
-    setHeroImage(randomImage);
-  }, []);
 
   const verse = verseData?.verse;
   const reference = verse?.reference || "John 3:16";
@@ -47,7 +25,7 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
     >
       <div className="relative w-full aspect-[16/10]">
         <img
-          src={heroImage}
+          src={mountainPeakImage}
           alt={reference}
           className="w-full h-full object-cover"
           loading="eager"
@@ -56,7 +34,7 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
 
         <div className="absolute inset-0 flex flex-col justify-end px-5 pb-5 gap-1">
           <p className="text-xs font-semibold text-slate-300/90 tracking-wide uppercase">
-            Verse of the Day
+            Daily Verse
           </p>
           <p className="text-sm font-bold text-amber-300 mt-0.5">{reference}</p>
           <p className="mt-2 text-[15px] leading-relaxed text-white font-light">
