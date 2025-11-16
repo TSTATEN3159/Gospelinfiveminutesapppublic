@@ -38,10 +38,15 @@ export function BibleVersionSelector({
 
   const handleChange = (v: string) => {
     const code = v as BibleVersionCode;
+    
+    // Always persist to localStorage for shared preferences across features
+    setPreferredBibleVersion(code);
+    
     if (!value) {
+      // Only update internal state if uncontrolled
       setInternalValue(code);
-      setPreferredBibleVersion(code);
     }
+    
     onChange?.(code);
   };
 
