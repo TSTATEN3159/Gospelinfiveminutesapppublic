@@ -1,0 +1,268 @@
+What you want to tell Replit is basically:
+
+“Every feature should live inside its own sandbox: its own provider + error boundary + clean API layer, so if something breaks it doesn’t crash the whole app.”
+
+Here’s how to say it and the concrete patterns (with code) they can use.
+
+1️⃣ The pattern you want for every feature
+
+Tell Replit you want this 3-layer wrap for each feature (Bible Trivia, Scripture Finder, Plain Meaning, Instant Application, Topical Search, etc.):
+
+UI shell / ErrorBoundary
+
+Catches errors so the whole app doesn’t crash
+
+Shows a friendly “Try again” screen for that feature only
+
+Feature Provider (Context + hooks)
+
+Holds only the state for that feature
+
+Exposes clean hooks like useTrivia(), usePlainMeaning()
+
+Service layer
+
+All API / network calls (fetch, OpenAI, Bible API, etc.)
+
+Always wrapped in try/catch, with typed results
+
+That’s what “wrapped” really means in React/TypeScript world.
+
+2️⃣ Give them a shared FeatureBoundary to use everywhere
+
+File (new): client/src/components/FeatureBoundary.tsx
+
+// client/src/components/FeatureBoundary.tsx
+import React from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+
+interface FeatureBoundaryProps {
+  featureName: string;           // e.g. "Bible Trivia"
+  onBackHome?: () => void;
+  children: React.ReactNode;
+}
+
+interface FeatureBoundaryState {
+  hasError: boolean;
+  errorMessage?: string;
+}
+
+export class FeatureBoundary
+  extends React.Component<FeatureBoundaryProps, FeatureBoundaryState>
+{
+  constructor(props: FeatureBoundaryProps) {
+    super(props);
+    this.state = { hasError: false };
+  }
+
+  static getDerivedStateFromError(error: Error): FeatureBoundaryState {
+    return { hasError: true, errorMessage: error.message };
+  }
+
+  componentDidCatch(error: Error, info: React.ErrorInfo) {
+    console.error(`[FeatureBoundary] ${this.props.featureName} error:`, error, info);
+  }
+
+  private handleRetry = () => {
+    // Reset error state and re-render children
+    this.setState({ hasError: false, errorMessage: undefined });
+  };
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex items-center justify-center px-4">
+          <Card className="max-w-md w-full shadow-2xl">
+            <CardHeader>
+              <CardTitle>
+                {this.props.featureName} ran into a problem
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-sm text-slate-600 dark:text-slate-300">
+                Something went wrong inside this feature, but the rest of the app
+                is still fine. You can try again or go back home.
+              </p>
+              {this.state.errorMessage && (
+                <p className="text-xs text-slate-500 dark:text-slate-400 line-clamp-3">
+                  {this.state.errorMessage}
+                </p>
+              )}
+              <div className="flex gap-3 justify-end">
+                {this.props.onBackHome && (
+                  <Button
+                    variant="outline"
+                    onClick={this.props.onBackHome}
+                  >
+                    Home
+                  </Button>
+                )}
+                <Button onClick={this.handleRetry}>
+                  Try Again
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
+        </div>
+      );
+    }
+
+    return this.props.children;
+  }
+}
+
+3️⃣ Example: wrap Bible Trivia in its own sandbox
+
+In your router / navigation file where you render BibleTriviaPage:
+
+import { FeatureBoundary } from "@/components/FeatureBoundary";
+import BibleTriviaPage from "@/pages/BibleTriviaPage";
+
+<Route
+  path="/trivia"
+  element={
+    <FeatureBoundary
+      featureName="Bible Trivia"
+      onBackHome={() => navigate("/home")}
+    >
+      <BibleTriviaPage />
+    </FeatureBoundary>
+  }
+/>
+
+
+Now if anything inside Trivia throws (including your React Query hooks, AI responses, etc.), only that page shows a nice error card. The rest of your app keeps running.
+
+Do the same for:
+
+PlainMeaningPage
+
+InstantApplicationPage
+
+TopicalBibleSearchPage
+
+ScriptureImagePage
+
+etc.
+
+4️⃣ Ask them to use feature providers instead of global state
+
+You can tell Replit:
+
+“For each major feature, please create a dedicated context + hook instead of mixing everything in a single global store. That way, feature state doesn’t leak into other features.”
+
+Pattern example:
+
+// client/src/context/PlainMeaningContext.tsx
+import { createContext, useContext, useState } from "react";
+
+interface PlainMeaningState {
+  reference: string | null;
+  explanation: string | null;
+  loading: boolean;
+  error: string | null;
+  generate: (reference: string) => Promise<void>;
+}
+
+const PlainMeaningContext = createContext<PlainMeaningState | null>(null);
+
+export function PlainMeaningProvider({ children }: { children: React.ReactNode }) {
+  const [reference, setReference] = useState<string | null>(null);
+  const [explanation, setExplanation] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const generate = async (ref: string) => {
+    setLoading(true);
+    setError(null);
+    setReference(ref);
+    setExplanation(null);
+    try {
+      const res = await fetch("/api/plain-meaning", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ reference: ref })
+      });
+      if (!res.ok) throw new Error("Plain Meaning request failed");
+      const data = await res.json();
+      if (!data.success || !data.explanation) {
+        throw new Error(data.error || "No explanation returned");
+      }
+      setExplanation(data.explanation);
+    } catch (err: any) {
+      console.error("PlainMeaning error:", err);
+      setError("Sorry, I couldn't explain that verse right now.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  return (
+    <PlainMeaningContext.Provider
+      value={{ reference, explanation, loading, error, generate }}
+    >
+      {children}
+    </PlainMeaningContext.Provider>
+  );
+}
+
+export function usePlainMeaning() {
+  const ctx = useContext(PlainMeaningContext);
+  if (!ctx) {
+    throw new Error("usePlainMeaning must be used within PlainMeaningProvider");
+  }
+  return ctx;
+}
+
+
+Then your page is clean and isolated:
+
+// client/src/pages/PlainMeaningPage.tsx
+import { PlainMeaningProvider, usePlainMeaning } from "@/context/PlainMeaningContext";
+
+function PlainMeaningScreen() {
+  const { reference, explanation, loading, error, generate } = usePlainMeaning();
+  // ... UI here ...
+}
+
+export default function PlainMeaningPageWrapper(props: { onNavigate?: (p: string) => void }) {
+  return (
+    <PlainMeaningProvider>
+      <PlainMeaningScreen {...props} />
+    </PlainMeaningProvider>
+  );
+}
+
+
+Same pattern can be applied to Trivia, Topical Search, Scripture Image, Text-to-Speech, etc.
+
+5️⃣ What you can literally paste to Replit
+
+Here’s a short instruction you can send them:
+
+Goal: Make every major feature in “The Gospel in Five Minutes” safely isolated so that if one feature fails, it doesn’t crash or interfere with the others.
+
+Please:
+
+Add a shared FeatureBoundary component (error boundary) and wrap each feature page in it: Bible Trivia, Plain Meaning, Instant Application, Topical Bible Search, Scripture Image, etc.
+
+For each major feature, create a dedicated context + hook (e.g. PlainMeaningProvider + usePlainMeaning, TriviaProvider + useTrivia). Do not mix state between features.
+
+Keep all API / network logic in separate services/*.ts files and wrap them in try/catch, returning typed results rather than letting errors bubble directly into the UI.
+
+Wherever possible, route user-facing errors through the feature’s provider so errors are shown nicely inside that feature only, not as a global crash.
+
+Update routes / navigation so each feature page is rendered inside both:
+
+its feature provider, and
+
+the shared FeatureBoundary.
+
+If they follow that, you’ll have:
+
+Each feature in its own sandbox
+
+Stronger protection against random AI / network failures
+
+Far fewer full-page crashes or weird “cross-feature” interference.
