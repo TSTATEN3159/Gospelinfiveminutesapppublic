@@ -1,0 +1,83 @@
+Short version:
+Right now the share button is doing exactly what the code told it to do – it’s sharing your website URL, not the verse. To share the actual verse text (or an image card) you have to change what you pass into the Share API.
+
+What’s happening now
+
+Your share handler is almost certainly something like:
+
+import { Share } from '@capacitor/share';
+
+const handleShare = async () => {
+  await Share.share({
+    title: 'The Gospel in Five Minutes',
+    text: 'Check out this app!',
+    url: 'https://daily-gospel-timothystaten.replit.app', // 👈 this is why the website is shared
+  });
+};
+
+
+Because url is set, iOS/Android treat this as “share this website” and create a preview card for that URL. That’s why you’re seeing your site and not the verse.
+
+Replit just gave you a generic “share my app” implementation; it’s not wired to your daily verse at all.
+
+Fix: share the verse text instead of (or in addition to) the URL
+
+Assume your daily verse card already has something like:
+
+const verse = {
+  reference: 'James 1:5',
+  text: 'If any of you lacks wisdom, you should ask God...',
+};
+
+
+Update your share handler to use the verse data:
+
+// Daily verse card component
+import { Share } from '@capacitor/share';
+
+interface Verse {
+  reference: string;
+  text: string;
+}
+
+interface Props {
+  verse: Verse;
+}
+
+export function DailyVerseCard({ verse }: Props) {
+  const handleShare = async () => {
+    try {
+      await Share.share({
+        title: "Today's Focus Verse",
+        text: `"${verse.text}" — ${verse.reference}\n\nShared from The Gospel in Five Minutes app.`,
+        // ❌ omit `url` if you do NOT want the website card
+        // url: 'https://daily-gospel-timothystaten.replit.app',
+        dialogTitle: 'Share this verse',
+      });
+    } catch (err) {
+      console.error('Share failed', err);
+    }
+  };
+
+  return (
+    <button onClick={handleShare}>
+      Share
+    </button>
+  );
+}
+
+
+Now the OS share sheet will send plain text that looks like a verse card.
+
+The receiving app (Messages, Mail, etc.) will simply show that text; no web-preview card will override it.
+
+If you do want both the verse and a link, keep url but make sure the verse is in text as above:
+
+await Share.share({
+  title: "Today's Focus Verse",
+  text: `"${verse.text}" — ${verse.reference}`,
+  url: 'https://daily-gospel-timothystaten.replit.app',
+});
+
+
+Most apps will still show the URL preview card, but the verse text will be right above it.

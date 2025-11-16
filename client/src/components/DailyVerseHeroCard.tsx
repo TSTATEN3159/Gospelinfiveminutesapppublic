@@ -22,11 +22,10 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const shareText = `${text}\n\n— ${reference}`;
+    const shareText = `"${text}"\n\n— ${reference}\n\nShared from The Gospel in 5 Minutes`;
     const shared = await safeShare({
-      title: 'Daily Verse',
-      text: shareText,
-      url: 'https://www.thegospelin5minutes.org'
+      title: "Today's Focus Verse",
+      text: shareText
     });
     
     if (shared) {
