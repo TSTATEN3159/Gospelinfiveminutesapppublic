@@ -45,7 +45,7 @@ const safeRemoveItem = (key) => {
   }
 };
 
-export const appStore = {
+const appStore = {
   // TODAY'S READING
   saveToday(content) {
     safeSetItem(KEY_TODAY, JSON.stringify({ content, savedAt: Date.now() }));
@@ -167,3 +167,5 @@ export const appStore = {
     safeSetItem(key, JSON.stringify(value));
   }
 };
+
+export default appStore;

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Sunrise, Sun, Moon } from 'lucide-react';
 import { useTranslations } from '@/lib/translations';
 // @ts-ignore - appStore is a JS file
-import { appStore } from '@/lib/appStore';
+import appStore from '@/lib/appStore';
 
 interface HomePageProps {
   user?: {
