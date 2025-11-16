@@ -554,6 +554,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return data.data;
   };
 
+  // Get Bible passage (for verse ranges like "JHN.3.16-17")
+  const getApiBiblePassage = async (bibleId: string, passageId: string) => {
+    const API_KEY = process.env.API_BIBLE_KEY;
+    if (!API_KEY) {
+      throw new Error('API_BIBLE_KEY not configured');
+    }
+
+    const response = await fetch(`https://api.scripture.api.bible/v1/bibles/${bibleId}/passages/${passageId}`, {
+      headers: {
+        'api-key': API_KEY
+      }
+    });
+    
+    if (!response.ok) {
+      throw new Error(`API.Bible passage request failed: ${response.status}`);
+    }
+    
+    const data = await response.json();
+    return data.data;
+  };
+
   // Bible version mapping - maps abbreviations to API.Bible IDs
   // Only public domain/free-to-use translations to comply with copyright
   const bibleVersionMapping: { [key: string]: { id: string, name: string } } = {
@@ -688,6 +709,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Convert reference to API.Bible format (e.g., "John 3:16" -> "JHN.3.16")
       const formattedRef = formatReferenceForApiBible(reference);
       
+      console.log(`[Bible Verse] Reference: ${reference} -> Formatted: ${formattedRef}`);
+      
       if (!formattedRef) {
         return res.status(400).json({ 
           success: false, 
@@ -695,15 +718,51 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      // Fetch verse from API.Bible
-      const verseData = await getApiBibleVerse(versionInfo.id, formattedRef);
-      
-      res.json({
-        success: true,
-        reference: verseData.reference || reference,
-        text: verseData.content ? verseData.content.replace(/<[^>]*>/g, '').trim() : '',
-        version: versionCode
-      });
+      // Check if this is a verse range (e.g., "Luke 17:20-21")
+      if (reference.match(/:\d+-\d+$/)) {
+        // Split range into individual verses and fetch them
+        const match = reference.match(/^(.+?)\s+(\d+):(\d+)-(\d+)$/);
+        if (!match) {
+          return res.status(400).json({ 
+            success: false, 
+            error: `Invalid verse range format: ${reference}` 
+          });
+        }
+        
+        const bookChapter = match[1] + ' ' + match[2];
+        const startVerse = parseInt(match[3]);
+        const endVerse = parseInt(match[4]);
+        
+        // Fetch each verse in the range
+        const verses = [];
+        for (let v = startVerse; v <= endVerse; v++) {
+          const singleRef = `${bookChapter}:${v}`;
+          const singleFormatted = formatReferenceForApiBible(singleRef);
+          if (singleFormatted) {
+            const verseData = await getApiBibleVerse(versionInfo.id, singleFormatted);
+            if (verseData.content) {
+              verses.push(verseData.content.replace(/<[^>]*>/g, '').trim());
+            }
+          }
+        }
+        
+        res.json({
+          success: true,
+          reference: reference,
+          text: verses.join(' '),
+          version: versionCode
+        });
+      } else {
+        // Single verse - use verse endpoint
+        const verseData = await getApiBibleVerse(versionInfo.id, formattedRef);
+        
+        res.json({
+          success: true,
+          reference: verseData.reference || reference,
+          text: verseData.content ? verseData.content.replace(/<[^>]*>/g, '').trim() : '',
+          version: versionCode
+        });
+      }
 
     } catch (error: any) {
       console.error('Error fetching Bible verse:', error);
