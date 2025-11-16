@@ -5,10 +5,22 @@ import { BibleVersionSelector } from "@/components/BibleVersionSelector";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Book, Sparkles, Volume2, Loader2, AlertCircle, Image as ImageIcon } from "lucide-react";
+import { Book, Sparkles, Volume2, Loader2, AlertCircle, Image as ImageIcon, Heart, Cross, Compass, Shield, Sun, Leaf, Users, Star } from "lucide-react";
 import { toggleSpeech } from "@/utils/speechEngine";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiUrl } from "@/lib/api-config";
+
+// Quick access topics with icons and colors
+const QUICK_ACCESS_TOPICS = [
+  { id: "kingdom-of-god", icon: Cross, color: "from-violet-400 to-purple-500" },
+  { id: "salvation", icon: Heart, color: "from-rose-400 to-pink-500" },
+  { id: "faith", icon: Shield, color: "from-blue-400 to-indigo-500" },
+  { id: "love", icon: Heart, color: "from-red-400 to-rose-500" },
+  { id: "prayer", icon: Sparkles, color: "from-amber-400 to-orange-500" },
+  { id: "holy-spirit", icon: Sun, color: "from-yellow-400 to-amber-500" },
+  { id: "healing", icon: Leaf, color: "from-green-400 to-emerald-500" },
+  { id: "forgiveness", icon: Star, color: "from-cyan-400 to-teal-500" },
+] as const;
 
 interface BibleVerse {
   reference: string;
@@ -131,24 +143,80 @@ export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVe
         </p>
       </div>
 
-      {/* Topic Selector */}
+      {/* Quick Access Topics - Pastel Cards */}
+      <div className="mb-8">
+        <h2 className="text-sm font-semibold text-gray-600 dark:text-gray-300 mb-3 px-1">
+          Quick Access Topics
+        </h2>
+        <div className="grid grid-cols-2 gap-3">
+          {QUICK_ACCESS_TOPICS.map((quickTopic) => {
+            const topicData = TOPICAL_BIBLE_TOPICS.find(t => t.id === quickTopic.id);
+            if (!topicData) return null;
+            
+            const Icon = quickTopic.icon;
+            
+            return (
+              <button
+                key={quickTopic.id}
+                onClick={() => handleTopicSelect(quickTopic.id)}
+                className={`
+                  group relative overflow-hidden
+                  p-4 rounded-2xl
+                  bg-gradient-to-br ${quickTopic.color}
+                  shadow-lg hover:shadow-xl
+                  transform hover:scale-[1.02] active:scale-[0.98]
+                  transition-all duration-200
+                  text-left
+                `}
+                data-testid={`quick-topic-${quickTopic.id}`}
+              >
+                {/* Glass shimmer effect */}
+                <div className="absolute inset-0 bg-white/20 group-hover:bg-white/30 transition-colors" />
+                
+                <div className="relative">
+                  <div className="flex items-start justify-between mb-2">
+                    <Icon className="w-6 h-6 text-white drop-shadow-md" />
+                    <div className="w-8 h-8 rounded-full bg-white/30 flex items-center justify-center">
+                      <Sparkles className="w-4 h-4 text-white" />
+                    </div>
+                  </div>
+                  <h3 className="font-bold text-white drop-shadow-sm text-base">
+                    {topicData.name}
+                  </h3>
+                  <p className="text-xs text-white/90 mt-1 line-clamp-2">
+                    {topicData.description}
+                  </p>
+                </div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Browse All Topics Dropdown */}
       <div className="mb-6">
-        <Select onValueChange={handleTopicSelect}>
+        <label className="block text-xs font-semibold text-gray-600 dark:text-gray-300 mb-2 px-1">
+          Browse all {TOPICAL_BIBLE_TOPICS.length}+ Biblical topics
+        </label>
+        <Select 
+          value={selectedTopic?.id}
+          onValueChange={handleTopicSelect}
+        >
           <SelectTrigger 
-            className="w-full py-6 bg-white shadow-lg dark:bg-gray-800 border-2 border-amber-400 rounded-xl text-lg font-medium hover:border-amber-500 transition-colors"
+            className="w-full h-12 bg-white/80 dark:bg-gray-900/80 border-2 border-gray-200 dark:border-gray-700 rounded-2xl text-sm shadow-md hover:shadow-lg transition-all"
             data-testid="select-topic"
           >
             <div className="flex items-center gap-2">
-              <Sparkles className="w-5 h-5 text-amber-500" />
-              <SelectValue placeholder="Choose a Biblical Topic..." />
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <SelectValue placeholder="Choose a topic (Faith, Love, Prayer…)" />
             </div>
           </SelectTrigger>
-          <SelectContent className="max-h-[400px]">
+          <SelectContent className="max-h-72">
             {TOPICAL_BIBLE_TOPICS.map((topic) => (
               <SelectItem 
                 key={topic.id} 
                 value={topic.id}
-                className="text-base py-3"
+                className="text-sm py-2"
                 data-testid={`topic-${topic.id}`}
               >
                 <div>
@@ -159,9 +227,6 @@ export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVe
             ))}
           </SelectContent>
         </Select>
-        <p className="text-xs text-gray-500 dark:text-gray-400 mt-2 text-center">
-          {TOPICAL_BIBLE_TOPICS.length} spiritual topics available
-        </p>
       </div>
 
       {/* Bible Version Selector (only show when topic is selected) */}
