@@ -1031,5 +1031,5 @@ function BibleTriviaPage({
 export default FeatureBoundary.with(
   BibleTriviaPage,
   "Bible Trivia Game",
-  (props) => props.onNavigate ? () => props.onNavigate!('home') : undefined
+  (props) => () => props.onNavigate?.('home')  // Factory called on each render with fresh props
 );

@@ -323,5 +323,5 @@ function BookmarksPage({ onNavigate }: BookmarksPageProps) {
 export default FeatureBoundary.with(
   BookmarksPage,
   "Bookmarks & Notes",
-  (props) => props.onNavigate ? () => props.onNavigate!('search') : undefined
+  (props) => () => props.onNavigate?.('search')  // Factory called on each render with fresh props
 );

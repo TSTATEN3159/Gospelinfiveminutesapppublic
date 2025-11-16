@@ -23,7 +23,7 @@ import { useSpeechRecognition } from "@/hooks/useSpeechRecognition";
 import { useTranslations } from "@/lib/translations";
 import { fetchVerseText } from "@/services/bibleService";
 import bibleStudyImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
-import { appStore } from "@/lib/appStore";
+import appStore from "@/lib/appStore";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ScriptureSelector from "./ScriptureSelector";
 import ScriptureCard from "./ScriptureCard";

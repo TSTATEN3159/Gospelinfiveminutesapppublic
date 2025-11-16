@@ -6,7 +6,7 @@ import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNo
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
-import { appStore } from "@/lib/appStore";
+import appStore from "@/lib/appStore";
 import { toggleSpeech, getIsSpeaking } from "@/utils/speechEngine";
 import {
   Dialog,

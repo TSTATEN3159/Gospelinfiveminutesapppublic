@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookmarkCheck, BookmarkX, ChevronLeft, Book, Loader2, Image as ImageIcon } from "lucide-react";
-import { appStore } from "@/lib/appStore";
+import appStore from "@/lib/appStore";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslations } from "@/lib/translations";
 import {

@@ -9,7 +9,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { bibleService } from "../services/bibleService";
-import { appStore } from "@/lib/appStore";
+import appStore from "@/lib/appStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TextSizeControls } from "@/components/TextSizeControls";
 import { ReminderSettings } from "@/components/settings/ReminderSettings";

@@ -7,7 +7,7 @@ import { Progress } from "@/components/ui/progress";
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import { apiUrl } from "@/lib/api-config";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
-import { appStore } from "@/lib/appStore";
+import appStore from "@/lib/appStore";
 
 type PlanType = "1yr-whole" | "6mo-ot" | "6mo-nt";
 

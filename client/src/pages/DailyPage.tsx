@@ -14,7 +14,7 @@ import plainMeaningImage from '@assets/stock_images/open_bible_with_coff_9ab4ad9
 import instantApplicationImage from '@assets/stock_images/bible_and_journal_wi_4f18af22.jpg';
 
 interface DailyPageProps {
-  onNavigate: (page: string) => void;
+  onNavigate: (page: string) => void;  // Required - parent always provides
   streakDays?: number;
   language?: string;
 }
@@ -251,5 +251,5 @@ function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPagePro
 export default FeatureBoundary.with(
   DailyPage,
   "Daily Scripture & Features",
-  (props) => props.onNavigate ? () => props.onNavigate('home') : undefined
+  (props) => () => props.onNavigate?.('home')  // Factory called on each render with fresh props
 );
