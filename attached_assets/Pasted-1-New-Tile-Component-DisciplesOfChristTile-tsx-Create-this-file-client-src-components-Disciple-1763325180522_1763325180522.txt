@@ -1,0 +1,132 @@
+1️⃣ New Tile Component: DisciplesOfChristTile.tsx
+
+Create this file:
+
+client/src/components/DisciplesOfChristTile.tsx
+
+import { cn } from "@/lib/utils";
+
+interface DisciplesOfChristTileProps {
+  verseRef: string;
+  verseText: string;
+  step: string;          // the “One Simple Step” text
+  className?: string;
+  onClick?: () => void;  // optional – open full devotion, etc.
+}
+
+export function DisciplesOfChristTile({
+  verseRef,
+  verseText,
+  step,
+  className,
+  onClick,
+}: DisciplesOfChristTileProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "w-full text-left rounded-3xl p-4 sm:p-5",
+        "bg-slate-900 text-slate-50 shadow-[0_18px_45px_rgba(15,23,42,0.55)]",
+        "overflow-hidden active:scale-[0.99] transition-transform",
+        className
+      )}
+    >
+      {/* Tile title */}
+      <p className="text-[11px] font-semibold tracking-[0.18em] text-emerald-300 mb-1 uppercase">
+        Disciples of Christ
+      </p>
+
+      {/* Verse reference */}
+      <p className="text-[13px] font-semibold text-emerald-200 mb-1">
+        {verseRef}
+      </p>
+
+      {/* Verse text – WRAPS and stays inside the tile */}
+      <p
+        className="
+          text-[14px] sm:text-[15px] font-medium leading-snug
+          whitespace-normal break-words
+          text-slate-50
+          mb-3
+        "
+      >
+        {verseText}
+      </p>
+
+      {/* Divider line */}
+      <div className="h-px w-full bg-slate-700/70 mb-3" />
+
+      {/* “One Simple Step” label */}
+      <p className="text-[11px] font-semibold tracking-[0.16em] text-emerald-300 mb-1 uppercase">
+        One Simple Step
+      </p>
+
+      {/* Step text – WRAPS and stays inside the tile */}
+      <p
+        className="
+          text-[13px] leading-snug
+          whitespace-normal break-words
+          text-slate-100/90
+        "
+      >
+        {step}
+      </p>
+    </button>
+  );
+}
+
+Why this will wrap correctly
+
+Key parts:
+
+whitespace-normal → allows normal wrapping at spaces
+
+break-words → forces very long words/URLs to break instead of overflowing
+
+No truncate, whitespace-nowrap, or fixed-line clamps that would push text off the edge
+
+The tile itself has overflow-hidden so nothing spills visually outside the rounded corners
+
+As long as a parent container doesn’t force whitespace-nowrap on everything, this tile will wrap cleanly on all screen sizes.
+
+2️⃣ How to Use It on Your Home Screen
+
+For example in HomeScreen.tsx (or wherever your tiles live):
+
+import { DisciplesOfChristTile } from "@/components/DisciplesOfChristTile";
+
+const todaysVerse = {
+  ref: "James 1:5",
+  text: "If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you.",
+  step: "Before your next decision today, pause for three seconds and whisper, “Lord, give me wisdom.”",
+};
+
+export default function HomeScreen() {
+  return (
+    <div className="space-y-4">
+      {/* other tiles */}
+
+      <DisciplesOfChristTile
+        verseRef={todaysVerse.ref}
+        verseText={todaysVerse.text}
+        step={todaysVerse.step}
+        onClick={() => {
+          // Navigate to full devotion / Gospel in 5 Minutes screen
+          // e.g. navigate("/disciples-of-christ");
+        }}
+      />
+    </div>
+  );
+}
+
+
+If you’re placing this inside a grid of tiles, you can pass layout classes:
+
+<DisciplesOfChristTile
+  className="h-full"
+  {...todaysVerse}
+/>
+
+
+If you paste this in and the text still overflows, send me a screenshot of the entire section including parent container and I’ll adjust the layout around it so the “Disciples of Christ” tile behaves perfectly.
