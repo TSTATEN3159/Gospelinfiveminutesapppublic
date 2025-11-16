@@ -13,7 +13,7 @@ import holyBibleImage from '@assets/stock_images/open_bible_pages_scr_bfe91e5c.j
 import blogWritingImage from '@assets/stock_images/person_writing_journ_4816488f.jpg';
 import friendsFellowship from '@assets/stock_images/group_of_people_pray_1d87fafd.jpg';
 import dailyDevotionsImage from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
-import bookmarkedVersesImage from '@assets/stock_images/open_bible_on_wooden_8be767df.jpg';
+import bookmarkedVersesImage from '@assets/stock_images/peaceful_stream_flow_fb1556f7.jpg';
 import { DisciplesOfChristTile } from "@/components/DisciplesOfChristTile";
 import { getCurrentDisciplesVerse } from "@/data/disciplesOfChristVerses";
 
