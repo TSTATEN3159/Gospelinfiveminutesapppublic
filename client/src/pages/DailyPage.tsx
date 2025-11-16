@@ -3,6 +3,7 @@ import { Calendar, BookOpen, ChevronRight, Lightbulb, CheckCircle, Flame, Facebo
 import { Button } from "@/components/ui/button";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
+import ScriptureTickerPanel from "../components/ScriptureTickerPanel";
 import { LiquidGlassFeatureTile } from "@/components/LiquidGlassFeatureTile";
 import { useTranslations } from "@/lib/translations";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
@@ -168,6 +169,11 @@ function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPagePro
             <span>{t.share}</span>
           </Button>
         </div>
+      </div>
+
+      {/* Scripture Ticker Panel - FIRST on Daily Page */}
+      <div className="px-4 pt-6 pb-3">
+        <ScriptureTickerPanel />
       </div>
 
       {/* Feature Tiles - Premium Liquid Glass */}

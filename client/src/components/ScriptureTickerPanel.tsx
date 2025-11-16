@@ -1,7 +1,8 @@
 import { useMemo } from "react";
 
-const STUDY_IMAGE_URL =
-  "https://images.pexels.com/photos/2080960/pexels-photo-2080960.jpeg?auto=compress&cs=tinysrgb&w=1200";
+// Import high-definition stock photos for the right side
+import bibleStudyImage1 from '@assets/stock_images/open_bible_golden_su_6f7daf93.jpg';
+import bibleStudyImage2 from '@assets/stock_images/hands_holding_bible__6bb30783.jpg';
 
 type Verse = {
   ref: string;
@@ -58,7 +59,8 @@ export default function ScriptureTickerPanel() {
       className="w-full rounded-3xl bg-slate-900 text-slate-100 shadow-[0_20px_60px_rgba(15,23,42,0.55)] overflow-hidden"
       data-testid="scripture-ticker-panel"
     >
-      <div className="grid md:grid-cols-[2fr,1.5fr] gap-4 md:gap-6 items-stretch">
+      <div className="grid md:grid-cols-[2fr,1.5fr] gap-0 items-stretch">
+        {/* LEFT SIDE: Static verse + ticker */}
         <div className="p-4 md:p-6 flex flex-col justify-between">
           <div>
             <p className="text-xs uppercase tracking-[0.2em] text-emerald-300 mb-2">
@@ -72,6 +74,7 @@ export default function ScriptureTickerPanel() {
             </p>
           </div>
 
+          {/* Scrolling ticker with many verses */}
           <div className="mt-4 pt-3 border-t border-slate-700">
             <p className="text-xs uppercase tracking-[0.2em] text-slate-400 mb-1">
               Meditate as you move
@@ -87,13 +90,32 @@ export default function ScriptureTickerPanel() {
           </div>
         </div>
 
-        <div className="relative h-40 md:h-full">
-          <img
-            src={STUDY_IMAGE_URL}
-            alt="Person studying the Bible and walking with God"
-            className="w-full h-full object-cover md:rounded-l-none rounded-3xl md:rounded-3xl md:rounded-l-[0] md:rounded-r-3xl"
-          />
-          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-slate-900/0 via-slate-900/10 to-slate-900/40" />
+        {/* RIGHT SIDE: Two HD photos that blend together */}
+        <div className="relative h-48 md:h-full min-h-[200px] overflow-hidden rounded-r-3xl">
+          {/* Top photo - fills upper half */}
+          <div className="absolute top-0 left-0 right-0 h-1/2">
+            <img
+              src={bibleStudyImage1}
+              alt="Open Bible with golden sunlight"
+              className="w-full h-full object-cover"
+            />
+            {/* Gradient blend at bottom edge */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900" />
+          </div>
+          
+          {/* Bottom photo - fills lower half */}
+          <div className="absolute bottom-0 left-0 right-0 h-1/2">
+            <img
+              src={bibleStudyImage2}
+              alt="Hands holding Bible"
+              className="w-full h-full object-cover"
+            />
+            {/* Gradient blend at top edge */}
+            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-slate-900" />
+          </div>
+          
+          {/* Overall subtle overlay for cohesion */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-slate-900/0 via-slate-900/5 to-slate-900/30" />
         </div>
       </div>
 

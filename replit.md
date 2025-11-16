@@ -33,7 +33,7 @@ Preferred communication style: Simple, everyday language.
 
 ### Core Features
 - **Daily Scripture**: Card-based display with bookmarking, notes, sharing, and copying.
-- **Scripture Ticker Widget**: Beautiful scrolling verse panel on Home page featuring a static "focus verse" with continuous scrolling ticker of 25 verses, accompanied by high-definition Bible study imagery. Uses pure CSS animations (no external dependencies).
+- **Scripture Ticker Widget**: Beautiful scrolling verse panel positioned FIRST on the Daily page, featuring a static "focus verse" with continuous scrolling ticker of 25 verses. Includes TWO high-definition stock photos (open Bible with golden sunlight, hands holding Bible) that blend seamlessly on the right side within the tile borders. Uses pure CSS animations (no external dependencies).
 - **AI Pastor Chat**: AI-powered Q&A.
 - **AI Verse Simplifier (Plain Meaning)**: Transforms Bible verses into simple language using OpenAI. Features professional Book/Chapter/Verse dropdown selector (ScriptureReferencePicker) for easy navigation through all 66 Bible books with accurate chapter counts. Now displayed with premium LiquidGlassFeatureTile component on DailyPage for enhanced visual appeal.
 - **AI Instant Application (Try This Today)**: Generates actionable steps from Bible verses using OpenAI. Features professional Book/Chapter/Verse dropdown selector (ScriptureReferencePicker) for easy navigation through all 66 Bible books with accurate chapter counts. Now displayed with premium LiquidGlassFeatureTile component on DailyPage for enhanced visual appeal.
