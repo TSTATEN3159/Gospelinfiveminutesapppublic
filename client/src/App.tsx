@@ -48,6 +48,7 @@ import InstantApplicationPage from "./pages/InstantApplicationPage";
 import VoiceSettingsPage from "./pages/VoiceSettingsPage";
 import TopicSearchPage from "./pages/TopicSearchPage";
 import ScriptureImagePage from "./pages/ScriptureImagePage";
+import DisciplesOfChristPage from "./pages/DisciplesOfChristPage";
 import { BibleVersionCode } from "./config/bibleVersions";
 
 interface User {
@@ -60,7 +61,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "disciples-of-christ";
 
 // Type-safe navigation params for each page
 type AppPageParams = {
@@ -193,7 +194,7 @@ function MainApp() {
   };
 
   const handleNavigate = (page: string, params?: any) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "disciples-of-christ"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       
@@ -303,6 +304,8 @@ function MainApp() {
                 initialVersion={imageParams.version}
                 onNavigate={handleNavigate}
               />;
+            case "disciples-of-christ":
+              return <DisciplesOfChristPage onBack={handleBackFromLegal} language={language} />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -325,7 +328,7 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "disciples-of-christ"].includes(currentPage) && (
                 <BottomNavigation 
                   currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
