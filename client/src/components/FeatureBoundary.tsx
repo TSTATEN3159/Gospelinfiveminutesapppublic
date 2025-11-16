@@ -41,6 +41,25 @@ export class FeatureBoundary extends Component<FeatureBoundaryProps, FeatureBoun
     this.setState({ hasError: false, errorMessage: undefined, errorStack: undefined });
   };
 
+  /**
+   * Higher-order component helper to wrap a component with FeatureBoundary
+   * This ensures the boundary controls the entire page surface from the start
+   */
+  static with<P extends object>(
+    Component: React.ComponentType<P>,
+    featureName: string,
+    getOnBackHome?: (props: P) => (() => void) | undefined
+  ): React.ComponentType<P> {
+    return (props: P) => (
+      <FeatureBoundary
+        featureName={featureName}
+        onBackHome={getOnBackHome?.(props)}
+      >
+        <Component {...props} />
+      </FeatureBoundary>
+    );
+  }
+
   render() {
     if (this.state.hasError) {
       return (

@@ -22,7 +22,8 @@ interface PlainMeaningPageProps {
   onNavigate: (page: string) => void;
 }
 
-function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
+// Content component without background (to be wrapped by provider)
+function PlainMeaningContent({ onNavigate }: PlainMeaningPageProps) {
   const { toast } = useToast();
   const {
     selection,
@@ -104,15 +105,9 @@ function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
   };
 
   return (
-    <div className="min-h-screen pb-20 bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-gray-950 dark:via-blue-950/20 dark:to-gray-950">
-      {/* Animated Background Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-blue-300 dark:bg-blue-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute top-40 -right-20 w-72 h-72 bg-cyan-300 dark:bg-cyan-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-20 left-20 w-72 h-72 bg-blue-300 dark:bg-blue-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '4s' }}></div>
-      </div>
+    <>
 
-      {/* Header */}
+      {/* Header - Now relative to parent */}
       <div className="relative backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 px-4 py-6 border-b border-blue-200/20 dark:border-blue-800/20 ios-safe-top">
         <div className="max-w-sm mx-auto">
           <Button
@@ -308,20 +303,36 @@ function PlainMeaningScreen({ onNavigate }: PlainMeaningPageProps) {
           </div>
         )}
       </div>
+    </>
+  );
+}
+
+// Wrapper component that owns the background and wraps Provider + Content
+// This ensures the boundary controls the ENTIRE page surface including background
+function PlainMeaningPageLayout(props: PlainMeaningPageProps) {
+  return (
+    <div className="min-h-screen pb-20 bg-gradient-to-br from-blue-50 via-white to-cyan-50 dark:from-gray-950 dark:via-blue-950/20 dark:to-gray-950">
+      {/* Animated Background Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-blue-300 dark:bg-blue-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute top-40 -right-20 w-72 h-72 bg-cyan-300 dark:bg-cyan-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-20 left-20 w-72 h-72 bg-blue-300 dark:bg-blue-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '4s' }}></div>
+      </div>
+
+      {/* Provider + Content inside the background */}
+      <PlainMeaningProvider>
+        <PlainMeaningContent {...props} />
+      </PlainMeaningProvider>
     </div>
   );
 }
 
-// Export the wrapped component with FeatureBoundary and Provider
-export default function PlainMeaningPage(props: PlainMeaningPageProps) {
-  return (
-    <FeatureBoundary 
-      featureName="Plain Meaning (AI Verse Simplifier)"
-      onBackHome={() => props.onNavigate('daily')}
-    >
-      <PlainMeaningProvider>
-        <PlainMeaningScreen {...props} />
-      </PlainMeaningProvider>
-    </FeatureBoundary>
-  );
-}
+// Wrap the entire layout with FeatureBoundary at the highest level
+// This ensures the boundary controls the full page surface (background + provider + content)
+const PlainMeaningPageWithBoundary = FeatureBoundary.with(
+  PlainMeaningPageLayout,
+  "Plain Meaning (AI Verse Simplifier)",
+  (props) => () => props.onNavigate('daily')
+);
+
+export default PlainMeaningPageWithBoundary;
