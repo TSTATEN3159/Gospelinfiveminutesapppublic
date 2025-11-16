@@ -1,0 +1,563 @@
+1. Topic data (40+ topics, references only)
+
+Create a new file:
+
+client/src/data/topicalBibleTopics.ts
+
+// client/src/data/topicalBibleTopics.ts
+
+export type BibleVersionCode =
+  | "KJV"
+  | "BBE"
+  | "WEB"
+  | "ASV"; // add more as you license them
+
+export interface TopicDefinition {
+  id: string;
+  name: string;
+  description: string;
+  // Verse references, e.g. "John 3:16", "Romans 8:28-30"
+  references: string[];
+}
+
+export const TOPICAL_BIBLE_TOPICS: TopicDefinition[] = [
+  {
+    id: "kingdom-of-god",
+    name: "Kingdom of God",
+    description: "What life looks like under King Jesus.",
+    references: ["Matthew 6:33", "Romans 14:17", "Luke 17:20-21"]
+  },
+  {
+    id: "salvation",
+    name: "Salvation",
+    description: "How God saves sinners by grace through faith.",
+    references: ["John 3:16", "Ephesians 2:8-9", "Romans 10:9-10"]
+  },
+  {
+    id: "faith",
+    name: "Faith",
+    description: "Trusting God’s character and promises.",
+    references: ["Hebrews 11:1", "2 Corinthians 5:7", "Romans 1:17"]
+  },
+  {
+    id: "love",
+    name: "Love",
+    description: "God’s love and the love we show others.",
+    references: ["1 Corinthians 13:4-7", "John 13:34-35", "1 John 4:7-8"]
+  },
+  {
+    id: "holy-spirit",
+    name: "Holy Spirit",
+    description: "The Spirit’s presence, power, and fruit.",
+    references: ["John 14:16-17", "Galatians 5:22-23", "Acts 1:8"]
+  },
+  {
+    id: "forgiveness",
+    name: "Forgiveness",
+    description: "Receiving and extending God’s forgiveness.",
+    references: ["Ephesians 4:32", "1 John 1:9", "Matthew 6:14-15"]
+  },
+  {
+    id: "healing",
+    name: "Healing",
+    description: "God’s care for our bodies and souls.",
+    references: ["James 5:14-15", "Psalm 103:2-3", "Isaiah 53:4-5"]
+  },
+  {
+    id: "wisdom",
+    name: "Wisdom",
+    description: "Seeing life from God’s perspective.",
+    references: ["James 1:5", "Proverbs 3:5-6", "Colossians 1:9-10"]
+  },
+  {
+    id: "peace",
+    name: "Peace",
+    description: "God’s peace in a restless world.",
+    references: ["Philippians 4:6-7", "John 14:27", "Isaiah 26:3"]
+  },
+  {
+    id: "joy",
+    name: "Joy",
+    description: "Deep gladness rooted in Christ.",
+    references: ["Nehemiah 8:10", "John 15:11", "1 Peter 1:8"]
+  },
+  {
+    id: "prayer",
+    name: "Prayer",
+    description: "Talking with the Father in Jesus’ name.",
+    references: ["Philippians 4:6", "Matthew 6:9-13", "1 Thessalonians 5:17"]
+  },
+  {
+    id: "strength",
+    name: "Strength",
+    description: "God’s power in our weakness.",
+    references: ["Isaiah 40:29-31", "2 Corinthians 12:9-10", "Philippians 4:13"]
+  },
+  {
+    id: "provision",
+    name: "God’s Provision",
+    description: "Trusting God to provide what we need.",
+    references: ["Matthew 6:31-34", "Philippians 4:19", "Psalm 23:1"]
+  },
+  {
+    id: "hope",
+    name: "Hope",
+    description: "Confident expectation rooted in God’s promises.",
+    references: ["Romans 15:13", "Hebrews 6:19", "1 Peter 1:3"]
+  },
+  {
+    id: "obedience",
+    name: "Obedience",
+    description: "Loving God by doing what He says.",
+    references: ["John 14:15", "James 1:22", "Deuteronomy 10:12-13"]
+  },
+  {
+    id: "repentance",
+    name: "Repentance",
+    description: "Turning from sin to God.",
+    references: ["Acts 3:19", "2 Corinthians 7:10", "1 John 1:9"]
+  },
+  {
+    id: "fear-and-courage",
+    name: "Fear & Courage",
+    description: "God’s presence drives out fear.",
+    references: ["Joshua 1:9", "2 Timothy 1:7", "Psalm 27:1"]
+  },
+  {
+    id: "humility",
+    name: "Humility",
+    description: "Walking low so Christ is lifted high.",
+    references: ["Philippians 2:3-5", "James 4:6", "1 Peter 5:5-6"]
+  },
+  {
+    id: "holiness",
+    name: "Holiness & Purity",
+    description: "Being set apart for God.",
+    references: ["1 Peter 1:15-16", "1 Thessalonians 4:3-4", "Hebrews 12:14"]
+  },
+  {
+    id: "spiritual-warfare",
+    name: "Spiritual Warfare",
+    description: "Standing firm in Christ’s victory.",
+    references: ["Ephesians 6:10-12", "2 Corinthians 10:3-5", "1 Peter 5:8-9"]
+  },
+  {
+    id: "faithfulness",
+    name: "Faithfulness",
+    description: "God’s faithfulness and ours.",
+    references: ["Lamentations 3:22-23", "Galatians 6:9", "Matthew 25:21"]
+  },
+  {
+    id: "trust",
+    name: "Trusting God",
+    description: "Leaning fully on the Lord.",
+    references: ["Proverbs 3:5-6", "Psalm 37:3-5", "Isaiah 12:2"]
+  },
+  {
+    id: "gods-will",
+    name: "God’s Will",
+    description: "Discerning and doing His will.",
+    references: ["Romans 12:1-2", "1 Thessalonians 4:3", "Proverbs 16:9"]
+  },
+  {
+    id: "grace",
+    name: "Grace",
+    description: "God’s undeserved kindness and power.",
+    references: ["Ephesians 2:8-9", "Titus 2:11-12", "2 Corinthians 12:9"]
+  },
+  {
+    id: "mercy",
+    name: "Mercy",
+    description: "God not giving us what we deserve.",
+    references: ["Psalm 103:8-12", "Micah 7:18-19", "Luke 6:36"]
+  },
+  {
+    id: "evangelism",
+    name: "Evangelism",
+    description: "Sharing the good news of Jesus.",
+    references: ["Matthew 28:18-20", "Romans 1:16", "Acts 1:8"]
+  },
+  {
+    id: "perseverance",
+    name: "Perseverance",
+    description: "Enduring in faith through trials.",
+    references: ["James 1:2-4", "Hebrews 12:1-3", "Romans 5:3-5"]
+  },
+  {
+    id: "thankfulness",
+    name: "Thankfulness",
+    description: "A grateful heart in all seasons.",
+    references: ["1 Thessalonians 5:18", "Colossians 3:15-17", "Psalm 100:4"]
+  },
+  {
+    id: "church",
+    name: "The Church",
+    description: "Christ’s body, called to unity and love.",
+    references: ["Ephesians 4:11-16", "Acts 2:42-47", "Hebrews 10:24-25"]
+  },
+  {
+    id: "word-of-god",
+    name: "Word of God",
+    description: "Scripture as God’s living voice.",
+    references: ["2 Timothy 3:16-17", "Hebrews 4:12", "Psalm 119:105"]
+  },
+  {
+    id: "end-times",
+    name: "End Times",
+    description: "Christ’s return and final victory.",
+    references: ["Matthew 24:30-31", "1 Thessalonians 4:16-17", "Revelation 21:1-4"]
+  },
+  {
+    id: "heaven",
+    name: "Heaven",
+    description: "The believer’s eternal home with God.",
+    references: ["Revelation 21:3-4", "John 14:2-3", "Philippians 3:20-21"]
+  },
+  {
+    id: "hell",
+    name: "Hell & Judgment",
+    description: "God’s righteous judgment on sin.",
+    references: ["Matthew 25:31-46", "Revelation 20:11-15", "Hebrews 9:27"]
+  },
+  {
+    id: "temptation",
+    name: "Temptation",
+    description: "Resisting sin by God’s help.",
+    references: ["1 Corinthians 10:13", "James 1:13-15", "Hebrews 4:15-16"]
+  },
+  {
+    id: "parenting",
+    name: "Parenting",
+    description: "Raising children in the Lord.",
+    references: ["Ephesians 6:4", "Proverbs 22:6", "Deuteronomy 6:6-7"]
+  },
+  {
+    id: "serving",
+    name: "Serving",
+    description: "Using our gifts to serve others.",
+    references: ["Mark 10:43-45", "1 Peter 4:10", "Galatians 5:13"]
+  },
+  {
+    id: "generosity",
+    name: "Generosity",
+    description: "Giving freely because God gave first.",
+    references: ["2 Corinthians 9:6-8", "Acts 20:35", "Proverbs 11:24-25"]
+  },
+  {
+    id: "work",
+    name: "Work",
+    description: "Honouring Christ in everyday work.",
+    references: ["Colossians 3:23-24", "1 Corinthians 10:31", "Proverbs 16:3"]
+  },
+  {
+    id: "marriage",
+    name: "Marriage",
+    description: "A picture of Christ and the Church.",
+    references: ["Ephesians 5:25-33", "Genesis 2:24", "1 Peter 3:7"]
+  },
+  {
+    id: "suffering",
+    name: "Trials & Suffering",
+    description: "God’s purposes in our pain.",
+    references: ["Romans 8:18", "1 Peter 4:12-13", "2 Corinthians 4:16-18"]
+  }
+];
+
+
+You can add/remove topics and references easily without changing the UI.
+
+2. Topical Bible Search tile component
+
+Create/update:
+
+client/src/components/TopicalBibleSearchCard.tsx
+
+// client/src/components/TopicalBibleSearchCard.tsx
+import { useEffect, useMemo, useState } from "react";
+import { Lightbulb, ChevronDown, BookOpen, Loader2 } from "lucide-react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue
+} from "@/components/ui/select";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
+import {
+  TOPICAL_BIBLE_TOPICS,
+  TopicDefinition,
+  BibleVersionCode
+} from "@/data/topicalBibleTopics";
+
+interface VerseResult {
+  reference: string;
+  text: string;
+  version: BibleVersionCode;
+}
+
+const BIBLE_VERSIONS: { code: BibleVersionCode; label: string }[] = [
+  { code: "KJV", label: "KJV – King James Version" },
+  { code: "BBE", label: "BBE – Bible in Basic English" },
+  { code: "WEB", label: "WEB – World English Bible" },
+  { code: "ASV", label: "ASV – American Standard Version" }
+  // add more as you wire licensing + backend
+];
+
+export function TopicalBibleSearchCard() {
+  const [selectedTopicId, setSelectedTopicId] = useState<string | null>(null);
+  const [selectedVersion, setSelectedVersion] =
+    useState<BibleVersionCode>("KJV");
+  const [verses, setVerses] = useState<VerseResult[]>([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const selectedTopic: TopicDefinition | null = useMemo(
+    () =>
+      TOPICAL_BIBLE_TOPICS.find((t) => t.id === selectedTopicId) ??
+      TOPICAL_BIBLE_TOPICS[0] ??
+      null,
+    [selectedTopicId]
+  );
+
+  // Ensure we always have a topic selected
+  useEffect(() => {
+    if (!selectedTopicId && TOPICAL_BIBLE_TOPICS.length > 0) {
+      setSelectedTopicId(TOPICAL_BIBLE_TOPICS[0].id);
+    }
+  }, [selectedTopicId]);
+
+  // Fetch all verses for the selected topic + version
+  const loadVerses = async (topic: TopicDefinition, version: BibleVersionCode) =>
+  {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const results: VerseResult[] = [];
+
+      // Simple sequential calls; you can optimize to batch on the backend
+      for (const reference of topic.references) {
+        const res = await fetch(
+          `/api/bible-verse?reference=${encodeURIComponent(
+            reference
+          )}&version=${encodeURIComponent(version)}`
+        );
+
+        if (!res.ok) {
+          throw new Error("Failed to fetch verse text");
+        }
+
+        const data = (await res.json()) as { reference: string; text: string };
+
+        results.push({
+          reference: data.reference ?? reference,
+          text: data.text ?? "",
+          version
+        });
+      }
+
+      setVerses(results);
+    } catch (err: any) {
+      console.error("Failed to load topical verses", err);
+      setError(
+        "Sorry, I'm having trouble loading the verses right now. Please try again."
+      );
+      setVerses([]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Reload when topic or version changes
+  useEffect(() => {
+    if (selectedTopic) {
+      void loadVerses(selectedTopic, selectedVersion);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedTopicId, selectedVersion]);
+
+  if (!selectedTopic) return null;
+
+  return (
+    <Card className="shadow-xl border-0 overflow-hidden bg-gradient-to-b from-amber-50 to-rose-50 dark:from-slate-900 dark:to-slate-950">
+      <CardHeader className="flex flex-row items-start gap-4 bg-gradient-to-r from-amber-400 to-rose-400 text-white">
+        <div className="mt-1">
+          <div className="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center">
+            <Lightbulb className="w-6 h-6" />
+          </div>
+        </div>
+        <div className="flex-1 space-y-1">
+          <CardTitle className="text-2xl font-semibold">
+            Topical Bible Search
+          </CardTitle>
+          <p className="text-sm text-amber-50/90">
+            Explore key Biblical topics and discover God&apos;s wisdom.
+          </p>
+        </div>
+      </CardHeader>
+
+      <CardContent className="p-5 space-y-5">
+        {/* Controls row */}
+        <div className="flex flex-col md:flex-row gap-3 md:items-center md:justify-between">
+          {/* Topic dropdown */}
+          <div className="flex-1">
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">
+              Topic
+            </div>
+            <Select
+              value={selectedTopicId ?? undefined}
+              onValueChange={(value) => setSelectedTopicId(value)}
+            >
+              <SelectTrigger className="w-full bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+                <SelectValue placeholder="Choose a topic" />
+              </SelectTrigger>
+              <SelectContent className="max-h-72">
+                {TOPICAL_BIBLE_TOPICS.map((topic) => (
+                  <SelectItem key={topic.id} value={topic.id}>
+                    {topic.name}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+
+          {/* Version dropdown */}
+          <div className="w-full md:w-64">
+            <div className="text-xs font-semibold text-slate-500 dark:text-slate-400 mb-1">
+              Bible Version
+            </div>
+            <Select
+              value={selectedVersion}
+              onValueChange={(value) =>
+                setSelectedVersion(value as BibleVersionCode)
+              }
+            >
+              <SelectTrigger className="w-full bg-white dark:bg-slate-900 border-slate-200 dark:border-slate-700">
+                <SelectValue placeholder="Choose version" />
+              </SelectTrigger>
+              <SelectContent>
+                {BIBLE_VERSIONS.map((v) => (
+                  <SelectItem key={v.code} value={v.code}>
+                    {v.label}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+        </div>
+
+        {/* Topic description */}
+        <div className="rounded-2xl bg-white/70 dark:bg-slate-900/70 border border-amber-100 dark:border-slate-700 px-4 py-3 flex items-center gap-3">
+          <div className="w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/40 flex items-center justify-center">
+            <BookOpen className="w-4 h-4 text-amber-700 dark:text-amber-200" />
+          </div>
+          <div>
+            <div className="text-sm font-semibold text-slate-800 dark:text-slate-100">
+              {selectedTopic.name}
+            </div>
+            <div className="text-xs text-slate-600 dark:text-slate-400">
+              {selectedTopic.description}
+            </div>
+          </div>
+        </div>
+
+        {/* Error */}
+        {error && (
+          <div className="rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 px-4 py-3 text-sm text-red-800 dark:text-red-200">
+            {error}
+          </div>
+        )}
+
+        {/* Verses list */}
+        <ScrollArea className="max-h-80 rounded-2xl border border-slate-100 dark:border-slate-800 bg-white/80 dark:bg-slate-950/70">
+          <div className="p-4 space-y-4">
+            {loading && (
+              <div className="flex items-center justify-center py-6 text-sm text-slate-500 gap-2">
+                <Loader2 className="w-4 h-4 animate-spin" />
+                Loading verses…
+              </div>
+            )}
+
+            {!loading && verses.length === 0 && (
+              <div className="py-4 text-center text-sm text-slate-500">
+                No verses loaded yet.
+              </div>
+            )}
+
+            {!loading &&
+              verses.map((v) => (
+                <div
+                  key={`${v.reference}-${v.version}`}
+                  className="rounded-xl bg-slate-50 dark:bg-slate-900/80 px-4 py-3 space-y-1"
+                >
+                  <div className="text-xs font-semibold text-amber-700 dark:text-amber-300 flex items-center gap-1">
+                    <ChevronDown className="w-3 h-3 opacity-70" />
+                    {v.reference} • {v.version}
+                  </div>
+                  <div className="text-sm text-slate-800 dark:text-slate-100 leading-relaxed whitespace-pre-wrap">
+                    {v.text || "(Verse text not available yet.)"}
+                  </div>
+                </div>
+              ))}
+          </div>
+        </ScrollArea>
+
+        {/* Reload button */}
+        <div className="flex justify-end">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => selectedTopic && loadVerses(selectedTopic, selectedVersion)}
+            disabled={loading}
+          >
+            {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+            Refresh verses
+          </Button>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+
+Then, on your Home page (or wherever that tile lives), just render:
+
+import { TopicalBibleSearchCard } from "@/components/TopicalBibleSearchCard";
+
+export default function HomePage() {
+  return (
+    <div className="p-4 space-y-6">
+      {/* other tiles ... */}
+      <TopicalBibleSearchCard />
+      {/* ... */}
+    </div>
+  );
+}
+
+3. Backend contract for Replit to wire (very small)
+
+Tell Replit that the only thing the frontend assumes is this endpoint:
+
+// Expected response shape for each verse
+GET /api/bible-verse?reference=John%203:16&version=KJV
+
+// should return JSON like:
+{
+  "reference": "John 3:16",
+  "text": "For God so loved the world, ...", // from the chosen version
+  "version": "KJV"
+}
+
+
+They can implement that with:
+
+API.Bible (using the KJV id de4e12af7f28f599-02 and similar ids for WEB/BBE/ASV) 
+API.bible Documentation
++1
+
+Or a different API they’re already using in Scripture Finder.
+
+Because KJV is public domain, you can safely make it your primary, and then add more translations as you get licenses/API access.
