@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Download, Image as ImageIcon, Home } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { FeatureBoundary } from "@/components/FeatureBoundary";
 
 interface ScriptureImagePageProps {
   initialReference?: string;
@@ -19,7 +20,8 @@ interface ScriptureImagePageProps {
 const CANVAS_WIDTH = 1290;
 const CANVAS_HEIGHT = 2796;
 
-export default function ScriptureImagePage({
+// Content component without background
+function ScriptureImageContent({
   initialReference = "",
   initialText = "",
   initialVersion,
@@ -111,7 +113,7 @@ export default function ScriptureImagePage({
   const skyBgs = getBackgroundsByCategory('sky');
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 pb-20">
+    <>
       {/* Header */}
       <div className="px-4 pt-6 pb-4 border-b border-slate-800 flex items-center justify-between gap-3">
         <div>
@@ -391,6 +393,24 @@ export default function ScriptureImagePage({
           </CardContent>
         </Card>
       </div>
+    </>
+  );
+}
+
+// Wrapper component that owns the background
+function ScriptureImagePageLayout(props: ScriptureImagePageProps) {
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 text-slate-50 pb-20">
+      <ScriptureImageContent {...props} />
     </div>
   );
 }
+
+// Wrap the entire layout with FeatureBoundary
+const ScriptureImagePageWithBoundary = FeatureBoundary.with(
+  ScriptureImagePageLayout,
+  "Scripture Image Generator",
+  (props) => props.onNavigate ? () => props.onNavigate?.('search') : undefined
+);
+
+export default ScriptureImagePageWithBoundary;

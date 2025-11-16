@@ -1,61 +1,75 @@
-import { useState } from "react";
+import { useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft, Target, Loader2, BookOpen, Sparkles } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useVersePassageMutation, useInstantApplicationMutation } from "@/hooks/useVerseInsights";
-import { runSafely } from "@/utils/featureGuard";
-import { ScriptureReferencePicker, ScriptureReferenceSelection, buildReferenceString } from "@/components/ScriptureReferencePicker";
+import { ScriptureReferencePicker, buildReferenceString } from "@/components/ScriptureReferencePicker";
+import { FeatureBoundary } from "@/components/FeatureBoundary";
+import { InstantApplicationProvider, useInstantApplication } from "@/context/InstantApplicationProvider";
 
 interface InstantApplicationPageProps {
   onNavigate: (page: string) => void;
 }
 
-export default function InstantApplicationPage({ onNavigate }: InstantApplicationPageProps) {
-  const [selection, setSelection] = useState<ScriptureReferenceSelection | null>(null);
-  const [verseText, setVerseText] = useState("");
-  const [application, setApplication] = useState("");
+// Content component without background (to be wrapped by provider)
+function InstantApplicationContent({ onNavigate }: InstantApplicationPageProps) {
   const { toast } = useToast();
+  const {
+    selection,
+    verseText,
+    application,
+    loadingVerse,
+    generatingApplication,
+    verseError,
+    applicationError,
+    setSelection,
+    loadVerse,
+    generateApplication,
+    clearErrors,
+  } = useInstantApplication();
 
-  const versePassageMutation = useVersePassageMutation();
-  const instantApplicationMutation = useInstantApplicationMutation();
+  // Show toast on errors
+  useEffect(() => {
+    if (verseError) {
+      toast({
+        title: "Error Loading Verse",
+        description: verseError,
+        variant: "destructive",
+      });
+      clearErrors();
+    }
+  }, [verseError, toast, clearErrors]);
 
-  const handleFetchVerse = async () => {
+  useEffect(() => {
+    if (applicationError) {
+      toast({
+        title: "Error Generating Application",
+        description: applicationError,
+        variant: "destructive",
+      });
+      clearErrors();
+    }
+  }, [applicationError, toast, clearErrors]);
+
+  const handleLoadVerse = async () => {
     if (!selection) {
       toast({
         title: "Reference Required",
         description: "Please select a Bible verse reference.",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
 
     const reference = buildReferenceString(selection);
-    setVerseText("");
-    setApplication("");
+    const success = await loadVerse(reference);
 
-    const result = await runSafely(
-      {
-        featureName: "Load Verse for Application",
-        userMessage: "Sorry, I couldn't load that verse. Please check the reference and try again."
-      },
-      async () => await versePassageMutation.mutateAsync(reference)
-    );
-
-    if (!result) {
+    if (success) {
       toast({
-        title: "Error",
-        description: "Sorry, I couldn't load that verse. Please check the reference and try again.",
-        variant: "destructive"
+        title: "Verse Loaded",
+        description: "Ready to create your action step.",
       });
-      return;
     }
-
-    setVerseText(result.text.trim());
-    toast({
-      title: "Verse Loaded",
-      description: "Ready to create your action step.",
-    });
   };
 
   const handleGetApplication = async () => {
@@ -63,43 +77,24 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
       toast({
         title: "Verse Text Required",
         description: "Please fetch a verse first to get an application.",
-        variant: "destructive"
+        variant: "destructive",
       });
       return;
     }
 
     const reference = buildReferenceString(selection);
-    setApplication("");
+    const success = await generateApplication(verseText, reference);
 
-    const result = await runSafely(
-      {
-        featureName: "Instant Application",
-        userMessage: "Sorry, I couldn't create an application for that verse. Please try again."
-      },
-      async () => await instantApplicationMutation.mutateAsync({ verse: verseText, reference })
-    );
-
-    if (!result) {
+    if (success) {
       toast({
-        title: "Error",
-        description: "Sorry, I couldn't create an application for that verse. Please try again.",
-        variant: "destructive"
+        title: "Application Generated",
+        description: "Your action step is ready!",
       });
-      return;
     }
-
-    setApplication(result.application);
   };
 
   return (
-    <div className="min-h-screen pb-20 bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-950 dark:via-purple-950/20 dark:to-gray-950">
-      {/* Animated Background Orbs */}
-      <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        <div className="absolute top-20 -left-20 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse"></div>
-        <div className="absolute top-40 -right-20 w-72 h-72 bg-pink-300 dark:bg-pink-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
-        <div className="absolute -bottom-20 left-20 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '4s' }}></div>
-      </div>
-
+    <>
       {/* Header */}
       <div className="relative backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 px-4 py-6 border-b border-purple-200/20 dark:border-purple-800/20 ios-safe-top">
         <div className="max-w-sm mx-auto">
@@ -161,12 +156,12 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
             />
 
             <Button
-              onClick={handleFetchVerse}
-              disabled={versePassageMutation.isPending || !selection}
+              onClick={handleLoadVerse}
+              disabled={loadingVerse || !selection}
               className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
               data-testid="button-fetch-verse"
             >
-              {versePassageMutation.isPending ? (
+              {loadingVerse ? (
                 <>
                   <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                   Loading Verse...
@@ -212,11 +207,11 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
               
               <Button
                 onClick={handleGetApplication}
-                disabled={instantApplicationMutation.isPending}
+                disabled={generatingApplication}
                 className="w-full h-14 text-lg rounded-2xl bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 hover:from-purple-700 hover:via-pink-700 hover:to-purple-700 shadow-xl hover:shadow-2xl transition-all duration-300 disabled:opacity-50 font-semibold"
                 data-testid="button-get-application"
               >
-                {instantApplicationMutation.isPending ? (
+                {generatingApplication ? (
                   <>
                     <Loader2 className="w-5 h-5 mr-3 animate-spin" />
                     Creating Action...
@@ -296,6 +291,36 @@ export default function InstantApplicationPage({ onNavigate }: InstantApplicatio
           </div>
         )}
       </div>
+    </>
+  );
+}
+
+// Wrapper component that owns the background and wraps Provider + Content
+// This ensures the boundary controls the ENTIRE page surface including background
+function InstantApplicationPageLayout(props: InstantApplicationPageProps) {
+  return (
+    <div className="min-h-screen pb-20 bg-gradient-to-br from-purple-50 via-white to-pink-50 dark:from-gray-950 dark:via-purple-950/20 dark:to-gray-950">
+      {/* Animated Background Orbs */}
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-20 -left-20 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse"></div>
+        <div className="absolute top-40 -right-20 w-72 h-72 bg-pink-300 dark:bg-pink-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '2s' }}></div>
+        <div className="absolute -bottom-20 left-20 w-72 h-72 bg-purple-300 dark:bg-purple-600 rounded-full mix-blend-multiply dark:mix-blend-soft-light filter blur-3xl opacity-30 animate-pulse" style={{ animationDelay: '4s' }}></div>
+      </div>
+
+      {/* Provider + Content inside the background */}
+      <InstantApplicationProvider>
+        <InstantApplicationContent {...props} />
+      </InstantApplicationProvider>
     </div>
   );
 }
+
+// Wrap the entire layout with FeatureBoundary at the highest level
+// This ensures the boundary controls the full page surface (background + provider + content)
+const InstantApplicationPageWithBoundary = FeatureBoundary.with(
+  InstantApplicationPageLayout,
+  "Instant Application (AI Action Generator)",
+  (props) => () => props.onNavigate('daily')
+);
+
+export default InstantApplicationPageWithBoundary;
