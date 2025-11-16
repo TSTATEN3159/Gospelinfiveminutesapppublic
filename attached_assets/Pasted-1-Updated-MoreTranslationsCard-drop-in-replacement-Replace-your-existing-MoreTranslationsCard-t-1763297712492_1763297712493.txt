@@ -1,6 +1,11 @@
+1️⃣ Updated MoreTranslationsCard (drop-in replacement)
+
+Replace your existing MoreTranslationsCard.tsx with this version:
+
+// client/src/components/MoreTranslationsCard.tsx
 import { Browser } from "@capacitor/browser";
 import { BookOpenText } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "@/lib/utils"; // if you don't use this, see note below
 
 type ExternalTranslationCode = "NIV" | "NLT" | "NKJV" | "NASB1995" | "MSG";
 
@@ -28,8 +33,11 @@ function buildBibleGatewayUrl(reference: string, translation: ExternalTranslatio
 }
 
 interface MoreTranslationsCardProps {
+  /** e.g. "Genesis 1:1" */
   reference: string;
+  /** match background: "dark" for Daily Verse, "light" for Scripture Finder */
   tone?: "dark" | "light";
+  /** optional extra classes for fine-tuning layout */
   className?: string;
 }
 
@@ -52,11 +60,12 @@ export function MoreTranslationsCard({
     <section
       className={cn(
         "rounded-3xl border shadow-[0_18px_45px_rgba(15,23,42,0.25)] overflow-hidden",
-        "bg-slate-50 border-slate-200",
+        "bg-slate-50 border-slate-200", // base for light
         isDark && "bg-slate-950/95 border-slate-800/80",
         className
       )}
     >
+      {/* Header */}
       <header className="flex items-center gap-3 px-4 pt-3 pb-2">
         <div
           className={cn(
@@ -76,17 +85,15 @@ export function MoreTranslationsCard({
             More translations
           </span>
           <span
-            className={cn(
-              "text-xs",
-              isDark ? "text-slate-300" : "text-slate-600"
-            )}
+            className={cn("text-xs", isDark ? "text-slate-300" : "text-slate-600")}
           >
-            View <span className="font-semibold">{reference}</span> in other
-            Bible versions.
+            View <span className="font-semibold">{reference}</span> in other Bible
+            versions.
           </span>
         </div>
       </header>
 
+      {/* Buttons */}
       <div className="flex flex-wrap gap-2 px-4 pb-3">
         {EXTERNAL_TRANSLATIONS.map((t) => (
           <button
@@ -107,6 +114,7 @@ export function MoreTranslationsCard({
         ))}
       </div>
 
+      {/* Footer */}
       <footer
         className={cn(
           "border-t px-4 py-2 text-[10px]",
@@ -116,10 +124,77 @@ export function MoreTranslationsCard({
         )}
       >
         Text opens in a secure reader view powered by{" "}
-        <span className="font-semibold">BibleGateway</span> on top of
-        DailyGospel. Tap <span className="font-semibold">Done</span> to return
-        here.
+        <span className="font-semibold">BibleGateway</span> on top of DailyGospel.
+        Tap <span className="font-semibold">Done</span> to return here.
       </footer>
     </section>
   );
 }
+
+
+If you don’t have cn from shadcn:
+just delete cn import and replace className={cn(..., className)} with a single string you like, or let Replit simplify it.
+
+2️⃣ Scripture Finder integration (what to tell Replit / where to use it)
+
+Assume your Scripture Finder result looks roughly like:
+
+// client/src/screens/ScriptureFinderScreen.tsx  (or similar)
+export function ScriptureFinderScreen() {
+  const reference = "Genesis 1:1";
+  const text =
+    '"*Genesis 1:1* In the beginning God created the heaven and the earth."';
+
+  return (
+    <div className="px-4 py-4 pb-8">
+      <div className="max-w-xl mx-auto space-y-3">
+        {/* Your existing green verse card */}
+        <div className="rounded-3xl border border-emerald-200 bg-emerald-50 px-4 py-3">
+          <div className="flex items-center justify-between mb-1">
+            <span className="font-semibold text-slate-800">{reference}</span>
+            {/* audio / star icons, etc. */}
+          </div>
+          <p className="text-sm text-slate-700 leading-relaxed">{text}</p>
+        </div>
+
+        {/* NEW: More translations card, tucked nicely under verse card */}
+        <MoreTranslationsCard
+          reference={reference}
+          tone="light"
+          className="mt-1"
+        />
+      </div>
+    </div>
+  );
+}
+
+
+So your Replit instructions can literally be:
+
+Open client/src/components/MoreTranslationsCard.tsx and replace its contents with this updated version.
+
+Then open client/src/screens/ScriptureFinderScreen.tsx (the screen that shows the Genesis 1:1 card) and:
+
+Import MoreTranslationsCard from "@/components/MoreTranslationsCard".
+
+Right below the green Scripture card, render:
+
+<MoreTranslationsCard
+  reference={reference}
+  tone="light"
+  className="mt-1"
+/>
+
+
+Because we added className and tone="light":
+
+The Scripture Finder version will sit tight under the green verse card, exactly like your screenshot.
+
+The Daily Verse screen can keep using:
+
+<MoreTranslationsCard reference={reference} tone="dark" className="mx-4 mt-4" />
+
+
+…so both places share the same component but “feel” at home in their own layouts.
+
+If you paste your actual Scripture Finder component code next, I can drop this in exactly where it belongs with your real prop names.

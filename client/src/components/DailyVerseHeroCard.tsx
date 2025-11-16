@@ -138,7 +138,7 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
       </div>
 
       <div className="bg-black/95">
-        <MoreTranslationsCard reference={reference} tone="dark" />
+        <MoreTranslationsCard reference={reference} tone="dark" className="mx-4 mt-4 mb-4" />
       </div>
     </div>
   );

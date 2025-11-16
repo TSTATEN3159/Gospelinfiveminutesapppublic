@@ -584,7 +584,7 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
             )}
 
             {/* More Translations Section */}
-            <MoreTranslationsCard reference={searchResult.reference} tone="light" />
+            <MoreTranslationsCard reference={searchResult.reference} tone="light" className="mt-3" />
 
             <div className="flex justify-center gap-2 flex-wrap">
               <Button 
