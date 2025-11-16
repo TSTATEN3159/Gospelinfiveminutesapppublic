@@ -1,8 +1,7 @@
 import { useMemo } from "react";
 
-// Import high-definition stock photos for the right side
-import bibleStudyImage1 from '@assets/stock_images/open_bible_golden_su_6f7daf93.jpg';
-import bibleStudyImage2 from '@assets/stock_images/hands_holding_bible__6bb30783.jpg';
+// Import high-definition stock photo for the right side
+import bibleStudyImage from '@assets/stock_images/bible_study_desk_ope_97d3d592.jpg';
 
 type Verse = {
   ref: string;
@@ -90,31 +89,14 @@ export default function ScriptureTickerPanel() {
           </div>
         </div>
 
-        {/* RIGHT SIDE: Two HD photos that blend together */}
+        {/* RIGHT SIDE: Single clean focused HD photo */}
         <div className="relative h-48 md:h-full min-h-[200px] overflow-hidden rounded-r-3xl">
-          {/* Top photo - fills upper half */}
-          <div className="absolute top-0 left-0 right-0 h-1/2">
-            <img
-              src={bibleStudyImage1}
-              alt="Open Bible with golden sunlight"
-              className="w-full h-full object-cover"
-            />
-            {/* Gradient blend at bottom edge */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-slate-900" />
-          </div>
-          
-          {/* Bottom photo - fills lower half */}
-          <div className="absolute bottom-0 left-0 right-0 h-1/2">
-            <img
-              src={bibleStudyImage2}
-              alt="Hands holding Bible"
-              className="w-full h-full object-cover"
-            />
-            {/* Gradient blend at top edge */}
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-transparent via-transparent to-slate-900" />
-          </div>
-          
-          {/* Overall subtle overlay for cohesion */}
+          <img
+            src={bibleStudyImage}
+            alt="Bible study desk with open Bible"
+            className="w-full h-full object-cover"
+          />
+          {/* Subtle overlay for cohesion with dark theme */}
           <div className="pointer-events-none absolute inset-0 bg-gradient-to-l from-slate-900/0 via-slate-900/5 to-slate-900/30" />
         </div>
       </div>

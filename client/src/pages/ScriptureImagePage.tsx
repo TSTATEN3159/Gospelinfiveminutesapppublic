@@ -28,24 +28,30 @@ function ScriptureImageContent({
   onNavigate
 }: ScriptureImagePageProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
-  
-  // Check for pending verse share from localStorage
-  const pendingShare = localStorage.getItem('pendingVerseShare');
-  let shareData = null;
-  if (pendingShare) {
-    try {
-      shareData = JSON.parse(pendingShare);
-      localStorage.removeItem('pendingVerseShare'); // Clear after reading
-    } catch (e) {
-      console.error('Failed to parse pending verse share', e);
-    }
-  }
 
-  const [verseText, setVerseText] = useState(shareData?.text || initialText);
-  const [reference, setReference] = useState(shareData?.reference || initialReference);
+  const [verseText, setVerseText] = useState(initialText);
+  const [reference, setReference] = useState(initialReference);
   const [version, setVersion] = useState<BibleVersionCode>(
-    shareData?.version || (initialVersion ?? getInitialBibleVersion())
+    initialVersion ?? getInitialBibleVersion()
   );
+  
+  // Check for pending verse share from localStorage on mount
+  useEffect(() => {
+    const pendingShare = localStorage.getItem('pendingVerseShare');
+    if (pendingShare) {
+      try {
+        const shareData = JSON.parse(pendingShare);
+        localStorage.removeItem('pendingVerseShare'); // Clear after reading
+        
+        // Update state with shared verse data
+        if (shareData.text) setVerseText(shareData.text);
+        if (shareData.reference) setReference(shareData.reference);
+        if (shareData.version) setVersion(shareData.version);
+      } catch (e) {
+        console.error('Failed to parse pending verse share', e);
+      }
+    }
+  }, []); // Run once on mount
 
   const [backgroundId, setBackgroundId] = useState<string>(
     SCRIPTURE_BACKGROUNDS[0]?.id ?? ""

@@ -1,13 +1,13 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { TOPICAL_BIBLE_TOPICS, TopicDefinition } from "@/data/topicalBibleTopics";
-import { BibleVersionCode, getInitialBibleVersion } from "@/config/bibleVersions";
-import { BibleVersionSelector } from "@/components/BibleVersionSelector";
+import { TOPICAL_BIBLE_VERSES } from "@/data/topicalBibleVerses";
+import { BibleVersionCode } from "@/config/bibleVersions";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
 import { Book, Sparkles, Volume2, Loader2, AlertCircle, Image as ImageIcon, Heart, Cross, Compass, Shield, Sun, Leaf, Users, Star } from "lucide-react";
 import { toggleSpeech } from "@/utils/speechEngine";
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useMutation } from "@tanstack/react-query";
 import { apiUrl } from "@/lib/api-config";
 
 // Quick access topics with icons and colors
@@ -39,8 +39,10 @@ interface TopicalBibleSearchCardProps {
 
 export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVerse }: TopicalBibleSearchCardProps) {
   const [selectedTopic, setSelectedTopic] = useState<TopicDefinition | null>(null);
-  const [selectedVersion, setSelectedVersion] = useState<BibleVersionCode>(getInitialBibleVersion());
   const [applicationText, setApplicationText] = useState<string | null>(null);
+  
+  // Version is locked to KJV since only KJV verses are stored locally
+  const selectedVersion: BibleVersionCode = 'KJV';
 
   const handleTopicSelect = (topicId: string) => {
     const topic = TOPICAL_BIBLE_TOPICS.find(t => t.id === topicId) || null;
@@ -48,40 +50,21 @@ export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVe
     setApplicationText(null);
   };
 
-  // Fetch verses for selected topic and version
-  const { data: verses = [], isLoading: isLoadingVerses } = useQuery<BibleVerse[]>({
-    queryKey: ['/api/bible-verse/batch', selectedTopic?.id, selectedVersion],
-    enabled: !!selectedTopic,
-    queryFn: async () => {
-      if (!selectedTopic) return [];
-
-      // Fetch all verses for this topic in parallel
-      const versePromises = selectedTopic.references.map(async (reference) => {
-        const response = await fetch(
-          apiUrl(`/api/bible-verse?reference=${encodeURIComponent(reference)}&version=${selectedVersion}`)
-        );
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch ${reference}`);
-        }
-        
-        const data = await response.json();
-        
-        if (data.success) {
-          return {
-            reference: data.reference,
-            text: data.text,
-            version: data.version
-          };
-        }
-        
-        return null;
-      });
-
-      const results = await Promise.all(versePromises);
-      return results.filter((v): v is BibleVerse => v !== null);
-    }
-  });
+  // Get verses from local storage (KJV only)
+  const verses = useMemo<BibleVerse[]>(() => {
+    if (!selectedTopic) return [];
+    
+    // Get KJV verses from local storage
+    const localVerses = TOPICAL_BIBLE_VERSES[selectedTopic.id] || [];
+    
+    return localVerses.map(v => ({
+      reference: v.reference,
+      text: v.text,
+      version: 'KJV'
+    }));
+  }, [selectedTopic]);
+  
+  const isLoadingVerses = false; // No loading since data is local
 
   // AI Application Generator
   const applicationMutation = useMutation({
@@ -133,7 +116,7 @@ export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVe
     <div className="max-w-3xl mx-auto">
       <div className="text-center mb-6">
         <p className="text-gray-600 dark:text-gray-400">
-          Click Me to Explore {TOPICAL_BIBLE_TOPICS.length}+ Biblical topics with curated scriptures in multiple versions
+          Explore {TOPICAL_BIBLE_TOPICS.length}+ Biblical topics with curated scriptures (KJV)
         </p>
       </div>
 
@@ -222,17 +205,6 @@ export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVe
           </SelectContent>
         </Select>
       </div>
-
-      {/* Bible Version Selector (only show when topic is selected) */}
-      {selectedTopic && (
-        <div className="mb-6">
-          <BibleVersionSelector
-            label="Bible Version"
-            value={selectedVersion}
-            onChange={(v) => setSelectedVersion(v)}
-          />
-        </div>
-      )}
 
       {/* Loading State */}
       {selectedTopic && isLoadingVerses && (
