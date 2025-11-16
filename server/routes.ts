@@ -1404,17 +1404,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Topic Application - "How to Live This Today"
+  const topicalApplicationSchema = z.object({
+    topic: z.string().min(1).max(500),
+    references: z.array(z.string()).min(1).max(50),
+    translation: z.string().optional().default("KJV"),
+  });
+
   const topicApplicationHandler = async (req: express.Request, res: express.Response) => {
     try {
-      const { topic, references, translation = "KJV" } = req.body as {
-        topic: string;
-        references: string[];
-        translation?: string;
-      };
-
-      if (!topic || !Array.isArray(references) || references.length === 0) {
-        return res.status(400).json({ success: false, error: "Topic and at least one reference are required." });
-      }
+      const { topic, references, translation } = topicalApplicationSchema.parse(req.body);
 
       const prompt = `
 You are a conservative evangelical Bible teacher.
@@ -1447,8 +1445,16 @@ Return only the application paragraph.
       }
 
       res.json({ success: true, application: text });
-    } catch (err) {
-      console.error("Topic application error:", err);
+    } catch (error) {
+      console.error("Topic application error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request format. Please provide a valid topic and Bible references."
+        });
+      }
+
       res.status(500).json({
         success: false,
         error: "I wasn't able to generate an application just now. Please try again in a moment."
