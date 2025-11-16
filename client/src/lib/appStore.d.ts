@@ -18,6 +18,11 @@ export interface AppStore {
   getNotes(): Array<{ ref: string; text: string; timestamp: number }>;
   addNote(reference: string, text: string): void;
   removeNote(reference: string): void;
+  
+  // Profile - stores user profile data
+  loadProfile(): { name: string; email: string; birthdate: string };
+  saveProfile(profile: { name: string; email: string; birthdate: string }): void;
+  deleteProfile(): void;
 }
 
 declare const appStore: AppStore;
