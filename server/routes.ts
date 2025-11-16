@@ -1205,6 +1205,59 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Topic Application - "How to Live This Today"
+  app.post("/api/topic-application", async (req, res) => {
+    try {
+      const { topic, references, translation = "KJV" } = req.body as {
+        topic: string;
+        references: string[];
+        translation?: string;
+      };
+
+      if (!topic || !Array.isArray(references) || references.length === 0) {
+        return res.status(400).json({ success: false, error: "Topic and at least one reference are required." });
+      }
+
+      const prompt = `
+You are a conservative evangelical Bible teacher.
+Topic: ${topic}
+Key passages: ${references.join(", ")}
+Translation in app: ${translation}
+
+Write a short, warm, practical application for ordinary believers:
+- 3–4 sentences max
+- Use simple language
+- No weird theology
+- Always centered on Christ and obedience
+- Do NOT quote the verses; assume they are already visible.
+Return only the application paragraph.
+`;
+
+      const completion = await openai.chat.completions.create({
+        model: "gpt-4o-mini",
+        messages: [
+          { role: "system", content: "You explain how to obey Scripture in daily life in short, clear paragraphs." },
+          { role: "user", content: prompt }
+        ],
+        temperature: 0.6,
+        max_tokens: 220
+      });
+
+      const text = completion.choices[0]?.message?.content?.trim() ?? "";
+      if (!text) {
+        return res.status(500).json({ success: false, error: "No response from AI." });
+      }
+
+      res.json({ success: true, application: text });
+    } catch (err) {
+      console.error("Topic application error:", err);
+      res.status(500).json({
+        success: false,
+        error: "I wasn't able to generate an application just now. Please try again in a moment."
+      });
+    }
+  });
+
   // Bible Trivia Route - Using curated questions with Bible API verses
   const bibleTriviaSchema = z.object({
     level: z.enum(['beginner', 'student', 'scholar', 'expert']).default('beginner'),

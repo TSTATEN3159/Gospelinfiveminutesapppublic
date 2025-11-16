@@ -1,0 +1,315 @@
+1️⃣ Voice Playback for Topic Verses
+
+This assumes you already have speechEngine.ts like we discussed (speak / toggleSpeech).
+
+A. Update TopicSearchPage.tsx
+
+Add imports at the top:
+
+import { toggleSpeech } from "@/utils/speechEngine";
+import { Volume2 } from "lucide-react";
+
+
+Then, in the verse render block, wrap each verse with a “listen” button:
+
+{selectedTopic.verses.map((v, idx) => (
+  <div
+    key={idx}
+    className="p-3 rounded-lg bg-amber-50 dark:bg-gray-800 border-l-4 border-amber-500 hover:bg-amber-100 dark:hover:bg-gray-700 transition cursor-pointer"
+  >
+    <div className="flex items-center justify-between mb-1">
+      <p className="font-semibold text-sm">{v.ref}</p>
+      <button
+        onClick={(e) => {
+          e.stopPropagation();
+          toggleSpeech(v.text);
+        }}
+        className="inline-flex items-center gap-1 px-2 py-1 text-xs rounded-full bg-white/70 dark:bg-gray-900/70 hover:bg-white shadow"
+      >
+        <Volume2 className="w-3 h-3" />
+        Listen
+      </button>
+    </div>
+    <p className="text-sm opacity-80 leading-relaxed">{v.text}</p>
+  </div>
+))}
+
+
+✅ Now every verse card has a Listen button that uses your global voice preferences.
+
+2️⃣ AI “How to live this today” Application
+
+We’ll add a backend route and a tiny frontend hook.
+
+A. Backend: new route
+
+File: server/routes.ts (or wherever your Express app is defined)
+
+Add near your other AI routes:
+
+import OpenAI from "openai";
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// Schema not strictly necessary, but you can wrap with zod if you like
+app.post("/api/topic-application", async (req, res) => {
+  try {
+    const { topic, references, translation = "KJV" } = req.body as {
+      topic: string;
+      references: string[];
+      translation?: string;
+    };
+
+    if (!topic || !Array.isArray(references) || references.length === 0) {
+      return res.status(400).json({ success: false, error: "Topic and at least one reference are required." });
+    }
+
+    const prompt = `
+You are a conservative evangelical Bible teacher.
+Topic: ${topic}
+Key passages: ${references.join(", ")}
+Translation in app: ${translation}
+
+Write a short, warm, practical application for ordinary believers:
+- 3–4 sentences max
+- Use simple language
+- No weird theology
+- Always centered on Christ and obedience
+- Do NOT quote the verses; assume they are already visible.
+Return only the application paragraph.
+`;
+
+    const completion = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: [
+        { role: "system", content: "You explain how to obey Scripture in daily life in short, clear paragraphs." },
+        { role: "user", content: prompt }
+      ],
+      temperature: 0.6,
+      max_tokens: 220
+    });
+
+    const text = completion.choices[0]?.message?.content?.trim() ?? "";
+    if (!text) {
+      return res.status(500).json({ success: false, error: "No response from AI." });
+    }
+
+    res.json({ success: true, application: text });
+  } catch (err) {
+    console.error("Topic application error:", err);
+    res.status(500).json({
+      success: false,
+      error: "I wasn't able to generate an application just now. Please try again in a moment."
+    });
+  }
+});
+
+B. Frontend: hook to call this route
+
+File: client/src/hooks/useTopicApplication.ts
+
+import { useMutation } from "@tanstack/react-query";
+
+interface TopicApplicationInput {
+  topic: string;
+  references: string[];
+  translation?: string;
+}
+
+interface TopicApplicationResponse {
+  success: boolean;
+  application?: string;
+  error?: string;
+}
+
+export function useTopicApplication() {
+  return useMutation<TopicApplicationResponse, Error, TopicApplicationInput>({
+    mutationFn: async (payload) => {
+      const res = await fetch("/api/topic-application", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Failed to generate application");
+      return res.json();
+    },
+  });
+}
+
+C. Use it in TopicSearchPage.tsx
+
+Add imports:
+
+import { useTopicApplication } from "@/hooks/useTopicApplication";
+import { Loader2, Sparkles } from "lucide-react";
+
+
+Inside component:
+
+const topicApplication = useTopicApplication();
+const [applicationText, setApplicationText] = useState<string | null>(null);
+
+const handleGenerateApplication = () => {
+  if (!selectedTopic) return;
+  const refs = selectedTopic.verses.map(v => v.ref);
+  setApplicationText(null);
+  topicApplication.mutate(
+    { topic: selectedTopic.topic, references: refs, translation: "KJV" },
+    {
+      onSuccess: (data) => {
+        if (data.success && data.application) {
+          setApplicationText(data.application);
+        }
+      }
+    }
+  );
+};
+
+
+Now, below the verses card content, add an “Apply this” card:
+
+<Card className="max-w-2xl mx-auto mt-4 border-dashed border-amber-400 bg-amber-50/60 dark:bg-gray-900/60">
+  <CardHeader>
+    <div className="flex items-center justify-between">
+      <CardTitle className="text-base font-semibold flex items-center gap-2">
+        <Sparkles className="w-4 h-4 text-amber-500" />
+        How to Live This Today
+      </CardTitle>
+      <Button
+        size="sm"
+        onClick={handleGenerateApplication}
+        disabled={topicApplication.isLoading}
+      >
+        {topicApplication.isLoading ? (
+          <>
+            <Loader2 className="w-4 h-4 mr-1 animate-spin" /> Thinking…
+          </>
+        ) : (
+          "Generate"
+        )}
+      </Button>
+    </div>
+  </CardHeader>
+  <CardContent>
+    {applicationText ? (
+      <p className="text-sm leading-relaxed">
+        {applicationText}
+      </p>
+    ) : (
+      <p className="text-xs text-amber-700/80">
+        Tap “Generate” for a short, practical way to obey these Scriptures today.
+      </p>
+    )}
+  </CardContent>
+</Card>
+
+
+✅ Now your topical tile not only shows verses but also gives a short, Christ-centered application for the topic on demand.
+
+3️⃣ Topic Tagging Helper (for smart auto-topic discovery)
+
+This doesn’t change the topical dropdown directly. It helps your other screens (like verse search, daily verse, reading plans) show “Related Topics” based on the verse text.
+
+A. Topic keyword map
+
+File: client/src/data/topicKeywords.ts
+
+export const TOPIC_KEYWORDS: Record<string, string[]> = {
+  "Kingdom of God": ["kingdom", "rule", "reign", "throne", "dominion"],
+  "Salvation": ["saved", "salvation", "redeem", "rescued", "deliverance"],
+  "Faith": ["faith", "believe", "trust", "assurance"],
+  "Love": ["love", "charity", "loveth", "beloved"],
+  "Hope": ["hope", "expectation", "future"],
+  "Forgiveness": ["forgive", "forgiveness", "pardon", "mercy"],
+  "Prayer": ["pray", "prayer", "supplication", "ask", "seek", "knock"],
+  "Holy Spirit": ["Spirit", "Holy Ghost", "Comforter", "paraclete"],
+  "Wisdom": ["wisdom", "understanding", "discernment"],
+  "Grace": ["grace", "favor", "unmerited"],
+  "Obedience": ["obey", "keep my commandments", "doers", "walk"],
+  "Peace": ["peace", "rest", "quietness"],
+  "Joy": ["joy", "rejoice", "gladness"],
+  "Courage": ["fear not", "be strong", "courage"],
+  "Provision": ["provide", "daily bread", "supply", "needs"],
+  "Spiritual Warfare": ["armor", "warfare", "battle", "wiles", "devil"],
+  "Holiness": ["holy", "sanctified", "set apart"],
+  "Repentance": ["repent", "turn", "confess", "return to me"],
+  "Suffering": ["suffer", "tribulation", "persecution", "affliction"],
+  "Healing": ["heal", "healed", "health", "restore"],
+  // …add as many as you like; more keywords = richer discovery
+};
+
+B. Helper function: infer topics from a passage text
+
+File: client/src/utils/topicInference.ts
+
+import { TOPIC_KEYWORDS } from "@/data/topicKeywords";
+
+export function inferTopicsFromText(text: string, maxTopics: number = 5): string[] {
+  if (!text) return [];
+  const lower = text.toLowerCase();
+  const matches: { topic: string; score: number }[] = [];
+
+  Object.entries(TOPIC_KEYWORDS).forEach(([topic, keywords]) => {
+    let score = 0;
+    keywords.forEach((kw) => {
+      const k = kw.toLowerCase();
+      if (lower.includes(k)) score++;
+    });
+    if (score > 0) {
+      matches.push({ topic, score });
+    }
+  });
+
+  return matches
+    .sort((a, b) => b.score - a.score)
+    .slice(0, maxTopics)
+    .map((m) => m.topic);
+}
+
+C. Use in your Bible Search or Verse of the Day screen
+
+Where you display a verse text (foundScriptureText):
+
+import { inferTopicsFromText } from "@/utils/topicInference";
+
+const relatedTopics = inferTopicsFromText(foundScriptureText);
+
+{relatedTopics.length > 0 && (
+  <div className="mt-3 flex flex-wrap gap-2">
+    {relatedTopics.map((t) => (
+      <span
+        key={t}
+        className="px-2 py-1 rounded-full text-xs bg-amber-100 text-amber-800 dark:bg-amber-900/40 dark:text-amber-200 cursor-pointer"
+        onClick={() => onNavigate("topic-search", { preselectTopic: t })}
+      >
+        {t}
+      </span>
+    ))}
+  </div>
+)}
+
+
+Later you can wire preselectTopic into TopicSearchPage so tapping a chip jumps straight to that topic.
+
+✅ Now any verse in the app can show “Related Topics” chips, and those take the user to your Topical Bible Search — using the same topic definitions as your dropdown.
+
+✨ Summary: What you now have
+
+For the Topical Bible Search tile:
+
+✅ Beautiful dropdown for 40+ topics
+
+✅ Static scripture lists (expandable per topic)
+
+✅ Listen button on each verse (uses your warm voice)
+
+✅ Button to generate a daily-life application via OpenAI
+
+✅ Under-the-hood topic inference tools you can reuse anywhere in the app
+
+And all of it is:
+
+App Store / Play Store safe
+
+Easy to expand (add topics, verses, translations)
+
+Centered on clear, biblical application

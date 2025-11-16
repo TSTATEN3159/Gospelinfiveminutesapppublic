@@ -2,7 +2,10 @@ import { useState } from "react";
 import { BIBLE_TOPICS, TopicData } from "@/data/topics";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
-import { Book, Sparkles } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Book, Sparkles, Volume2, Loader2 } from "lucide-react";
+import { toggleSpeech } from "@/utils/speechEngine";
+import { useTopicApplication } from "@/hooks/useTopicApplication";
 
 interface TopicSearchPageProps {
   onNavigate?: (page: string, searchQuery?: string) => void;
@@ -10,10 +13,29 @@ interface TopicSearchPageProps {
 
 export default function TopicSearchPage({ onNavigate }: TopicSearchPageProps) {
   const [selectedTopic, setSelectedTopic] = useState<TopicData | null>(null);
+  const [applicationText, setApplicationText] = useState<string | null>(null);
+  const topicApplication = useTopicApplication();
 
   const onTopicSelect = (topicName: string) => {
     const topic = BIBLE_TOPICS.find(t => t.topic === topicName) || null;
     setSelectedTopic(topic);
+    setApplicationText(null);
+  };
+
+  const handleGenerateApplication = () => {
+    if (!selectedTopic) return;
+    const refs = selectedTopic.verses.map(v => v.ref);
+    setApplicationText(null);
+    topicApplication.mutate(
+      { topic: selectedTopic.topic, references: refs, translation: "KJV" },
+      {
+        onSuccess: (data) => {
+          if (data.success && data.application) {
+            setApplicationText(data.application);
+          }
+        }
+      }
+    );
   };
 
   const handleVerseClick = (reference: string) => {
@@ -86,15 +108,68 @@ export default function TopicSearchPage({ onNavigate }: TopicSearchPageProps) {
                   className="p-4 rounded-lg bg-amber-50 dark:bg-gray-800 border-l-4 border-amber-500 cursor-pointer hover:bg-amber-100 dark:hover:bg-gray-700 transition-all hover:shadow-md hover:scale-[1.01]"
                   data-testid={`verse-${idx}`}
                 >
-                  <p className="font-bold text-amber-700 dark:text-amber-400 mb-2 flex items-center gap-2">
-                    <Book className="w-4 h-4" />
-                    {v.ref}
-                  </p>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="font-bold text-amber-700 dark:text-amber-400 flex items-center gap-2">
+                      <Book className="w-4 h-4" />
+                      {v.ref}
+                    </p>
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSpeech(v.text);
+                      }}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded-full bg-white dark:bg-gray-900 hover:bg-amber-100 dark:hover:bg-gray-700 shadow-sm border border-amber-200 dark:border-gray-600 transition-all"
+                      data-testid={`button-listen-${idx}`}
+                      aria-label={`Listen to ${v.ref}`}
+                    >
+                      <Volume2 className="w-3 h-3" />
+                      Listen
+                    </button>
+                  </div>
                   <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed italic">
                     "{v.text}"
                   </p>
                 </div>
               ))}
+            </CardContent>
+          </Card>
+        )}
+
+        {selectedTopic && (
+          <Card className="max-w-2xl mx-auto mt-4 border-2 border-dashed border-amber-400 bg-gradient-to-br from-amber-50/80 to-orange-50/60 dark:from-gray-900/60 dark:to-gray-800/60 shadow-lg">
+            <CardHeader>
+              <div className="flex items-center justify-between">
+                <CardTitle className="text-lg font-semibold flex items-center gap-2">
+                  <Sparkles className="w-5 h-5 text-amber-500" />
+                  How to Live This Today
+                </CardTitle>
+                <Button
+                  size="sm"
+                  onClick={handleGenerateApplication}
+                  disabled={topicApplication.isPending}
+                  className="bg-amber-600 hover:bg-amber-700 text-white"
+                  data-testid="button-generate-application"
+                >
+                  {topicApplication.isPending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 mr-1 animate-spin" /> Thinking…
+                    </>
+                  ) : (
+                    "Generate"
+                  )}
+                </Button>
+              </div>
+            </CardHeader>
+            <CardContent>
+              {applicationText ? (
+                <p className="text-sm leading-relaxed text-gray-800 dark:text-gray-200">
+                  {applicationText}
+                </p>
+              ) : (
+                <p className="text-xs text-amber-700/80 dark:text-amber-300/80">
+                  Tap "Generate" for a short, practical way to obey these Scriptures today.
+                </p>
+              )}
             </CardContent>
           </Card>
         )}
