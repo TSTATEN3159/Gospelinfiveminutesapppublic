@@ -3,6 +3,7 @@ import { Calendar, BookOpen, ChevronRight, Lightbulb, CheckCircle, Flame, Facebo
 import { Button } from "@/components/ui/button";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
+import { LiquidGlassFeatureTile } from "@/components/LiquidGlassFeatureTile";
 import { useTranslations } from "@/lib/translations";
 import { safeShare } from "@/utils/capabilities";
 import { useToast } from "@/hooks/use-toast";
@@ -167,68 +168,102 @@ export default function DailyPage({ onNavigate, streakDays = 0, language = "en" 
 
       {/* Feature Tiles - Premium Liquid Glass */}
       <div className="max-w-sm mx-auto space-y-5 px-4 py-6">
-        {dailyFeatures.map((feature) => (
-          <div
-            key={feature.id}
-            className="relative cursor-pointer group"
-            onClick={() => handleFeatureClick(feature.id)}
-            data-testid={`tile-${feature.id}`}
-          >
-            {/* Liquid Glass Card */}
-            <Card 
-              className={`relative rounded-3xl overflow-hidden backdrop-blur-2xl bg-white/40 dark:bg-gray-900/40 border ${feature.border} dark:border-gray-700/50 shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_20px_60px_-15px] group-hover:-translate-y-1`}
-              style={{
-                boxShadow: `0 8px 32px 0 ${feature.glowColor}, inset 0 1px 0 0 rgba(255, 255, 255, 0.5)`
-              }}
+        {dailyFeatures.map((feature) => {
+          // Use new LiquidGlassFeatureTile for Plain Meaning and Instant Application
+          if (feature.id === 'plain-meaning') {
+            return (
+              <LiquidGlassFeatureTile
+                key={feature.id}
+                title={feature.title}
+                subtitle={feature.description}
+                accentColorClass="from-sky-400 to-indigo-500"
+                imageSrc={plainMeaningImage}
+                icon={<Lightbulb className="w-6 h-6 text-sky-500" />}
+                onClick={() => handleFeatureClick(feature.id)}
+                data-testid={`tile-${feature.id}`}
+              />
+            );
+          }
+          
+          if (feature.id === 'instant-application') {
+            return (
+              <LiquidGlassFeatureTile
+                key={feature.id}
+                title={feature.title}
+                subtitle={feature.description}
+                accentColorClass="from-fuchsia-400 to-violet-500"
+                imageSrc={instantApplicationImage}
+                icon={<CheckCircle className="w-6 h-6 text-fuchsia-500" />}
+                onClick={() => handleFeatureClick(feature.id)}
+                data-testid={`tile-${feature.id}`}
+              />
+            );
+          }
+          
+          // Use original rendering for other features
+          return (
+            <div
+              key={feature.id}
+              className="relative cursor-pointer group"
+              onClick={() => handleFeatureClick(feature.id)}
+              data-testid={`tile-${feature.id}`}
             >
-              {/* Glass shimmer overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent opacity-50 pointer-events-none"></div>
-              
-              {/* Image Header - Vivid & Sharp */}
-              <div className="relative h-40 overflow-hidden">
-                <img 
-                  src={feature.image}
-                  alt={feature.title}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-105 contrast-110 saturate-110"
-                  style={{ 
-                    imageRendering: 'crisp-edges',
-                    WebkitFontSmoothing: 'antialiased'
-                  }}
-                />
-                {/* Subtle bottom gradient for icon visibility */}
-                <div className={`absolute inset-0 bg-gradient-to-t ${feature.overlay}`} />
+              {/* Liquid Glass Card */}
+              <Card 
+                className={`relative rounded-3xl overflow-hidden backdrop-blur-2xl bg-white/40 dark:bg-gray-900/40 border ${feature.border} dark:border-gray-700/50 shadow-2xl transition-all duration-500 hover:scale-[1.03] hover:shadow-[0_20px_60px_-15px] group-hover:-translate-y-1`}
+                style={{
+                  boxShadow: `0 8px 32px 0 ${feature.glowColor}, inset 0 1px 0 0 rgba(255, 255, 255, 0.5)`
+                }}
+              >
+                {/* Glass shimmer overlay */}
+                <div className="absolute inset-0 bg-gradient-to-br from-white/60 via-transparent to-transparent opacity-50 pointer-events-none"></div>
                 
-                {/* Glass icon badge */}
-                <div className="absolute bottom-3 right-3">
-                  <div className={`w-14 h-14 ${feature.iconBg} rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden ring-2 ring-white/50`}>
-                    <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
-                    <feature.icon className={`w-7 h-7 ${feature.iconColor} relative z-10 drop-shadow-lg`} />
-                    <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"></div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Content with Glass Background */}
-              <CardContent className="relative p-5 backdrop-blur-xl bg-white/50 dark:bg-gray-900/50">
-                <div className="flex items-center justify-between">
-                  <div className="flex-1 pr-3">
-                    <h3 className={`font-bold text-lg bg-gradient-to-r ${feature.gradientFrom} ${feature.gradientTo} bg-clip-text text-transparent mb-1.5 drop-shadow-sm`}>
-                      {feature.title}
-                    </h3>
-                    <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
-                      {feature.description}
-                    </p>
-                  </div>
-                  <div className="flex-shrink-0">
-                    <div className="w-10 h-10 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl flex items-center justify-center shadow-lg group-hover:bg-white/80 dark:group-hover:bg-gray-800/80 transition-all duration-300">
-                      <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:translate-x-0.5 transition-transform duration-300" />
+                {/* Image Header - Vivid & Sharp */}
+                <div className="relative h-40 overflow-hidden">
+                  <img 
+                    src={feature.image}
+                    alt={feature.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 brightness-105 contrast-110 saturate-110"
+                    style={{ 
+                      imageRendering: 'crisp-edges',
+                      WebkitFontSmoothing: 'antialiased'
+                    }}
+                  />
+                  {/* Subtle bottom gradient for icon visibility */}
+                  <div className={`absolute inset-0 bg-gradient-to-t ${feature.overlay}`} />
+                  
+                  {/* Glass icon badge */}
+                  <div className="absolute bottom-3 right-3">
+                    <div className={`w-14 h-14 ${feature.iconBg} rounded-2xl flex items-center justify-center shadow-2xl relative overflow-hidden ring-2 ring-white/50`}>
+                      <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
+                      <feature.icon className={`w-7 h-7 ${feature.iconColor} relative z-10 drop-shadow-lg`} />
+                      <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"></div>
                     </div>
                   </div>
                 </div>
-              </CardContent>
-            </Card>
-          </div>
-        ))}
+
+                {/* Content with Glass Background */}
+                <CardContent className="relative p-5 backdrop-blur-xl bg-white/50 dark:bg-gray-900/50">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1 pr-3">
+                      <h3 className={`font-bold text-lg bg-gradient-to-r ${feature.gradientFrom} ${feature.gradientTo} bg-clip-text text-transparent mb-1.5 drop-shadow-sm`}>
+                        {feature.title}
+                      </h3>
+                      <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed font-medium">
+                        {feature.description}
+                      </p>
+                    </div>
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 rounded-xl bg-white/60 dark:bg-gray-800/60 backdrop-blur-xl flex items-center justify-center shadow-lg group-hover:bg-white/80 dark:group-hover:bg-gray-800/80 transition-all duration-300">
+                        <ChevronRight className="w-5 h-5 text-gray-700 dark:text-gray-300 group-hover:translate-x-0.5 transition-transform duration-300" />
+                      </div>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
+            </div>
+          );
+        })}
       </div>
 
       {/* Footer Info */}

@@ -1,0 +1,213 @@
+You can absolutely make these look like your other “liquid glass” tiles and swap in sharper, more on-theme images. I’ll give you:
+
+A reusable LiquidGlassFeatureTile component
+
+How to use it specifically for Plain Meaning & Instant Application
+
+Suggestions for what the new vivid images should depict
+
+All of this is drop-in React + Tailwind that Replit can wire up.
+
+1️⃣ Reusable “liquid glass” tile component
+
+File (new): client/src/components/LiquidGlassFeatureTile.tsx
+
+// client/src/components/LiquidGlassFeatureTile.tsx
+import { ReactNode } from "react";
+
+interface LiquidGlassFeatureTileProps {
+  title: string;
+  subtitle: string;
+  accentColorClass?: string;  // e.g. "from-sky-400 to-indigo-500"
+  icon?: ReactNode;
+  imageSrc: string;
+  onClick?: () => void;
+  "data-testid"?: string;
+}
+
+export function LiquidGlassFeatureTile({
+  title,
+  subtitle,
+  accentColorClass = "from-sky-400 to-indigo-500",
+  icon,
+  imageSrc,
+  onClick,
+  "data-testid": testId
+}: LiquidGlassFeatureTileProps) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      data-testid={testId}
+      className="
+        w-full text-left rounded-3xl overflow-hidden relative
+        group transition-all duration-300
+        bg-gradient-to-br from-white/30 to-white/5
+        dark:from-white/10 dark:to-white/5
+        border border-white/50 dark:border-white/20
+        shadow-[0_24px_60px_rgba(15,23,42,0.4)]
+        backdrop-blur-2xl
+        hover:-translate-y-1 hover:shadow-[0_30px_80px_rgba(15,23,42,0.6)]
+      "
+    >
+      {/* Background image */}
+      <div className="absolute inset-0">
+        <img
+          src={imageSrc}
+          alt={title}
+          className="
+            w-full h-full object-cover
+            opacity-80 group-hover:opacity-100
+            transition-opacity duration-300
+          "
+        />
+        {/* tinted gradient overlay so text stays readable */}
+        <div
+          className={`
+            absolute inset-0
+            bg-gradient-to-br ${accentColorClass}
+            opacity-65 group-hover:opacity-55
+            mix-blend-multiply
+            transition-opacity duration-300
+          `}
+        />
+      </div>
+
+      {/* Content */}
+      <div className="relative p-5 sm:p-6 flex flex-col h-full gap-3">
+        <div className="flex items-start justify-between gap-3">
+          <div className="flex-1 space-y-1">
+            <h2 className="text-lg sm:text-xl font-bold text-slate-900 drop-shadow-sm">
+              {title}
+            </h2>
+            <p className="text-xs sm:text-sm text-slate-800/90 leading-snug">
+              {subtitle}
+            </p>
+          </div>
+
+          {/* Accent icon in its own glass bubble */}
+          <div
+            className="
+              flex items-center justify-center
+              w-11 h-11 sm:w-12 sm:h-12
+              rounded-2xl
+              bg-white/70 dark:bg-slate-950/60
+              border border-white/80 dark:border-slate-700
+              shadow-lg
+            "
+          >
+            {icon}
+          </div>
+        </div>
+
+        {/* Chevron / “open” affordance */}
+        <div className="mt-auto flex justify-end">
+          <div
+            className="
+              flex items-center justify-center
+              w-9 h-9 rounded-2xl
+              bg-white/75 dark:bg-slate-950/70
+              border border-white/80 dark:border-slate-700
+              shadow
+              text-slate-700
+              group-hover:bg-slate-900 group-hover:text-white
+              transition-colors
+            "
+          >
+            <span className="text-base leading-none">›</span>
+          </div>
+        </div>
+      </div>
+    </button>
+  );
+}
+
+
+This gives you:
+
+Glassmorphism (blur, semi-transparent white, soft shadows)
+
+Vivid background image with a colored gradient overlay
+
+Nice icon bubble & chevron, like your other tiles
+
+2️⃣ Use it for Plain Meaning & Instant Application
+
+Let’s assume your home page is client/src/pages/HomePage.tsx and you currently have separate JSX blocks for these two tiles.
+
+Replace those existing tile blocks with this.
+
+A. Plain Meaning tile
+import { LiquidGlassFeatureTile } from "@/components/LiquidGlassFeatureTile";
+import { Lightbulb } from "lucide-react"; // already used in your UI
+
+// inside your HomePage component render:
+
+<LiquidGlassFeatureTile
+  title="Plain Meaning"
+  subtitle="Scripture in everyday language while preserving theological integrity."
+  accentColorClass="from-sky-400 to-indigo-500"
+  imageSrc="/images/features/plain-meaning-vivid.jpg"
+  icon={<Lightbulb className="w-6 h-6 text-sky-500" />}
+  onClick={() => onNavigate?.("plain-meaning")}
+  data-testid="tile-plain-meaning"
+/>
+
+B. Instant Application tile
+import { CheckCircle2 } from "lucide-react";
+
+<LiquidGlassFeatureTile
+  title="Instant Application"
+  subtitle="Get one simple action to live out any verse today."
+  accentColorClass="from-fuchsia-400 to-violet-500"
+  imageSrc="/images/features/instant-application-vivid.jpg"
+  icon={<CheckCircle2 className="w-6 h-6 text-fuchsia-500" />}
+  onClick={() => onNavigate?.("instant-application")}
+  data-testid="tile-instant-application"
+/>
+
+
+Replit just needs to make sure these imports are in whatever file renders your dashboard / “More” / home tiles and that onNavigate matches your routing.
+
+3️⃣ What the new vivid images should actually show
+
+You can create or source the following as high-resolution JPGs and place them under
+/public/images/features/… or wherever your images live.
+
+plain-meaning-vivid.jpg – suggestion
+
+A bright illustration that visually says “explaining Scripture in modern life”:
+
+Open Bible on a clean desk
+
+Notebook or tablet with simple, readable notes (“Today’s meaning”, bullet points)
+
+A warm mug / coffee + phone nearby
+
+Soft sunrise/sunset light, warm tones (gold, peach, light blue)
+
+This matches the idea: “Scripture, but in everyday language for real life.”
+
+instant-application-vivid.jpg – suggestion
+
+Something that screams “do this now / take action”:
+
+Open Bible → arrow/line leading to a checklist or journal page
+
+Hand holding a pen checking off one item (“Encourage someone today”, “Forgive”)
+
+Light coming in through a window, giving that morning devotion vibe
+
+Slightly more energetic color palette (purples/pinks/oranges) to match the accent gradient
+
+You already have similar concepts in your current images—just ask a designer/illustrator or use a high-quality illustration pack to make them sharper and richer in color.
+
+4️⃣ How to explain this to Replit
+
+You can tell them:
+
+Add LiquidGlassFeatureTile.tsx as a reusable glassmorphism card component (code pasted below).
+
+Replace the existing Plain Meaning and Instant Application tiles on the Home/More screen with LiquidGlassFeatureTile, using the new images /images/features/plain-meaning-vivid.jpg and /images/features/instant-application-vivid.jpg.
+
+Ensure the tiles use the same backdrop blur and gradients as my other “liquid glass” tiles (the component already does this with Tailwind classes).
