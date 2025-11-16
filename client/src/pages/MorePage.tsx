@@ -14,6 +14,7 @@ import blogWritingImage from '@assets/stock_images/person_writing_journ_4816488f
 import friendsFellowship from '@assets/stock_images/group_of_people_pray_1d87fafd.jpg';
 import dailyDevotionsImage from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
 import { DisciplesOfChristTile } from "@/components/DisciplesOfChristTile";
+import { getCurrentDisciplesVerse } from "@/data/disciplesOfChristVerses";
 
 interface MorePageProps {
   language: string;
@@ -71,13 +72,6 @@ const getSettingsMenuItems = (t: any) => [
     description: t.privacyStatementDesc,
     icon: Shield,
     comingSoon: false
-  },
-  {
-    id: "terms",
-    title: t.endUserAgreement,
-    description: t.endUserAgreementDesc,
-    icon: FileText,
-    comingSoon: false
   }
 ];
 
@@ -88,6 +82,9 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
   
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
+  
+  // Get current Disciples of Christ verse (rotates every 2 days)
+  const currentDisciplesVerse = getCurrentDisciplesVerse();
   
   const mainMenuItems = getMainMenuItems(t, isIOS);
   const settingsMenuItems = getSettingsMenuItems(t);
@@ -189,22 +186,20 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
         </div>
       </div>
 
-      <div className="max-w-sm mx-auto space-y-3 px-4">
+      <div className="max-w-sm mx-auto space-y-3 px-4 pt-4">
+        {/* Disciples of Christ Tile - Always First */}
+        <DisciplesOfChristTile
+          verseRef={currentDisciplesVerse.ref}
+          verseText={currentDisciplesVerse.text}
+          step={currentDisciplesVerse.step}
+          onClick={() => {
+            // Navigate to daily page to show full verse
+            onNavigate?.('daily');
+          }}
+        />
+
         {/* Main Menu Items */}
         {mainMenuItems.map((item, index) => {
-          // Insert Disciples of Christ tile after Faith Videos (videos is at index 1)
-          const disciplesTile = item.id === 'videos' && index === 1 ? (
-            <DisciplesOfChristTile
-              key="disciples-of-christ"
-              verseRef="James 1:5"
-              verseText="If any of you lacks wisdom, you should ask God, who gives generously to all without finding fault, and it will be given to you."
-              step="Before your next decision today, pause for three seconds and whisper, 'Lord, give me wisdom.'"
-              onClick={() => {
-                // Navigate to full devotion page (future implementation)
-                console.log("Disciples of Christ tile clicked");
-              }}
-            />
-          ) : null;
           const getItemColors = (id: string) => {
             switch(id) {
               case 'videos': return {
@@ -296,8 +291,7 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
             </Card>
           );
 
-          // Render the tile with proper key
-          const mainTile = tileImage ? (
+          const tileWithImage = tileImage ? (
             <Card 
               key={item.id}
               className={`bg-white rounded-2xl overflow-hidden shadow-2xl hover:shadow-[0_25px_50px_-12px_rgba(0,0,0,0.25)] border-2 ${tileImage.border} cursor-pointer transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-1 ring-4 ring-white/50 hover:ring-white/70 backdrop-blur-sm`}
@@ -336,8 +330,8 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
             </Card>
           ) : regularTile;
 
-          // Return items array (including Disciples tile after videos)
-          return disciplesTile ? [mainTile, disciplesTile] : mainTile;
+          // Return the tile
+          return tileWithImage;
         })}
 
         {/* Settings & Account Section */}
@@ -414,7 +408,7 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
               </div>
               {t.supportLegal}
             </h2>
-            <div className="space-y-4">
+            <div className="space-y-2">
               <Button 
                 variant="ghost"
                 size="default"
@@ -427,6 +421,21 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
                     <HeadphonesIcon className="w-5 h-5 text-indigo-600" />
                   </div>
                   <span className="font-medium text-gray-800 text-base">{t.supportPrivacyRights}</span>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-400" />
+              </Button>
+              <Button 
+                variant="ghost"
+                size="default"
+                className="w-full justify-between bg-white/80 hover:bg-white text-gray-800 border-white/50 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-[1.02] hover:-translate-y-0.5 ring-2 ring-indigo-200/50 hover:ring-indigo-300/70"
+                onClick={() => onNavigate?.('terms')}
+                data-testid="menu-terms"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="bg-indigo-100 p-2 rounded-full">
+                    <FileText className="w-5 h-5 text-indigo-600" />
+                  </div>
+                  <span className="font-medium text-gray-800 text-base">{t.endUserAgreement}</span>
                 </div>
                 <ChevronRight className="w-5 h-5 text-gray-400" />
               </Button>
