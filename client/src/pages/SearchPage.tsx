@@ -32,6 +32,13 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
       onNavigate('search', reference);
     }
   };
+  
+  // Handle navigation to topic search page
+  const handleTopicSearchNavigation = (page: string) => {
+    if (onNavigate) {
+      onNavigate(page);
+    }
+  };
   const t = useTranslations(language);
   return (
     <div className="min-h-screen pb-20">
@@ -112,7 +119,7 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
           />
           
           {/* Topical Search Section */}
-          <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} backgroundImage={shepherdImage} />
+          <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} onNavigateToTopicSearch={handleTopicSearchNavigation} backgroundImage={shepherdImage} />
           
           {/* Help Spread God's Word Section - Moved from HomePage */}
           <div className="relative overflow-hidden rounded-3xl shadow-lg border-2 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">

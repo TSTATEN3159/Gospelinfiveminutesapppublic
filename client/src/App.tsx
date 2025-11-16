@@ -46,6 +46,7 @@ import ScreenshotToolPage from "./pages/ScreenshotToolPage";
 import PlainMeaningPage from "./pages/PlainMeaningPage";
 import InstantApplicationPage from "./pages/InstantApplicationPage";
 import VoiceSettingsPage from "./pages/VoiceSettingsPage";
+import TopicSearchPage from "./pages/TopicSearchPage";
 
 interface User {
   firstName: string;
@@ -57,7 +58,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search";
 
 function MainApp() {
   const [user, setUser] = useState<User | null>(null);
@@ -256,7 +257,7 @@ function MainApp() {
             case "savedverses":
               return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
             case "bookmarks":
-              return <BookmarksPage onNavigate={handleNavigate} />;
+              return <BookmarksPage onNavigate={handleNavigateToLegal} />;
             case "glassdemo":
               return <GlassDemoPage />;
             case "devotionals":
@@ -271,6 +272,8 @@ function MainApp() {
               return <InstantApplicationPage onNavigate={handleNavigateToLegal} />;
             case "voice-settings":
               return <VoiceSettingsPage />;
+            case "topic-search":
+              return <TopicSearchPage onNavigate={handleNavigateToLegal} />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }

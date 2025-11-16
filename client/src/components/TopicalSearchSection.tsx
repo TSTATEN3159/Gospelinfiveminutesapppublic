@@ -89,10 +89,11 @@ const presetTopics = [
 
 interface TopicalSearchSectionProps {
   onNavigateToScripture?: (reference: string) => void;
+  onNavigateToTopicSearch?: (page: string) => void;
   backgroundImage?: string;
 }
 
-export function TopicalSearchSection({ onNavigateToScripture, backgroundImage }: TopicalSearchSectionProps = {}) {
+export function TopicalSearchSection({ onNavigateToScripture, onNavigateToTopicSearch, backgroundImage }: TopicalSearchSectionProps = {}) {
   const [selectedResult, setSelectedResult] = useState<TopicalSearchResult | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [customSearch, setCustomSearch] = useState('');
@@ -253,6 +254,21 @@ export function TopicalSearchSection({ onNavigateToScripture, backgroundImage }:
 
         <CardContent className="relative z-10 p-6 space-y-6">
 
+          {/* Navigate to Topic Search Page Button */}
+          <div className="text-center">
+            <Button 
+              onClick={() => onNavigateToTopicSearch?.('topic-search')}
+              className="w-full bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white py-6 text-lg font-semibold shadow-lg hover:shadow-xl transition-all"
+              data-testid="button-explore-topics"
+            >
+              <Lightbulb className="w-5 h-5 mr-2" />
+              Explore 40+ Biblical Topics
+            </Button>
+            <p className="text-sm text-gray-600 dark:text-gray-300 mt-2">
+              Discover curated scriptures on Faith, Love, Prayer, Healing, and more
+            </p>
+          </div>
+
           {/* Error Message */}
           {error && (
             <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-center">
@@ -260,11 +276,11 @@ export function TopicalSearchSection({ onNavigateToScripture, backgroundImage }:
             </div>
           )}
 
-          {/* Preset Topic Tiles Grid */}
+          {/* Preset Topic Tiles Grid - Now for quick access */}
           <div className="bg-white/90 backdrop-blur-sm rounded-xl p-6 shadow-sm space-y-4">
             <div className="text-center mb-4">
-              <h3 className="text-lg font-semibold text-gray-900 mb-2">Popular Biblical Topics</h3>
-              <p className="text-gray-600 text-sm">Explore key themes in Scripture</p>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">Quick Access Topics</h3>
+              <p className="text-gray-600 text-sm">Tap for instant AI-powered insights</p>
             </div>
             <div className="grid grid-cols-2 gap-3">
           {presetTopics.map((topic) => {
