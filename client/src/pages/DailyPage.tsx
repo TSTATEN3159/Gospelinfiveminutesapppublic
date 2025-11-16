@@ -13,7 +13,7 @@ import { useToast } from "@/hooks/use-toast";
 import dailyDevotionsImage from '@assets/stock_images/open_bible_on_wooden_95d8fbf5.jpg';
 import readingPlansImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
 import plainMeaningImage from '@assets/stock_images/library_books_shelve_bc687803.jpg';
-import instantApplicationImage from '@assets/stock_images/hands_helping_prayer_7429179c.jpg';
+import instantApplicationImage from '@assets/stock_images/mountain_peak_summit_3634e7cb.jpg';
 
 interface DailyPageProps {
   onNavigate: (page: string) => void;  // Required - parent always provides
