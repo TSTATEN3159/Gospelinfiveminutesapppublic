@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { TOPICAL_BIBLE_TOPICS, TopicDefinition, BibleVersionCode } from "@/data/topicalBibleTopics";
+import { TOPICAL_BIBLE_TOPICS, TopicDefinition } from "@/data/topicalBibleTopics";
+import { BibleVersionCode, getInitialBibleVersion } from "@/config/bibleVersions";
+import { BibleVersionSelector } from "@/components/BibleVersionSelector";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Select, SelectTrigger, SelectContent, SelectItem, SelectValue } from "@/components/ui/select";
 import { Button } from "@/components/ui/button";
-import { Book, Sparkles, Volume2, Loader2, AlertCircle } from "lucide-react";
+import { Book, Sparkles, Volume2, Loader2, AlertCircle, Image as ImageIcon } from "lucide-react";
 import { toggleSpeech } from "@/utils/speechEngine";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiUrl } from "@/lib/api-config";
@@ -15,12 +17,17 @@ interface BibleVerse {
 }
 
 interface TopicalBibleSearchCardProps {
-  onNavigate?: (page: string, searchQuery?: string) => void;
+  onNavigate?: (page: string, data?: any) => void;
+  onCreateImageFromVerse?: (payload: {
+    reference: string;
+    text: string;
+    version: BibleVersionCode;
+  }) => void;
 }
 
-export default function TopicalBibleSearchCard({ onNavigate }: TopicalBibleSearchCardProps) {
+export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVerse }: TopicalBibleSearchCardProps) {
   const [selectedTopic, setSelectedTopic] = useState<TopicDefinition | null>(null);
-  const [selectedVersion, setSelectedVersion] = useState<BibleVersionCode>("KJV");
+  const [selectedVersion, setSelectedVersion] = useState<BibleVersionCode>(getInitialBibleVersion());
   const [applicationText, setApplicationText] = useState<string | null>(null);
 
   const handleTopicSelect = (topicId: string) => {
@@ -160,23 +167,11 @@ export default function TopicalBibleSearchCard({ onNavigate }: TopicalBibleSearc
       {/* Bible Version Selector (only show when topic is selected) */}
       {selectedTopic && (
         <div className="mb-6">
-          <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-            Bible Version
-          </label>
-          <Select value={selectedVersion} onValueChange={(v) => setSelectedVersion(v as BibleVersionCode)}>
-            <SelectTrigger 
-              className="w-full bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-600"
-              data-testid="select-version"
-            >
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="KJV" data-testid="version-kjv">King James Version (KJV)</SelectItem>
-              <SelectItem value="WEB" data-testid="version-web">World English Bible (WEB)</SelectItem>
-              <SelectItem value="ASV" data-testid="version-asv">American Standard Version (ASV)</SelectItem>
-              <SelectItem value="BBE" data-testid="version-bbe">Bible in Basic English (BBE)</SelectItem>
-            </SelectContent>
-          </Select>
+          <BibleVersionSelector
+            label="Bible Version"
+            value={selectedVersion}
+            onChange={(v) => setSelectedVersion(v)}
+          />
         </div>
       )}
 
@@ -211,27 +206,46 @@ export default function TopicalBibleSearchCard({ onNavigate }: TopicalBibleSearc
             {verses.map((verse, idx) => (
               <div
                 key={idx}
-                onClick={() => handleVerseClick(verse.reference)}
-                className="p-4 rounded-lg bg-amber-50 dark:bg-gray-800 border-l-4 border-amber-500 cursor-pointer hover:bg-amber-100 dark:hover:bg-gray-700 transition-all hover:shadow-md hover:scale-[1.01]"
+                className="p-4 rounded-lg bg-amber-50 dark:bg-gray-800 border-l-4 border-amber-500 transition-all hover:shadow-md"
                 data-testid={`verse-${idx}`}
               >
                 <div className="flex items-center justify-between mb-2">
                   <p className="font-bold text-amber-700 dark:text-amber-400 flex items-center gap-2">
                     <Book className="w-4 h-4" />
-                    {verse.reference}
+                    {verse.reference} • {verse.version}
                   </p>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleSpeech(verse.text);
-                    }}
-                    className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded-full bg-white dark:bg-gray-900 hover:bg-amber-100 dark:hover:bg-gray-700 shadow-sm border border-amber-200 dark:border-gray-600 transition-all"
-                    data-testid={`button-listen-${idx}`}
-                    aria-label={`Listen to ${verse.reference}`}
-                  >
-                    <Volume2 className="w-3 h-3" />
-                    <span className="font-medium">Listen</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleSpeech(verse.text);
+                      }}
+                      className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded-full bg-white dark:bg-gray-900 hover:bg-amber-100 dark:hover:bg-gray-700 shadow-sm border border-amber-200 dark:border-gray-600 transition-all"
+                      data-testid={`button-listen-${idx}`}
+                      aria-label={`Listen to ${verse.reference}`}
+                    >
+                      <Volume2 className="w-3 h-3" />
+                      <span className="font-medium">Listen</span>
+                    </button>
+                    {onCreateImageFromVerse && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          onCreateImageFromVerse({
+                            reference: verse.reference,
+                            text: verse.text,
+                            version: verse.version as BibleVersionCode
+                          });
+                        }}
+                        className="inline-flex items-center gap-1 px-3 py-1.5 text-xs rounded-full bg-purple-50 dark:bg-purple-900/30 hover:bg-purple-100 dark:hover:bg-purple-900/50 shadow-sm border border-purple-200 dark:border-purple-700 transition-all text-purple-700 dark:text-purple-300"
+                        data-testid={`button-make-image-${idx}`}
+                        aria-label={`Create image for ${verse.reference}`}
+                      >
+                        <ImageIcon className="w-3 h-3" />
+                        <span className="font-medium">Image</span>
+                      </button>
+                    )}
+                  </div>
                 </div>
                 <p className="text-gray-800 dark:text-gray-200 leading-relaxed">
                   {verse.text}

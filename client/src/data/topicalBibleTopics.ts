@@ -1,8 +1,6 @@
-export type BibleVersionCode =
-  | "KJV"
-  | "BBE"
-  | "WEB"
-  | "ASV";
+import { BibleVersionCode } from "@/config/bibleVersions";
+
+export type { BibleVersionCode };
 
 export interface TopicDefinition {
   id: string;
