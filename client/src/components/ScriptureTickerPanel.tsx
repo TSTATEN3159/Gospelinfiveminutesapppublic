@@ -61,12 +61,12 @@ export default function ScriptureTickerPanel() {
     >
       <div className="grid md:grid-cols-[2fr,1.5fr] gap-0 items-stretch">
         {/* LEFT SIDE: Static verse + ticker */}
-        <div className="p-4 md:p-6 flex flex-col justify-between">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.2em] text-emerald-300 mb-2">
-              Today&apos;s Focus Verse
+        <div className="p-4 md:p-6 flex flex-col justify-between min-w-0">
+          <div className="min-w-0">
+            <p className="text-[11px] uppercase tracking-[0.25em] text-emerald-300 mb-2">
+              TODAY&apos;S FOCUS VERSE
             </p>
-            <p className="text-base md:text-xl font-semibold leading-snug mb-3 max-h-20 md:max-h-24 overflow-hidden break-words">
+            <p className="text-base md:text-xl font-semibold text-slate-100 leading-snug mb-3 whitespace-normal break-words">
               &ldquo;{featuredVerse.text}&rdquo;
             </p>
             <p className="text-xs md:text-sm font-medium text-emerald-200">
