@@ -198,22 +198,20 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
             <span>Follow</span>
           </a>
           
-          {/* Share Button - Professional Green */}
+          {/* Share Verse Button - Opens Scripture Image Generator */}
           <Button 
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
             data-testid="button-share-home"
-            aria-label="Share The Gospel in 5 Minutes with friends"
+            aria-label="Share today's verse with a beautiful design"
             onClick={() => {
-              if (navigator.share) {
-                navigator.share({
-                  title: 'The Gospel in 5 Minutes',
-                  text: 'Discover daily Bible verses and spiritual guidance with The Gospel in 5 Minutes app!',
-                  url: 'https://www.thegospelin5minutes.org'
-                }).catch(console.error);
-              } else {
-                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
-                  console.log('Link copied to clipboard');
-                }).catch(console.error);
+              if (dailyVerse) {
+                // Store verse data in localStorage for Scripture Image page to read
+                localStorage.setItem('pendingVerseShare', JSON.stringify({
+                  reference: dailyVerse.reference,
+                  text: dailyVerse.text,
+                  version: 'KJV'
+                }));
+                onNavigate?.('image-scripture');
               }
             }}
           >

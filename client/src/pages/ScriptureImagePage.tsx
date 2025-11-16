@@ -28,11 +28,23 @@ function ScriptureImageContent({
   onNavigate
 }: ScriptureImagePageProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  
+  // Check for pending verse share from localStorage
+  const pendingShare = localStorage.getItem('pendingVerseShare');
+  let shareData = null;
+  if (pendingShare) {
+    try {
+      shareData = JSON.parse(pendingShare);
+      localStorage.removeItem('pendingVerseShare'); // Clear after reading
+    } catch (e) {
+      console.error('Failed to parse pending verse share', e);
+    }
+  }
 
-  const [verseText, setVerseText] = useState(initialText);
-  const [reference, setReference] = useState(initialReference);
+  const [verseText, setVerseText] = useState(shareData?.text || initialText);
+  const [reference, setReference] = useState(shareData?.reference || initialReference);
   const [version, setVersion] = useState<BibleVersionCode>(
-    initialVersion ?? getInitialBibleVersion()
+    shareData?.version || (initialVersion ?? getInitialBibleVersion())
   );
 
   const [backgroundId, setBackgroundId] = useState<string>(
