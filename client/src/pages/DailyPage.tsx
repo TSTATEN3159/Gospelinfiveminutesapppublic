@@ -12,7 +12,7 @@ import { useToast } from "@/hooks/use-toast";
 // Static images - original stock photography setup
 import dailyDevotionsImage from '@assets/stock_images/open_bible_on_wooden_95d8fbf5.jpg';
 import readingPlansImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
-import plainMeaningImage from '@assets/stock_images/open_bible_with_coff_9ab4ad96.jpg';
+import plainMeaningImage from '@assets/stock_images/library_books_shelve_bc687803.jpg';
 import instantApplicationImage from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
 
 interface DailyPageProps {
