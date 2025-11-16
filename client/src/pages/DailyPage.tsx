@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Calendar, BookOpen, ChevronRight, Lightbulb, CheckCircle, Flame, Facebook, Instagram, Share } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,39 +9,11 @@ import { FeatureBoundary } from "@/components/FeatureBoundary";
 import { safeShare } from "@/utils/capabilities";
 import { useToast } from "@/hooks/use-toast";
 
-// Daily Devotional Images - Warm & Cozy Collection (Valid high-res images only)
-import devotional1 from '@assets/stock_images/devotional-1.jpg';
-import devotional2 from '@assets/stock_images/devotional-3.jpg';
-import devotional3 from '@assets/stock_images/warm_cozy_bible_jour_f51a9ba5.jpg';
-import devotional4 from '@assets/stock_images/warm_cozy_bible_jour_c71d4255.jpg';
-import devotional5 from '@assets/stock_images/warm_cozy_bible_jour_9c9d4b87.jpg';
-import devotional6 from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
-
-// Plain Meaning Images - Original gentle coffee/Bible scene
+// Static images - original stock photography setup
+import dailyDevotionsImage from '@assets/stock_images/open_bible_on_wooden_95d8fbf5.jpg';
+import readingPlansImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
 import plainMeaningImage from '@assets/stock_images/open_bible_with_coff_9ab4ad96.jpg';
-
-// Instant Application Images - Action & Journaling
-import instantApp1 from '@assets/stock_images/bible_and_journal_wi_4f18af22.jpg';
-import instantApp2 from '@assets/stock_images/person_writing_journ_4816488f.jpg';
-import instantApp3 from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
-
-// Reading Plans Images - Spiritual Journey
-import readingPlan1 from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
-import readingPlan2 from '@assets/stock_images/forest_path_sunlight_c1195fdf.jpg';
-import readingPlan3 from '@assets/stock_images/open_bible_on_wooden_95d8fbf5.jpg';
-
-// Image pools for rotation - each feature has its own unique pool
-const IMAGE_POOLS = {
-  devotionals: [devotional1, devotional2, devotional3, devotional4, devotional5, devotional6],
-  plainMeaning: [plainMeaningImage], // Single gentle image as requested
-  instantApplication: [instantApp1, instantApp2, instantApp3],
-  readingPlans: [readingPlan1, readingPlan2, readingPlan3],
-};
-
-// Pick random image from pool
-const pickImage = (pool: string[]) => {
-  return pool[Math.floor(Math.random() * pool.length)];
-};
+import instantApplicationImage from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
 
 interface DailyPageProps {
   onNavigate: (page: string) => void;  // Required - parent always provides
@@ -50,14 +21,14 @@ interface DailyPageProps {
   language?: string;
 }
 
-// Feature tile configurations (images assigned dynamically)
-const getFeatureConfig = (images: { [key: string]: string }) => [
+// Static feature tile configurations
+const dailyFeatures = [
   {
     id: "devotionals",
     title: "365 Daily Devotionals",
     description: "Daily scripture, devotion, and practical application for spiritual growth",
     icon: Calendar,
-    image: images.devotionals,
+    image: dailyDevotionsImage,
     overlay: 'from-transparent via-transparent to-amber-950/60',
     border: 'border-amber-200/50',
     gradientFrom: 'from-amber-500',
@@ -71,7 +42,7 @@ const getFeatureConfig = (images: { [key: string]: string }) => [
     title: "Bible Reading Plans",
     description: "1-year whole Bible, 6-month OT & NT plans with progress tracking",
     icon: BookOpen,
-    image: images.readingPlans,
+    image: readingPlansImage,
     overlay: 'from-transparent via-transparent to-emerald-950/60',
     border: 'border-emerald-200/50',
     gradientFrom: 'from-emerald-500',
@@ -85,7 +56,7 @@ const getFeatureConfig = (images: { [key: string]: string }) => [
     title: "Plain Meaning",
     description: "Scripture in everyday language while preserving theological integrity",
     icon: Lightbulb,
-    image: images.plainMeaning,
+    image: plainMeaningImage,
     overlay: 'from-transparent via-transparent to-blue-950/60',
     border: 'border-blue-200/50',
     gradientFrom: 'from-blue-500',
@@ -99,7 +70,7 @@ const getFeatureConfig = (images: { [key: string]: string }) => [
     title: "Instant Application",
     description: "Get one simple action to live out any verse today",
     icon: CheckCircle,
-    image: images.instantApplication,
+    image: instantApplicationImage,
     overlay: 'from-transparent via-transparent to-purple-950/60',
     border: 'border-purple-200/50',
     gradientFrom: 'from-purple-500',
@@ -113,17 +84,6 @@ const getFeatureConfig = (images: { [key: string]: string }) => [
 function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPageProps) {
   const t = useTranslations(language);
   const { toast } = useToast();
-  
-  // Pick random images on mount (each feature gets unique image from its pool)
-  const [featureImages, setFeatureImages] = useState({
-    devotionals: pickImage(IMAGE_POOLS.devotionals),
-    plainMeaning: pickImage(IMAGE_POOLS.plainMeaning),
-    instantApplication: pickImage(IMAGE_POOLS.instantApplication),
-    readingPlans: pickImage(IMAGE_POOLS.readingPlans),
-  });
-
-  // Generate feature configs with selected images
-  const dailyFeatures = getFeatureConfig(featureImages);
   
   const handleFeatureClick = (id: string) => {
     onNavigate(id);
