@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff, Image as ImageIcon } from "lucide-react";
+import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   AlertDialog,
@@ -28,6 +28,8 @@ import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ScriptureSelector from "./ScriptureSelector";
 import ScriptureCard from "./ScriptureCard";
 import { getVersion, setVersion } from "@/store/versionPrefs";
+import { getNextReference, getPrevReference, getBookIndexByName, formatReference } from "@/utils/scriptureUtils";
+import bibleStructure from "@/data/bibleStructure.json";
 
 interface SearchResult {
   text: string;
@@ -82,6 +84,10 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
   const [compareResult, setCompareResult] = useState<SearchResult | null>(null);
   const [sideBySide, setSideBySide] = useState(false);
   const [currentReference, setCurrentReference] = useState("");
+  const [currentBookIndex, setCurrentBookIndex] = useState(0);
+  const [currentChapter, setCurrentChapter] = useState(1);
+  const [currentVerse, setCurrentVerse] = useState(1);
+  const [currentMode, setCurrentMode] = useState<"verse" | "range" | "chapter">("verse");
   const [isLoading, setIsLoading] = useState(false);
   const [hasSearched, setHasSearched] = useState(false);
   const [showVoicePermissionDialog, setShowVoicePermissionDialog] = useState(false);
@@ -177,6 +183,25 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     }
   }, [initialSearchQuery]);
 
+  const parseReference = (ref: string) => {
+    // Parse reference like "Genesis 1:1" or "John 3:16-18" or "John 3"
+    const match = ref.match(/^(.+?)\s+(\d+)(?::(\d+)(?:-(\d+))?)?$/);
+    if (match) {
+      const bookName = match[1];
+      const chapter = parseInt(match[2]);
+      const verse = match[3] ? parseInt(match[3]) : 1;
+      const endVerse = match[4] ? parseInt(match[4]) : null;
+      
+      const bookIndex = getBookIndexByName(bookName);
+      const mode = endVerse ? "range" : (!match[3] ? "chapter" : "verse");
+      
+      setCurrentBookIndex(bookIndex);
+      setCurrentChapter(chapter);
+      setCurrentVerse(verse);
+      setCurrentMode(mode);
+    }
+  };
+
   const changeVersion = (v: string) => {
     setSelectedVersion(v);
     setVersion(v);
@@ -187,6 +212,26 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     }
   };
 
+  const handleNext = () => {
+    const bookName = Object.keys(bibleStructure)[currentBookIndex];
+    const bookData = bibleStructure[bookName as keyof typeof bibleStructure];
+    const versesInChapter = bookData?.chapters[currentChapter - 1] || 1;
+    
+    const next = getNextReference(currentBookIndex, currentChapter, currentVerse, currentMode, versesInChapter, 3);
+    if (next) {
+      const ref = formatReference(next.bookIndex, next.chapter, next.verse, currentMode, 3);
+      handleSearch(ref);
+    }
+  };
+
+  const handlePrev = () => {
+    const prev = getPrevReference(currentBookIndex, currentChapter, currentVerse, currentMode, 3);
+    if (prev) {
+      const ref = formatReference(prev.bookIndex, prev.chapter, prev.verse, currentMode, 3);
+      handleSearch(ref);
+    }
+  };
+
   const handleSearch = async (q?: string, versionOverride?: string) => {
     const query = (q ?? searchQuery).trim();
     if (!query) return;
@@ -194,6 +239,9 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
     setIsLoading(true);
     setHasSearched(true);
     setCurrentReference(query);
+    
+    // Parse the reference to track navigation state
+    parseReference(query);
 
     try {
       // Fetch primary version
@@ -467,6 +515,35 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
                   </button>
                 </div>
               )}
+            </div>
+            
+            {/* Navigation Buttons */}
+            <div className="flex justify-between items-center py-2 border-y border-gray-200">
+              <Button
+                onClick={handlePrev}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-1"
+                data-testid="button-prev-scripture"
+              >
+                <ChevronLeft className="w-4 h-4" />
+                Previous
+              </Button>
+              
+              <span className="text-sm font-semibold text-gray-600">
+                {searchResult.reference}
+              </span>
+              
+              <Button
+                onClick={handleNext}
+                variant="outline"
+                size="sm"
+                className="flex items-center gap-1"
+                data-testid="button-next-scripture"
+              >
+                Next
+                <ChevronRight className="w-4 h-4" />
+              </Button>
             </div>
             
             {/* Scripture Display */}

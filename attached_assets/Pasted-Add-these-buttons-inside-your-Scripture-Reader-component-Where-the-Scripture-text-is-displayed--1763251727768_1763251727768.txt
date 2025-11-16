@@ -1,0 +1,85 @@
+Add these buttons inside your Scripture Reader component
+
+(Where the Scripture text is displayed)
+
+<div className="flex justify-between py-4">
+  <button
+    onClick={handlePrev}
+    className="px-3 py-2 rounded-full bg-gray-200 dark:bg-gray-700"
+  >
+    ◀
+  </button>
+
+  <button
+    onClick={handleNext}
+    className="px-3 py-2 rounded-full bg-gray-200 dark:bg-gray-700"
+  >
+    ▶
+  </button>
+</div>
+
+🔹 Required logic
+
+Add this utility to scriptureUtils.ts:
+
+export function getNextReference(bookIndex, chapter, verse, mode, versesInChapter) {
+  if (mode === "chapter") {
+    return { bookIndex, chapter: chapter + 1, verse: 1 };
+  }
+
+  if (mode === "verse") {
+    if (verse < versesInChapter) {
+      return { bookIndex, chapter, verse: verse + 1 };
+    } else {
+      return { bookIndex, chapter: chapter + 1, verse: 1 };
+    }
+  }
+
+  if (mode === "range") {
+    const rangeSize = window.localStorage.getItem("rangeSize") ?? 3;
+    if (verse + Number(rangeSize) <= versesInChapter) {
+      return { bookIndex, chapter, verse: verse + Number(rangeSize) };
+    } else {
+      return { bookIndex, chapter: chapter + 1, verse: 1 };
+    }
+  }
+
+  return null;
+}
+
+
+And Previous:
+
+export function getPrevReference(bookIndex, chapter, verse, mode) {
+  if (mode === "chapter") {
+    return { bookIndex, chapter: chapter - 1, verse: 1 };
+  }
+
+  if (mode === "verse") {
+    if (verse > 1) {
+      return { bookIndex, chapter, verse: verse - 1 };
+    } else {
+      return { bookIndex, chapter: chapter - 1, verse: 1 };
+    }
+  }
+
+  if (mode === "range") {
+    const rangeSize = window.localStorage.getItem("rangeSize") ?? 3;
+    if (verse > Number(rangeSize)) {
+      return { bookIndex, chapter, verse: verse - Number(rangeSize) };
+    } else {
+      return { bookIndex, chapter: chapter - 1, verse: 1 };
+    }
+  }
+}
+
+🔹 Update handlers inside Scripture view component:
+const handleNext = () => {
+  const next = getNextReference(currentBookIndex, selectedChapter, selectedVerse, selectionMode, versesInChapter);
+  if (next) loadReference(next);
+};
+
+const handlePrev = () => {
+  const prev = getPrevReference(currentBookIndex, selectedChapter, selectedVerse, selectionMode);
+  if (prev) loadReference(prev);
+};
