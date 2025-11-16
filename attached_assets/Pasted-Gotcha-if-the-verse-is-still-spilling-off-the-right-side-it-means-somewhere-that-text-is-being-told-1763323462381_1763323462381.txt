@@ -1,0 +1,77 @@
+Gotcha—if the verse is still spilling off the right side, it means somewhere that text is being told “don’t wrap” (via truncate, whitespace-nowrap, or missing min-w-0 in a flex layout).
+
+Here’s a concrete fix you can drop in that will force wrapping inside the card and keep it within the rounded rectangle.
+
+1️⃣ Replace the Focus Verse header block with this
+
+In your component where you render “TODAY’S FOCUS VERSE”, swap that entire header/verse section with:
+
+{/* Focus verse header + text */}
+<div className="px-4 pt-4 pb-3">
+  <p className="text-[11px] tracking-[0.25em] text-emerald-400 uppercase mb-2">
+    TODAY'S FOCUS VERSE
+  </p>
+
+  {/* This is the verse line that MUST wrap */}
+  <p
+    className="
+      text-xl
+      font-semibold
+      text-slate-50
+      leading-snug
+      whitespace-normal
+      break-words
+      text-balance
+    "
+  >
+    {focusVerseText}
+  </p>
+
+  <p className="mt-2 text-sm font-medium text-emerald-300">
+    {focusVerseReference}
+  </p>
+</div>
+
+
+Key parts:
+
+whitespace-normal → allows wrapping
+
+break-words → long words (or long references) will break instead of pushing out of the box
+
+text-balance → lets the browser balance lines more nicely (where supported)
+
+2️⃣ If this block lives in a flex container, make sure it can shrink & wrap
+
+If the card root is something like:
+
+<div className="flex items-center ...">
+
+
+then make sure the text container has min-w-0 so wrapping is allowed:
+
+<div className="flex flex-col bg-slate-950 rounded-3xl overflow-hidden shadow-xl">
+  <div className="min-w-0">
+    {/* paste the Focus Verse block from above here */}
+  </div>
+  {/* rest of card (image, buttons, etc.) */}
+</div>
+
+
+min-w-0 is crucial in flex layouts—without it, the browser often refuses to shrink the text box, so the text just runs right out of the rounded card.
+
+3️⃣ Remove any old “no-wrap” utilities
+
+In your previous code, make sure you delete any of these on the verse <p>:
+
+truncate
+
+whitespace-nowrap
+
+whitespace-pre
+
+overflow-x-auto
+
+Those all fight against wrapping.
+
+Try those two changes (new <p> with wrapping classes + min-w-0 on its container). If you paste your exact JSX for that card next time, I can surgically edit it line-by-line, but this should stop the verse from running off the card.
