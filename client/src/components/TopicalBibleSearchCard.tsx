@@ -133,7 +133,7 @@ export default function TopicalBibleSearchCard({ onNavigate, onCreateImageFromVe
     <div className="max-w-3xl mx-auto">
       <div className="text-center mb-6">
         <p className="text-gray-600 dark:text-gray-400">
-          Explore {TOPICAL_BIBLE_TOPICS.length}+ Biblical topics with curated scriptures in multiple versions
+          Click Me to Explore {TOPICAL_BIBLE_TOPICS.length}+ Biblical topics with curated scriptures in multiple versions
         </p>
       </div>
 
