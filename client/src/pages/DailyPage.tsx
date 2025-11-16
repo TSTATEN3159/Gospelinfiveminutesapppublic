@@ -18,12 +18,8 @@ import devotional4 from '@assets/stock_images/warm_cozy_bible_jour_c71d4255.jpg'
 import devotional5 from '@assets/stock_images/warm_cozy_bible_jour_9c9d4b87.jpg';
 import devotional6 from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
 
-// Plain Meaning Images - Bible Study Focus (Valid high-res images only)
-import plainMeaning1 from '@assets/stock_images/plain-meaning-4.jpg';
-import plainMeaning2 from '@assets/stock_images/bible_study_desk_ope_af3add3d.jpg';
-import plainMeaning3 from '@assets/stock_images/bible_study_desk_ope_27e518aa.jpg';
-import plainMeaning4 from '@assets/stock_images/bible_study_desk_ope_97d3d592.jpg';
-import plainMeaning5 from '@assets/stock_images/open_bible_with_coff_9ab4ad96.jpg';
+// Plain Meaning Images - Original gentle coffee/Bible scene
+import plainMeaningImage from '@assets/stock_images/open_bible_with_coff_9ab4ad96.jpg';
 
 // Instant Application Images - Action & Journaling
 import instantApp1 from '@assets/stock_images/bible_and_journal_wi_4f18af22.jpg';
@@ -38,7 +34,7 @@ import readingPlan3 from '@assets/stock_images/open_bible_on_wooden_95d8fbf5.jpg
 // Image pools for rotation - each feature has its own unique pool
 const IMAGE_POOLS = {
   devotionals: [devotional1, devotional2, devotional3, devotional4, devotional5, devotional6],
-  plainMeaning: [plainMeaning1, plainMeaning2, plainMeaning3, plainMeaning4, plainMeaning5],
+  plainMeaning: [plainMeaningImage], // Single gentle image as requested
   instantApplication: [instantApp1, instantApp2, instantApp3],
   readingPlans: [readingPlan1, readingPlan2, readingPlan3],
 };
