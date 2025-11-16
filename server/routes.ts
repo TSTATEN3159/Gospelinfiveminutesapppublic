@@ -663,6 +663,145 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get specific Bible verse by reference and version (for Topical Bible Search)
+  app.get("/api/bible-verse", async (req, res) => {
+    try {
+      const { reference, version = 'KJV' } = req.query;
+      
+      if (!reference || typeof reference !== 'string') {
+        return res.status(400).json({ 
+          success: false, 
+          error: 'Missing required parameter: reference' 
+        });
+      }
+
+      const versionCode = (version as string).toUpperCase();
+      const versionInfo = bibleVersionMapping[versionCode];
+      
+      if (!versionInfo) {
+        return res.status(400).json({ 
+          success: false, 
+          error: `Unsupported Bible version: ${version}. Supported versions: ${Object.keys(bibleVersionMapping).join(', ')}` 
+        });
+      }
+
+      // Convert reference to API.Bible format (e.g., "John 3:16" -> "JHN.3.16")
+      const formattedRef = formatReferenceForApiBible(reference);
+      
+      if (!formattedRef) {
+        return res.status(400).json({ 
+          success: false, 
+          error: `Invalid reference format: ${reference}. Please use format like "John 3:16" or "Romans 8:28"` 
+        });
+      }
+
+      // Fetch verse from API.Bible
+      const verseData = await getApiBibleVerse(versionInfo.id, formattedRef);
+      
+      res.json({
+        success: true,
+        reference: verseData.reference || reference,
+        text: verseData.content ? verseData.content.replace(/<[^>]*>/g, '').trim() : '',
+        version: versionCode
+      });
+
+    } catch (error: any) {
+      console.error('Error fetching Bible verse:', error);
+      res.status(500).json({ 
+        success: false, 
+        error: 'Failed to fetch verse. Please try again.' 
+      });
+    }
+  });
+
+  // Helper function to convert reference to API.Bible format
+  function formatReferenceForApiBible(reference: string): string | null {
+    const bookMappings: { [key: string]: string } = {
+      // Old Testament
+      'genesis': 'GEN', 'gen': 'GEN',
+      'exodus': 'EXO', 'exo': 'EXO',
+      'leviticus': 'LEV', 'lev': 'LEV',
+      'numbers': 'NUM', 'num': 'NUM',
+      'deuteronomy': 'DEU', 'deut': 'DEU',
+      'joshua': 'JOS', 'josh': 'JOS',
+      'judges': 'JDG', 'judg': 'JDG',
+      'ruth': 'RUT',
+      '1 samuel': '1SA', '1samuel': '1SA', '1 sam': '1SA',
+      '2 samuel': '2SA', '2samuel': '2SA', '2 sam': '2SA',
+      '1 kings': '1KI', '1kings': '1KI',
+      '2 kings': '2KI', '2kings': '2KI',
+      '1 chronicles': '1CH', '1chronicles': '1CH', '1 chron': '1CH',
+      '2 chronicles': '2CH', '2chronicles': '2CH', '2 chron': '2CH',
+      'ezra': 'EZR',
+      'nehemiah': 'NEH', 'neh': 'NEH',
+      'esther': 'EST',
+      'job': 'JOB',
+      'psalms': 'PSA', 'psalm': 'PSA', 'ps': 'PSA',
+      'proverbs': 'PRO', 'prov': 'PRO',
+      'ecclesiastes': 'ECC', 'eccl': 'ECC',
+      'song of solomon': 'SNG', 'song': 'SNG',
+      'isaiah': 'ISA', 'isa': 'ISA',
+      'jeremiah': 'JER', 'jer': 'JER',
+      'lamentations': 'LAM', 'lam': 'LAM',
+      'ezekiel': 'EZK', 'ezek': 'EZK',
+      'daniel': 'DAN', 'dan': 'DAN',
+      'hosea': 'HOS', 'hos': 'HOS',
+      'joel': 'JOL',
+      'amos': 'AMO',
+      'obadiah': 'OBA', 'obad': 'OBA',
+      'jonah': 'JON',
+      'micah': 'MIC', 'mic': 'MIC',
+      'nahum': 'NAM', 'nah': 'NAM',
+      'habakkuk': 'HAB', 'hab': 'HAB',
+      'zephaniah': 'ZEP', 'zeph': 'ZEP',
+      'haggai': 'HAG', 'hag': 'HAG',
+      'zechariah': 'ZEC', 'zech': 'ZEC',
+      'malachi': 'MAL', 'mal': 'MAL',
+      
+      // New Testament
+      'matthew': 'MAT', 'matt': 'MAT', 'mt': 'MAT',
+      'mark': 'MRK', 'mk': 'MRK',
+      'luke': 'LUK', 'lk': 'LUK',
+      'john': 'JHN', 'jn': 'JHN',
+      'acts': 'ACT',
+      'romans': 'ROM', 'rom': 'ROM',
+      '1 corinthians': '1CO', '1corinthians': '1CO', '1 cor': '1CO',
+      '2 corinthians': '2CO', '2corinthians': '2CO', '2 cor': '2CO',
+      'galatians': 'GAL', 'gal': 'GAL',
+      'ephesians': 'EPH', 'eph': 'EPH',
+      'philippians': 'PHP', 'phil': 'PHP',
+      'colossians': 'COL', 'col': 'COL',
+      '1 thessalonians': '1TH', '1thessalonians': '1TH', '1 thess': '1TH',
+      '2 thessalonians': '2TH', '2thessalonians': '2TH', '2 thess': '2TH',
+      '1 timothy': '1TI', '1timothy': '1TI', '1 tim': '1TI',
+      '2 timothy': '2TI', '2timothy': '2TI', '2 tim': '2TI',
+      'titus': 'TIT', 'tit': 'TIT',
+      'philemon': 'PHM', 'phlm': 'PHM',
+      'hebrews': 'HEB', 'heb': 'HEB',
+      'james': 'JAM', 'jas': 'JAM', 'jas': 'JAM',
+      '1 peter': '1PE', '1peter': '1PE', '1 pet': '1PE',
+      '2 peter': '2PE', '2peter': '2PE', '2 pet': '2PE',
+      '1 john': '1JN', '1john': '1JN',
+      '2 john': '2JN', '2john': '2JN',
+      '3 john': '3JN', '3john': '3JN',
+      'jude': 'JUD',
+      'revelation': 'REV', 'rev': 'REV'
+    };
+    
+    // Parse reference like "John 3:16" or "Romans 8:28-30"
+    const match = reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+    if (!match) return null;
+    
+    const bookName = match[1].toLowerCase().trim();
+    const chapter = match[2];
+    const verse = match[3];
+    
+    const bookCode = bookMappings[bookName];
+    if (!bookCode) return null;
+    
+    return `${bookCode}.${chapter}.${verse}`;
+  }
+
   // Bible Search OpenAI Route - for retrieving Bible chapters and verses
   const bibleSearchSchema = z.object({
     query: z.string().min(1).max(100), // e.g. "John 3:16" or "Psalm 23"
