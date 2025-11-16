@@ -3,7 +3,6 @@ import { Calendar, BookOpen, ChevronRight, Lightbulb, CheckCircle, Flame, Facebo
 import { Button } from "@/components/ui/button";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
-import { DailyVerseHeroCard } from "@/components/DailyVerseHeroCard";
 import { LiquidGlassFeatureTile } from "@/components/LiquidGlassFeatureTile";
 import { useTranslations } from "@/lib/translations";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
@@ -168,25 +167,8 @@ function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPagePro
         </div>
       </div>
 
-      {/* Hero Verse Card - Bible App Style */}
-      <div className="px-4 pt-6 pb-4 max-w-2xl mx-auto">
-        <DailyVerseHeroCard 
-          onPress={() => handleFeatureClick('search')}
-        />
-      </div>
-
-      {/* Section Header */}
-      <div className="px-4 pt-4 pb-2 max-w-2xl mx-auto">
-        <h2 className="text-lg font-bold text-foreground">
-          Explore Features
-        </h2>
-        <p className="text-sm text-muted-foreground">
-          AI-powered tools to help you understand and apply Scripture
-        </p>
-      </div>
-
       {/* Feature Tiles - Premium Liquid Glass */}
-      <div className="max-w-sm mx-auto space-y-5 px-4 py-2">
+      <div className="max-w-sm mx-auto space-y-5 px-4 py-6">
         {dailyFeatures.map((feature) => (
           <div
             key={feature.id}
