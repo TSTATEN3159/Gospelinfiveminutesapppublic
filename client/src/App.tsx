@@ -36,6 +36,7 @@ import FriendsPage from "./pages/FriendsPage";
 import BibleStudiesPage from "./pages/BibleStudiesPage";
 import BibleTriviaPage from "./pages/BibleTriviaPage";
 import SavedVersesPage from "./pages/SavedVersesPage";
+import BookmarksPage from "./pages/BookmarksPage";
 import GlassDemoPage from "./pages/GlassDemoPage";
 import DailyDevotionsPage from "./pages/DailyDevotionsPage";
 import DailyPage from "./pages/DailyPage";
@@ -56,7 +57,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings";
 
 function MainApp() {
   const [user, setUser] = useState<User | null>(null);
@@ -254,6 +255,8 @@ function MainApp() {
               return <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />;
             case "savedverses":
               return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
+            case "bookmarks":
+              return <BookmarksPage onNavigate={handleNavigate} />;
             case "glassdemo":
               return <GlassDemoPage />;
             case "devotionals":

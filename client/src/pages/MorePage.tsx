@@ -23,8 +23,8 @@ interface MorePageProps {
 const getMainMenuItems = (t: any, isIOS = false) => {
   const items = [
     {
-      id: "savedverses",
-      title: "Saved Verses",
+      id: "bookmarks",
+      title: "Bookmarked Verses",
       description: "View your bookmarked scripture passages",
       icon: BookmarkCheck,
       comingSoon: false
