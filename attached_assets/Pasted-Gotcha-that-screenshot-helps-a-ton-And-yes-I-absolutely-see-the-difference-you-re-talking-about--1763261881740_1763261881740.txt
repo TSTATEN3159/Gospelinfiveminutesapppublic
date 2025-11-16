@@ -1,0 +1,176 @@
+Gotcha—that screenshot helps a ton. And yes, I absolutely see the difference you’re talking about.
+
+1. What Bible App is doing that your images weren’t
+
+Looking at that Home screen:
+
+Real photography – full-bleed photo of an actual landscape, not illustration or AI-looking art.
+
+Very high resolution – no fuzziness, no banding in gradients.
+
+Simple overlay text – one strong verse, large serif/sans font, aligned cleanly.
+
+Each tile is its own card – dark background, clear spacing between cards, each with its own image or color block.
+
+No visual noise – no clip-art, no “cute” icons on top of the photo, just minimal stats/icons underneath.
+
+So when you tell me “professional,” I should think:
+
+“Looks like a top-10 App Store app: real photography, crisp text, clean spacing, no cartoony art.”
+
+I’ll keep that definition in mind going forward.
+
+2. How to get Bible-App-level images (instead of AI art)
+
+For the look you want, you should not rely on AI generation alone. Use real stock photos that are:
+
+2000–3000px wide
+
+Editorial or lifestyle, not illustrations
+
+Warm but not cheesy (avoid obvious staged “Christian stock” with fake smiles)
+
+Tell Replit (or do this yourself):
+
+Pick 3–5 hero photos for the main verse card:
+
+Search on stock sites for things like:
+
+“sunrise over hills”
+
+“forest light path”
+
+“quiet desk with open bible”
+
+Good sources:
+
+Unsplash, Pexels (free)
+
+Lightstock, Shutterstock, Adobe Stock (paid, more Christian options)
+
+Save them into your app as:
+
+public/images/verse-hero-1.jpg
+
+public/images/verse-hero-2.jpg
+
+public/images/verse-hero-3.jpg
+
+We’ll randomly rotate between them or choose one based on theme.
+
+3. Code for a Verse-of-the-Day tile that looks like Bible App
+
+Here’s a single, polished card that will look much closer to that screenshot.
+
+File: client/src/components/VerseOfDayCard.tsx
+
+// client/src/components/VerseOfDayCard.tsx
+import { useMemo } from "react";
+import { Bookmark, Share2, Heart } from "lucide-react";
+
+interface VerseOfDayCardProps {
+  reference: string;          // e.g. "John 3:16"
+  text: string;               // verse text
+  stats?: {
+    likes?: number;
+    comments?: number;
+    shares?: number;
+  };
+  onPress?: () => void;
+}
+
+const HERO_IMAGES = [
+  "/images/verse-hero-1.jpg",
+  "/images/verse-hero-2.jpg",
+  "/images/verse-hero-3.jpg",
+];
+
+export function VerseOfDayCard({
+  reference,
+  text,
+  stats,
+  onPress,
+}: VerseOfDayCardProps) {
+  const heroImage = useMemo(
+    () => HERO_IMAGES[Math.floor(Math.random() * HERO_IMAGES.length)],
+    []
+  );
+
+  return (
+    <button
+      type="button"
+      onClick={onPress}
+      className="w-full text-left rounded-3xl overflow-hidden bg-black/90 shadow-[0_18px_40px_rgba(0,0,0,0.6)] focus:outline-none focus:ring-2 focus:ring-amber-400/80"
+    >
+      {/* Image + overlay */}
+      <div className="relative w-full aspect-[16/9]">
+        <img
+          src={heroImage}
+          alt={reference}
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/75 via-black/35 to-black/10" />
+
+        <div className="absolute inset-0 flex flex-col justify-end px-4 pb-4 gap-1">
+          <p className="text-xs font-semibold text-slate-200/90 mb-1">
+            Verse of the Day
+          </p>
+          <p className="text-sm font-semibold text-amber-200">{reference}</p>
+          <p className="mt-1 text-[13px] sm:text-sm leading-relaxed text-slate-50">
+            {text}
+          </p>
+        </div>
+      </div>
+
+      {/* Stats row, similar feel to Bible app */}
+      <div className="flex items-center justify-between px-4 py-2 bg-black">
+        <div className="flex items-center gap-4 text-[11px] text-slate-300/80">
+          <span className="inline-flex items-center gap-1.5">
+            <Heart className="w-3.5 h-3.5" />
+            {stats?.likes?.toLocaleString() ?? "—"}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Bookmark className="w-3.5 h-3.5" />
+            {stats?.comments?.toLocaleString() ?? "—"}
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Share2 className="w-3.5 h-3.5" />
+            {stats?.shares?.toLocaleString() ?? "—"}
+          </span>
+        </div>
+        <span className="text-[11px] text-slate-400">More ▾</span>
+      </div>
+    </button>
+  );
+}
+
+
+Then in your Home page:
+
+import { VerseOfDayCard } from "@/components/VerseOfDayCard";
+
+<VerseOfDayCard
+  reference="John 3:16"
+  text="For God so loved the world, that he gave his only begotten Son..."
+  stats={{ likes: 1300000, comments: 23000, shares: 434200 }}
+  onPress={() => onNavigate("verse-of-the-day")}
+/>
+
+
+Once you plug in real, high-res stock photos for those hero images, this card will feel much closer to that Bible App example.
+
+4. What to tell Replit, in your words
+
+You can literally paste this to them:
+
+“The current hero images look cartoonish. I want our Home screen to look on par with YouVersion: real photography, very crisp, each tile its own card.
+
+Please:
+
+Source 3–5 high-quality stock images (real photos, not illustrations) for the Verse of the Day hero card and put them in public/images/verse-hero-*.jpg.
+
+Add the VerseOfDayCard component (code below) and use it on the Home page instead of the current hero image.
+
+Ensure the app uses a dark background behind cards (like #050505) so photos pop.
+
+For any future “professional” imagery, use real photo or premium stock, not AI art.”
