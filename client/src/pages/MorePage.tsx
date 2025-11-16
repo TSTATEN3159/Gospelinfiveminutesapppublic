@@ -13,6 +13,7 @@ import holyBibleImage from '@assets/stock_images/open_bible_pages_scr_bfe91e5c.j
 import blogWritingImage from '@assets/stock_images/person_writing_journ_4816488f.jpg';
 import friendsFellowship from '@assets/stock_images/group_of_people_pray_1d87fafd.jpg';
 import dailyDevotionsImage from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
+import bookmarkedVersesImage from '@assets/stock_images/open_bible_on_wooden_8be767df.jpg';
 import { DisciplesOfChristTile } from "@/components/DisciplesOfChristTile";
 import { getCurrentDisciplesVerse } from "@/data/disciplesOfChristVerses";
 
@@ -234,7 +235,7 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
           // Get background image and overlay colors for each tile
           const getTileImage = (id: string) => {
             switch(id) {
-              case 'bookmarks': return { image: holyBibleImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
+              case 'bookmarks': return { image: bookmarkedVersesImage, overlay: 'from-blue-900/70 via-blue-600/20', border: 'border-blue-200', iconBg: 'bg-blue-100', iconBorder: 'border-blue-200/60', iconRing: 'ring-blue-300/50', iconColor: 'text-blue-700' };
               case 'videos': return { image: holyBibleImage, overlay: 'from-purple-900/70 via-purple-600/20', border: 'border-purple-200', iconBg: 'bg-purple-100', iconBorder: 'border-purple-200/60', iconRing: 'ring-purple-300/50', iconColor: 'text-purple-700' };
               case 'blog': return { image: blogWritingImage, overlay: 'from-orange-900/70 via-orange-600/20', border: 'border-orange-200', iconBg: 'bg-orange-100', iconBorder: 'border-orange-200/60', iconRing: 'ring-orange-300/50', iconColor: 'text-orange-700' };
               case 'devotionals': return { image: dailyDevotionsImage, overlay: 'from-amber-900/70 via-amber-600/20', border: 'border-amber-200', iconBg: 'bg-amber-100', iconBorder: 'border-amber-200/60', iconRing: 'ring-amber-300/50', iconColor: 'text-amber-700' };
