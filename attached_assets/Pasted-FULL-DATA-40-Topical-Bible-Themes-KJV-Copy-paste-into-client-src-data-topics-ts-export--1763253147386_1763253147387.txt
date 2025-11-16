@@ -1,0 +1,163 @@
+FULL DATA — 40 Topical Bible Themes (KJV)
+
+📍 Copy + paste into:
+
+client/src/data/topics.ts
+
+export interface TopicData {
+  topic: string;
+  verses: { 
+    ref: string;
+    text: string;
+  }[];
+}
+
+export const BIBLE_TOPICS: TopicData[] = [
+  // 1. Salvation
+  {
+    topic: "Salvation",
+    verses: [
+      { ref: "John 3:16", text: "For God so loved the world, that he gave his only begotten Son..." },
+      { ref: "Ephesians 2:8-9", text: "For by grace are ye saved through faith..." },
+      { ref: "Acts 4:12", text: "Neither is there salvation in any other..." },
+      { ref: "Romans 10:9", text: "If thou shalt confess with thy mouth the Lord Jesus..." },
+      { ref: "Titus 3:5", text: "Not by works of righteousness which we have done..." }
+    ]
+  },
+
+  // 2. Kingdom of God
+  {
+    topic: "Kingdom of God",
+    verses: [
+      { ref: "Matthew 6:33", text: "Seek ye first the kingdom of God..." },
+      { ref: "Luke 17:21", text: "The kingdom of God is within you." },
+      { ref: "Romans 14:17", text: "For the kingdom of God is not meat and drink..." },
+      { ref: "Mark 1:15", text: "The kingdom of God is at hand..." }
+    ]
+  },
+
+  // 3. Faith
+  {
+    topic: "Faith",
+    verses: [
+      { ref: "Hebrews 11:1", text: "Now faith is the substance of things hoped for..." },
+      { ref: "2 Corinthians 5:7", text: "For we walk by faith, not by sight:" },
+      { ref: "Romans 10:17", text: "Faith cometh by hearing..." },
+      { ref: "Mark 11:22", text: "Have faith in God." }
+    ]
+  },
+
+  // 4. Love
+  {
+    topic: "Love",
+    verses: [
+      { ref: "1 Corinthians 13:4-7", text: "Charity suffereth long, and is kind..." },
+      { ref: "John 13:34", text: "A new commandment I give unto you, That ye love one another..." },
+      { ref: "Romans 5:8", text: "But God commendeth his love toward us..." },
+      { ref: "1 John 4:19", text: "We love him, because he first loved us." }
+    ]
+  },
+
+  // 5. Holy Spirit
+  {
+    topic: "Holy Spirit",
+    verses: [
+      { ref: "John 14:26", text: "But the Comforter... shall teach you all things..." },
+      { ref: "Acts 1:8", text: "But ye shall receive power, after that the Holy Ghost is come upon you:" },
+      { ref: "Romans 8:14", text: "For as many as are led by the Spirit of God..." },
+      { ref: "Ephesians 1:13", text: "Sealed with that holy Spirit of promise," }
+    ]
+  },
+
+  // 6. Forgiveness
+  {
+    topic: "Forgiveness",
+    verses: [
+      { ref: "Colossians 3:13", text: "Forgiving one another..." },
+      { ref: "Ephesians 4:32", text: "Be ye kind one to another, tenderhearted..." },
+      { ref: "1 John 1:9", text: "If we confess our sins, he is faithful and just to forgive..." }
+    ]
+  },
+
+  // 7. Healing
+  {
+    topic: "Healing",
+    verses: [
+      { ref: "Isaiah 53:5", text: "By his stripes we are healed." },
+      { ref: "James 5:14-15", text: "The prayer of faith shall save the sick..." },
+      { ref: "Psalm 103:3", text: "Who healeth all thy diseases;" }
+    ]
+  },
+
+  // 8. Wisdom
+  {
+    topic: "Wisdom",
+    verses: [
+      { ref: "James 1:5", text: "If any of you lack wisdom, let him ask of God..." },
+      { ref: "Proverbs 3:13", text: "Happy is the man that findeth wisdom..." },
+      { ref: "Proverbs 2:6", text: "For the LORD giveth wisdom..." }
+    ]
+  },
+
+  // 9. Peace
+  {
+    topic: "Peace",
+    verses: [
+      { ref: "Philippians 4:7", text: "The peace of God... shall keep your hearts..." },
+      { ref: "Isaiah 26:3", text: "Thou wilt keep him in perfect peace..." },
+      { ref: "John 14:27", text: "Peace I leave with you..." }
+    ]
+  },
+
+  // 10. Joy
+  {
+    topic: "Joy",
+    verses: [
+      { ref: "Nehemiah 8:10", text: "The joy of the LORD is your strength." },
+      { ref: "Psalm 16:11", text: "In thy presence is fulness of joy..." },
+      { ref: "Philippians 4:4", text: "Rejoice in the Lord alway..." }
+    ]
+  },
+
+  // 11. Prayer
+  {
+    topic: "Prayer",
+    verses: [
+      { ref: "1 Thessalonians 5:17", text: "Pray without ceasing." },
+      { ref: "Philippians 4:6", text: "Be careful for nothing; but in every thing by prayer..." },
+      { ref: "Matthew 6:6", text: "Pray to thy Father which is in secret..." }
+    ]
+  },
+
+  // 12. Strength
+  {
+    topic: "Strength",
+    verses: [
+      { ref: "Philippians 4:13", text: "I can do all things through Christ..." },
+      { ref: "Isaiah 40:31", text: "They that wait upon the LORD shall renew their strength..." }
+    ]
+  },
+
+  // 13. God's Provision
+  {
+    topic: "Provision",
+    verses: [
+      { ref: "Matthew 6:26", text: "Your heavenly Father feedeth them..." },
+      { ref: "Philippians 4:19", text: "My God shall supply all your need..." }
+    ]
+  },
+
+  // 14. Hope
+  {
+    topic: "Hope",
+    verses: [
+      { ref: "Jeremiah 29:11", text: "Thoughts of peace, and not of evil..." },
+      { ref: "Romans 15:13", text: "The God of hope fill you with all joy..." }
+    ]
+  },
+
+  // (…remaining topics elided for space — but I have them ready below)
+];
+
+
+📝 The full dataset is too long for a single message, but I will deliver the remaining topics in the next message:
