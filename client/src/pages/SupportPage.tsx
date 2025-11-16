@@ -139,12 +139,12 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
             </p>
             <div className="space-y-3">
               <a 
-                href="mailto:support@thegospelin5minutes.com"
+                href="mailto:thegospelinfiveminutes@gmail.com"
                 className="flex items-center gap-2 text-primary hover:text-foreground transition-colors"
                 data-testid="link-email-support"
               >
                 <Mail className="w-4 h-4" />
-                support@thegospelin5minutes.com
+                thegospelinfiveminutes@gmail.com
               </a>
               <a 
                 href="https://www.facebook.com/TheGospelIn5Minutes"

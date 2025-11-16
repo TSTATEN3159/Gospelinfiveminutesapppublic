@@ -125,7 +125,7 @@ export default function PrivacyPolicyPage({ onBack, language = "en" }: PrivacyPo
             <div className="text-muted-foreground space-y-2">
               <p>{t.contactUsIntro}</p>
               <p>
-                <strong>{t.contactEmailLabel}</strong> privacy@thegospelin5minutes.com<br />
+                <strong>{t.contactEmailLabel}</strong> thegospelinfiveminutes@gmail.com<br />
                 <strong>{t.contactFacebookLabel}</strong> @TheGospelIn5Minutes<br />
                 <strong>{t.contactAddressLabel}</strong> The Gospel in 5 Minutes, Privacy Officer
               </p>
