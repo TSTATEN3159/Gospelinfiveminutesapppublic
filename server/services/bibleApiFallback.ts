@@ -278,21 +278,22 @@ class BibleApiFallback {
 
   /**
    * Main method: Try all APIs in order with usage limits
+   * Priority order: API.Bible → Bolls.life → OpenAI → GetContext.xyz
    */
   async getVerse(reference: string, version: string = 'KJV'): Promise<BibleVerse> {
     console.log(`Fetching verse: ${reference} (${version})`);
 
-    // Try Bolls.life first (unlimited)
-    let verse = await this.fetchFromBolls(reference, version);
+    // Try API.Bible first (5K daily limit - primary for reliability)
+    let verse = await this.fetchFromApiBible(reference, version);
     if (verse) {
-      console.log(`✅ Retrieved from Bolls.life`);
+      console.log(`✅ Retrieved from API.Bible (${apiUsageTracker.getRemainingApiBibleRequests()} requests remaining today)`);
       return verse;
     }
 
-    // Try API.Bible second (5K daily limit)
-    verse = await this.fetchFromApiBible(reference, version);
+    // Try Bolls.life second (unlimited - fallback)
+    verse = await this.fetchFromBolls(reference, version);
     if (verse) {
-      console.log(`✅ Retrieved from API.Bible (${apiUsageTracker.getRemainingApiBibleRequests()} requests remaining today)`);
+      console.log(`✅ Retrieved from Bolls.life (fallback)`);
       return verse;
     }
 
@@ -306,7 +307,7 @@ class BibleApiFallback {
     // Try GetContext.xyz last (backup)
     verse = await this.fetchFromGetContext(reference);
     if (verse) {
-      console.log(`✅ Retrieved from GetContext.xyz (fallback)`);
+      console.log(`✅ Retrieved from GetContext.xyz (final fallback)`);
       return verse;
     }
 
