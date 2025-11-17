@@ -28,10 +28,10 @@ class ApiUsageTracker {
         SELECT 
           COALESCE((SELECT COUNT(*) FROM api_usage_log 
             WHERE service = 'api_bible' 
-            AND DATE(created_at) = ${today}), 0) as api_bible_requests,
-          COALESCE((SELECT SUM(cost_usd) FROM api_usage_log 
+            AND DATE(created_at) = ${today}::date), 0) as api_bible_requests,
+          COALESCE((SELECT SUM(CAST(cost_usd AS DECIMAL)) FROM api_usage_log 
             WHERE service = 'openai' 
-            AND DATE_FORMAT(created_at, '%Y-%m') = ${thisMonth}), 0) as openai_cost
+            AND TO_CHAR(created_at, 'YYYY-MM') = ${thisMonth}), 0) as openai_cost
       `);
 
       const row: any = result.rows?.[0] || { api_bible_requests: 0, openai_cost: 0 };
