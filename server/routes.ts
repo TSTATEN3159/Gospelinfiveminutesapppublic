@@ -11,6 +11,8 @@ import { db } from "./db";
 import { sql } from "drizzle-orm";
 import devotionals365Router from "./devotionals-365";
 import { getAllPlans, getPlan, getDayReading, type PlanType } from "./reading-plans";
+import { bibleApiFallback } from "./services/bibleApiFallback";
+import { apiUsageTracker } from "./services/apiUsageTracker";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -598,7 +600,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     return verses[dayOfYear % verses.length];
   };
 
-  // Get daily verse from API.Bible
+  // Get daily verse using smart API fallback chain
   app.get("/api/daily-verse", async (req, res) => {
     try {
       const version = req.query.version as string || 'KJV';
@@ -611,28 +613,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
       
-      const dailyReference = getDailyVerseReference();
-      const verse = await getApiBibleVerse(versionInfo.id, dailyReference);
+      // Convert daily reference from API.Bible format to readable format
+      const dailyReferenceApiBible = getDailyVerseReference();
+      // Parse "JHN.3.16" -> "John 3:16"
+      const [bookCode, chapter, verseNum] = dailyReferenceApiBible.split('.');
+      const bookNames: { [key: string]: string } = {
+        'JHN': 'John', 'PSA': 'Psalms', 'PRO': 'Proverbs', 'JER': 'Jeremiah',
+        'PHP': 'Philippians', 'ROM': 'Romans', 'ISA': 'Isaiah', 'HEB': 'Hebrews',
+        'MAT': 'Matthew', 'EPH': 'Ephesians', 'JOS': 'Joshua'
+      };
+      const bookName = bookNames[bookCode] || bookCode;
+      const dailyReference = `${bookName} ${chapter}:${verseNum}`;
       
-      // Parse reference to extract components
-      const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
+      // Use smart fallback system: Bolls.life → API.Bible → OpenAI → GetContext
+      const verse = await bibleApiFallback.getVerse(dailyReference, version.toUpperCase());
       
       const result = {
-        text: verse.content.replace(/<[^>]*>/g, '').trim(), // Remove HTML tags
+        text: verse.text,
         reference: verse.reference,
-        book: refParts ? refParts[1] : 'Unknown',
-        chapter: refParts ? refParts[2] : '1',
-        verse: refParts ? refParts[3] : '1',
+        book: verse.book,
+        chapter: verse.chapter,
+        verse: verse.verse,
         translation: version.toUpperCase(),
         translationName: versionInfo.name,
-        date: new Date().toDateString()
+        date: new Date().toDateString(),
+        source: verse.source
       };
       
       res.json({ success: true, verse: result });
     } catch (error) {
-      console.error('Error fetching daily verse:', error);
+      console.error('Error fetching daily verse from all sources:', error);
       
-      // Fallback to inspirational verses with requested translation noted
+      // Final static fallback
       const requestedVersion = req.query.version as string || 'NIV';
       const fallbackVerses = [
         {
@@ -643,7 +655,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           verse: "5-6",
           translation: "NIV",
           translationName: "New International Version (Fallback)",
-          date: new Date().toDateString()
+          date: new Date().toDateString(),
+          source: 'static_fallback'
         },
         {
           text: "For I know the plans I have for you, declares the Lord, plans to prosper you and not to harm you, to give you hope and a future.",
@@ -653,7 +666,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           verse: "11",
           translation: "NIV",
           translationName: "New International Version (Fallback)",
-          date: new Date().toDateString()
+          date: new Date().toDateString(),
+          source: 'static_fallback'
         }
       ];
       
@@ -681,6 +695,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error returning Bible versions:', error);
       res.status(500).json({ success: false, error: 'Failed to get Bible versions' });
+    }
+  });
+
+  // Get API usage statistics (for monitoring)
+  app.get("/api/usage-stats", async (req, res) => {
+    try {
+      const stats = bibleApiFallback.getUsageStats();
+      res.json({ 
+        success: true, 
+        stats: {
+          apiBible: {
+            requestsToday: stats.apiBible.requestsToday,
+            dailyLimit: stats.apiBible.limit,
+            remaining: stats.apiBible.remaining,
+            percentUsed: Math.round((stats.apiBible.requestsToday / stats.apiBible.limit) * 100)
+          },
+          openAI: {
+            costThisMonth: parseFloat(stats.openAI.costThisMonth.toFixed(2)),
+            monthlyBudget: stats.openAI.limit,
+            remaining: parseFloat(stats.openAI.remaining.toFixed(2)),
+            percentUsed: Math.round((stats.openAI.costThisMonth / stats.openAI.limit) * 100)
+          }
+        }
+      });
+    } catch (error) {
+      console.error('Error returning usage stats:', error);
+      res.status(500).json({ success: false, error: 'Failed to get usage statistics' });
     }
   });
 
@@ -1114,87 +1155,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { query, version } = bibleSearchSchema.parse(req.body);
       console.log("Bible Search - Query:", query, "Version:", version);
 
-      // Try API.Bible first, fallback to OpenAI if needed
-      try {
-        const API_KEY = process.env.API_BIBLE_KEY;
-        if (API_KEY && query.length >= 3) {
-          const bibleId = version === 'NIV' ? 'de4e12af7f28f599-02' : 'de4e12af7f28f599-01';
-          const searchResponse = await fetch(`https://api.scripture.api.bible/v1/bibles/${bibleId}/search?query=${encodeURIComponent(query)}&limit=10`, {
-            headers: {
-              'api-key': API_KEY
-            }
-          });
-          
-          if (searchResponse.ok) {
-            const searchData = await searchResponse.json();
-            
-            // Check if verses array exists and has items
-            if (searchData?.data?.verses && Array.isArray(searchData.data.verses)) {
-              const verses = searchData.data.verses.map((verse: any) => {
-                const refParts = verse.reference.match(/^(.+?)\s+(\d+):(\d+(?:-\d+)?)$/);
-                
-                return {
-                  text: verse.text.replace(/<[^>]*>/g, '').trim(),
-                  reference: verse.reference,
-                  book: refParts ? refParts[1] : 'Unknown',
-                  chapter: refParts ? refParts[2] : '1',
-                  verse: refParts ? refParts[3] : '1',
-                  translation: version
-                };
-              });
-              
-              if (verses.length > 0) {
-                // Return first verse in the format frontend expects
-                const firstVerse = verses[0];
-                return res.json({ 
-                  success: true, 
-                  text: firstVerse.text,
-                  reference: firstVerse.reference,
-                  version: version,
-                  source: 'api.bible'
-                });
-              }
-            }
-          }
-        }
-      } catch (apiBibleError) {
-        console.log('API.Bible search failed, falling back to OpenAI:', apiBibleError);
-      }
-
-      // Fallback to OpenAI for search
-      const response = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
-        messages: [
-          {
-            role: "system",
-            content: `You are a Bible scholar providing accurate Bible text. When given a Bible reference:
-            1. Return the EXACT Bible text for the requested reference in the specified version (${version})
-            2. If it's a chapter reference (e.g. "John 3"), return the ENTIRE chapter
-            3. If it's a verse reference (e.g. "John 3:16"), return just that verse
-            4. Always include the complete reference at the beginning
-            5. Use proper formatting with verse numbers for chapters
-            6. Be precise and accurate with the biblical text
-            7. If the reference is unclear or doesn't exist, explain what's wrong and suggest corrections`
-          },
-          {
-            role: "user", 
-            content: `Please provide the Bible text for: ${query} (${version} version)`
-          }
-        ],
-        max_completion_tokens: 2000 // Longer for full chapters
-      });
-
-      const content = response.choices[0].message.content;
-      if (!content) {
-        throw new Error("No response content from OpenAI");
-      }
-
+      // Use smart fallback system: Bolls.life → API.Bible → OpenAI → GetContext
+      const verse = await bibleApiFallback.getVerse(query, version);
+      
       res.json({
         success: true,
-        text: content,
-        reference: query,
+        text: verse.text,
+        reference: verse.reference,
         version: version,
-        query: query
+        source: verse.source
       });
 
     } catch (error) {
