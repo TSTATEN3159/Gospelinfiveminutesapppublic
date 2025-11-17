@@ -34,6 +34,26 @@ class BibleApiFallback {
     'NIV': 'KJV', // Bolls doesn't have NIV, fallback to KJV
   };
 
+  // Bolls.life book name to numeric ID mapping (1-66)
+  private readonly bookNameToId: Record<string, number> = {
+    // Old Testament (1-39)
+    'Genesis': 1, 'Exodus': 2, 'Leviticus': 3, 'Numbers': 4, 'Deuteronomy': 5,
+    'Joshua': 6, 'Judges': 7, 'Ruth': 8, '1 Samuel': 9, '2 Samuel': 10,
+    '1 Kings': 11, '2 Kings': 12, '1 Chronicles': 13, '2 Chronicles': 14,
+    'Ezra': 15, 'Nehemiah': 16, 'Esther': 17, 'Job': 18, 'Psalms': 19, 'Psalm': 19,
+    'Proverbs': 20, 'Ecclesiastes': 21, 'Song of Solomon': 22, 'Song of Songs': 22,
+    'Isaiah': 23, 'Jeremiah': 24, 'Lamentations': 25, 'Ezekiel': 26, 'Daniel': 27,
+    'Hosea': 28, 'Joel': 29, 'Amos': 30, 'Obadiah': 31, 'Jonah': 32, 'Micah': 33,
+    'Nahum': 34, 'Habakkuk': 35, 'Zephaniah': 36, 'Haggai': 37, 'Zechariah': 38, 'Malachi': 39,
+    // New Testament (40-66)
+    'Matthew': 40, 'Mark': 41, 'Luke': 42, 'John': 43, 'Acts': 44,
+    'Romans': 45, '1 Corinthians': 46, '2 Corinthians': 47, 'Galatians': 48,
+    'Ephesians': 49, 'Philippians': 50, 'Colossians': 51, '1 Thessalonians': 52,
+    '2 Thessalonians': 53, '1 Timothy': 54, '2 Timothy': 55, 'Titus': 56,
+    'Philemon': 57, 'Hebrews': 58, 'James': 59, '1 Peter': 60, '2 Peter': 61,
+    '1 John': 62, '2 John': 63, '3 John': 64, 'Jude': 65, 'Revelation': 66
+  };
+
   // Version mapping for API.Bible
   private readonly apiBibleVersionMap: Record<string, string> = {
     'KJV': 'de4e12af7f28f599-01',
@@ -63,24 +83,46 @@ class BibleApiFallback {
 
   /**
    * PRIMARY: Fetch from Bolls.life (unlimited, no API key)
+   * Bolls.life requires numeric book IDs (1-66) instead of book names
    */
   private async fetchFromBolls(reference: string, version: string = 'KJV'): Promise<BibleVerse | null> {
     try {
       const bollsVersion = this.bollsVersionMap[version] || 'KJV';
       
-      // Parse reference: "John 3:16" -> book, chapter, verse
+      // Parse reference: "Romans 12:2" -> book, chapter, verse
       const parsed = this.parseReference(reference);
       if (!parsed) return null;
 
-      const url = `${this.BOLLS_BASE_URL}/get-verse/${bollsVersion}/${parsed.book}/${parsed.chapter}/${parsed.verse}/`;
+      // Get numeric book ID for Bolls.life (e.g., Romans = 45)
+      const bookId = this.bookNameToId[parsed.book];
+      if (!bookId) {
+        console.error(`Unknown book name for Bolls: "${parsed.book}" from reference "${reference}"`);
+        return null;
+      }
+
+      // Correct URL format: https://bolls.life/get-verse/KJV/45/12/2/
+      const url = `${this.BOLLS_BASE_URL}/get-verse/${bollsVersion}/${bookId}/${parsed.chapter}/${parsed.verse}/`;
       
       const response = await fetch(url);
       if (!response.ok) throw new Error(`Bolls API failed: ${response.status}`);
 
       const data = await response.json();
       
+      // Bolls may return single object or array
+      const verseData = Array.isArray(data) ? data[0] : data;
+      
+      // Clean HTML tags and Strong's numbers from verse text
+      // Bolls.life includes Strong's Concordance numbers like "And2532 be4964"
+      const cleanText = (verseData.text || verseData.verse || '')
+        .replace(/<br\s*\/?>/gi, '\n')           // Convert <br> to newlines
+        .replace(/<\/?[^>]+(>|$)/g, '')          // Remove HTML tags
+        .replace(/\d+/g, '')                      // Remove all Strong's numbers
+        .replace(/\s+/g, ' ')                     // Normalize whitespace
+        .replace(/\s+([,:;.!?])/g, '$1')         // Fix spacing before punctuation
+        .trim();
+      
       return {
-        text: data.text || data.verse,
+        text: cleanText,
         reference: `${parsed.book} ${parsed.chapter}:${parsed.verse}`,
         book: parsed.book,
         chapter: parsed.chapter.toString(),

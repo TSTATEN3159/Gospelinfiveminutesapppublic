@@ -1,0 +1,247 @@
+Yes, this is exactly what I needed 👍 — the 404 is happening because Bolls expects a **numeric book ID**, not the **book name** in the URL.
+
+Your current (failing) URL:
+
+```ts
+// ❌ This 404s:
+https://bolls.life/get-verse/KJV/Romans/12/2/
+```
+
+Bolls expects:
+
+```ts
+// ✅ Bolls expects numeric book ID, e.g. Romans = 45
+https://bolls.life/get-verse/KJV/45/12/2/
+```
+
+So we need to:
+
+1. Parse `"Romans 12:2"` → `"Romans"`, `12`, `2`
+2. Map `"Romans"` → `45` (Bolls book ID)
+3. Call `https://bolls.life/get-verse/KJV/45/12/2/`
+4. Normalize Bolls response into your existing shape.
+
+Below is a **drop-in replacement** for your `fetchFromBolls()` in
+`server/services/bibleApiFallback.ts` (lines 67–95).
+
+---
+
+## ✅ Drop-in `fetchFromBolls` for Replit
+
+```ts
+// server/services/bibleApiFallback.ts
+
+type DailyVerseResponse = {
+  success: boolean;
+  verse: {
+    text: string;
+    reference: string;
+    book: string;
+    chapter: string;
+    verse: string;
+    translation: string;
+    translationName: string;
+    date: string;
+    source: string;
+  };
+};
+
+// Map from book name -> Bolls numeric ID
+const BOOK_NAME_TO_ID: Record<string, number> = {
+  // OT
+  "Genesis": 1,
+  "Exodus": 2,
+  "Leviticus": 3,
+  "Numbers": 4,
+  "Deuteronomy": 5,
+  "Joshua": 6,
+  "Judges": 7,
+  "Ruth": 8,
+  "1 Samuel": 9,
+  "2 Samuel": 10,
+  "1 Kings": 11,
+  "2 Kings": 12,
+  "1 Chronicles": 13,
+  "2 Chronicles": 14,
+  "Ezra": 15,
+  "Nehemiah": 16,
+  "Esther": 17,
+  "Job": 18,
+  "Psalms": 19,
+  "Psalm": 19,          // handle "Psalm 23:1"
+  "Proverbs": 20,
+  "Ecclesiastes": 21,
+  "Song of Solomon": 22,
+  "Song of Songs": 22,  // extra aliases
+  "Isaiah": 23,
+  "Jeremiah": 24,
+  "Lamentations": 25,
+  "Ezekiel": 26,
+  "Daniel": 27,
+  "Hosea": 28,
+  "Joel": 29,
+  "Amos": 30,
+  "Obadiah": 31,
+  "Jonah": 32,
+  "Micah": 33,
+  "Nahum": 34,
+  "Habakkuk": 35,
+  "Zephaniah": 36,
+  "Haggai": 37,
+  "Zechariah": 38,
+  "Malachi": 39,
+  // NT
+  "Matthew": 40,
+  "Mark": 41,
+  "Luke": 42,
+  "John": 43,
+  "Acts": 44,
+  "Romans": 45,
+  "1 Corinthians": 46,
+  "2 Corinthians": 47,
+  "Galatians": 48,
+  "Ephesians": 49,
+  "Philippians": 50,
+  "Colossians": 51,
+  "1 Thessalonians": 52,
+  "2 Thessalonians": 53,
+  "1 Timothy": 54,
+  "2 Timothy": 55,
+  "Titus": 56,
+  "Philemon": 57,
+  "Hebrews": 58,
+  "James": 59,
+  "1 Peter": 60,
+  "2 Peter": 61,
+  "1 John": 62,
+  "2 John": 63,
+  "3 John": 64,
+  "Jude": 65,
+  "Revelation": 66,
+};
+
+const TRANSLATION_NAME: Record<string, string> = {
+  KJV: "King James Version",
+  WEB: "World English Bible",
+  ASV: "American Standard Version",
+  BBE: "Bible in Basic English",
+};
+
+function normalizeBookName(name: string): string {
+  return name.replace(/\s+/g, " ").trim();
+}
+
+function parseReference(ref: string): { book: string; chapter: number; verse: number } {
+  // Example ref: "Romans 12:2", "1 Corinthians 13:4"
+  const parts = ref.trim().split(" ");
+  if (parts.length < 2) {
+    throw new Error(`Invalid reference format: ${ref}`);
+  }
+
+  const last = parts[parts.length - 1]; // "12:2"
+  const bookName = parts.slice(0, -1).join(" "); // "Romans" or "1 Corinthians"
+
+  const [chapterStr, verseStr] = last.split(":");
+  const chapter = Number(chapterStr);
+  const verse = Number(verseStr);
+
+  if (!chapter || !verse) {
+    throw new Error(`Invalid chapter/verse in reference: ${ref}`);
+  }
+
+  return { book: normalizeBookName(bookName), chapter, verse };
+}
+
+function htmlToPlainText(html: string): string {
+  // Very light cleanup: strip tags and convert <br> to newlines
+  return html
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/?[^>]+(>|$)/g, "")
+    .trim();
+}
+
+// 🔹 THIS is your backup call to Bolls.life
+export async function fetchFromBolls(reference: string, version: string): Promise<DailyVerseResponse> {
+  const { book, chapter, verse } = parseReference(reference);
+
+  const bookId = BOOK_NAME_TO_ID[book];
+  if (!bookId) {
+    throw new Error(`Unknown book name for Bolls: "${book}" from reference "${reference}"`);
+  }
+
+  const translationCode = (version || "KJV").toUpperCase();
+  const translationName = TRANSLATION_NAME[translationCode] ?? translationCode;
+
+  const url = `https://bolls.life/get-verse/${translationCode}/${bookId}/${chapter}/${verse}/`;
+
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`Bolls API returned ${res.status} for ${url}`);
+  }
+
+  const json = await res.json();
+
+  // Bolls may return a single object or an array; normalize:
+  const verseData = Array.isArray(json) ? json[0] : json;
+
+  const plainText = htmlToPlainText(verseData.text ?? "");
+
+  return {
+    success: true,
+    verse: {
+      text: plainText,
+      reference, // e.g. "Romans 12:2"
+      book,      // "Romans"
+      chapter: String(chapter),
+      verse: String(verse),
+      translation: translationCode,
+      translationName,
+      date: new Date().toDateString(),
+      source: "bolls",
+    },
+  };
+}
+```
+
+---
+
+## 🔁 How this fits your existing `/api/daily-verse`
+
+Your `/api/daily-verse` controller can keep its current shape.
+When the primary `api_bible` call fails, just do something like:
+
+```ts
+import { fetchFromBolls } from "./services/bibleApiFallback";
+
+app.get("/api/daily-verse", async (req, res) => {
+  const version = (req.query.version as string) || "KJV";
+
+  try {
+    // 1️⃣ Try primary Bible API first (whatever you already have)
+    const primary = await fetchFromPrimaryBibleApi(version);
+    if (primary?.success) {
+      return res.json(primary);
+    }
+  } catch (e) {
+    console.warn("Primary Bible API failed, falling back to Bolls:", e);
+  }
+
+  try {
+    // 2️⃣ Fallback to Bolls based on the reference you want
+    // You can either:
+    //  - use a predetermined daily reference, OR
+    //  - use your own logic to choose a reference for today.
+    const fallback = await fetchFromBolls("Romans 12:2", version);
+    return res.json(fallback);
+  } catch (e) {
+    console.error("Bolls fallback failed:", e);
+    return res.status(500).json({ success: false, error: "Unable to fetch daily verse" });
+  }
+});
+```
+
+Later we can swap `"Romans 12:2"` for your **daily-verse logic** (random, by date, reading plan, etc.).
+
+---
+
+If you paste this `fetchFromBolls` into `server/services/bibleApiFallback.ts` and wire it like above, Bolls will act as a **clean backup API** that returns **exactly the same structure** your app already expects.
