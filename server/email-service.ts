@@ -1,13 +1,46 @@
-// EmailService using SendGrid integration
-import { MailService } from '@sendgrid/mail';
+// EmailService using SendGrid Replit Connector
+import sgMail from '@sendgrid/mail';
 
-if (!process.env.SENDGRID_API_KEY) {
-  console.warn("SENDGRID_API_KEY environment variable not set - email functionality will be disabled");
+let connectionSettings: any;
+
+async function getCredentials() {
+  const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME
+  const xReplitToken = process.env.REPL_IDENTITY 
+    ? 'repl ' + process.env.REPL_IDENTITY 
+    : process.env.WEB_REPL_RENEWAL 
+    ? 'depl ' + process.env.WEB_REPL_RENEWAL 
+    : null;
+
+  if (!xReplitToken) {
+    throw new Error('X_REPLIT_TOKEN not found for repl/depl');
+  }
+
+  connectionSettings = await fetch(
+    'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=sendgrid',
+    {
+      headers: {
+        'Accept': 'application/json',
+        'X_REPLIT_TOKEN': xReplitToken
+      }
+    }
+  ).then(res => res.json()).then(data => data.items?.[0]);
+
+  if (!connectionSettings || (!connectionSettings.settings.api_key || !connectionSettings.settings.from_email)) {
+    throw new Error('SendGrid not connected');
+  }
+  return {apiKey: connectionSettings.settings.api_key, email: connectionSettings.settings.from_email};
 }
 
-const mailService = new MailService();
-if (process.env.SENDGRID_API_KEY) {
-  mailService.setApiKey(process.env.SENDGRID_API_KEY);
+// WARNING: Never cache this client.
+// Access tokens expire, so a new client must be created each time.
+// Always call this function again to get a fresh client.
+async function getUncachableSendGridClient() {
+  const {apiKey, email} = await getCredentials();
+  sgMail.setApiKey(apiKey);
+  return {
+    client: sgMail,
+    fromEmail: email
+  };
 }
 
 interface EmailParams {
@@ -19,25 +52,27 @@ interface EmailParams {
 }
 
 export async function sendEmail(params: EmailParams): Promise<boolean> {
-  if (!process.env.SENDGRID_API_KEY) {
-    console.log('Email would be sent to:', params.to, 'Subject:', params.subject);
-    return true; // Return true for development/testing
-  }
-
   try {
+    const { client, fromEmail } = await getUncachableSendGridClient();
+    
     const mailData: any = {
       to: params.to,
-      from: params.from,
+      from: params.from || fromEmail, // Use configured from_email if not provided
       subject: params.subject,
     };
     
     if (params.text) mailData.text = params.text;
     if (params.html) mailData.html = params.html;
     
-    await mailService.send(mailData);
+    await client.send(mailData);
     console.log('Email sent successfully to:', params.to);
     return true;
-  } catch (error) {
+  } catch (error: any) {
+    // If SendGrid not connected, log but don't fail
+    if (error.message?.includes('SendGrid not connected')) {
+      console.log('SendGrid not connected - Email would be sent to:', params.to, 'Subject:', params.subject);
+      return true; // Return true for development/testing
+    }
     console.error('SendGrid email error:', error);
     return false;
   }
@@ -118,24 +153,32 @@ To unsubscribe, please reply to this email with "UNSUBSCRIBE"
 }
 
 export async function sendBlogUpdateEmails(subscribers: any[], articles: any[]): Promise<void> {
-  const fromEmail = "updates@thegospelin5minutes.org"; // Configure this with your verified SendGrid sender
+  try {
+    const { fromEmail } = await getUncachableSendGridClient();
 
-  for (const subscriber of subscribers) {
-    const { html, text } = createBlogUpdateEmailTemplate(subscriber.name, articles);
-    
-    try {
-      await sendEmail({
-        to: subscriber.email,
-        from: fromEmail,
-        subject: "New Spiritual Inspiration - The Gospel in 5 Minutes",
-        html,
-        text
-      });
+    for (const subscriber of subscribers) {
+      const { html, text } = createBlogUpdateEmailTemplate(subscriber.name, articles);
       
-      // Update last email sent timestamp (storage layer will handle this)
-      console.log(`Blog update email sent to ${subscriber.email}`);
-    } catch (error) {
-      console.error(`Failed to send email to ${subscriber.email}:`, error);
+      try {
+        await sendEmail({
+          to: subscriber.email,
+          from: fromEmail, // Use configured SendGrid from_email
+          subject: "New Spiritual Inspiration - The Gospel in 5 Minutes",
+          html,
+          text
+        });
+        
+        // Update last email sent timestamp (storage layer will handle this)
+        console.log(`Blog update email sent to ${subscriber.email}`);
+      } catch (error) {
+        console.error(`Failed to send email to ${subscriber.email}:`, error);
+      }
+    }
+  } catch (error: any) {
+    if (error.message?.includes('SendGrid not connected')) {
+      console.log('SendGrid not connected - Skipping email send');
+    } else {
+      console.error('Failed to send blog update emails:', error);
     }
   }
 }

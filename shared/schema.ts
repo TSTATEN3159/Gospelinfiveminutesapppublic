@@ -334,3 +334,30 @@ export const insertAbuseReportSchema = createInsertSchema(abuseReports).pick({
 
 export type InsertAbuseReport = z.infer<typeof insertAbuseReportSchema>;
 export type AbuseReport = typeof abuseReports.$inferSelect;
+
+// API Usage Log - Track external API usage for rate limiting
+export const apiUsageLog = pgTable("api_usage_log", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  service: text("service").notNull(), // 'api_bible', 'openai', 'bolls', 'getcontext'
+  endpoint: text("endpoint").notNull(), // e.g., 'gpt-4o-mini', 'verse_lookup'
+  success: boolean("success").notNull().default(true),
+  costUsd: text("cost_usd").notNull().default('0'), // Store as text for precision
+  metadata: text("metadata"), // JSON string with additional details
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    serviceCreatedIdx: index('api_usage_log_service_created_idx').on(table.service, table.createdAt),
+    createdIdx: index('api_usage_log_created_idx').on(table.createdAt),
+  };
+});
+
+export const insertApiUsageLogSchema = createInsertSchema(apiUsageLog).pick({
+  service: true,
+  endpoint: true,
+  success: true,
+  costUsd: true,
+  metadata: true,
+});
+
+export type InsertApiUsageLog = z.infer<typeof insertApiUsageLogSchema>;
+export type ApiUsageLog = typeof apiUsageLog.$inferSelect;
