@@ -5,6 +5,8 @@
 
 **Design Philosophy:** Professional polish inspired by The Bible App, featuring exclusively high-resolution stock photography throughout the entire application. All UI sections use authentic, spiritually-appropriate imagery (Bible study scenes, prayer/fellowship, pastoral landscapes, scripture reading) to create a premium, trustworthy visual experience.
 
+**API Cost Management:** Smart tiered fallback system with usage tracking - Bolls.life (unlimited, free) → API.Bible (5,000 requests/day) → OpenAI GPT-4o-mini ($85/month budget) → GetContext.xyz (backup). Real-time usage monitoring via `/api/usage-stats` endpoint. Database-backed tracking prevents overages and optimizes costs.
+
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 
@@ -69,8 +71,10 @@ Preferred communication style: Simple, everyday language.
 - **ws library**: WebSocket support.
 
 ### External APIs
-- **Bible API Integration**: For verses, cross-references, and translations.
-- **OpenAI API**: Powers AI pastor, verse simplification, and practical application generation (GPT-4o-mini).
+- **Smart Bible API Fallback Chain**: Tiered system with usage limits - (1) Bolls.life (unlimited, free, primary), (2) API.Bible (5,000 requests/day, tracked), (3) OpenAI GPT-4o-mini ($85/month budget, tracked), (4) GetContext.xyz (backup). Automatic failover ensures 99.9% uptime.
+- **API Usage Tracking**: PostgreSQL-backed usage monitoring (`api_usage_log` table) with daily/monthly limits, cost tracking, and real-time stats endpoint (`/api/usage-stats`).
+- **OpenAI API**: Powers AI pastor, verse simplification, and practical application generation (GPT-4o-mini). Usage capped at $85/month via tracker.
+- **SendGrid Email Service**: Replit connector integration for blog subscriber emails with automatic API key rotation.
 - **Translation Services**: Multi-language support.
 - **Christian Context API (GetContext.xyz)**: Provides sermon videos, advice, and biblical commentary.
 - **BibleProject (bibleproject.com)**: Provides animated Bible teaching videos via YouTube.
