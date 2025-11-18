@@ -1,0 +1,135 @@
+1️⃣ Bottom nav: change “More” → “Discipleship”
+Assuming you have something like BottomNav.tsx with five <NavLink> items, it probably looks roughly like this:
+// client/src/components/BottomNav.tsx
+import { NavLink } from "react-router-dom";
+
+export default function BottomNav() {
+  return (
+    <nav className="h-14 border-t bg-white flex items-center justify-around">
+      <NavLink to="/" className="...">Home</NavLink>
+      <NavLink to="/ask" className="...">Ask</NavLink>
+      <NavLink to="/search" className="...">Search</NavLink>
+      <NavLink to="/daily" className="...">Daily</NavLink>
+      <NavLink to="/more" className="...">More</NavLink>
+    </nav>
+  );
+}
+👉 Replace the last tab with Discipleship and point it at /discipleship:
+// client/src/components/BottomNav.tsx
+import { NavLink } from "react-router-dom";
+
+export default function BottomNav() {
+  return (
+    <nav className="h-14 border-t bg-white flex items-center justify-around">
+      <NavLink
+        to="/"
+        className={({ isActive }) =>
+          `flex flex-col items-center text-[11px] ${
+            isActive ? "text-slate-900" : "text-slate-400"
+          }`
+        }
+      >
+        <span>🏠</span>
+        <span>Home</span>
+      </NavLink>
+
+      <NavLink
+        to="/ask"
+        className={({ isActive }) =>
+          `flex flex-col items-center text-[11px] ${
+            isActive ? "text-slate-900" : "text-slate-400"
+          }`
+        }
+      >
+        <span>❓</span>
+        <span>Ask</span>
+      </NavLink>
+
+      <NavLink
+        to="/search"
+        className={({ isActive }) =>
+          `flex flex-col items-center text-[11px] ${
+            isActive ? "text-slate-900" : "text-slate-400"
+          }`
+        }
+      >
+        <span>🔍</span>
+        <span>Search</span>
+      </NavLink>
+
+      <NavLink
+        to="/daily"
+        className={({ isActive }) =>
+          `flex flex-col items-center text-[11px] ${
+            isActive ? "text-slate-900" : "text-slate-400"
+          }`
+        }
+      >
+        <span>📅</span>
+        <span>Daily</span>
+      </NavLink>
+
+      {/* ⬇️ NEW DISCIPLESHIP TAB (replaces More) */}
+      <NavLink
+        to="/discipleship"
+        className={({ isActive }) =>
+          `flex flex-col items-center text-[11px] ${
+            isActive ? "text-slate-900" : "text-slate-400"
+          }`
+        }
+      >
+        <span>🌱</span>
+        <span>Discipleship</span>
+      </NavLink>
+    </nav>
+  );
+}
+Use whatever icon you want (🌱 is just a placeholder for “growth”).
+2️⃣ Make sure the Discipleship routes are registered
+With the tab pointing to /discipleship, you need the routes we created earlier wired into your router:
+// client/src/AppRoutes.tsx (or wherever your <Routes> live)
+
+import { Routes, Route } from "react-router-dom";
+import DiscipleshipScreen from "./features/discipleship/DiscipleshipScreen";
+import DiscipleshipPlanScreen from "./features/discipleship/DiscipleshipPlanScreen";
+import DiscipleshipReadingScreen from "./features/discipleship/DiscipleshipReadingScreen";
+// plus your other imports: Home, Ask, Search, Daily, etc.
+
+export function AppRoutes() {
+  return (
+    <Routes>
+      <Route path="/" element={<HomeScreen />} />
+      <Route path="/ask" element={<AskScreen />} />
+      <Route path="/search" element={<SearchScreen />} />
+      <Route path="/daily" element={<DailyScreen />} />
+
+      {/* ⬇️ NEW DISCIPLESHIP ROUTES */}
+      <Route path="/discipleship" element={<DiscipleshipScreen />} />
+      <Route path="/discipleship/plans/:planId" element={<DiscipleshipPlanScreen />} />
+      <Route
+        path="/discipleship/plans/:planId/day/:dayNumber/item/:itemId"
+        element={<DiscipleshipReadingScreen />}
+      />
+
+      {/* you can keep a /more route if you still use it somewhere else, 
+         but it won't be in the bottom nav anymore */}
+      {/* <Route path="/more" element={<MoreScreen />} /> */}
+    </Routes>
+  );
+}
+Once this is in place:
+Tap Discipleship tab → you see the list of smaller tiles
+Tap “Am I Going to Heaven or Hell?” → you see the Day selector + Devotional + Scriptures list
+Tap “Devotional” or a Scripture → you see the full reading page with explanation and (optionally) Bible text from your API
+3️⃣ About “hooked to an API” for Scriptures
+For these plans:
+✅ Devotional + explanation text → stored in your own code / backend (what we already did).
+✅ Bible verse text → safest is your own endpoint that calls the Bible API (with Bolls as backup) like we set up earlier.
+That way if the Bible API ever has issues:
+Your discipleship pages still load
+You can show the reference + your explanation
+You can show a friendly “Unable to load full verse text right now” message instead of breaking the whole screen
+Quick recap
+There’s no hard 5-tab limit — you just had all 5 already in use.
+To see Discipleship at the bottom, you swap More → Discipleship in BottomNav.tsx.
+The routes we built earlier make “Am I going to Heaven or Hell?” your first plan, using tiles like in your screenshots but with your own style and ownership.
