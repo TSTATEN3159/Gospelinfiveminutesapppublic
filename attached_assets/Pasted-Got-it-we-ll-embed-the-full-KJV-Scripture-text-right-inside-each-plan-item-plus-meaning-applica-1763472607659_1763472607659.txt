@@ -1,0 +1,853 @@
+Got it — we’ll embed the full KJV Scripture text right inside each plan item, plus meaning + application, and I’ll show you a forward/back navigation pattern that lets users move through the day’s Scriptures and then advance to the next day.
+Because this can get very long, I’m going to:
+Give you the navigation UI code (forward/back + next-day).
+Give you Plan 16 (Identity in Christ) fully updated in the new format.
+Give you Plan 17 (Overcoming Fear & Anxiety) fully in the new format.
+Replit can then copy this exact pattern to Plans 18–25 so it doesn’t become one giant, unmanageable file.
+1️⃣ Forward / Back + Next Day navigation
+This assumes each day has an items array (devotional + scriptures), like we’ve been building.
+// client/src/features/discipleship/DiscipleshipDayScreen.tsx
+
+import { useState, useMemo } from "react";
+import { DiscipleshipPlan, DiscipleshipPlanItem } from "./discipleshipPlans";
+import { Button } from "@/components/ui/button";
+
+interface Props {
+  plan: DiscipleshipPlan;
+  dayNumber: number;
+  onGoToDay: (dayNumber: number) => void;
+  onPlanCompleted?: () => void;
+}
+
+export function DiscipleshipDayScreen({
+  plan,
+  dayNumber,
+  onGoToDay,
+  onPlanCompleted,
+}: Props) {
+  const day = useMemo(
+    () => plan.days.find((d) => d.dayNumber === dayNumber),
+    [plan, dayNumber]
+  );
+
+  const [index, setIndex] = useState(0);
+
+  if (!day) {
+    return (
+      <div className="p-4">
+        <p className="text-sm text-slate-500">Day not found.</p>
+      </div>
+    );
+  }
+
+  const totalItems = day.items.length;
+  const currentItem: DiscipleshipPlanItem = day.items[index];
+
+  const isFirst = index === 0;
+  const isLast = index === totalItems - 1;
+  const isLastDay = dayNumber === plan.days[plan.days.length - 1].dayNumber;
+
+  const handleNext = () => {
+    if (!isLast) {
+      setIndex((i) => i + 1);
+    }
+  };
+
+  const handleBack = () => {
+    if (!isFirst) {
+      setIndex((i) => i - 1);
+    }
+  };
+
+  const handleNextDay = () => {
+    const nextDay = dayNumber + 1;
+    if (nextDay <= plan.days.length) {
+      onGoToDay(nextDay);
+    } else {
+      onPlanCompleted?.();
+    }
+  };
+
+  return (
+    <div className="flex flex-col h-full px-4 pb-6 pt-4">
+      {/* Progress header */}
+      <div className="mb-3">
+        <div className="text-xs text-slate-500">
+          {plan.title} · Day {day.dayNumber} of {plan.days.length}
+        </div>
+        <div className="h-1 mt-1 rounded-full bg-slate-200 overflow-hidden">
+          <div
+            className="h-full bg-slate-900 transition-all"
+            style={{ width: `${((index + 1) / totalItems) * 100}%` }}
+          />
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto">
+        {currentItem.type === "devotional" && (
+          <div>
+            <h2 className="text-lg font-semibold mb-2">
+              {currentItem.title}
+            </h2>
+            <div className="prose prose-sm max-w-none">
+              {currentItem.body.split("\n").map((line, idx) => (
+                <p key={idx}>{line}</p>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {currentItem.type === "scripture" && (
+          <div>
+            <h2 className="text-base font-semibold mb-1">
+              {currentItem.title}
+            </h2>
+            <p className="text-xs text-slate-500 mb-1">
+              {currentItem.reference} · KJV
+            </p>
+            <div className="prose prose-sm max-w-none whitespace-pre-line">
+              {currentItem.body}
+            </div>
+          </div>
+        )}
+      </div>
+
+      {/* Navigation buttons */}
+      <div className="mt-4 flex items-center justify-between gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          disabled={isFirst}
+          onClick={handleBack}
+          className="flex-1"
+        >
+          Back
+        </Button>
+
+        {!isLast && (
+          <Button
+            size="sm"
+            onClick={handleNext}
+            className="flex-1"
+          >
+            Next
+          </Button>
+        )}
+
+        {isLast && (
+          <Button
+            size="sm"
+            onClick={handleNextDay}
+            className="flex-1"
+          >
+            {isLastDay ? "Finish Plan" : "Next Day"}
+          </Button>
+        )}
+      </div>
+    </div>
+  );
+}
+Replit can hook onGoToDay up to your navigator/router and record progress when a day is completed.
+2️⃣ PLAN 16 – Identity in Christ (updated with full Scripture text)
+Here’s the full plan object using your chosen compact format (A):
+{
+  id: "identity-in-christ",
+  title: "Identity in Christ",
+  subtitle: "Seeing yourself the way God sees you",
+  imageUrl: "/images/plans/identity-in-christ.jpg",
+  days: [
+    // DAY 1 --------------------------------------------
+    {
+      dayNumber: 1,
+      title: "From Guilty to Forgiven",
+      items: [
+        {
+          id: "ic-d1-devotional",
+          type: "devotional",
+          title: "Day 1 — From Guilty to Forgiven",
+          body: `
+Your identity no longer begins with failure or shame. Because of Jesus, you stand forgiven. God sees you as washed clean—not partially, but totally. The cross didn’t make you “fixable”; it made you accepted.
+
+Every time guilt tries to shout, the blood of Jesus speaks a better word: “Paid in full.”
+
+**Reflection:** What guilt still tries to define who you are?
+
+**Prayer:** Jesus, thank You that my sin and shame do not define me. Help me believe I am truly forgiven.
+
+**Shareable Truth:** “My past is paid for. I am free.”
+          `.trim(),
+        },
+        {
+          id: "ic-d1-rom8-1",
+          type: "scripture",
+          title: "No Condemnation",
+          reference: "Romans 8:1",
+          body: `
+**Scripture (KJV)**  
+> “There is therefore now no condemnation to them which are in Christ Jesus,  
+> who walk not after the flesh, but after the Spirit.”
+
+**Meaning:** In Christ, the guilty verdict over your life is gone.  
+**Application:** When condemnation speaks, answer with this verse—God has already ruled in your favor.
+          `.trim(),
+        },
+        {
+          id: "ic-d1-ps103-12",
+          type: "scripture",
+          title: "Removed Forever",
+          reference: "Psalm 103:12",
+          body: `
+**Scripture (KJV)**  
+> “As far as the east is from the west,  
+> so far hath he removed our transgressions from us.”
+
+**Meaning:** God doesn’t keep your sins close; He puts them out of reach.  
+**Application:** Stop dragging back what God has carried away.
+          `.trim(),
+        },
+        {
+          id: "ic-d1-col2-13-14",
+          type: "scripture",
+          title: "Debt Canceled",
+          reference: "Colossians 2:13–14",
+          body: `
+**Scripture (KJV)**  
+> “And you, being dead in your sins and the uncircumcision of your flesh,  
+> hath he quickened together with him, having forgiven you all trespasses;  
+> Blotting out the handwriting of ordinances that was against us,  
+> which was contrary to us, and took it out of the way, nailing it to his cross.”
+
+**Meaning:** Every charge against you was nailed to the cross with Jesus.  
+**Application:** Live as someone whose record before God is clean.
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 2 --------------------------------------------
+    {
+      dayNumber: 2,
+      title: "From Orphan to Child of God",
+      items: [
+        {
+          id: "ic-d2-devotional",
+          type: "devotional",
+          title: "Day 2 — From Orphan to Child of God",
+          body: `
+You are not spiritually homeless. In Christ, God has adopted you into His family. You belong to a Father who will never abandon you.
+
+Your prayer life is not begging a stranger—it’s talking to your Father.
+
+**Reflection:** How would your prayers change if you truly believed God delights to hear you?
+
+**Prayer:** Father, help me live like a loved child, not an orphan trying to earn a home.
+
+**Shareable Truth:** “I am fully known and fully loved by my Father.”
+          `.trim(),
+        },
+        {
+          id: "ic-d2-john1-12",
+          type: "scripture",
+          title: "Given the Right",
+          reference: "John 1:12",
+          body: `
+**Scripture (KJV)**  
+> “But as many as received him, to them gave he power to become the sons of God,  
+> even to them that believe on his name.”
+
+**Meaning:** Trusting in Jesus makes you part of God’s family.  
+**Application:** Your deepest identity is “child of God,” not your job, past, or failures.
+          `.trim(),
+        },
+        {
+          id: "ic-d2-rom8-15-16",
+          type: "scripture",
+          title: "Adopted & Secure",
+          reference: "Romans 8:15–16",
+          body: `
+**Scripture (KJV)**  
+> “For ye have not received the spirit of bondage again to fear;  
+> but ye have received the Spirit of adoption, whereby we cry, Abba, Father.  
+> The Spirit itself beareth witness with our spirit, that we are the children of God.”
+
+**Meaning:** The Holy Spirit reassures your heart that you truly belong to God.  
+**Application:** When fear says “God has left you,” remember the Spirit says, “You are His child.”
+          `.trim(),
+        },
+        {
+          id: "ic-d2-1john3-1",
+          type: "scripture",
+          title: "Lavished Love",
+          reference: "1 John 3:1",
+          body: `
+**Scripture (KJV)**  
+> “Behold, what manner of love the Father hath bestowed upon us,  
+> that we should be called the sons of God…”
+
+**Meaning:** Being God’s child is proof of how great His love is.  
+**Application:** Measure your worth by the Father’s love, not people’s opinions.
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 3 --------------------------------------------
+    {
+      dayNumber: 3,
+      title: "From Slave to Free",
+      items: [
+        {
+          id: "ic-d3-devotional",
+          type: "devotional",
+          title: "Day 3 — From Slave to Free",
+          body: `
+Sin once owned you, but not anymore. Jesus didn’t just forgive your past; He broke sin’s power over your present.
+
+You are not fighting for freedom; you are fighting from the freedom Christ already gave you.
+
+**Reflection:** What old habit still talks to you like you’re its slave?
+
+**Prayer:** Lord, help me think and walk as someone truly freed by Christ.
+
+**Shareable Truth:** “Sin is no longer my master—Jesus is.”
+          `.trim(),
+        },
+        {
+          id: "ic-d3-rom6-6-7",
+          type: "scripture",
+          title: "Old Self Crucified",
+          reference: "Romans 6:6–7",
+          body: `
+**Scripture (KJV)**  
+> “Knowing this, that our old man is crucified with him,  
+> that the body of sin might be destroyed,  
+> that henceforth we should not serve sin.  
+> For he that is dead is freed from sin.”
+
+**Meaning:** Your old “sin-ruled self” was nailed to the cross with Jesus.  
+**Application:** You don’t have to obey sin anymore—say “no” as someone already free.
+          `.trim(),
+        },
+        {
+          id: "ic-d3-gal5-1",
+          type: "scripture",
+          title: "Stand Firm in Freedom",
+          reference: "Galatians 5:1",
+          body: `
+**Scripture (KJV)**  
+> “Stand fast therefore in the liberty wherewith Christ hath made us free,  
+> and be not entangled again with the yoke of bondage.”
+
+**Meaning:** Christ freed you so you could live free, not go back to chains.  
+**Application:** Don’t play with patterns you know once enslaved you.
+          `.trim(),
+        },
+        {
+          id: "ic-d3-john8-36",
+          type: "scripture",
+          title: "Free Indeed",
+          reference: "John 8:36",
+          body: `
+**Scripture (KJV)**  
+> “If the Son therefore shall make you free, ye shall be free indeed.”
+
+**Meaning:** Jesus gives real, not imaginary, freedom.  
+**Application:** When you feel stuck, remind yourself: Christ’s freedom is stronger than this bondage.
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 4 --------------------------------------------
+    {
+      dayNumber: 4,
+      title: "From Broken to New Creation",
+      items: [
+        {
+          id: "ic-d4-devotional",
+          type: "devotional",
+          title: "Day 4 — From Broken to New Creation",
+          body: `
+God doesn’t just glue the old life back together. In Christ, He has made you a new creation. Broken pieces are not your final story.
+
+You may feel your old struggles, but God calls you by your new name.
+
+**Reflection:** What “old label” do you need to let go of today?
+
+**Prayer:** Lord, help me believe what You say about me more than what my past says.
+
+**Shareable Truth:** “In Jesus, I am not just repaired—I am new.”
+          `.trim(),
+        },
+        {
+          id: "ic-d4-2cor5-17",
+          type: "scripture",
+          title: "New Creation Reality",
+          reference: "2 Corinthians 5:17",
+          body: `
+**Scripture (KJV)**  
+> “Therefore if any man be in Christ, he is a new creature:  
+> old things are passed away; behold, all things are become new.”
+
+**Meaning:** Being in Christ means your deepest identity has changed.  
+**Application:** Let “new creation” be the first label you wear today.
+          `.trim(),
+        },
+        {
+          id: "ic-d4-ezek36-26",
+          type: "scripture",
+          title: "A New Heart",
+          reference: "Ezekiel 36:26",
+          body: `
+**Scripture (KJV)**  
+> “A new heart also will I give you, and a new spirit will I put within you:  
+> and I will take away the stony heart out of your flesh,  
+> and I will give you an heart of flesh.”
+
+**Meaning:** God gives you a heart that can respond to Him.  
+**Application:** Ask God to soften any hard place in your heart today.
+          `.trim(),
+        },
+        {
+          id: "ic-d4-phil1-6",
+          type: "scripture",
+          title: "He Finishes His Work",
+          reference: "Philippians 1:6",
+          body: `
+**Scripture (KJV)**  
+> “Being confident of this very thing,  
+> that he which hath begun a good work in you  
+> will perform it until the day of Jesus Christ.”
+
+**Meaning:** The God who started His work in you will not abandon it.  
+**Application:** Trust that your growth is God’s ongoing project, not just yours.
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 5 --------------------------------------------
+    {
+      dayNumber: 5,
+      title: "Living Out Your New Identity",
+      items: [
+        {
+          id: "ic-d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Living Out Your New Identity",
+          body: `
+Identity leads to obedience—not the other way around. You don’t live holy to become someone; you live holy because you already are someone in Christ.
+
+You are walking out on the outside what God has already done on the inside.
+
+**Reflection:** What one habit do you sense God asking you to change to match your new identity?
+
+**Prayer:** Father, let my choices today match who You say I am in Christ.
+
+**Shareable Truth:** “I live from identity, not for identity.”
+          `.trim(),
+        },
+        {
+          id: "ic-d5-col3-1-3",
+          type: "scripture",
+          title: "Set Your Mind Above",
+          reference: "Colossians 3:1–3",
+          body: `
+**Scripture (KJV)**  
+> “If ye then be risen with Christ, seek those things which are above,  
+> where Christ sitteth on the right hand of God.  
+> Set your affection on things above, not on things on the earth.  
+> For ye are dead, and your life is hid with Christ in God.”
+
+**Meaning:** Your true life is tied to Christ in heaven, not to earth.  
+**Application:** Aim your thoughts and desires where your real life is—on Christ.
+          `.trim(),
+        },
+        {
+          id: "ic-d5-eph4-22-24",
+          type: "scripture",
+          title: "Put On the New Self",
+          reference: "Ephesians 4:22–24",
+          body: `
+**Scripture (KJV)**  
+> “That ye put off concerning the former conversation the old man,  
+> which is corrupt according to the deceitful lusts;  
+> And be renewed in the spirit of your mind;  
+> And that ye put on the new man,  
+> which after God is created in righteousness and true holiness.”
+
+**Meaning:** You actively lay aside old patterns and choose the new life God created you for.  
+**Application:** Identify one “old self” pattern today and deliberately “put it off.”
+          `.trim(),
+        },
+        {
+          id: "ic-d5-1pet2-9",
+          type: "scripture",
+          title: "Chosen & Called",
+          reference: "1 Peter 2:9",
+          body: `
+**Scripture (KJV)**  
+> “But ye are a chosen generation, a royal priesthood, an holy nation,  
+> a peculiar people; that ye should shew forth the praises of him  
+> who hath called you out of darkness into his marvellous light.”
+
+**Meaning:** God chose you to belong to Him and to display His glory.  
+**Application:** Step into today as someone brought from darkness into light—on purpose.
+          `.trim(),
+        },
+      ],
+    },
+  ],
+}
+3️⃣ PLAN 17 – Overcoming Fear and Anxiety (full, format A)
+Here’s Plan 17 in the same structure with embedded KJV verses:
+{
+  id: "overcoming-fear-and-anxiety",
+  title: "Overcoming Fear and Anxiety",
+  subtitle: "Learning to trust God with what scares you",
+  imageUrl: "/images/plans/overcoming-fear-and-anxiety.jpg",
+  days: [
+    // DAY 1 --------------------------------------------
+    {
+      dayNumber: 1,
+      title: "Naming Your Fears",
+      items: [
+        {
+          id: "ofa-d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Naming Your Fears",
+          body: `
+Fear grows in the dark. God invites you to bring your fears into His light. He already knows what keeps you up at night.
+
+Faith doesn’t mean you never feel afraid; it means you carry fear to a faithful God.
+
+**Reflection:** What fear do you need to say aloud in prayer today?
+
+**Prayer:** Lord, I bring my fears to You instead of carrying them alone.
+
+**Shareable Truth:** “Faith doesn’t hide fear — it hands fear to God.”
+          `.trim(),
+        },
+        {
+          id: "ofa-d1-ps56-3-4",
+          type: "scripture",
+          title: "When I Am Afraid",
+          reference: "Psalm 56:3–4",
+          body: `
+**Scripture (KJV)**  
+> “What time I am afraid, I will trust in thee.  
+> In God I will praise his word, in God I have put my trust;  
+> I will not fear what flesh can do unto me.”
+
+**Meaning:** Fear loses its grip when you choose to trust God.  
+**Application:** Each time fear rises today, whisper: “I will trust in You.”
+          `.trim(),
+        },
+        {
+          id: "ofa-d1-ps34-4",
+          type: "scripture",
+          title: "He Heard and Delivered",
+          reference: "Psalm 34:4",
+          body: `
+**Scripture (KJV)**  
+> “I sought the Lord, and he heard me,  
+> and delivered me from all my fears.”
+
+**Meaning:** God listens when you bring your fears honestly to Him.  
+**Application:** Turn one anxious thought into a direct, simple prayer right now.
+          `.trim(),
+        },
+        {
+          id: "ofa-d1-isa41-10",
+          type: "scripture",
+          title: "Do Not Fear, I Am With You",
+          reference: "Isaiah 41:10",
+          body: `
+**Scripture (KJV)**  
+> “Fear thou not; for I am with thee: be not dismayed; for I am thy God:  
+> I will strengthen thee; yea, I will help thee; yea, I will uphold thee  
+> with the right hand of my righteousness.”
+
+**Meaning:** God’s presence and help are stronger than what you fear.  
+**Application:** When panic whispers “you’re alone,” answer with this promise.
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 2 --------------------------------------------
+    {
+      dayNumber: 2,
+      title: "Anxiety and the Peace of God",
+      items: [
+        {
+          id: "ofa-d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Anxiety and the Peace of God",
+          body: `
+Anxiety often lives in the “what ifs” of tomorrow. God invites you to bring every concern to Him with prayer and thanksgiving. His peace doesn’t always change your situation, but it changes your heart in the situation.
+
+You fight anxious thoughts by filling your mind with the presence and promises of God.
+
+**Reflection:** What worry can you name and turn into a specific prayer today?
+
+**Prayer:** Lord, instead of replaying my worries, teach me to release them to You.
+
+**Shareable Truth:** “God’s peace guards what anxiety tries to steal.”
+          `.trim(),
+        },
+        {
+          id: "ofa-d2-phil4-6-7",
+          type: "scripture",
+          title: "Prayer Instead of Panic",
+          reference: "Philippians 4:6–7",
+          body: `
+**Scripture (KJV)**  
+> “Be careful for nothing; but in every thing by prayer and supplication  
+> with thanksgiving let your requests be made known unto God.  
+> And the peace of God, which passeth all understanding,  
+> shall keep your hearts and minds through Christ Jesus.”
+
+**Meaning:** Bringing everything to God opens your heart to His guarding peace.  
+**Application:** When anxiety builds, pause and pray specifically instead of spiraling.
+          `.trim(),
+        },
+        {
+          id: "ofa-d2-1pet5-7",
+          type: "scripture",
+          title: "Casting Your Cares",
+          reference: "1 Peter 5:7",
+          body: `
+**Scripture (KJV)**  
+> “Casting all your care upon him; for he careth for you.”
+
+**Meaning:** God personally cares about what burdens you.  
+**Application:** Picture placing your worry in God’s hands and leaving it there.
+          `.trim(),
+        },
+        {
+          id: "ofa-d2-matt6-34",
+          type: "scripture",
+          title: "Tomorrow in God’s Hands",
+          reference: "Matthew 6:34",
+          body: `
+**Scripture (KJV)**  
+> “Take therefore no thought for the morrow:  
+> for the morrow shall take thought for the things of itself.  
+> Sufficient unto the day is the evil thereof.”
+
+**Meaning:** Today has enough in it already; don’t live trapped in tomorrow’s fears.  
+**Application:** Ask God for grace for **today**, trusting Him with tomorrow.
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 3 --------------------------------------------
+    {
+      dayNumber: 3,
+      title: "Fear of People or Fear of God?",
+      items: [
+        {
+          id: "ofa-d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Fear of People or Fear of God?",
+          body: `
+So much anxiety comes from worrying what people think about you. The Bible calls this the “fear of man.” It is a trap. The way out is not to stop caring about people, but to care most about what God thinks.
+
+When God’s opinion is biggest in your heart, people lose their power to control you.
+
+**Reflection:** Whose opinion has grown too large in your heart lately?
+
+**Prayer:** Lord, teach me to care more about pleasing You than impressing people.
+
+**Shareable Truth:** “The more I fear God, the less I fear people.”
+          `.trim(),
+        },
+        {
+          id: "ofa-d3-prov29-25",
+          type: "scripture",
+          title: "Snare or Safety",
+          reference: "Proverbs 29:25",
+          body: `
+**Scripture (KJV)**  
+> “The fear of man bringeth a snare:  
+> but whoso putteth his trust in the Lord shall be safe.”
+
+**Meaning:** Living for people’s approval traps you; trusting God protects you.  
+**Application:** Ask yourself today: “Am I doing this to please God or impress people?”
+          `.trim(),
+        },
+        {
+          id: "ofa-d3-matt10-28",
+          type: "scripture",
+          title: "Whom to Fear",
+          reference: "Matthew 10:28",
+          body: `
+**Scripture (KJV)**  
+> “And fear not them which kill the body, but are not able to kill the soul:  
+> but rather fear him which is able to destroy both soul and body in hell.”
+
+**Meaning:** God alone has ultimate authority over your soul.  
+**Application:** Let the reality of God’s authority free you from being ruled by human opinions.
+          `.trim(),
+        },
+        {
+          id: "ofa-d3-gal1-10",
+          type: "scripture",
+          title: "God-Pleaser, Not Man-Pleaser",
+          reference: "Galatians 1:10",
+          body: `
+**Scripture (KJV)**  
+> “For do I now persuade men, or God? or do I seek to please men?  
+> for if I yet pleased men, I should not be the servant of Christ.”
+
+**Meaning:** You can’t live for people’s approval and truly serve Christ at the same time.  
+**Application:** Choose one area today where you will obey God even if people don’t applaud.
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 4 --------------------------------------------
+    {
+      dayNumber: 4,
+      title: "God’s Presence in the Storm",
+      items: [
+        {
+          id: "ofa-d4-devotional",
+          type: "devotional",
+          title: "Day 4 — God’s Presence in the Storm",
+          body: `
+God never promised a life without storms, but He did promise His presence in the middle of them. Jesus doesn’t stand far away; He steps into the boat with you.
+
+The waves may still rise, but the One who controls them is with you.
+
+**Reflection:** Where do you most need to remember that Jesus is “in the boat” with you?
+
+**Prayer:** Jesus, thank You that You are with me in every storm I face.
+
+**Shareable Truth:** “Peace is not the absence of storms, but the presence of Jesus.”
+          `.trim(),
+        },
+        {
+          id: "ofa-d4-mark4-39-40",
+          type: "scripture",
+          title: "Peace, Be Still",
+          reference: "Mark 4:39–40",
+          body: `
+**Scripture (KJV)**  
+> “And he arose, and rebuked the wind, and said unto the sea,  
+> Peace, be still. And the wind ceased, and there was a great calm.  
+> And he said unto them, Why are ye so fearful? how is it that ye have no faith?”
+
+**Meaning:** Jesus has authority over what terrifies you.  
+**Application:** Ask Him to speak “Peace, be still” over your troubled heart.
+          `.trim(),
+        },
+        {
+          id: "ofa-d4-ps23-4",
+          type: "scripture",
+          title: "Valley Without Abandonment",
+          reference: "Psalm 23:4",
+          body: `
+**Scripture (KJV)**  
+> “Yea, though I walk through the valley of the shadow of death,  
+> I will fear no evil: for thou art with me;  
+> thy rod and thy staff they comfort me.”
+
+**Meaning:** Even in the darkest seasons, God is with you as Shepherd.  
+**Application:** Picture God walking beside you in the very place you feel most afraid.
+          `.trim(),
+        },
+        {
+          id: "ofa-d4-isa43-2",
+          type: "scripture",
+          title: "Through Waters and Fire",
+          reference: "Isaiah 43:2",
+          body: `
+**Scripture (KJV)**  
+> “When thou passest through the waters, I will be with thee;  
+> and through the rivers, they shall not overflow thee:  
+> when thou walkest through the fire, thou shalt not be burned;  
+> neither shall the flame kindle upon thee.”
+
+**Meaning:** Trials will come, but they will not have the last word over you.  
+**Application:** Hold this verse as a banner over whatever you are “passing through.”
+          `.trim(),
+        },
+      ],
+    },
+
+    // DAY 5 --------------------------------------------
+    {
+      dayNumber: 5,
+      title: "Practicing Peace Daily",
+      items: [
+        {
+          id: "ofa-d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Practicing Peace Daily",
+          body: `
+Peace is not a one-time moment; it is a daily practice of turning your mind back to God. You train your heart to look up instead of only around.
+
+Anxiety may knock, but you don’t have to invite it in to stay.
+
+**Reflection:** What small daily rhythm could you build to re-center your heart on God’s peace?
+
+**Prayer:** Lord, teach me to return my mind to You again and again each day.
+
+**Shareable Truth:** “When anxiety knocks, I answer the door with God’s promises.”
+          `.trim(),
+        },
+        {
+          id: "ofa-d5-isa26-3",
+          type: "scripture",
+          title: "Stayed on Him",
+          reference: "Isaiah 26:3",
+          body: `
+**Scripture (KJV)**  
+> “Thou wilt keep him in perfect peace, whose mind is stayed on thee:  
+> because he trusteth in thee.”
+
+**Meaning:** Peace grows where the mind is fixed on God in trust.  
+**Application:** Catch your thoughts wandering and gently turn them back to Him.
+          `.trim(),
+        },
+        {
+          id: "ofa-d5-col3-15",
+          type: "scripture",
+          title: "Let Peace Rule",
+          reference: "Colossians 3:15",
+          body: `
+**Scripture (KJV)**  
+> “And let the peace of God rule in your hearts,  
+> to the which also ye are called in one body; and be ye thankful.”
+
+**Meaning:** God’s peace is meant to be the “referee” in your heart.  
+**Application:** When anxiety and peace both speak, choose to let peace rule.
+          `.trim(),
+        },
+        {
+          id: "ofa-d5-john14-27",
+          type: "scripture",
+          title: "Jesus’ Kind of Peace",
+          reference: "John 14:27",
+          body: `
+**Scripture (KJV)**  
+> “Peace I leave with you, my peace I give unto you: not as the world giveth,  
+> give I unto you. Let not your heart be troubled, neither let it be afraid.”
+
+**Meaning:** Jesus gives a peace the world cannot give and cannot take away.  
+**Application:** Tell your heart, in His name: “Do not be troubled or afraid.”
+          `.trim(),
+        },
+      ],
+    },
+  ],
+}
+If you’d like, Replit can now:
+Paste these two plan objects into DISCIPLESHIP_PLANS.
+Use the navigation component above to give you forward/back + “Next Day.”
+Then copy this exact devotional + three full Scriptures pattern for Plans 18–25 so it all stays consistent.
