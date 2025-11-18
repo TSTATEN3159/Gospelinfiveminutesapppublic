@@ -309,7 +309,7 @@ function MainApp() {
                 onNavigate={handleNavigate}
               />;
             case "discipleship-list":
-              return <DiscipleshipListPage onNavigate={handleNavigate} language={language} />;
+              return <DiscipleshipListPage onNavigate={handleNavigate} language={language} streakDays={streakDays} />;
             case "discipleship-plan":
               const planParams = (pageParams["discipleship-plan"] || {}) as { planId?: string };
               return <DiscipleshipPlanDetailPage planId={planParams.planId || ""} onNavigate={handleNavigate} />;
@@ -343,9 +343,9 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-list", "discipleship-plan", "discipleship-reading"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-plan", "discipleship-reading"].includes(currentPage) && (
                 <BottomNavigation 
-                  currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
+                  currentPage={currentPage as "home" | "ask" | "search" | "daily" | "discipleship-list"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
                 />
               )}

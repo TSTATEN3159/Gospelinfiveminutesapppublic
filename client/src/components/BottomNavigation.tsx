@@ -1,7 +1,7 @@
-import { Home, Book, Search, Calendar, MoreHorizontal } from "lucide-react";
+import { Home, Book, Search, Calendar, Sprout } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-type NavPage = "home" | "ask" | "search" | "daily" | "more";
+type NavPage = "home" | "ask" | "search" | "daily" | "discipleship-list";
 
 interface BottomNavigationProps {
   currentPage: NavPage;
@@ -14,7 +14,7 @@ export default function BottomNavigation({ currentPage, onPageChange }: BottomNa
     { id: "ask" as const, icon: Book, label: "Ask" },
     { id: "search" as const, icon: Search, label: "Search" },
     { id: "daily" as const, icon: Calendar, label: "Daily" },
-    { id: "more" as const, icon: MoreHorizontal, label: "More" },
+    { id: "discipleship-list" as const, icon: Sprout, label: "Discipleship" },
   ];
 
   return (
