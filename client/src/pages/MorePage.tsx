@@ -194,8 +194,8 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
           verseText={currentDisciplesVerse.text}
           step={currentDisciplesVerse.step}
           onClick={() => {
-            // Navigate to dedicated Disciples of Christ page
-            onNavigate?.('disciples-of-christ');
+            // Navigate to discipleship plans list
+            onNavigate?.('discipleship-list');
           }}
         />
 

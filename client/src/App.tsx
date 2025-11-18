@@ -48,7 +48,9 @@ import InstantApplicationPage from "./pages/InstantApplicationPage";
 import VoiceSettingsPage from "./pages/VoiceSettingsPage";
 import TopicSearchPage from "./pages/TopicSearchPage";
 import ScriptureImagePage from "./pages/ScriptureImagePage";
-import DisciplesOfChristPage from "./pages/DisciplesOfChristPage";
+import DiscipleshipListPage from "./pages/DiscipleshipListPage";
+import DiscipleshipPlanDetailPage from "./pages/DiscipleshipPlanDetailPage";
+import DiscipleshipReadingPage from "./pages/DiscipleshipReadingPage";
 import { BibleVersionCode } from "./config/bibleVersions";
 
 interface User {
@@ -61,12 +63,14 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "disciples-of-christ";
+type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading";
 
 // Type-safe navigation params for each page
 type AppPageParams = {
   search?: { query?: string };
   "image-scripture"?: { reference?: string; text?: string; version?: BibleVersionCode };
+  "discipleship-plan"?: { planId: string };
+  "discipleship-reading"?: { planId: string; dayNumber: number; itemId: string };
 };
 
 function MainApp() {
@@ -194,7 +198,7 @@ function MainApp() {
   };
 
   const handleNavigate = (page: string, params?: any) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "disciples-of-christ"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       
@@ -304,8 +308,19 @@ function MainApp() {
                 initialVersion={imageParams.version}
                 onNavigate={handleNavigate}
               />;
-            case "disciples-of-christ":
-              return <DisciplesOfChristPage onBack={handleBackFromLegal} language={language} />;
+            case "discipleship-list":
+              return <DiscipleshipListPage onNavigate={handleNavigate} language={language} />;
+            case "discipleship-plan":
+              const planParams = (pageParams["discipleship-plan"] || {}) as { planId?: string };
+              return <DiscipleshipPlanDetailPage planId={planParams.planId || ""} onNavigate={handleNavigate} />;
+            case "discipleship-reading":
+              const readingParams = (pageParams["discipleship-reading"] || {}) as { planId?: string; dayNumber?: number; itemId?: string };
+              return <DiscipleshipReadingPage 
+                planId={readingParams.planId || ""}
+                dayNumber={readingParams.dayNumber || 1}
+                itemId={readingParams.itemId || ""}
+                onNavigate={handleNavigate}
+              />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -328,7 +343,7 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "disciples-of-christ"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-list", "discipleship-plan", "discipleship-reading"].includes(currentPage) && (
                 <BottomNavigation 
                   currentPage={currentPage as "home" | "ask" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
