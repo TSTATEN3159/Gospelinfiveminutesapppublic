@@ -1,3 +1,6 @@
+import heavenCloudsImage from '@assets/stock_images/heaven_clouds_eterna_9fe3749f.jpg';
+import worshipHandsImage from '@assets/stock_images/church_worship_hands_478f58d8.jpg';
+import prayerSupportImage from '@assets/stock_images/hands_helping_prayer_2e8063e8.jpg';
 import groupPrayerImage from '@assets/stock_images/group_of_people_pray_e32ccdad.jpg';
 import forestPathImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
 import twoPeopleReadingImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
@@ -32,7 +35,7 @@ export const heavenOrHellPlan: DiscipleshipPlan = {
   id: "heaven-or-hell",
   title: "Am I Going to Heaven or Hell?",
   subtitle: "Finding real assurance in Christ",
-  imageUrl: "/assets/discipleship/heaven-or-hell.jpg",
+  imageUrl: heavenCloudsImage,
   totalDays: 5,
   days: [
     {
@@ -251,7 +254,7 @@ export const lifeInSpiritPlan: DiscipleshipPlan = {
   id: "life-in-spirit",
   title: "Life in the Spirit",
   subtitle: "Learning to live by the power of the Holy Spirit",
-  imageUrl: "/assets/discipleship/life-in-spirit.jpg",
+  imageUrl: worshipHandsImage,
   totalDays: 5,
   days: [
     {
@@ -411,7 +414,7 @@ export const breakingFreeAddictionPlan: DiscipleshipPlan = {
   id: "breaking-free-addiction",
   title: "Breaking Free from Addiction",
   subtitle: "Walking out of bondage and into freedom in Christ",
-  imageUrl: "/assets/discipleship/breaking-free.jpg",
+  imageUrl: prayerSupportImage,
   totalDays: 5,
   days: [
     {
