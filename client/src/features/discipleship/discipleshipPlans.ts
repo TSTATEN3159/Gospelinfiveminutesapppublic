@@ -4,6 +4,9 @@ import prayerSupportImage from '@assets/stock_images/hands_helping_prayer_2e8063
 import groupPrayerImage from '@assets/stock_images/group_of_people_pray_e32ccdad.jpg';
 import forestPathImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
 import twoPeopleReadingImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
+import calmLakeImage from '@assets/stock_images/calm_lake_reflection_6b898f76.jpg';
+import peacefulPrayerImage from '@assets/stock_images/peaceful_prayer_hand_0c8506a2.jpg';
+import sunriseMountainImage from '@assets/stock_images/beautiful_sunrise_go_5ee50391.jpg';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -645,6 +648,51 @@ export const findingGodlyRelationshipPlan: DiscipleshipPlan = {
   ],
 };
 
+export const conqueringFearPlan: DiscipleshipPlan = {
+  id: "conquering-fear-anxiety",
+  title: "Conquering Fear and Anxiety",
+  subtitle: "Learning to rest in God's peace",
+  imageUrl: calmLakeImage,
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "Naming Your Fears", items: [{ id: "d1-devotional", type: "devotional", title: "Naming Your Fears", body: "Fear grows in the dark, when it stays vague and undefined. God invites you to name your fears and bring them into His light. He is not surprised by what scares you—He already knows, and He is bigger than all of it. Faith isn't pretending you're not afraid; it's choosing to trust God in the fear." }, { id: "d1-ps", type: "scripture", title: "Psalm 56:3–4", reference: "Psalm 56:3-4", body: "When you're afraid, trust in God; His Word and presence become your confidence" }] },
+    { id: "day-2", dayNumber: 2, title: "God Is Bigger Than 'What If'", items: [{ id: "d2-devotional", type: "devotional", title: "God Is Bigger Than 'What If'", body: "Anxiety often lives in the land of 'What if...?' But God is already in your future. He doesn't just control circumstances—He holds you. His plans are wise, His heart is good, and His power is unlimited. Anxiety shrinks when you remember who your God is." }, { id: "d2-matt", type: "scripture", title: "Matthew 6:25–34", reference: "Matthew 6:25-34", body: "Jesus tells us not to worry about tomorrow; the Father knows what we need" }] },
+    { id: "day-3", dayNumber: 3, title: "Replacing Worry with Prayer", items: [{ id: "d3-devotional", type: "devotional", title: "Replacing Worry with Prayer", body: "Worry is like mental chewing—it burns energy but doesn't feed your soul. God tells you what to do instead: pray, give thanks, and present your requests to Him. Prayer takes what's spinning in your mind and places it in God's hands." }, { id: "d3-phil", type: "scripture", title: "Philippians 4:6–7", reference: "Philippians 4:6-7", body: "Trade anxiety for prayer and thanksgiving; God's peace guards your heart and mind" }] },
+    { id: "day-4", dayNumber: 4, title: "Guarding Your Mind", items: [{ id: "d4-devotional", type: "devotional", title: "Guarding Your Mind", body: "What you feed your mind shapes your emotions. God calls you to guard your mind and fill it with what is true, honorable, pure, and praiseworthy. Anxiety weakens when your mind is anchored in God's truth." }, { id: "d4-phil2", type: "scripture", title: "Philippians 4:8–9", reference: "Philippians 4:8-9", body: "Think on what is true, honorable, just, pure, lovely, and commendable" }] },
+    { id: "day-5", dayNumber: 5, title: "Learning to Rest in God", items: [{ id: "d5-devotional", type: "devotional", title: "Learning to Rest in God", body: "Anxiety constantly pushes you to do more, fix more, control more. God invites you to rest—not because everything is solved, but because He is God and you are not. Resting in God means trusting that He is working even when you don't see it." }, { id: "d5-matt2", type: "scripture", title: "Matthew 11:28–30", reference: "Matthew 11:28-30", body: "Jesus invites the weary and burdened to find rest in Him" }] },
+  ],
+};
+
+export const dealingWithAngerPlan: DiscipleshipPlan = {
+  id: "dealing-anger-unforgiveness",
+  title: "Dealing with Anger and Unforgiveness",
+  subtitle: "From bitterness to Christlike mercy",
+  imageUrl: peacefulPrayerImage,
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "Owning Your Anger", items: [{ id: "d1-devotional", type: "devotional", title: "Owning Your Anger", body: "Anger is not always sin; God Himself is slow to anger, not free of it. But human anger easily slips into bitterness, harsh words, and revenge. Freedom begins when you own your anger instead of excusing it. God invites you to bring your anger to Him, not unleash it on others." }, { id: "d1-eph", type: "scripture", title: "Ephesians 4:26–27", reference: "Ephesians 4:26-27", body: "Be angry and do not sin; don't let the sun go down on your anger" }] },
+    { id: "day-2", dayNumber: 2, title: "The Cost of Unforgiveness", items: [{ id: "d2-devotional", type: "devotional", title: "The Cost of Unforgiveness", body: "Unforgiveness feels like power—holding someone's wrong over their head. But in reality, it chains you, not them. Bitterness is like drinking poison and expecting the other person to die. Forgiving doesn't mean forgetting or excusing. It means releasing someone from your personal revenge and entrusting justice to God." }, { id: "d2-matt", type: "scripture", title: "Matthew 6:14–15", reference: "Matthew 6:14-15", body: "If we forgive others, the Father forgives us" }] },
+    { id: "day-3", dayNumber: 3, title: "Forgiving from the Heart", items: [{ id: "d3-devotional", type: "devotional", title: "Forgiving from the Heart", body: "Forgiveness is more than saying 'It's okay.' Often, it wasn't okay at all. Forgiving from the heart means naming the wrong honestly, bringing your pain to God, and choosing to release the debt. You're not saying what they did was right—you're saying you will no longer be ruled by it." }, { id: "d3-mark", type: "scripture", title: "Mark 11:25", reference: "Mark 11:25", body: "When you stand praying, forgive if you have anything against anyone" }] },
+    { id: "day-4", dayNumber: 4, title: "Learning Gentle Speech", items: [{ id: "d4-devotional", type: "devotional", title: "Learning Gentle Speech", body: "Anger doesn't just stay inside; it flows out through your mouth. Words spoken in heat can scar relationships for years. God calls you to speak truth and grace at the same time. As the Spirit changes your heart, He also wants to change your words." }, { id: "d4-prov", type: "scripture", title: "Proverbs 15:1", reference: "Proverbs 15:1", body: "A soft answer turns away wrath, but harsh words stir up anger" }] },
+    { id: "day-5", dayNumber: 5, title: "Living Free from Bitterness", items: [{ id: "d5-devotional", type: "devotional", title: "Living Free from Bitterness", body: "Forgiveness and healing are not one-time events; they become a lifestyle. New offenses will come. Old hurts will resurface. But you don't have to live as a prisoner of bitterness. As you remember how much you've been forgiven, your heart softens toward others. You are never more like Jesus than when you forgive." }, { id: "d5-heb", type: "scripture", title: "Hebrews 12:14–15", reference: "Hebrews 12:14-15", body: "Pursue peace and watch for any root of bitterness" }] },
+  ],
+};
+
+export const purposePlan: DiscipleshipPlan = {
+  id: "purpose-why-am-i-here",
+  title: "Purpose: Why Am I Here?",
+  subtitle: "Living the life God designed",
+  imageUrl: sunriseMountainImage,
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "Created on Purpose", items: [{ id: "d1-devotional", type: "devotional", title: "Created on Purpose", body: "You are not an accident. You were crafted by God with intention. The world measures worth by success, beauty, or usefulness. God measures worth by design and love. You were made in His image to know Him, reflect Him, and enjoy Him. When you discover God's purpose, every day becomes meaningful—even the ordinary ones." }, { id: "d1-gen", type: "scripture", title: "Genesis 1:26–27", reference: "Genesis 1:26-27", body: "You were made in God's image" }] },
+    { id: "day-2", dayNumber: 2, title: "Saved for a Reason", items: [{ id: "d2-devotional", type: "devotional", title: "Saved for a Reason", body: "God didn't just save you from hell; He saved you for Himself. He brought you from darkness to light so that you would declare His praises and walk in His ways. Your identity in Christ becomes the foundation of your purpose. You are called to live as an ambassador of His kingdom wherever He places you." }, { id: "d2-1pet", type: "scripture", title: "1 Peter 2:9–10", reference: "1 Peter 2:9-10", body: "You are a chosen people, called out of darkness to proclaim His excellencies" }] },
+    { id: "day-3", dayNumber: 3, title: "Discovering Your Gifts", items: [{ id: "d3-devotional", type: "devotional", title: "Discovering Your Gifts", body: "God gives spiritual gifts so that His people can build up the body of Christ. Your gifts are not for your ego; they're for service and encouragement. As you serve, your gifts become clearer. You don't have to be gifted at everything—just faithful with what God has given you." }, { id: "d3-rom", type: "scripture", title: "Romans 12:4–8", reference: "Romans 12:4-8", body: "Different gifts in one body; use them diligently" }] },
+    { id: "day-4", dayNumber: 4, title: "Purpose in Daily Life", items: [{ id: "d4-devotional", type: "devotional", title: "Purpose in Daily Life", body: "Purpose isn't just about big moments. It's also about how you handle small, everyday opportunities. Work, school, chores, conversations, parenting, marriage, friendships—all become places to love God and love people. When you do ordinary tasks with a heart of worship, they become acts of eternal significance." }, { id: "d4-1cor", type: "scripture", title: "1 Corinthians 10:31", reference: "1 Corinthians 10:31", body: "Whatever you do, do all to the glory of God" }] },
+    { id: "day-5", dayNumber: 5, title: "Trusting God with the Path", items: [{ id: "d5-devotional", type: "devotional", title: "Trusting God with the Path", body: "You may not know the full shape of your calling yet, and that's okay. God calls you to be faithful with what's in front of you, and He unfolds the rest in His timing. You don't have to fear missing His purpose if you are walking with Him daily. Purpose is less about finding a perfect role and more about walking closely with a perfect God." }, { id: "d5-prov2", type: "scripture", title: "Proverbs 3:5–6", reference: "Proverbs 3:5-6", body: "Trust in the Lord; He will direct your paths" }] },
+  ],
+};
+
 export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   heavenOrHellPlan,
   lifeInSpiritPlan,
@@ -652,4 +700,7 @@ export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   winningOverTemptationPlan,
   findingGodsWillPlan,
   findingGodlyRelationshipPlan,
+  conqueringFearPlan,
+  dealingWithAngerPlan,
+  purposePlan,
 ];
