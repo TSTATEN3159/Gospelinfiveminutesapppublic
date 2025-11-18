@@ -2,6 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Users, Shield, Settings, Play, BookOpen, BookmarkCheck, ChevronRight, Flame, Share, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DISCIPLESHIP_PLANS } from "@/features/discipleship/discipleshipPlans";
+import { loadPlanProgress } from "@/features/discipleship/discipleshipProgress";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
 import { useTestFlight } from "@/hooks/useTestFlight";
@@ -151,39 +152,55 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
           </p>
           
           <div className="space-y-3">
-            {DISCIPLESHIP_PLANS.map((plan) => (
-              <Card
-                key={plan.id}
-                onClick={() => onNavigate("discipleship-plan", { planId: plan.id })}
-                className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer"
-                data-testid={`card-plan-${plan.id}`}
-              >
-                <div className="flex">
-                  <div className="w-24 h-24 flex-shrink-0">
-                    <img
-                      src={heavenCloudsImage}
-                      alt={plan.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                  <CardContent className="flex-1 p-3 flex flex-col justify-between">
-                    <div>
-                      <h3 className="text-base font-semibold leading-snug text-gray-900 dark:text-gray-100" data-testid={`text-plan-title-${plan.id}`}>
-                        {plan.title}
-                      </h3>
-                      {plan.subtitle && (
-                        <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5" data-testid={`text-plan-subtitle-${plan.id}`}>
-                          {plan.subtitle}
-                        </p>
-                      )}
+            {DISCIPLESHIP_PLANS.map((plan) => {
+              const progress = loadPlanProgress(plan);
+              const percent = Math.round(progress.ratio * 100);
+
+              return (
+                <Card
+                  key={plan.id}
+                  onClick={() => onNavigate("discipleship-plan", { planId: plan.id })}
+                  className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+                  data-testid={`card-plan-${plan.id}`}
+                >
+                  <div className="flex">
+                    <div className="w-24 h-24 flex-shrink-0">
+                      <img
+                        src={heavenCloudsImage}
+                        alt={plan.title}
+                        className="w-full h-full object-cover"
+                      />
                     </div>
-                    <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1">
-                      {plan.totalDays} day plan • Gospel in Five Minutes
-                    </p>
-                  </CardContent>
-                </div>
-              </Card>
-            ))}
+                    <CardContent className="flex-1 p-3 flex flex-col justify-between">
+                      <div>
+                        <h3 className="text-base font-semibold leading-snug text-gray-900 dark:text-gray-100" data-testid={`text-plan-title-${plan.id}`}>
+                          {plan.title}
+                        </h3>
+                        {plan.subtitle && (
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5" data-testid={`text-plan-subtitle-${plan.id}`}>
+                            {plan.subtitle}
+                          </p>
+                        )}
+                      </div>
+
+                      {/* Progress meter */}
+                      <div className="mt-2">
+                        <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+                          <div
+                            className="h-full bg-slate-900 dark:bg-slate-300 transition-all"
+                            style={{ width: `${percent}%` }}
+                            data-testid={`progress-bar-${plan.id}`}
+                          />
+                        </div>
+                        <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1" data-testid={`progress-text-${plan.id}`}>
+                          {progress.completed}/{progress.total} steps • {percent}% done
+                        </p>
+                      </div>
+                    </CardContent>
+                  </div>
+                </Card>
+              );
+            })}
           </div>
         </div>
 

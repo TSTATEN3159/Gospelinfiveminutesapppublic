@@ -1,0 +1,191 @@
+Nice, this is going to make the whole Discipleship section feel “alive” instead of static. Let’s hit both parts:
+Progress meters (on the list tile and inside the plan)
+PDF Bible vs API for Scripture text
+1️⃣ Progress meter for each plan
+We’ll do this:
+Track which items (devotional + scriptures) a user has opened.
+Store that in localStorage per plan.
+Compute completedCount / totalItems → show as a bar + percentage:
+On the Discipleship list (small bar under each tile)
+On the Plan detail page (larger bar at the top)
+a) Progress helper (localStorage)
+Create a small helper file:
+// client/src/features/discipleship/discipleshipProgress.ts
+
+import { DiscipleshipPlan } from "./discipleshipPlans";
+
+const PROGRESS_PREFIX = "discipleship-progress:";
+
+export type PlanProgress = {
+  completedItemIds: string[];
+};
+
+function getStorageKey(planId: string) {
+  return `${PROGRESS_PREFIX}${planId}`;
+}
+
+export function loadPlanProgress(plan: DiscipleshipPlan): {
+  completed: number;
+  total: number;
+  ratio: number;
+  completedItemIds: string[];
+} {
+  const key = getStorageKey(plan.id);
+  let stored: PlanProgress | null = null;
+
+  try {
+    const raw = localStorage.getItem(key);
+    if (raw) stored = JSON.parse(raw);
+  } catch {
+    stored = null;
+  }
+
+  const completedIds = stored?.completedItemIds ?? [];
+  const allItemIds = plan.days.flatMap((d) => d.items.map((i) => i.id));
+
+  const completed = allItemIds.filter((id) => completedIds.includes(id)).length;
+  const total = allItemIds.length;
+  const ratio = total === 0 ? 0 : completed / total;
+
+  return { completed, total, ratio, completedItemIds: completedIds };
+}
+
+export function markItemCompleted(plan: DiscipleshipPlan, itemId: string) {
+  const key = getStorageKey(plan.id);
+  const current = loadPlanProgress(plan);
+  if (current.completedItemIds.includes(itemId)) return;
+
+  const updated: PlanProgress = {
+    completedItemIds: [...current.completedItemIds, itemId],
+  };
+
+  localStorage.setItem(key, JSON.stringify(updated));
+}
+b) Show progress bar on the Discipleship list tiles
+Update DiscipleshipScreen.tsx:
+// client/src/features/discipleship/DiscipleshipScreen.tsx
+import { Link } from "react-router-dom";
+import { DISCIPLESHIP_PLANS } from "./discipleshipPlans";
+import { loadPlanProgress } from "./discipleshipProgress";
+
+export default function DiscipleshipScreen() {
+  return (
+    <div className="flex flex-col h-full bg-slate-50">
+      <header className="px-4 pt-4 pb-2">
+        <h1 className="text-2xl font-semibold tracking-tight">Discipleship</h1>
+        <p className="text-sm text-slate-500">
+          Short Bible plans to help you follow Jesus in everyday life.
+        </p>
+      </header>
+
+      <main className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+        {DISCIPLESHIP_PLANS.map((plan) => {
+          const progress = loadPlanProgress(plan);
+          const percent = Math.round(progress.ratio * 100);
+
+          return (
+            <Link
+              key={plan.id}
+              to={`/discipleship/plans/${plan.id}`}
+              className="flex rounded-2xl bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+            >
+              <div className="w-24 h-24 flex-shrink-0">
+                <img
+                  src={plan.imageUrl}
+                  alt={plan.title}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+
+              <div className="flex-1 p-3 flex flex-col justify-between">
+                <div>
+                  <h2 className="text-base font-semibold leading-snug">
+                    {plan.title}
+                  </h2>
+                  {plan.subtitle && (
+                    <p className="text-xs text-slate-500 mt-0.5">
+                      {plan.subtitle}
+                    </p>
+                  )}
+                </div>
+
+                {/* Progress meter */}
+                <div className="mt-2">
+                  <div className="h-1.5 w-full bg-slate-200 rounded-full overflow-hidden">
+                    <div
+                      className="h-full bg-slate-900 transition-all"
+                      style={{ width: `${percent}%` }}
+                    />
+                  </div>
+                  <p className="text-[11px] text-slate-500 mt-1">
+                    {progress.completed}/{progress.total} steps • {percent}% done
+                  </p>
+                </div>
+              </div>
+            </Link>
+          );
+        })}
+      </main>
+    </div>
+  );
+}
+c) Show progress at the top of the Plan detail page
+Update DiscipleshipPlanScreen.tsx:
+// add import
+import { loadPlanProgress } from "./discipleshipProgress";
+
+// inside the component, after `const activeDay = ...`:
+const progress = loadPlanProgress(plan);
+const percent = Math.round(progress.ratio * 100);
+Then, right under the header image:
+      {/* Header image */}
+      <div className="px-4">
+        <div className="rounded-3xl overflow-hidden shadow-md mb-3">
+          <img
+            src={plan.imageUrl}
+            alt={plan.title}
+            className="w-full h-44 object-cover"
+          />
+        </div>
+
+        {/* Progress bar on first page of plan */}
+        <div className="mb-3">
+          <div className="flex justify-between items-center mb-1">
+            <span className="text-xs font-medium text-slate-600">
+              Progress
+            </span>
+            <span className="text-[11px] text-slate-500">
+              {percent}% • {progress.completed}/{progress.total} steps
+            </span>
+          </div>
+          <div className="h-2 w-full bg-slate-200 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-slate-900 transition-all"
+              style={{ width: `${percent}%` }}
+            />
+          </div>
+        </div>
+      </div>
+Now the user sees their progress:
+On the plans list
+On the plan front page before they start reading
+d) Mark items as completed when opened
+In DiscipleshipReadingScreen.tsx, mark the item complete as soon as they open it:
+// client/src/features/discipleship/DiscipleshipReadingScreen.tsx
+import { useMemo, useEffect } from "react";
+import {
+  DISCIPLESHIP_PLANS,
+  DiscipleshipPlan,
+  PlanDay,
+  PlanItem,
+} from "./discipleshipPlans";
+import { markItemCompleted } from "./discipleshipProgress";
+
+// ...inside component after we know plan/day/item:
+
+  useEffect(() => {
+    if (plan && item) {
+      markItemCompleted(plan, item.id);
+    }
+  }, [plan, item]);
+That’s it: opening a Devotional or Scripture counts as “done” for progres
