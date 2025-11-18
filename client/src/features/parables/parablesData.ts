@@ -36,7 +36,7 @@ export const JESUS_PARABLES: Parable[] = [
     id: "mustard-seed",
     title: "The Mustard Seed",
     reference: "Matthew 13:31-32",
-    parable: "The kingdom of heaven is like to a grain of mustard seed, which a man took, and sowed in his field: Which indeed is the least of all seeds: but when it is grown, it is the greatest among herbs, and becometh a tree, so that the birds of the air come and lodge in the branches thereof.",
+    parable: "Another parable put he forth unto them, saying, The kingdom of heaven is like to a grain of mustard seed, which a man took, and sowed in his field: Which indeed is the least of all seeds: but when it is grown, it is the greatest among herbs, and becometh a tree, so that the birds of the air come and lodge in the branches thereof.",
     meaning: "God's kingdom starts small but grows to extraordinary proportions. What seems insignificant at first becomes a place of shelter and blessing for many. Small beginnings should not be despised.",
     application: "Don't despise small acts of faith or humble beginnings. Plant seeds of the Gospel faithfully, trusting God will bring growth. Your small prayers, kind words, and simple obedience can produce surprising kingdom impact. Be patient with spiritual growth in yourself and others."
   },
@@ -44,7 +44,7 @@ export const JESUS_PARABLES: Parable[] = [
     id: "lost-sheep",
     title: "The Lost Sheep",
     reference: "Luke 15:3-7",
-    parable: "What man of you, having an hundred sheep, if he lose one of them, doth not leave the ninety and nine in the wilderness, and go after that which is lost, until he find it? And when he hath found it, he layeth it on his shoulders, rejoicing. And when he cometh home, he calleth together his friends and neighbours, saying unto them, Rejoice with me; for I have found my sheep which was lost. I say unto you, that likewise joy shall be in heaven over one sinner that repenteth, more than over ninety and nine just persons, which need no repentance.",
+    parable: "And he spake this parable unto them, saying, What man of you, having an hundred sheep, if he lose one of them, doth not leave the ninety and nine in the wilderness, and go after that which is lost, until he find it? And when he hath found it, he layeth it on his shoulders, rejoicing. And when he cometh home, he calleth together his friends and neighbours, saying unto them, Rejoice with me; for I have found my sheep which was lost. I say unto you, that likewise joy shall be in heaven over one sinner that repenteth, more than over ninety and nine just persons, which need no repentance.",
     meaning: "God values each individual soul and actively seeks the lost. Heaven rejoices over one sinner who repents. Every person matters to God, and He pursues them with persistent love.",
     application: "Never write anyone off as too far gone for God's grace. Share the Gospel with those who seem lost, praying persistently for their salvation. If you feel lost, know that God is actively seeking you. Rejoice when anyone comes to faith, no matter their background."
   },
@@ -84,7 +84,7 @@ export const JESUS_PARABLES: Parable[] = [
     id: "pharisee-tax-collector",
     title: "The Pharisee and Tax Collector",
     reference: "Luke 18:10-14",
-    parable: "Two men went up into the temple to pray; the one a Pharisee, and the other a publican. The Pharisee stood and prayed thus with himself, God, I thank thee, that I am not as other men are, extortioners, unjust, adulterers, or even as this publican. I fast twice in the week, I give tithes of all that I possess. And the publican, standing afar off, would not lift up so much as his eyes unto heaven, but smote upon his breast, saying, God be merciful to me a sinner.",
+    parable: "Two men went up into the temple to pray; the one a Pharisee, and the other a publican. The Pharisee stood and prayed thus with himself, God, I thank thee, that I am not as other men are, extortioners, unjust, adulterers, or even as this publican. I fast twice in the week, I give tithes of all that I possess. And the publican, standing afar off, would not lift up so much as his eyes unto heaven, but smote upon his breast, saying, God be merciful to me a sinner. I tell you, this man went down to his house justified rather than the other: for every one that exalteth himself shall be abased; and he that humbleth himself shall be exalted.",
     meaning: "Self-righteousness is spiritually deadly. God justifies the humble who acknowledge their sin, not the proud who trust in their own goodness. True prayer comes from recognizing our need for God's mercy.",
     application: "Approach God with humility, not pride in your spiritual achievements. Recognize your ongoing need for grace. Don't compare yourself favorably to others. Let your prayer be marked by honest confession and dependence on God's mercy, not self-congratulation."
   },
