@@ -7,6 +7,9 @@ import twoPeopleReadingImage from '@assets/stock_images/two_people_reading_b_2fa
 import calmLakeImage from '@assets/stock_images/calm_lake_reflection_6b898f76.jpg';
 import peacefulPrayerImage from '@assets/stock_images/peaceful_prayer_hand_0c8506a2.jpg';
 import sunriseMountainImage from '@assets/stock_images/beautiful_sunrise_go_5ee50391.jpg';
+import majesticMountainImage from '@assets/stock_images/majestic_mountain_pe_d088efcc.jpg';
+import openBibleSunlightImage from '@assets/stock_images/open_bible_golden_su_50449d17.jpg';
+import crossSilhouetteImage from '@assets/stock_images/cross_silhouette_sun_9382d340.jpg';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -693,6 +696,51 @@ export const purposePlan: DiscipleshipPlan = {
   ],
 };
 
+export const growingStrongRootsPlan: DiscipleshipPlan = {
+  id: "growing-strong-roots",
+  title: "Growing Strong Roots in Christ",
+  subtitle: "Becoming unshakable in Jesus",
+  imageUrl: majesticMountainImage,
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "Rooted, Not Just Visiting", items: [{ id: "d1-devotional", type: "devotional", title: "Rooted, Not Just Visiting", body: "Many people 'visit' Jesus on Sundays but live the rest of the week rooted in everything else. Scripture says we are to be rooted and built up in Christ. Roots are unseen, slow, and steady. Your unseen life with Jesus—prayer, meditation on Scripture, obedience in small things—determines how you stand when life shakes." }, { id: "d1-col", type: "scripture", title: "Colossians 2:6–7", reference: "Colossians 2:6-7", body: "Walk in Christ, rooted and built up, established in the faith" }] },
+    { id: "day-2", dayNumber: 2, title: "Feeding on God's Word", items: [{ id: "d2-devotional", type: "devotional", title: "Feeding on God's Word", body: "Roots pull nourishment from the soil. Your soul's 'soil' is the Word of God. If your Bible intake is shallow and irregular, your roots will be too. God's Word is not just information—it is food, light, and life. You cannot grow deep in Christ while staying distant from His Word." }, { id: "d2-matt", type: "scripture", title: "Matthew 4:4", reference: "Matthew 4:4", body: "We live by every word that comes from God's mouth" }] },
+    { id: "day-3", dayNumber: 3, title: "Prayer that Sinks Roots Deeper", items: [{ id: "d3-devotional", type: "devotional", title: "Prayer that Sinks Roots Deeper", body: "Prayer is not just a religious task—it's the way your heart stays connected to the Vine. When prayer is absent, you live as if you are on your own. Real prayer is honest, not fancy. Over time, prayer moves from 'last resort' to 'first response.'" }, { id: "d3-luke", type: "scripture", title: "Luke 11:1–4", reference: "Luke 11:1-4", body: "Jesus teaches the disciples to pray with dependence and worship" }] },
+    { id: "day-4", dayNumber: 4, title: "Obedience: Roots that Take Hold", items: [{ id: "d4-devotional", type: "devotional", title: "Obedience: Roots that Take Hold", body: "Hearing God's Word without obeying it is like planting a seed but never letting it take root. Jesus said those who hear His words and do them are like a wise person building on rock. Every time you choose God's way over your own, you drive your roots deeper into Him." }, { id: "d4-james", type: "scripture", title: "James 1:22–25", reference: "James 1:22-25", body: "Be doers of the Word, not hearers only" }] },
+    { id: "day-5", dayNumber: 5, title: "Standing Firm in the Storm", items: [{ id: "d5-devotional", type: "devotional", title: "Standing Firm in the Storm", body: "Strong roots don't prevent storms, but they keep the tree standing when storms hit. As you grow in the Word, prayer, and obedience, you find that when hardship comes, you bend but you do not break. The same winds that uproot shallow faith drive deep faith even deeper." }, { id: "d5-john", type: "scripture", title: "John 16:33", reference: "John 16:33", body: "In this world you will have trouble, but Jesus has overcome it" }] },
+  ],
+};
+
+export const hearingGodsVoicePlan: DiscipleshipPlan = {
+  id: "hearing-gods-voice",
+  title: "Hearing God's Voice Through His Word",
+  subtitle: "Learning to listen to Scripture",
+  imageUrl: openBibleSunlightImage,
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "God Still Speaks", items: [{ id: "d1-devotional", type: "devotional", title: "God Still Speaks", body: "God is not silent. He speaks clearly today—primarily through His written Word. Many chase mystical experiences, but neglect the Bible that sits unopened nearby. When you open Scripture, you are not just reading ancient text—you are listening to the living God." }, { id: "d1-2tim", type: "scripture", title: "2 Timothy 3:16–17", reference: "2 Timothy 3:16-17", body: "All Scripture is God-breathed and useful to equip you" }] },
+    { id: "day-2", dayNumber: 2, title: "Reading with a Listening Heart", items: [{ id: "d2-devotional", type: "devotional", title: "Reading with a Listening Heart", body: "You can read the Bible quickly and miss God's voice. Hearing requires attention and humility. Instead of rushing, slow down. Ask: What does this teach about God? About me? A listening heart doesn't try to twist Scripture—it submits to what God says, even when it confronts or corrects." }, { id: "d2-ps", type: "scripture", title: "Psalm 119:18", reference: "Psalm 119:18", body: "Open my eyes, that I may behold wondrous things out of Your law" }] },
+    { id: "day-3", dayNumber: 3, title: "The Spirit and the Word Together", items: [{ id: "d3-devotional", type: "devotional", title: "The Spirit and the Word Together", body: "The Holy Spirit is the Author of Scripture. He doesn't compete with the Word; He illuminates it. Without Him, the Bible can feel dry. With Him, it becomes light and life. Ask the Spirit to help you understand and apply what you read." }, { id: "d3-john", type: "scripture", title: "John 16:13–14", reference: "John 16:13-14", body: "The Spirit of truth guides into truth and glorifies Jesus" }] },
+    { id: "day-4", dayNumber: 4, title: "Testing Voices by the Word", items: [{ id: "d4-devotional", type: "devotional", title: "Testing Voices by the Word", body: "Many voices claim to speak for God. Scripture is your plumb line to test every voice. God will never lead you in a way that contradicts His Word. Any 'voice' that excuses sin, attacks Christ's work, or twists Scripture is not from Him." }, { id: "d4-1john", type: "scripture", title: "1 John 4:1", reference: "1 John 4:1", body: "Test the spirits to see whether they are from God" }] },
+    { id: "day-5", dayNumber: 5, title: "Responding to What You Hear", items: [{ id: "d5-devotional", type: "devotional", title: "Responding to What You Hear", body: "Hearing is incomplete without a response. God speaks so that you will trust, repent, obey, and worship. When Scripture prompts you to forgive, forgive. When it calls you to repent, repent. This is how you walk with God in real time." }, { id: "d5-luke", type: "scripture", title: "Luke 11:28", reference: "Luke 11:28", body: "Blessed are those who hear the Word of God and keep it" }] },
+  ],
+};
+
+export const dailyRepentancePlan: DiscipleshipPlan = {
+  id: "walking-daily-repentance",
+  title: "Walking in Daily Repentance",
+  subtitle: "Turning back to God again and again",
+  imageUrl: crossSilhouetteImage,
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "Repentance: God's Gift", items: [{ id: "d1-devotional", type: "devotional", title: "Repentance: God's Gift", body: "Repentance is not God's way of beating you up; it's His invitation to come home. It means turning away from sin and turning back to God in trust. True repentance is more than feeling bad. It involves agreement with God about your sin, sorrow over grieving Him, and a change of direction." }, { id: "d1-rom", type: "scripture", title: "Romans 2:4", reference: "Romans 2:4", body: "God's kindness leads you to repentance" }] },
+    { id: "day-2", dayNumber: 2, title: "Confessing Sin Honestly", items: [{ id: "d2-devotional", type: "devotional", title: "Confessing Sin Honestly", body: "We often minimize, excuse, or rename sin. But true confession speaks plainly: 'What I did was sin against God.' No blaming, no softening, no spin. When you walk in the light with God, you experience cleansing—not condemnation." }, { id: "d2-1john", type: "scripture", title: "1 John 1:8–9", reference: "1 John 1:8-9", body: "If we confess our sins, He is faithful and just to forgive and cleanse us" }] },
+    { id: "day-3", dayNumber: 3, title: "Turning from Sin", items: [{ id: "d3-devotional", type: "devotional", title: "Turning from Sin", body: "Repentance is not just 'I'm sorry.' It is a turn—away from what God hates and toward what God loves. That means taking practical steps to leave sin behind and pursue obedience. You're not earning forgiveness; you're walking in the freedom God has already given." }, { id: "d3-acts", type: "scripture", title: "Acts 26:20", reference: "Acts 26:20", body: "Repent, turn to God, and perform deeds in keeping with repentance" }] },
+    { id: "day-4", dayNumber: 4, title: "Daily, Not Just Once", items: [{ id: "d4-devotional", type: "devotional", title: "Daily, Not Just Once", body: "Repentance is not a one-time event at conversion; it's a daily rhythm in a believer's life. A mature Christian doesn't repent less; they repent faster. Instead of defending themselves, they agree quickly with God and return to Him." }, { id: "d4-luke", type: "scripture", title: "Luke 9:23", reference: "Luke 9:23", body: "Take up your cross daily and follow Jesus" }] },
+    { id: "day-5", dayNumber: 5, title: "Resting in Forgiveness", items: [{ id: "d5-devotional", type: "devotional", title: "Resting in Forgiveness", body: "Repentance leads somewhere: to rest in the finished work of Christ. You do not repent to earn God's love; you repent because His love has already been poured out at the cross. When God forgives, He removes it as far as east is from west." }, { id: "d5-rom2", type: "scripture", title: "Romans 8:1", reference: "Romans 8:1", body: "No condemnation for those in Christ Jesus" }] },
+  ],
+};
+
 export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   heavenOrHellPlan,
   lifeInSpiritPlan,
@@ -703,4 +751,7 @@ export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   conqueringFearPlan,
   dealingWithAngerPlan,
   purposePlan,
+  growingStrongRootsPlan,
+  hearingGodsVoicePlan,
+  dailyRepentancePlan,
 ];
