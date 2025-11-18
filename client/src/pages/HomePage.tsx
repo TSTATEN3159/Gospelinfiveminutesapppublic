@@ -242,7 +242,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         <DailyVerseHeroCard onPress={() => setShowVerseModal(true)} />
 
         {/* Bible Trivia Section */}
-        <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-700">
           <div className="relative h-40">
             <img 
               src={mountainLakeImage}
@@ -253,12 +253,12 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           </div>
           <div className="p-4">
             <div className="flex items-center mb-3">
-              <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center mr-3">
-                <BookOpen className="w-4 h-4 text-amber-600" />
+              <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900 rounded-full flex items-center justify-center mr-3">
+                <BookOpen className="w-4 h-4 text-amber-600 dark:text-amber-400" />
               </div>
-              <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-bibleTrivia">Bible Trivia</h2>
+              <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100" data-testid="text-sectionTitle-bibleTrivia">Bible Trivia</h2>
             </div>
-            <p className="text-gray-600 text-sm mb-3">
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
               Test your biblical knowledge with challenging questions from Scripture.
             </p>
             <Button 
@@ -272,7 +272,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         </div>
 
         {/* Bible Study Section */}
-        <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
+        <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-700">
           <div className="relative h-40">
             <img 
               src={forestPathImage}
@@ -282,23 +282,23 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>
           <div className="p-4">
-            <h2 className="text-lg font-bold text-gray-900 mb-2">
+            <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
               Bible Studies
             </h2>
-            <p className="text-gray-600 text-sm mb-3">
+            <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
               Explore comprehensive Bible studies with guided reflections and spiritual growth.
             </p>
             <div className="flex justify-between items-center">
               <Button 
                 variant="ghost" 
                 size="sm" 
-                className="text-blue-600 p-0 h-auto" 
+                className="text-blue-600 dark:text-blue-400 p-0 h-auto" 
                 onClick={() => onNavigate?.('biblestudies')}
                 data-testid="button-browseBibleStudies"
               >
                 Browse Studies
               </Button>
-              <Button variant="ghost" size="sm" className="text-gray-400 p-0 h-auto" data-testid="button-dismissStudy">
+              <Button variant="ghost" size="sm" className="text-gray-400 dark:text-gray-500 p-0 h-auto" data-testid="button-dismissStudy">
                 Dismiss
               </Button>
             </div>
@@ -312,19 +312,19 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
 
         {/* The Gospel, In Their Words Section */}
         {dailyVideo && (
-          <div className="bg-white rounded-2xl overflow-hidden shadow-lg border-2">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-700">
             <div className="p-4">
               <div className="flex items-center mb-3">
-                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3">
-                  <Play className="w-4 h-4 text-blue-600" />
+                <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center mr-3">
+                  <Play className="w-4 h-4 text-blue-600 dark:text-blue-400" />
                 </div>
-                <h2 className="text-lg font-bold text-gray-900" data-testid="text-sectionTitle-gospelInMotion">
+                <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100" data-testid="text-sectionTitle-gospelInMotion">
                   The Gospel in Motion
                 </h2>
               </div>
               
               <div 
-                className="flex items-center p-3 bg-gradient-to-r from-blue-50 to-purple-50 rounded-xl cursor-pointer hover-elevate mb-3"
+                className="flex items-center p-3 bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-950 dark:to-purple-950 rounded-xl cursor-pointer hover-elevate mb-3"
                 onClick={() => setShowVideoPlayer(true)}
                 data-testid="card-dailyVideo"
                 role="button"
@@ -343,21 +343,21 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
                       <Play className="w-3 h-3 mr-1" />
                       BibleProject
                     </Badge>
-                    <span className="text-xs text-gray-500">{dailyVideo.duration}</span>
+                    <span className="text-xs text-gray-500 dark:text-gray-400">{dailyVideo.duration}</span>
                   </div>
-                  <h3 className="font-semibold text-gray-900 text-sm mb-1">
+                  <h3 className="font-semibold text-gray-900 dark:text-gray-100 text-sm mb-1">
                     {dailyVideo.title}
                   </h3>
                   {dailyVideo.subject && (
-                    <p className="text-sm text-blue-700 font-medium mb-1">
+                    <p className="text-sm text-blue-700 dark:text-blue-400 font-medium mb-1">
                       Today's Focus: {dailyVideo.subject}
                     </p>
                   )}
-                  <p className="text-xs text-gray-600 line-clamp-2">
+                  <p className="text-xs text-gray-600 dark:text-gray-300 line-clamp-2">
                     {dailyVideo.description}
                   </p>
                   {dailyVideo.verseReference && (
-                    <p className="text-xs text-gray-500 mt-1 font-medium">
+                    <p className="text-xs text-gray-500 dark:text-gray-400 mt-1 font-medium">
                       {dailyVideo.verseReference}
                     </p>
                   )}
@@ -374,7 +374,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
                 </div>
               </div>
               
-              <p className="text-gray-600 text-xs text-center">
+              <p className="text-gray-600 dark:text-gray-400 text-xs text-center">
                 Tap to watch today's animated Bible teaching from BibleProject
               </p>
             </div>
