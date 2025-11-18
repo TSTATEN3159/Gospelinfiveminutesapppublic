@@ -353,7 +353,7 @@ function MainApp() {
               {/* Bottom Navigation - Hide on legal pages and friends page */}
               {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-plan", "discipleship-reading"].includes(currentPage) && (
                 <BottomNavigation 
-                  currentPage={currentPage as "home" | "ask" | "search" | "daily" | "discipleship-list"} 
+                  currentPage={currentPage as "home" | "discipleship-list" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
                 />
               )}
