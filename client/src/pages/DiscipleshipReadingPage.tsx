@@ -1,7 +1,8 @@
-import { useMemo } from "react";
+import { useMemo, useEffect } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DISCIPLESHIP_PLANS, DiscipleshipPlan, PlanDay, PlanItem } from "@/features/discipleship/discipleshipPlans";
+import { markItemCompleted } from "@/features/discipleship/discipleshipProgress";
 import { Card, CardContent } from "@/components/ui/card";
 import { AppNavigate } from "../App";
 
@@ -32,6 +33,12 @@ export default function DiscipleshipReadingPage({
     if (!day) return undefined;
     return day.items.find((i) => i.id === itemId);
   }, [day, itemId]);
+
+  useEffect(() => {
+    if (plan && item) {
+      markItemCompleted(plan, item.id);
+    }
+  }, [plan, item]);
 
   if (!plan || !day || !item) {
     return (
