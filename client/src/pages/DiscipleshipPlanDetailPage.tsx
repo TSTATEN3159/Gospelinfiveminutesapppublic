@@ -1,0 +1,142 @@
+import { useState, useMemo } from "react";
+import { Card } from "@/components/ui/card";
+import { ArrowLeft, CheckCircle2, Circle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { DISCIPLESHIP_PLANS, DiscipleshipPlan, PlanDay } from "@/features/discipleship/discipleshipPlans";
+import heavenCloudsImage from '@assets/stock_images/heaven_clouds_eterna_9fe3749f.jpg';
+
+interface DiscipleshipPlanDetailPageProps {
+  planId: string;
+  onNavigate: (page: string, params?: any) => void;
+}
+
+export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: DiscipleshipPlanDetailPageProps) {
+  const [activeDayIndex, setActiveDayIndex] = useState(0);
+
+  const plan: DiscipleshipPlan | undefined = useMemo(
+    () => DISCIPLESHIP_PLANS.find((p) => p.id === planId),
+    [planId]
+  );
+
+  if (!plan) {
+    return (
+      <div className="min-h-screen pb-20 bg-slate-50 p-4">
+        <p className="text-sm text-red-600">Plan not found.</p>
+        <Button
+          onClick={() => onNavigate("discipleship-list")}
+          variant="ghost"
+          className="text-blue-600 text-sm mt-2"
+          data-testid="button-back-to-list"
+        >
+          Back to Discipleship
+        </Button>
+      </div>
+    );
+  }
+
+  const activeDay: PlanDay = plan.days[activeDayIndex];
+
+  return (
+    <div className="min-h-screen pb-20 bg-slate-50">
+      <div className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onNavigate("discipleship-list")}
+            data-testid="button-back"
+            aria-label="Go back"
+            className="hover-elevate"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
+          <h1 className="text-lg font-semibold truncate" data-testid="text-plan-title">{plan.title}</h1>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 py-4">
+        <div className="rounded-3xl overflow-hidden shadow-md mb-4">
+          <img
+            src={heavenCloudsImage}
+            alt={plan.title}
+            className="w-full h-44 object-cover"
+          />
+        </div>
+
+        <div className="flex space-x-2 mb-4">
+          {plan.days.map((day, index) => {
+            const isActive = index === activeDayIndex;
+            return (
+              <button
+                key={day.id}
+                onClick={() => setActiveDayIndex(index)}
+                className={`flex-1 rounded-2xl border text-center py-2 text-xs transition-colors ${
+                  isActive
+                    ? "border-slate-900 bg-slate-900 text-white"
+                    : "border-slate-200 bg-white text-slate-700"
+                }`}
+                data-testid={`button-day-${day.dayNumber}`}
+              >
+                <div className="font-semibold text-sm">{day.dayNumber}</div>
+                <div className={`text-[11px] ${isActive ? 'text-slate-300' : 'text-slate-400'}`}>
+                  Day {day.dayNumber}
+                </div>
+              </button>
+            );
+          })}
+        </div>
+
+        <p className="text-xs text-slate-500 mb-3">
+          Day {activeDay.dayNumber} of {plan.totalDays}
+        </p>
+
+        <div className="space-y-2 mb-4">
+          {activeDay.items.map((item) => (
+            <Card
+              key={item.id}
+              onClick={() =>
+                onNavigate("discipleship-reading", {
+                  planId: plan.id,
+                  dayNumber: activeDay.dayNumber,
+                  itemId: item.id,
+                })
+              }
+              className="flex items-center justify-between rounded-xl bg-white px-3 py-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
+              data-testid={`card-item-${item.id}`}
+            >
+              <div className="flex items-center space-x-2">
+                <Circle className="w-5 h-5 text-slate-300" />
+                <div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {item.type === "devotional"
+                      ? "Devotional"
+                      : item.reference ?? item.title}
+                  </p>
+                  {item.type === "scripture" && item.reference && (
+                    <p className="text-[11px] text-slate-500">{item.title}</p>
+                  )}
+                </div>
+              </div>
+              <span className="text-slate-400 text-base">›</span>
+            </Card>
+          ))}
+        </div>
+
+        <Button
+          onClick={() => {
+            const firstItem = activeDay.items[0];
+            onNavigate("discipleship-reading", {
+              planId: plan.id,
+              dayNumber: activeDay.dayNumber,
+              itemId: firstItem.id,
+            });
+          }}
+          className="w-full rounded-full bg-slate-900 hover:bg-slate-800 text-white py-6 text-sm font-semibold shadow-lg"
+          data-testid="button-start-reading"
+        >
+          Start Reading
+        </Button>
+      </div>
+    </div>
+  );
+}
