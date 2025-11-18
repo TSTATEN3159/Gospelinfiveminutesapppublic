@@ -1,3 +1,7 @@
+import groupPrayerImage from '@assets/stock_images/group_of_people_pray_e32ccdad.jpg';
+import forestPathImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
+import twoPeopleReadingImage from '@assets/stock_images/two_people_reading_b_2fa31c4a.jpg';
+
 export type PlanItemType = "devotional" | "scripture";
 
 export interface PlanItem {
@@ -567,7 +571,7 @@ export const winningOverTemptationPlan: DiscipleshipPlan = {
   id: "winning-over-temptation",
   title: "Winning Over Temptation",
   subtitle: "God's power for real battles",
-  imageUrl: "@assets/stock_images/group_of_people_pray_e32ccdad.jpg",
+  imageUrl: groupPrayerImage,
   totalDays: 5,
   days: [
     {
@@ -612,7 +616,7 @@ export const findingGodsWillPlan: DiscipleshipPlan = {
   id: "finding-gods-will",
   title: "Finding God's Will for My Life",
   subtitle: "Confidence in God's direction",
-  imageUrl: "@assets/stock_images/forest_path_sunlight_7c167ac0.jpg",
+  imageUrl: forestPathImage,
   totalDays: 5,
   days: [
     { id: "day-1", dayNumber: 1, title: "God Wants You to Know His Will", items: [{ id: "d1-devotional", type: "devotional", title: "God Wants You to Know His Will", body: "Many believers fear missing God's will — like God is hiding it. But Scripture says the opposite: God wants to guide His children. His will is not discovered by anxiety — it's revealed to those who seek Him. When you follow what you know, God reveals what you don't yet know." }, { id: "d1-prov", type: "scripture", title: "Proverbs 3:5–6", reference: "Proverbs 3:5-6", body: "He will direct your paths" }] },
@@ -627,7 +631,7 @@ export const findingGodlyRelationshipPlan: DiscipleshipPlan = {
   id: "finding-godly-relationship",
   title: "Finding a Godly Relationship",
   subtitle: "God's design for love, dating, and marriage",
-  imageUrl: "@assets/stock_images/two_people_reading_b_2fa31c4a.jpg",
+  imageUrl: twoPeopleReadingImage,
   totalDays: 5,
   days: [
     { id: "day-1", dayNumber: 1, title: "God Cares About Who You Date", items: [{ id: "d1-devotional", type: "devotional", title: "God Cares About Who You Date", body: "Romantic relationships can be beautiful — or deeply damaging. God designed love, so He knows how it works best. The person you date influences your walk with God, your peace, your habits, and your future family. God does not want you to settle for someone who pulls you away from Him." }, { id: "d1-2cor", type: "scripture", title: "2 Corinthians 6:14", reference: "2 Corinthians 6:14", body: "Do not be unequally yoked" }] },

@@ -12,7 +12,6 @@ import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AppNavigate } from "../App";
-import heavenCloudsImage from '@assets/stock_images/heaven_clouds_eterna_9fe3749f.jpg';
 
 interface DiscipleshipListPageProps {
   onNavigate: AppNavigate;
@@ -166,7 +165,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
                   <div className="flex">
                     <div className="w-24 h-24 flex-shrink-0">
                       <img
-                        src={heavenCloudsImage}
+                        src={plan.imageUrl}
                         alt={plan.title}
                         className="w-full h-full object-cover"
                       />
