@@ -381,87 +381,165 @@ export const lifeInSpiritPlan: DiscipleshipPlan = {
       title: "Born of the Spirit",
       items: [
         {
-          id: "d1-devotional",
+          id: "lis-d1-devotional",
           type: "devotional",
-          title: "Born of the Spirit",
-          body:
-            "The Christian life is not just 'trying harder to be good.' It begins with a miracle: you are born again by the Holy Spirit. God doesn't just improve your old life; He gives you a new one.\n\n" +
-            "When you believed in Jesus, the Spirit made you alive on the inside. He opened your eyes, softened your heart, and turned you toward Christ. Now you are not only forgiven—you are indwelt. The same Spirit who raised Jesus from the dead now lives in you.\n\n" +
-            "Life in the Spirit is not a special level for super-Christians. It is normal Christianity. You are no longer condemned, and you no longer have to be ruled by the flesh. You have a new power at work within you.",
+          title: "Day 1 — Born of the Spirit",
+          body: `The Christian life is not just "trying harder to be good." It begins with a miracle: you are **born again** by the Holy Spirit. God doesn't just improve your old life; He gives you a new one.
+
+When you believed in Jesus, the Spirit made you alive on the inside. He opened your eyes, softened your heart, and turned you toward Christ. Now you are not only forgiven—you are **indwelt**. The same Spirit who raised Jesus from the dead now lives in you.
+
+Life in the Spirit is not a special level for super-Christians. It is normal Christianity. You are no longer condemned, and you no longer have to be ruled by the flesh. You have a new power at work within you.
+
+**Reflection**
+
+When you think about your salvation, do you see it as mostly *your decision* or as God's **Spirit giving you new life**?
+
+**Prayer**
+
+Holy Spirit, thank You for making me alive in Christ. Help me understand that I am no longer condemned and that a new life has truly begun in me.
+
+**Shareable Truth**
+
+"The Christian life isn't self-improvement; it's a new life in the Spirit."`,
         },
         {
-          id: "d1-rom-8-1-2",
+          id: "lis-d1-rom8-1-2",
           type: "scripture",
-          title: "Romans 8:1-2",
-          reference: "Romans 8:1-2",
-          body: "No condemnation in Christ; the law of the Spirit of life has set you free from the law of sin and death.",
+          title: "No Condemnation in Christ",
+          reference: "Romans 8:1–2",
+          body: `**Plain Meaning:** For those who are in Christ Jesus, there is now no condemnation. The law of the Spirit of life has set you free from the law of sin and death.
+
+**Application:** You don't live under a guilty verdict anymore. The Spirit marks you as someone liberated from sin's death sentence.`,
         },
         {
-          id: "d1-jn-3-5-6",
+          id: "lis-d1-john3-5-6",
           type: "scripture",
-          title: "John 3:5-6",
-          reference: "John 3:5-6",
-          body: "Jesus explains that we must be born of water and the Spirit; what is born of the Spirit is spirit.",
+          title: "Born of Water and the Spirit",
+          reference: "John 3:5–6",
+          body: `**Plain Meaning:** Jesus explains that you must be born "of water and the Spirit" to enter the kingdom of God. What is born of the flesh is flesh; what is born of the Spirit is spirit.
+
+**Application:** You don't enter God's kingdom by heritage, effort, or religion, but by a new birth the Spirit brings.`,
+        },
+        {
+          id: "lis-d1-titus3-5-6",
+          type: "scripture",
+          title: "Wash and Renew",
+          reference: "Titus 3:5–6",
+          body: `**Plain Meaning:** God saved us not by works of righteousness we have done, but according to His mercy, by the washing of regeneration and renewal of the Holy Spirit.
+
+**Application:** Your new life is mercy from start to finish. The Spirit washed you and made you new; you cannot boast in yourself.`,
         },
       ],
     },
     {
       id: "day-2",
       dayNumber: 2,
-      title: "The Spirit Within: Your New Identity",
+      title: "A New Identity in the Spirit",
       items: [
         {
-          id: "d2-devotional",
+          id: "lis-d2-devotional",
           type: "devotional",
-          title: "The Spirit Within: Your New Identity",
-          body:
-            "Many believers still see themselves mainly as broken, dirty, or disqualified. But God says something different. Because His Spirit lives in you, your core identity has changed.\n\n" +
-            "You are now a child of God, adopted into His family. The Holy Spirit is the 'Spirit of adoption' who cries out in you, 'Abba, Father.' He Himself bears witness that you belong to God.\n\n" +
-            "Your body is also a temple of the Holy Spirit. That means God is not far away; He has chosen to dwell in you. This is both comfort and calling: comfort because you are never alone, calling because your life is now set apart for Him.",
+          title: "Day 2 — The Spirit Within: Your New Identity",
+          body: `Many believers still see themselves mainly as broken, dirty, or disqualified. But God says something different. Because His Spirit lives in you, your **core identity** has changed.
+
+You are now a child of God, adopted into His family. The Holy Spirit is the "Spirit of adoption" who cries out in you, *"Abba, Father."* He Himself bears witness that you belong to God.
+
+Your body is also a **temple** of the Holy Spirit. That means God is not far away; He has chosen to dwell in you. This is both comfort and calling: comfort because you are never alone, calling because your life is now set apart for Him.
+
+**Reflection**
+
+What would change about your daily decisions if you really believed: "I am God's child, and His Spirit lives in me"?
+
+**Prayer**
+
+Father, thank You that Your Spirit lives in me as a seal that I am Yours. Help me remember who I am in Christ when temptation and fear come.
+
+**Shareable Truth**
+
+"The Holy Spirit is God's way of saying: 'You're Mine now—and forever.'"`,
         },
         {
-          id: "d2-rom-8-15-16",
+          id: "lis-d2-rom8-15-16",
           type: "scripture",
-          title: "Romans 8:15-16",
-          reference: "Romans 8:15-16",
-          body: "The Spirit of adoption causes us to cry, 'Abba, Father,' and testifies that we are God's children.",
+          title: "Spirit of Adoption",
+          reference: "Romans 8:15–16",
+          body: `**Plain Meaning:** You did not receive a spirit of slavery to fall back into fear, but the Spirit of adoption, who cries "Abba, Father," and bears witness that you are God's child.
+
+**Application:** Fear no longer has the final word. The Spirit in you continually reminds you that you belong to a Father, not a slavemaster.`,
         },
         {
-          id: "d2-1cor-6-19-20",
+          id: "lis-d2-1cor6-19-20",
           type: "scripture",
-          title: "1 Corinthians 6:19-20",
-          reference: "1 Corinthians 6:19-20",
-          body: "Your body is a temple of the Holy Spirit; you are not your own, you were bought with a price.",
+          title: "Temple of the Holy Spirit",
+          reference: "1 Corinthians 6:19–20",
+          body: `**Plain Meaning:** Your body is a temple of the Holy Spirit, whom you have from God. You are not your own; you were bought with a price.
+
+**Application:** Your body and life have a holy purpose now. You don't belong to sin, to culture, or even to yourself—you belong to God.`,
+        },
+        {
+          id: "lis-d2-eph1-13-14",
+          type: "scripture",
+          title: "Sealed by the Spirit",
+          reference: "Ephesians 1:13–14",
+          body: `**Plain Meaning:** When you believed the gospel, you were sealed with the Holy Spirit, who is a guarantee of your inheritance until the full redemption.
+
+**Application:** The Spirit is God's down payment that He will finish what He started in you. Your future with Him is secure.`,
         },
       ],
     },
     {
       id: "day-3",
       dayNumber: 3,
-      title: "Walking by the Spirit, Not the Flesh",
+      title: "Walking by the Spirit",
       items: [
         {
-          id: "d3-devotional",
+          id: "lis-d3-devotional",
           type: "devotional",
-          title: "Walking by the Spirit, Not the Flesh",
-          body:
-            "The flesh still pulls at you—old habits, old reactions, old patterns. But you are no longer a slave. Scripture calls you to walk by the Spirit so you will not fulfill the desires of the flesh.\n\n" +
-            "Walking by the Spirit is not a mystical feeling; it's a daily direction. You set your mind on the things of the Spirit. You listen to God's Word. You say yes to His leading and no to the flesh's demands.\n\n" +
-            "When you fail, you don't quit—you confess, get up, and keep in step with the Spirit again. Over time, your desires start to change. What once pulled you strongly now loses its grip, because you value pleasing God more than pleasing sin.",
+          title: "Day 3 — Walking by the Spirit, Not the Flesh",
+          body: `The flesh still pulls at you—old habits, old reactions, old patterns. But you are no longer a slave. Scripture calls you to **walk by the Spirit** so you will not fulfill the desires of the flesh.
+
+Walking by the Spirit is not a mystical feeling; it's a daily direction. You set your mind on the things of the Spirit. You listen to God's Word. You say yes to His leading and no to the flesh's demands.
+
+When you fail, you don't quit—you confess, get up, and keep in step with the Spirit again. Over time, your desires start to change. What once pulled you strongly now loses its grip, because you value pleasing God more than pleasing sin.
+
+**Reflection**
+
+Where do you most feel the pull of the flesh right now, and what would it look like to "walk by the Spirit" in that specific area today?
+
+**Prayer**
+
+Holy Spirit, I choose today to set my mind on the things of God. Show me when I'm drifting toward the flesh, and give me strength to obey You.
+
+**Shareable Truth**
+
+"Walking in the Spirit is a direction, not a mood."`,
         },
         {
-          id: "d3-gal-5-16-17",
+          id: "lis-d3-gal5-16-17",
           type: "scripture",
-          title: "Galatians 5:16-17",
-          reference: "Galatians 5:16-17",
-          body: "Walk by the Spirit, and you will not gratify the desires of the flesh; the flesh and Spirit are opposed.",
+          title: "Walk by the Spirit",
+          reference: "Galatians 5:16–17",
+          body: `**Plain Meaning:** If you walk by the Spirit you will not gratify the desires of the flesh, because the flesh and Spirit are opposed to each other.
+
+**Application:** You win the battle with sin not by sheer willpower, but by a Spirit-led walk that leaves less room for the flesh.`,
         },
         {
-          id: "d3-rom-8-5-6",
+          id: "lis-d3-rom8-5-6",
           type: "scripture",
-          title: "Romans 8:5-6",
-          reference: "Romans 8:5-6",
-          body: "Those who live according to the Spirit set their minds on the things of the Spirit; this mindset is life and peace.",
+          title: "Mindset of Life and Peace",
+          reference: "Romans 8:5–6",
+          body: `**Plain Meaning:** Those who live according to the Spirit set their minds on the things of the Spirit; this mindset is life and peace.
+
+**Application:** What you habitually think about reveals whether you're living by the flesh or by the Spirit. Guard your inner focus.`,
+        },
+        {
+          id: "lis-d3-col3-1-3",
+          type: "scripture",
+          title: "Set Your Mind Above",
+          reference: "Colossians 3:1–3",
+          body: `**Plain Meaning:** Since you have been raised with Christ, seek the things above and set your mind there, because your life is hidden with Christ in God.
+
+**Application:** Your true life is anchored in heaven, not earth. Let that reality shape your choices and desires.`,
         },
       ],
     },
@@ -471,27 +549,53 @@ export const lifeInSpiritPlan: DiscipleshipPlan = {
       title: "Led by the Spirit",
       items: [
         {
-          id: "d4-devotional",
+          id: "lis-d4-devotional",
           type: "devotional",
-          title: "Led by the Spirit",
-          body:
-            "Life in the Spirit is not only about power over sin; it is about guidance. God did not save you to wander in confusion. He promises to lead His children.\n\n" +
-            "The Spirit leads primarily through the Word of God, making Scripture come alive and applying it to your situation. He also gives inner conviction, wise counsel through other believers, and providential circumstances. All of this will always agree with Scripture, never contradict it.\n\n" +
-            "You don't have to fear missing God's will if you are humbly seeking Him, obeying what you already know, and staying surrendered. The Spirit is a faithful Guide. He is more committed to you walking in God's will than you are.",
+          title: "Day 4 — Led by the Spirit",
+          body: `Life in the Spirit is not only about power over sin; it is about **guidance**. God did not save you to wander in confusion. He promises to lead His children.
+
+The Spirit leads primarily through the **Word of God**, making Scripture come alive and applying it to your situation. He also gives inner conviction, wise counsel through other believers, and providential circumstances. All of this will always agree with Scripture, never contradict it.
+
+You don't have to fear missing God's will if you are humbly seeking Him, obeying what you already know, and staying surrendered. The Spirit is a faithful Guide. He is more committed to you walking in God's will than you are.
+
+**Reflection**
+
+Where do you most need the Spirit's guidance right now—relationships, work, ministry, decisions?
+
+**Prayer**
+
+Spirit of truth, guide me. Keep me close to Your Word, sensitive to Your leading, and willing to obey even when it costs me.
+
+**Shareable Truth**
+
+"The Holy Spirit is not just power for today—He's guidance for every step."`,
         },
         {
-          id: "d4-rom-8-14",
+          id: "lis-d4-rom8-14",
           type: "scripture",
-          title: "Romans 8:14",
+          title: "Led as Sons",
           reference: "Romans 8:14",
-          body: "All who are led by the Spirit of God are sons of God.",
+          body: `**Plain Meaning:** All who are led by the Spirit of God are sons of God.
+
+**Application:** Being led by the Spirit is a family mark. Your guidance is not random; it flows from your sonship.`,
         },
         {
-          id: "d4-jn-16-13",
+          id: "lis-d4-john16-13",
           type: "scripture",
-          title: "John 16:13",
+          title: "Spirit of Truth Guides",
           reference: "John 16:13",
-          body: "The Spirit of truth will guide you into all truth.",
+          body: `**Plain Meaning:** The Spirit of truth will guide you into all the truth and glorify Jesus.
+
+**Application:** The Spirit's guidance will always agree with Scripture and lead you toward Jesus, not away from Him.`,
+        },
+        {
+          id: "lis-d4-isa30-21",
+          type: "scripture",
+          title: "This Is the Way, Walk in It",
+          reference: "Isaiah 30:21",
+          body: `**Plain Meaning:** God promises that you will hear a word behind you saying, "This is the way, walk in it," when you turn to the right or left.
+
+**Application:** God is not trying to confuse you. As you seek Him, He faithfully directs your steps.`,
         },
       ],
     },
@@ -501,27 +605,53 @@ export const lifeInSpiritPlan: DiscipleshipPlan = {
       title: "Fruit, Power, and Mission",
       items: [
         {
-          id: "d5-devotional",
+          id: "lis-d5-devotional",
           type: "devotional",
-          title: "Fruit, Power, and Mission",
-          body:
-            "The Spirit doesn't fill you just so you can feel spiritual. He fills you so you can bear fruit and live on mission.\n\n" +
-            "Fruit is who you are becoming—love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control. Power is what you are able to do—witness boldly, serve sacrificially, endure hardship with hope.\n\n" +
-            "Jesus promised the Spirit so that His people would be witnesses 'to the end of the earth.' Life in the Spirit is a life that reflects Christ and reaches others for Him. You are not only a recipient of grace—you are a carrier.",
+          title: "Day 5 — Fruit, Power, and Mission",
+          body: `The Spirit doesn't fill you just so you can feel spiritual. He fills you so you can **bear fruit** and live on **mission**.
+
+Fruit is who you are becoming—love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control. Power is what you are able to do—witness boldly, serve sacrificially, endure hardship with hope.
+
+Jesus promised the Spirit so that His people would be witnesses "to the end of the earth." Life in the Spirit is a life that reflects Christ and reaches others for Him. You are not only a recipient of grace—you are a carrier.
+
+**Reflection**
+
+Which fruit of the Spirit do you most want God to grow in you this month, and who do you sense He wants you to witness or minister to?
+
+**Prayer**
+
+Holy Spirit, bear Your fruit in my character and use me in Your power. Make my life a living picture of Jesus to the people around me.
+
+**Shareable Truth**
+
+"The Spirit doesn't just live in you—He works through you for others."`,
         },
         {
-          id: "d5-gal-5-22-23",
+          id: "lis-d5-gal5-22-23",
           type: "scripture",
-          title: "Galatians 5:22-23",
-          reference: "Galatians 5:22-23",
-          body: "The fruit of the Spirit in a believer's life.",
+          title: "The Spirit's Fruit",
+          reference: "Galatians 5:22–23",
+          body: `**Plain Meaning:** The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control.
+
+**Application:** The Spirit aims to change your character, not just your circumstances. These traits are signs of His work in you.`,
         },
         {
-          id: "d5-acts-1-8",
+          id: "lis-d5-acts1-8",
           type: "scripture",
-          title: "Acts 1:8",
+          title: "Power to Witness",
           reference: "Acts 1:8",
-          body: "You will receive power when the Holy Spirit comes upon you, and you will be Jesus' witnesses.",
+          body: `**Plain Meaning:** You will receive power when the Holy Spirit comes upon you, and you will be Jesus' witnesses to the ends of the earth.
+
+**Application:** The Spirit empowers you to speak of Christ with boldness and love, right where you are.`,
+        },
+        {
+          id: "lis-d5-phil2-13",
+          type: "scripture",
+          title: "God at Work in You",
+          reference: "Philippians 2:13",
+          body: `**Plain Meaning:** God is at work in you, both to will and to work for His good pleasure.
+
+**Application:** Even your desire to obey is a work of the Spirit. You are not alone in the struggle; God Himself is working within you.`,
         },
       ],
     },
@@ -536,152 +666,282 @@ export const breakingFreeAddictionPlan: DiscipleshipPlan = {
   totalDays: 5,
   days: [
     {
-      id: "day-1",
+      id: "bfa-day-1",
       dayNumber: 1,
       title: "Naming the Chains",
       items: [
         {
-          id: "d1-devotional",
+          id: "bfa-d1-devotional",
           type: "devotional",
-          title: "Naming the Chains",
-          body:
-            "Addiction hides in the dark. It tells you, 'You can stop anytime… no one needs to know… it's not that bad.' But Jesus said everyone who practices sin is a slave to sin.\n\n" +
-            "Freedom begins with honesty. You cannot heal what you will not name. Whether it's alcohol, drugs, pornography, gambling, food, social media, or anything else that controls you—God already sees it, and He still invites you to Himself.\n\n" +
-            "Jesus didn't come just to forgive your addiction; He came to break its power. The road may be long and messy, but it starts with agreeing with God about your bondage and admitting you cannot save yourself.",
+          title: "Day 1 — Naming the Chains",
+          body: `Addiction hides in the dark. It tells you, "You can stop anytime… no one needs to know… it's not that bad." But Jesus said everyone who practices sin is a **slave** to sin.
+
+Freedom begins with **honesty**. You cannot heal what you will not name. Whether it's alcohol, drugs, pornography, gambling, food, social media, or anything else that controls you—God already sees it, and He still invites you to Himself.
+
+Jesus didn't come just to forgive your addiction; He came to **break its power**. The road may be long and messy, but it starts with agreeing with God about your bondage and admitting you cannot save yourself.
+
+**Reflection**
+
+What is the specific addiction or bondage you need to bring into the light before God today?
+
+**Prayer**
+
+Lord Jesus, I confess that this area has more power over me than I have admitted. Search me, show me the truth, and begin Your freeing work in me.
+
+**Shareable Truth**
+
+"You cannot defeat what you refuse to name—but Jesus already can."`,
         },
         {
-          id: "d1-jn-8-34-36",
+          id: "bfa-d1-john8-34-36",
           type: "scripture",
-          title: "John 8:34-36",
-          reference: "John 8:34-36",
-          body: "Whoever practices sin is a slave to sin, but the Son sets you free indeed.",
+          title: "Slave or Free?",
+          reference: "John 8:34–36",
+          body: `**Plain Meaning:** Whoever practices sin is a slave to sin, but the Son sets people truly free.
+
+**Application:** Addiction is spiritual slavery, but Jesus has real power to break chains and give true freedom.`,
         },
         {
-          id: "d1-ps-139-23-24",
+          id: "bfa-d1-rom7-18-19",
           type: "scripture",
-          title: "Psalm 139:23-24",
-          reference: "Psalm 139:23-24",
-          body: "'Search me, O God… see if there is any grievous way in me, and lead me in the way everlasting.'",
+          title: "The Inner Struggle",
+          reference: "Romans 7:18–19",
+          body: `**Plain Meaning:** Paul describes wanting to do good but experiencing another power at work that pulls him into what he hates.
+
+**Application:** You are not crazy or alone in the inner battle. Scripture understands the struggle and points you to grace, not self-reliance.`,
+        },
+        {
+          id: "bfa-d1-ps139-23-24",
+          type: "scripture",
+          title: "Search Me, O God",
+          reference: "Psalm 139:23–24",
+          body: `**Plain Meaning:** The psalmist invites God to search his heart and reveal any grievous way.
+
+**Application:** Ask God to put His finger on the real issues—beneath the surface habits to the heart-level idols.`,
         },
       ],
     },
     {
-      id: "day-2",
+      id: "bfa-day-2",
       dayNumber: 2,
       title: "Bringing Sin into the Light",
       items: [
         {
-          id: "d2-devotional",
+          id: "bfa-d2-devotional",
           type: "devotional",
-          title: "Bringing Sin into the Light",
-          body:
-            "Addiction grows in secrecy and shame. The enemy whispers, 'If people knew, they would reject you.' God says the opposite: Bring it into the light so I can heal you.\n\n" +
-            "Confession is not just saying 'I messed up.' It is agreeing with God that your sin is serious, destructive, and against Him. But confession is also the doorway to cleansing and restoration. The blood of Jesus is enough even for the sins you are most ashamed of.\n\n" +
-            "God also uses safe, godly people as part of your healing. James tells us to confess our sins to one another and pray for one another that we may be healed. Isolation keeps you stuck; honest fellowship moves you toward freedom.",
+          title: "Day 2 — Bringing Sin into the Light",
+          body: `Addiction grows in secrecy and shame. The enemy whispers, "If people knew, they would reject you." God says the opposite: **Bring it into the light so I can heal you.**
+
+Confession is not just saying "I messed up." It is agreeing with God that your sin is serious, destructive, and against Him. But confession is also the doorway to cleansing and restoration. The blood of Jesus is enough even for the sins you are most ashamed of.
+
+God also uses **safe, godly people** as part of your healing. James tells us to confess our sins to one another and pray for one another that we may be healed. Isolation keeps you stuck; honest fellowship moves you toward freedom.
+
+**Reflection**
+
+Who is one mature, trustworthy believer you can be honest with about your struggle this week?
+
+**Prayer**
+
+Lord, give me courage to bring my sin into the light—with You and with a trusted brother or sister. Thank You that Your mercy is greater than my shame.
+
+**Shareable Truth**
+
+"Shame says 'hide'; grace says 'come into the light and be healed.'"`,
         },
         {
-          id: "d2-1jn-1-7-9",
+          id: "bfa-d2-1john1-7-9",
           type: "scripture",
-          title: "1 John 1:7-9",
-          reference: "1 John 1:7-9",
-          body: "Walking in the light, confessing sin, and experiencing cleansing through Jesus' blood.",
+          title: "Walk in the Light",
+          reference: "1 John 1:7–9",
+          body: `**Plain Meaning:** Walking in the light means honesty before God; as we confess our sins, He is faithful to forgive and cleanse us.
+
+**Application:** Freedom requires stepping out of hiding. Confession is not the end of you; it's the beginning of cleansing.`,
         },
         {
-          id: "d2-jas-5-16",
+          id: "bfa-d2-prov28-13",
           type: "scripture",
-          title: "James 5:16",
+          title: "Concealed or Confessed?",
+          reference: "Proverbs 28:13",
+          body: `**Plain Meaning:** Those who conceal sins do not prosper, but those who confess and forsake them obtain mercy.
+
+**Application:** Hiding your addiction ensures its power over you. Mercy flows where sin is confessed and abandoned.`,
+        },
+        {
+          id: "bfa-d2-james5-16",
+          type: "scripture",
+          title: "Healing in Community",
           reference: "James 5:16",
-          body: "Confess your sins to one another and pray for one another, that you may be healed.",
+          body: `**Plain Meaning:** Confess your sins to one another and pray for one another, that you may be healed.
+
+**Application:** You need both God and godly people. Honest friendships are part of God's design for your healing.`,
         },
       ],
     },
     {
-      id: "day-3",
+      id: "bfa-day-3",
       dayNumber: 3,
       title: "New Patterns and Escape Routes",
       items: [
         {
-          id: "d3-devotional",
+          id: "bfa-d3-devotional",
           type: "devotional",
-          title: "New Patterns and Escape Routes",
-          body:
-            "Addiction is not just a 'bad habit'; it is often a whole network of patterns—triggers, times of day, emotions, places, and relationships that pull you back into sin.\n\n" +
-            "God always provides a way of escape. But you must plan for it. That may mean blocking access, changing routes, deleting apps, avoiding certain friends, or rearranging your schedule. Radical steps are not legalism; they are wisdom when your soul is at stake.\n\n" +
-            "Jesus' strong language about cutting off a hand or plucking out an eye is about taking drastic action against anything that leads you repeatedly into sin. You are not powerless; in Christ you are free to flee.",
+          title: "Day 3 — New Patterns and Escape Routes",
+          body: `Addiction is not just a "bad habit"; it is often a whole network of patterns—triggers, times of day, emotions, places, and relationships that pull you back into sin.
+
+God always provides a way of escape. But you must **plan for it**. That may mean blocking access, changing routes, deleting apps, avoiding certain friends, or rearranging your schedule. Radical steps are not legalism; they are **wisdom** when your soul is at stake.
+
+Jesus' strong language about cutting off a hand or plucking out an eye is about taking drastic action against anything that leads you repeatedly into sin. You are not powerless; in Christ you are free to flee.
+
+**Reflection**
+
+What practical "escape routes" and boundaries do you need to put in place this week to make it harder to fall and easier to obey?
+
+**Prayer**
+
+Lord, show me the patterns that lead me into sin. Give me wisdom and courage to set up boundaries and escape routes that honor You.
+
+**Shareable Truth**
+
+"God always provides a way out—wisdom is choosing it before temptation hits."`,
         },
         {
-          id: "d3-1cor-10-13",
+          id: "bfa-d3-1cor10-13",
           type: "scripture",
-          title: "1 Corinthians 10:13",
+          title: "A Way of Escape",
           reference: "1 Corinthians 10:13",
-          body: "God is faithful; He will not let you be tempted beyond your ability but will provide the way of escape.",
+          body: `**Plain Meaning:** Temptation is common to humanity, but God is faithful and always provides a way of escape so you can endure it.
+
+**Application:** You are never forced to sin. Ask God to show you the path of escape before you're in too deep.`,
         },
         {
-          id: "d3-2tim-2-22",
+          id: "bfa-d3-2tim2-22",
           type: "scripture",
-          title: "2 Timothy 2:22",
+          title: "Flee and Pursue",
           reference: "2 Timothy 2:22",
-          body: "Flee youthful passions and pursue righteousness, faith, love, and peace with those who call on the Lord.",
+          body: `**Plain Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace with those who call on the Lord.
+
+**Application:** It's not enough to run from sin; you must also run *toward* godly people and godly pursuits.`,
+        },
+        {
+          id: "bfa-d3-matt5-29-30",
+          type: "scripture",
+          title: "Radical Amputations",
+          reference: "Matthew 5:29–30",
+          body: `**Plain Meaning:** Jesus uses strong imagery about losing an eye or hand rather than being thrown into hell because of sin.
+
+**Application:** Serious sin calls for serious measures. Removing access points to addiction is wisdom, not extremism.`,
         },
       ],
     },
     {
-      id: "day-4",
+      id: "bfa-day-4",
       dayNumber: 4,
       title: "You Can't Do This Alone",
       items: [
         {
-          id: "d4-devotional",
+          id: "bfa-d4-devotional",
           type: "devotional",
-          title: "You Can't Do This Alone",
-          body:
-            "God never meant for you to fight addiction alone. Lone-ranger Christianity is dangerous, especially when you're dealing with deep-rooted sin. You need the body of Christ.\n\n" +
-            "Community gives you encouragement when you're weary, correction when you're drifting, and accountability when you're tempted to hide. Two are better than one; if one falls, the other lifts him up.\n\n" +
-            "The church is not a museum for perfect people; it is a hospital for sinners who need grace. You may need a recovery group, a mentor, a counselor, or all three. That's not weakness—that's wisdom and humility.",
+          title: "Day 4 — You Can't Do This Alone",
+          body: `God never meant for you to fight addiction alone. Lone-ranger Christianity is dangerous, especially when you're dealing with deep-rooted sin. You need the **body of Christ**.
+
+Community gives you encouragement when you're weary, correction when you're drifting, and accountability when you're tempted to hide. Two are better than one; if one falls, the other lifts him up.
+
+The church is not a museum for perfect people; it is a hospital for sinners who need grace. You may need a recovery group, a mentor, a counselor, or all three. That's not weakness—that's wisdom and humility.
+
+**Reflection**
+
+Who are the two or three people God may be calling you to invite into your battle for freedom?
+
+**Prayer**
+
+Lord, I confess that I often want to hide and fix myself alone. Give me the humility to seek help and the courage to walk in community.
+
+**Shareable Truth**
+
+"Freedom is personal, but it is rarely private."`,
         },
         {
-          id: "d4-heb-10-24-25",
+          id: "bfa-d4-hebrews10-24-25",
           type: "scripture",
-          title: "Hebrews 10:24-25",
-          reference: "Hebrews 10:24-25",
-          body: "Don't neglect meeting together; stir one another up to love and good works.",
+          title: "Don't Walk Alone",
+          reference: "Hebrews 10:24–25",
+          body: `**Plain Meaning:** Believers are called to stir one another up to love and good works and not neglect meeting together.
+
+**Application:** Skipping community weakens you. You need regular encouragement and challenge from other believers.`,
         },
         {
-          id: "d4-ecc-4-9-10",
+          id: "bfa-d4-eccl4-9-10",
           type: "scripture",
-          title: "Ecclesiastes 4:9-10",
-          reference: "Ecclesiastes 4:9-10",
-          body: "Two are better than one; if one falls, the other can lift him up.",
+          title: "Two Are Better Than One",
+          reference: "Ecclesiastes 4:9–10",
+          body: `**Plain Meaning:** Two are better than one because if one falls, the other can lift him up.
+
+**Application:** Recovery is easier with real partners. Let others lift you instead of hiding when you fall.`,
+        },
+        {
+          id: "bfa-d4-gal6-1-2",
+          type: "scripture",
+          title: "Restore Gently",
+          reference: "Galatians 6:1–2",
+          body: `**Plain Meaning:** Those who are spiritual should restore the one caught in any transgression with gentleness, bearing one another's burdens.
+
+**Application:** Ask God for safe people who restore gently—and be willing to be that kind of person for others too.`,
         },
       ],
     },
     {
-      id: "day-5",
+      id: "bfa-day-5",
       dayNumber: 5,
       title: "Falling Forward in Grace",
       items: [
         {
-          id: "d5-devotional",
+          id: "bfa-d5-devotional",
           type: "devotional",
-          title: "Falling Forward in Grace",
-          body:
-            "Freedom from addiction is often a process, not a straight line. You may still stumble. The enemy wants you to believe that one fall means nothing has changed—that you might as well give up.\n\n" +
-            "But Scripture says the righteous person falls seven times and rises again. Your hope is not in a flawless track record; your hope is in a faithful Savior. When you sin, run toward God, not away from Him.\n\n" +
-            "God disciplines His children, but He does not abandon them. He is committed to finishing the good work He started in you. Each time you fall and get back up in repentance and faith, you are 'falling forward' into deeper dependence on grace.",
+          title: "Day 5 — Falling Forward in Grace",
+          body: `Freedom from addiction is often **a process**, not a straight line. You may still stumble. The enemy wants you to believe that one fall means nothing has changed—that you might as well give up.
+
+But Scripture says the righteous person falls seven times and rises again. Your hope is not in a flawless track record; your hope is in a faithful Savior. When you sin, run **toward** God, not away from Him.
+
+God disciplines His children, but He does not abandon them. He is committed to finishing the good work He started in you. Each time you fall and get back up in repentance and faith, you are "falling forward" into deeper dependence on grace.
+
+**Reflection**
+
+How do you usually respond after you fall—running to God or hiding from Him? What would it look like to "fall forward" next time?
+
+**Prayer**
+
+Father, I thank You that Your grace is greater than my failures. When I fall, help me run back to You quickly, receive Your forgiveness, and keep walking toward freedom.
+
+**Shareable Truth**
+
+"Freedom isn't never falling; it's always getting back up and running to Jesus."`,
         },
         {
-          id: "d5-prov-24-16",
+          id: "bfa-d5-prov24-16",
           type: "scripture",
-          title: "Proverbs 24:16",
+          title: "Rise Again",
           reference: "Proverbs 24:16",
-          body: "The righteous falls seven times and rises again.",
+          body: `**Plain Meaning:** The righteous person falls seven times and rises again, but the wicked stumble in calamity.
+
+**Application:** In Christ, falling is not final. By His grace you get back up and keep moving toward Him.`,
         },
         {
-          id: "d5-mic-7-8-9",
+          id: "bfa-d5-micah7-8-9",
           type: "scripture",
-          title: "Micah 7:8-9",
-          reference: "Micah 7:8-9",
-          body: "'When I fall, I shall rise… He will bring me out to the light.'",
+          title: "From Darkness to Light",
+          reference: "Micah 7:8–9",
+          body: `**Plain Meaning:** Even when the believer falls, he declares that the Lord will be his light, and God will bring him out to the light.
+
+**Application:** Your lowest moments are not beyond God's reach. He still leads you from darkness back into His light.`,
+        },
+        {
+          id: "bfa-d5-hebrews4-15-16",
+          type: "scripture",
+          title: "Help in Time of Need",
+          reference: "Hebrews 4:15–16",
+          body: `**Plain Meaning:** We have a High Priest who sympathizes with our weaknesses, so we can come boldly to the throne of grace for mercy and help.
+
+**Application:** Run to Jesus *because* you are weak, not because you feel strong. The throne you approach is a throne of grace.`,
         },
       ],
     },
