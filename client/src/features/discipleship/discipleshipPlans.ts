@@ -563,8 +563,86 @@ export const breakingFreeAddictionPlan: DiscipleshipPlan = {
   ],
 };
 
+export const winningOverTemptationPlan: DiscipleshipPlan = {
+  id: "winning-over-temptation",
+  title: "Winning Over Temptation",
+  subtitle: "God's power for real battles",
+  imageUrl: "@assets/stock_images/group_of_people_pray_e32ccdad.jpg",
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "The Battle Is Real",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "The Battle Is Real",
+          body: "Temptation is not a sign that you're weak — it's proof that you're alive in Christ. Before salvation, sin didn't have to tempt you… you simply followed it. Now there's a war inside you: the Spirit versus the flesh.\n\nYou are not temptation's prisoner anymore. But to win the war, you must recognize the enemy. Temptation comes through:\nThe flesh — inner desires\nThe world — pressure around you\nThe devil — lies against you\n\nJesus understands temptation. He faced the full assault of Satan and never sinned. So when you battle temptation, you're not alone — your King has fought and won.",
+        },
+        { id: "d1-james", type: "scripture", title: "James 1:13–15", reference: "James 1:13-15", body: "Temptation gives birth to sin when desires are acted on" },
+        { id: "d1-eph", type: "scripture", title: "Ephesians 6:10–11", reference: "Ephesians 6:10-11", body: "Stand against the devil's schemes" },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Run, Don't Reason",
+      items: [
+        { id: "d2-devotional", type: "devotional", title: "Run, Don't Reason", body: "We often lose the battle because we try to negotiate with temptation. The flesh says: 'Just a little… it's not a big deal…' But the Bible doesn't say 'argue with temptation.' It says: 'Flee.' Sometimes victory looks like leaving the room, deleting the app, changing the friend group, or blocking the access. Fleeing is not cowardice — it's obedience." },
+        { id: "d2-2tim", type: "scripture", title: "2 Timothy 2:22", reference: "2 Timothy 2:22", body: "Flee youthful passions and pursue righteousness" },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Take Every Thought Captive",
+      items: [
+        { id: "d3-devotional", type: "devotional", title: "Take Every Thought Captive", body: "Temptation doesn't start with behavior — it starts with thoughts. The battlefield is your mind. The enemy throws lies but God gives you the power to reject lies and replace them with truth. When Jesus was tempted, He responded: 'It is written…' Not with emotion or willpower — but the Word." },
+        { id: "d3-2cor", type: "scripture", title: "2 Corinthians 10:3–5", reference: "2 Corinthians 10:3-5", body: "Take thoughts captive to obey Christ" },
+      ],
+    },
+    { id: "day-4", dayNumber: 4, title: "The Spirit Is Greater", items: [{ id: "d4-devotional", type: "devotional", title: "The Spirit Is Greater", body: "You don't fight for victory — you fight from victory. The Spirit of God lives in you, and where the Spirit rules, sin cannot dominate." }, { id: "d4-rom", type: "scripture", title: "Romans 8:9", reference: "Romans 8:9", body: "We are no longer controlled by the flesh but the Spirit" }] },
+    { id: "day-5", dayNumber: 5, title: "Freedom Is a Journey", items: [{ id: "d5-devotional", type: "devotional", title: "Freedom Is a Journey", body: "The righteous person is not the one who never falls, but the one who keeps getting up in grace. When you fail: Run to God, not away. Confess quickly. Keep walking in the Spirit." }, { id: "d5-prov", type: "scripture", title: "Proverbs 24:16", reference: "Proverbs 24:16", body: "The righteous rise again after falling" }] },
+  ],
+};
+
+export const findingGodsWillPlan: DiscipleshipPlan = {
+  id: "finding-gods-will",
+  title: "Finding God's Will for My Life",
+  subtitle: "Confidence in God's direction",
+  imageUrl: "@assets/stock_images/forest_path_sunlight_7c167ac0.jpg",
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "God Wants You to Know His Will", items: [{ id: "d1-devotional", type: "devotional", title: "God Wants You to Know His Will", body: "Many believers fear missing God's will — like God is hiding it. But Scripture says the opposite: God wants to guide His children. His will is not discovered by anxiety — it's revealed to those who seek Him. When you follow what you know, God reveals what you don't yet know." }, { id: "d1-prov", type: "scripture", title: "Proverbs 3:5–6", reference: "Proverbs 3:5-6", body: "He will direct your paths" }] },
+    { id: "day-2", dayNumber: 2, title: "The Word Leads the Way", items: [{ id: "d2-devotional", type: "devotional", title: "The Word Leads the Way", body: "The primary way God leads is through His written Word. Any guidance that contradicts Scripture is not God. The more Scripture is in you, the more your choices reflect Christ." }, { id: "d2-ps", type: "scripture", title: "Psalm 119:105", reference: "Psalm 119:105", body: "God's Word is a lamp to our feet" }] },
+    { id: "day-3", dayNumber: 3, title: "God's Spirit Guides Your Steps", items: [{ id: "d3-devotional", type: "devotional", title: "God's Spirit Guides", body: "The Holy Spirit applies God's Word personally. He nudges, convicts, warns, and encourages. You don't have to fear making the wrong move if your heart is surrendered to Him." }, { id: "d3-rom", type: "scripture", title: "Romans 8:14", reference: "Romans 8:14", body: "The children of God are led by the Spirit" }] },
+    { id: "day-4", dayNumber: 4, title: "Peace Is a Guide", items: [{ id: "d4-devotional", type: "devotional", title: "Peace Is a Guide", body: "When God is guiding you, He often gives you a deep peace that doesn't match the situation. Let peace be the umpire in your heart — ruling in or ruling out decisions." }, { id: "d4-col", type: "scripture", title: "Colossians 3:15", reference: "Colossians 3:15", body: "Let God's peace rule in your hearts" }] },
+    { id: "day-5", dayNumber: 5, title: "Trust God with the Next Step", items: [{ id: "d5-devotional", type: "devotional", title: "Trust God with the Next Step", body: "God leads one step at a time — so your faith is in Him, not in your plan. The most important step you'll ever take is the next one of obedience." }, { id: "d5-ps", type: "scripture", title: "Psalm 37:23", reference: "Psalm 37:23", body: "God orders the steps of the righteous" }] },
+  ],
+};
+
+export const findingGodlyRelationshipPlan: DiscipleshipPlan = {
+  id: "finding-godly-relationship",
+  title: "Finding a Godly Relationship",
+  subtitle: "God's design for love, dating, and marriage",
+  imageUrl: "@assets/stock_images/two_people_reading_b_2fa31c4a.jpg",
+  totalDays: 5,
+  days: [
+    { id: "day-1", dayNumber: 1, title: "God Cares About Who You Date", items: [{ id: "d1-devotional", type: "devotional", title: "God Cares About Who You Date", body: "Romantic relationships can be beautiful — or deeply damaging. God designed love, so He knows how it works best. The person you date influences your walk with God, your peace, your habits, and your future family. God does not want you to settle for someone who pulls you away from Him." }, { id: "d1-2cor", type: "scripture", title: "2 Corinthians 6:14", reference: "2 Corinthians 6:14", body: "Do not be unequally yoked" }] },
+    { id: "day-2", dayNumber: 2, title: "Look for Christlike Qualities", items: [{ id: "d2-devotional", type: "devotional", title: "Look for Christlike Qualities", body: "Attraction matters — but character comes first. Don't just ask: 'Do I like them?' Ask: 'Do they look like Jesus is changing their life?' A dating relationship is not a mission field — marry someone who is already following Christ." }, { id: "d2-1sam", type: "scripture", title: "1 Samuel 16:7", reference: "1 Samuel 16:7", body: "God looks at the heart" }] },
+    { id: "day-3", dayNumber: 3, title: "Purity Protects Your Future", items: [{ id: "d3-devotional", type: "devotional", title: "Purity Protects Your Future", body: "Sex is God's idea — and He designed it for marriage. Purity is not God trying to ruin your fun — it's God protecting your future joy. Someone who truly loves you will protect your purity, not pressure you to sin." }, { id: "d3-1thess", type: "scripture", title: "1 Thessalonians 4:3–5", reference: "1 Thessalonians 4:3-5", body: "This is God's will: that we abstain from sexual immorality" }] },
+    { id: "day-4", dayNumber: 4, title: "Relationships Built on Wisdom", items: [{ id: "d4-devotional", type: "devotional", title: "Relationships Built on Wisdom", body: "Every relationship has storms. Wisdom builds a foundation that can survive them. The foolish build on chemistry and convenience. The wise build on Christ and commitment." }, { id: "d4-matt", type: "scripture", title: "Matthew 7:24–25", reference: "Matthew 7:24-25", body: "Build on the rock, not sand" }] },
+    { id: "day-5", dayNumber: 5, title: "Trust God with Your Timing", items: [{ id: "d5-devotional", type: "devotional", title: "Trust God with Your Timing", body: "Waiting is hard — especially when everyone around you seems to be dating or married. But waiting is not wasting when God is the One who holds the timetable. Don't rush ahead of God — He writes better love stories than we do." }, { id: "d5-ps", type: "scripture", title: "Psalm 84:11", reference: "Psalm 84:11", body: "God withholds no good thing from those who walk uprightly" }] },
+  ],
+};
+
 export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   heavenOrHellPlan,
   lifeInSpiritPlan,
   breakingFreeAddictionPlan,
+  winningOverTemptationPlan,
+  findingGodsWillPlan,
+  findingGodlyRelationshipPlan,
 ];
