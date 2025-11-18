@@ -1,8 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { ArrowLeft, Cross, BookOpen } from "lucide-react";
+import { ArrowLeft, BookHeart, Calendar, CheckCircle2, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useTranslations } from "@/lib/translations";
-import { getCurrentDisciplesVerse, disciplesVerses } from "@/data/disciplesOfChristVerses";
+import discipleHeroImage from '@assets/stock_images/disciples_following__34d3c839.jpg';
 
 interface DisciplesOfChristPageProps {
   onBack?: () => void;
@@ -10,14 +9,11 @@ interface DisciplesOfChristPageProps {
 }
 
 export default function DisciplesOfChristPage({ onBack, language }: DisciplesOfChristPageProps) {
-  const currentVerse = getCurrentDisciplesVerse();
-  const t = useTranslations(language);
-
   return (
-    <div className="min-h-screen pb-6 bg-gradient-to-b from-amber-50 to-orange-50/30">
+    <div className="min-h-screen pb-6 bg-gradient-to-b from-blue-50 via-white to-purple-50/30">
       {/* Header with Back Button */}
-      <div className="bg-white/80 backdrop-blur-sm border-b border-amber-200/50 sticky top-0 z-10">
-        <div className="max-w-2xl mx-auto px-4 py-3 flex items-center gap-3">
+      <div className="bg-white/95 backdrop-blur-md border-b border-gray-200 sticky top-0 z-10 shadow-sm">
+        <div className="max-w-4xl mx-auto px-4 py-3 flex items-center gap-3">
           <Button
             variant="ghost"
             size="icon"
@@ -28,104 +24,117 @@ export default function DisciplesOfChristPage({ onBack, language }: DisciplesOfC
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <div className="flex items-center gap-2 flex-1">
-            <div className="w-8 h-8 bg-amber-100 rounded-full flex items-center justify-center shadow-md border-2 border-amber-200/60">
-              <Cross className="w-4 h-4 text-amber-700" />
-            </div>
-            <h1 className="text-lg font-bold text-gray-800">Disciples of Christ</h1>
-          </div>
+          <h1 className="text-lg font-bold text-gray-900">Disciple</h1>
         </div>
       </div>
 
-      <div className="max-w-2xl mx-auto px-4 py-6 space-y-6">
-        {/* Current Verse Hero Section */}
-        <Card 
-          className="bg-white rounded-2xl shadow-2xl border-2 border-amber-200 ring-4 ring-amber-100/50"
-          data-testid="card-current-verse"
-        >
+      {/* Hero Section with Background Image */}
+      <div className="relative h-64 overflow-hidden">
+        <img 
+          src={discipleHeroImage}
+          alt="Disciples Following Christ"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-blue-900/80 via-blue-800/70 to-blue-900/90" />
+        
+        {/* Hero Content */}
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-6 text-center">
+          <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center mb-4 shadow-2xl border-2 border-white/40">
+            <BookHeart className="w-8 h-8 text-white" strokeWidth={1.5} />
+          </div>
+          <h1 className="text-3xl font-bold text-white mb-3 drop-shadow-lg" data-testid="title-main">
+            Disciple of Christ
+          </h1>
+          <h2 className="text-xl font-semibold text-blue-100 mb-2 drop-shadow-md" data-testid="subtitle-plans">
+            Plans & Teachings
+          </h2>
+          <p className="text-sm text-blue-200 max-w-md leading-relaxed drop-shadow-md">
+            Deepen your faith through structured spiritual growth plans designed to transform your walk with Christ
+          </p>
+        </div>
+      </div>
+
+      <div className="max-w-4xl mx-auto px-4 py-8 space-y-6">
+        {/* Introduction Card */}
+        <Card className="bg-gradient-to-br from-blue-50 to-purple-50 border-2 border-blue-200/50 shadow-lg">
           <CardContent className="p-6">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="w-10 h-10 bg-amber-100 rounded-full flex items-center justify-center shadow-lg border-2 border-amber-200/60 ring-1 ring-amber-300/50">
-                <BookOpen className="w-5 h-5 text-amber-700" />
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center shadow-md border-2 border-blue-200/60 flex-shrink-0">
+                <Users className="w-6 h-6 text-blue-700" />
               </div>
-              <div>
-                <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide">Today's Verse</p>
-                <p className="text-sm font-bold text-amber-700" data-testid="text-current-verse-ref">{currentVerse.ref}</p>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">Begin Your Discipleship Journey</h3>
+                <p className="text-sm text-gray-700 leading-relaxed">
+                  Choose from carefully crafted spiritual growth plans designed to guide you deeper into God's Word and strengthen your relationship with Christ. Each plan includes daily readings, practical applications, and transformative teachings.
+                </p>
               </div>
-            </div>
-            
-            <p className="text-base leading-relaxed text-gray-800 mb-4" data-testid="text-current-verse-text">
-              "{currentVerse.text}"
-            </p>
-            
-            <div className="border-t border-amber-200 pt-4">
-              <p className="text-xs font-semibold text-amber-600 uppercase tracking-wide mb-2">One Simple Step</p>
-              <p className="text-sm leading-relaxed text-gray-700 italic" data-testid="text-current-verse-step">
-                {currentVerse.step}
-              </p>
             </div>
           </CardContent>
         </Card>
 
-        {/* All Verses Section */}
-        <div>
-          <h2 className="text-base font-bold text-gray-800 mb-3 px-2">All Discipleship Verses</h2>
-          <div className="space-y-3">
-            {disciplesVerses.map((verse, index) => {
-              const isCurrent = verse.ref === currentVerse.ref;
-              
-              return (
-                <Card
-                  key={verse.ref}
-                  className={`
-                    bg-white rounded-xl shadow-lg border-2 transition-all duration-300
-                    ${isCurrent 
-                      ? 'border-amber-400 ring-2 ring-amber-200 bg-amber-50/50' 
-                      : 'border-gray-200 hover:border-amber-200 hover:shadow-xl'
-                    }
-                  `}
-                  data-testid={`card-verse-${index}`}
-                >
-                  <CardContent className="p-4">
-                    <div className="flex items-start gap-3">
-                      <div className={`
-                        w-8 h-8 rounded-full flex items-center justify-center shadow-md border-2 flex-shrink-0
-                        ${isCurrent 
-                          ? 'bg-amber-200 border-amber-300 text-amber-800' 
-                          : 'bg-gray-100 border-gray-200 text-gray-600'
-                        }
-                      `}>
-                        <span className="text-sm font-bold">{index + 1}</span>
-                      </div>
-                      <div className="flex-1 min-w-0">
-                        <p className={`
-                          text-sm font-bold mb-1
-                          ${isCurrent ? 'text-amber-700' : 'text-gray-700'}
-                        `} data-testid={`text-verse-ref-${index}`}>
-                          {verse.ref}
-                        </p>
-                        <p className="text-sm leading-relaxed text-gray-700 mb-2" data-testid={`text-verse-text-${index}`}>
-                          "{verse.text}"
-                        </p>
-                        <div className="border-t border-gray-200 pt-2">
-                          <p className="text-xs text-gray-600 italic" data-testid={`text-verse-step-${index}`}>
-                            {verse.step}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              );
-            })}
+        {/* Plans Section - Ready for Individual Plans */}
+        <div className="space-y-4">
+          <div className="flex items-center gap-3 px-2">
+            <Calendar className="w-5 h-5 text-blue-700" />
+            <h3 className="text-lg font-bold text-gray-900">Available Plans</h3>
+          </div>
+
+          {/* Placeholder for Future Plans */}
+          <div className="bg-white rounded-2xl border-2 border-dashed border-blue-200 p-12 text-center">
+            <div className="w-16 h-16 bg-blue-50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <BookHeart className="w-8 h-8 text-blue-400" />
+            </div>
+            <h4 className="text-lg font-semibold text-gray-700 mb-2">Plans Coming Soon</h4>
+            <p className="text-sm text-gray-500 max-w-md mx-auto">
+              Individual discipleship plans will be added here to guide you through your spiritual growth journey
+            </p>
           </div>
         </div>
 
+        {/* Features Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8">
+          <Card className="bg-white border-2 border-gray-100 shadow-sm hover-elevate">
+            <CardContent className="p-5 text-center">
+              <div className="w-12 h-12 bg-blue-50 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm border border-blue-100">
+                <CheckCircle2 className="w-6 h-6 text-blue-600" />
+              </div>
+              <h4 className="font-semibold text-gray-900 text-sm mb-1">Structured Growth</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Follow proven paths to deepen your faith
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-2 border-gray-100 shadow-sm hover-elevate">
+            <CardContent className="p-5 text-center">
+              <div className="w-12 h-12 bg-purple-50 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm border border-purple-100">
+                <BookHeart className="w-6 h-6 text-purple-600" />
+              </div>
+              <h4 className="font-semibold text-gray-900 text-sm mb-1">Daily Teachings</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Bite-sized lessons that fit your schedule
+              </p>
+            </CardContent>
+          </Card>
+
+          <Card className="bg-white border-2 border-gray-100 shadow-sm hover-elevate">
+            <CardContent className="p-5 text-center">
+              <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center mx-auto mb-3 shadow-sm border border-green-100">
+                <Users className="w-6 h-6 text-green-600" />
+              </div>
+              <h4 className="font-semibold text-gray-900 text-sm mb-1">Practical Steps</h4>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                Apply biblical truths to your daily life
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+
         {/* Footer Note */}
-        <Card className="bg-gradient-to-r from-amber-100 to-orange-100 border-2 border-amber-200/50">
-          <CardContent className="p-4 text-center">
+        <Card className="bg-gradient-to-r from-blue-50 to-purple-50 border-2 border-blue-100/50 shadow-sm">
+          <CardContent className="p-5 text-center">
             <p className="text-xs text-gray-700 leading-relaxed">
-              Your daily verse rotates every 2 days. Each verse includes a practical step to help you live out God's Word today.
+              New discipleship plans are being added regularly to help you grow in your faith journey. Check back soon for guided paths to transform your spiritual walk.
             </p>
           </CardContent>
         </Card>
