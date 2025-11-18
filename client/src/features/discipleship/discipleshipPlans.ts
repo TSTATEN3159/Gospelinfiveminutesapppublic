@@ -89,36 +89,58 @@ Lord, I don't want to guess about eternity. Open my eyes this week to see the tr
           type: "scripture",
           title: "All Have Sinned",
           reference: "Romans 3:23",
-          body: `**Plain Meaning:** Every human being, without exception, has sinned and fallen short of God's perfect standard. Sin is not just "big crimes"; it is any thought, action, or desire that fails to love God with all your heart.
+          body: `
+**Scripture (KJV)**  
+> "For all have sinned, and come short of the glory of God;"
 
-**Application:** This verse removes all excuses and comparisons. You don't come to God as a "pretty good person" needing a small touch-up; you come as a sinner needing a Savior.`,
+**Meaning:** Every human being, without exception, has sinned and fallen short of God's perfect standard. Sin is not just "big crimes"; it is any thought, action, or desire that fails to love God with all your heart.  
+**Application:** This verse removes all excuses and comparisons. You don't come to God as a "pretty good person" needing a small touch-up; you come as a sinner needing a Savior.
+          `.trim(),
         },
         {
           id: "d1-rom310-12",
           type: "scripture",
           title: "None Righteous on Their Own",
           reference: "Romans 3:10–12",
-          body: `**Plain Meaning:** No one, by nature, lives in a way that is perfectly right before God. Left to ourselves, we do not seek God as He truly is.
+          body: `
+**Scripture (KJV)**  
+> "As it is written, There is none righteous, no, not one:  
+> There is none that understandeth, there is none that seeketh after God.  
+> They are all gone out of the way, they are together become unprofitable;  
+> there is none that doeth good, no, not one."
 
-**Application:** This kills spiritual pride. You don't need help polishing your goodness; you need God to rescue you from spiritual death.`,
+**Meaning:** No one, by nature, lives in a way that is perfectly right before God. Left to ourselves, we do not seek God as He truly is.  
+**Application:** This kills spiritual pride. You don't need help polishing your goodness; you need God to rescue you from spiritual death.
+          `.trim(),
         },
         {
           id: "d1-heb927",
           type: "scripture",
           title: "Appointment with Judgment",
           reference: "Hebrews 9:27",
-          body: `**Plain Meaning:** Every person dies once and then faces God's judgment. There are no second chances, reincarnations, or do-overs.
+          body: `
+**Scripture (KJV)**  
+> "And as it is appointed unto men once to die, but after this the judgment:"
 
-**Application:** This makes today urgent. You don't know your day of death, but you do know you will stand before God. Now is the time to seek Him.`,
+**Meaning:** Every person dies once and then faces God's judgment. There are no second chances, reincarnations, or do-overs.  
+**Application:** This makes today urgent. You don't know your day of death, but you do know you will stand before God. Now is the time to seek Him.
+          `.trim(),
         },
         {
           id: "d1-matt713-14",
           type: "scripture",
           title: "Two Roads, Two Destinations",
           reference: "Matthew 7:13–14",
-          body: `**Plain Meaning:** Jesus describes two gates and two roads: the wide road many travel that leads to destruction, and the narrow road that leads to life.
+          body: `
+**Scripture (KJV)**  
+> "Enter ye in at the strait gate: for wide is the gate, and broad is the way,  
+> that leadeth to destruction, and many there be which go in thereat:  
+> Because strait is the gate, and narrow is the way, which leadeth unto life,  
+> and few there be that find it."
 
-**Application:** You are on one of those roads right now. Faith in Christ is not one option among many equal paths; it is the narrow way that leads to life.`,
+**Meaning:** Jesus describes two gates and two roads: the wide road many travel that leads to destruction, and the narrow road that leads to life.  
+**Application:** You are on one of those roads right now. Faith in Christ is not one option among many equal paths; it is the narrow way that leads to life.
+          `.trim(),
         },
       ],
     },
@@ -154,36 +176,57 @@ Holy God, show me the truth about my sin—not to crush me, but to bring me to Y
           type: "scripture",
           title: "Sin Separates from God",
           reference: "Isaiah 59:2",
-          body: `**Plain Meaning:** Sin creates a separation between people and God, so that He hides His face and does not hear.
+          body: `
+**Scripture (KJV)**  
+> "But your iniquities have separated between you and your God,  
+> and your sins have hid his face from you, that he will not hear."
 
-**Application:** The biggest problem with sin is not what it does to your reputation—it is what it does to your relationship with God.`,
+**Meaning:** Sin creates a separation between people and God, so that He hides His face and does not hear.  
+**Application:** The biggest problem with sin is not what it does to your reputation—it is what it does to your relationship with God.
+          `.trim(),
         },
         {
           id: "d2-rom62-23",
           type: "scripture",
           title: "Sin's Paycheck: Death",
           reference: "Romans 6:23",
-          body: `**Plain Meaning:** The result, or wage, of sin is death—spiritual separation from God now and forever. But God offers eternal life as a gift through Jesus Christ.
+          body: `
+**Scripture (KJV)**  
+> "For the wages of sin is death; but the gift of God is eternal life  
+> through Jesus Christ our Lord."
 
-**Application:** You don't "get away" with sin; you get paid for it—with death. But God offers a different paycheck: eternal life, undeserved, through His Son.`,
+**Meaning:** The result, or wage, of sin is death—spiritual separation from God now and forever. But God offers eternal life as a gift through Jesus Christ.  
+**Application:** You don't "get away" with sin; you get paid for it—with death. But God offers a different paycheck: eternal life, undeserved, through His Son.
+          `.trim(),
         },
         {
           id: "d2-ps514",
           type: "scripture",
           title: "Against God First",
           reference: "Psalm 51:4",
-          body: `**Plain Meaning:** David confesses that his sin, though it hurt others, was ultimately against God Himself.
+          body: `
+**Scripture (KJV)**  
+> "Against thee, thee only, have I sinned, and done this evil in thy sight:  
+> that thou mightest be justified when thou speakest,  
+> and be clear when thou judgest."
 
-**Application:** Sin is not only about hurting people; it is about offending a holy God. That is why only God can ultimately forgive it.`,
+**Meaning:** David confesses that his sin, though it hurt others, was ultimately against God Himself.  
+**Application:** Sin is not only about hurting people; it is about offending a holy God. That is why only God can ultimately forgive it.
+          `.trim(),
         },
         {
           id: "d2-james417",
           type: "scripture",
           title: "Respectable Sins",
           reference: "James 4:17",
-          body: `**Plain Meaning:** Knowing the right thing to do and refusing to do it is also sin.
+          body: `
+**Scripture (KJV)**  
+> "Therefore to him that knoweth to do good, and doeth it not,  
+> to him it is sin."
 
-**Application:** Sin is not just doing bad things; it is also failing to do the good God has shown you. This means no one can claim to be innocent.`,
+**Meaning:** Knowing the right thing to do and refusing to do it is also sin.  
+**Application:** Sin is not just doing bad things; it is also failing to do the good God has shown you. This means no one can claim to be innocent.
+          `.trim(),
         },
       ],
     },
@@ -217,36 +260,62 @@ Lord, strip away any belief that I can earn heaven. Show me that my only hope is
           type: "scripture",
           title: "The Proud Religious Man & the Broken Sinner",
           reference: "Luke 18:10–14",
-          body: `**Plain Meaning:** Jesus contrasts a proud Pharisee trusting his own goodness with a tax collector crying for mercy. God accepts the humble sinner, not the self-righteous man.
+          body: `
+**Scripture (KJV)**  
+> "Two men went up into the temple to pray; the one a Pharisee, and the other a publican.  
+> The Pharisee stood and prayed thus with himself, God, I thank thee, that I am not as other men are,  
+> extortioners, unjust, adulterers, or even as this publican.  
+> I fast twice in the week, I give tithes of all that I possess.  
+> And the publican, standing afar off, would not lift up so much as his eyes unto heaven,  
+> but smote upon his breast, saying, God be merciful to me a sinner.  
+> I tell you, this man went down to his house justified rather than the other:  
+> for every one that exalteth himself shall be abased; and he that humbleth himself shall be exalted."
 
-**Application:** God is not impressed with religious pride. The person who admits their guilt and casts themselves on God's mercy goes home justified.`,
+**Meaning:** Jesus contrasts a proud Pharisee trusting his own goodness with a tax collector crying for mercy. God accepts the humble sinner, not the self-righteous man.  
+**Application:** God is not impressed with religious pride. The person who admits their guilt and casts themselves on God's mercy goes home justified.
+          `.trim(),
         },
         {
           id: "d3-rom323-24",
           type: "scripture",
           title: "Justified as a Gift",
           reference: "Romans 3:23–24",
-          body: `**Plain Meaning:** All have sinned, yet God justifies (declares righteous) sinners freely by His grace through the redemption that is in Christ Jesus.
+          body: `
+**Scripture (KJV)**  
+> "For all have sinned, and come short of the glory of God;  
+> Being justified freely by his grace through the redemption that is in Christ Jesus:"
 
-**Application:** You cannot buy or earn justification. It is a free act of God's grace because Jesus paid the full price.`,
+**Meaning:** All have sinned, yet God justifies (declares righteous) sinners freely by His grace through the redemption that is in Christ Jesus.  
+**Application:** You cannot buy or earn justification. It is a free act of God's grace because Jesus paid the full price.
+          `.trim(),
         },
         {
           id: "d3-isaiah646",
           type: "scripture",
           title: "Our Righteousness Is Not Enough",
           reference: "Isaiah 64:6",
-          body: `**Plain Meaning:** Even what we think of as righteous deeds are like "filthy rags" before a perfectly holy God.
+          body: `
+**Scripture (KJV)**  
+> "But we are all as an unclean thing, and all our righteousnesses are as filthy rags;  
+> and we all do fade as a leaf; and our iniquities, like the wind, have taken us away."
 
-**Application:** Compared to other people, you may look good. Compared to God's holiness, even your best efforts fall short.`,
+**Meaning:** Even what we think of as righteous deeds are like "filthy rags" before a perfectly holy God.  
+**Application:** Compared to other people, you may look good. Compared to God's holiness, even your best efforts fall short.
+          `.trim(),
         },
         {
           id: "d3-eph28-9",
           type: "scripture",
           title: "Saved by Grace, Not Works",
           reference: "Ephesians 2:8–9",
-          body: `**Plain Meaning:** Salvation is by grace through faith. It is God's gift—not a result of works—so that no one can boast.
+          body: `
+**Scripture (KJV)**  
+> "For by grace are ye saved through faith; and that not of yourselves: it is the gift of God:  
+> Not of works, lest any man should boast."
 
-**Application:** Any system that says "do enough good and you will be saved" contradicts this verse. The Christian rests in grace, not performance.`,
+**Meaning:** Salvation is by grace through faith. It is God's gift—not a result of works—so that no one can boast.  
+**Application:** Any system that says "do enough good and you will be saved" contradicts this verse. The Christian rests in grace, not performance.
+          `.trim(),
         },
       ],
     },
@@ -280,36 +349,59 @@ Jesus, thank You for taking my place. Help me see the cross not just as a story,
           type: "scripture",
           title: "Pierced for Our Transgressions",
           reference: "Isaiah 53:5–6",
-          body: `**Plain Meaning:** The suffering Servant was pierced and crushed for **our** sins; the punishment that brings us peace fell on Him.
+          body: `
+**Scripture (KJV)**  
+> "But he was wounded for our transgressions, he was bruised for our iniquities:  
+> the chastisement of our peace was upon him; and with his stripes we are healed.  
+> All we like sheep have gone astray; we have turned every one to his own way;  
+> and the LORD hath laid on him the iniquity of us all."
 
-**Application:** Your sin did not just disappear; it was placed on Christ. He took what you deserve so you can receive what He deserves.`,
+**Meaning:** The suffering Servant was pierced and crushed for **our** sins; the punishment that brings us peace fell on Him.  
+**Application:** Your sin did not just disappear; it was placed on Christ. He took what you deserve so you can receive what He deserves.
+          `.trim(),
         },
         {
           id: "d4-2cor521",
           type: "scripture",
           title: "The Great Exchange",
           reference: "2 Corinthians 5:21",
-          body: `**Plain Meaning:** God made Jesus, who knew no sin, to be sin for us, so that in Him we might become the righteousness of God.
+          body: `
+**Scripture (KJV)**  
+> "For he hath made him to be sin for us, who knew no sin;  
+> that we might be made the righteousness of God in him."
 
-**Application:** At the cross, your sin was counted to Christ, and His righteousness is counted to you when you trust Him.`,
+**Meaning:** God made Jesus, who knew no sin, to be sin for us, so that in Him we might become the righteousness of God.  
+**Application:** At the cross, your sin was counted to Christ, and His righteousness is counted to you when you trust Him.
+          `.trim(),
         },
         {
           id: "d4-rom58",
           type: "scripture",
           title: "Love in the Middle of Our Sin",
           reference: "Romans 5:8",
-          body: `**Plain Meaning:** God demonstrates His love by Christ dying for us **while** we were still sinners.
+          body: `
+**Scripture (KJV)**  
+> "But God commendeth his love toward us, in that, while we were yet sinners,  
+> Christ died for us."
 
-**Application:** God did not wait for you to clean up your life. The cross proves His love came first.`,
+**Meaning:** God demonstrates His love by Christ dying for us **while** we were still sinners.  
+**Application:** God did not wait for you to clean up your life. The cross proves His love came first.
+          `.trim(),
         },
         {
           id: "d4-1pet224",
           type: "scripture",
           title: "He Bore Our Sins",
           reference: "1 Peter 2:24",
-          body: `**Plain Meaning:** Jesus bore our sins in His body on the tree so we might die to sin and live to righteousness.
+          body: `
+**Scripture (KJV)**  
+> "Who his own self bare our sins in his own body on the tree,  
+> that we, being dead to sins, should live unto righteousness:  
+> by whose stripes ye were healed."
 
-**Application:** The cross is not just forgiveness; it is also power to live a new life, free from sin's rule.`,
+**Meaning:** Jesus bore our sins in His body on the tree so we might die to sin and live to righteousness.  
+**Application:** The cross is not just forgiveness; it is also power to live a new life, free from sin's rule.
+          `.trim(),
         },
       ],
     },
@@ -345,36 +437,60 @@ Lord Jesus, I confess that I am a sinner who cannot save myself. I turn from my 
           type: "scripture",
           title: "Repent and Believe",
           reference: "Mark 1:15",
-          body: `**Plain Meaning:** Jesus announces the kingdom of God and calls people to repent and believe the gospel.
+          body: `
+**Scripture (KJV)**  
+> "And saying, The time is fulfilled, and the kingdom of God is at hand:  
+> repent ye, and believe the gospel."
 
-**Application:** The response Jesus calls for is clear: turn from sin, turn to Him in faith. Both are needed.`,
+**Meaning:** Jesus announces the kingdom of God and calls people to repent and believe the gospel.  
+**Application:** The response Jesus calls for is clear: turn from sin, turn to Him in faith. Both are needed.
+          `.trim(),
         },
         {
           id: "d5-rom109-10",
           type: "scripture",
           title: "Confess and Believe",
           reference: "Romans 10:9–10",
-          body: `**Plain Meaning:** If you confess Jesus as Lord and believe God raised Him from the dead, you will be saved.
+          body: `
+**Scripture (KJV)**  
+> "That if thou shalt confess with thy mouth the Lord Jesus,  
+> and shalt believe in thine heart that God hath raised him from the dead,  
+> thou shalt be saved.  
+> For with the heart man believeth unto righteousness;  
+> and with the mouth confession is made unto salvation."
 
-**Application:** Salvation is tied to a real faith in the risen Christ and a heart-level surrender to His lordship.`,
+**Meaning:** If you confess Jesus as Lord and believe God raised Him from the dead, you will be saved.  
+**Application:** Salvation is tied to a real faith in the risen Christ and a heart-level surrender to His lordship.
+          `.trim(),
         },
         {
           id: "d5-john112",
           type: "scripture",
           title: "Receiving Christ",
           reference: "John 1:12",
-          body: `**Plain Meaning:** Those who receive Jesus and believe in His name are given the right to become children of God.
+          body: `
+**Scripture (KJV)**  
+> "But as many as received him, to them gave he power to become the sons of God,  
+> even to them that believe on his name:"
 
-**Application:** Eternal life is not automatic; you must personally receive Christ by faith.`,
+**Meaning:** Those who receive Jesus and believe in His name are given the right to become children of God.  
+**Application:** Eternal life is not automatic; you must personally receive Christ by faith.
+          `.trim(),
         },
         {
           id: "d5-1john513",
           type: "scripture",
           title: "You Can Know You Have Eternal Life",
           reference: "1 John 5:13",
-          body: `**Plain Meaning:** John writes so that believers may **know** they have eternal life.
+          body: `
+**Scripture (KJV)**  
+> "These things have I written unto you that believe on the name of the Son of God;  
+> that ye may know that ye have eternal life,  
+> and that ye may believe on the name of the Son of God."
 
-**Application:** God wants you to have settled confidence in Christ, not constant fear about your eternal destiny.`,
+**Meaning:** John writes so that believers may **know** they have eternal life.  
+**Application:** God wants you to have settled confidence in Christ, not constant fear about your eternal destiny.
+          `.trim(),
         },
       ],
     },
