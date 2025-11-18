@@ -23,6 +23,7 @@ import workCallingImage from '@assets/stock_images/professional_person__259aad65
 import purityWorldImage from '@assets/stock_images/pure_heart_clean_han_1a005796.jpg';
 import sufferingFaithfulnessImage from '@assets/stock_images/person_in_difficult__faffc05a.jpg';
 import prayerLifeImage from '@assets/stock_images/hands_folded_in_pray_b98684b0.jpg';
+import ruggedChurchImage from '@assets/stock_images/old_rustic_stone_chu_610102d9.jpg';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -501,7 +502,7 @@ export const lifeInSpiritPlan: DiscipleshipPlan = {
   id: "life-in-spirit",
   title: "Life in the Spirit",
   subtitle: "Learning to live by the power of the Holy Spirit",
-  imageUrl: worshipHandsImage,
+  imageUrl: ruggedChurchImage,
   totalDays: 5,
   days: [
     {
