@@ -1,0 +1,460 @@
+Perfect 👍 — here’s exactly what you can hand to Replit:
+
+* A **TypeScript “blueprint”** (`DiscipleshipPlan` interface)
+* Plus **Plan #1 – “Am I Going to Heaven or Hell?”** fully wired as data
+
+They can drop this into a file like:
+
+> `client/src/features/discipleship/discipleshipPlans.ts`
+
+and then add more plans into the same `DISCIPLESHIP_PLANS` array.
+
+---
+
+## 📁 `discipleshipPlans.ts` (Plan 1 wired up)
+
+```ts
+// client/src/features/discipleship/discipleshipPlans.ts
+
+// 1) TYPES / BLUEPRINTS
+// ----------------------------------------------------
+
+export type DiscipleshipPlanItem =
+  | {
+      id: string;
+      type: "devotional";
+      title: string;
+      body: string; // can contain markdown (Reflection, Prayer, Shareable Truth)
+    }
+  | {
+      id: string;
+      type: "scripture";
+      title: string;      // short label ("All Have Sinned")
+      reference: string;  // "Romans 3:23"
+      body: string;       // plain meaning + application
+    };
+
+export interface DiscipleshipPlanDay {
+  dayNumber: number;     // 1,2,3,4,5
+  title: string;         // "Day 1 — The Ultimate Question"
+  items: DiscipleshipPlanItem[];
+}
+
+export interface DiscipleshipPlan {
+  id: string;            // "heaven-or-hell"
+  title: string;         // "Am I Going to Heaven or Hell?"
+  subtitle?: string;
+  imageUrl: string;      // tile image path in /public or your assets
+  days: DiscipleshipPlanDay[];
+}
+
+// 2) PLAN 1 – "AM I GOING TO HEAVEN OR HELL?"
+// ----------------------------------------------------
+
+export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
+  {
+    id: "heaven-or-hell",
+    title: "Am I Going to Heaven or Hell?",
+    subtitle: "A 5-day journey to understand the gospel",
+    imageUrl: "/images/plans/heaven-or-hell.jpg", // <-- Replit can swap to a real asset
+    days: [
+      // DAY 1 ------------------------------------------------
+      {
+        dayNumber: 1,
+        title: "The Question Nobody Escapes",
+        items: [
+          {
+            id: "d1-devotional",
+            type: "devotional",
+            title: "Day 1 – The Question Nobody Escapes",
+            body: `
+Every person will stand before God one day. We prepare for jobs, school, retirement, even vacations—but many never prepare for **eternity**. The question “Am I going to heaven or hell?” is not morbid; it’s **wise**.
+
+The Bible is clear: heaven is real, hell is real, and every person spends forever in one of those two places. The good news is that God does not leave you guessing. He tells you plainly how to be right with Him.
+
+Heaven is not a reward for “pretty good people.” Hell is not only for the worst of the worst. Scripture says **all have sinned** and **none** can save themselves. That means the question is not “Am I better than others?” but “What have I done with Jesus?”
+
+**Reflection**
+
+If you died tonight, on what would you honestly be basing your hope of heaven—your goodness, your church, your feelings, or Christ alone?
+
+**Prayer**
+
+Lord, I don’t want to guess about eternity. Open my eyes this week to see the truth about my heart and Your way of salvation.
+
+**Shareable Truth**
+
+“Eternity is too long to be wrong about the gospel.”
+            `.trim(),
+          },
+          {
+            id: "d1-rom323",
+            type: "scripture",
+            title: "All Have Sinned",
+            reference: "Romans 3:23",
+            body: `
+**Plain Meaning:** Every human being, without exception, has sinned and fallen short of God's perfect standard. Sin is not just “big crimes”; it is any thought, action, or desire that fails to love God with all your heart.
+
+**Application:** This verse removes all excuses and comparisons. You don’t come to God as a “pretty good person” needing a small touch-up; you come as a sinner needing a Savior.
+            `.trim(),
+          },
+          {
+            id: "d1-rom310-12",
+            type: "scripture",
+            title: "None Righteous on Their Own",
+            reference: "Romans 3:10–12",
+            body: `
+**Plain Meaning:** No one, by nature, lives in a way that is perfectly right before God. Left to ourselves, we do not seek God as He truly is.
+
+**Application:** This kills spiritual pride. You don’t need help polishing your goodness; you need God to rescue you from spiritual death.
+            `.trim(),
+          },
+          {
+            id: "d1-heb927",
+            type: "scripture",
+            title: "Appointment with Judgment",
+            reference: "Hebrews 9:27",
+            body: `
+**Plain Meaning:** Every person dies once and then faces God’s judgment. There are no second chances, reincarnations, or do-overs.
+
+**Application:** This makes today urgent. You don’t know your day of death, but you do know you will stand before God. Now is the time to seek Him.
+            `.trim(),
+          },
+          {
+            id: "d1-matt713-14",
+            type: "scripture",
+            title: "Two Roads, Two Destinations",
+            reference: "Matthew 7:13–14",
+            body: `
+**Plain Meaning:** Jesus describes two gates and two roads: the wide road many travel that leads to destruction, and the narrow road that leads to life.
+
+**Application:** You are on one of those roads right now. Faith in Christ is not one option among many equal paths; it is the narrow way that leads to life.
+            `.trim(),
+          },
+        ],
+      },
+
+      // DAY 2 ------------------------------------------------
+      {
+        dayNumber: 2,
+        title: "What Is Sin, Really?",
+        items: [
+          {
+            id: "d2-devotional",
+            type: "devotional",
+            title: "Day 2 – What Is Sin, Really?",
+            body: `
+Most people admit they are “not perfect,” but the Bible’s view of sin is far deeper than occasional mistakes. Sin is **rebellion** against God—choosing our way over His, loving His gifts more than Him, and wanting to rule our own life.
+
+You can sin in open ways (lying, lust, anger) but also in religious ways (self-righteousness, pride, using good works to feel superior). Sin is not just what you do; it is what you **are by nature** apart from Christ.
+
+Until you see the seriousness of sin, the cross will just look like a religious symbol, not a rescue.
+
+**Reflection**
+
+Do you tend to think of sin as “little slip-ups” or as deep rebellion against a holy God?
+
+**Prayer**
+
+Holy God, show me the truth about my sin—not to crush me, but to bring me to Your cure in Christ.
+
+**Shareable Truth**
+
+“You will never see Christ as a great Savior until you see yourself as a real sinner.”
+            `.trim(),
+          },
+          {
+            id: "d2-isaiah59-2",
+            type: "scripture",
+            title: "Sin Separates from God",
+            reference: "Isaiah 59:2",
+            body: `
+**Plain Meaning:** Sin creates a separation between people and God, so that He hides His face and does not hear.
+
+**Application:** The biggest problem with sin is not what it does to your reputation—it is what it does to your relationship with God.
+            `.trim(),
+          },
+          {
+            id: "d2-rom62-23",
+            type: "scripture",
+            title: "Sin’s Paycheck: Death",
+            reference: "Romans 6:23",
+            body: `
+**Plain Meaning:** The result, or wage, of sin is death—spiritual separation from God now and forever. But God offers eternal life as a gift through Jesus Christ.
+
+**Application:** You don’t “get away” with sin; you get paid for it—with death. But God offers a different paycheck: eternal life, undeserved, through His Son.
+            `.trim(),
+          },
+          {
+            id: "d2-ps514",
+            type: "scripture",
+            title: "Against God First",
+            reference: "Psalm 51:4",
+            body: `
+**Plain Meaning:** David confesses that his sin, though it hurt others, was ultimately against God Himself.
+
+**Application:** Sin is not only about hurting people; it is about offending a holy God. That is why only God can ultimately forgive it.
+            `.trim(),
+          },
+          {
+            id: "d2-james214",
+            type: "scripture",
+            title: "Respectable Sins",
+            reference: "James 4:17",
+            body: `
+**Plain Meaning:** Knowing the right thing to do and refusing to do it is also sin.
+
+**Application:** Sin is not just doing bad things; it is also failing to do the good God has shown you. This means no one can claim to be innocent.
+            `.trim(),
+          },
+        ],
+      },
+
+      // DAY 3 ------------------------------------------------
+      {
+        dayNumber: 3,
+        title: "Who Deserves Heaven?",
+        items: [
+          {
+            id: "d3-devotional",
+            type: "devotional",
+            title: "Day 3 – Who Deserves Heaven?",
+            body: `
+If entrance into heaven were based on deserving, no one would enter. The Bible’s verdict is clear: **no one is good enough**. Even our “righteous” acts are stained with wrong motives, pride, or self-interest.
+
+That sounds hopeless—until you realize the gospel is not about what you deserve but about what Christ provides. Heaven is not a wage you earn; it is a **gift** God gives because of Jesus’ perfect life, death, and resurrection.
+
+**Reflection**
+
+Deep down, have you been thinking, “I’m pretty good, so I should be okay with God”?
+
+**Prayer**
+
+Lord, strip away any belief that I can earn heaven. Show me that my only hope is the perfect righteousness of Jesus.
+
+**Shareable Truth**
+
+“Heaven is not a trophy for the good—it is a gift for the forgiven.”
+            `.trim(),
+          },
+          {
+            id: "d3-luke1810-14",
+            type: "scripture",
+            title: "The Proud Religious Man & the Broken Sinner",
+            reference: "Luke 18:10–14",
+            body: `
+**Plain Meaning:** Jesus contrasts a proud Pharisee trusting his own goodness with a tax collector crying for mercy. God accepts the humble sinner, not the self-righteous man.
+
+**Application:** God is not impressed with religious pride. The person who admits their guilt and casts themselves on God’s mercy goes home justified.
+            `.trim(),
+          },
+          {
+            id: "d3-rom332-24",
+            type: "scripture",
+            title: "Justified as a Gift",
+            reference: "Romans 3:23–24",
+            body: `
+**Plain Meaning:** All have sinned, yet God justifies (declares righteous) sinners freely by His grace through the redemption that is in Christ Jesus.
+
+**Application:** You cannot buy or earn justification. It is a free act of God’s grace because Jesus paid the full price.
+            `.trim(),
+          },
+          {
+            id: "d3-isaiah646",
+            type: "scripture",
+            title: "Our Righteousness Is Not Enough",
+            reference: "Isaiah 64:6",
+            body: `
+**Plain Meaning:** Even what we think of as righteous deeds are like “filthy rags” before a perfectly holy God.
+
+**Application:** Compared to other people, you may look good. Compared to God’s holiness, even your best efforts fall short.
+            `.trim(),
+          },
+          {
+            id: "d3-eph28-9",
+            type: "scripture",
+            title: "Saved by Grace, Not Works",
+            reference: "Ephesians 2:8–9",
+            body: `
+**Plain Meaning:** Salvation is by grace through faith. It is God’s gift—not a result of works—so that no one can boast.
+
+**Application:** Any system that says “do enough good and you will be saved” contradicts this verse. The Christian rests in grace, not performance.
+            `.trim(),
+          },
+        ],
+      },
+
+      // DAY 4 ------------------------------------------------
+      {
+        dayNumber: 4,
+        title: "What Jesus Did for You",
+        items: [
+          {
+            id: "d4-devotional",
+            type: "devotional",
+            title: "Day 4 – What Jesus Did for You",
+            body: `
+The gospel is not advice about how to live better; it is **news** about what Jesus has already done. On the cross, Jesus took the place of sinners, bearing the wrath and judgment we deserved so that we could be forgiven and declared righteous.
+
+He lived the perfect life you could not live, died the death you should have died, and rose from the dead so you could share His life forever.
+
+**Reflection**
+
+When you think of the cross, do you see it mainly as a symbol—or as a personal rescue for you?
+
+**Prayer**
+
+Jesus, thank You for taking my place. Help me see the cross not just as a story, but as Your love poured out for my sin.
+
+**Shareable Truth**
+
+“On the cross, Jesus treated as you deserved, so you can be treated as He deserves.”
+            `.trim(),
+          },
+          {
+            id: "d4-isaiah535-6",
+            type: "scripture",
+            title: "Pierced for Our Transgressions",
+            reference: "Isaiah 53:5–6",
+            body: `
+**Plain Meaning:** The suffering Servant was pierced and crushed for **our** sins; the punishment that brings us peace fell on Him.
+
+**Application:** Your sin did not just disappear; it was placed on Christ. He took what you deserve so you can receive what He deserves.
+            `.trim(),
+          },
+          {
+            id: "d4-2cor521",
+            type: "scripture",
+            title: "The Great Exchange",
+            reference: "2 Corinthians 5:21",
+            body: `
+**Plain Meaning:** God made Jesus, who knew no sin, to be sin for us, so that in Him we might become the righteousness of God.
+
+**Application:** At the cross, your sin was counted to Christ, and His righteousness is counted to you when you trust Him.
+            `.trim(),
+          },
+          {
+            id: "d4-rom58",
+            type: "scripture",
+            title: "Love in the Middle of Our Sin",
+            reference: "Romans 5:8",
+            body: `
+**Plain Meaning:** God demonstrates His love by Christ dying for us **while** we were still sinners.
+
+**Application:** God did not wait for you to clean up your life. The cross proves His love came first.
+            `.trim(),
+          },
+          {
+            id: "d4-1pet224",
+            type: "scripture",
+            title: "He Bore Our Sins",
+            reference: "1 Peter 2:24",
+            body: `
+**Plain Meaning:** Jesus bore our sins in His body on the tree so we might die to sin and live to righteousness.
+
+**Application:** The cross is not just forgiveness; it is also power to live a new life, free from sin’s rule.
+            `.trim(),
+          },
+        ],
+      },
+
+      // DAY 5 ------------------------------------------------
+      {
+        dayNumber: 5,
+        title: "How to Be Sure You’re Saved",
+        items: [
+          {
+            id: "d5-devotional",
+            type: "devotional",
+            title: "Day 5 – How to Be Sure You’re Saved",
+            body: `
+God does not want you living in constant uncertainty about heaven and hell. The Bible shows that a person is saved by **repenting** (turning from sin and self-rule) and **believing** (trusting Jesus alone as Lord and Savior).
+
+This is not a magic formula; it is a real transfer of trust—from yourself to Christ. When you trust Him, God forgives your sins, gives you a new heart, and begins changing your life from the inside out.
+
+Assurance is not based on never sinning again, but on the faithfulness of Christ and the evidence of a new direction in your life.
+
+**Reflection**
+
+Have you personally turned from sin and trusted in Jesus alone as your Lord and Savior—or are you still partly trusting yourself?
+
+**Prayer**
+
+Lord Jesus, I confess that I am a sinner who cannot save myself. I turn from my sin and place my full trust in You—Your cross, Your resurrection, and Your lordship over my life.
+
+**Shareable Truth**
+
+“Saving faith is not trusting Christ + something; it is trusting Christ alone.”
+            `.trim(),
+          },
+          {
+            id: "d5-mark115",
+            type: "scripture",
+            title: "Repent and Believe",
+            reference: "Mark 1:15",
+            body: `
+**Plain Meaning:** Jesus announces the kingdom of God and calls people to repent and believe the gospel.
+
+**Application:** The response Jesus calls for is clear: turn from sin, turn to Him in faith. Both are needed.
+            `.trim(),
+          },
+          {
+            id: "d5-rom109-10",
+            type: "scripture",
+            title: "Confess and Believe",
+            reference: "Romans 10:9–10",
+            body: `
+**Plain Meaning:** If you confess Jesus as Lord and believe God raised Him from the dead, you will be saved.
+
+**Application:** Salvation is tied to a real faith in the risen Christ and a heart-level surrender to His lordship.
+            `.trim(),
+          },
+          {
+            id: "d5-john112",
+            type: "scripture",
+            title: "Receiving Christ",
+            reference: "John 1:12",
+            body: `
+**Plain Meaning:** Those who receive Jesus and believe in His name are given the right to become children of God.
+
+**Application:** Eternal life is not automatic; you must personally receive Christ by faith.
+            `.trim(),
+          },
+          {
+            id: "d5-1john513",
+            type: "scripture",
+            title: "You Can Know You Have Eternal Life",
+            reference: "1 John 5:13",
+            body: `
+**Plain Meaning:** John writes so that believers may **know** they have eternal life.
+
+**Application:** God wants you to have settled confidence in Christ, not constant fear about your eternal destiny.
+            `.trim(),
+          },
+        ],
+      },
+    ],
+  },
+];
+```
+
+---
+
+### How to use this
+
+You can tell Replit / your dev:
+
+1. **Create (or open) the file:**
+
+```text
+client/src/features/discipleship/discipleshipPlans.ts
+```
+
+2. Paste this entire code in.
+3. Wherever the app needs the plans (e.g. `DiscipleshipScreen`, `DiscipleshipPlanScreen`), import:
+
+```ts
+import { DISCIPLESHIP_PLANS } from "@/features/discipleship/discipleshipPlans";
+```
+
+4. I can now do the **same TypeScript conversion** for Plans 2–15 so they are all ready to plug in exactly like this one—no extra thinking required from your side, just paste and go.

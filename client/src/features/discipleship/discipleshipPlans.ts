@@ -40,216 +40,328 @@ export interface DiscipleshipPlan {
 export const heavenOrHellPlan: DiscipleshipPlan = {
   id: "heaven-or-hell",
   title: "Am I Going to Heaven or Hell?",
-  subtitle: "Finding real assurance in Christ",
+  subtitle: "A 5-day journey to understand the gospel",
   imageUrl: heavenCloudsImage,
   totalDays: 5,
   days: [
     {
       id: "day-1",
       dayNumber: 1,
-      title: "Why This Question Matters",
+      title: "The Question Nobody Escapes",
       items: [
         {
           id: "d1-devotional",
           type: "devotional",
-          title: "Why This Question Matters",
-          body:
-            "Everyone dies. No one avoids judgment. We ignore it until a funeral or a health scare forces us to face eternity. " +
-            "Most people assume they are going to heaven: 'I'm a good person... I go to church... God knows my heart.' " +
-            "But Jesus Himself said that not everyone who calls Him 'Lord' will enter the kingdom of heaven. Heaven is not a reward " +
-            "for the good; it is a gift for the forgiven. Today God invites you to move from guessing to knowing, " +
-            "so you can live with confidence instead of fear.",
+          title: "Day 1 – The Question Nobody Escapes",
+          body: `Every person will stand before God one day. We prepare for jobs, school, retirement, even vacations—but many never prepare for **eternity**. The question "Am I going to heaven or hell?" is not morbid; it's **wise**.
+
+The Bible is clear: heaven is real, hell is real, and every person spends forever in one of those two places. The good news is that God does not leave you guessing. He tells you plainly how to be right with Him.
+
+Heaven is not a reward for "pretty good people." Hell is not only for the worst of the worst. Scripture says **all have sinned** and **none** can save themselves. That means the question is not "Am I better than others?" but "What have I done with Jesus?"
+
+**Reflection**
+
+If you died tonight, on what would you honestly be basing your hope of heaven—your goodness, your church, your feelings, or Christ alone?
+
+**Prayer**
+
+Lord, I don't want to guess about eternity. Open my eyes this week to see the truth about my heart and Your way of salvation.
+
+**Shareable Truth**
+
+"Eternity is too long to be wrong about the gospel."`,
         },
         {
-          id: "d1-heb-9-27",
+          id: "d1-rom323",
           type: "scripture",
-          title: "Hebrews 9:27",
+          title: "All Have Sinned",
+          reference: "Romans 3:23",
+          body: `**Plain Meaning:** Every human being, without exception, has sinned and fallen short of God's perfect standard. Sin is not just "big crimes"; it is any thought, action, or desire that fails to love God with all your heart.
+
+**Application:** This verse removes all excuses and comparisons. You don't come to God as a "pretty good person" needing a small touch-up; you come as a sinner needing a Savior.`,
+        },
+        {
+          id: "d1-rom310-12",
+          type: "scripture",
+          title: "None Righteous on Their Own",
+          reference: "Romans 3:10–12",
+          body: `**Plain Meaning:** No one, by nature, lives in a way that is perfectly right before God. Left to ourselves, we do not seek God as He truly is.
+
+**Application:** This kills spiritual pride. You don't need help polishing your goodness; you need God to rescue you from spiritual death.`,
+        },
+        {
+          id: "d1-heb927",
+          type: "scripture",
+          title: "Appointment with Judgment",
           reference: "Hebrews 9:27",
-          body:
-            "This verse reminds us that death and judgment are appointments every person will keep. There are no second lives or " +
-            "restarts—what we do with Jesus in this life matters forever.",
+          body: `**Plain Meaning:** Every person dies once and then faces God's judgment. There are no second chances, reincarnations, or do-overs.
+
+**Application:** This makes today urgent. You don't know your day of death, but you do know you will stand before God. Now is the time to seek Him.`,
         },
         {
-          id: "d1-mt-7-21",
+          id: "d1-matt713-14",
           type: "scripture",
-          title: "Matthew 7:21",
-          reference: "Matthew 7:21",
-          body:
-            "Jesus warns that calling Him 'Lord' with our lips is not enough. True faith shows up in a surrendered life that does " +
-            "the will of the Father.",
-        },
-        {
-          id: "d1-jn-3-16",
-          type: "scripture",
-          title: "John 3:16",
-          reference: "John 3:16",
-          body:
-            "God's love moved Him to give His Son so that anyone who believes in Him will not perish but have eternal life. " +
-            "Eternal life is not earned but received through faith in Christ.",
+          title: "Two Roads, Two Destinations",
+          reference: "Matthew 7:13–14",
+          body: `**Plain Meaning:** Jesus describes two gates and two roads: the wide road many travel that leads to destruction, and the narrow road that leads to life.
+
+**Application:** You are on one of those roads right now. Faith in Christ is not one option among many equal paths; it is the narrow way that leads to life.`,
         },
       ],
     },
     {
       id: "day-2",
       dayNumber: 2,
-      title: "What Jesus Did To Save You",
+      title: "What Is Sin, Really?",
       items: [
         {
           id: "d2-devotional",
           type: "devotional",
-          title: "What Jesus Did To Save You",
-          body:
-            "Heaven requires perfection because God is holy. None of us meet that standard. Jesus did what we could never do: " +
-            "He lived a sinless life, took our sin upon Himself, and died in our place. On the cross He absorbed the judgment we deserved. " +
-            "He rose again so that His life could be given to us. You don't go to heaven because you are perfect; you go because He is. " +
-            "Salvation is not you paying God back—it is you trusting that Jesus already paid it all.",
+          title: "Day 2 – What Is Sin, Really?",
+          body: `Most people admit they are "not perfect," but the Bible's view of sin is far deeper than occasional mistakes. Sin is **rebellion** against God—choosing our way over His, loving His gifts more than Him, and wanting to rule our own life.
+
+You can sin in open ways (lying, lust, anger) but also in religious ways (self-righteousness, pride, using good works to feel superior). Sin is not just what you do; it is what you **are by nature** apart from Christ.
+
+Until you see the seriousness of sin, the cross will just look like a religious symbol, not a rescue.
+
+**Reflection**
+
+Do you tend to think of sin as "little slip-ups" or as deep rebellion against a holy God?
+
+**Prayer**
+
+Holy God, show me the truth about my sin—not to crush me, but to bring me to Your cure in Christ.
+
+**Shareable Truth**
+
+"You will never see Christ as a great Savior until you see yourself as a real sinner."`,
         },
         {
-          id: "d2-rom-6-23",
+          id: "d2-isaiah59-2",
           type: "scripture",
-          title: "Romans 6:23",
+          title: "Sin Separates from God",
+          reference: "Isaiah 59:2",
+          body: `**Plain Meaning:** Sin creates a separation between people and God, so that He hides His face and does not hear.
+
+**Application:** The biggest problem with sin is not what it does to your reputation—it is what it does to your relationship with God.`,
+        },
+        {
+          id: "d2-rom62-23",
+          type: "scripture",
+          title: "Sin's Paycheck: Death",
           reference: "Romans 6:23",
-          body:
-            "Sin earns death as its wage, but God offers eternal life as a free gift in Christ Jesus our Lord. The contrast is sharp: " +
-            "what we earn versus what He gives.",
+          body: `**Plain Meaning:** The result, or wage, of sin is death—spiritual separation from God now and forever. But God offers eternal life as a gift through Jesus Christ.
+
+**Application:** You don't "get away" with sin; you get paid for it—with death. But God offers a different paycheck: eternal life, undeserved, through His Son.`,
         },
         {
-          id: "d2-2cor-5-21",
+          id: "d2-ps514",
           type: "scripture",
-          title: "2 Corinthians 5:21",
-          reference: "2 Corinthians 5:21",
-          body:
-            "Jesus, who knew no sin, was made to be sin for us so that in Him we might become the righteousness of God. " +
-            "He took our place so we could receive His standing before the Father.",
+          title: "Against God First",
+          reference: "Psalm 51:4",
+          body: `**Plain Meaning:** David confesses that his sin, though it hurt others, was ultimately against God Himself.
+
+**Application:** Sin is not only about hurting people; it is about offending a holy God. That is why only God can ultimately forgive it.`,
         },
         {
-          id: "d2-jn-14-6",
+          id: "d2-james417",
           type: "scripture",
-          title: "John 14:6",
-          reference: "John 14:6",
-          body:
-            "Jesus does not claim to be one of many ways. He is the Way, the Truth, and the Life. No one comes to the Father except through Him.",
+          title: "Respectable Sins",
+          reference: "James 4:17",
+          body: `**Plain Meaning:** Knowing the right thing to do and refusing to do it is also sin.
+
+**Application:** Sin is not just doing bad things; it is also failing to do the good God has shown you. This means no one can claim to be innocent.`,
         },
       ],
     },
     {
       id: "day-3",
       dayNumber: 3,
-      title: "What Real Faith Looks Like",
+      title: "Who Deserves Heaven?",
       items: [
         {
           id: "d3-devotional",
           type: "devotional",
-          title: "What Real Faith Looks Like",
-          body:
-            "Faith is more than agreeing that God exists or praying when life is hard. Saving faith trusts Jesus alone for salvation " +
-            "and surrenders to Him as Lord. Real faith shows up in a new direction: not instant perfection, but a new pattern of following Christ. " +
-            "If you are truly trusting Him, your life will gradually reflect that trust.",
+          title: "Day 3 – Who Deserves Heaven?",
+          body: `If entrance into heaven were based on deserving, no one would enter. The Bible's verdict is clear: **no one is good enough**. Even our "righteous" acts are stained with wrong motives, pride, or self-interest.
+
+That sounds hopeless—until you realize the gospel is not about what you deserve but about what Christ provides. Heaven is not a wage you earn; it is a **gift** God gives because of Jesus' perfect life, death, and resurrection.
+
+**Reflection**
+
+Deep down, have you been thinking, "I'm pretty good, so I should be okay with God"?
+
+**Prayer**
+
+Lord, strip away any belief that I can earn heaven. Show me that my only hope is the perfect righteousness of Jesus.
+
+**Shareable Truth**
+
+"Heaven is not a trophy for the good—it is a gift for the forgiven."`,
         },
         {
-          id: "d3-james-2-17",
+          id: "d3-luke1810-14",
           type: "scripture",
-          title: "James 2:17",
-          reference: "James 2:17",
-          body:
-            "Faith without works is dead. Works do not save us, but living faith always produces visible fruit in how we live.",
+          title: "The Proud Religious Man & the Broken Sinner",
+          reference: "Luke 18:10–14",
+          body: `**Plain Meaning:** Jesus contrasts a proud Pharisee trusting his own goodness with a tax collector crying for mercy. God accepts the humble sinner, not the self-righteous man.
+
+**Application:** God is not impressed with religious pride. The person who admits their guilt and casts themselves on God's mercy goes home justified.`,
         },
         {
-          id: "d3-lk-9-23",
+          id: "d3-rom323-24",
           type: "scripture",
-          title: "Luke 9:23",
-          reference: "Luke 9:23",
-          body:
-            "Jesus calls His followers to deny themselves, take up their cross daily, and follow Him. Real faith says yes to that call.",
+          title: "Justified as a Gift",
+          reference: "Romans 3:23–24",
+          body: `**Plain Meaning:** All have sinned, yet God justifies (declares righteous) sinners freely by His grace through the redemption that is in Christ Jesus.
+
+**Application:** You cannot buy or earn justification. It is a free act of God's grace because Jesus paid the full price.`,
         },
         {
-          id: "d3-2cor-5-17",
+          id: "d3-isaiah646",
           type: "scripture",
-          title: "2 Corinthians 5:17",
-          reference: "2 Corinthians 5:17",
-          body:
-            "In Christ we become new creations. The old has passed away and the new has come. Salvation brings a real inner change.",
+          title: "Our Righteousness Is Not Enough",
+          reference: "Isaiah 64:6",
+          body: `**Plain Meaning:** Even what we think of as righteous deeds are like "filthy rags" before a perfectly holy God.
+
+**Application:** Compared to other people, you may look good. Compared to God's holiness, even your best efforts fall short.`,
+        },
+        {
+          id: "d3-eph28-9",
+          type: "scripture",
+          title: "Saved by Grace, Not Works",
+          reference: "Ephesians 2:8–9",
+          body: `**Plain Meaning:** Salvation is by grace through faith. It is God's gift—not a result of works—so that no one can boast.
+
+**Application:** Any system that says "do enough good and you will be saved" contradicts this verse. The Christian rests in grace, not performance.`,
         },
       ],
     },
     {
       id: "day-4",
       dayNumber: 4,
-      title: "The Fruit of Salvation",
+      title: "What Jesus Did for You",
       items: [
         {
           id: "d4-devotional",
           type: "devotional",
-          title: "The Fruit of Salvation",
-          body:
-            "You recognize a tree by its fruit. In the same way, a genuine relationship with Jesus produces visible change over time—" +
-            "new desires, a growing hatred of sin, and an increasing love for God and people. We are not saved by fruit, but real salvation " +
-            "does not stay hidden. Where Jesus truly reigns, transformation begins.",
+          title: "Day 4 – What Jesus Did for You",
+          body: `The gospel is not advice about how to live better; it is **news** about what Jesus has already done. On the cross, Jesus took the place of sinners, bearing the wrath and judgment we deserved so that we could be forgiven and declared righteous.
+
+He lived the perfect life you could not live, died the death you should have died, and rose from the dead so you could share His life forever.
+
+**Reflection**
+
+When you think of the cross, do you see it mainly as a symbol—or as a personal rescue for you?
+
+**Prayer**
+
+Jesus, thank You for taking my place. Help me see the cross not just as a story, but as Your love poured out for my sin.
+
+**Shareable Truth**
+
+"On the cross, Jesus was treated as you deserved, so you can be treated as He deserves."`,
         },
         {
-          id: "d4-mt-7-20",
+          id: "d4-isaiah535-6",
           type: "scripture",
-          title: "Matthew 7:20",
-          reference: "Matthew 7:20",
-          body:
-            "Jesus says we will recognize people by their fruits. What consistently comes out of our lives reveals what is within.",
+          title: "Pierced for Our Transgressions",
+          reference: "Isaiah 53:5–6",
+          body: `**Plain Meaning:** The suffering Servant was pierced and crushed for **our** sins; the punishment that brings us peace fell on Him.
+
+**Application:** Your sin did not just disappear; it was placed on Christ. He took what you deserve so you can receive what He deserves.`,
         },
         {
-          id: "d4-gal-5-22-23",
+          id: "d4-2cor521",
           type: "scripture",
-          title: "Galatians 5:22–23",
-          reference: "Galatians 5:22–23",
-          body:
-            "The fruit of the Spirit—love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control—" +
-            "shows what the Holy Spirit is producing in a believer.",
+          title: "The Great Exchange",
+          reference: "2 Corinthians 5:21",
+          body: `**Plain Meaning:** God made Jesus, who knew no sin, to be sin for us, so that in Him we might become the righteousness of God.
+
+**Application:** At the cross, your sin was counted to Christ, and His righteousness is counted to you when you trust Him.`,
         },
         {
-          id: "d4-phil-1-6",
+          id: "d4-rom58",
           type: "scripture",
-          title: "Philippians 1:6",
-          reference: "Philippians 1:6",
-          body:
-            "God finishes what He starts. The One who began a good work in you will carry it on to completion in Christ Jesus.",
+          title: "Love in the Middle of Our Sin",
+          reference: "Romans 5:8",
+          body: `**Plain Meaning:** God demonstrates His love by Christ dying for us **while** we were still sinners.
+
+**Application:** God did not wait for you to clean up your life. The cross proves His love came first.`,
+        },
+        {
+          id: "d4-1pet224",
+          type: "scripture",
+          title: "He Bore Our Sins",
+          reference: "1 Peter 2:24",
+          body: `**Plain Meaning:** Jesus bore our sins in His body on the tree so we might die to sin and live to righteousness.
+
+**Application:** The cross is not just forgiveness; it is also power to live a new life, free from sin's rule.`,
         },
       ],
     },
     {
       id: "day-5",
       dayNumber: 5,
-      title: "Blessed Assurance",
+      title: "How to Be Sure You're Saved",
       items: [
         {
           id: "d5-devotional",
           type: "devotional",
-          title: "Blessed Assurance",
-          body:
-            "God does not want His children living in constant fear about eternity. In Christ, He offers assurance. Our salvation is not " +
-            "held by our grip on God but by His grip on us. When He saves, He keeps. This confidence does not make us careless; it makes us grateful " +
-            "and bold. You do not have to guess about heaven when your life is hidden with Christ.",
+          title: "Day 5 – How to Be Sure You're Saved",
+          body: `God does not want you living in constant uncertainty about heaven and hell. The Bible shows that a person is saved by **repenting** (turning from sin and self-rule) and **believing** (trusting Jesus alone as Lord and Savior).
+
+This is not a magic formula; it is a real transfer of trust—from yourself to Christ. When you trust Him, God forgives your sins, gives you a new heart, and begins changing your life from the inside out.
+
+Assurance is not based on never sinning again, but on the faithfulness of Christ and the evidence of a new direction in your life.
+
+**Reflection**
+
+Have you personally turned from sin and trusted in Jesus alone as your Lord and Savior—or are you still partly trusting yourself?
+
+**Prayer**
+
+Lord Jesus, I confess that I am a sinner who cannot save myself. I turn from my sin and place my full trust in You—Your cross, Your resurrection, and Your lordship over my life.
+
+**Shareable Truth**
+
+"Saving faith is not trusting Christ + something; it is trusting Christ alone."`,
         },
         {
-          id: "d5-1jn-5-13",
+          id: "d5-mark115",
           type: "scripture",
-          title: "1 John 5:13",
+          title: "Repent and Believe",
+          reference: "Mark 1:15",
+          body: `**Plain Meaning:** Jesus announces the kingdom of God and calls people to repent and believe the gospel.
+
+**Application:** The response Jesus calls for is clear: turn from sin, turn to Him in faith. Both are needed.`,
+        },
+        {
+          id: "d5-rom109-10",
+          type: "scripture",
+          title: "Confess and Believe",
+          reference: "Romans 10:9–10",
+          body: `**Plain Meaning:** If you confess Jesus as Lord and believe God raised Him from the dead, you will be saved.
+
+**Application:** Salvation is tied to a real faith in the risen Christ and a heart-level surrender to His lordship.`,
+        },
+        {
+          id: "d5-john112",
+          type: "scripture",
+          title: "Receiving Christ",
+          reference: "John 1:12",
+          body: `**Plain Meaning:** Those who receive Jesus and believe in His name are given the right to become children of God.
+
+**Application:** Eternal life is not automatic; you must personally receive Christ by faith.`,
+        },
+        {
+          id: "d5-1john513",
+          type: "scripture",
+          title: "You Can Know You Have Eternal Life",
           reference: "1 John 5:13",
-          body:
-            "John writes so that believers may know they have eternal life. God wants His children assured, not uncertain.",
-        },
-        {
-          id: "d5-rom-8-1",
-          type: "scripture",
-          title: "Romans 8:1",
-          reference: "Romans 8:1",
-          body:
-            "There is now no condemnation for those who are in Christ Jesus. Judgment has already been settled at the cross.",
-        },
-        {
-          id: "d5-jn-10-28",
-          type: "scripture",
-          title: "John 10:28",
-          reference: "John 10:28",
-          body:
-            "Jesus gives His sheep eternal life and says no one can snatch them out of His hand. Your security rests in His power.",
+          body: `**Plain Meaning:** John writes so that believers may **know** they have eternal life.
+
+**Application:** God wants you to have settled confidence in Christ, not constant fear about your eternal destiny.`,
         },
       ],
     },
