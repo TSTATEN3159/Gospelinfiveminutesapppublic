@@ -5,7 +5,6 @@ import { Button } from "@/components/ui/button";
 import { DISCIPLESHIP_PLANS, DiscipleshipPlan, PlanDay } from "@/features/discipleship/discipleshipPlans";
 import { loadPlanProgress } from "@/features/discipleship/discipleshipProgress";
 import { AppNavigate } from "../App";
-import heavenCloudsImage from '@assets/stock_images/heaven_clouds_eterna_9fe3749f.jpg';
 
 interface DiscipleshipPlanDetailPageProps {
   planId: string;
@@ -61,7 +60,7 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
       <div className="max-w-4xl mx-auto px-4 py-4">
         <div className="rounded-3xl overflow-hidden shadow-md mb-4">
           <img
-            src={heavenCloudsImage}
+            src={plan.imageUrl}
             alt={plan.title}
             className="w-full h-44 object-cover"
           />
