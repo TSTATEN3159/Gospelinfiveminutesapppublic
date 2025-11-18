@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from "react";
 import { DiscipleshipPlan, PlanItem } from "./discipleshipPlans";
 import { Button } from "@/components/ui/button";
+import { BookOpen, Sparkles } from "lucide-react";
 
 interface Props {
   plan: DiscipleshipPlan;
@@ -87,30 +88,71 @@ export function DiscipleshipDayScreen({
       </div>
 
       {/* Content */}
-      <div className="flex-1 overflow-y-auto">
+      <div className="flex-1 overflow-y-auto pb-2">
         {currentItem.type === "devotional" && (
-          <div>
-            <h2 className="text-lg font-semibold mb-2">
-              {currentItem.title}
-            </h2>
-            <div className="prose prose-sm max-w-none">
-              {currentItem.body.split("\n").map((line: string, idx: number) => (
-                <p key={idx}>{line}</p>
-              ))}
+          <div className="rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 p-6 shadow-md border border-amber-100 dark:border-amber-900/50">
+            <div className="flex items-center gap-2 mb-4">
+              <div className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/50">
+                <Sparkles className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+              </div>
+              <h2 className="text-xl font-semibold text-amber-900 dark:text-amber-100">
+                {currentItem.title}
+              </h2>
+            </div>
+            <div className="space-y-3 text-amber-950/90 dark:text-amber-50/90 leading-relaxed">
+              {currentItem.body.split("\n").map((line: string, idx: number) => {
+                if (line.startsWith("**") && line.endsWith("**")) {
+                  const text = line.slice(2, -2);
+                  return (
+                    <p key={idx} className="font-semibold text-amber-900 dark:text-amber-200 mt-4 first:mt-0">
+                      {text}
+                    </p>
+                  );
+                }
+                return line.trim() ? (
+                  <p key={idx} className="text-base">{line}</p>
+                ) : null;
+              })}
             </div>
           </div>
         )}
 
         {currentItem.type === "scripture" && (
-          <div>
-            <h2 className="text-base font-semibold mb-1">
-              {currentItem.title}
-            </h2>
-            <p className="text-xs text-slate-500 mb-1">
-              {currentItem.reference} · KJV
-            </p>
-            <div className="prose prose-sm max-w-none whitespace-pre-line">
-              {currentItem.body}
+          <div className="rounded-xl bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/30 dark:to-blue-950/30 p-6 shadow-md border border-sky-100 dark:border-sky-900/50">
+            <div className="flex items-center gap-2 mb-3">
+              <div className="p-2 rounded-lg bg-sky-100 dark:bg-sky-900/50">
+                <BookOpen className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+              </div>
+              <div className="flex-1">
+                <h2 className="text-lg font-semibold text-sky-900 dark:text-sky-100">
+                  {currentItem.title}
+                </h2>
+                <p className="text-xs text-sky-600 dark:text-sky-400 font-medium mt-0.5">
+                  {currentItem.reference} · KJV
+                </p>
+              </div>
+            </div>
+            <div className="space-y-3 text-sky-950/90 dark:text-sky-50/90 leading-relaxed">
+              {currentItem.body.split("\n").map((line: string, idx: number) => {
+                if (line.startsWith("**") && line.endsWith("**")) {
+                  const text = line.slice(2, -2);
+                  return (
+                    <p key={idx} className="font-semibold text-sky-900 dark:text-sky-200 mt-4 first:mt-0">
+                      {text}
+                    </p>
+                  );
+                }
+                if (line.startsWith(">")) {
+                  return (
+                    <blockquote key={idx} className="border-l-4 border-sky-300 dark:border-sky-700 pl-4 py-1 italic text-sky-900 dark:text-sky-100 bg-white/50 dark:bg-sky-950/30 rounded-r">
+                      {line.slice(1).trim()}
+                    </blockquote>
+                  );
+                }
+                return line.trim() ? (
+                  <p key={idx} className="text-base">{line}</p>
+                ) : null;
+              })}
             </div>
           </div>
         )}
