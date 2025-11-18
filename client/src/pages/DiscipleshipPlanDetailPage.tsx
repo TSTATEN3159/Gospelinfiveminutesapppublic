@@ -3,6 +3,7 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DISCIPLESHIP_PLANS, DiscipleshipPlan, PlanDay } from "@/features/discipleship/discipleshipPlans";
+import { loadPlanProgress } from "@/features/discipleship/discipleshipProgress";
 import { AppNavigate } from "../App";
 import heavenCloudsImage from '@assets/stock_images/heaven_clouds_eterna_9fe3749f.jpg';
 
@@ -36,6 +37,8 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
   }
 
   const activeDay: PlanDay = plan.days[activeDayIndex];
+  const progress = loadPlanProgress(plan);
+  const percent = Math.round(progress.ratio * 100);
 
   return (
     <div className="min-h-screen pb-20 bg-slate-50">
@@ -62,6 +65,25 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
             alt={plan.title}
             className="w-full h-44 object-cover"
           />
+        </div>
+
+        {/* Progress bar */}
+        <div className="mb-4">
+          <div className="flex justify-between items-center mb-1">
+            <span className="text-xs font-medium text-slate-600 dark:text-slate-400">
+              Progress
+            </span>
+            <span className="text-[11px] text-slate-500 dark:text-slate-400" data-testid="progress-stats">
+              {percent}% • {progress.completed}/{progress.total} steps
+            </span>
+          </div>
+          <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
+            <div
+              className="h-full bg-slate-900 dark:bg-slate-300 transition-all"
+              style={{ width: `${percent}%` }}
+              data-testid="progress-bar"
+            />
+          </div>
         </div>
 
         <div className="flex space-x-2 mb-4">
