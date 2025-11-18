@@ -121,7 +121,6 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
                 onNavigate("discipleship-reading", {
                   planId: plan.id,
                   dayNumber: activeDay.dayNumber,
-                  itemId: item.id,
                 })
               }
               className="flex items-center justify-between rounded-xl bg-white px-3 py-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer"
@@ -147,11 +146,9 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
 
         <Button
           onClick={() => {
-            const firstItem = activeDay.items[0];
             onNavigate("discipleship-reading", {
               planId: plan.id,
               dayNumber: activeDay.dayNumber,
-              itemId: firstItem.id,
             });
           }}
           className="w-full rounded-full bg-slate-900 hover:bg-slate-800 text-white py-6 text-sm font-semibold shadow-lg"

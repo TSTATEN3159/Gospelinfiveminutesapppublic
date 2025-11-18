@@ -70,7 +70,7 @@ type AppPageParams = {
   search?: { query?: string };
   "image-scripture"?: { reference?: string; text?: string; version?: BibleVersionCode };
   "discipleship-plan"?: { planId: string };
-  "discipleship-reading"?: { planId: string; dayNumber: number; itemId: string };
+  "discipleship-reading"?: { planId: string; dayNumber: number };
 };
 
 // Type-safe navigation function signature
@@ -322,11 +322,10 @@ function MainApp() {
               const planParams = (pageParams["discipleship-plan"] || {}) as { planId?: string };
               return <DiscipleshipPlanDetailPage planId={planParams.planId || ""} onNavigate={handleNavigate} />;
             case "discipleship-reading":
-              const readingParams = (pageParams["discipleship-reading"] || {}) as { planId?: string; dayNumber?: number; itemId?: string };
+              const readingParams = (pageParams["discipleship-reading"] || {}) as { planId?: string; dayNumber?: number };
               return <DiscipleshipReadingPage 
                 planId={readingParams.planId || ""}
                 dayNumber={readingParams.dayNumber || 1}
-                itemId={readingParams.itemId || ""}
                 onNavigate={handleNavigate}
               />;
             default:

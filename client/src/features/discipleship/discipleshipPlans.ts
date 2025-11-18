@@ -536,27 +536,33 @@ Holy Spirit, thank You for making me alive in Christ. Help me understand that I 
           type: "scripture",
           title: "No Condemnation in Christ",
           reference: "Romans 8:1–2",
-          body: `**Plain Meaning:** For those who are in Christ Jesus, there is now no condemnation. The law of the Spirit of life has set you free from the law of sin and death.
+          body: `**Scripture (KJV)**  
+> "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit. For the law of the Spirit of life in Christ Jesus hath made me free from the law of sin and death."
 
-**Application:** You don't live under a guilty verdict anymore. The Spirit marks you as someone liberated from sin's death sentence.`,
+**Meaning:** For those who are in Christ Jesus, there is now no condemnation. The law of the Spirit of life has set you free from the law of sin and death.  
+**Application:** You don't live under a guilty verdict anymore. The Spirit marks you as someone liberated from sin's death sentence.`.trim(),
         },
         {
           id: "lis-d1-john3-5-6",
           type: "scripture",
           title: "Born of Water and the Spirit",
           reference: "John 3:5–6",
-          body: `**Plain Meaning:** Jesus explains that you must be born "of water and the Spirit" to enter the kingdom of God. What is born of the flesh is flesh; what is born of the Spirit is spirit.
+          body: `**Scripture (KJV)**  
+> "Jesus answered, Verily, verily, I say unto thee, Except a man be born of water and of the Spirit, he cannot enter into the kingdom of God. That which is born of the flesh is flesh; and that which is born of the Spirit is spirit."
 
-**Application:** You don't enter God's kingdom by heritage, effort, or religion, but by a new birth the Spirit brings.`,
+**Meaning:** Jesus explains that you must be born "of water and the Spirit" to enter the kingdom of God. What is born of the flesh is flesh; what is born of the Spirit is spirit.  
+**Application:** You don't enter God's kingdom by heritage, effort, or religion, but by a new birth the Spirit brings.`.trim(),
         },
         {
           id: "lis-d1-titus3-5-6",
           type: "scripture",
           title: "Wash and Renew",
           reference: "Titus 3:5–6",
-          body: `**Plain Meaning:** God saved us not by works of righteousness we have done, but according to His mercy, by the washing of regeneration and renewal of the Holy Spirit.
+          body: `**Scripture (KJV)**  
+> "Not by works of righteousness which we have done, but according to his mercy he saved us, by the washing of regeneration, and renewing of the Holy Ghost; Which he shed on us abundantly through Jesus Christ our Saviour;"
 
-**Application:** Your new life is mercy from start to finish. The Spirit washed you and made you new; you cannot boast in yourself.`,
+**Meaning:** God saved us not by works of righteousness we have done, but according to His mercy, by the washing of regeneration and renewal of the Holy Spirit.  
+**Application:** Your new life is mercy from start to finish. The Spirit washed you and made you new; you cannot boast in yourself.`.trim(),
         },
       ],
     },
@@ -592,27 +598,33 @@ Father, thank You that Your Spirit lives in me as a seal that I am Yours. Help m
           type: "scripture",
           title: "Spirit of Adoption",
           reference: "Romans 8:15–16",
-          body: `**Plain Meaning:** You did not receive a spirit of slavery to fall back into fear, but the Spirit of adoption, who cries "Abba, Father," and bears witness that you are God's child.
+          body: `**Scripture (KJV)**  
+> "For ye have not received the spirit of bondage again to fear; but ye have received the Spirit of adoption, whereby we cry, Abba, Father. The Spirit itself beareth witness with our spirit, that we are the children of God:"
 
-**Application:** Fear no longer has the final word. The Spirit in you continually reminds you that you belong to a Father, not a slavemaster.`,
+**Meaning:** You did not receive a spirit of slavery to fall back into fear, but the Spirit of adoption, who cries "Abba, Father," and bears witness that you are God's child.  
+**Application:** Fear no longer has the final word. The Spirit in you continually reminds you that you belong to a Father, not a slavemaster.`.trim(),
         },
         {
           id: "lis-d2-1cor6-19-20",
           type: "scripture",
           title: "Temple of the Holy Spirit",
           reference: "1 Corinthians 6:19–20",
-          body: `**Plain Meaning:** Your body is a temple of the Holy Spirit, whom you have from God. You are not your own; you were bought with a price.
+          body: `**Scripture (KJV)**  
+> "What? know ye not that your body is the temple of the Holy Ghost which is in you, which ye have of God, and ye are not your own? For ye are bought with a price: therefore glorify God in your body, and in your spirit, which are God’s."
 
-**Application:** Your body and life have a holy purpose now. You don't belong to sin, to culture, or even to yourself—you belong to God.`,
+**Meaning:** Your body is a temple of the Holy Spirit, whom you have from God. You are not your own; you were bought with a price.  
+**Application:** Your body and life have a holy purpose now. You don't belong to sin, to culture, or even to yourself—you belong to God.`.trim(),
         },
         {
           id: "lis-d2-eph1-13-14",
           type: "scripture",
           title: "Sealed by the Spirit",
           reference: "Ephesians 1:13–14",
-          body: `**Plain Meaning:** When you believed the gospel, you were sealed with the Holy Spirit, who is a guarantee of your inheritance until the full redemption.
+          body: `**Scripture (KJV)**  
+> "In whom ye also trusted, after that ye heard the word of truth, the gospel of your salvation: in whom also after that ye believed, ye were sealed with that holy Spirit of promise, Which is the earnest of our inheritance until the redemption of the purchased possession, unto the praise of his glory."
 
-**Application:** The Spirit is God's down payment that He will finish what He started in you. Your future with Him is secure.`,
+**Meaning:** When you believed the gospel, you were sealed with the Holy Spirit, who is a guarantee of your inheritance until the full redemption.  
+**Application:** The Spirit is God's down payment that He will finish what He started in you. Your future with Him is secure.`.trim(),
         },
       ],
     },
@@ -648,27 +660,33 @@ Holy Spirit, I choose today to set my mind on the things of God. Show me when I'
           type: "scripture",
           title: "Walk by the Spirit",
           reference: "Galatians 5:16–17",
-          body: `**Plain Meaning:** If you walk by the Spirit you will not gratify the desires of the flesh, because the flesh and Spirit are opposed to each other.
+          body: `**Scripture (KJV)**  
+> "This I say then, Walk in the Spirit, and ye shall not fulfil the lust of the flesh. For the flesh lusteth against the Spirit, and the Spirit against the flesh: and these are contrary the one to the other: so that ye cannot do the things that ye would."
 
-**Application:** You win the battle with sin not by sheer willpower, but by a Spirit-led walk that leaves less room for the flesh.`,
+**Meaning:** If you walk by the Spirit you will not gratify the desires of the flesh, because the flesh and Spirit are opposed to each other.  
+**Application:** You win the battle with sin not by sheer willpower, but by a Spirit-led walk that leaves less room for the flesh.`.trim(),
         },
         {
           id: "lis-d3-rom8-5-6",
           type: "scripture",
           title: "Mindset of Life and Peace",
           reference: "Romans 8:5–6",
-          body: `**Plain Meaning:** Those who live according to the Spirit set their minds on the things of the Spirit; this mindset is life and peace.
+          body: `**Scripture (KJV)**  
+> "For they that are after the flesh do mind the things of the flesh; but they that are after the Spirit the things of the Spirit. For to be carnally minded is death; but to be spiritually minded is life and peace."
 
-**Application:** What you habitually think about reveals whether you're living by the flesh or by the Spirit. Guard your inner focus.`,
+**Meaning:** Those who live according to the Spirit set their minds on the things of the Spirit; this mindset is life and peace.  
+**Application:** What you habitually think about reveals whether you're living by the flesh or by the Spirit. Guard your inner focus.`.trim(),
         },
         {
           id: "lis-d3-col3-1-3",
           type: "scripture",
           title: "Set Your Mind Above",
           reference: "Colossians 3:1–3",
-          body: `**Plain Meaning:** Since you have been raised with Christ, seek the things above and set your mind there, because your life is hidden with Christ in God.
+          body: `**Scripture (KJV)**  
+> "If ye then be risen with Christ, seek those things which are above, where Christ sitteth on the right hand of God. Set your affection on things above, not on things on the earth. For ye are dead, and your life is hid with Christ in God."
 
-**Application:** Your true life is anchored in heaven, not earth. Let that reality shape your choices and desires.`,
+**Meaning:** Since you have been raised with Christ, seek the things above and set your mind there, because your life is hidden with Christ in God.  
+**Application:** Your true life is anchored in heaven, not earth. Let that reality shape your choices and desires.`.trim(),
         },
       ],
     },
@@ -704,27 +722,33 @@ Spirit of truth, guide me. Keep me close to Your Word, sensitive to Your leading
           type: "scripture",
           title: "Led as Sons",
           reference: "Romans 8:14",
-          body: `**Plain Meaning:** All who are led by the Spirit of God are sons of God.
+          body: `**Scripture (KJV)**  
+> "For as many as are led by the Spirit of God, they are the sons of God."
 
-**Application:** Being led by the Spirit is a family mark. Your guidance is not random; it flows from your sonship.`,
+**Meaning:** All who are led by the Spirit of God are sons of God.  
+**Application:** Being led by the Spirit is a family mark. Your guidance is not random; it flows from your sonship.`.trim(),
         },
         {
           id: "lis-d4-john16-13",
           type: "scripture",
           title: "Spirit of Truth Guides",
           reference: "John 16:13",
-          body: `**Plain Meaning:** The Spirit of truth will guide you into all the truth and glorify Jesus.
+          body: `**Scripture (KJV)**  
+> "Howbeit when he, the Spirit of truth, is come, he will guide you into all truth: for he shall not speak of himself; but whatsoever he shall hear, that shall he speak: and he will shew you things to come."
 
-**Application:** The Spirit's guidance will always agree with Scripture and lead you toward Jesus, not away from Him.`,
+**Meaning:** The Spirit of truth will guide you into all the truth and glorify Jesus.  
+**Application:** The Spirit's guidance will always agree with Scripture and lead you toward Jesus, not away from Him.`.trim(),
         },
         {
           id: "lis-d4-isa30-21",
           type: "scripture",
           title: "This Is the Way, Walk in It",
           reference: "Isaiah 30:21",
-          body: `**Plain Meaning:** God promises that you will hear a word behind you saying, "This is the way, walk in it," when you turn to the right or left.
+          body: `**Scripture (KJV)**  
+> "And thine ears shall hear a word behind thee, saying, This is the way, walk ye in it, when ye turn to the right hand, and when ye turn to the left."
 
-**Application:** God is not trying to confuse you. As you seek Him, He faithfully directs your steps.`,
+**Meaning:** God promises that you will hear a word behind you saying, "This is the way, walk in it," when you turn to the right or left.  
+**Application:** God is not trying to confuse you. As you seek Him, He faithfully directs your steps.`.trim(),
         },
       ],
     },
@@ -760,27 +784,33 @@ Holy Spirit, bear Your fruit in my character and use me in Your power. Make my l
           type: "scripture",
           title: "The Spirit's Fruit",
           reference: "Galatians 5:22–23",
-          body: `**Plain Meaning:** The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control.
+          body: `**Scripture (KJV)**  
+> "But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, Meekness, temperance: against such there is no law."
 
-**Application:** The Spirit aims to change your character, not just your circumstances. These traits are signs of His work in you.`,
+**Meaning:** The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control.  
+**Application:** The Spirit aims to change your character, not just your circumstances. These traits are signs of His work in you.`.trim(),
         },
         {
           id: "lis-d5-acts1-8",
           type: "scripture",
           title: "Power to Witness",
           reference: "Acts 1:8",
-          body: `**Plain Meaning:** You will receive power when the Holy Spirit comes upon you, and you will be Jesus' witnesses to the ends of the earth.
+          body: `**Scripture (KJV)**  
+> "But ye shall receive power, after that the Holy Ghost is come upon you: and ye shall be witnesses unto me both in Jerusalem, and in all Judæa, and in Samaria, and unto the uttermost part of the earth."
 
-**Application:** The Spirit empowers you to speak of Christ with boldness and love, right where you are.`,
+**Meaning:** You will receive power when the Holy Spirit comes upon you, and you will be Jesus' witnesses to the ends of the earth.  
+**Application:** The Spirit empowers you to speak of Christ with boldness and love, right where you are.`.trim(),
         },
         {
           id: "lis-d5-phil2-13",
           type: "scripture",
           title: "God at Work in You",
           reference: "Philippians 2:13",
-          body: `**Plain Meaning:** God is at work in you, both to will and to work for His good pleasure.
+          body: `**Scripture (KJV)**  
+> "For it is God which worketh in you both to will and to do of his good pleasure."
 
-**Application:** Even your desire to obey is a work of the Spirit. You are not alone in the struggle; God Himself is working within you.`,
+**Meaning:** God is at work in you, both to will and to work for His good pleasure.  
+**Application:** Even your desire to obey is a work of the Spirit. You are not alone in the struggle; God Himself is working within you.`.trim(),
         },
       ],
     },
@@ -826,27 +856,33 @@ Lord Jesus, I confess that this area has more power over me than I have admitted
           type: "scripture",
           title: "Slave or Free?",
           reference: "John 8:34–36",
-          body: `**Plain Meaning:** Whoever practices sin is a slave to sin, but the Son sets people truly free.
+          body: `**Scripture (KJV)**  
+> "Jesus answered them, Verily, verily, I say unto you, Whosoever committeth sin is the servant of sin. And the servant abideth not in the house for ever: but the Son abideth ever. If the Son therefore shall make you free, ye shall be free indeed."
 
-**Application:** Addiction is spiritual slavery, but Jesus has real power to break chains and give true freedom.`,
+**Meaning:** Whoever practices sin is a slave to sin, but the Son sets people truly free.  
+**Application:** Addiction is spiritual slavery, but Jesus has real power to break chains and give true freedom.`.trim(),
         },
         {
           id: "bfa-d1-rom7-18-19",
           type: "scripture",
           title: "The Inner Struggle",
           reference: "Romans 7:18–19",
-          body: `**Plain Meaning:** Paul describes wanting to do good but experiencing another power at work that pulls him into what he hates.
+          body: `**Scripture (KJV)**  
+> "For I know that in me (that is, in my flesh,) dwelleth no good thing: for to will is present with me; but how to perform that which is good I find not. For the good that I would I do not: but the evil which I would not, that I do."
 
-**Application:** You are not crazy or alone in the inner battle. Scripture understands the struggle and points you to grace, not self-reliance.`,
+**Meaning:** Paul describes wanting to do good but experiencing another power at work that pulls him into what he hates.  
+**Application:** You are not crazy or alone in the inner battle. Scripture understands the struggle and points you to grace, not self-reliance.`.trim(),
         },
         {
           id: "bfa-d1-ps139-23-24",
           type: "scripture",
           title: "Search Me, O God",
           reference: "Psalm 139:23–24",
-          body: `**Plain Meaning:** The psalmist invites God to search his heart and reveal any grievous way.
+          body: `**Scripture (KJV)**  
+> "Search me, O God, and know my heart: try me, and know my thoughts: And see if there be any wicked way in me, and lead me in the way everlasting."
 
-**Application:** Ask God to put His finger on the real issues—beneath the surface habits to the heart-level idols.`,
+**Meaning:** The psalmist invites God to search his heart and reveal any grievous way.  
+**Application:** Ask God to put His finger on the real issues—beneath the surface habits to the heart-level idols.`.trim(),
         },
       ],
     },
@@ -882,27 +918,33 @@ Lord, give me courage to bring my sin into the light—with You and with a trust
           type: "scripture",
           title: "Walk in the Light",
           reference: "1 John 1:7–9",
-          body: `**Plain Meaning:** Walking in the light means honesty before God; as we confess our sins, He is faithful to forgive and cleanse us.
+          body: `**Scripture (KJV)**  
+> "But if we walk in the light, as he is in the light, we have fellowship one with another, and the blood of Jesus Christ his Son cleanseth us from all sin. If we say that we have no sin, we deceive ourselves, and the truth is not in us. If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."
 
-**Application:** Freedom requires stepping out of hiding. Confession is not the end of you; it's the beginning of cleansing.`,
+**Meaning:** Walking in the light means honesty before God; as we confess our sins, He is faithful to forgive and cleanse us.  
+**Application:** Freedom requires stepping out of hiding. Confession is not the end of you; it's the beginning of cleansing.`.trim(),
         },
         {
           id: "bfa-d2-prov28-13",
           type: "scripture",
           title: "Concealed or Confessed?",
           reference: "Proverbs 28:13",
-          body: `**Plain Meaning:** Those who conceal sins do not prosper, but those who confess and forsake them obtain mercy.
+          body: `**Scripture (KJV)**  
+> "He that covereth his sins shall not prosper: but whoso confesseth and forsaketh them shall have mercy."
 
-**Application:** Hiding your addiction ensures its power over you. Mercy flows where sin is confessed and abandoned.`,
+**Meaning:** Those who conceal sins do not prosper, but those who confess and forsake them obtain mercy.  
+**Application:** Hiding your addiction ensures its power over you. Mercy flows where sin is confessed and abandoned.`.trim(),
         },
         {
           id: "bfa-d2-james5-16",
           type: "scripture",
           title: "Healing in Community",
           reference: "James 5:16",
-          body: `**Plain Meaning:** Confess your sins to one another and pray for one another, that you may be healed.
+          body: `**Scripture (KJV)**  
+> "Confess your faults one to another, and pray one for another, that ye may be healed. The effectual fervent prayer of a righteous man availeth much."
 
-**Application:** You need both God and godly people. Honest friendships are part of God's design for your healing.`,
+**Meaning:** Confess your sins to one another and pray for one another, that you may be healed.  
+**Application:** You need both God and godly people. Honest friendships are part of God's design for your healing.`.trim(),
         },
       ],
     },
@@ -938,27 +980,33 @@ Lord, show me the patterns that lead me into sin. Give me wisdom and courage to 
           type: "scripture",
           title: "A Way of Escape",
           reference: "1 Corinthians 10:13",
-          body: `**Plain Meaning:** Temptation is common to humanity, but God is faithful and always provides a way of escape so you can endure it.
+          body: `**Scripture (KJV)**  
+> "There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape, that ye may be able to bear it."
 
-**Application:** You are never forced to sin. Ask God to show you the path of escape before you're in too deep.`,
+**Meaning:** Temptation is common to humanity, but God is faithful and always provides a way of escape so you can endure it.  
+**Application:** You are never forced to sin. Ask God to show you the path of escape before you're in too deep.`.trim(),
         },
         {
           id: "bfa-d3-2tim2-22",
           type: "scripture",
           title: "Flee and Pursue",
           reference: "2 Timothy 2:22",
-          body: `**Plain Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace with those who call on the Lord.
+          body: `**Scripture (KJV)**  
+> "Flee also youthful lusts: but follow righteousness, faith, charity, peace, with them that call on the Lord out of a pure heart."
 
-**Application:** It's not enough to run from sin; you must also run *toward* godly people and godly pursuits.`,
+**Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace with those who call on the Lord.  
+**Application:** It's not enough to run from sin; you must also run *toward* godly people and godly pursuits.`.trim(),
         },
         {
           id: "bfa-d3-matt5-29-30",
           type: "scripture",
           title: "Radical Amputations",
           reference: "Matthew 5:29–30",
-          body: `**Plain Meaning:** Jesus uses strong imagery about losing an eye or hand rather than being thrown into hell because of sin.
+          body: `**Scripture (KJV)**  
+> "And if thy right eye offend thee, pluck it out, and cast it from thee: for it is profitable for thee that one of thy members should perish, and not that thy whole body should be cast into hell. And if thy right hand offend thee, cut it off, and cast it from thee: for it is profitable for thee that one of thy members should perish, and not that thy whole body should be cast into hell."
 
-**Application:** Serious sin calls for serious measures. Removing access points to addiction is wisdom, not extremism.`,
+**Meaning:** Jesus uses strong imagery about losing an eye or hand rather than being thrown into hell because of sin.  
+**Application:** Serious sin calls for serious measures. Removing access points to addiction is wisdom, not extremism.`.trim(),
         },
       ],
     },
@@ -994,27 +1042,33 @@ Lord, I confess that I often want to hide and fix myself alone. Give me the humi
           type: "scripture",
           title: "Don't Walk Alone",
           reference: "Hebrews 10:24–25",
-          body: `**Plain Meaning:** Believers are called to stir one another up to love and good works and not neglect meeting together.
+          body: `**Scripture (KJV)**  
+> "And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together, as the manner of some is; but exhorting one another: and so much the more, as ye see the day approaching."
 
-**Application:** Skipping community weakens you. You need regular encouragement and challenge from other believers.`,
+**Meaning:** Believers are called to stir one another up to love and good works and not neglect meeting together.  
+**Application:** Skipping community weakens you. You need regular encouragement and challenge from other believers.`.trim(),
         },
         {
           id: "bfa-d4-eccl4-9-10",
           type: "scripture",
           title: "Two Are Better Than One",
           reference: "Ecclesiastes 4:9–10",
-          body: `**Plain Meaning:** Two are better than one because if one falls, the other can lift him up.
+          body: `**Scripture (KJV)**  
+> "¶ Two are better than one; because they have a good reward for their labour. For if they fall, the one will lift up his fellow: but woe to him that is alone when he falleth; for he hath not another to help him up."
 
-**Application:** Recovery is easier with real partners. Let others lift you instead of hiding when you fall.`,
+**Meaning:** Two are better than one because if one falls, the other can lift him up.  
+**Application:** Recovery is easier with real partners. Let others lift you instead of hiding when you fall.`.trim(),
         },
         {
           id: "bfa-d4-gal6-1-2",
           type: "scripture",
           title: "Restore Gently",
           reference: "Galatians 6:1–2",
-          body: `**Plain Meaning:** Those who are spiritual should restore the one caught in any transgression with gentleness, bearing one another's burdens.
+          body: `**Scripture (KJV)**  
+> "Brethren, if a man be overtaken in a fault, ye which are spiritual, restore such an one in the spirit of meekness; considering thyself, lest thou also be tempted. Bear ye one another’s burdens, and so fulfil the law of Christ."
 
-**Application:** Ask God for safe people who restore gently—and be willing to be that kind of person for others too.`,
+**Meaning:** Those who are spiritual should restore the one caught in any transgression with gentleness, bearing one another's burdens.  
+**Application:** Ask God for safe people who restore gently—and be willing to be that kind of person for others too.`.trim(),
         },
       ],
     },
@@ -1050,27 +1104,33 @@ Father, I thank You that Your grace is greater than my failures. When I fall, he
           type: "scripture",
           title: "Rise Again",
           reference: "Proverbs 24:16",
-          body: `**Plain Meaning:** The righteous person falls seven times and rises again, but the wicked stumble in calamity.
+          body: `**Scripture (KJV)**  
+> "For a just man falleth seven times, and riseth up again: but the wicked shall fall into mischief."
 
-**Application:** In Christ, falling is not final. By His grace you get back up and keep moving toward Him.`,
+**Meaning:** The righteous person falls seven times and rises again, but the wicked stumble in calamity.  
+**Application:** In Christ, falling is not final. By His grace you get back up and keep moving toward Him.`.trim(),
         },
         {
           id: "bfa-d5-micah7-8-9",
           type: "scripture",
           title: "From Darkness to Light",
           reference: "Micah 7:8–9",
-          body: `**Plain Meaning:** Even when the believer falls, he declares that the Lord will be his light, and God will bring him out to the light.
+          body: `**Scripture (KJV)**  
+> "¶ Rejoice not against me, O mine enemy: when I fall, I shall arise; when I sit in darkness, the LORD shall be a light unto me. I will bear the indignation of the LORD, because I have sinned against him, until he plead my cause, and execute judgment for me: he will bring me forth to the light, and I shall behold his righteousness."
 
-**Application:** Your lowest moments are not beyond God's reach. He still leads you from darkness back into His light.`,
+**Meaning:** Even when the believer falls, he declares that the Lord will be his light, and God will bring him out to the light.  
+**Application:** Your lowest moments are not beyond God's reach. He still leads you from darkness back into His light.`.trim(),
         },
         {
           id: "bfa-d5-hebrews4-15-16",
           type: "scripture",
           title: "Help in Time of Need",
           reference: "Hebrews 4:15–16",
-          body: `**Plain Meaning:** We have a High Priest who sympathizes with our weaknesses, so we can come boldly to the throne of grace for mercy and help.
+          body: `**Scripture (KJV)**  
+> "For we have not an high priest which cannot be touched with the feeling of our infirmities; but was in all points tempted like as we are, yet without sin. Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need."
 
-**Application:** Run to Jesus *because* you are weak, not because you feel strong. The throne you approach is a throne of grace.`,
+**Meaning:** We have a High Priest who sympathizes with our weaknesses, so we can come boldly to the throne of grace for mercy and help.  
+**Application:** Run to Jesus *because* you are weak, not because you feel strong. The throne you approach is a throne of grace.`.trim(),
         },
       ],
     },
@@ -1119,18 +1179,22 @@ Lord Jesus, thank You that You faced temptation and won. Help me to see my battl
           type: "scripture",
           title: "James 1:13–15",
           reference: "James 1:13-15",
-          body: `**Plain Meaning:** God does not tempt anyone. Temptation arises from one's own desires, which when acted upon give birth to sin, and sin leads to death.
+          body: `**Scripture (KJV)**  
+> "Let no man say when he is tempted, I am tempted of God: for God cannot be tempted with evil, neither tempteth he any man: But every man is tempted, when he is drawn away of his own lust, and enticed. Then when lust hath conceived, it bringeth forth sin: and sin, when it is finished, bringeth forth death."
 
-**Application:** You cannot blame God or circumstances for your temptation. Recognize the pattern: desire → temptation → sin → death. Break the cycle early by taking your desires to God.`,
+**Meaning:** God does not tempt anyone. Temptation arises from one's own desires, which when acted upon give birth to sin, and sin leads to death.  
+**Application:** You cannot blame God or circumstances for your temptation. Recognize the pattern: desire → temptation → sin → death. Break the cycle early by taking your desires to God.`.trim(),
         },
         {
           id: "d1-eph",
           type: "scripture",
           title: "Ephesians 6:10–11",
           reference: "Ephesians 6:10-11",
-          body: `**Plain Meaning:** Be strong in the Lord and put on the full armor of God so you can stand against the devil's schemes.
+          body: `**Scripture (KJV)**  
+> "Finally, my brethren, be strong in the Lord, and in the power of his might. Put on the whole armour of God, that ye may be able to stand against the wiles of the devil."
 
-**Application:** Your battle is spiritual. You need God's strength and His armor, not just willpower. The devil has schemes, but God has given you the tools to stand firm.`,
+**Meaning:** Be strong in the Lord and put on the full armor of God so you can stand against the devil's schemes.  
+**Application:** Your battle is spiritual. You need God's strength and His armor, not just willpower. The devil has schemes, but God has given you the tools to stand firm.`.trim(),
         },
       ],
     },
@@ -1164,18 +1228,22 @@ God, give me the courage to run from what tempts me, even when it feels like I'm
           type: "scripture",
           title: "2 Timothy 2:22",
           reference: "2 Timothy 2:22",
-          body: `**Plain Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace, along with those who call on the Lord from a pure heart.
+          body: `**Scripture (KJV)**  
+> "Flee also youthful lusts: but follow righteousness, faith, charity, peace, with them that call on the Lord out of a pure heart."
 
-**Application:** Don't just run from sin—run toward godliness. Surround yourself with people who are pursuing Christ with you. Victory is both fleeing and pursuing.`,
+**Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace, along with those who call on the Lord from a pure heart.  
+**Application:** Don't just run from sin—run toward godliness. Surround yourself with people who are pursuing Christ with you. Victory is both fleeing and pursuing.`.trim(),
         },
         {
           id: "d2-1cor1013",
           type: "scripture",
           title: "God Provides a Way Out",
           reference: "1 Corinthians 10:13",
-          body: `**Plain Meaning:** No temptation has overtaken you that is not common to man. God is faithful, and He will not let you be tempted beyond your ability, but with the temptation He will also provide the way of escape.
+          body: `**Scripture (KJV)**  
+> "There hath no temptation taken you but such as is common to man: but God is faithful, who will not suffer you to be tempted above that ye are able; but will with the temptation also make a way to escape, that ye may be able to bear it."
 
-**Application:** You are never trapped. Every temptation has an exit. Look for it, and God will help you take it.`,
+**Meaning:** No temptation has overtaken you that is not common to man. God is faithful, and He will not let you be tempted beyond your ability, but with the temptation He will also provide the way of escape.  
+**Application:** You are never trapped. Every temptation has an exit. Look for it, and God will help you take it.`.trim(),
         },
       ],
     },
@@ -1209,18 +1277,22 @@ Holy Spirit, guard my mind and give me the strength to take every thought captiv
           type: "scripture",
           title: "2 Corinthians 10:3–5",
           reference: "2 Corinthians 10:3-5",
-          body: `**Plain Meaning:** Though we live in the world, we do not wage war as the world does. We destroy arguments and every lofty opinion raised against the knowledge of God, and take every thought captive to obey Christ.
+          body: `**Scripture (KJV)**  
+> "For though we walk in the flesh, we do not war after the flesh: (For the weapons of our warfare are not carnal, but mighty through God to the pulling down of strong holds;) Casting down imaginations, and every high thing that exalteth itself against the knowledge of God, and bringing into captivity every thought to the obedience of Christ;"
 
-**Application:** You have the power to take control of your thoughts. Don't let lies run wild—arrest them and submit them to Christ.`,
+**Meaning:** Though we live in the world, we do not wage war as the world does. We destroy arguments and every lofty opinion raised against the knowledge of God, and take every thought captive to obey Christ.  
+**Application:** You have the power to take control of your thoughts. Don't let lies run wild—arrest them and submit them to Christ.`.trim(),
         },
         {
           id: "d3-matt44-11",
           type: "scripture",
           title: "Jesus' Example",
           reference: "Matthew 4:4, 11",
-          body: `**Plain Meaning:** When tempted, Jesus responded with "It is written…" and defeated Satan with Scripture. After the devil left, angels came and ministered to Him.
+          body: `**Scripture (KJV)**  
+> "But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God."
 
-**Application:** Use the Word of God as your weapon against temptation. When you resist the devil with Scripture, he will flee—and God will minister to you.`,
+**Meaning:** When tempted, Jesus responded with "It is written…" and defeated Satan with Scripture. After the devil left, angels came and ministered to Him.  
+**Application:** Use the Word of God as your weapon against temptation. When you resist the devil with Scripture, he will flee—and God will minister to you.`.trim(),
         },
       ],
     },
@@ -1254,18 +1326,22 @@ Holy Spirit, remind me that You are greater than every temptation. Strengthen me
           type: "scripture",
           title: "Romans 8:9",
           reference: "Romans 8:9",
-          body: `**Plain Meaning:** You are not in the flesh but in the Spirit, if indeed the Spirit of God dwells in you.
+          body: `**Scripture (KJV)**  
+> "But ye are not in the flesh, but in the Spirit, if so be that the Spirit of God dwell in you. Now if any man have not the Spirit of Christ, he is none of his."
 
-**Application:** If you are in Christ, you are no longer controlled by the flesh. The Spirit's presence changes your identity and your power source.`,
+**Meaning:** You are not in the flesh but in the Spirit, if indeed the Spirit of God dwells in you.  
+**Application:** If you are in Christ, you are no longer controlled by the flesh. The Spirit's presence changes your identity and your power source.`.trim(),
         },
         {
           id: "d4-1john44",
           type: "scripture",
           title: "Greater Is He Who Is in You",
           reference: "1 John 4:4",
-          body: `**Plain Meaning:** Little children, you are from God and have overcome them, for He who is in you is greater than he who is in the world.
+          body: `**Scripture (KJV)**  
+> "Ye are of God, little children, and have overcome them: because greater is he that is in you, than he that is in the world."
 
-**Application:** The Holy Spirit in you is more powerful than any temptation, any lie, or any enemy. You overcome because of who lives in you.`,
+**Meaning:** Little children, you are from God and have overcome them, for He who is in you is greater than he who is in the world.  
+**Application:** The Holy Spirit in you is more powerful than any temptation, any lie, or any enemy. You overcome because of who lives in you.`.trim(),
         },
       ],
     },
@@ -1302,18 +1378,22 @@ Father, thank You that Your grace is greater than my worst failure. Help me to r
           type: "scripture",
           title: "Proverbs 24:16",
           reference: "Proverbs 24:16",
-          body: `**Plain Meaning:** The righteous falls seven times and rises again, but the wicked stumble in times of calamity.
+          body: `**Scripture (KJV)**  
+> "For a just man falleth seven times, and riseth up again: but the wicked shall fall into mischief."
 
-**Application:** What separates the righteous from the wicked is not the absence of falling, but the getting back up. Keep rising in God's grace.`,
+**Meaning:** The righteous falls seven times and rises again, but the wicked stumble in times of calamity.  
+**Application:** What separates the righteous from the wicked is not the absence of falling, but the getting back up. Keep rising in God's grace.`.trim(),
         },
         {
           id: "d5-1john19",
           type: "scripture",
           title: "Confess and Be Cleansed",
           reference: "1 John 1:9",
-          body: `**Plain Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.
+          body: `**Scripture (KJV)**  
+> "If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."
 
-**Application:** Confession brings cleansing. Don't hide your failures—bring them to God, and He will wash you clean every time.`,
+**Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.  
+**Application:** Confession brings cleansing. Don't hide your failures—bring them to God, and He will wash you clean every time.`.trim(),
         },
       ],
     },
@@ -1357,18 +1437,22 @@ Father, thank You that You want to guide me even more than I want to be guided. 
           type: "scripture",
           title: "Proverbs 3:5–6",
           reference: "Proverbs 3:5-6",
-          body: `**Plain Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make your paths straight.
+          body: `**Scripture (KJV)**  
+> "¶ Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."
 
-**Application:** God promises to direct your path when you trust Him fully and acknowledge Him in every decision. Stop leaning on your limited understanding and lean into His unlimited wisdom.`,
+**Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make your paths straight.  
+**Application:** God promises to direct your path when you trust Him fully and acknowledge Him in every decision. Stop leaning on your limited understanding and lean into His unlimited wisdom.`.trim(),
         },
         {
           id: "d1-ps2514",
           type: "scripture",
           title: "The Secret of the Lord",
           reference: "Psalm 25:14",
-          body: `**Plain Meaning:** The friendship of the Lord is for those who fear Him, and He makes known to them His covenant.
+          body: `**Scripture (KJV)**  
+> "The secret of the LORD is with them that fear him; and he will shew them his covenant."
 
-**Application:** God reveals His will to those who walk closely with Him. Intimacy with God leads to clarity about His direction.`,
+**Meaning:** The friendship of the Lord is for those who fear Him, and He makes known to them His covenant.  
+**Application:** God reveals His will to those who walk closely with Him. Intimacy with God leads to clarity about His direction.`.trim(),
         },
       ],
     },
@@ -1402,18 +1486,22 @@ Lord, make Your Word alive in my heart. Let it be the lamp that guides my steps 
           type: "scripture",
           title: "Psalm 119:105",
           reference: "Psalm 119:105",
-          body: `**Plain Meaning:** Your word is a lamp to my feet and a light to my path.
+          body: `**Scripture (KJV)**  
+> "Thy word is a lamp unto my feet, and a light unto my path."
 
-**Application:** God's Word illuminates the step in front of you. You don't need to see the whole path—just the next step. Stay in the Word and He will keep guiding.`,
+**Meaning:** Your word is a lamp to my feet and a light to my path.  
+**Application:** God's Word illuminates the step in front of you. You don't need to see the whole path—just the next step. Stay in the Word and He will keep guiding.`.trim(),
         },
         {
           id: "d2-2tim316-17",
           type: "scripture",
           title: "Scripture Equips You",
           reference: "2 Timothy 3:16–17",
-          body: `**Plain Meaning:** All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work.
+          body: `**Scripture (KJV)**  
+> "All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, throughly furnished unto all good works."
 
-**Application:** God's Word doesn't just inform you—it equips you for the work God calls you to do. If you want to know God's will, saturate yourself in His Word.`,
+**Meaning:** All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work.  
+**Application:** God's Word doesn't just inform you—it equips you for the work God calls you to do. If you want to know God's will, saturate yourself in His Word.`.trim(),
         },
       ],
     },
@@ -1447,18 +1535,22 @@ Holy Spirit, I need Your guidance. Speak to me through Your Word, convict me whe
           type: "scripture",
           title: "Romans 8:14",
           reference: "Romans 8:14",
-          body: `**Plain Meaning:** For all who are led by the Spirit of God are sons of God.
+          body: `**Scripture (KJV)**  
+> "For as many as are led by the Spirit of God, they are the sons of God."
 
-**Application:** Being led by the Spirit is a mark of belonging to God. If you are His child, He will lead you—trust that His Spirit is at work in you.`,
+**Meaning:** For all who are led by the Spirit of God are sons of God.  
+**Application:** Being led by the Spirit is a mark of belonging to God. If you are His child, He will lead you—trust that His Spirit is at work in you.`.trim(),
         },
         {
           id: "d3-john1613",
           type: "scripture",
           title: "The Spirit Guides into Truth",
           reference: "John 16:13",
-          body: `**Plain Meaning:** When the Spirit of truth comes, He will guide you into all the truth.
+          body: `**Scripture (KJV)**  
+> "Howbeit when he, the Spirit of truth, is come, he will guide you into all truth: for he shall not speak of himself; but whatsoever he shall hear, that shall he speak: and he will shew you things to come."
 
-**Application:** The Holy Spirit's role is to guide you into truth—not confusion. When you feel confused, ask the Spirit to bring clarity and trust that He will.`,
+**Meaning:** When the Spirit of truth comes, He will guide you into all the truth.  
+**Application:** The Holy Spirit's role is to guide you into truth—not confusion. When you feel confused, ask the Spirit to bring clarity and trust that He will.`.trim(),
         },
       ],
     },
@@ -1492,18 +1584,22 @@ Prince of Peace, give me Your peace as I make decisions. Let Your peace be the g
           type: "scripture",
           title: "Colossians 3:15",
           reference: "Colossians 3:15",
-          body: `**Plain Meaning:** Let the peace of Christ rule in your hearts.
+          body: `**Scripture (KJV)**  
+> "And let the peace of God rule in your hearts, to the which also ye are called in one body; and be ye thankful."
 
-**Application:** Peace should be the umpire, the deciding factor in your decisions. When you lack peace, pause and seek God more deeply before moving forward.`,
+**Meaning:** Let the peace of Christ rule in your hearts.  
+**Application:** Peace should be the umpire, the deciding factor in your decisions. When you lack peace, pause and seek God more deeply before moving forward.`.trim(),
         },
         {
           id: "d4-phil47",
           type: "scripture",
           title: "Peace Guards Your Heart",
           reference: "Philippians 4:7",
-          body: `**Plain Meaning:** And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.
+          body: `**Scripture (KJV)**  
+> "And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."
 
-**Application:** God's peace isn't logical—it surpasses understanding. When you're walking in His will, His peace guards your heart even in uncertain circumstances.`,
+**Meaning:** And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.  
+**Application:** God's peace isn't logical—it surpasses understanding. When you're walking in His will, His peace guards your heart even in uncertain circumstances.`.trim(),
         },
       ],
     },
@@ -1537,18 +1633,22 @@ Lord, I don't need to see the whole staircase—just the next step. Give me the 
           type: "scripture",
           title: "Psalm 37:23",
           reference: "Psalm 37:23",
-          body: `**Plain Meaning:** The steps of a man are established by the Lord, when he delights in his way.
+          body: `**Scripture (KJV)**  
+> "The steps of a good man are ordered by the LORD: and he delighteth in his way."
 
-**Application:** When you delight in the Lord, He directs your steps. Your job isn't to figure it all out—it's to delight in Him and trust that He's ordering your path.`,
+**Meaning:** The steps of a man are established by the Lord, when he delights in his way.  
+**Application:** When you delight in the Lord, He directs your steps. Your job isn't to figure it all out—it's to delight in Him and trust that He's ordering your path.`.trim(),
         },
         {
           id: "d5-prov165",
           type: "scripture",
           title: "Commit Your Work to the Lord",
           reference: "Proverbs 16:3",
-          body: `**Plain Meaning:** Commit your work to the Lord, and your plans will be established.
+          body: `**Scripture (KJV)**  
+> "Commit thy works unto the LORD, and thy thoughts shall be established."
 
-**Application:** When you surrender your plans to God, He establishes them. Stop holding tightly to your own agenda and release it into His hands.`,
+**Meaning:** Commit your work to the Lord, and your plans will be established.  
+**Application:** When you surrender your plans to God, He establishes them. Stop holding tightly to your own agenda and release it into His hands.`.trim(),
         },
       ],
     },
@@ -1592,18 +1692,22 @@ Father, help me to value what You value in a relationship. Give me patience to w
           type: "scripture",
           title: "2 Corinthians 6:14",
           reference: "2 Corinthians 6:14",
-          body: `**Plain Meaning:** Do not be unequally yoked with unbelievers. What partnership has righteousness with lawlessness? Or what fellowship has light with darkness?
+          body: `**Scripture (KJV)**  
+> "Be ye not unequally yoked together with unbelievers: for what fellowship hath righteousness with unrighteousness? and what communion hath light with darkness?"
 
-**Application:** Dating a non-believer is like yoking an ox with a donkey—they'll pull in different directions. Your spiritual life is too important to compromise for a relationship.`,
+**Meaning:** Do not be unequally yoked with unbelievers. What partnership has righteousness with lawlessness? Or what fellowship has light with darkness?  
+**Application:** Dating a non-believer is like yoking an ox with a donkey—they'll pull in different directions. Your spiritual life is too important to compromise for a relationship.`.trim(),
         },
         {
           id: "d1-amos33",
           type: "scripture",
           title: "Can Two Walk Together?",
           reference: "Amos 3:3",
-          body: `**Plain Meaning:** Can two walk together, except they be agreed?
+          body: `**Scripture (KJV)**  
+> "Can two walk together, except they be agreed?"
 
-**Application:** If you and the person you're dating don't share the same commitment to Christ, you'll struggle to walk together in the same direction.`,
+**Meaning:** Can two walk together, except they be agreed?  
+**Application:** If you and the person you're dating don't share the same commitment to Christ, you'll struggle to walk together in the same direction.`.trim(),
         },
       ],
     },
@@ -1637,18 +1741,22 @@ Lord, give me spiritual eyes to see what really matters. Help me to prioritize g
           type: "scripture",
           title: "1 Samuel 16:7",
           reference: "1 Samuel 16:7",
-          body: `**Plain Meaning:** Man looks on the outward appearance, but the Lord looks on the heart.
+          body: `**Scripture (KJV)**  
+> "But the LORD said unto Samuel, Look not on his countenance, or on the height of his stature; because I have refused him: for the Lord seeth not as man seeth; for man looketh on the outward appearance, but the LORD looketh on the heart."
 
-**Application:** The world judges by looks, status, and charisma. God looks at the heart. Make sure the person's heart is pursuing Christ.`,
+**Meaning:** Man looks on the outward appearance, but the Lord looks on the heart.  
+**Application:** The world judges by looks, status, and charisma. God looks at the heart. Make sure the person's heart is pursuing Christ.`.trim(),
         },
         {
           id: "d2-gal522-23",
           type: "scripture",
           title: "The Fruit of the Spirit",
           reference: "Galatians 5:22–23",
-          body: `**Plain Meaning:** The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control.
+          body: `**Scripture (KJV)**  
+> "But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, Meekness, temperance: against such there is no law."
 
-**Application:** Look for these qualities in the person you're considering dating. If the fruit of the Spirit is missing, red flags are waving.`,
+**Meaning:** The fruit of the Spirit is love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control.  
+**Application:** Look for these qualities in the person you're considering dating. If the fruit of the Spirit is missing, red flags are waving.`.trim(),
         },
       ],
     },
@@ -1682,18 +1790,22 @@ God, give me the strength to honor You with my body. Help me to flee from sexual
           type: "scripture",
           title: "1 Thessalonians 4:3–5",
           reference: "1 Thessalonians 4:3-5",
-          body: `**Plain Meaning:** This is the will of God, your sanctification: that you abstain from sexual immorality; that each one of you know how to control his own body in holiness and honor.
+          body: `**Scripture (KJV)**  
+> "For this is the will of God, even your sanctification, that ye should abstain from fornication: That every one of you should know how to possess his vessel in sanctification and honour; Not in the lust of concupiscence, even as the Gentiles which know not God:"
 
-**Application:** God's will is clear: sexual purity before marriage. This isn't a suggestion—it's His loving design to protect you.`,
+**Meaning:** This is the will of God, your sanctification: that you abstain from sexual immorality; that each one of you know how to control his own body in holiness and honor.  
+**Application:** God's will is clear: sexual purity before marriage. This isn't a suggestion—it's His loving design to protect you.`.trim(),
         },
         {
           id: "d3-1cor618-20",
           type: "scripture",
           title: "Your Body Is a Temple",
           reference: "1 Corinthians 6:18–20",
-          body: `**Plain Meaning:** Flee from sexual immorality. Your body is a temple of the Holy Spirit. You are not your own; you were bought with a price. So glorify God in your body.
+          body: `**Scripture (KJV)**  
+> "Flee fornication. Every sin that a man doeth is without the body; but he that committeth fornication sinneth against his own body. What? know ye not that your body is the temple of the Holy Ghost which is in you, which ye have of God, and ye are not your own? For ye are bought with a price: therefore glorify God in your body, and in your spirit, which are God’s."
 
-**Application:** Your body belongs to God. Sexual sin is unique because it sins against your own body. Honor God by fleeing from it.`,
+**Meaning:** Flee from sexual immorality. Your body is a temple of the Holy Spirit. You are not your own; you were bought with a price. So glorify God in your body.  
+**Application:** Your body belongs to God. Sexual sin is unique because it sins against your own body. Honor God by fleeing from it.`.trim(),
         },
       ],
     },
@@ -1725,18 +1837,22 @@ Jesus, be the foundation of my relationships. Help me to build on You, not on fl
           type: "scripture",
           title: "Matthew 7:24–25",
           reference: "Matthew 7:24-25",
-          body: `**Plain Meaning:** Everyone who hears these words of Mine and does them will be like a wise man who built his house on the rock. And the rain fell, and the floods came, and the winds blew and beat on that house, but it did not fall, because it had been founded on the rock.
+          body: `**Scripture (KJV)**  
+> "¶ Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock."
 
-**Application:** A relationship built on obedience to Christ's Word will withstand the storms. Build on the rock, not on feelings.`,
+**Meaning:** Everyone who hears these words of Mine and does them will be like a wise man who built his house on the rock. And the rain fell, and the floods came, and the winds blew and beat on that house, but it did not fall, because it had been founded on the rock.  
+**Application:** A relationship built on obedience to Christ's Word will withstand the storms. Build on the rock, not on feelings.`.trim(),
         },
         {
           id: "d4-prov35-6",
           type: "scripture",
           title: "Trust in the Lord",
           reference: "Proverbs 3:5–6",
-          body: `**Plain Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make straight your paths.
+          body: `**Scripture (KJV)**  
+> "¶ Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."
 
-**Application:** Don't rely on your feelings or your friends' advice alone. Bring your relationship to God and trust Him to guide you.`,
+**Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make straight your paths.  
+**Application:** Don't rely on your feelings or your friends' advice alone. Bring your relationship to God and trust Him to guide you.`.trim(),
         },
       ],
     },
@@ -1770,18 +1886,22 @@ Father, help me to trust that Your timing is perfect. Give me contentment in thi
           type: "scripture",
           title: "Psalm 84:11",
           reference: "Psalm 84:11",
-          body: `**Plain Meaning:** For the Lord God is a sun and shield; the Lord bestows favor and honor. No good thing does He withhold from those who walk uprightly.
+          body: `**Scripture (KJV)**  
+> "For the LORD God is a sun and shield: the LORD will give grace and glory: no good thing will he withhold from them that walk uprightly."
 
-**Application:** If you're walking with God, He will not withhold any good thing from you—including the right relationship at the right time. Trust Him.`,
+**Meaning:** For the Lord God is a sun and shield; the Lord bestows favor and honor. No good thing does He withhold from those who walk uprightly.  
+**Application:** If you're walking with God, He will not withhold any good thing from you—including the right relationship at the right time. Trust Him.`.trim(),
         },
         {
           id: "d5-eccles33",
           type: "scripture",
           title: "A Time for Everything",
           reference: "Ecclesiastes 3:1",
-          body: `**Plain Meaning:** For everything there is a season, and a time for every matter under heaven.
+          body: `**Scripture (KJV)**  
+> "To every thing there is a season, and a time to every purpose under the heaven:"
 
-**Application:** There is a season for singleness and a season for relationships. Don't try to force a season that God hasn't opened yet.`,
+**Meaning:** For everything there is a season, and a time for every matter under heaven.  
+**Application:** There is a season for singleness and a season for relationships. Don't try to force a season that God hasn't opened yet.`.trim(),
         },
       ],
     },
@@ -1825,18 +1945,22 @@ Father, I'm afraid of [name your fear]. I bring it to You because You are bigger
           type: "scripture",
           title: "Psalm 56:3–4",
           reference: "Psalm 56:3-4",
-          body: `**Plain Meaning:** When I am afraid, I put my trust in You. In God, whose word I praise—in God I trust; I shall not be afraid. What can flesh do to me?
+          body: `**Scripture (KJV)**  
+> "What time I am afraid, I will trust in thee. In God I will praise his word, in God I have put my trust; I will not fear what flesh can do unto me."
 
-**Application:** When fear comes, shift your focus from what you fear to who God is. Trust isn't the absence of fear—it's choosing God in the midst of it.`,
+**Meaning:** When I am afraid, I put my trust in You. In God, whose word I praise—in God I trust; I shall not be afraid. What can flesh do to me?  
+**Application:** When fear comes, shift your focus from what you fear to who God is. Trust isn't the absence of fear—it's choosing God in the midst of it.`.trim(),
         },
         {
           id: "d1-ps2310",
           type: "scripture",
           title: "The Lord Is My Light",
           reference: "Psalm 27:1",
-          body: `**Plain Meaning:** The Lord is my light and my salvation; whom shall I fear? The Lord is the stronghold of my life; of whom shall I be afraid?
+          body: `**Scripture (KJV)**  
+> "The LORD is my light and my salvation; whom shall I fear? the LORD is the strength of my life; of whom shall I be afraid?"
 
-**Application:** God is your protector and your light. When you're afraid, remember: He is with you, and He is stronger than whatever you fear.`,
+**Meaning:** The Lord is my light and my salvation; whom shall I fear? The Lord is the stronghold of my life; of whom shall I be afraid?  
+**Application:** God is your protector and your light. When you're afraid, remember: He is with you, and He is stronger than whatever you fear.`.trim(),
         },
       ],
     },
@@ -1870,18 +1994,22 @@ Lord, I'm anxious about the future and all the 'what ifs.' Remind me that You ar
           type: "scripture",
           title: "Matthew 6:25–34",
           reference: "Matthew 6:25-34",
-          body: `**Plain Meaning:** Jesus tells us not to worry about tomorrow, for the Father knows what we need. He will provide for us just as He provides for the birds and the flowers.
+          body: `**Scripture (KJV)**  
+> "Therefore I say unto you, Take no thought for your life, what ye shall eat, or what ye shall drink; nor yet for your body, what ye shall put on. Is not the life more than meat, and the body than raiment? Behold the fowls of the air: for they sow not, neither do they reap, nor gather into barns; yet your heavenly Father feedeth them. Are ye not much better than they? Which of you by taking thought can add one cubit unto his stature? And why take ye thought for raiment? Consider the lilies of the field, how they grow; they toil not, neither do they spin: And yet I say unto you, That even Solomon in all his glory was not arrayed like one of these. Wherefore, if God so clothe the grass of the field, which to day is, and to morrow is cast into the oven, shall he not much more clothe you, O ye of little faith? Therefore take no thought, saying, What shall we eat? or, What shall we drink? or, Wherewithal shall we be clothed? (For after all these things do the Gentiles seek:) for your heavenly Father knoweth that ye have need of all these things. But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you. Take therefore no thought for the morrow: for the morrow shall take thought for the things of itself. Sufficient unto the day is the evil thereof."
 
-**Application:** Stop trying to control tomorrow. Your Father knows what you need and will take care of you. Focus on today and trust Him with the rest.`,
+**Meaning:** Jesus tells us not to worry about tomorrow, for the Father knows what we need. He will provide for us just as He provides for the birds and the flowers.  
+**Application:** Stop trying to control tomorrow. Your Father knows what you need and will take care of you. Focus on today and trust Him with the rest.`.trim(),
         },
         {
           id: "d2-jer2911",
           type: "scripture",
           title: "God Has Plans for You",
           reference: "Jeremiah 29:11",
-          body: `**Plain Meaning:** For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.
+          body: `**Scripture (KJV)**  
+> "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end."
 
-**Application:** God's plans for you are good, even when you can't see them. Trust that He is working for your good and your future.`,
+**Meaning:** For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.  
+**Application:** God's plans for you are good, even when you can't see them. Trust that He is working for your good and your future.`.trim(),
         },
       ],
     },
@@ -1915,18 +2043,22 @@ Father, I give You [name your worry]. I can't carry it anymore. Take it from me 
           type: "scripture",
           title: "Philippians 4:6–7",
           reference: "Philippians 4:6-7",
-          body: `**Plain Meaning:** Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.
+          body: `**Scripture (KJV)**  
+> "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."
 
-**Application:** Trade anxiety for prayer and thanksgiving. When you bring your worries to God, His supernatural peace guards your heart and mind.`,
+**Meaning:** Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God. And the peace of God, which surpasses all understanding, will guard your hearts and your minds in Christ Jesus.  
+**Application:** Trade anxiety for prayer and thanksgiving. When you bring your worries to God, His supernatural peace guards your heart and mind.`.trim(),
         },
         {
           id: "d3-1pet57",
           type: "scripture",
           title: "Cast Your Anxiety on Him",
           reference: "1 Peter 5:7",
-          body: `**Plain Meaning:** Cast all your anxieties on Him, because He cares for you.
+          body: `**Scripture (KJV)**  
+> "Casting all your care upon him; for he careth for you."
 
-**Application:** God isn't annoyed by your worries—He cares about them because He cares about you. Throw your anxieties on Him and let Him carry them.`,
+**Meaning:** Cast all your anxieties on Him, because He cares for you.  
+**Application:** God isn't annoyed by your worries—He cares about them because He cares about you. Throw your anxieties on Him and let Him carry them.`.trim(),
         },
       ],
     },
@@ -1960,18 +2092,22 @@ Lord, help me to guard my mind from lies and fear. Fill my thoughts with what is
           type: "scripture",
           title: "Philippians 4:8–9",
           reference: "Philippians 4:8-9",
-          body: `**Plain Meaning:** Finally, brothers, whatever is true, whatever is honorable, whatever is just, whatever is pure, whatever is lovely, whatever is commendable, if there is any excellence, if there is anything worthy of praise, think about these things.
+          body: `**Scripture (KJV)**  
+> "Finally, brethren, whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure, whatsoever things are lovely, whatsoever things are of good report; if there be any virtue, and if there be any praise, think on these things. Those things, which ye have both learned, and received, and heard, and seen in me, do: and the God of peace shall be with you."
 
-**Application:** You have control over what you think about. Fill your mind with God's truth, not the world's lies, and your anxiety will lose its grip.`,
+**Meaning:** Finally, brothers, whatever is true, whatever is honorable, whatever is just, whatever is pure, whatever is lovely, whatever is commendable, if there is any excellence, if there is anything worthy of praise, think about these things.  
+**Application:** You have control over what you think about. Fill your mind with God's truth, not the world's lies, and your anxiety will lose its grip.`.trim(),
         },
         {
           id: "d4-rom122",
           type: "scripture",
           title: "Renew Your Mind",
           reference: "Romans 12:2",
-          body: `**Plain Meaning:** Do not be conformed to this world, but be transformed by the renewal of your mind.
+          body: `**Scripture (KJV)**  
+> "And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God."
 
-**Application:** Your mind is transformed when you replace worldly thinking with God's Word. Renewing your mind daily is the path to peace.`,
+**Meaning:** Do not be conformed to this world, but be transformed by the renewal of your mind.  
+**Application:** Your mind is transformed when you replace worldly thinking with God's Word. Renewing your mind daily is the path to peace.`.trim(),
         },
       ],
     },
@@ -2005,18 +2141,22 @@ Jesus, I'm tired of trying to fix everything on my own. Teach me to rest in You 
           type: "scripture",
           title: "Matthew 11:28–30",
           reference: "Matthew 11:28-30",
-          body: `**Plain Meaning:** Come to Me, all who labor and are heavy laden, and I will give you rest. Take My yoke upon you, and learn from Me, for I am gentle and lowly in heart, and you will find rest for your souls.
+          body: `**Scripture (KJV)**  
+> "¶ Come unto me, all ye that labour and are heavy laden, and I will give you rest. Take my yoke upon you, and learn of me; for I am meek and lowly in heart: and ye shall find rest unto your souls. For my yoke is easy, and my burden is light."
 
-**Application:** Jesus invites the weary and burdened to find rest in Him. Stop striving and come to Him. His rest is real and available to you today.`,
+**Meaning:** Come to Me, all who labor and are heavy laden, and I will give you rest. Take My yoke upon you, and learn from Me, for I am gentle and lowly in heart, and you will find rest for your souls.  
+**Application:** Jesus invites the weary and burdened to find rest in Him. Stop striving and come to Him. His rest is real and available to you today.`.trim(),
         },
         {
           id: "d5-ps4610",
           type: "scripture",
           title: "Be Still and Know",
           reference: "Psalm 46:10",
-          body: `**Plain Meaning:** Be still, and know that I am God. I will be exalted among the nations, I will be exalted in the earth!
+          body: `**Scripture (KJV)**  
+> "Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth."
 
-**Application:** Sometimes the most spiritual thing you can do is be still. Stop striving, stop controlling, and simply trust that God is God.`,
+**Meaning:** Be still, and know that I am God. I will be exalted among the nations, I will be exalted in the earth!  
+**Application:** Sometimes the most spiritual thing you can do is be still. Stop striving, stop controlling, and simply trust that God is God.`.trim(),
         },
       ],
     },
@@ -2060,18 +2200,22 @@ Lord, I confess my anger to You. Help me to bring it to You first, not unleash i
           type: "scripture",
           title: "Ephesians 4:26–27",
           reference: "Ephesians 4:26-27",
-          body: `**Plain Meaning:** Be angry and do not sin; do not let the sun go down on your anger, and give no opportunity to the devil.
+          body: `**Scripture (KJV)**  
+> "Be ye angry, and sin not: let not the sun go down upon your wrath: Neither give place to the devil."
 
-**Application:** Anger itself isn't always sin, but unresolved anger opens the door to sin. Deal with your anger quickly and bring it to God before it turns into bitterness.`,
+**Meaning:** Be angry and do not sin; do not let the sun go down on your anger, and give no opportunity to the devil.  
+**Application:** Anger itself isn't always sin, but unresolved anger opens the door to sin. Deal with your anger quickly and bring it to God before it turns into bitterness.`.trim(),
         },
         {
           id: "d1-james119-20",
           type: "scripture",
           title: "Quick to Listen, Slow to Anger",
           reference: "James 1:19–20",
-          body: `**Plain Meaning:** Let every person be quick to hear, slow to speak, slow to anger; for the anger of man does not produce the righteousness of God.
+          body: `**Scripture (KJV)**  
+> "Wherefore, my beloved brethren, let every man be swift to hear, slow to speak, slow to wrath: For the wrath of man worketh not the righteousness of God."
 
-**Application:** Human anger rarely produces godly results. Slow down, listen first, and give yourself time before reacting in anger.`,
+**Meaning:** Let every person be quick to hear, slow to speak, slow to anger; for the anger of man does not produce the righteousness of God.  
+**Application:** Human anger rarely produces godly results. Slow down, listen first, and give yourself time before reacting in anger.`.trim(),
         },
       ],
     },
@@ -2105,18 +2249,22 @@ Father, I release [name the person] into Your hands. I choose to forgive, not be
           type: "scripture",
           title: "Matthew 6:14–15",
           reference: "Matthew 6:14-15",
-          body: `**Plain Meaning:** For if you forgive others their trespasses, your heavenly Father will also forgive you, but if you do not forgive others their trespasses, neither will your Father forgive your trespasses.
+          body: `**Scripture (KJV)**  
+> "For if ye forgive men their trespasses, your heavenly Father will also forgive you: But if ye forgive not men their trespasses, neither will your Father forgive your trespasses."
 
-**Application:** Forgiveness isn't optional for followers of Christ. Just as God has forgiven you, He calls you to forgive others—even when it's hard.`,
+**Meaning:** For if you forgive others their trespasses, your heavenly Father will also forgive you, but if you do not forgive others their trespasses, neither will your Father forgive your trespasses.  
+**Application:** Forgiveness isn't optional for followers of Christ. Just as God has forgiven you, He calls you to forgive others—even when it's hard.`.trim(),
         },
         {
           id: "d2-rom1219",
           type: "scripture",
           title: "Leave Room for God's Wrath",
           reference: "Romans 12:19",
-          body: `**Plain Meaning:** Beloved, never avenge yourselves, but leave it to the wrath of God, for it is written, "Vengeance is Mine, I will repay, says the Lord."
+          body: `**Scripture (KJV)**  
+> "Dearly beloved, avenge not yourselves, but rather give place unto wrath: for it is written, Vengeance is mine; I will repay, saith the Lord."
 
-**Application:** You don't need to hold onto bitterness to ensure justice. God will handle it. Release the person and trust God to be the judge.`,
+**Meaning:** Beloved, never avenge yourselves, but leave it to the wrath of God, for it is written, "Vengeance is Mine, I will repay, says the Lord."  
+**Application:** You don't need to hold onto bitterness to ensure justice. God will handle it. Release the person and trust God to be the judge.`.trim(),
         },
       ],
     },
@@ -2150,18 +2298,22 @@ Jesus, help me to forgive from the heart, not just with words. Heal the hurt and
           type: "scripture",
           title: "Mark 11:25",
           reference: "Mark 11:25",
-          body: `**Plain Meaning:** And whenever you stand praying, forgive, if you have anything against anyone, so that your Father also who is in heaven may forgive you your trespasses.
+          body: `**Scripture (KJV)**  
+> "And when ye stand praying, forgive, if ye have ought against any: that your Father also which is in heaven may forgive you your trespasses."
 
-**Application:** Forgiveness is part of your prayer life. Before you ask God for anything, check your heart and forgive those who have wronged you.`,
+**Meaning:** And whenever you stand praying, forgive, if you have anything against anyone, so that your Father also who is in heaven may forgive you your trespasses.  
+**Application:** Forgiveness is part of your prayer life. Before you ask God for anything, check your heart and forgive those who have wronged you.`.trim(),
         },
         {
           id: "d3-col313",
           type: "scripture",
           title: "Forgive as the Lord Forgave You",
           reference: "Colossians 3:13",
-          body: `**Plain Meaning:** Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you.
+          body: `**Scripture (KJV)**  
+> "Forbearing one another, and forgiving one another, if any man have a quarrel against any: even as Christ forgave you, so also do ye."
 
-**Application:** You have been forgiven of so much. Let that shape how you forgive others—freely and fully, just as Christ forgave you.`,
+**Meaning:** Bear with each other and forgive one another if any of you has a grievance against someone. Forgive as the Lord forgave you.  
+**Application:** You have been forgiven of so much. Let that shape how you forgive others—freely and fully, just as Christ forgave you.`.trim(),
         },
       ],
     },
@@ -2195,18 +2347,22 @@ Lord, guard my mouth and tame my tongue. Help me to speak words of life, not dea
           type: "scripture",
           title: "Proverbs 15:1",
           reference: "Proverbs 15:1",
-          body: `**Plain Meaning:** A soft answer turns away wrath, but a harsh word stirs up anger.
+          body: `**Scripture (KJV)**  
+> "A soft answer turneth away wrath: but grievous words stir up anger."
 
-**Application:** Your tone and words have power. A gentle response can defuse conflict, while harsh words escalate it. Choose gentleness.`,
+**Meaning:** A soft answer turns away wrath, but a harsh word stirs up anger.  
+**Application:** Your tone and words have power. A gentle response can defuse conflict, while harsh words escalate it. Choose gentleness.`.trim(),
         },
         {
           id: "d4-eph429",
           type: "scripture",
           title: "Let No Corrupting Talk Come Out",
           reference: "Ephesians 4:29",
-          body: `**Plain Meaning:** Let no corrupting talk come out of your mouths, but only such as is good for building up, as fits the occasion, that it may give grace to those who hear.
+          body: `**Scripture (KJV)**  
+> "Let no corrupt communication proceed out of your mouth, but that which is good to the use of edifying, that it may minister grace unto the hearers."
 
-**Application:** Your words should build up, not tear down. Before you speak in anger, ask: will this give grace to the hearer?`,
+**Meaning:** Let no corrupting talk come out of your mouths, but only such as is good for building up, as fits the occasion, that it may give grace to those who hear.  
+**Application:** Your words should build up, not tear down. Before you speak in anger, ask: will this give grace to the hearer?`.trim(),
         },
       ],
     },
@@ -2240,18 +2396,22 @@ Father, search my heart for any root of bitterness. Uproot it and replace it wit
           type: "scripture",
           title: "Hebrews 12:14–15",
           reference: "Hebrews 12:14-15",
-          body: `**Plain Meaning:** Strive for peace with everyone, and for the holiness without which no one will see the Lord. See to it that no one fails to obtain the grace of God; that no "root of bitterness" springs up and causes trouble, and by it many become defiled.
+          body: `**Scripture (KJV)**  
+> "Follow peace with all men, and holiness, without which no man shall see the Lord: Looking diligently lest any man fail of the grace of God; lest any root of bitterness springing up trouble you, and thereby many be defiled;"
 
-**Application:** Bitterness doesn't just hurt you—it affects everyone around you. Pursue peace and uproot bitterness before it spreads.`,
+**Meaning:** Strive for peace with everyone, and for the holiness without which no one will see the Lord. See to it that no one fails to obtain the grace of God; that no "root of bitterness" springs up and causes trouble, and by it many become defiled.  
+**Application:** Bitterness doesn't just hurt you—it affects everyone around you. Pursue peace and uproot bitterness before it spreads.`.trim(),
         },
         {
           id: "d5-luke637-38",
           type: "scripture",
           title: "Forgive and You Will Be Forgiven",
           reference: "Luke 6:37–38",
-          body: `**Plain Meaning:** Judge not, and you will not be judged; condemn not, and you will not be condemned; forgive, and you will be forgiven.
+          body: `**Scripture (KJV)**  
+> "Judge not, and ye shall not be judged: condemn not, and ye shall not be condemned: forgive, and ye shall be forgiven: Give, and it shall be given unto you; good measure, pressed down, and shaken together, and running over, shall men give into your bosom. For with the same measure that ye mete withal it shall be measured to you again."
 
-**Application:** The measure you use for others will be used for you. Extend mercy and forgiveness freely, and you will receive it in return.`,
+**Meaning:** Judge not, and you will not be judged; condemn not, and you will not be condemned; forgive, and you will be forgiven.  
+**Application:** The measure you use for others will be used for you. Extend mercy and forgiveness freely, and you will receive it in return.`.trim(),
         },
       ],
     },
@@ -2295,18 +2455,22 @@ Father, thank You for creating me on purpose and with purpose. Help me to see my
           type: "scripture",
           title: "Genesis 1:26–27",
           reference: "Genesis 1:26-27",
-          body: `**Plain Meaning:** Then God said, "Let Us make man in Our image, after Our likeness." So God created man in His own image, in the image of God He created him; male and female He created them.
+          body: `**Scripture (KJV)**  
+> "¶ And God said, Let us make man in our image, after our likeness: and let them have dominion over the fish of the sea, and over the fowl of the air, and over the cattle, and over all the earth, and over every creeping thing that creepeth upon the earth. So God created man in his own image, in the image of God created he him; male and female created he them."
 
-**Application:** You bear the image of God. That alone gives you infinite worth and purpose. Your life matters because you were made to reflect the glory of your Creator.`,
+**Meaning:** Then God said, "Let Us make man in Our image, after Our likeness." So God created man in His own image, in the image of God He created him; male and female He created them.  
+**Application:** You bear the image of God. That alone gives you infinite worth and purpose. Your life matters because you were made to reflect the glory of your Creator.`.trim(),
         },
         {
           id: "d1-eph210",
           type: "scripture",
           title: "God's Workmanship",
           reference: "Ephesians 2:10",
-          body: `**Plain Meaning:** For we are His workmanship, created in Christ Jesus for good works, which God prepared beforehand, that we should walk in them.
+          body: `**Scripture (KJV)**  
+> "For we are his workmanship, created in Christ Jesus unto good works, which God hath before ordained that we should walk in them."
 
-**Application:** You are God's masterpiece, created for good works He planned in advance. Your purpose isn't random—it was designed by God before you were born.`,
+**Meaning:** For we are His workmanship, created in Christ Jesus for good works, which God prepared beforehand, that we should walk in them.  
+**Application:** You are God's masterpiece, created for good works He planned in advance. Your purpose isn't random—it was designed by God before you were born.`.trim(),
         },
       ],
     },
@@ -2340,18 +2504,22 @@ Lord, You didn't just rescue me—You called me to represent You. Help me to liv
           type: "scripture",
           title: "1 Peter 2:9–10",
           reference: "1 Peter 2:9-10",
-          body: `**Plain Meaning:** But you are a chosen race, a royal priesthood, a holy nation, a people for His own possession, that you may proclaim the excellencies of Him who called you out of darkness into His marvelous light.
+          body: `**Scripture (KJV)**  
+> "But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light: Which in time past were not a people, but are now the people of God: which had not obtained mercy, but now have obtained mercy."
 
-**Application:** You are chosen, royal, and set apart. Your purpose is to proclaim God's greatness. Live like someone who belongs to the King.`,
+**Meaning:** But you are a chosen race, a royal priesthood, a holy nation, a people for His own possession, that you may proclaim the excellencies of Him who called you out of darkness into His marvelous light.  
+**Application:** You are chosen, royal, and set apart. Your purpose is to proclaim God's greatness. Live like someone who belongs to the King.`.trim(),
         },
         {
           id: "d2-2cor520",
           type: "scripture",
           title: "Ambassadors for Christ",
           reference: "2 Corinthians 5:20",
-          body: `**Plain Meaning:** Therefore, we are ambassadors for Christ, God making His appeal through us.
+          body: `**Scripture (KJV)**  
+> "Now then we are ambassadors for Christ, as though God did beseech you by us: we pray you in Christ’s stead, be ye reconciled to God."
 
-**Application:** You represent Christ wherever you go. Your words, actions, and life are His message to the world. Live worthy of your calling.`,
+**Meaning:** Therefore, we are ambassadors for Christ, God making His appeal through us.  
+**Application:** You represent Christ wherever you go. Your words, actions, and life are His message to the world. Live worthy of your calling.`.trim(),
         },
       ],
     },
@@ -2385,18 +2553,22 @@ Holy Spirit, reveal the gifts You've given me and help me to use them faithfully
           type: "scripture",
           title: "Romans 12:4–8",
           reference: "Romans 12:4-8",
-          body: `**Plain Meaning:** We have different gifts according to the grace given to each of us. Use them diligently—whether prophecy, service, teaching, encouraging, giving, leading, or showing mercy.
+          body: `**Scripture (KJV)**  
+> "For as we have many members in one body, and all members have not the same office: So we, being many, are one body in Christ, and every one members one of another. Having then gifts differing according to the grace that is given to us, whether prophecy, let us prophesy according to the proportion of faith; Or ministry, let us wait on our ministering: or he that teacheth, on teaching; Or he that exhorteth, on exhortation: he that giveth, let him do it with simplicity; he that ruleth, with diligence; he that sheweth mercy, with cheerfulness."
 
-**Application:** Don't compare your gifts to others'. Use what God has given you with diligence and faithfulness, knowing every gift matters in the body of Christ.`,
+**Meaning:** We have different gifts according to the grace given to each of us. Use them diligently—whether prophecy, service, teaching, encouraging, giving, leading, or showing mercy.  
+**Application:** Don't compare your gifts to others'. Use what God has given you with diligence and faithfulness, knowing every gift matters in the body of Christ.`.trim(),
         },
         {
           id: "d3-1pet410-11",
           type: "scripture",
           title: "Serve One Another",
           reference: "1 Peter 4:10–11",
-          body: `**Plain Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.
+          body: `**Scripture (KJV)**  
+> "As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God. If any man speak, let him speak as the oracles of God; if any man minister, let him do it as of the ability which God giveth: that God in all things may be glorified through Jesus Christ, to whom be praise and dominion for ever and ever. Amen."
 
-**Application:** Your gifts are a stewardship—God gave them to you to bless others. Don't hoard them; use them generously to serve the body of Christ.`,
+**Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.  
+**Application:** Your gifts are a stewardship—God gave them to you to bless others. Don't hoard them; use them generously to serve the body of Christ.`.trim(),
         },
       ],
     },
@@ -2430,18 +2602,22 @@ Father, help me to see every task, conversation, and moment as an opportunity to
           type: "scripture",
           title: "1 Corinthians 10:31",
           reference: "1 Corinthians 10:31",
-          body: `**Plain Meaning:** So, whether you eat or drink, or whatever you do, do all to the glory of God.
+          body: `**Scripture (KJV)**  
+> "Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God."
 
-**Application:** Everything you do—no matter how ordinary—can be an act of worship when you do it for God's glory. Bring Him into every moment.`,
+**Meaning:** So, whether you eat or drink, or whatever you do, do all to the glory of God.  
+**Application:** Everything you do—no matter how ordinary—can be an act of worship when you do it for God's glory. Bring Him into every moment.`.trim(),
         },
         {
           id: "d4-col323-24",
           type: "scripture",
           title: "Work as for the Lord",
           reference: "Colossians 3:23–24",
-          body: `**Plain Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward. You are serving the Lord Christ.
+          body: `**Scripture (KJV)**  
+> "And whatsoever ye do, do it heartily, as to the Lord, and not unto men; Knowing that of the Lord ye shall receive the reward of the inheritance: for ye serve the Lord Christ."
 
-**Application:** Your work isn't just for your boss or your family—it's for the Lord. When you work with that perspective, even the mundane becomes meaningful.`,
+**Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward. You are serving the Lord Christ.  
+**Application:** Your work isn't just for your boss or your family—it's for the Lord. When you work with that perspective, even the mundane becomes meaningful.`.trim(),
         },
       ],
     },
@@ -2475,18 +2651,22 @@ Lord, I trust You with my future. Help me to be faithful with what's in front of
           type: "scripture",
           title: "Proverbs 3:5–6",
           reference: "Proverbs 3:5-6",
-          body: `**Plain Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make straight your paths.
+          body: `**Scripture (KJV)**  
+> "¶ Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."
 
-**Application:** Stop trying to figure it all out on your own. Trust God with your purpose and He will direct your steps. Your job is to walk with Him, not to have it all mapped out.`,
+**Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make straight your paths.  
+**Application:** Stop trying to figure it all out on your own. Trust God with your purpose and He will direct your steps. Your job is to walk with Him, not to have it all mapped out.`.trim(),
         },
         {
           id: "d5-jer2911",
           type: "scripture",
           title: "God's Plans for You",
           reference: "Jeremiah 29:11",
-          body: `**Plain Meaning:** For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.
+          body: `**Scripture (KJV)**  
+> "For I know the thoughts that I think toward you, saith the LORD, thoughts of peace, and not of evil, to give you an expected end."
 
-**Application:** God knows the plans He has for you, and they are good. You don't need to know every detail—just trust that He's leading you to a future full of hope.`,
+**Meaning:** For I know the plans I have for you, declares the Lord, plans for welfare and not for evil, to give you a future and a hope.  
+**Application:** God knows the plans He has for you, and they are good. You don't need to know every detail—just trust that He's leading you to a future full of hope.`.trim(),
         },
       ],
     },
@@ -2530,18 +2710,22 @@ Jesus, I want to be rooted in You, not just visiting You. Help me to build my li
           type: "scripture",
           title: "Colossians 2:6–7",
           reference: "Colossians 2:6-7",
-          body: `**Plain Meaning:** Therefore, as you received Christ Jesus the Lord, so walk in Him, rooted and built up in Him and established in the faith.
+          body: `**Scripture (KJV)**  
+> "As ye have therefore received Christ Jesus the Lord, so walk ye in him: Rooted and built up in him, and stablished in the faith, as ye have been taught, abounding therein with thanksgiving."
 
-**Application:** Just as you received Christ by faith, continue to walk in Him daily. Being rooted means going deep—not just surface-level faith, but a life built on Jesus.`,
+**Meaning:** Therefore, as you received Christ Jesus the Lord, so walk in Him, rooted and built up in Him and established in the faith.  
+**Application:** Just as you received Christ by faith, continue to walk in Him daily. Being rooted means going deep—not just surface-level faith, but a life built on Jesus.`.trim(),
         },
         {
           id: "d1-jer178",
           type: "scripture",
           title: "Planted by the Water",
           reference: "Jeremiah 17:7–8",
-          body: `**Plain Meaning:** Blessed is the man who trusts in the Lord, whose trust is the Lord. He is like a tree planted by water, that sends out its roots by the stream.
+          body: `**Scripture (KJV)**  
+> "Blessed is the man that trusteth in the LORD, and whose hope the LORD is. For he shall be as a tree planted by the waters, and that spreadeth out her roots by the river, and shall not see when heat cometh, but her leaf shall be green; and shall not be careful in the year of drought, neither shall cease from yielding fruit."
 
-**Application:** When you trust the Lord deeply, you become like a tree with deep roots. Even in drought, you remain green and fruitful because your roots are in Him.`,
+**Meaning:** Blessed is the man who trusts in the Lord, whose trust is the Lord. He is like a tree planted by water, that sends out its roots by the stream.  
+**Application:** When you trust the Lord deeply, you become like a tree with deep roots. Even in drought, you remain green and fruitful because your roots are in Him.`.trim(),
         },
       ],
     },
@@ -2575,18 +2759,22 @@ Lord, create in me a hunger for Your Word. Help me to feast on it daily so that 
           type: "scripture",
           title: "Matthew 4:4",
           reference: "Matthew 4:4",
-          body: `**Plain Meaning:** Man shall not live by bread alone, but by every word that comes from the mouth of God.
+          body: `**Scripture (KJV)**  
+> "But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God."
 
-**Application:** Physical food keeps your body alive, but God's Word sustains your soul. You need it just as much—if not more—than your daily bread.`,
+**Meaning:** Man shall not live by bread alone, but by every word that comes from the mouth of God.  
+**Application:** Physical food keeps your body alive, but God's Word sustains your soul. You need it just as much—if not more—than your daily bread.`.trim(),
         },
         {
           id: "d2-ps11997",
           type: "scripture",
           title: "Delighting in God's Word",
           reference: "Psalm 119:97",
-          body: `**Plain Meaning:** Oh how I love Your law! It is my meditation all the day.
+          body: `**Scripture (KJV)**  
+> "O how love I thy law! it is my meditation all the day."
 
-**Application:** When you love God's Word, you can't stop thinking about it. It becomes the meditation of your heart, not just a Sunday routine.`,
+**Meaning:** Oh how I love Your law! It is my meditation all the day.  
+**Application:** When you love God's Word, you can't stop thinking about it. It becomes the meditation of your heart, not just a Sunday routine.`.trim(),
         },
       ],
     },
@@ -2620,18 +2808,22 @@ Father, teach me to pray. Help me to talk to You honestly and often, not just wh
           type: "scripture",
           title: "Luke 11:1–4",
           reference: "Luke 11:1-4",
-          body: `**Plain Meaning:** Jesus teaches the disciples to pray, modeling dependence on God, worship, and trust in His provision and forgiveness.
+          body: `**Scripture (KJV)**  
+> "And it came to pass, that, as he was praying in a certain place, when he ceased, one of his disciples said unto him, Lord, teach us to pray, as John also taught his disciples. And he said unto them, When ye pray, say, Our Father which art in heaven, Hallowed be thy name. Thy kingdom come. Thy will be done, as in heaven, so in earth. Give us day by day our daily bread. And forgive us our sins; for we also forgive every one that is indebted to us. And lead us not into temptation; but deliver us from evil."
 
-**Application:** Prayer is learned by doing it. Follow Jesus' model: honor God, depend on Him, and bring your needs to Him with trust.`,
+**Meaning:** Jesus teaches the disciples to pray, modeling dependence on God, worship, and trust in His provision and forgiveness.  
+**Application:** Prayer is learned by doing it. Follow Jesus' model: honor God, depend on Him, and bring your needs to Him with trust.`.trim(),
         },
         {
           id: "d3-1thess517",
           type: "scripture",
           title: "Pray Without Ceasing",
           reference: "1 Thessalonians 5:17",
-          body: `**Plain Meaning:** Pray without ceasing.
+          body: `**Scripture (KJV)**  
+> "Pray without ceasing."
 
-**Application:** Prayer isn't just a morning or evening event—it's a constant conversation with God throughout your day. Stay connected to Him always.`,
+**Meaning:** Pray without ceasing.  
+**Application:** Prayer isn't just a morning or evening event—it's a constant conversation with God throughout your day. Stay connected to Him always.`.trim(),
         },
       ],
     },
@@ -2665,18 +2857,22 @@ Lord, I want to be a doer of Your Word, not just a hearer. Give me the courage t
           type: "scripture",
           title: "James 1:22–25",
           reference: "James 1:22-25",
-          body: `**Plain Meaning:** Be doers of the Word, and not hearers only, deceiving yourselves. The one who looks into the Word and persists in obedience will be blessed.
+          body: `**Scripture (KJV)**  
+> "But be ye doers of the word, and not hearers only, deceiving your own selves. For if any be a hearer of the word, and not a doer, he is like unto a man beholding his natural face in a glass: For he beholdeth himself, and goeth his way, and straightway forgetteth what manner of man he was. But whoso looketh into the perfect law of liberty, and continueth therein, he being not a forgetful hearer, but a doer of the work, this man shall be blessed in his deed."
 
-**Application:** Knowing the Word without obeying it is self-deception. True blessing comes when you hear God's Word and actually do what it says.`,
+**Meaning:** Be doers of the Word, and not hearers only, deceiving yourselves. The one who looks into the Word and persists in obedience will be blessed.  
+**Application:** Knowing the Word without obeying it is self-deception. True blessing comes when you hear God's Word and actually do what it says.`.trim(),
         },
         {
           id: "d4-john1314-15",
           type: "scripture",
           title: "If You Love Me, Obey",
           reference: "John 14:15",
-          body: `**Plain Meaning:** If you love Me, you will keep My commandments.
+          body: `**Scripture (KJV)**  
+> "¶ If ye love me, keep my commandments."
 
-**Application:** Love for Jesus is shown through obedience, not just words or feelings. If you love Him, obey Him.`,
+**Meaning:** If you love Me, you will keep My commandments.  
+**Application:** Love for Jesus is shown through obedience, not just words or feelings. If you love Him, obey Him.`.trim(),
         },
       ],
     },
@@ -2710,18 +2906,22 @@ Jesus, I know storms will come. Help me to grow deep roots in You now so that wh
           type: "scripture",
           title: "John 16:33",
           reference: "John 16:33",
-          body: `**Plain Meaning:** In the world you will have tribulation. But take heart; I have overcome the world.
+          body: `**Scripture (KJV)**  
+> "These things I have spoken unto you, that in me ye might have peace. In the world ye shall have tribulation: but be of good cheer; I have overcome the world."
 
-**Application:** Jesus doesn't promise a storm-free life, but He does promise victory. In Him, you can face any storm with confidence because He has overcome.`,
+**Meaning:** In the world you will have tribulation. But take heart; I have overcome the world.  
+**Application:** Jesus doesn't promise a storm-free life, but He does promise victory. In Him, you can face any storm with confidence because He has overcome.`.trim(),
         },
         {
           id: "d5-matt724-27",
           type: "scripture",
           title: "Build on the Rock",
           reference: "Matthew 7:24–27",
-          body: `**Plain Meaning:** Everyone who hears Jesus' words and does them is like a wise man who built his house on the rock. The rain fell, the floods came, and the winds blew, but the house did not fall, because it had been founded on the rock.
+          body: `**Scripture (KJV)**  
+> "¶ Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock. And every one that heareth these sayings of mine, and doeth them not, shall be likened unto a foolish man, which built his house upon the sand: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell: and great was the fall of it."
 
-**Application:** When you build your life on Jesus' Word and obey it, you can withstand any storm. Shallow faith collapses; deep faith endures.`,
+**Meaning:** Everyone who hears Jesus' words and does them is like a wise man who built his house on the rock. The rain fell, the floods came, and the winds blew, but the house did not fall, because it had been founded on the rock.  
+**Application:** When you build your life on Jesus' Word and obey it, you can withstand any storm. Shallow faith collapses; deep faith endures.`.trim(),
         },
       ],
     },
@@ -2765,18 +2965,22 @@ Lord, help me to recognize that Your Word is not just ancient history—it's You
           type: "scripture",
           title: "2 Timothy 3:16–17",
           reference: "2 Timothy 3:16-17",
-          body: `**Plain Meaning:** All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work.
+          body: `**Scripture (KJV)**  
+> "All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, throughly furnished unto all good works."
 
-**Application:** Scripture is not just a book—it's God-breathed. When you read it, God is speaking directly to you, equipping you for everything He's called you to do.`,
+**Meaning:** All Scripture is breathed out by God and profitable for teaching, for reproof, for correction, and for training in righteousness, that the man of God may be complete, equipped for every good work.  
+**Application:** Scripture is not just a book—it's God-breathed. When you read it, God is speaking directly to you, equipping you for everything He's called you to do.`.trim(),
         },
         {
           id: "d1-heb412",
           type: "scripture",
           title: "The Word Is Living and Active",
           reference: "Hebrews 4:12",
-          body: `**Plain Meaning:** For the word of God is living and active, sharper than any two-edged sword, piercing to the division of soul and of spirit.
+          body: `**Scripture (KJV)**  
+> "For the word of God is quick, and powerful, and sharper than any twoedged sword, piercing even to the dividing asunder of soul and spirit, and of the joints and marrow, and is a discerner of the thoughts and intents of the heart."
 
-**Application:** God's Word isn't dead text on a page—it's alive and active. It speaks into your life, revealing your heart and pointing you to truth.`,
+**Meaning:** For the word of God is living and active, sharper than any two-edged sword, piercing to the division of soul and of spirit.  
+**Application:** God's Word isn't dead text on a page—it's alive and active. It speaks into your life, revealing your heart and pointing you to truth.`.trim(),
         },
       ],
     },
@@ -2810,18 +3014,22 @@ Father, give me a humble and attentive heart when I read Your Word. Help me to s
           type: "scripture",
           title: "Psalm 119:18",
           reference: "Psalm 119:18",
-          body: `**Plain Meaning:** Open my eyes, that I may behold wondrous things out of Your law.
+          body: `**Scripture (KJV)**  
+> "Open thou mine eyes, that I may behold wondrous things out of thy law."
 
-**Application:** You need God's help to truly understand His Word. Ask Him to open your eyes as you read, and He will reveal wonderful truths you would have missed on your own.`,
+**Meaning:** Open my eyes, that I may behold wondrous things out of Your law.  
+**Application:** You need God's help to truly understand His Word. Ask Him to open your eyes as you read, and He will reveal wonderful truths you would have missed on your own.`.trim(),
         },
         {
           id: "d2-james122",
           type: "scripture",
           title: "Be Quick to Listen",
           reference: "James 1:22",
-          body: `**Plain Meaning:** But be doers of the word, and not hearers only, deceiving yourselves.
+          body: `**Scripture (KJV)**  
+> "But be ye doers of the word, and not hearers only, deceiving your own selves."
 
-**Application:** It's not enough to read the Bible—you have to listen and obey. A heart that truly listens will respond in obedience.`,
+**Meaning:** But be doers of the word, and not hearers only, deceiving yourselves.  
+**Application:** It's not enough to read the Bible—you have to listen and obey. A heart that truly listens will respond in obedience.`.trim(),
         },
       ],
     },
@@ -2855,18 +3063,22 @@ Holy Spirit, You wrote the Word—help me to understand it. Illuminate the truth
           type: "scripture",
           title: "John 16:13–14",
           reference: "John 16:13-14",
-          body: `**Plain Meaning:** When the Spirit of truth comes, He will guide you into all the truth and glorify Jesus.
+          body: `**Scripture (KJV)**  
+> "Howbeit when he, the Spirit of truth, is come, he will guide you into all truth: for he shall not speak of himself; but whatsoever he shall hear, that shall he speak: and he will shew you things to come. He shall glorify me: for he shall receive of mine, and shall shew it unto you."
 
-**Application:** The Holy Spirit's job is to guide you into truth and point you to Jesus. Ask Him to teach you as you read, and He will.`,
+**Meaning:** When the Spirit of truth comes, He will guide you into all the truth and glorify Jesus.  
+**Application:** The Holy Spirit's job is to guide you into truth and point you to Jesus. Ask Him to teach you as you read, and He will.`.trim(),
         },
         {
           id: "d3-1cor214",
           type: "scripture",
           title: "The Spirit Teaches Spiritual Things",
           reference: "1 Corinthians 2:14",
-          body: `**Plain Meaning:** The natural person does not accept the things of the Spirit of God, for they are folly to him, and he is not able to understand them because they are spiritually discerned.
+          body: `**Scripture (KJV)**  
+> "But the natural man receiveth not the things of the Spirit of God: for they are foolishness unto him: neither can he know them, because they are spiritually discerned."
 
-**Application:** Without the Spirit, Scripture can seem confusing or irrelevant. With the Spirit, God's truth comes alive and transforms you.`,
+**Meaning:** The natural person does not accept the things of the Spirit of God, for they are folly to him, and he is not able to understand them because they are spiritually discerned.  
+**Application:** Without the Spirit, Scripture can seem confusing or irrelevant. With the Spirit, God's truth comes alive and transforms you.`.trim(),
         },
       ],
     },
@@ -2900,18 +3112,22 @@ Lord, give me discernment to test every voice against Your Word. Help me to reje
           type: "scripture",
           title: "1 John 4:1",
           reference: "1 John 4:1",
-          body: `**Plain Meaning:** Beloved, do not believe every spirit, but test the spirits to see whether they are from God.
+          body: `**Scripture (KJV)**  
+> "Beloved, believe not every spirit, but try the spirits whether they are of God: because many false prophets are gone out into the world."
 
-**Application:** Don't accept every voice or teaching as truth. Test it against Scripture. If it doesn't align, reject it.`,
+**Meaning:** Beloved, do not believe every spirit, but test the spirits to see whether they are from God.  
+**Application:** Don't accept every voice or teaching as truth. Test it against Scripture. If it doesn't align, reject it.`.trim(),
         },
         {
           id: "d4-acts1711",
           type: "scripture",
           title: "The Bereans Examined the Scriptures",
           reference: "Acts 17:11",
-          body: `**Plain Meaning:** The Bereans were more noble because they received the word with eagerness and examined the Scriptures daily to see if these things were so.
+          body: `**Scripture (KJV)**  
+> "These were more noble than those in Thessalonica, in that they received the word with all readiness of mind, and searched the scriptures daily, whether those things were so."
 
-**Application:** Even good teaching should be tested against Scripture. Be eager to learn, but always check it against God's Word.`,
+**Meaning:** The Bereans were more noble because they received the word with eagerness and examined the Scriptures daily to see if these things were so.  
+**Application:** Even good teaching should be tested against Scripture. Be eager to learn, but always check it against God's Word.`.trim(),
         },
       ],
     },
@@ -2945,18 +3161,22 @@ Father, help me to not just hear Your Word but to respond to it. Give me the cou
           type: "scripture",
           title: "Luke 11:28",
           reference: "Luke 11:28",
-          body: `**Plain Meaning:** Blessed are those who hear the word of God and keep it.
+          body: `**Scripture (KJV)**  
+> "But he said, Yea rather, blessed are they that hear the word of God, and keep it."
 
-**Application:** True blessing comes not just from hearing God's Word, but from doing what it says. Obedience brings the blessing.`,
+**Meaning:** Blessed are those who hear the word of God and keep it.  
+**Application:** True blessing comes not just from hearing God's Word, but from doing what it says. Obedience brings the blessing.`.trim(),
         },
         {
           id: "d5-james122-25",
           type: "scripture",
           title: "Doers of the Word",
           reference: "James 1:22–25",
-          body: `**Plain Meaning:** Be doers of the word, and not hearers only. The one who looks into the law and persists in doing it will be blessed.
+          body: `**Scripture (KJV)**  
+> "But be ye doers of the word, and not hearers only, deceiving your own selves. For if any be a hearer of the word, and not a doer, he is like unto a man beholding his natural face in a glass: For he beholdeth himself, and goeth his way, and straightway forgetteth what manner of man he was. But whoso looketh into the perfect law of liberty, and continueth therein, he being not a forgetful hearer, but a doer of the work, this man shall be blessed in his deed."
 
-**Application:** It's not enough to read and know Scripture—you have to live it. When you do what God's Word says, you experience His blessing.`,
+**Meaning:** Be doers of the word, and not hearers only. The one who looks into the law and persists in doing it will be blessed.  
+**Application:** It's not enough to read and know Scripture—you have to live it. When you do what God's Word says, you experience His blessing.`.trim(),
         },
       ],
     },
@@ -3000,45 +3220,55 @@ Father, thank You that repentance is Your kindness calling me home. Soften my he
           type: "scripture",
           title: "God's Kindness Leads to Repentance",
           reference: "Romans 2:4",
-          body: `**Plain Meaning:** God's kindness and patience are meant to lead you to repentance, not to encourage sin.
+          body: `**Scripture (KJV)**  
+> "Or despisest thou the riches of his goodness and forbearance and longsuffering; not knowing that the goodness of God leadeth thee to repentance?"
 
-**Application:** Repentance is not punishment—it's a gift that flows from experiencing God's kindness. When you see how good God is, it makes you want to turn from sin.`,
+**Meaning:** God's kindness and patience are meant to lead you to repentance, not to encourage sin.  
+**Application:** Repentance is not punishment—it's a gift that flows from experiencing God's kindness. When you see how good God is, it makes you want to turn from sin.`.trim(),
         },
         {
           id: "d1-acts319",
           type: "scripture",
           title: "Repent and Turn Back",
           reference: "Acts 3:19",
-          body: `**Plain Meaning:** Repent and turn back to God so that your sins may be blotted out.
+          body: `**Scripture (KJV)**  
+> "¶ Repent ye therefore, and be converted, that your sins may be blotted out, when the times of refreshing shall come from the presence of the Lord;"
 
-**Application:** Repentance is not just feeling sorry—it's actively turning back to God. When you do, He wipes your sins away completely.`,
+**Meaning:** Repent and turn back to God so that your sins may be blotted out.  
+**Application:** Repentance is not just feeling sorry—it's actively turning back to God. When you do, He wipes your sins away completely.`.trim(),
         },
         {
           id: "d1-ps511-4",
           type: "scripture",
           title: "David's Honest Confession",
           reference: "Psalm 51:1–4",
-          body: `**Plain Meaning:** David confesses his sin honestly before God, acknowledging that ultimately all sin is against God Himself.
+          body: `**Scripture (KJV)**  
+> "Have mercy upon me, O God, according to thy lovingkindness: according unto the multitude of thy tender mercies blot out my transgressions. Wash me throughly from mine iniquity, and cleanse me from my sin. For I acknowledge my transgressions: and my sin is ever before me. Against thee, thee only, have I sinned, and done this evil in thy sight: that thou mightest be justified when thou speakest, and be clear when thou judgest."
 
-**Application:** True repentance doesn't minimize or excuse. It calls sin what God calls it and brings it directly to Him for mercy.`,
+**Meaning:** David confesses his sin honestly before God, acknowledging that ultimately all sin is against God Himself.  
+**Application:** True repentance doesn't minimize or excuse. It calls sin what God calls it and brings it directly to Him for mercy.`.trim(),
         },
         {
           id: "d1-2cor79-10",
           type: "scripture",
           title: "Godly Grief vs. Worldly Grief",
           reference: "2 Corinthians 7:9–10",
-          body: `**Plain Meaning:** Godly grief produces repentance that leads to salvation without regret; worldly grief produces death.
+          body: `**Scripture (KJV)**  
+> "Now I rejoice, not that ye were made sorry, but that ye sorrowed to repentance: for ye were made sorry after a godly manner, that ye might receive damage by us in nothing. For godly sorrow worketh repentance to salvation not to be repented of: but the sorrow of the world worketh death."
 
-**Application:** There's a difference between being sorry you got caught and being sorry you sinned against God. Godly sorrow changes you; worldly sorrow just makes you feel bad.`,
+**Meaning:** Godly grief produces repentance that leads to salvation without regret; worldly grief produces death.  
+**Application:** There's a difference between being sorry you got caught and being sorry you sinned against God. Godly sorrow changes you; worldly sorrow just makes you feel bad.`.trim(),
         },
         {
           id: "d1-isaiah556-7",
           type: "scripture",
           title: "Return to the Lord",
           reference: "Isaiah 55:6–7",
-          body: `**Plain Meaning:** Seek the Lord while He may be found; let the wicked forsake their way and return to the Lord, who will have compassion and abundantly pardon.
+          body: `**Scripture (KJV)**  
+> "¶ Seek ye the LORD while he may be found, call ye upon him while he is near: Let the wicked forsake his way, and the unrighteous man his thoughts: and let him return unto the LORD, and he will have mercy upon him; and to our God, for he will abundantly pardon."
 
-**Application:** No matter how far you've gone, God invites you to return. His mercy is abundant, and His arms are open.`,
+**Meaning:** Seek the Lord while He may be found; let the wicked forsake their way and return to the Lord, who will have compassion and abundantly pardon.  
+**Application:** No matter how far you've gone, God invites you to return. His mercy is abundant, and His arms are open.`.trim(),
         },
       ],
     },
@@ -3072,45 +3302,55 @@ Lord, I bring my sin before You. I call it what You call it and ask for cleansin
           type: "scripture",
           title: "Walking in the Light",
           reference: "1 John 1:8–9",
-          body: `**Plain Meaning:** If we say we have no sin, we deceive ourselves. But if we confess our sins, God is faithful and just to forgive us and cleanse us from all unrighteousness.
+          body: `**Scripture (KJV)**  
+> "If we say that we have no sin, we deceive ourselves, and the truth is not in us. If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."
 
-**Application:** Confession brings cleansing, not condemnation. God doesn't reject you when you confess—He forgives you completely because of Jesus.`,
+**Meaning:** If we say we have no sin, we deceive ourselves. But if we confess our sins, God is faithful and just to forgive us and cleanse us from all unrighteousness.  
+**Application:** Confession brings cleansing, not condemnation. God doesn't reject you when you confess—He forgives you completely because of Jesus.`.trim(),
         },
         {
           id: "d2-prov2813",
           type: "scripture",
           title: "Concealing vs. Confessing",
           reference: "Proverbs 28:13",
-          body: `**Plain Meaning:** Whoever conceals their sins will not prosper, but whoever confesses and forsakes them will receive mercy.
+          body: `**Scripture (KJV)**  
+> "He that covereth his sins shall not prosper: but whoso confesseth and forsaketh them shall have mercy."
 
-**Application:** Hiding sin keeps you stuck. Confessing and turning from it opens the door to God's mercy and freedom.`,
+**Meaning:** Whoever conceals their sins will not prosper, but whoever confesses and forsakes them will receive mercy.  
+**Application:** Hiding sin keeps you stuck. Confessing and turning from it opens the door to God's mercy and freedom.`.trim(),
         },
         {
           id: "d2-ps321-5",
           type: "scripture",
           title: "The Misery of Hiding Sin",
           reference: "Psalm 32:1–5",
-          body: `**Plain Meaning:** David describes the physical and emotional misery of hiding sin, and the relief and forgiveness that came when he confessed it to God.
+          body: `**Scripture (KJV)**  
+> "Blessed is he whose transgression is forgiven, whose sin is covered. Blessed is the man unto whom the LORD imputeth not iniquity, and in whose spirit there is no guile. When I kept silence, my bones waxed old through my roaring all the day long. For day and night thy hand was heavy upon me: my moisture is turned into the drought of summer. Selah. I acknowledged my sin unto thee, and mine iniquity have I not hid. I said, I will confess my transgressions unto the LORD; and thou forgavest the iniquity of my sin. Selah."
 
-**Application:** Unconfessed sin weighs you down spiritually, emotionally, and even physically. Confession brings relief and restoration.`,
+**Meaning:** David describes the physical and emotional misery of hiding sin, and the relief and forgiveness that came when he confessed it to God.  
+**Application:** Unconfessed sin weighs you down spiritually, emotionally, and even physically. Confession brings relief and restoration.`.trim(),
         },
         {
           id: "d2-heb416",
           type: "scripture",
           title: "Come Boldly for Mercy",
           reference: "Hebrews 4:16",
-          body: `**Plain Meaning:** We can come boldly to the throne of grace to receive mercy and find help in time of need.
+          body: `**Scripture (KJV)**  
+> "Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need."
 
-**Application:** You don't have to crawl to God in shame. Because of Jesus, you can come confidently, knowing you'll receive mercy, not rejection.`,
+**Meaning:** We can come boldly to the throne of grace to receive mercy and find help in time of need.  
+**Application:** You don't have to crawl to God in shame. Because of Jesus, you can come confidently, knowing you'll receive mercy, not rejection.`.trim(),
         },
         {
           id: "d2-luke189-14",
           type: "scripture",
           title: "The Tax Collector's Humble Confession",
           reference: "Luke 18:9–14",
-          body: `**Plain Meaning:** Jesus contrasts a proud Pharisee who boasted in his own righteousness with a tax collector who humbly cried out for mercy. The tax collector went home justified, not the Pharisee.
+          body: `**Scripture (KJV)**  
+> "And he spake this parable unto certain which trusted in themselves that they were righteous, and despised others: Two men went up into the temple to pray; the one a Pharisee, and the other a publican. The Pharisee stood and prayed thus with himself, God, I thank thee, that I am not as other men are, extortioners, unjust, adulterers, or even as this publican. I fast twice in the week, I give tithes of all that I possess. And the publican, standing afar off, would not lift up so much as his eyes unto heaven, but smote upon his breast, saying, God be merciful to me a sinner. I tell you, this man went down to his house justified rather than the other: for every one that exalteth himself shall be abased; and he that humbleth himself shall be exalted."
 
-**Application:** God responds to humble, honest confession, not religious pride or self-justification.`,
+**Meaning:** Jesus contrasts a proud Pharisee who boasted in his own righteousness with a tax collector who humbly cried out for mercy. The tax collector went home justified, not the Pharisee.  
+**Application:** God responds to humble, honest confession, not religious pride or self-justification.`.trim(),
         },
       ],
     },
@@ -3144,45 +3384,55 @@ Jesus, thank You for forgiving me. Now help me to walk differently. Show me what
           type: "scripture",
           title: "Deeds in Keeping with Repentance",
           reference: "Acts 26:20",
-          body: `**Plain Meaning:** Paul preached that people should repent, turn to God, and perform deeds in keeping with their repentance.
+          body: `**Scripture (KJV)**  
+> "But shewed first unto them of Damascus, and at Jerusalem, and throughout all the coasts of Judæa, and then to the Gentiles, that they should repent and turn to God, and do works meet for repentance."
 
-**Application:** Real repentance shows up in your actions. If you've truly turned from sin, your life will begin to look different.`,
+**Meaning:** Paul preached that people should repent, turn to God, and perform deeds in keeping with their repentance.  
+**Application:** Real repentance shows up in your actions. If you've truly turned from sin, your life will begin to look different.`.trim(),
         },
         {
           id: "d3-eph422-24",
           type: "scripture",
           title: "Put Off the Old, Put On the New",
           reference: "Ephesians 4:22–24",
-          body: `**Plain Meaning:** Put off your old self, which belongs to your former manner of life and is corrupt; be renewed in the spirit of your minds, and put on the new self, created after the likeness of God.
+          body: `**Scripture (KJV)**  
+> "That ye put off concerning the former conversation the old man, which is corrupt according to the deceitful lusts; And be renewed in the spirit of your mind; And that ye put on the new man, which after God is created in righteousness and true holiness."
 
-**Application:** Repentance involves both putting off sinful patterns and putting on Christlike ones. It's not just stopping bad habits—it's replacing them with godly ones.`,
+**Meaning:** Put off your old self, which belongs to your former manner of life and is corrupt; be renewed in the spirit of your minds, and put on the new self, created after the likeness of God.  
+**Application:** Repentance involves both putting off sinful patterns and putting on Christlike ones. It's not just stopping bad habits—it's replacing them with godly ones.`.trim(),
         },
         {
           id: "d3-rom1312-14",
           type: "scripture",
           title: "Put On Christ, Make No Provision for the Flesh",
           reference: "Romans 13:12–14",
-          body: `**Plain Meaning:** Cast off the works of darkness and put on the armor of light. Put on the Lord Jesus Christ, and make no provision for the flesh.
+          body: `**Scripture (KJV)**  
+> "The night is far spent, the day is at hand: let us therefore cast off the works of darkness, and let us put on the armour of light. Let us walk honestly, as in the day; not in rioting and drunkenness, not in chambering and wantonness, not in strife and envying. But put ye on the Lord Jesus Christ, and make not provision for the flesh, to fulfil the lusts thereof."
 
-**Application:** Don't set yourself up for failure by keeping easy access to sin. Remove temptation, cut off the pathways, and clothe yourself in Christ instead.`,
+**Meaning:** Cast off the works of darkness and put on the armor of light. Put on the Lord Jesus Christ, and make no provision for the flesh.  
+**Application:** Don't set yourself up for failure by keeping easy access to sin. Remove temptation, cut off the pathways, and clothe yourself in Christ instead.`.trim(),
         },
         {
           id: "d3-col35-10",
           type: "scripture",
           title: "Put to Death What Is Earthly",
           reference: "Colossians 3:5–10",
-          body: `**Plain Meaning:** Put to death what is earthly in you—sexual immorality, impurity, covetousness, and more. You have put off the old self and have put on the new self, being renewed in knowledge after the image of its Creator.
+          body: `**Scripture (KJV)**  
+> "Mortify therefore your members which are upon the earth; fornication, uncleanness, inordinate affection, evil concupiscence, and covetousness, which is idolatry: For which things’ sake the wrath of God cometh on the children of disobedience: In the which ye also walked some time, when ye lived in them. But now ye also put off all these; anger, wrath, malice, blasphemy, filthy communication out of your mouth. Lie not one to another, seeing that ye have put off the old man with his deeds; And have put on the new man, which is renewed in knowledge after the image of him that created him:"
 
-**Application:** Repentance is serious. You're not casually managing sin—you're putting it to death and living as a new creation in Christ.`,
+**Meaning:** Put to death what is earthly in you—sexual immorality, impurity, covetousness, and more. You have put off the old self and have put on the new self, being renewed in knowledge after the image of its Creator.  
+**Application:** Repentance is serious. You're not casually managing sin—you're putting it to death and living as a new creation in Christ.`.trim(),
         },
         {
           id: "d3-heb121-2",
           type: "scripture",
           title: "Lay Aside Every Weight",
           reference: "Hebrews 12:1–2",
-          body: `**Plain Meaning:** Lay aside every weight and sin that clings so closely, and run with endurance the race set before you, looking to Jesus.
+          body: `**Scripture (KJV)**  
+> "Wherefore seeing we also are compassed about with so great a cloud of witnesses, let us lay aside every weight, and the sin which doth so easily beset us, and let us run with patience the race that is set before us, Looking unto Jesus the author and finisher of our faith; who for the joy that was set before him endured the cross, despising the shame, and is set down at the right hand of the throne of God."
 
-**Application:** Some things aren't sins, but they weigh you down. True repentance clears away everything that hinders your walk with Christ.`,
+**Meaning:** Lay aside every weight and sin that clings so closely, and run with endurance the race set before you, looking to Jesus.  
+**Application:** Some things aren't sins, but they weigh you down. True repentance clears away everything that hinders your walk with Christ.`.trim(),
         },
       ],
     },
@@ -3216,45 +3466,55 @@ Lord, make repentance a normal, daily part of my relationship with You. Keep my 
           type: "scripture",
           title: "Take Up Your Cross Daily",
           reference: "Luke 9:23",
-          body: `**Plain Meaning:** Jesus said, "If anyone would come after Me, let him deny himself and take up his cross daily and follow Me."
+          body: `**Scripture (KJV)**  
+> "¶ And he said to them all, If any man will come after me, let him deny himself, and take up his cross daily, and follow me."
 
-**Application:** Following Jesus isn't a one-time decision—it's a daily choice. Every day you deny self and say yes to Christ.`,
+**Meaning:** Jesus said, "If anyone would come after Me, let him deny himself and take up his cross daily and follow Me."  
+**Application:** Following Jesus isn't a one-time decision—it's a daily choice. Every day you deny self and say yes to Christ.`.trim(),
         },
         {
           id: "d4-ps13923-24",
           type: "scripture",
           title: "Search Me, O God",
           reference: "Psalm 139:23–24",
-          body: `**Plain Meaning:** David prays, "Search me, O God, and know my heart; try me and know my thoughts. See if there be any grievous way in me, and lead me in the way everlasting."
+          body: `**Scripture (KJV)**  
+> "Search me, O God, and know my heart: try me, and know my thoughts: And see if there be any wicked way in me, and lead me in the way everlasting."
 
-**Application:** Don't wait until you stumble into sin to repent. Regularly invite God to show you areas that need His light and transformation.`,
+**Meaning:** David prays, "Search me, O God, and know my heart; try me and know my thoughts. See if there be any grievous way in me, and lead me in the way everlasting."  
+**Application:** Don't wait until you stumble into sin to repent. Regularly invite God to show you areas that need His light and transformation.`.trim(),
         },
         {
           id: "d4-rev24-5",
           type: "scripture",
           title: "Remember, Repent, Return",
           reference: "Revelation 2:4–5",
-          body: `**Plain Meaning:** Jesus tells the church in Ephesus: "You have abandoned the love you had at first. Remember therefore from where you have fallen; repent, and do the works you did at first."
+          body: `**Scripture (KJV)**  
+> "Nevertheless I have somewhat against thee, because thou hast left thy first love. Remember therefore from whence thou art fallen, and repent, and do the first works; or else I will come unto thee quickly, and will remove thy candlestick out of his place, except thou repent."
 
-**Application:** Even mature believers can drift. The remedy is simple: remember where you've fallen from, repent, and return to doing what you once did with passion.`,
+**Meaning:** Jesus tells the church in Ephesus: "You have abandoned the love you had at first. Remember therefore from where you have fallen; repent, and do the works you did at first."  
+**Application:** Even mature believers can drift. The remedy is simple: remember where you've fallen from, repent, and return to doing what you once did with passion.`.trim(),
         },
         {
           id: "d4-lam340-41",
           type: "scripture",
           title: "Examine Our Ways and Return",
           reference: "Lamentations 3:40–41",
-          body: `**Plain Meaning:** "Let us test and examine our ways, and return to the Lord! Let us lift up our hearts and hands to God in heaven."
+          body: `**Scripture (KJV)**  
+> "Let us search and try our ways, and turn again to the LORD. Let us lift up our heart with our hands unto God in the heavens."
 
-**Application:** Regular self-examination isn't morbid introspection—it's wise stewardship of your walk with God. Look honestly at your life and return to Him.`,
+**Meaning:** "Let us test and examine our ways, and return to the Lord! Let us lift up our hearts and hands to God in heaven."  
+**Application:** Regular self-examination isn't morbid introspection—it's wise stewardship of your walk with God. Look honestly at your life and return to Him.`.trim(),
         },
         {
           id: "d4-matt53-4",
           type: "scripture",
           title: "Blessed Are the Poor in Spirit",
           reference: "Matthew 5:3–4",
-          body: `**Plain Meaning:** "Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they shall be comforted."
+          body: `**Scripture (KJV)**  
+> "Blessed are the poor in spirit: for theirs is the kingdom of heaven. Blessed are they that mourn: for they shall be comforted."
 
-**Application:** A healthy spiritual life includes mourning over sin—not in hopeless despair, but in humble dependence on God's grace.`,
+**Meaning:** "Blessed are the poor in spirit, for theirs is the kingdom of heaven. Blessed are those who mourn, for they shall be comforted."  
+**Application:** A healthy spiritual life includes mourning over sin—not in hopeless despair, but in humble dependence on God's grace.`.trim(),
         },
       ],
     },
@@ -3288,45 +3548,55 @@ Father, thank You that in Christ I am truly forgiven. Help me rest in Your grace
           type: "scripture",
           title: "No Condemnation",
           reference: "Romans 8:1",
-          body: `**Plain Meaning:** There is therefore now no condemnation for those who are in Christ Jesus.
+          body: `**Scripture (KJV)**  
+> "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit."
 
-**Application:** When you confess and repent, you don't live under condemnation. The verdict over you is "not guilty" because of Jesus.`,
+**Meaning:** There is therefore now no condemnation for those who are in Christ Jesus.  
+**Application:** When you confess and repent, you don't live under condemnation. The verdict over you is "not guilty" because of Jesus.`.trim(),
         },
         {
           id: "d5-ps10310-12",
           type: "scripture",
           title: "As Far as East Is from West",
           reference: "Psalm 103:10–12",
-          body: `**Plain Meaning:** God does not deal with us according to our sins. He has removed our transgressions from us as far as the east is from the west.
+          body: `**Scripture (KJV)**  
+> "He hath not dealt with us after our sins; nor rewarded us according to our iniquities. For as the heaven is high above the earth, so great is his mercy toward them that fear him. As far as the east is from the west, so far hath he removed our transgressions from us."
 
-**Application:** God's forgiveness is total and final. He doesn't keep a record to throw back at you later. Your sin is gone—completely.`,
+**Meaning:** God does not deal with us according to our sins. He has removed our transgressions from us as far as the east is from the west.  
+**Application:** God's forgiveness is total and final. He doesn't keep a record to throw back at you later. Your sin is gone—completely.`.trim(),
         },
         {
           id: "d5-mic718-19",
           type: "scripture",
           title: "God Delights in Steadfast Love",
           reference: "Micah 7:18–19",
-          body: `**Plain Meaning:** Who is a God like You, pardoning iniquity and passing over transgression? He does not retain His anger forever, because He delights in steadfast love. He will cast all our sins into the depths of the sea.
+          body: `**Scripture (KJV)**  
+> "Who is a God like unto thee, that pardoneth iniquity, and passeth by the transgression of the remnant of his heritage? he retaineth not his anger for ever, because he delighteth in mercy. He will turn again, he will have compassion upon us; he will subdue our iniquities; and thou wilt cast all their sins into the depths of the sea."
 
-**Application:** God doesn't forgive grudgingly—He delights in showing mercy. He throws your sins into the deepest part of the ocean, never to be retrieved.`,
+**Meaning:** Who is a God like You, pardoning iniquity and passing over transgression? He does not retain His anger forever, because He delights in steadfast love. He will cast all our sins into the depths of the sea.  
+**Application:** God doesn't forgive grudgingly—He delights in showing mercy. He throws your sins into the deepest part of the ocean, never to be retrieved.`.trim(),
         },
         {
           id: "d5-heb1014-17",
           type: "scripture",
           title: "Perfected and Remembered No More",
           reference: "Hebrews 10:14–17",
-          body: `**Plain Meaning:** By a single offering, Christ has perfected for all time those who are being sanctified. The Holy Spirit testifies: "I will remember their sins and their lawless deeds no more."
+          body: `**Scripture (KJV)**  
+> "For by one offering he hath perfected for ever them that are sanctified. Whereof the Holy Ghost also is a witness to us: for after that he had said before, This is the covenant that I will make with them after those days, saith the Lord, I will put my laws into their hearts, and in their minds will I write them; And their sins and iniquities will I remember no more."
 
-**Application:** Christ's sacrifice was once for all. Your sins are not just covered—they're forgotten by God. He doesn't bring them up because Jesus has dealt with them fully.`,
+**Meaning:** By a single offering, Christ has perfected for all time those who are being sanctified. The Holy Spirit testifies: "I will remember their sins and their lawless deeds no more."  
+**Application:** Christ's sacrifice was once for all. Your sins are not just covered—they're forgotten by God. He doesn't bring them up because Jesus has dealt with them fully.`.trim(),
         },
         {
           id: "d5-col213-14",
           type: "scripture",
           title: "Your Debt Was Nailed to the Cross",
           reference: "Colossians 2:13–14",
-          body: `**Plain Meaning:** God made you alive together with Christ, having forgiven us all our trespasses, by canceling the record of debt that stood against us with its legal demands. This He set aside, nailing it to the cross.
+          body: `**Scripture (KJV)**  
+> "And you, being dead in your sins and the uncircumcision of your flesh, hath he quickened together with him, having forgiven you all trespasses; Blotting out the handwriting of ordinances that was against us, which was contrary to us, and took it out of the way, nailing it to his cross;"
 
-**Application:** The legal record of your sins was nailed to the cross with Jesus. The debt is paid. The charges are dropped. You are free.`,
+**Meaning:** God made you alive together with Christ, having forgiven us all our trespasses, by canceling the record of debt that stood against us with its legal demands. This He set aside, nailing it to the cross.  
+**Application:** The legal record of your sins was nailed to the cross with Jesus. The debt is paid. The charges are dropped. You are free.`.trim(),
         },
       ],
     },
@@ -3370,45 +3640,55 @@ Lord, I acknowledge that everything I have is Yours. Teach me to be a faithful s
           type: "scripture",
           title: "The Earth Is the Lord's",
           reference: "Psalm 24:1",
-          body: `**Plain Meaning:** The earth and everything in it belong to the Lord.
+          body: `**Scripture (KJV)**  
+> "The earth is the LORD’s, and the fulness thereof; the world, and they that dwell therein."
 
-**Application:** Everything you have—money, possessions, even your abilities—all belong to God. You're managing His resources, not your own.`,
+**Meaning:** The earth and everything in it belong to the Lord.  
+**Application:** Everything you have—money, possessions, even your abilities—all belong to God. You're managing His resources, not your own.`.trim(),
         },
         {
           id: "d1-hag28",
           type: "scripture",
           title: "Silver and Gold Are God's",
           reference: "Haggai 2:8",
-          body: `**Plain Meaning:** The silver and gold belong to God.
+          body: `**Scripture (KJV)**  
+> "The silver is mine, and the gold is mine, saith the LORD of hosts."
 
-**Application:** Money is not ultimately yours. God owns it all, and He entrusts it to you for His purposes.`,
+**Meaning:** The silver and gold belong to God.  
+**Application:** Money is not ultimately yours. God owns it all, and He entrusts it to you for His purposes.`.trim(),
         },
         {
           id: "d1-deut818",
           type: "scripture",
           title: "God Gives You Power to Produce Wealth",
           reference: "Deuteronomy 8:18",
-          body: `**Plain Meaning:** God gives you the ability to produce wealth.
+          body: `**Scripture (KJV)**  
+> "But thou shalt remember the LORD thy God: for it is he that giveth thee power to get wealth, that he may establish his covenant which he sware unto thy fathers, as it is this day."
 
-**Application:** Your job, your skills, your opportunities—all come from God. Don't forget that He is the source of everything you have.`,
+**Meaning:** God gives you the ability to produce wealth.  
+**Application:** Your job, your skills, your opportunities—all come from God. Don't forget that He is the source of everything you have.`.trim(),
         },
         {
           id: "d1-1chron2911-14",
           type: "scripture",
           title: "All Things Come from God",
           reference: "1 Chronicles 29:11–14",
-          body: `**Plain Meaning:** David praises God, acknowledging that all things come from Him, and we give only what is already His.
+          body: `**Scripture (KJV)**  
+> "Thine, O LORD, is the greatness, and the power, and the glory, and the victory, and the majesty: for all that is in the heaven and in the earth is thine; thine is the kingdom, O LORD, and thou art exalted as head above all. Both riches and honour come of thee, and thou reignest over all; and in thine hand is power and might; and in thine hand it is to make great, and to give strength unto all. Now therefore, our God, we thank thee, and praise thy glorious name. But who am I, and what is my people, that we should be able to offer so willingly after this sort? for all things come of thee, and of thine own have we given thee."
 
-**Application:** When you give to God, you're not giving away your stuff—you're returning what was His all along.`,
+**Meaning:** David praises God, acknowledging that all things come from Him, and we give only what is already His.  
+**Application:** When you give to God, you're not giving away your stuff—you're returning what was His all along.`.trim(),
         },
         {
           id: "d1-1cor42",
           type: "scripture",
           title: "Stewards Must Be Found Faithful",
           reference: "1 Corinthians 4:2",
-          body: `**Plain Meaning:** It is required of stewards that they be found faithful.
+          body: `**Scripture (KJV)**  
+> "Moreover it is required in stewards, that a man be found faithful."
 
-**Application:** God will evaluate how you managed what He entrusted to you. The question isn't "Did you have much?" but "Were you faithful with what you had?"`,
+**Meaning:** It is required of stewards that they be found faithful.  
+**Application:** God will evaluate how you managed what He entrusted to you. The question isn't "Did you have much?" but "Were you faithful with what you had?"`.trim(),
         },
       ],
     },
@@ -3442,45 +3722,55 @@ Father, free me from the love of money. I want to love You and people more than 
           type: "scripture",
           title: "Beware of Covetousness",
           reference: "Luke 12:15",
-          body: `**Plain Meaning:** Jesus warns to beware of all covetousness, for life is more than possessions.
+          body: `**Scripture (KJV)**  
+> "And he said unto them, Take heed, and beware of covetousness: for a man’s life consisteth not in the abundance of the things which he possesseth."
 
-**Application:** Your worth and security don't come from what you own. Greed promises satisfaction but never delivers.`,
+**Meaning:** Jesus warns to beware of all covetousness, for life is more than possessions.  
+**Application:** Your worth and security don't come from what you own. Greed promises satisfaction but never delivers.`.trim(),
         },
         {
           id: "d2-1tim69-10",
           type: "scripture",
           title: "Love of Money Leads to Sorrows",
           reference: "1 Timothy 6:9–10",
-          body: `**Plain Meaning:** Those who desire to be rich fall into temptation and many harmful desires. The love of money is a root of all kinds of evils.
+          body: `**Scripture (KJV)**  
+> "But they that will be rich fall into temptation and a snare, and into many foolish and hurtful lusts, which drown men in destruction and perdition. For the love of money is the root of all evil: which while some coveted after, they have erred from the faith, and pierced themselves through with many sorrows."
 
-**Application:** Money itself isn't evil, but loving it leads to destruction. It's a trap that promises freedom but delivers slavery.`,
+**Meaning:** Those who desire to be rich fall into temptation and many harmful desires. The love of money is a root of all kinds of evils.  
+**Application:** Money itself isn't evil, but loving it leads to destruction. It's a trap that promises freedom but delivers slavery.`.trim(),
         },
         {
           id: "d2-matt619-21",
           type: "scripture",
           title: "Where Your Treasure Is",
           reference: "Matthew 6:19–21",
-          body: `**Plain Meaning:** Don't store up treasures on earth, but in heaven. Where your treasure is, there your heart will be also.
+          body: `**Scripture (KJV)**  
+> "¶ Lay not up for yourselves treasures upon earth, where moth and rust doth corrupt, and where thieves break through and steal: But lay up for yourselves treasures in heaven, where neither moth nor rust doth corrupt, and where thieves do not break through nor steal: For where your treasure is, there will your heart be also."
 
-**Application:** What you spend your money on reveals what you truly value. Invest in what lasts forever, not what rusts away.`,
+**Meaning:** Don't store up treasures on earth, but in heaven. Where your treasure is, there your heart will be also.  
+**Application:** What you spend your money on reveals what you truly value. Invest in what lasts forever, not what rusts away.`.trim(),
         },
         {
           id: "d2-heb135",
           type: "scripture",
           title: "Be Content",
           reference: "Hebrews 13:5",
-          body: `**Plain Meaning:** Keep your life free from love of money, and be content with what you have, for God said, "I will never leave you or forsake you."
+          body: `**Scripture (KJV)**  
+> "Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee."
 
-**Application:** Contentment comes not from having more, but from trusting that God is with you and will provide what you need.`,
+**Meaning:** Keep your life free from love of money, and be content with what you have, for God said, "I will never leave you or forsake you."  
+**Application:** Contentment comes not from having more, but from trusting that God is with you and will provide what you need.`.trim(),
         },
         {
           id: "d2-col35",
           type: "scripture",
           title: "Greed Is Idolatry",
           reference: "Colossians 3:5",
-          body: `**Plain Meaning:** Put to death what is earthly in you, including covetousness, which is idolatry.
+          body: `**Scripture (KJV)**  
+> "Mortify therefore your members which are upon the earth; fornication, uncleanness, inordinate affection, evil concupiscence, and covetousness, which is idolatry:"
 
-**Application:** Greed is not just a bad habit—it's worshiping money instead of God. It's spiritual adultery.`,
+**Meaning:** Put to death what is earthly in you, including covetousness, which is idolatry.  
+**Application:** Greed is not just a bad habit—it's worshiping money instead of God. It's spiritual adultery.`.trim(),
         },
       ],
     },
@@ -3514,45 +3804,55 @@ Lord, make my giving an act of joyful worship. Use what I give to bless others a
           type: "scripture",
           title: "Sow Generously",
           reference: "2 Corinthians 9:6–8",
-          body: `**Plain Meaning:** Whoever sows sparingly will also reap sparingly, and whoever sows bountifully will also reap bountifully. God loves a cheerful giver and is able to make all grace abound to you.
+          body: `**Scripture (KJV)**  
+> "But this I say, He which soweth sparingly shall reap also sparingly; and he which soweth bountifully shall reap also bountifully. Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver. And God is able to make all grace abound toward you; that ye, always having all sufficiency in all things, may abound to every good work:"
 
-**Application:** Generosity isn't a loss—it's a seed. God blesses cheerful givers and supplies what they need to keep giving.`,
+**Meaning:** Whoever sows sparingly will also reap sparingly, and whoever sows bountifully will also reap bountifully. God loves a cheerful giver and is able to make all grace abound to you.  
+**Application:** Generosity isn't a loss—it's a seed. God blesses cheerful givers and supplies what they need to keep giving.`.trim(),
         },
         {
           id: "d3-prov39-10",
           type: "scripture",
           title: "Honor the Lord with Your Wealth",
           reference: "Proverbs 3:9–10",
-          body: `**Plain Meaning:** Honor the Lord with your wealth and with the firstfruits of all your produce.
+          body: `**Scripture (KJV)**  
+> "Honour the LORD with thy substance, and with the firstfruits of all thine increase: So shall thy barns be filled with plenty, and thy presses shall burst out with new wine."
 
-**Application:** Giving God your "firstfruits" means He gets first priority, not the leftovers. It's an act of worship and trust.`,
+**Meaning:** Honor the Lord with your wealth and with the firstfruits of all your produce.  
+**Application:** Giving God your "firstfruits" means He gets first priority, not the leftovers. It's an act of worship and trust.`.trim(),
         },
         {
           id: "d3-acts2035",
           type: "scripture",
           title: "More Blessed to Give",
           reference: "Acts 20:35",
-          body: `**Plain Meaning:** Jesus said it is more blessed to give than to receive.
+          body: `**Scripture (KJV)**  
+> "I have shewed you all things, how that so labouring ye ought to support the weak, and to remember the words of the Lord Jesus, how he said, It is more blessed to give than to receive."
 
-**Application:** Generosity brings a joy that hoarding never can. When you give, you taste the heart of God.`,
+**Meaning:** Jesus said it is more blessed to give than to receive.  
+**Application:** Generosity brings a joy that hoarding never can. When you give, you taste the heart of God.`.trim(),
         },
         {
           id: "d3-phil418-19",
           type: "scripture",
           title: "A Fragrant Offering",
           reference: "Philippians 4:18–19",
-          body: `**Plain Meaning:** Paul says the gifts given are a fragrant offering, a sacrifice acceptable and pleasing to God. And God will supply every need of yours.
+          body: `**Scripture (KJV)**  
+> "But I have all, and abound: I am full, having received of Epaphroditus the things which were sent from you, an odour of a sweet smell, a sacrifice acceptable, wellpleasing to God. But my God shall supply all your need according to his riches in glory by Christ Jesus."
 
-**Application:** Your giving is an offering to God. He sees it, is pleased by it, and promises to take care of your needs.`,
+**Meaning:** Paul says the gifts given are a fragrant offering, a sacrifice acceptable and pleasing to God. And God will supply every need of yours.  
+**Application:** Your giving is an offering to God. He sees it, is pleased by it, and promises to take care of your needs.`.trim(),
         },
         {
           id: "d3-mark1241-44",
           type: "scripture",
           title: "The Widow's Small Gift",
           reference: "Mark 12:41–44",
-          body: `**Plain Meaning:** Jesus commends a poor widow who gave two small coins, saying she gave more than all the rich people because she gave out of her poverty.
+          body: `**Scripture (KJV)**  
+> "¶ And Jesus sat over against the treasury, and beheld how the people cast money into the treasury: and many that were rich cast in much. And there came a certain poor widow, and she threw in two mites, which make a farthing. And he called unto him his disciples, and saith unto them, Verily I say unto you, That this poor widow hath cast more in, than all they which have cast into the treasury: For all they did cast in of their abundance; but she of her want did cast in all that she had, even all her living."
 
-**Application:** God doesn't measure your gift by the amount, but by the heart. Sacrificial giving honors God more than large gifts given casually.`,
+**Meaning:** Jesus commends a poor widow who gave two small coins, saying she gave more than all the rich people because she gave out of her poverty.  
+**Application:** God doesn't measure your gift by the amount, but by the heart. Sacrificial giving honors God more than large gifts given casually.`.trim(),
         },
       ],
     },
@@ -3586,45 +3886,55 @@ Lord, give me practical wisdom with money. Help me honor You in how I work, spen
           type: "scripture",
           title: "Diligent Hands Bring Wealth",
           reference: "Proverbs 10:4",
-          body: `**Plain Meaning:** A slack hand causes poverty, but the hand of the diligent makes rich.
+          body: `**Scripture (KJV)**  
+> "He becometh poor that dealeth with a slack hand: but the hand of the diligent maketh rich."
 
-**Application:** Hard work and diligence honor God. Laziness leads to need; faithful work provides for yourself and others.`,
+**Meaning:** A slack hand causes poverty, but the hand of the diligent makes rich.  
+**Application:** Hard work and diligence honor God. Laziness leads to need; faithful work provides for yourself and others.`.trim(),
         },
         {
           id: "d4-prov2120",
           type: "scripture",
           title: "The Wise Store Up",
           reference: "Proverbs 21:20",
-          body: `**Plain Meaning:** Precious treasure and oil are in a wise person's dwelling, but a foolish man devours it.
+          body: `**Scripture (KJV)**  
+> "There is treasure to be desired and oil in the dwelling of the wise; but a foolish man spendeth it up."
 
-**Application:** Saving wisely is biblical. The fool spends everything immediately; the wise prepare for the future.`,
+**Meaning:** Precious treasure and oil are in a wise person's dwelling, but a foolish man devours it.  
+**Application:** Saving wisely is biblical. The fool spends everything immediately; the wise prepare for the future.`.trim(),
         },
         {
           id: "d4-prov227",
           type: "scripture",
           title: "The Borrower Is Slave to the Lender",
           reference: "Proverbs 22:7",
-          body: `**Plain Meaning:** The rich rules over the poor, and the borrower is the slave of the lender.
+          body: `**Scripture (KJV)**  
+> "The rich ruleth over the poor, and the borrower is servant to the lender."
 
-**Application:** Debt puts you in bondage. Be cautious about borrowing, and work to live within your means and become debt-free.`,
+**Meaning:** The rich rules over the poor, and the borrower is the slave of the lender.  
+**Application:** Debt puts you in bondage. Be cautious about borrowing, and work to live within your means and become debt-free.`.trim(),
         },
         {
           id: "d4-matt631-33",
           type: "scripture",
           title: "Seek First God's Kingdom",
           reference: "Matthew 6:31–33",
-          body: `**Plain Meaning:** Don't be anxious about food and clothing. Seek first the kingdom of God and His righteousness, and all these things will be added to you.
+          body: `**Scripture (KJV)**  
+> "Therefore take no thought, saying, What shall we eat? or, What shall we drink? or, Wherewithal shall we be clothed? (For after all these things do the Gentiles seek:) for your heavenly Father knoweth that ye have need of all these things. But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you."
 
-**Application:** When God's kingdom is your priority, He takes care of your needs. Worry less about money; seek Him more.`,
+**Meaning:** Don't be anxious about food and clothing. Seek first the kingdom of God and His righteousness, and all these things will be added to you.  
+**Application:** When God's kingdom is your priority, He takes care of your needs. Worry less about money; seek Him more.`.trim(),
         },
         {
           id: "d4-1tim66-8",
           type: "scripture",
           title: "Godliness with Contentment",
           reference: "1 Timothy 6:6–8",
-          body: `**Plain Meaning:** Godliness with contentment is great gain. If we have food and clothing, with these we will be content.
+          body: `**Scripture (KJV)**  
+> "But godliness with contentment is great gain. For we brought nothing into this world, and it is certain we can carry nothing out. And having food and raiment let us be therewith content."
 
-**Application:** True wealth is godliness combined with contentment, not a big bank account. Learn to be satisfied with what God provides.`,
+**Meaning:** Godliness with contentment is great gain. If we have food and clothing, with these we will be content.  
+**Application:** True wealth is godliness combined with contentment, not a big bank account. Learn to be satisfied with what God provides.`.trim(),
         },
       ],
     },
@@ -3658,45 +3968,55 @@ Jesus, You gave everything for me. Shape me into a truly generous person, not ju
           type: "scripture",
           title: "Jesus Became Poor",
           reference: "2 Corinthians 8:9",
-          body: `**Plain Meaning:** Though Jesus was rich, yet for your sake He became poor, so that you by His poverty might become rich.
+          body: `**Scripture (KJV)**  
+> "For ye know the grace of our Lord Jesus Christ, that, though he was rich, yet for your sakes he became poor, that ye through his poverty might be rich."
 
-**Application:** Jesus gave up everything for you. Your generosity is a reflection of the gospel—giving sacrificially because you've been given everything in Christ.`,
+**Meaning:** Though Jesus was rich, yet for your sake He became poor, so that you by His poverty might become rich.  
+**Application:** Jesus gave up everything for you. Your generosity is a reflection of the gospel—giving sacrificially because you've been given everything in Christ.`.trim(),
         },
         {
           id: "d5-eph51-2",
           type: "scripture",
           title: "Imitate God and Walk in Love",
           reference: "Ephesians 5:1–2",
-          body: `**Plain Meaning:** Be imitators of God and walk in love, as Christ loved us and gave Himself up for us.
+          body: `**Scripture (KJV)**  
+> "Be ye therefore followers of God, as dear children; And walk in love, as Christ also hath loved us, and hath given himself for us an offering and a sacrifice to God for a sweetsmelling savour."
 
-**Application:** Jesus is your model for generosity. He gave His life; you give your resources, time, and love as a reflection of Him.`,
+**Meaning:** Be imitators of God and walk in love, as Christ loved us and gave Himself up for us.  
+**Application:** Jesus is your model for generosity. He gave His life; you give your resources, time, and love as a reflection of Him.`.trim(),
         },
         {
           id: "d5-luke638",
           type: "scripture",
           title: "Give and It Will Be Given to You",
           reference: "Luke 6:38",
-          body: `**Plain Meaning:** Give, and it will be given to you. Good measure, pressed down, shaken together, running over, will be put into your lap.
+          body: `**Scripture (KJV)**  
+> "Give, and it shall be given unto you; good measure, pressed down, and shaken together, and running over, shall men give into your bosom. For with the same measure that ye mete withal it shall be measured to you again."
 
-**Application:** God's measure is overflowing. You can't out-give God—He blesses generosity in ways you can't predict.`,
+**Meaning:** Give, and it will be given to you. Good measure, pressed down, shaken together, running over, will be put into your lap.  
+**Application:** God's measure is overflowing. You can't out-give God—He blesses generosity in ways you can't predict.`.trim(),
         },
         {
           id: "d5-titus34-7",
           type: "scripture",
           title: "God Saved Us by His Mercy",
           reference: "Titus 3:4–7",
-          body: `**Plain Meaning:** When the goodness and loving kindness of God appeared, He saved us not because of works done by us, but according to His own mercy.
+          body: `**Scripture (KJV)**  
+> "But after that the kindness and love of God our Saviour toward man appeared, Not by works of righteousness which we have done, but according to his mercy he saved us, by the washing of regeneration, and renewing of the Holy Ghost; Which he shed on us abundantly through Jesus Christ our Saviour; That being justified by his grace, we should be made heirs according to the hope of eternal life."
 
-**Application:** You didn't earn salvation; God gave it generously. Let that generous grace overflow into how you live and give.`,
+**Meaning:** When the goodness and loving kindness of God appeared, He saved us not because of works done by us, but according to His own mercy.  
+**Application:** You didn't earn salvation; God gave it generously. Let that generous grace overflow into how you live and give.`.trim(),
         },
         {
           id: "d5-matt2534-40",
           type: "scripture",
           title: "Serving the Least Is Serving Jesus",
           reference: "Matthew 25:34–40",
-          body: `**Plain Meaning:** Jesus says that when you serve the hungry, the stranger, the sick, or the prisoner, you are serving Him.
+          body: `**Scripture (KJV)**  
+> "Then shall the King say unto them on his right hand, Come, ye blessed of my Father, inherit the kingdom prepared for you from the foundation of the world: For I was an hungred, and ye gave me meat: I was thirsty, and ye gave me drink: I was a stranger, and ye took me in: Naked, and ye clothed me: I was sick, and ye visited me: I was in prison, and ye came unto me. Then shall the righteous answer him, saying, Lord, when saw we thee an hungred, and fed thee? or thirsty, and gave thee drink? When saw we thee a stranger, and took thee in? or naked, and clothed thee? Or when saw we thee sick, or in prison, and came unto thee? And the King shall answer and say unto them, Verily I say unto you, Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me."
 
-**Application:** Generosity to those in need is generosity to Jesus Himself. How you treat the least among you reveals your heart toward Him.`,
+**Meaning:** Jesus says that when you serve the hungry, the stranger, the sick, or the prisoner, you are serving Him.  
+**Application:** Generosity to those in need is generosity to Jesus Himself. How you treat the least among you reveals your heart toward Him.`.trim(),
         },
       ],
     },
@@ -3740,45 +4060,55 @@ Lord, open my eyes to the real battle. Teach me to be strong in You, not in myse
           type: "scripture",
           title: "Not Against Flesh and Blood",
           reference: "Ephesians 6:10–12",
-          body: `**Plain Meaning:** Be strong in the Lord. Your struggle is not against flesh and blood, but against spiritual forces of evil.
+          body: `**Scripture (KJV)**  
+> "Finally, my brethren, be strong in the Lord, and in the power of his might. Put on the whole armour of God, that ye may be able to stand against the wiles of the devil. For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world, against spiritual wickedness in high places."
 
-**Application:** When conflict arises, remember the real enemy is spiritual. People are not your opponents—they're fellow image-bearers caught in the same war.`,
+**Meaning:** Be strong in the Lord. Your struggle is not against flesh and blood, but against spiritual forces of evil.  
+**Application:** When conflict arises, remember the real enemy is spiritual. People are not your opponents—they're fellow image-bearers caught in the same war.`.trim(),
         },
         {
           id: "d1-2cor103-4",
           type: "scripture",
           title: "Weapons with Divine Power",
           reference: "2 Corinthians 10:3–4",
-          body: `**Plain Meaning:** Though we walk in the flesh, we are not waging war according to the flesh. Our weapons have divine power to destroy strongholds.
+          body: `**Scripture (KJV)**  
+> "For though we walk in the flesh, we do not war after the flesh: (For the weapons of our warfare are not carnal, but mighty through God to the pulling down of strong holds;)"
 
-**Application:** You can't fight spiritual battles with human strategies. Prayer, Scripture, and faith are your real weapons.`,
+**Meaning:** Though we walk in the flesh, we are not waging war according to the flesh. Our weapons have divine power to destroy strongholds.  
+**Application:** You can't fight spiritual battles with human strategies. Prayer, Scripture, and faith are your real weapons.`.trim(),
         },
         {
           id: "d1-1pet58-9",
           type: "scripture",
           title: "Resist the Devil",
           reference: "1 Peter 5:8–9",
-          body: `**Plain Meaning:** Be sober-minded and watchful. Your adversary the devil prowls like a roaring lion, seeking someone to devour. Resist him, firm in your faith.
+          body: `**Scripture (KJV)**  
+> "Be sober, be vigilant; because your adversary the devil, as a roaring lion, walketh about, seeking whom he may devour: Whom resist stedfast in the faith, knowing that the same afflictions are accomplished in your brethren that are in the world."
 
-**Application:** The enemy is real and active. Don't be naive or fearful—be alert and stand firm in Christ.`,
+**Meaning:** Be sober-minded and watchful. Your adversary the devil prowls like a roaring lion, seeking someone to devour. Resist him, firm in your faith.  
+**Application:** The enemy is real and active. Don't be naive or fearful—be alert and stand firm in Christ.`.trim(),
         },
         {
           id: "d1-john1010",
           type: "scripture",
           title: "The Thief Comes to Destroy",
           reference: "John 10:10",
-          body: `**Plain Meaning:** The thief comes only to steal, kill, and destroy. Jesus came that you may have life and have it abundantly.
+          body: `**Scripture (KJV)**  
+> "The thief cometh not, but for to steal, and to kill, and to destroy: I am come that they might have life, and that they might have it more abundantly."
 
-**Application:** The enemy's goal is destruction. Jesus' goal is abundant life. Recognize which voice you're listening to.`,
+**Meaning:** The thief comes only to steal, kill, and destroy. Jesus came that you may have life and have it abundantly.  
+**Application:** The enemy's goal is destruction. Jesus' goal is abundant life. Recognize which voice you're listening to.`.trim(),
         },
         {
           id: "d1-col213-15",
           type: "scripture",
           title: "Christ Disarmed Spiritual Rulers",
           reference: "Colossians 2:13–15",
-          body: `**Plain Meaning:** God made you alive with Christ, having forgiven all your trespasses. He disarmed the rulers and authorities and put them to open shame, triumphing over them in the cross.
+          body: `**Scripture (KJV)**  
+> "And you, being dead in your sins and the uncircumcision of your flesh, hath he quickened together with him, having forgiven you all trespasses; Blotting out the handwriting of ordinances that was against us, which was contrary to us, and took it out of the way, nailing it to his cross; And having spoiled principalities and powers, he made a shew of them openly, triumphing over them in it."
 
-**Application:** The enemy has been defeated at the cross. You fight from victory, not for victory.`,
+**Meaning:** God made you alive with Christ, having forgiven all your trespasses. He disarmed the rulers and authorities and put them to open shame, triumphing over them in the cross.  
+**Application:** The enemy has been defeated at the cross. You fight from victory, not for victory.`.trim(),
         },
       ],
     },
@@ -3812,45 +4142,55 @@ Jesus, fasten me with Your truth and guard my heart with Your righteousness. Let
           type: "scripture",
           title: "Stand with Truth and Righteousness",
           reference: "Ephesians 6:13–14",
-          body: `**Plain Meaning:** Take up the whole armor of God so you can stand. Stand therefore, having fastened on the belt of truth and the breastplate of righteousness.
+          body: `**Scripture (KJV)**  
+> "Wherefore take unto you the whole armour of God, that ye may be able to withstand in the evil day, and having done all, to stand. Stand therefore, having your loins girt about with truth, and having on the breastplate of righteousness;"
 
-**Application:** Truth and righteousness are foundational. Without them, the rest of your armor doesn't work.`,
+**Meaning:** Take up the whole armor of God so you can stand. Stand therefore, having fastened on the belt of truth and the breastplate of righteousness.  
+**Application:** Truth and righteousness are foundational. Without them, the rest of your armor doesn't work.`.trim(),
         },
         {
           id: "d2-john1717",
           type: "scripture",
           title: "God's Word Is Truth",
           reference: "John 17:17",
-          body: `**Plain Meaning:** Jesus prays, "Sanctify them in the truth; Your word is truth."
+          body: `**Scripture (KJV)**  
+> "Sanctify them through thy truth: thy word is truth."
 
-**Application:** The Word of God is your standard for truth. When the enemy lies, the Bible exposes it.`,
+**Meaning:** Jesus prays, "Sanctify them in the truth; Your word is truth."  
+**Application:** The Word of God is your standard for truth. When the enemy lies, the Bible exposes it.`.trim(),
         },
         {
           id: "d2-john831-32",
           type: "scripture",
           title: "The Truth Sets You Free",
           reference: "John 8:31–32",
-          body: `**Plain Meaning:** Jesus said, "If you abide in My word, you are truly My disciples, and you will know the truth, and the truth will set you free."
+          body: `**Scripture (KJV)**  
+> "Then said Jesus to those Jews which believed on him, If ye continue in my word, then are ye my disciples indeed; And ye shall know the truth, and the truth shall make you free."
 
-**Application:** Knowing and living in God's truth brings freedom. Lies keep you in bondage; truth liberates.`,
+**Meaning:** Jesus said, "If you abide in My word, you are truly My disciples, and you will know the truth, and the truth will set you free."  
+**Application:** Knowing and living in God's truth brings freedom. Lies keep you in bondage; truth liberates.`.trim(),
         },
         {
           id: "d2-2cor521",
           type: "scripture",
           title: "Become God's Righteousness in Christ",
           reference: "2 Corinthians 5:21",
-          body: `**Plain Meaning:** God made Jesus who knew no sin to be sin for us, so that in Him we might become the righteousness of God.
+          body: `**Scripture (KJV)**  
+> "For he hath made him to be sin for us, who knew no sin; that we might be made the righteousness of God in him."
 
-**Application:** Your righteousness before God is not your own—it's Christ's. When the enemy accuses, point to the cross.`,
+**Meaning:** God made Jesus who knew no sin to be sin for us, so that in Him we might become the righteousness of God.  
+**Application:** Your righteousness before God is not your own—it's Christ's. When the enemy accuses, point to the cross.`.trim(),
         },
         {
           id: "d2-rom833-34",
           type: "scripture",
           title: "Who Can Bring a Charge?",
           reference: "Romans 8:33–34",
-          body: `**Plain Meaning:** Who shall bring any charge against God's elect? It is God who justifies. Who is to condemn? Christ Jesus is the one who died and was raised, who is at the right hand of God interceding for us.
+          body: `**Scripture (KJV)**  
+> "Who shall lay any thing to the charge of God’s elect? It is God that justifieth. Who is he that condemneth? It is Christ that died, yea rather, that is risen again, who is even at the right hand of God, who also maketh intercession for us."
 
-**Application:** Satan is the accuser, but God is the justifier. When accusations come, remember: you are justified by Christ, not condemned.`,
+**Meaning:** Who shall bring any charge against God's elect? It is God who justifies. Who is to condemn? Christ Jesus is the one who died and was raised, who is at the right hand of God interceding for us.  
+**Application:** Satan is the accuser, but God is the justifier. When accusations come, remember: you are justified by Christ, not condemned.`.trim(),
         },
       ],
     },
@@ -3884,45 +4224,55 @@ Lord, anchor me in the peace of the gospel and make me ready to share it. Streng
           type: "scripture",
           title: "Feet Fitted with the Gospel of Peace",
           reference: "Ephesians 6:15–16",
-          body: `**Plain Meaning:** Have your feet fitted with the readiness given by the gospel of peace. Take up the shield of faith, with which you can extinguish all the flaming darts of the evil one.
+          body: `**Scripture (KJV)**  
+> "And your feet shod with the preparation of the gospel of peace; Above all, taking the shield of faith, wherewith ye shall be able to quench all the fiery darts of the wicked."
 
-**Application:** Peace with God makes you immovable. Faith in God protects you from the enemy's attacks.`,
+**Meaning:** Have your feet fitted with the readiness given by the gospel of peace. Take up the shield of faith, with which you can extinguish all the flaming darts of the evil one.  
+**Application:** Peace with God makes you immovable. Faith in God protects you from the enemy's attacks.`.trim(),
         },
         {
           id: "d3-rom51",
           type: "scripture",
           title: "Peace with God Through Faith",
           reference: "Romans 5:1",
-          body: `**Plain Meaning:** Therefore, since we have been justified by faith, we have peace with God through our Lord Jesus Christ.
+          body: `**Scripture (KJV)**  
+> "Therefore being justified by faith, we have peace with God through our Lord Jesus Christ:"
 
-**Application:** You're not at war with God anymore. That peace is your foundation for every battle you face.`,
+**Meaning:** Therefore, since we have been justified by faith, we have peace with God through our Lord Jesus Christ.  
+**Application:** You're not at war with God anymore. That peace is your foundation for every battle you face.`.trim(),
         },
         {
           id: "d3-isaiah527",
           type: "scripture",
           title: "Beautiful Are the Feet",
           reference: "Isaiah 52:7",
-          body: `**Plain Meaning:** How beautiful upon the mountains are the feet of him who brings good news, who publishes peace.
+          body: `**Scripture (KJV)**  
+> "¶ How beautiful upon the mountains are the feet of him that bringeth good tidings, that publisheth peace; that bringeth good tidings of good, that publisheth salvation; that saith unto Zion, Thy God reigneth!"
 
-**Application:** When you carry the gospel, you bring the best news in the world. Be ready to share it wherever you go.`,
+**Meaning:** How beautiful upon the mountains are the feet of him who brings good news, who publishes peace.  
+**Application:** When you carry the gospel, you bring the best news in the world. Be ready to share it wherever you go.`.trim(),
         },
         {
           id: "d3-heb111-6",
           type: "scripture",
           title: "Faith Is Assurance",
           reference: "Hebrews 11:1, 6",
-          body: `**Plain Meaning:** Faith is the assurance of things hoped for, the conviction of things not seen. Without faith it is impossible to please God.
+          body: `**Scripture (KJV)**  
+> "Now faith is the substance of things hoped for, the evidence of things not seen."
 
-**Application:** Faith isn't wishful thinking—it's confidence in God's character and promises, even when you can't see the outcome yet.`,
+**Meaning:** Faith is the assurance of things hoped for, the conviction of things not seen. Without faith it is impossible to please God.  
+**Application:** Faith isn't wishful thinking—it's confidence in God's character and promises, even when you can't see the outcome yet.`.trim(),
         },
         {
           id: "d3-ps914-5",
           type: "scripture",
           title: "God Is a Shield",
           reference: "Psalm 91:4–5",
-          body: `**Plain Meaning:** God will cover you with His pinions; under His wings you will find refuge. His faithfulness is a shield. You will not fear the terror of the night, nor the arrow that flies by day.
+          body: `**Scripture (KJV)**  
+> "He shall cover thee with his feathers, and under his wings shalt thou trust: his truth shall be thy shield and buckler. Thou shalt not be afraid for the terror by night; nor for the arrow that flieth by day;"
 
-**Application:** God Himself is your shield. When fear and doubt come like arrows, run to Him for refuge.`,
+**Meaning:** God will cover you with His pinions; under His wings you will find refuge. His faithfulness is a shield. You will not fear the terror of the night, nor the arrow that flies by day.  
+**Application:** God Himself is your shield. When fear and doubt come like arrows, run to Him for refuge.`.trim(),
         },
       ],
     },
@@ -3956,45 +4306,55 @@ Jesus, cover my mind with the assurance of salvation and put Your Word in my hea
           type: "scripture",
           title: "Helmet of Salvation and Sword of the Spirit",
           reference: "Ephesians 6:17",
-          body: `**Plain Meaning:** Take the helmet of salvation and the sword of the Spirit, which is the word of God.
+          body: `**Scripture (KJV)**  
+> "And take the helmet of salvation, and the sword of the Spirit, which is the word of God:"
 
-**Application:** Salvation secures your mind; Scripture equips your hand. Both are essential for spiritual warfare.`,
+**Meaning:** Take the helmet of salvation and the sword of the Spirit, which is the word of God.  
+**Application:** Salvation secures your mind; Scripture equips your hand. Both are essential for spiritual warfare.`.trim(),
         },
         {
           id: "d4-1thess58",
           type: "scripture",
           title: "Put On the Helmet of Hope",
           reference: "1 Thessalonians 5:8",
-          body: `**Plain Meaning:** Since we belong to the day, let us be sober, having put on the breastplate of faith and love, and for a helmet the hope of salvation.
+          body: `**Scripture (KJV)**  
+> "But let us, who are of the day, be sober, putting on the breastplate of faith and love; and for an helmet, the hope of salvation."
 
-**Application:** The helmet is the hope of salvation—confidence that God will finish what He started in you.`,
+**Meaning:** Since we belong to the day, let us be sober, having put on the breastplate of faith and love, and for a helmet the hope of salvation.  
+**Application:** The helmet is the hope of salvation—confidence that God will finish what He started in you.`.trim(),
         },
         {
           id: "d4-rom838-39",
           type: "scripture",
           title: "Nothing Can Separate You from God's Love",
           reference: "Romans 8:38–39",
-          body: `**Plain Meaning:** I am sure that neither death nor life, nor angels nor rulers, nor things present nor things to come, nor powers, nor height nor depth, nor anything else in all creation, will be able to separate us from the love of God in Christ Jesus our Lord.
+          body: `**Scripture (KJV)**  
+> "For I am persuaded, that neither death, nor life, nor angels, nor principalities, nor powers, nor things present, nor things to come, Nor height, nor depth, nor any other creature, shall be able to separate us from the love of God, which is in Christ Jesus our Lord."
 
-**Application:** When the enemy whispers that you're not saved or that God has abandoned you, stand on this truth: nothing can separate you from His love.`,
+**Meaning:** I am sure that neither death nor life, nor angels nor rulers, nor things present nor things to come, nor powers, nor height nor depth, nor anything else in all creation, will be able to separate us from the love of God in Christ Jesus our Lord.  
+**Application:** When the enemy whispers that you're not saved or that God has abandoned you, stand on this truth: nothing can separate you from His love.`.trim(),
         },
         {
           id: "d4-matt41-11",
           type: "scripture",
           title: "Jesus Uses Scripture Against Temptation",
           reference: "Matthew 4:1–11",
-          body: `**Plain Meaning:** Jesus was tempted by the devil and responded every time with "It is written…"
+          body: `**Scripture (KJV)**  
+> "Then was Jesus led up of the Spirit into the wilderness to be tempted of the devil. And when he had fasted forty days and forty nights, he was afterward an hungred. And when the tempter came to him, he said, If thou be the Son of God, command that these stones be made bread. But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God. Then the devil taketh him up into the holy city, and setteth him on a pinnacle of the temple, And saith unto him, If thou be the Son of God, cast thyself down: for it is written, He shall give his angels charge concerning thee: and in their hands they shall bear thee up, lest at any time thou dash thy foot against a stone. Jesus said unto him, It is written again, Thou shalt not tempt the Lord thy God. Again, the devil taketh him up into an exceeding high mountain, and sheweth him all the kingdoms of the world, and the glory of them; And saith unto him, All these things will I give thee, if thou wilt fall down and worship me. Then saith Jesus unto him, Get thee hence, Satan: for it is written, Thou shalt worship the Lord thy God, and him only shalt thou serve. Then the devil leaveth him, and, behold, angels came and ministered unto him."
 
-**Application:** Jesus defeated Satan with Scripture, not feelings or arguments. Follow His example: fight lies with God's Word.`,
+**Meaning:** Jesus was tempted by the devil and responded every time with "It is written…"  
+**Application:** Jesus defeated Satan with Scripture, not feelings or arguments. Follow His example: fight lies with God's Word.`.trim(),
         },
         {
           id: "d4-ps1496",
           type: "scripture",
           title: "A Two-Edged Sword in Their Hand",
           reference: "Psalm 149:6",
-          body: `**Plain Meaning:** Let the high praises of God be in their throats and a two-edged sword in their hands.
+          body: `**Scripture (KJV)**  
+> "Let the high praises of God be in their mouth, and a twoedged sword in their hand;"
 
-**Application:** Worship and the Word go together. When you praise God and wield His Word, you're armed for battle.`,
+**Meaning:** Let the high praises of God be in their throats and a two-edged sword in their hands.  
+**Application:** Worship and the Word go together. When you praise God and wield His Word, you're armed for battle.`.trim(),
         },
       ],
     },
@@ -4028,45 +4388,55 @@ Lord, teach me to pray as part of my armor. Surround me with brothers and sister
           type: "scripture",
           title: "Pray at All Times in the Spirit",
           reference: "Ephesians 6:18–20",
-          body: `**Plain Meaning:** Pray at all times in the Spirit, with all prayer and supplication. Keep alert with all perseverance, making supplication for all the saints.
+          body: `**Scripture (KJV)**  
+> "Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints; And for me, that utterance may be given unto me, that I may open my mouth boldly, to make known the mystery of the gospel, For which I am an ambassador in bonds: that therein I may speak boldly, as I ought to speak."
 
-**Application:** The armor isn't complete without prayer. Constant, Spirit-led prayer is how you stay connected to God and the body of Christ in the fight.`,
+**Meaning:** Pray at all times in the Spirit, with all prayer and supplication. Keep alert with all perseverance, making supplication for all the saints.  
+**Application:** The armor isn't complete without prayer. Constant, Spirit-led prayer is how you stay connected to God and the body of Christ in the fight.`.trim(),
         },
         {
           id: "d5-james516",
           type: "scripture",
           title: "Pray for One Another",
           reference: "James 5:16",
-          body: `**Plain Meaning:** Confess your sins to one another and pray for one another, that you may be healed. The prayer of a righteous person has great power.
+          body: `**Scripture (KJV)**  
+> "Confess your faults one to another, and pray one for another, that ye may be healed. The effectual fervent prayer of a righteous man availeth much."
 
-**Application:** Don't hide your struggles. Bring them to trusted believers who will pray with you and for you.`,
+**Meaning:** Confess your sins to one another and pray for one another, that you may be healed. The prayer of a righteous person has great power.  
+**Application:** Don't hide your struggles. Bring them to trusted believers who will pray with you and for you.`.trim(),
         },
         {
           id: "d5-heb1024-25",
           type: "scripture",
           title: "Stir One Another Up",
           reference: "Hebrews 10:24–25",
-          body: `**Plain Meaning:** Let us consider how to stir up one another to love and good works, not neglecting to meet together, but encouraging one another.
+          body: `**Scripture (KJV)**  
+> "And let us consider one another to provoke unto love and to good works: Not forsaking the assembling of ourselves together, as the manner of some is; but exhorting one another: and so much the more, as ye see the day approaching."
 
-**Application:** You need the church, and the church needs you. Don't isolate—gather, encourage, and fight together.`,
+**Meaning:** Let us consider how to stir up one another to love and good works, not neglecting to meet together, but encouraging one another.  
+**Application:** You need the church, and the church needs you. Don't isolate—gather, encourage, and fight together.`.trim(),
         },
         {
           id: "d5-gal62",
           type: "scripture",
           title: "Bear One Another's Burdens",
           reference: "Galatians 6:2",
-          body: `**Plain Meaning:** Bear one another's burdens, and so fulfill the law of Christ.
+          body: `**Scripture (KJV)**  
+> "Bear ye one another’s burdens, and so fulfil the law of Christ."
 
-**Application:** When a fellow believer is struggling spiritually, step in. Pray for them, encourage them, and help carry their load.`,
+**Meaning:** Bear one another's burdens, and so fulfill the law of Christ.  
+**Application:** When a fellow believer is struggling spiritually, step in. Pray for them, encourage them, and help carry their load.`.trim(),
         },
         {
           id: "d5-matt1819-20",
           type: "scripture",
           title: "Jesus Is Present Where Believers Agree",
           reference: "Matthew 18:19–20",
-          body: `**Plain Meaning:** If two of you agree on earth about anything they ask, it will be done for them by My Father in heaven. For where two or three are gathered in My name, there am I among them.
+          body: `**Scripture (KJV)**  
+> "Again I say unto you, That if two of you shall agree on earth as touching any thing that they shall ask, it shall be done for them of my Father which is in heaven. For where two or three are gathered together in my name, there am I in the midst of them."
 
-**Application:** Corporate prayer has power. When believers unite in prayer, Jesus is present, and the Father listens.`,
+**Meaning:** If two of you agree on earth about anything they ask, it will be done for them by My Father in heaven. For where two or three are gathered in My name, there am I among them.  
+**Application:** Corporate prayer has power. When believers unite in prayer, Jesus is present, and the Father listens.`.trim(),
         },
       ],
     },
@@ -4110,36 +4480,44 @@ Father, thank You for declaring me forgiven through Jesus. Help me to stop livin
           type: "scripture",
           title: "Redemption Through His Blood",
           reference: "Ephesians 1:7",
-          body: `**Plain Meaning:** In Christ we have redemption through His blood, the forgiveness of our trespasses, according to the riches of His grace.
+          body: `**Scripture (KJV)**  
+> "In whom we have redemption through his blood, the forgiveness of sins, according to the riches of his grace;"
 
-**Application:** Forgiveness is not based on your performance but on Christ's blood. You are fully forgiven because of what Jesus did, not what you do.`,
+**Meaning:** In Christ we have redemption through His blood, the forgiveness of our trespasses, according to the riches of His grace.  
+**Application:** Forgiveness is not based on your performance but on Christ's blood. You are fully forgiven because of what Jesus did, not what you do.`.trim(),
         },
         {
           id: "d1-col113-14",
           type: "scripture",
           title: "Transferred to the Kingdom",
           reference: "Colossians 1:13–14",
-          body: `**Plain Meaning:** God has delivered us from the domain of darkness and transferred us to the kingdom of His beloved Son, in whom we have redemption, the forgiveness of sins.
+          body: `**Scripture (KJV)**  
+> "Who hath delivered us from the power of darkness, and hath translated us into the kingdom of his dear Son: In whom we have redemption through his blood, even the forgiveness of sins:"
 
-**Application:** You're not just forgiven—you've been moved from one kingdom to another. You now belong to Jesus and live under His reign.`,
+**Meaning:** God has delivered us from the domain of darkness and transferred us to the kingdom of His beloved Son, in whom we have redemption, the forgiveness of sins.  
+**Application:** You're not just forgiven—you've been moved from one kingdom to another. You now belong to Jesus and live under His reign.`.trim(),
         },
         {
           id: "d1-rom81",
           type: "scripture",
           title: "No Condemnation",
           reference: "Romans 8:1",
-          body: `**Plain Meaning:** There is therefore now no condemnation for those who are in Christ Jesus.
+          body: `**Scripture (KJV)**  
+> "There is therefore now no condemnation to them which are in Christ Jesus, who walk not after the flesh, but after the Spirit."
 
-**Application:** If you are in Christ, God does not condemn you. The guilty verdict has been removed. Live like it.`,
+**Meaning:** There is therefore now no condemnation for those who are in Christ Jesus.  
+**Application:** If you are in Christ, God does not condemn you. The guilty verdict has been removed. Live like it.`.trim(),
         },
         {
           id: "d1-1jn19",
           type: "scripture",
           title: "He Is Faithful to Forgive",
           reference: "1 John 1:9",
-          body: `**Plain Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.
+          body: `**Scripture (KJV)**  
+> "If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."
 
-**Application:** When you sin, don't hide. Confess it. God promises to forgive and cleanse you every single time.`,
+**Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.  
+**Application:** When you sin, don't hide. Confess it. God promises to forgive and cleanse you every single time.`.trim(),
         },
       ],
     },
@@ -4173,36 +4551,44 @@ Abba, Father, thank You for adopting me into Your family. Teach me to live as Yo
           type: "scripture",
           title: "Children of God",
           reference: "John 1:12–13",
-          body: `**Plain Meaning:** To all who did receive Him, who believed in His name, He gave the right to become children of God, who were born, not of blood nor of the will of the flesh nor of the will of man, but of God.
+          body: `**Scripture (KJV)**  
+> "But as many as received him, to them gave he power to become the sons of God, even to them that believe on his name: Which were born, not of blood, nor of the will of the flesh, nor of the will of man, but of God."
 
-**Application:** Your identity as God's child is not based on your family background or efforts—it's a gift of grace through faith in Jesus.`,
+**Meaning:** To all who did receive Him, who believed in His name, He gave the right to become children of God, who were born, not of blood nor of the will of the flesh nor of the will of man, but of God.  
+**Application:** Your identity as God's child is not based on your family background or efforts—it's a gift of grace through faith in Jesus.`.trim(),
         },
         {
           id: "d2-rom814-15",
           type: "scripture",
           title: "The Spirit of Adoption",
           reference: "Romans 8:14–15",
-          body: `**Plain Meaning:** All who are led by the Spirit of God are sons of God. For you did not receive the spirit of slavery to fall back into fear, but you have received the Spirit of adoption as sons, by whom we cry, "Abba! Father!"
+          body: `**Scripture (KJV)**  
+> "For as many as are led by the Spirit of God, they are the sons of God. For ye have not received the spirit of bondage again to fear; but ye have received the Spirit of adoption, whereby we cry, Abba, Father."
 
-**Application:** You don't have to be afraid of God. You have the Spirit of adoption, and you can call God "Abba"—your Papa.`,
+**Meaning:** All who are led by the Spirit of God are sons of God. For you did not receive the spirit of slavery to fall back into fear, but you have received the Spirit of adoption as sons, by whom we cry, "Abba! Father!"  
+**Application:** You don't have to be afraid of God. You have the Spirit of adoption, and you can call God "Abba"—your Papa.`.trim(),
         },
         {
           id: "d2-gal46-7",
           type: "scripture",
           title: "Heirs of God",
           reference: "Galatians 4:6–7",
-          body: `**Plain Meaning:** Because you are sons, God has sent the Spirit of His Son into our hearts, crying, "Abba! Father!" So you are no longer a slave, but a son, and if a son, then an heir through God.
+          body: `**Scripture (KJV)**  
+> "And because ye are sons, God hath sent forth the Spirit of his Son into your hearts, crying, Abba, Father. Wherefore thou art no more a servant, but a son; and if a son, then an heir of God through Christ."
 
-**Application:** You're not just a child of God—you're also an heir. Everything God has for His children is yours in Christ.`,
+**Meaning:** Because you are sons, God has sent the Spirit of His Son into our hearts, crying, "Abba! Father!" So you are no longer a slave, but a son, and if a son, then an heir through God.  
+**Application:** You're not just a child of God—you're also an heir. Everything God has for His children is yours in Christ.`.trim(),
         },
         {
           id: "d2-1jn31",
           type: "scripture",
           title: "See What Kind of Love",
           reference: "1 John 3:1",
-          body: `**Plain Meaning:** See what kind of love the Father has given to us, that we should be called children of God; and so we are.
+          body: `**Scripture (KJV)**  
+> "Behold, what manner of love the Father hath bestowed upon us, that we should be called the sons of God: therefore the world knoweth us not, because it knew him not."
 
-**Application:** It's not just a title—it's reality. You really are God's child, loved deeply by the Father.`,
+**Meaning:** See what kind of love the Father has given to us, that we should be called children of God; and so we are.  
+**Application:** It's not just a title—it's reality. You really are God's child, loved deeply by the Father.`.trim(),
         },
       ],
     },
@@ -4236,36 +4622,44 @@ Jesus, You broke the chains of sin. Help me to walk in the freedom You purchased
           type: "scripture",
           title: "Freed from Sin",
           reference: "Romans 6:6–7",
-          body: `**Plain Meaning:** We know that our old self was crucified with Him in order that the body of sin might be brought to nothing, so that we would no longer be enslaved to sin. For one who has died has been set free from sin.
+          body: `**Scripture (KJV)**  
+> "Knowing this, that our old man is crucified with him, that the body of sin might be destroyed, that henceforth we should not serve sin. For he that is dead is freed from sin."
 
-**Application:** Your old sinful self died with Christ. You are no longer a slave to sin. It doesn't have to control you anymore.`,
+**Meaning:** We know that our old self was crucified with Him in order that the body of sin might be brought to nothing, so that we would no longer be enslaved to sin. For one who has died has been set free from sin.  
+**Application:** Your old sinful self died with Christ. You are no longer a slave to sin. It doesn't have to control you anymore.`.trim(),
         },
         {
           id: "d3-gal51",
           type: "scripture",
           title: "Stand Firm in Freedom",
           reference: "Galatians 5:1",
-          body: `**Plain Meaning:** For freedom Christ has set us free; stand firm therefore, and do not submit again to a yoke of slavery.
+          body: `**Scripture (KJV)**  
+> "Stand fast therefore in the liberty wherewith Christ hath made us free, and be not entangled again with the yoke of bondage."
 
-**Application:** Jesus set you free—don't go back to living like a slave. Stand firm in the freedom He bought for you.`,
+**Meaning:** For freedom Christ has set us free; stand firm therefore, and do not submit again to a yoke of slavery.  
+**Application:** Jesus set you free—don't go back to living like a slave. Stand firm in the freedom He bought for you.`.trim(),
         },
         {
           id: "d3-jn831-32",
           type: "scripture",
           title: "The Truth Will Set You Free",
           reference: "John 8:31–32",
-          body: `**Plain Meaning:** Jesus said, "If you abide in My word, you are truly My disciples, and you will know the truth, and the truth will set you free."
+          body: `**Scripture (KJV)**  
+> "Then said Jesus to those Jews which believed on him, If ye continue in my word, then are ye my disciples indeed; And ye shall know the truth, and the truth shall make you free."
 
-**Application:** Freedom comes from knowing and abiding in God's truth. The more you know Jesus, the freer you become.`,
+**Meaning:** Jesus said, "If you abide in My word, you are truly My disciples, and you will know the truth, and the truth will set you free."  
+**Application:** Freedom comes from knowing and abiding in God's truth. The more you know Jesus, the freer you become.`.trim(),
         },
         {
           id: "d3-2cor317",
           type: "scripture",
           title: "Where the Spirit Is, There Is Freedom",
           reference: "2 Corinthians 3:17",
-          body: `**Plain Meaning:** Now the Lord is the Spirit, and where the Spirit of the Lord is, there is freedom.
+          body: `**Scripture (KJV)**  
+> "Now the Lord is that Spirit: and where the Spirit of the Lord is, there is liberty."
 
-**Application:** The Spirit of God brings freedom. Stay close to Him, and you will experience the liberty Christ died to give you.`,
+**Meaning:** Now the Lord is the Spirit, and where the Spirit of the Lord is, there is freedom.  
+**Application:** The Spirit of God brings freedom. Stay close to Him, and you will experience the liberty Christ died to give you.`.trim(),
         },
       ],
     },
@@ -4299,36 +4693,44 @@ Lord, thank You for making me new. Help me to see myself as You see me—a brand
           type: "scripture",
           title: "New Creation",
           reference: "2 Corinthians 5:17",
-          body: `**Plain Meaning:** If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.
+          body: `**Scripture (KJV)**  
+> "Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new."
 
-**Application:** You are not your past. In Christ, you are entirely new. Don't let the old define you—embrace the new life God has given.`,
+**Meaning:** If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.  
+**Application:** You are not your past. In Christ, you are entirely new. Don't let the old define you—embrace the new life God has given.`.trim(),
         },
         {
           id: "d4-eph422-24",
           type: "scripture",
           title: "Put On the New Self",
           reference: "Ephesians 4:22–24",
-          body: `**Plain Meaning:** Put off your old self, which belongs to your former manner of life and is corrupt, and be renewed in the spirit of your minds, and put on the new self, created after the likeness of God in true righteousness and holiness.
+          body: `**Scripture (KJV)**  
+> "That ye put off concerning the former conversation the old man, which is corrupt according to the deceitful lusts; And be renewed in the spirit of your mind; And that ye put on the new man, which after God is created in righteousness and true holiness."
 
-**Application:** Stop living like the old you. Put on your new identity—one that reflects God's righteousness and holiness.`,
+**Meaning:** Put off your old self, which belongs to your former manner of life and is corrupt, and be renewed in the spirit of your minds, and put on the new self, created after the likeness of God in true righteousness and holiness.  
+**Application:** Stop living like the old you. Put on your new identity—one that reflects God's righteousness and holiness.`.trim(),
         },
         {
           id: "d4-ezek3626",
           type: "scripture",
           title: "A New Heart",
           reference: "Ezekiel 36:26",
-          body: `**Plain Meaning:** I will give you a new heart, and a new spirit I will put within you. And I will remove the heart of stone from your flesh and give you a heart of flesh.
+          body: `**Scripture (KJV)**  
+> "A new heart also will I give you, and a new spirit will I put within you: and I will take away the stony heart out of your flesh, and I will give you an heart of flesh."
 
-**Application:** God doesn't just change your behavior—He gives you a new heart. Your desires change when Christ transforms you from the inside out.`,
+**Meaning:** I will give you a new heart, and a new spirit I will put within you. And I will remove the heart of stone from your flesh and give you a heart of flesh.  
+**Application:** God doesn't just change your behavior—He gives you a new heart. Your desires change when Christ transforms you from the inside out.`.trim(),
         },
         {
           id: "d4-col310",
           type: "scripture",
           title: "Renewed in Knowledge",
           reference: "Colossians 3:10",
-          body: `**Plain Meaning:** You have put on the new self, which is being renewed in knowledge after the image of its creator.
+          body: `**Scripture (KJV)**  
+> "And have put on the new man, which is renewed in knowledge after the image of him that created him:"
 
-**Application:** Your new identity is continually being renewed. The more you know God, the more you reflect His image.`,
+**Meaning:** You have put on the new self, which is being renewed in knowledge after the image of its creator.  
+**Application:** Your new identity is continually being renewed. The more you know God, the more you reflect His image.`.trim(),
         },
       ],
     },
@@ -4362,36 +4764,44 @@ Father, help me to live in light of who You say I am. Let my identity in Christ 
           type: "scripture",
           title: "Set Your Minds on Things Above",
           reference: "Colossians 3:1–4",
-          body: `**Plain Meaning:** If then you have been raised with Christ, seek the things that are above, where Christ is, seated at the right hand of God. Set your minds on things that are above, not on things that are on earth. For you have died, and your life is hidden with Christ in God.
+          body: `**Scripture (KJV)**  
+> "If ye then be risen with Christ, seek those things which are above, where Christ sitteth on the right hand of God. Set your affection on things above, not on things on the earth. For ye are dead, and your life is hid with Christ in God. When Christ, who is our life, shall appear, then shall ye also appear with him in glory."
 
-**Application:** Your true life is with Christ in heaven. Don't let earthly labels define you—live according to your heavenly identity.`,
+**Meaning:** If then you have been raised with Christ, seek the things that are above, where Christ is, seated at the right hand of God. Set your minds on things that are above, not on things that are on earth. For you have died, and your life is hidden with Christ in God.  
+**Application:** Your true life is with Christ in heaven. Don't let earthly labels define you—live according to your heavenly identity.`.trim(),
         },
         {
           id: "d5-gal220",
           type: "scripture",
           title: "Christ Lives in Me",
           reference: "Galatians 2:20",
-          body: `**Plain Meaning:** I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself for me.
+          body: `**Scripture (KJV)**  
+> "I am crucified with Christ: nevertheless I live; yet not I, but Christ liveth in me: and the life which I now live in the flesh I live by the faith of the Son of God, who loved me, and gave himself for me."
 
-**Application:** Your old self is dead. Now Christ lives in you. Every day, you live by faith in His love and power, not your own.`,
+**Meaning:** I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself for me.  
+**Application:** Your old self is dead. Now Christ lives in you. Every day, you live by faith in His love and power, not your own.`.trim(),
         },
         {
           id: "d5-rom612-13",
           type: "scripture",
           title: "Do Not Let Sin Reign",
           reference: "Romans 6:12–13",
-          body: `**Plain Meaning:** Let not sin therefore reign in your mortal body, to make you obey its passions. Do not present your members to sin as instruments for unrighteousness, but present yourselves to God as those who have been brought from death to life.
+          body: `**Scripture (KJV)**  
+> "Let not sin therefore reign in your mortal body, that ye should obey it in the lusts thereof. Neither yield ye your members as instruments of unrighteousness unto sin: but yield yourselves unto God, as those that are alive from the dead, and your members as instruments of righteousness unto God."
 
-**Application:** You are alive in Christ. Don't give sin control—present yourself to God as someone who has been made new.`,
+**Meaning:** Let not sin therefore reign in your mortal body, to make you obey its passions. Do not present your members to sin as instruments for unrighteousness, but present yourselves to God as those who have been brought from death to life.  
+**Application:** You are alive in Christ. Don't give sin control—present yourself to God as someone who has been made new.`.trim(),
         },
         {
           id: "d5-phil313",
           type: "scripture",
           title: "Forgetting What Lies Behind",
           reference: "Philippians 3:13",
-          body: `**Plain Meaning:** Brothers, I do not consider that I have made it my own. But one thing I do: forgetting what lies behind and straining forward to what lies ahead.
+          body: `**Scripture (KJV)**  
+> "Brethren, I count not myself to have apprehended: but this one thing I do, forgetting those things which are behind, and reaching forth unto those things which are before,"
 
-**Application:** Don't dwell on your old identity. Press forward into the fullness of who you are in Christ.`,
+**Meaning:** Brothers, I do not consider that I have made it my own. But one thing I do: forgetting what lies behind and straining forward to what lies ahead.  
+**Application:** Don't dwell on your old identity. Press forward into the fullness of who you are in Christ.`.trim(),
         },
       ],
     },
@@ -4437,36 +4847,44 @@ Lord, I am afraid. I bring this fear to You—not to fix it on my own, but to tr
           type: "scripture",
           title: "When I Am Afraid, I Trust in You",
           reference: "Psalm 56:3",
-          body: `**Plain Meaning:** David admits his fear but chooses to respond by putting his trust in God.
+          body: `**Scripture (KJV)**  
+> "What time I am afraid, I will trust in thee."
 
-**Application:** Fear is not sin—it's what you do with the fear that matters. When fear comes, turn toward God, not away from Him.`,
+**Meaning:** David admits his fear but chooses to respond by putting his trust in God.  
+**Application:** Fear is not sin—it's what you do with the fear that matters. When fear comes, turn toward God, not away from Him.`.trim(),
         },
         {
           id: "d1-ps344-5",
           type: "scripture",
           title: "Seek the Lord and Be Delivered",
           reference: "Psalm 34:4–5",
-          body: `**Plain Meaning:** Those who seek the Lord are delivered from their fears, and their faces are radiant with hope.
+          body: `**Scripture (KJV)**  
+> "I sought the LORD, and he heard me, and delivered me from all my fears. They looked unto him, and were lightened: and their faces were not ashamed."
 
-**Application:** Don't carry fear alone. Seek God actively, and He will meet you in it.`,
+**Meaning:** Those who seek the Lord are delivered from their fears, and their faces are radiant with hope.  
+**Application:** Don't carry fear alone. Seek God actively, and He will meet you in it.`.trim(),
         },
         {
           id: "d1-ps3411",
           type: "scripture",
           title: "The Lord Hears the Cry of the Afflicted",
           reference: "Psalm 34:17",
-          body: `**Plain Meaning:** When the righteous cry out, the Lord hears them and delivers them from all their troubles.
+          body: `**Scripture (KJV)**  
+> "The righteous cry, and the LORD heareth, and delivereth them out of all their troubles."
 
-**Application:** Your cry doesn't fall on deaf ears. God is attentive to your fear and ready to act.`,
+**Meaning:** When the righteous cry out, the Lord hears them and delivers them from all their troubles.  
+**Application:** Your cry doesn't fall on deaf ears. God is attentive to your fear and ready to act.`.trim(),
         },
         {
           id: "d1-ps2714",
           type: "scripture",
           title: "Wait for the Lord; Be Strong",
           reference: "Psalm 27:14",
-          body: `**Plain Meaning:** Wait for the Lord; be strong, and let your heart take courage; wait for the Lord!
+          body: `**Scripture (KJV)**  
+> "Wait on the LORD: be of good courage, and he shall strengthen thine heart: wait, I say, on the LORD."
 
-**Application:** Courage is not the absence of fear—it's trusting God while you wait for Him to act.`,
+**Meaning:** Wait for the Lord; be strong, and let your heart take courage; wait for the Lord!  
+**Application:** Courage is not the absence of fear—it's trusting God while you wait for Him to act.`.trim(),
         },
       ],
     },
@@ -4502,36 +4920,44 @@ Lord, my anxious thoughts tell me You are far away. Remind me of Your nearness. 
           type: "scripture",
           title: "Rejoice, the Lord Is at Hand",
           reference: "Philippians 4:4–7",
-          body: `**Plain Meaning:** Rejoice always, for the Lord is near. Don't be anxious; instead, pray about everything, and God's peace will guard your heart and mind.
+          body: `**Scripture (KJV)**  
+> "Rejoice in the Lord alway: and again I say, Rejoice. Let your moderation be known unto all men. The Lord is at hand. Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."
 
-**Application:** Anxiety is defeated not by trying harder to calm down, but by turning everything over to God in prayer.`,
+**Meaning:** Rejoice always, for the Lord is near. Don't be anxious; instead, pray about everything, and God's peace will guard your heart and mind.  
+**Application:** Anxiety is defeated not by trying harder to calm down, but by turning everything over to God in prayer.`.trim(),
         },
         {
           id: "d2-ps469",
           type: "scripture",
           title: "Be Still and Know",
           reference: "Psalm 46:10",
-          body: `**Plain Meaning:** Be still, and know that I am God. I will be exalted among the nations, I will be exalted in the earth!
+          body: `**Scripture (KJV)**  
+> "Be still, and know that I am God: I will be exalted among the heathen, I will be exalted in the earth."
 
-**Application:** Stillness is an act of trust. When anxiety screams for action, God invites you to rest in His sovereignty.`,
+**Meaning:** Be still, and know that I am God. I will be exalted among the nations, I will be exalted in the earth!  
+**Application:** Stillness is an act of trust. When anxiety screams for action, God invites you to rest in His sovereignty.`.trim(),
         },
         {
           id: "d2-ps1455-6",
           type: "scripture",
           title: "The Lord Upholds the Brokenhearted",
           reference: "Psalm 145:14",
-          body: `**Plain Meaning:** The Lord upholds all who are falling and raises up all who are bowed down.
+          body: `**Scripture (KJV)**  
+> "The LORD upholdeth all that fall, and raiseth up all those that be bowed down."
 
-**Application:** When anxiety weighs you down, God is the One who lifts you. You don't have to carry it alone.`,
+**Meaning:** The Lord upholds all who are falling and raises up all who are bowed down.  
+**Application:** When anxiety weighs you down, God is the One who lifts you. You don't have to carry it alone.`.trim(),
         },
         {
           id: "d2-isa4110",
           type: "scripture",
           title: "Fear Not, I Am with You",
           reference: "Isaiah 41:10",
-          body: `**Plain Meaning:** Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you, I will uphold you with My righteous right hand.
+          body: `**Scripture (KJV)**  
+> "¶ Fear thou not; for I am with thee: be not dismayed; for I am thy God: I will strengthen thee; yea, I will help thee; yea, I will uphold thee with the right hand of my righteousness."
 
-**Application:** God doesn't just tell you not to fear—He gives you reasons not to: His presence, His strength, His help, His upholding hand.`,
+**Meaning:** Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you, I will uphold you with My righteous right hand.  
+**Application:** God doesn't just tell you not to fear—He gives you reasons not to: His presence, His strength, His help, His upholding hand.`.trim(),
         },
       ],
     },
@@ -4567,27 +4993,33 @@ Father, I release this weight to You. I've been trying to carry it, and I can't.
           type: "scripture",
           title: "Cast All Your Anxieties on Him",
           reference: "1 Peter 5:6–7",
-          body: `**Plain Meaning:** Humble yourselves under the mighty hand of God, and at the proper time He will exalt you, casting all your anxieties on Him, because He cares for you.
+          body: `**Scripture (KJV)**  
+> "Humble yourselves therefore under the mighty hand of God, that he may exalt you in due time: Casting all your care upon him; for he careth for you."
 
-**Application:** Casting your cares is an expression of humility. It admits you cannot carry it—and that you trust God can.`,
+**Meaning:** Humble yourselves under the mighty hand of God, and at the proper time He will exalt you, casting all your anxieties on Him, because He cares for you.  
+**Application:** Casting your cares is an expression of humility. It admits you cannot carry it—and that you trust God can.`.trim(),
         },
         {
           id: "d3-matt1128-30",
           type: "scripture",
           title: "Come to Me, You Who Are Weary",
           reference: "Matthew 11:28–30",
-          body: `**Plain Meaning:** Jesus invites all who are weary and burdened to come to Him for rest. His yoke is easy and His burden is light.
+          body: `**Scripture (KJV)**  
+> "¶ Come unto me, all ye that labour and are heavy laden, and I will give you rest. Take my yoke upon you, and learn of me; for I am meek and lowly in heart: and ye shall find rest unto your souls. For my yoke is easy, and my burden is light."
 
-**Application:** Jesus doesn't add more weight—He lifts it. Come to Him with your burdens, and He will give you rest.`,
+**Meaning:** Jesus invites all who are weary and burdened to come to Him for rest. His yoke is easy and His burden is light.  
+**Application:** Jesus doesn't add more weight—He lifts it. Come to Him with your burdens, and He will give you rest.`.trim(),
         },
         {
           id: "d3-ps5522",
           type: "scripture",
           title: "Cast Your Burden on the Lord",
           reference: "Psalm 55:22",
-          body: `**Plain Meaning:** Cast your burden on the Lord, and He will sustain you; He will never permit the righteous to be moved.
+          body: `**Scripture (KJV)**  
+> "Cast thy burden upon the LORD, and he shall sustain thee: he shall never suffer the righteous to be moved."
 
-**Application:** God doesn't promise to remove every burden instantly, but He does promise to sustain you through it.`,
+**Meaning:** Cast your burden on the Lord, and He will sustain you; He will never permit the righteous to be moved.  
+**Application:** God doesn't promise to remove every burden instantly, but He does promise to sustain you through it.`.trim(),
         },
       ],
     },
@@ -4623,36 +5055,44 @@ Lord, forgive me for fearing people more than You. Help me to live for Your appr
           type: "scripture",
           title: "The Fear of Man Is a Snare",
           reference: "Proverbs 29:25",
-          body: `**Plain Meaning:** The fear of man lays a snare, but whoever trusts in the Lord is safe.
+          body: `**Scripture (KJV)**  
+> "The fear of man bringeth a snare: but whoso putteth his trust in the LORD shall be safe."
 
-**Application:** Trusting God is the antidote to the fear of man. When you trust Him, you are secure—no matter what others think.`,
+**Meaning:** The fear of man lays a snare, but whoever trusts in the Lord is safe.  
+**Application:** Trusting God is the antidote to the fear of man. When you trust Him, you are secure—no matter what others think.`.trim(),
         },
         {
           id: "d4-gal110",
           type: "scripture",
           title: "Am I Trying to Please Man?",
           reference: "Galatians 1:10",
-          body: `**Plain Meaning:** Paul asks: Am I now seeking the approval of man, or of God? If I were still trying to please man, I would not be a servant of Christ.
+          body: `**Scripture (KJV)**  
+> "For do I now persuade men, or God? or do I seek to please men? for if I yet pleased men, I should not be the servant of Christ."
 
-**Application:** You cannot serve two masters. Choose today: Will you live for God's approval or man's applause?`,
+**Meaning:** Paul asks: Am I now seeking the approval of man, or of God? If I were still trying to please man, I would not be a servant of Christ.  
+**Application:** You cannot serve two masters. Choose today: Will you live for God's approval or man's applause?`.trim(),
         },
         {
           id: "d4-acts529",
           type: "scripture",
           title: "We Must Obey God Rather Than Men",
           reference: "Acts 5:29",
-          body: `**Plain Meaning:** Peter and the apostles answered: We must obey God rather than men.
+          body: `**Scripture (KJV)**  
+> "¶ Then Peter and the other apostles answered and said, We ought to obey God rather than men."
 
-**Application:** When obedience to God conflicts with pleasing people, the choice is clear. Obey God.`,
+**Meaning:** Peter and the apostles answered: We must obey God rather than men.  
+**Application:** When obedience to God conflicts with pleasing people, the choice is clear. Obey God.`.trim(),
         },
         {
           id: "d4-matt1028",
           type: "scripture",
           title: "Do Not Fear Those Who Kill the Body",
           reference: "Matthew 10:28",
-          body: `**Plain Meaning:** Do not fear those who kill the body but cannot kill the soul. Rather fear Him who can destroy both soul and body in hell.
+          body: `**Scripture (KJV)**  
+> "And fear not them which kill the body, but are not able to kill the soul: but rather fear him which is able to destroy both soul and body in hell."
 
-**Application:** The worst any person can do is limited. God's authority is eternal. Fear Him, not them.`,
+**Meaning:** Do not fear those who kill the body but cannot kill the soul. Rather fear Him who can destroy both soul and body in hell.  
+**Application:** The worst any person can do is limited. God's authority is eternal. Fear Him, not them.`.trim(),
         },
       ],
     },
@@ -4686,36 +5126,44 @@ Prince of Peace, guard my heart and mind. Teach me to rest in You, to set my tho
           type: "scripture",
           title: "Perfect Peace for the Steadfast Mind",
           reference: "Isaiah 26:3",
-          body: `**Plain Meaning:** You keep him in perfect peace whose mind is stayed on You, because he trusts in You.
+          body: `**Scripture (KJV)**  
+> "Thou wilt keep him in perfect peace, whose mind is stayed on thee: because he trusteth in thee."
 
-**Application:** Peace is the fruit of a mind anchored on God. What you focus on determines your peace.`,
+**Meaning:** You keep him in perfect peace whose mind is stayed on You, because he trusts in You.  
+**Application:** Peace is the fruit of a mind anchored on God. What you focus on determines your peace.`.trim(),
         },
         {
           id: "d5-john1427",
           type: "scripture",
           title: "My Peace I Give to You",
           reference: "John 14:27",
-          body: `**Plain Meaning:** Jesus gives His peace—not as the world gives, but as a gift that calms troubled and fearful hearts.
+          body: `**Scripture (KJV)**  
+> "Peace I leave with you, my peace I give unto you: not as the world giveth, give I unto you. Let not your heart be troubled, neither let it be afraid."
 
-**Application:** The peace Jesus offers doesn't depend on your circumstances. It is rooted in His presence and His finished work.`,
+**Meaning:** Jesus gives His peace—not as the world gives, but as a gift that calms troubled and fearful hearts.  
+**Application:** The peace Jesus offers doesn't depend on your circumstances. It is rooted in His presence and His finished work.`.trim(),
         },
         {
           id: "d5-col315",
           type: "scripture",
           title: "Let the Peace of Christ Rule",
           reference: "Colossians 3:15",
-          body: `**Plain Meaning:** Let the peace of Christ rule in your hearts, to which indeed you were called in one body. And be thankful.
+          body: `**Scripture (KJV)**  
+> "And let the peace of God rule in your hearts, to the which also ye are called in one body; and be ye thankful."
 
-**Application:** Peace is meant to rule your heart—to be the umpire of your decisions, emotions, and reactions. Let it lead you.`,
+**Meaning:** Let the peace of Christ rule in your hearts, to which indeed you were called in one body. And be thankful.  
+**Application:** Peace is meant to rule your heart—to be the umpire of your decisions, emotions, and reactions. Let it lead you.`.trim(),
         },
         {
           id: "d5-rom158",
           type: "scripture",
           title: "The God of Hope Fills You with Peace",
           reference: "Romans 15:13",
-          body: `**Plain Meaning:** May the God of hope fill you with all joy and peace in believing, so that by the power of the Holy Spirit you may abound in hope.
+          body: `**Scripture (KJV)**  
+> "Now the God of hope fill you with all joy and peace in believing, that ye may abound in hope, through the power of the Holy Ghost."
 
-**Application:** Peace is a gift from the God of hope. As you trust Him, He fills you with peace by the Spirit's power.`,
+**Meaning:** May the God of hope fill you with all joy and peace in believing, so that by the power of the Holy Spirit you may abound in hope.  
+**Application:** Peace is a gift from the God of hope. As you trust Him, He fills you with peace by the Spirit's power.`.trim(),
         },
       ],
     },
@@ -4761,36 +5209,44 @@ Father, forgive me for treating time with You as optional. Help me to see it as 
           type: "scripture",
           title: "Earnestly Seeking God",
           reference: "Psalm 63:1–2",
-          body: `**Plain Meaning:** David's soul thirsts for God; he earnestly seeks Him because he has seen God's power and glory.
+          body: `**Scripture (KJV)**  
+> "O God, thou art my God; early will I seek thee: my soul thirsteth for thee, my flesh longeth for thee in a dry and thirsty land, where no water is; To see thy power and thy glory, so as I have seen thee in the sanctuary."
 
-**Application:** Time with God begins with desire. Ask God to give you a longing for His presence, not just a sense of duty.`,
+**Meaning:** David's soul thirsts for God; he earnestly seeks Him because he has seen God's power and glory.  
+**Application:** Time with God begins with desire. Ask God to give you a longing for His presence, not just a sense of duty.`.trim(),
         },
         {
           id: "d1-luke516",
           type: "scripture",
           title: "Jesus Withdrew to Pray",
           reference: "Luke 5:16",
-          body: `**Plain Meaning:** Jesus would withdraw to desolate places and pray.
+          body: `**Scripture (KJV)**  
+> "¶ And he withdrew himself into the wilderness, and prayed."
 
-**Application:** If Jesus needed time alone with the Father, you do too. Follow His example—make time, protect it, prioritize it.`,
+**Meaning:** Jesus would withdraw to desolate places and pray.  
+**Application:** If Jesus needed time alone with the Father, you do too. Follow His example—make time, protect it, prioritize it.`.trim(),
         },
         {
           id: "d1-ps14312",
           type: "scripture",
           title: "Satisfy Us in the Morning",
           reference: "Psalm 90:14",
-          body: `**Plain Meaning:** Satisfy us in the morning with Your steadfast love, that we may rejoice and be glad all our days.
+          body: `**Scripture (KJV)**  
+> "O satisfy us early with thy mercy; that we may rejoice and be glad all our days."
 
-**Application:** Starting your day with God sets the tone for everything. Let His love be the first thing that satisfies your soul.`,
+**Meaning:** Satisfy us in the morning with Your steadfast love, that we may rejoice and be glad all our days.  
+**Application:** Starting your day with God sets the tone for everything. Let His love be the first thing that satisfies your soul.`.trim(),
         },
         {
           id: "d1-jer2913",
           type: "scripture",
           title: "Seek Me and Find Me",
           reference: "Jeremiah 29:13",
-          body: `**Plain Meaning:** You will seek Me and find Me, when you seek Me with all your heart.
+          body: `**Scripture (KJV)**  
+> "And ye shall seek me, and find me, when ye shall search for me with all your heart."
 
-**Application:** God promises to be found by those who genuinely seek Him. He's not hiding—He's waiting for you to come.`,
+**Meaning:** You will seek Me and find Me, when you seek Me with all your heart.  
+**Application:** God promises to be found by those who genuinely seek Him. He's not hiding—He's waiting for you to come.`.trim(),
         },
       ],
     },
@@ -4826,27 +5282,33 @@ Father, teach me to pray honestly. Help me to stop performing and start pouring 
           type: "scripture",
           title: "The Lord's Prayer",
           reference: "Matthew 6:9–13",
-          body: `**Plain Meaning:** Jesus teaches His disciples to pray by honoring God's name, submitting to His will, asking for provision, seeking forgiveness, and requesting deliverance.
+          body: `**Scripture (KJV)**  
+> "After this manner therefore pray ye: Our Father which art in heaven, Hallowed be thy name. Thy kingdom come. Thy will be done in earth, as it is in heaven. Give us this day our daily bread. And forgive us our debts, as we forgive our debtors. And lead us not into temptation, but deliver us from evil: For thine is the kingdom, and the power, and the glory, for ever. Amen."
 
-**Application:** The Lord's Prayer is a model. It shows you how to balance worship, dependence, confession, and trust in your prayers.`,
+**Meaning:** Jesus teaches His disciples to pray by honoring God's name, submitting to His will, asking for provision, seeking forgiveness, and requesting deliverance.  
+**Application:** The Lord's Prayer is a model. It shows you how to balance worship, dependence, confession, and trust in your prayers.`.trim(),
         },
         {
           id: "d2-ps624-8",
           type: "scripture",
           title: "Pour Out Your Heart Before Him",
           reference: "Psalm 62:8",
-          body: `**Plain Meaning:** Trust in Him at all times, O people; pour out your heart before Him; God is a refuge for us.
+          body: `**Scripture (KJV)**  
+> "Trust in him at all times; ye people, pour out your heart before him: God is a refuge for us. Selah."
 
-**Application:** Don't hold back. Whatever is in your heart—fear, anger, joy, confusion—pour it out to God. He is your refuge.`,
+**Meaning:** Trust in Him at all times, O people; pour out your heart before Him; God is a refuge for us.  
+**Application:** Don't hold back. Whatever is in your heart—fear, anger, joy, confusion—pour it out to God. He is your refuge.`.trim(),
         },
         {
           id: "d2-phil46-7",
           type: "scripture",
           title: "Let Your Requests Be Made Known",
           reference: "Philippians 4:6–7",
-          body: `**Plain Meaning:** In everything, by prayer and supplication with thanksgiving, let your requests be made known to God.
+          body: `**Scripture (KJV)**  
+> "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."
 
-**Application:** Bring everything to God—big or small. He cares about all of it, and He invites you to ask.`,
+**Meaning:** In everything, by prayer and supplication with thanksgiving, let your requests be made known to God.  
+**Application:** Bring everything to God—big or small. He cares about all of it, and He invites you to ask.`.trim(),
         },
       ],
     },
@@ -4882,36 +5344,44 @@ Lord, slow me down. Help me not to rush past Your Word but to meditate on it, sa
           type: "scripture",
           title: "Meditate Day and Night",
           reference: "Psalm 1:1–2",
-          body: `**Plain Meaning:** Blessed is the one whose delight is in the law of the Lord, and who meditates on it day and night.
+          body: `**Scripture (KJV)**  
+> "Blessed is the man that walketh not in the counsel of the ungodly, nor standeth in the way of sinners, nor sitteth in the seat of the scornful. But his delight is in the law of the LORD; and in his law doth he meditate day and night."
 
-**Application:** Meditation is not a burden; it's a delight. When you love God's Word, you naturally want to think about it all day.`,
+**Meaning:** Blessed is the one whose delight is in the law of the Lord, and who meditates on it day and night.  
+**Application:** Meditation is not a burden; it's a delight. When you love God's Word, you naturally want to think about it all day.`.trim(),
         },
         {
           id: "d3-josh18",
           type: "scripture",
           title: "Do Not Let This Book Depart",
           reference: "Joshua 1:8",
-          body: `**Plain Meaning:** Meditate on God's Word day and night so that you may be careful to do everything written in it. Then you will prosper and succeed.
+          body: `**Scripture (KJV)**  
+> "This book of the law shall not depart out of thy mouth; but thou shalt meditate therein day and night, that thou mayest observe to do according to all that is written therein: for then thou shalt make thy way prosperous, and then thou shalt have good success."
 
-**Application:** Success in God's eyes comes from meditating on His Word and obeying it. The two are inseparable.`,
+**Meaning:** Meditate on God's Word day and night so that you may be careful to do everything written in it. Then you will prosper and succeed.  
+**Application:** Success in God's eyes comes from meditating on His Word and obeying it. The two are inseparable.`.trim(),
         },
         {
           id: "d3-ps11997",
           type: "scripture",
           title: "Oh, How I Love Your Law",
           reference: "Psalm 119:97",
-          body: `**Plain Meaning:** Oh, how I love Your law! It is my meditation all the day.
+          body: `**Scripture (KJV)**  
+> "O how love I thy law! it is my meditation all the day."
 
-**Application:** Love for God's Word and meditation go together. The more you meditate, the more you love it; the more you love it, the more you meditate.`,
+**Meaning:** Oh, how I love Your law! It is my meditation all the day.  
+**Application:** Love for God's Word and meditation go together. The more you meditate, the more you love it; the more you love it, the more you meditate.`.trim(),
         },
         {
           id: "d3-col316",
           type: "scripture",
           title: "Let the Word Dwell Richly",
           reference: "Colossians 3:16",
-          body: `**Plain Meaning:** Let the word of Christ dwell in you richly, teaching and admonishing one another in all wisdom.
+          body: `**Scripture (KJV)**  
+> "Let the word of Christ dwell in you richly in all wisdom; teaching and admonishing one another in psalms and hymns and spiritual songs, singing with grace in your hearts to the Lord."
 
-**Application:** God's Word should be so deeply embedded in you that it overflows into your relationships, decisions, and worship.`,
+**Meaning:** Let the word of Christ dwell in you richly, teaching and admonishing one another in all wisdom.  
+**Application:** God's Word should be so deeply embedded in you that it overflows into your relationships, decisions, and worship.`.trim(),
         },
       ],
     },
@@ -4947,27 +5417,33 @@ Lord, give me ears to hear and a heart willing to obey. Don't let me be a hearer
           type: "scripture",
           title: "Be Doers of the Word",
           reference: "James 1:22–25",
-          body: `**Plain Meaning:** Be doers of the Word, not hearers only. The one who looks into God's Word and acts on it will be blessed.
+          body: `**Scripture (KJV)**  
+> "But be ye doers of the word, and not hearers only, deceiving your own selves. For if any be a hearer of the word, and not a doer, he is like unto a man beholding his natural face in a glass: For he beholdeth himself, and goeth his way, and straightway forgetteth what manner of man he was. But whoso looketh into the perfect law of liberty, and continueth therein, he being not a forgetful hearer, but a doer of the work, this man shall be blessed in his deed."
 
-**Application:** The blessing is not in knowing God's Word—it's in obeying it. Knowledge without obedience puffs up.`,
+**Meaning:** Be doers of the Word, not hearers only. The one who looks into God's Word and acts on it will be blessed.  
+**Application:** The blessing is not in knowing God's Word—it's in obeying it. Knowledge without obedience puffs up.`.trim(),
         },
         {
           id: "d4-luke1128",
           type: "scripture",
           title: "Blessed Are Those Who Hear and Keep",
           reference: "Luke 11:28",
-          body: `**Plain Meaning:** Jesus says, "Blessed rather are those who hear the word of God and keep it!"
+          body: `**Scripture (KJV)**  
+> "But he said, Yea rather, blessed are they that hear the word of God, and keep it."
 
-**Application:** It's not enough to hear. True blessing comes from hearing and keeping—obeying what God has said.`,
+**Meaning:** Jesus says, "Blessed rather are those who hear the word of God and keep it!"  
+**Application:** It's not enough to hear. True blessing comes from hearing and keeping—obeying what God has said.`.trim(),
         },
         {
           id: "d4-john1417",
           type: "scripture",
           title: "If You Love Me, Keep My Commandments",
           reference: "John 14:15",
-          body: `**Plain Meaning:** Jesus says, "If you love Me, you will keep My commandments."
+          body: `**Scripture (KJV)**  
+> "¶ If ye love me, keep my commandments."
 
-**Application:** Love for Jesus is proven by obedience. If you claim to love Him but refuse to obey, your love is only words.`,
+**Meaning:** Jesus says, "If you love Me, you will keep My commandments."  
+**Application:** Love for Jesus is proven by obedience. If you claim to love Him but refuse to obey, your love is only words.`.trim(),
         },
       ],
     },
@@ -5003,27 +5479,33 @@ Lord, forgive me for letting other things crowd You out. Help me to prioritize Y
           type: "scripture",
           title: "Seek First the Kingdom",
           reference: "Matthew 6:33",
-          body: `**Plain Meaning:** Seek first the kingdom of God and His righteousness, and all these things will be added to you.
+          body: `**Scripture (KJV)**  
+> "But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you."
 
-**Application:** When you put God first, everything else falls into place. He promises to provide what you need as you seek Him.`,
+**Meaning:** Seek first the kingdom of God and His righteousness, and all these things will be added to you.  
+**Application:** When you put God first, everything else falls into place. He promises to provide what you need as you seek Him.`.trim(),
         },
         {
           id: "d5-mark135",
           type: "scripture",
           title: "Jesus Rose Early to Pray",
           reference: "Mark 1:35",
-          body: `**Plain Meaning:** Very early in the morning, while it was still dark, Jesus got up, left the house, and went off to a solitary place to pray.
+          body: `**Scripture (KJV)**  
+> "And in the morning, rising up a great while before day, he went out, and departed into a solitary place, and there prayed."
 
-**Application:** Even Jesus prioritized time alone with the Father—before the busyness of the day began.`,
+**Meaning:** Very early in the morning, while it was still dark, Jesus got up, left the house, and went off to a solitary place to pray.  
+**Application:** Even Jesus prioritized time alone with the Father—before the busyness of the day began.`.trim(),
         },
         {
           id: "d5-ps51-3",
           type: "scripture",
           title: "In the Morning, O Lord, You Hear My Voice",
           reference: "Psalm 5:3",
-          body: `**Plain Meaning:** In the morning, O Lord, You hear my voice; in the morning I prepare a sacrifice for You and watch expectantly.
+          body: `**Scripture (KJV)**  
+> "My voice shalt thou hear in the morning, O LORD; in the morning will I direct my prayer unto thee, and will look up."
 
-**Application:** Morning time with God sets the tone for your day. Come expectantly—God is ready to meet you.`,
+**Meaning:** In the morning, O Lord, You hear my voice; in the morning I prepare a sacrifice for You and watch expectantly.  
+**Application:** Morning time with God sets the tone for your day. Come expectantly—God is ready to meet you.`.trim(),
         },
       ],
     },
@@ -5069,27 +5551,33 @@ Jesus, You are the King who became a servant. Teach me to follow Your example—
           type: "scripture",
           title: "Jesus Washes the Disciples' Feet",
           reference: "John 13:1–5",
-          body: `**Plain Meaning:** Jesus, knowing His hour had come and loving His own to the end, took a towel and washed His disciples' feet.
+          body: `**Scripture (KJV)**  
+> "Now before the feast of the passover, when Jesus knew that his hour was come that he should depart out of this world unto the Father, having loved his own which were in the world, he loved them unto the end. And supper being ended, the devil having now put into the heart of Judas Iscariot, Simon’s son, to betray him; Jesus knowing that the Father had given all things into his hands, and that he was come from God, and went to God; He riseth from supper, and laid aside his garments; and took a towel, and girded himself. After that he poureth water into a bason, and began to wash the disciples’ feet, and to wipe them with the towel wherewith he was girded."
 
-**Application:** Love expresses itself in service. Jesus' act of washing feet was not a one-time gesture—it was a picture of how He constantly serves those He loves.`,
+**Meaning:** Jesus, knowing His hour had come and loving His own to the end, took a towel and washed His disciples' feet.  
+**Application:** Love expresses itself in service. Jesus' act of washing feet was not a one-time gesture—it was a picture of how He constantly serves those He loves.`.trim(),
         },
         {
           id: "d1-john1312-15",
           type: "scripture",
           title: "I Have Given You an Example",
           reference: "John 13:12–15",
-          body: `**Plain Meaning:** After washing their feet, Jesus said, "I have given you an example, that you also should do just as I have done to you."
+          body: `**Scripture (KJV)**  
+> "So after he had washed their feet, and had taken his garments, and was set down again, he said unto them, Know ye what I have done to you? Ye call me Master and Lord: and ye say well; for so I am. If I then, your Lord and Master, have washed your feet; ye also ought to wash one another’s feet. For I have given you an example, that ye should do as I have done to you."
 
-**Application:** Jesus didn't just tell you to serve—He showed you how. His life is the blueprint for servant-hearted living.`,
+**Meaning:** After washing their feet, Jesus said, "I have given you an example, that you also should do just as I have done to you."  
+**Application:** Jesus didn't just tell you to serve—He showed you how. His life is the blueprint for servant-hearted living.`.trim(),
         },
         {
           id: "d1-phil25-8",
           type: "scripture",
           title: "He Took the Form of a Servant",
           reference: "Philippians 2:5–8",
-          body: `**Plain Meaning:** Jesus, though He was in the form of God, did not count equality with God a thing to be grasped, but emptied Himself, taking the form of a servant.
+          body: `**Scripture (KJV)**  
+> "Let this mind be in you, which was also in Christ Jesus: Who, being in the form of God, thought it not robbery to be equal with God: But made himself of no reputation, and took upon him the form of a servant, and was made in the likeness of men: And being found in fashion as a man, he humbled himself, and became obedient unto death, even the death of the cross."
 
-**Application:** If Jesus, who is God, humbled Himself to serve, no task is beneath you. Serve with the mind of Christ.`,
+**Meaning:** Jesus, though He was in the form of God, did not count equality with God a thing to be grasped, but emptied Himself, taking the form of a servant.  
+**Application:** If Jesus, who is God, humbled Himself to serve, no task is beneath you. Serve with the mind of Christ.`.trim(),
         },
       ],
     },
@@ -5125,27 +5613,33 @@ Lord, reshape my definition of greatness. Help me to measure my life not by what
           type: "scripture",
           title: "The Son of Man Came to Serve",
           reference: "Mark 10:42–45",
-          body: `**Plain Meaning:** Jesus said the Son of Man came not to be served but to serve, and to give His life as a ransom for many.
+          body: `**Scripture (KJV)**  
+> "But Jesus called them to him, and saith unto them, Ye know that they which are accounted to rule over the Gentiles exercise lordship over them; and their great ones exercise authority upon them. But so shall it not be among you: but whosoever will be great among you, shall be your minister: And whosoever of you will be the chiefest, shall be servant of all. For even the Son of man came not to be ministered unto, but to minister, and to give his life a ransom for many."
 
-**Application:** Jesus' entire mission was service and sacrifice. If you follow Him, your life should reflect the same.`,
+**Meaning:** Jesus said the Son of Man came not to be served but to serve, and to give His life as a ransom for many.  
+**Application:** Jesus' entire mission was service and sacrifice. If you follow Him, your life should reflect the same.`.trim(),
         },
         {
           id: "d2-matt2026-28",
           type: "scripture",
           title: "Whoever Wants to Be Great Must Be a Servant",
           reference: "Matthew 20:26–28",
-          body: `**Plain Meaning:** Whoever wants to be great must be a servant, and whoever wants to be first must be a slave—just as the Son of Man came to serve.
+          body: `**Scripture (KJV)**  
+> "But it shall not be so among you: but whosoever will be great among you, let him be your minister; And whosoever will be chief among you, let him be your servant: Even as the Son of man came not to be ministered unto, but to minister, and to give his life a ransom for many."
 
-**Application:** Ambition is not wrong—but it must be redirected. Seek to be great at serving, not at being served.`,
+**Meaning:** Whoever wants to be great must be a servant, and whoever wants to be first must be a slave—just as the Son of Man came to serve.  
+**Application:** Ambition is not wrong—but it must be redirected. Seek to be great at serving, not at being served.`.trim(),
         },
         {
           id: "d2-luke2226-27",
           type: "scripture",
           title: "I Am Among You as One Who Serves",
           reference: "Luke 22:26–27",
-          body: `**Plain Meaning:** Jesus says, "Let the greatest among you become as the youngest, and the leader as one who serves. I am among you as one who serves."
+          body: `**Scripture (KJV)**  
+> "But ye shall not be so: but he that is greatest among you, let him be as the younger; and he that is chief, as he that doth serve. For whether is greater, he that sitteth at meat, or he that serveth? is not he that sitteth at meat? but I am among you as he that serveth."
 
-**Application:** Jesus led by serving. If you want to lead well, follow His example.`,
+**Meaning:** Jesus says, "Let the greatest among you become as the youngest, and the leader as one who serves. I am among you as one who serves."  
+**Application:** Jesus led by serving. If you want to lead well, follow His example.`.trim(),
         },
       ],
     },
@@ -5181,27 +5675,33 @@ Lord, show me where You want me to serve in the body of Christ. Give me a willin
           type: "scripture",
           title: "Many Members, One Body",
           reference: "1 Corinthians 12:12–27",
-          body: `**Plain Meaning:** The body is one, yet it has many members. Each member has a role, and all are needed.
+          body: `**Scripture (KJV)**  
+> "For as the body is one, and hath many members, and all the members of that one body, being many, are one body: so also is Christ. For by one Spirit are we all baptized into one body, whether we be Jews or Gentiles, whether we be bond or free; and have been all made to drink into one Spirit. For the body is not one member, but many. If the foot shall say, Because I am not the hand, I am not of the body; is it therefore not of the body? And if the ear shall say, Because I am not the eye, I am not of the body; is it therefore not of the body? If the whole body were an eye, where were the hearing? If the whole were hearing, where were the smelling? But now hath God set the members every one of them in the body, as it hath pleased him. And if they were all one member, where were the body? But now are they many members, yet but one body. And the eye cannot say unto the hand, I have no need of thee: nor again the head to the feet, I have no need of you. Nay, much more those members of the body, which seem to be more feeble, are necessary: And those members of the body, which we think to be less honourable, upon these we bestow more abundant honour; and our uncomely parts have more abundant comeliness. For our comely parts have no need: but God hath tempered the body together, having given more abundant honour to that part which lacked: That there should be no schism in the body; but that the members should have the same care one for another. And whether one member suffer, all the members suffer with it; or one member be honoured, all the members rejoice with it. Now ye are the body of Christ, and members in particular."
 
-**Application:** You are not extra. You are essential. The body of Christ needs your unique gifts and service.`,
+**Meaning:** The body is one, yet it has many members. Each member has a role, and all are needed.  
+**Application:** You are not extra. You are essential. The body of Christ needs your unique gifts and service.`.trim(),
         },
         {
           id: "d3-1pet410-11",
           type: "scripture",
           title: "Serve One Another with Your Gifts",
           reference: "1 Peter 4:10–11",
-          body: `**Plain Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.
+          body: `**Scripture (KJV)**  
+> "As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God. If any man speak, let him speak as the oracles of God; if any man minister, let him do it as of the ability which God giveth: that God in all things may be glorified through Jesus Christ, to whom be praise and dominion for ever and ever. Amen."
 
-**Application:** Your gifts are not for you—they are for the benefit of others. Steward them well by serving the church.`,
+**Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.  
+**Application:** Your gifts are not for you—they are for the benefit of others. Steward them well by serving the church.`.trim(),
         },
         {
           id: "d3-rom126-8",
           type: "scripture",
           title: "Use Your Gifts According to Grace",
           reference: "Romans 12:6–8",
-          body: `**Plain Meaning:** Having gifts that differ according to the grace given to us, let us use them—prophecy, service, teaching, exhortation, giving, leading, showing mercy.
+          body: `**Scripture (KJV)**  
+> "Having then gifts differing according to the grace that is given to us, whether prophecy, let us prophesy according to the proportion of faith; Or ministry, let us wait on our ministering: or he that teacheth, on teaching; Or he that exhorteth, on exhortation: he that giveth, let him do it with simplicity; he that ruleth, with diligence; he that sheweth mercy, with cheerfulness."
 
-**Application:** Whatever your gift, use it. Don't wait for a title or permission—just serve faithfully.`,
+**Meaning:** Having gifts that differ according to the grace given to us, let us use them—prophecy, service, teaching, exhortation, giving, leading, showing mercy.  
+**Application:** Whatever your gift, use it. Don't wait for a title or permission—just serve faithfully.`.trim(),
         },
       ],
     },
@@ -5237,27 +5737,33 @@ Jesus, open my eyes to see You in the faces of the hurting, the lonely, the forg
           type: "scripture",
           title: "Whatever You Did for the Least, You Did for Me",
           reference: "Matthew 25:34–40",
-          body: `**Plain Meaning:** Jesus says that when you feed the hungry, welcome the stranger, clothe the naked, or visit the sick and imprisoned, you do it to Him.
+          body: `**Scripture (KJV)**  
+> "Then shall the King say unto them on his right hand, Come, ye blessed of my Father, inherit the kingdom prepared for you from the foundation of the world: For I was an hungred, and ye gave me meat: I was thirsty, and ye gave me drink: I was a stranger, and ye took me in: Naked, and ye clothed me: I was sick, and ye visited me: I was in prison, and ye came unto me. Then shall the righteous answer him, saying, Lord, when saw we thee an hungred, and fed thee? or thirsty, and gave thee drink? When saw we thee a stranger, and took thee in? or naked, and clothed thee? Or when saw we thee sick, or in prison, and came unto thee? And the King shall answer and say unto them, Verily I say unto you, Inasmuch as ye have done it unto one of the least of these my brethren, ye have done it unto me."
 
-**Application:** Every act of service to the vulnerable and overlooked is an act of worship to Christ.`,
+**Meaning:** Jesus says that when you feed the hungry, welcome the stranger, clothe the naked, or visit the sick and imprisoned, you do it to Him.  
+**Application:** Every act of service to the vulnerable and overlooked is an act of worship to Christ.`.trim(),
         },
         {
           id: "d4-prov1931",
           type: "scripture",
           title: "Kindness to the Poor Is Lending to the Lord",
           reference: "Proverbs 19:17",
-          body: `**Plain Meaning:** Whoever is generous to the poor lends to the Lord, and He will repay him for his deed.
+          body: `**Scripture (KJV)**  
+> "He that hath pity upon the poor lendeth unto the LORD; and that which he hath given will he pay him again."
 
-**Application:** Serving the poor is not charity you might regret—it's an investment God Himself will honor.`,
+**Meaning:** Whoever is generous to the poor lends to the Lord, and He will repay him for his deed.  
+**Application:** Serving the poor is not charity you might regret—it's an investment God Himself will honor.`.trim(),
         },
         {
           id: "d4-james115-17",
           type: "scripture",
           title: "Pure Religion: Care for Widows and Orphans",
           reference: "James 1:27",
-          body: `**Plain Meaning:** Pure and undefiled religion is to visit orphans and widows in their affliction.
+          body: `**Scripture (KJV)**  
+> "Pure religion and undefiled before God and the Father is this, To visit the fatherless and widows in their affliction, and to keep himself unspotted from the world."
 
-**Application:** True faith is not just what you believe—it's how you care for the vulnerable.`,
+**Meaning:** Pure and undefiled religion is to visit orphans and widows in their affliction.  
+**Application:** True faith is not just what you believe—it's how you care for the vulnerable.`.trim(),
         },
       ],
     },
@@ -5293,27 +5799,33 @@ Lord, make me a servant in every area of my life. Help me to see opportunities t
           type: "scripture",
           title: "Work as for the Lord",
           reference: "Colossians 3:23–24",
-          body: `**Plain Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward.
+          body: `**Scripture (KJV)**  
+> "And whatsoever ye do, do it heartily, as to the Lord, and not unto men; Knowing that of the Lord ye shall receive the reward of the inheritance: for ye serve the Lord Christ."
 
-**Application:** Even mundane work becomes worship when done as service to Christ.`,
+**Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward.  
+**Application:** Even mundane work becomes worship when done as service to Christ.`.trim(),
         },
         {
           id: "d5-eph525-28",
           type: "scripture",
           title: "Husbands, Love and Serve Your Wives",
           reference: "Ephesians 5:25–28",
-          body: `**Plain Meaning:** Husbands, love your wives, as Christ loved the church and gave Himself up for her.
+          body: `**Scripture (KJV)**  
+> "Husbands, love your wives, even as Christ also loved the church, and gave himself for it; That he might sanctify and cleanse it with the washing of water by the word, That he might present it to himself a glorious church, not having spot, or wrinkle, or any such thing; but that it should be holy and without blemish. So ought men to love their wives as their own bodies. He that loveth his wife loveth himself."
 
-**Application:** Christian marriage is built on sacrificial service, mirroring Christ's love for the church.`,
+**Meaning:** Husbands, love your wives, as Christ loved the church and gave Himself up for her.  
+**Application:** Christian marriage is built on sacrificial service, mirroring Christ's love for the church.`.trim(),
         },
         {
           id: "d5-gal513",
           type: "scripture",
           title: "Serve One Another Through Love",
           reference: "Galatians 5:13",
-          body: `**Plain Meaning:** You were called to freedom, brothers. Only do not use your freedom as an opportunity for the flesh, but through love serve one another.
+          body: `**Scripture (KJV)**  
+> "For, brethren, ye have been called unto liberty; only use not liberty for an occasion to the flesh, but by love serve one another."
 
-**Application:** Freedom in Christ is not freedom to please yourself—it's freedom to love and serve others.`,
+**Meaning:** You were called to freedom, brothers. Only do not use your freedom as an opportunity for the flesh, but through love serve one another.  
+**Application:** Freedom in Christ is not freedom to please yourself—it's freedom to love and serve others.`.trim(),
         },
       ],
     },
@@ -5359,27 +5871,33 @@ Father, thank You for creating marriage. Help me to honor Your design and to see
           type: "scripture",
           title: "One Flesh",
           reference: "Genesis 2:24",
-          body: `**Plain Meaning:** A man shall leave his father and mother and hold fast to his wife, and they shall become one flesh.
+          body: `**Scripture (KJV)**  
+> "Therefore shall a man leave his father and his mother, and shall cleave unto his wife: and they shall be one flesh."
 
-**Application:** Marriage is a covenant of leaving, cleaving, and becoming one. It is meant to be exclusive, permanent, and intimate.`,
+**Meaning:** A man shall leave his father and mother and hold fast to his wife, and they shall become one flesh.  
+**Application:** Marriage is a covenant of leaving, cleaving, and becoming one. It is meant to be exclusive, permanent, and intimate.`.trim(),
         },
         {
           id: "d1-matt194-6",
           type: "scripture",
           title: "What God Has Joined Together",
           reference: "Matthew 19:4–6",
-          body: `**Plain Meaning:** Jesus affirms God's design: one man, one woman, one flesh. What God has joined together, let no one separate.
+          body: `**Scripture (KJV)**  
+> "And he answered and said unto them, Have ye not read, that he which made them at the beginning made them male and female, And said, For this cause shall a man leave father and mother, and shall cleave to his wife: and they twain shall be one flesh? Wherefore they are no more twain, but one flesh. What therefore God hath joined together, let not man put asunder."
 
-**Application:** Marriage is not a human contract you can break at will—it is a divine covenant God holds you to.`,
+**Meaning:** Jesus affirms God's design: one man, one woman, one flesh. What God has joined together, let no one separate.  
+**Application:** Marriage is not a human contract you can break at will—it is a divine covenant God holds you to.`.trim(),
         },
         {
           id: "d1-mal215-16",
           type: "scripture",
           title: "Guard Your Spirit; Do Not Be Faithless",
           reference: "Malachi 2:15–16",
-          body: `**Plain Meaning:** God hates divorce because it breaks the covenant He witnessed. Guard your spirit and do not be faithless to the wife of your youth.
+          body: `**Scripture (KJV)**  
+> "And did not he make one? Yet had he the residue of the spirit. And wherefore one? That he might seek a godly seed. Therefore take heed to your spirit, and let none deal treacherously against the wife of his youth. For the LORD, the God of Israel, saith that he hateth putting away: for one covereth violence with his garment, saith the LORD of hosts: therefore take heed to your spirit, that ye deal not treacherously."
 
-**Application:** God takes your marriage covenant seriously. Guard it fiercely, and do not treat it lightly.`,
+**Meaning:** God hates divorce because it breaks the covenant He witnessed. Guard your spirit and do not be faithless to the wife of your youth.  
+**Application:** God takes your marriage covenant seriously. Guard it fiercely, and do not treat it lightly.`.trim(),
         },
       ],
     },
@@ -5413,27 +5931,33 @@ Lord, help me to fulfill my role in marriage with humility and love. Teach me to
           type: "scripture",
           title: "Husbands, Love Your Wives",
           reference: "Ephesians 5:25–28",
-          body: `**Plain Meaning:** Husbands, love your wives, as Christ loved the church and gave Himself up for her.
+          body: `**Scripture (KJV)**  
+> "Husbands, love your wives, even as Christ also loved the church, and gave himself for it; That he might sanctify and cleanse it with the washing of water by the word, That he might present it to himself a glorious church, not having spot, or wrinkle, or any such thing; but that it should be holy and without blemish. So ought men to love their wives as their own bodies. He that loveth his wife loveth himself."
 
-**Application:** Husbands, your love should be sacrificial, not self-serving. Christ's love is the standard.`,
+**Meaning:** Husbands, love your wives, as Christ loved the church and gave Himself up for her.  
+**Application:** Husbands, your love should be sacrificial, not self-serving. Christ's love is the standard.`.trim(),
         },
         {
           id: "d2-eph522-24",
           type: "scripture",
           title: "Wives, Submit to Your Husbands",
           reference: "Ephesians 5:22–24",
-          body: `**Plain Meaning:** Wives, submit to your own husbands, as to the Lord, for the husband is the head of the wife even as Christ is the head of the church.
+          body: `**Scripture (KJV)**  
+> "Wives, submit yourselves unto your own husbands, as unto the Lord. For the husband is the head of the wife, even as Christ is the head of the church: and he is the saviour of the body. Therefore as the church is subject unto Christ, so let the wives be to their own husbands in every thing."
 
-**Application:** Submission is not weakness—it is trust in God's design and in the leadership He has appointed.`,
+**Meaning:** Wives, submit to your own husbands, as to the Lord, for the husband is the head of the wife even as Christ is the head of the church.  
+**Application:** Submission is not weakness—it is trust in God's design and in the leadership He has appointed.`.trim(),
         },
         {
           id: "d2-1pet37",
           type: "scripture",
           title: "Husbands, Live with Understanding",
           reference: "1 Peter 3:7",
-          body: `**Plain Meaning:** Husbands, live with your wives in an understanding way, showing honor to the woman as the weaker vessel, since they are heirs with you of the grace of life.
+          body: `**Scripture (KJV)**  
+> "Likewise, ye husbands, dwell with them according to knowledge, giving honour unto the wife, as unto the weaker vessel, and as being heirs together of the grace of life; that your prayers be not hindered."
 
-**Application:** Husbands, treat your wife with tenderness, honor, and understanding. She is your co-heir in Christ.`,
+**Meaning:** Husbands, live with your wives in an understanding way, showing honor to the woman as the weaker vessel, since they are heirs with you of the grace of life.  
+**Application:** Husbands, treat your wife with tenderness, honor, and understanding. She is your co-heir in Christ.`.trim(),
         },
       ],
     },
@@ -5467,27 +5991,33 @@ Lord, teach us to communicate with humility and grace. Help us to forgive quickl
           type: "scripture",
           title: "Do Not Let the Sun Go Down on Your Anger",
           reference: "Ephesians 4:26–27",
-          body: `**Plain Meaning:** Be angry and do not sin; do not let the sun go down on your anger, and give no opportunity to the devil.
+          body: `**Scripture (KJV)**  
+> "Be ye angry, and sin not: let not the sun go down upon your wrath: Neither give place to the devil."
 
-**Application:** Deal with conflict quickly. Unresolved anger gives the enemy a foothold in your marriage.`,
+**Meaning:** Be angry and do not sin; do not let the sun go down on your anger, and give no opportunity to the devil.  
+**Application:** Deal with conflict quickly. Unresolved anger gives the enemy a foothold in your marriage.`.trim(),
         },
         {
           id: "d3-col312-13",
           type: "scripture",
           title: "Forgive as the Lord Forgave You",
           reference: "Colossians 3:12–13",
-          body: `**Plain Meaning:** Put on compassion, kindness, humility, and patience, bearing with one another and forgiving each other as the Lord forgave you.
+          body: `**Scripture (KJV)**  
+> "Put on therefore, as the elect of God, holy and beloved, bowels of mercies, kindness, humbleness of mind, meekness, longsuffering; Forbearing one another, and forgiving one another, if any man have a quarrel against any: even as Christ forgave you, so also do ye."
 
-**Application:** You have been forgiven much. Forgive your spouse the same way Christ forgave you.`,
+**Meaning:** Put on compassion, kindness, humility, and patience, bearing with one another and forgiving each other as the Lord forgave you.  
+**Application:** You have been forgiven much. Forgive your spouse the same way Christ forgave you.`.trim(),
         },
         {
           id: "d3-prov1520",
           type: "scripture",
           title: "A Soft Answer Turns Away Wrath",
           reference: "Proverbs 15:1",
-          body: `**Plain Meaning:** A soft answer turns away wrath, but a harsh word stirs up anger.
+          body: `**Scripture (KJV)**  
+> "A soft answer turneth away wrath: but grievous words stir up anger."
 
-**Application:** The tone you use matters. Choose gentleness over harshness, even when you're frustrated.`,
+**Meaning:** A soft answer turns away wrath, but a harsh word stirs up anger.  
+**Application:** The tone you use matters. Choose gentleness over harshness, even when you're frustrated.`.trim(),
         },
       ],
     },
@@ -5521,27 +6051,33 @@ Lord, protect our marriage from drift and from the enemy's schemes. Help us to f
           type: "scripture",
           title: "Let Each Have His Own Wife",
           reference: "1 Corinthians 7:1–5",
-          body: `**Plain Meaning:** Because of the temptation to sexual immorality, each man should have his own wife and each woman her own husband. Do not deprive one another.
+          body: `**Scripture (KJV)**  
+> "Now concerning the things whereof ye wrote unto me: It is good for a man not to touch a woman. Nevertheless, to avoid fornication, let every man have his own wife, and let every woman have her own husband. Let the husband render unto the wife due benevolence: and likewise also the wife unto the husband. The wife hath not power of her own body, but the husband: and likewise also the husband hath not power of his own body, but the wife. Defraud ye not one the other, except it be with consent for a time, that ye may give yourselves to fasting and prayer; and come together again, that Satan tempt you not for your incontinency."
 
-**Application:** Physical intimacy in marriage is a gift and a safeguard. Don't neglect it.`,
+**Meaning:** Because of the temptation to sexual immorality, each man should have his own wife and each woman her own husband. Do not deprive one another.  
+**Application:** Physical intimacy in marriage is a gift and a safeguard. Don't neglect it.`.trim(),
         },
         {
           id: "d4-heb134",
           type: "scripture",
           title: "Let the Marriage Bed Be Undefiled",
           reference: "Hebrews 13:4",
-          body: `**Plain Meaning:** Let marriage be held in honor among all, and let the marriage bed be undefiled, for God will judge the sexually immoral and adulterous.
+          body: `**Scripture (KJV)**  
+> "Marriage is honourable in all, and the bed undefiled: but whoremongers and adulterers God will judge."
 
-**Application:** Guard the purity of your marriage. Sexual sin has severe consequences—flee from it.`,
+**Meaning:** Let marriage be held in honor among all, and let the marriage bed be undefiled, for God will judge the sexually immoral and adulterous.  
+**Application:** Guard the purity of your marriage. Sexual sin has severe consequences—flee from it.`.trim(),
         },
         {
           id: "d4-prov427",
           type: "scripture",
           title: "Do Not Swerve to the Right or the Left",
           reference: "Proverbs 4:23–27",
-          body: `**Plain Meaning:** Guard your heart, keep your eyes straight ahead, and do not swerve to the right or left. Keep your foot from evil.
+          body: `**Scripture (KJV)**  
+> "¶ Keep thy heart with all diligence; for out of it are the issues of life. Put away from thee a froward mouth, and perverse lips put far from thee. Let thine eyes look right on, and let thine eyelids look straight before thee. Ponder the path of thy feet, and let all thy ways be established. Turn not to the right hand nor to the left: remove thy foot from evil."
 
-**Application:** Guarding your marriage starts with guarding your heart and your eyes. Be vigilant.`,
+**Meaning:** Guard your heart, keep your eyes straight ahead, and do not swerve to the right or left. Keep your foot from evil.  
+**Application:** Guarding your marriage starts with guarding your heart and your eyes. Be vigilant.`.trim(),
         },
       ],
     },
@@ -5575,27 +6111,33 @@ Father, teach us to pray together. Unite our hearts as we come before You. Grow 
           type: "scripture",
           title: "Two Are Better Than One",
           reference: "Ecclesiastes 4:9–12",
-          body: `**Plain Meaning:** Two are better than one. If one falls, the other can lift them up. A cord of three strands is not quickly broken.
+          body: `**Scripture (KJV)**  
+> "¶ Two are better than one; because they have a good reward for their labour. For if they fall, the one will lift up his fellow: but woe to him that is alone when he falleth; for he hath not another to help him up. Again, if two lie together, then they have heat: but how can one be warm alone? And if one prevail against him, two shall withstand him; and a threefold cord is not quickly broken."
 
-**Application:** A marriage with God at the center is strong. He is the third strand that holds you together.`,
+**Meaning:** Two are better than one. If one falls, the other can lift them up. A cord of three strands is not quickly broken.  
+**Application:** A marriage with God at the center is strong. He is the third strand that holds you together.`.trim(),
         },
         {
           id: "d5-1pet37",
           type: "scripture",
           title: "Pray Together So Your Prayers Are Not Hindered",
           reference: "1 Peter 3:7",
-          body: `**Plain Meaning:** Husbands, live with your wives in an understanding way, showing honor, so that your prayers may not be hindered.
+          body: `**Scripture (KJV)**  
+> "Likewise, ye husbands, dwell with them according to knowledge, giving honour unto the wife, as unto the weaker vessel, and as being heirs together of the grace of life; that your prayers be not hindered."
 
-**Application:** Your relationship with your spouse affects your relationship with God. Treat each other with honor.`,
+**Meaning:** Husbands, live with your wives in an understanding way, showing honor, so that your prayers may not be hindered.  
+**Application:** Your relationship with your spouse affects your relationship with God. Treat each other with honor.`.trim(),
         },
         {
           id: "d5-matt1819-20",
           type: "scripture",
           title: "Where Two Agree, God Is Present",
           reference: "Matthew 18:19–20",
-          body: `**Plain Meaning:** If two of you agree on earth about anything they ask, it will be done for them by My Father in heaven. Where two or three are gathered in My name, I am there.
+          body: `**Scripture (KJV)**  
+> "Again I say unto you, That if two of you shall agree on earth as touching any thing that they shall ask, it shall be done for them of my Father which is in heaven. For where two or three are gathered together in my name, there am I in the midst of them."
 
-**Application:** Praying together invites God's presence and power into your marriage.`,
+**Meaning:** If two of you agree on earth about anything they ask, it will be done for them by My Father in heaven. Where two or three are gathered in My name, I am there.  
+**Application:** Praying together invites God's presence and power into your marriage.`.trim(),
         },
       ],
     },
@@ -5639,27 +6181,33 @@ Lord, thank You for the children You have entrusted to me. Help me to steward th
           type: "scripture",
           title: "Children Are a Heritage from the Lord",
           reference: "Psalm 127:3–5",
-          body: `**Plain Meaning:** Children are a heritage from the Lord, the fruit of the womb a reward. Blessed is the man whose quiver is full of them.
+          body: `**Scripture (KJV)**  
+> "Lo, children are an heritage of the LORD: and the fruit of the womb is his reward. As arrows are in the hand of a mighty man; so are children of the youth. Happy is the man that hath his quiver full of them: they shall not be ashamed, but they shall speak with the enemies in the gate."
 
-**Application:** Children are not a burden—they are a blessing from God. Receive them as such.`,
+**Meaning:** Children are a heritage from the Lord, the fruit of the womb a reward. Blessed is the man whose quiver is full of them.  
+**Application:** Children are not a burden—they are a blessing from God. Receive them as such.`.trim(),
         },
         {
           id: "d1-gen1718",
           type: "scripture",
           title: "Abraham Will Command His Children",
           reference: "Genesis 18:19",
-          body: `**Plain Meaning:** God chose Abraham so that he may command his children and his household after him to keep the way of the Lord.
+          body: `**Scripture (KJV)**  
+> "For I know him, that he will command his children and his household after him, and they shall keep the way of the LORD, to do justice and judgment; that the LORD may bring upon Abraham that which he hath spoken of him."
 
-**Application:** God gives you children so you can teach them to follow Him. Parenting is discipleship.`,
+**Meaning:** God chose Abraham so that he may command his children and his household after him to keep the way of the Lord.  
+**Application:** God gives you children so you can teach them to follow Him. Parenting is discipleship.`.trim(),
         },
         {
           id: "d1-prov226",
           type: "scripture",
           title: "Train Up a Child",
           reference: "Proverbs 22:6",
-          body: `**Plain Meaning:** Train up a child in the way he should go; even when he is old he will not depart from it.
+          body: `**Scripture (KJV)**  
+> "Train up a child in the way he should go: and when he is old, he will not depart from it."
 
-**Application:** Training takes time and intentionality. Invest in your children's spiritual formation now, trusting God for the future.`,
+**Meaning:** Train up a child in the way he should go; even when he is old he will not depart from it.  
+**Application:** Training takes time and intentionality. Invest in your children's spiritual formation now, trusting God for the future.`.trim(),
         },
       ],
     },
@@ -5695,27 +6243,33 @@ Lord, help me to parent with both grace and truth. Give me wisdom to discipline 
           type: "scripture",
           title: "Do Not Provoke Your Children",
           reference: "Ephesians 6:4",
-          body: `**Plain Meaning:** Fathers, do not provoke your children to anger, but bring them up in the discipline and instruction of the Lord.
+          body: `**Scripture (KJV)**  
+> "And, ye fathers, provoke not your children to wrath: but bring them up in the nurture and admonition of the Lord."
 
-**Application:** Discipline your children, but do it in a way that reflects God's heart—firm but loving, just but gracious.`,
+**Meaning:** Fathers, do not provoke your children to anger, but bring them up in the discipline and instruction of the Lord.  
+**Application:** Discipline your children, but do it in a way that reflects God's heart—firm but loving, just but gracious.`.trim(),
         },
         {
           id: "d2-col321",
           type: "scripture",
           title: "Do Not Embitter Your Children",
           reference: "Colossians 3:21",
-          body: `**Plain Meaning:** Fathers, do not embitter your children, or they will become discouraged.
+          body: `**Scripture (KJV)**  
+> "Fathers, provoke not your children to anger, lest they be discouraged."
 
-**Application:** Harsh, graceless parenting crushes a child's spirit. Be firm, but always point them to hope in Christ.`,
+**Meaning:** Fathers, do not embitter your children, or they will become discouraged.  
+**Application:** Harsh, graceless parenting crushes a child's spirit. Be firm, but always point them to hope in Christ.`.trim(),
         },
         {
           id: "d2-titus211-12",
           type: "scripture",
           title: "Grace Trains Us",
           reference: "Titus 2:11–12",
-          body: `**Plain Meaning:** The grace of God has appeared, bringing salvation and training us to renounce ungodliness and to live self-controlled, upright, and godly lives.
+          body: `**Scripture (KJV)**  
+> "For the grace of God that bringeth salvation hath appeared to all men, Teaching us that, denying ungodliness and worldly lusts, we should live soberly, righteously, and godly, in this present world;"
 
-**Application:** Grace is not soft—it trains us. Show your children that grace leads to godliness, not license to sin.`,
+**Meaning:** The grace of God has appeared, bringing salvation and training us to renounce ungodliness and to live self-controlled, upright, and godly lives.  
+**Application:** Grace is not soft—it trains us. Show your children that grace leads to godliness, not license to sin.`.trim(),
         },
       ],
     },
@@ -5749,27 +6303,33 @@ Lord, teach me to discipline my children as You discipline me—with love, patie
           type: "scripture",
           title: "The Lord Disciplines Those He Loves",
           reference: "Hebrews 12:5–11",
-          body: `**Plain Meaning:** The Lord disciplines the one He loves. All discipline seems painful at the time, but later it yields the peaceful fruit of righteousness.
+          body: `**Scripture (KJV)**  
+> "And ye have forgotten the exhortation which speaketh unto you as unto children, My son, despise not thou the chastening of the Lord, nor faint when thou art rebuked of him: For whom the Lord loveth he chasteneth, and scourgeth every son whom he receiveth. If ye endure chastening, God dealeth with you as with sons; for what son is he whom the father chasteneth not? But if ye be without chastisement, whereof all are partakers, then are ye bastards, and not sons. Furthermore we have had fathers of our flesh which corrected us, and we gave them reverence: shall we not much rather be in subjection unto the Father of spirits, and live? For they verily for a few days chastened us after their own pleasure; but he for our profit, that we might be partakers of his holiness. Now no chastening for the present seemeth to be joyous, but grievous: nevertheless afterward it yieldeth the peaceable fruit of righteousness unto them which are exercised thereby."
 
-**Application:** Discipline your children because you love them, not because you're angry. And discipline always has a purpose—formation, not just punishment.`,
+**Meaning:** The Lord disciplines the one He loves. All discipline seems painful at the time, but later it yields the peaceful fruit of righteousness.  
+**Application:** Discipline your children because you love them, not because you're angry. And discipline always has a purpose—formation, not just punishment.`.trim(),
         },
         {
           id: "d3-prov1324",
           type: "scripture",
           title: "Whoever Spares the Rod Hates His Son",
           reference: "Proverbs 13:24",
-          body: `**Plain Meaning:** Whoever spares the rod hates his son, but he who loves him is diligent to discipline him.
+          body: `**Scripture (KJV)**  
+> "He that spareth his rod hateth his son: but he that loveth him chasteneth him betimes."
 
-**Application:** Discipline is an act of love. Failing to discipline is not kindness—it's negligence.`,
+**Meaning:** Whoever spares the rod hates his son, but he who loves him is diligent to discipline him.  
+**Application:** Discipline is an act of love. Failing to discipline is not kindness—it's negligence.`.trim(),
         },
         {
           id: "d3-prov2215",
           type: "scripture",
           title: "Folly Is Bound Up in a Child's Heart",
           reference: "Proverbs 22:15",
-          body: `**Plain Meaning:** Folly is bound up in the heart of a child, but the rod of discipline drives it far from him.
+          body: `**Scripture (KJV)**  
+> "Foolishness is bound in the heart of a child; but the rod of correction shall drive it far from him."
 
-**Application:** Children are not morally neutral. They are bent toward sin and need discipline to train them in righteousness.`,
+**Meaning:** Folly is bound up in the heart of a child, but the rod of discipline drives it far from him.  
+**Application:** Children are not morally neutral. They are bent toward sin and need discipline to train them in righteousness.`.trim(),
         },
       ],
     },
@@ -5803,27 +6363,33 @@ Lord, help me to be intentional about pointing my children to You in the everyda
           type: "scripture",
           title: "Teach Them Diligently",
           reference: "Deuteronomy 6:6–9",
-          body: `**Plain Meaning:** These words shall be on your heart, and you shall teach them diligently to your children, talking of them when you sit, walk, lie down, and rise.
+          body: `**Scripture (KJV)**  
+> "And these words, which I command thee this day, shall be in thine heart: And thou shalt teach them diligently unto thy children, and shalt talk of them when thou sittest in thine house, and when thou walkest by the way, and when thou liest down, and when thou risest up. And thou shalt bind them for a sign upon thine hand, and they shall be as frontlets between thine eyes. And thou shalt write them upon the posts of thy house, and on thy gates."
 
-**Application:** Teaching your children about God is not a one-time event—it's woven into the fabric of daily life.`,
+**Meaning:** These words shall be on your heart, and you shall teach them diligently to your children, talking of them when you sit, walk, lie down, and rise.  
+**Application:** Teaching your children about God is not a one-time event—it's woven into the fabric of daily life.`.trim(),
         },
         {
           id: "d4-ps784-7",
           type: "scripture",
           title: "Tell the Next Generation",
           reference: "Psalm 78:4–7",
-          body: `**Plain Meaning:** We will tell the coming generation the glorious deeds of the Lord, that they should set their hope in God and not forget His works.
+          body: `**Scripture (KJV)**  
+> "We will not hide them from their children, shewing to the generation to come the praises of the LORD, and his strength, and his wonderful works that he hath done. For he established a testimony in Jacob, and appointed a law in Israel, which he commanded our fathers, that they should make them known to their children: That the generation to come might know them, even the children which should be born; who should arise and declare them to their children: That they might set their hope in God, and not forget the works of God, but keep his commandments:"
 
-**Application:** Your children need to know God's story—His faithfulness, His power, His love. Tell them often.`,
+**Meaning:** We will tell the coming generation the glorious deeds of the Lord, that they should set their hope in God and not forget His works.  
+**Application:** Your children need to know God's story—His faithfulness, His power, His love. Tell them often.`.trim(),
         },
         {
           id: "d4-2tim315",
           type: "scripture",
           title: "From Childhood You Have Known the Scriptures",
           reference: "2 Timothy 3:15",
-          body: `**Plain Meaning:** From childhood you have been acquainted with the sacred writings, which are able to make you wise for salvation through faith in Christ Jesus.
+          body: `**Scripture (KJV)**  
+> "And that from a child thou hast known the holy scriptures, which are able to make thee wise unto salvation through faith which is in Christ Jesus."
 
-**Application:** Teach your children the Scriptures from an early age. God's Word has the power to lead them to salvation.`,
+**Meaning:** From childhood you have been acquainted with the sacred writings, which are able to make you wise for salvation through faith in Christ Jesus.  
+**Application:** Teach your children the Scriptures from an early age. God's Word has the power to lead them to salvation.`.trim(),
         },
       ],
     },
@@ -5857,27 +6423,33 @@ Father, I entrust my children to You. Do in their hearts what I cannot do. Save 
           type: "scripture",
           title: "I Have Lent Him to the Lord",
           reference: "1 Samuel 1:27–28",
-          body: `**Plain Meaning:** Hannah prayed for a child, and when God gave her Samuel, she gave him back to the Lord.
+          body: `**Scripture (KJV)**  
+> "For this child I prayed; and the LORD hath given me my petition which I asked of him: Therefore also I have lent him to the LORD; as long as he liveth he shall be lent to the LORD. And he worshipped the LORD there."
 
-**Application:** Your children are not yours to keep—they are God's to use. Dedicate them to Him and trust Him with their lives.`,
+**Meaning:** Hannah prayed for a child, and when God gave her Samuel, she gave him back to the Lord.  
+**Application:** Your children are not yours to keep—they are God's to use. Dedicate them to Him and trust Him with their lives.`.trim(),
         },
         {
           id: "d5-prov35-6",
           type: "scripture",
           title: "Trust in the Lord with All Your Heart",
           reference: "Proverbs 3:5–6",
-          body: `**Plain Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make straight your paths.
+          body: `**Scripture (KJV)**  
+> "¶ Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."
 
-**Application:** You can't control your children's future, but you can trust the God who holds it.`,
+**Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make straight your paths.  
+**Application:** You can't control your children's future, but you can trust the God who holds it.`.trim(),
         },
         {
           id: "d5-phil16",
           type: "scripture",
           title: "He Who Began a Good Work Will Complete It",
           reference: "Philippians 1:6",
-          body: `**Plain Meaning:** I am sure of this, that He who began a good work in you will bring it to completion at the day of Jesus Christ.
+          body: `**Scripture (KJV)**  
+> "Being confident of this very thing, that he which hath begun a good work in you will perform it until the day of Jesus Christ:"
 
-**Application:** If God has begun a work in your child's heart, trust Him to finish it. Pray, and let go.`,
+**Meaning:** I am sure of this, that He who began a good work in you will bring it to completion at the day of Jesus Christ.  
+**Application:** If God has begun a work in your child's heart, trust Him to finish it. Pray, and let go.`.trim(),
         },
       ],
     },
@@ -5921,27 +6493,33 @@ Lord, help me to see my work as worship. Whatever I do, let me do it for Your gl
           type: "scripture",
           title: "Whatever You Do, Work for the Lord",
           reference: "Colossians 3:23–24",
-          body: `**Plain Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward.
+          body: `**Scripture (KJV)**  
+> "And whatsoever ye do, do it heartily, as to the Lord, and not unto men; Knowing that of the Lord ye shall receive the reward of the inheritance: for ye serve the Lord Christ."
 
-**Application:** Your boss may not notice, but the Lord does. Work for Him, and He will reward you.`,
+**Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward.  
+**Application:** Your boss may not notice, but the Lord does. Work for Him, and He will reward you.`.trim(),
         },
         {
           id: "d1-gen215",
           type: "scripture",
           title: "Work and Keep the Garden",
           reference: "Genesis 2:15",
-          body: `**Plain Meaning:** The Lord God took the man and put him in the garden of Eden to work it and keep it.
+          body: `**Scripture (KJV)**  
+> "And the LORD God took the man, and put him into the garden of Eden to dress it and to keep it."
 
-**Application:** Work existed before the fall. It was part of God's good design, not a result of sin.`,
+**Meaning:** The Lord God took the man and put him in the garden of Eden to work it and keep it.  
+**Application:** Work existed before the fall. It was part of God's good design, not a result of sin.`.trim(),
         },
         {
           id: "d1-1cor1031",
           type: "scripture",
           title: "Do All to the Glory of God",
           reference: "1 Corinthians 10:31",
-          body: `**Plain Meaning:** Whatever you do, do all to the glory of God.
+          body: `**Scripture (KJV)**  
+> "Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God."
 
-**Application:** No task is too small to be done for God's glory. Even the most ordinary work can bring Him honor.`,
+**Meaning:** Whatever you do, do all to the glory of God.  
+**Application:** No task is too small to be done for God's glory. Even the most ordinary work can bring Him honor.`.trim(),
         },
       ],
     },
@@ -5975,27 +6553,33 @@ Lord, help me to see my calling as bigger than my job. Show me how to serve You 
           type: "scripture",
           title: "Called to Proclaim His Excellencies",
           reference: "1 Peter 2:9",
-          body: `**Plain Meaning:** You are a chosen race, a royal priesthood, a holy nation, a people for His own possession, that you may proclaim the excellencies of Him who called you.
+          body: `**Scripture (KJV)**  
+> "But ye are a chosen generation, a royal priesthood, an holy nation, a peculiar people; that ye should shew forth the praises of him who hath called you out of darkness into his marvellous light:"
 
-**Application:** Your primary calling is not a job—it's to proclaim the excellencies of Christ in everything you do.`,
+**Meaning:** You are a chosen race, a royal priesthood, a holy nation, a people for His own possession, that you may proclaim the excellencies of Him who called you.  
+**Application:** Your primary calling is not a job—it's to proclaim the excellencies of Christ in everything you do.`.trim(),
         },
         {
           id: "d2-eph410-12",
           type: "scripture",
           title: "Gifts Given to Equip the Saints",
           reference: "Ephesians 4:11–12",
-          body: `**Plain Meaning:** God gave gifts to equip the saints for the work of ministry, for building up the body of Christ.
+          body: `**Scripture (KJV)**  
+> "And he gave some, apostles; and some, prophets; and some, evangelists; and some, pastors and teachers; For the perfecting of the saints, for the work of the ministry, for the edifying of the body of Christ:"
 
-**Application:** God has uniquely equipped you for service in His kingdom. Discover your gifts and use them.`,
+**Meaning:** God gave gifts to equip the saints for the work of ministry, for building up the body of Christ.  
+**Application:** God has uniquely equipped you for service in His kingdom. Discover your gifts and use them.`.trim(),
         },
         {
           id: "d2-rom68",
           type: "scripture",
           title: "Each Has Different Gifts",
           reference: "Romans 12:6–8",
-          body: `**Plain Meaning:** We have different gifts according to the grace given to us. Let us use them.
+          body: `**Scripture (KJV)**  
+> "Having then gifts differing according to the grace that is given to us, whether prophecy, let us prophesy according to the proportion of faith; Or ministry, let us wait on our ministering: or he that teacheth, on teaching; Or he that exhorteth, on exhortation: he that giveth, let him do it with simplicity; he that ruleth, with diligence; he that sheweth mercy, with cheerfulness."
 
-**Application:** God has given you unique gifts. Your calling is to steward them well for His glory and the good of others.`,
+**Meaning:** We have different gifts according to the grace given to us. Let us use them.  
+**Application:** God has given you unique gifts. Your calling is to steward them well for His glory and the good of others.`.trim(),
         },
       ],
     },
@@ -6029,27 +6613,33 @@ Lord, help me to work with integrity and to be a faithful witness for You in my 
           type: "scripture",
           title: "The Integrity of the Upright Guides Them",
           reference: "Proverbs 11:3",
-          body: `**Plain Meaning:** The integrity of the upright guides them, but the crookedness of the treacherous destroys them.
+          body: `**Scripture (KJV)**  
+> "The integrity of the upright shall guide them: but the perverseness of transgressors shall destroy them."
 
-**Application:** Integrity in your work protects and guides you. Compromise eventually leads to ruin.`,
+**Meaning:** The integrity of the upright guides them, but the crookedness of the treacherous destroys them.  
+**Application:** Integrity in your work protects and guides you. Compromise eventually leads to ruin.`.trim(),
         },
         {
           id: "d3-eph628",
           type: "scripture",
           title: "Serve with a Good Will",
           reference: "Ephesians 6:5–8",
-          body: `**Plain Meaning:** Bondservants (employees), obey your earthly masters with respect and sincerity, as you would Christ, serving with a good will as to the Lord.
+          body: `**Scripture (KJV)**  
+> "Servants, be obedient to them that are your masters according to the flesh, with fear and trembling, in singleness of your heart, as unto Christ; Not with eyeservice, as menpleasers; but as the servants of Christ, doing the will of God from the heart; With good will doing service, as to the Lord, and not to men: Knowing that whatsoever good thing any man doeth, the same shall he receive of the Lord, whether he be bond or free."
 
-**Application:** Your work ethic is a reflection of your relationship with Christ. Serve with excellence, as if He is your boss.`,
+**Meaning:** Bondservants (employees), obey your earthly masters with respect and sincerity, as you would Christ, serving with a good will as to the Lord.  
+**Application:** Your work ethic is a reflection of your relationship with Christ. Serve with excellence, as if He is your boss.`.trim(),
         },
         {
           id: "d3-titus210",
           type: "scripture",
           title: "Adorn the Doctrine of God",
           reference: "Titus 2:9–10",
-          body: `**Plain Meaning:** Bondservants are to be well-pleasing, not argumentative, and to show all good faith, so that in everything they may adorn the doctrine of God our Savior.
+          body: `**Scripture (KJV)**  
+> "Exhort servants to be obedient unto their own masters, and to please them well in all things; not answering again; Not purloining, but shewing all good fidelity; that they may adorn the doctrine of God our Saviour in all things."
 
-**Application:** Your conduct at work either adorns the gospel or tarnishes it. Choose to adorn it.`,
+**Meaning:** Bondservants are to be well-pleasing, not argumentative, and to show all good faith, so that in everything they may adorn the doctrine of God our Savior.  
+**Application:** Your conduct at work either adorns the gospel or tarnishes it. Choose to adorn it.`.trim(),
         },
       ],
     },
@@ -6083,27 +6673,33 @@ Lord, teach me to rest. Help me to trust You enough to stop striving and to rece
           type: "scripture",
           title: "Remember the Sabbath Day",
           reference: "Exodus 20:8–11",
-          body: `**Plain Meaning:** Remember the Sabbath day, to keep it holy. Six days you shall labor, but the seventh is a Sabbath to the Lord.
+          body: `**Scripture (KJV)**  
+> "Remember the sabbath day, to keep it holy. Six days shalt thou labour, and do all thy work: But the seventh day is the sabbath of the LORD thy God: in it thou shalt not do any work, thou, nor thy son, nor thy daughter, thy manservant, nor thy maidservant, nor thy cattle, nor thy stranger that is within thy gates: For in six days the LORD made heaven and earth, the sea, and all that in them is, and rested the seventh day: wherefore the LORD blessed the sabbath day, and hallowed it."
 
-**Application:** God commands rest because you need it. Sabbath is not optional—it's a gift to receive and a command to obey.`,
+**Meaning:** Remember the Sabbath day, to keep it holy. Six days you shall labor, but the seventh is a Sabbath to the Lord.  
+**Application:** God commands rest because you need it. Sabbath is not optional—it's a gift to receive and a command to obey.`.trim(),
         },
         {
           id: "d4-matt1128",
           type: "scripture",
           title: "Come to Me and Rest",
           reference: "Matthew 11:28",
-          body: `**Plain Meaning:** Come to Me, all who labor and are heavy laden, and I will give you rest.
+          body: `**Scripture (KJV)**  
+> "¶ Come unto me, all ye that labour and are heavy laden, and I will give you rest."
 
-**Application:** Jesus offers rest for your soul. You don't have to earn it—just receive it.`,
+**Meaning:** Come to Me, all who labor and are heavy laden, and I will give you rest.  
+**Application:** Jesus offers rest for your soul. You don't have to earn it—just receive it.`.trim(),
         },
         {
           id: "d4-ps1272",
           type: "scripture",
           title: "It Is in Vain to Rise Early and Go Late to Rest",
           reference: "Psalm 127:2",
-          body: `**Plain Meaning:** It is in vain that you rise up early and go late to rest, eating the bread of anxious toil; for He gives to His beloved sleep.
+          body: `**Scripture (KJV)**  
+> "It is vain for you to rise up early, to sit up late, to eat the bread of sorrows: for so he giveth his beloved sleep."
 
-**Application:** Overworking is not noble—it's a lack of trust in God's provision. Rest is a gift from Him.`,
+**Meaning:** It is in vain that you rise up early and go late to rest, eating the bread of anxious toil; for He gives to His beloved sleep.  
+**Application:** Overworking is not noble—it's a lack of trust in God's provision. Rest is a gift from Him.`.trim(),
         },
       ],
     },
@@ -6137,27 +6733,33 @@ Lord, everything I have is Yours. Show me how to use my gifts, my time, and my r
           type: "scripture",
           title: "The Parable of the Talents",
           reference: "Matthew 25:14–30",
-          body: `**Plain Meaning:** The master entrusts his servants with talents (resources) and holds them accountable for how they used them. The faithful are rewarded; the lazy are condemned.
+          body: `**Scripture (KJV)**  
+> "¶ For the kingdom of heaven is as a man travelling into a far country, who called his own servants, and delivered unto them his goods. And unto one he gave five talents, to another two, and to another one; to every man according to his several ability; and straightway took his journey. Then he that had received the five talents went and traded with the same, and made them other five talents. And likewise he that had received two, he also gained other two. But he that had received one went and digged in the earth, and hid his lord’s money. After a long time the lord of those servants cometh, and reckoneth with them. And so he that had received five talents came and brought other five talents, saying, Lord, thou deliveredst unto me five talents: behold, I have gained beside them five talents more. His lord said unto him, Well done, thou good and faithful servant: thou hast been faithful over a few things, I will make thee ruler over many things: enter thou into the joy of thy lord. He also that had received two talents came and said, Lord, thou deliveredst unto me two talents: behold, I have gained two other talents beside them. His lord said unto him, Well done, good and faithful servant; thou hast been faithful over a few things, I will make thee ruler over many things: enter thou into the joy of thy lord. Then he which had received the one talent came and said, Lord, I knew thee that thou art an hard man, reaping where thou hast not sown, and gathering where thou hast not strawed: And I was afraid, and went and hid thy talent in the earth: lo, there thou hast that is thine. His lord answered and said unto him, Thou wicked and slothful servant, thou knewest that I reap where I sowed not, and gather where I have not strawed: Thou oughtest therefore to have put my money to the exchangers, and then at my coming I should have received mine own with usury. Take therefore the talent from him, and give it unto him which hath ten talents. For unto every one that hath shall be given, and he shall have abundance: but from him that hath not shall be taken away even that which he hath. And cast ye the unprofitable servant into outer darkness: there shall be weeping and gnashing of teeth."
 
-**Application:** God has entrusted you with gifts and opportunities. Use them faithfully. One day, you will give an account.`,
+**Meaning:** The master entrusts his servants with talents (resources) and holds them accountable for how they used them. The faithful are rewarded; the lazy are condemned.  
+**Application:** God has entrusted you with gifts and opportunities. Use them faithfully. One day, you will give an account.`.trim(),
         },
         {
           id: "d5-1pet410",
           type: "scripture",
           title: "Use Your Gifts to Serve One Another",
           reference: "1 Peter 4:10",
-          body: `**Plain Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.
+          body: `**Scripture (KJV)**  
+> "As every man hath received the gift, even so minister the same one to another, as good stewards of the manifold grace of God."
 
-**Application:** Your gifts are not for you—they are for serving others and stewarding God's grace.`,
+**Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.  
+**Application:** Your gifts are not for you—they are for serving others and stewarding God's grace.`.trim(),
         },
         {
           id: "d5-1tim617-19",
           type: "scripture",
           title: "Use Your Wealth for Good Works",
           reference: "1 Timothy 6:17–19",
-          body: `**Plain Meaning:** Those who are rich in this present age are to do good, to be rich in good works, generous and ready to share, storing up treasure for themselves as a good foundation for the future.
+          body: `**Scripture (KJV)**  
+> "Charge them that are rich in this world, that they be not highminded, nor trust in uncertain riches, but in the living God, who giveth us richly all things to enjoy; That they do good, that they be rich in good works, ready to distribute, willing to communicate; Laying up in store for themselves a good foundation against the time to come, that they may lay hold on eternal life."
 
-**Application:** Use what God has given you—time, money, talents—for eternal impact, not just temporary comfort.`,
+**Meaning:** Those who are rich in this present age are to do good, to be rich in good works, generous and ready to share, storing up treasure for themselves as a good foundation for the future.  
+**Application:** Use what God has given you—time, money, talents—for eternal impact, not just temporary comfort.`.trim(),
         },
       ],
     },
@@ -6203,27 +6805,33 @@ Lord, forgive me for letting the world shape my view of sex and purity. Help me 
           type: "scripture",
           title: "Male and Female He Created Them",
           reference: "Genesis 1:27–28",
-          body: `**Plain Meaning:** God created male and female, blessed them, and told them to be fruitful and multiply.
+          body: `**Scripture (KJV)**  
+> "So God created man in his own image, in the image of God created he him; male and female created he them. And God blessed them, and God said unto them, Be fruitful, and multiply, and replenish the earth, and subdue it: and have dominion over the fish of the sea, and over the fowl of the air, and over every living thing that moveth upon the earth."
 
-**Application:** Sex is God's idea, created for good. His design is clear: one man, one woman, in marriage.`,
+**Meaning:** God created male and female, blessed them, and told them to be fruitful and multiply.  
+**Application:** Sex is God's idea, created for good. His design is clear: one man, one woman, in marriage.`.trim(),
         },
         {
           id: "d1-heb134",
           type: "scripture",
           title: "The Marriage Bed Undefiled",
           reference: "Hebrews 13:4",
-          body: `**Plain Meaning:** Let marriage be held in honor among all, and let the marriage bed be undefiled, for God will judge the sexually immoral and adulterous.
+          body: `**Scripture (KJV)**  
+> "Marriage is honourable in all, and the bed undefiled: but whoremongers and adulterers God will judge."
 
-**Application:** Sex within marriage is pure and honorable. Sex outside marriage is sin and will be judged by God.`,
+**Meaning:** Let marriage be held in honor among all, and let the marriage bed be undefiled, for God will judge the sexually immoral and adulterous.  
+**Application:** Sex within marriage is pure and honorable. Sex outside marriage is sin and will be judged by God.`.trim(),
         },
         {
           id: "d1-1cor618-20",
           type: "scripture",
           title: "Flee Sexual Immorality",
           reference: "1 Corinthians 6:18–20",
-          body: `**Plain Meaning:** Flee from sexual immorality. Your body is a temple of the Holy Spirit. You are not your own; you were bought with a price. So glorify God in your body.
+          body: `**Scripture (KJV)**  
+> "Flee fornication. Every sin that a man doeth is without the body; but he that committeth fornication sinneth against his own body. What? know ye not that your body is the temple of the Holy Ghost which is in you, which ye have of God, and ye are not your own? For ye are bought with a price: therefore glorify God in your body, and in your spirit, which are God’s."
 
-**Application:** Sexual sin is uniquely destructive because it sins against your own body, which is God's temple. Honor God with your body.`,
+**Meaning:** Flee from sexual immorality. Your body is a temple of the Holy Spirit. You are not your own; you were bought with a price. So glorify God in your body.  
+**Application:** Sexual sin is uniquely destructive because it sins against your own body, which is God's temple. Honor God with your body.`.trim(),
         },
       ],
     },
@@ -6257,27 +6865,33 @@ Lord, search my heart and expose any lust hiding there. Give me the strength to 
           type: "scripture",
           title: "Lust in the Heart Is Adultery",
           reference: "Matthew 5:27–30",
-          body: `**Plain Meaning:** Jesus says that looking at someone with lust is adultery in the heart. If your eye causes you to sin, tear it out.
+          body: `**Scripture (KJV)**  
+> "¶ Ye have heard that it was said by them of old time, Thou shalt not commit adultery: But I say unto you, That whosoever looketh on a woman to lust after her hath committed adultery with her already in his heart. And if thy right eye offend thee, pluck it out, and cast it from thee: for it is profitable for thee that one of thy members should perish, and not that thy whole body should be cast into hell. And if thy right hand offend thee, cut it off, and cast it from thee: for it is profitable for thee that one of thy members should perish, and not that thy whole body should be cast into hell."
 
-**Application:** Jesus is not calling for literal self-mutilation—He's calling for radical action against sin. Take lust seriously.`,
+**Meaning:** Jesus says that looking at someone with lust is adultery in the heart. If your eye causes you to sin, tear it out.  
+**Application:** Jesus is not calling for literal self-mutilation—He's calling for radical action against sin. Take lust seriously.`.trim(),
         },
         {
           id: "d2-job311",
           type: "scripture",
           title: "I Made a Covenant with My Eyes",
           reference: "Job 31:1",
-          body: `**Plain Meaning:** Job says, "I have made a covenant with my eyes; how then could I gaze at a virgin?"
+          body: `**Scripture (KJV)**  
+> "I made a covenant with mine eyes; why then should I think upon a maid?"
 
-**Application:** Guard your eyes. Make a covenant to avoid looking at what stirs up lust.`,
+**Meaning:** Job says, "I have made a covenant with my eyes; how then could I gaze at a virgin?"  
+**Application:** Guard your eyes. Make a covenant to avoid looking at what stirs up lust.`.trim(),
         },
         {
           id: "d2-2tim222",
           type: "scripture",
           title: "Flee Youthful Passions",
           reference: "2 Timothy 2:22",
-          body: `**Plain Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace, along with those who call on the Lord from a pure heart.
+          body: `**Scripture (KJV)**  
+> "Flee also youthful lusts: but follow righteousness, faith, charity, peace, with them that call on the Lord out of a pure heart."
 
-**Application:** Don't just avoid sin—replace it. Flee lust and pursue Christ and godly community.`,
+**Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace, along with those who call on the Lord from a pure heart.  
+**Application:** Don't just avoid sin—replace it. Flee lust and pursue Christ and godly community.`.trim(),
         },
       ],
     },
@@ -6313,27 +6927,33 @@ Lord, give me the courage to set boundaries and to guard my eyes. Help me to fle
           type: "scripture",
           title: "I Will Not Set Worthless Things Before My Eyes",
           reference: "Psalm 101:3",
-          body: `**Plain Meaning:** I will not set before my eyes anything that is worthless.
+          body: `**Scripture (KJV)**  
+> "I will set no wicked thing before mine eyes: I hate the work of them that turn aside; it shall not cleave to me."
 
-**Application:** What you look at matters. Be ruthless about removing anything that stirs up lust.`,
+**Meaning:** I will not set before my eyes anything that is worthless.  
+**Application:** What you look at matters. Be ruthless about removing anything that stirs up lust.`.trim(),
         },
         {
           id: "d3-prov423",
           type: "scripture",
           title: "Guard Your Heart",
           reference: "Proverbs 4:23",
-          body: `**Plain Meaning:** Keep your heart with all vigilance, for from it flow the springs of life.
+          body: `**Scripture (KJV)**  
+> "¶ Keep thy heart with all diligence; for out of it are the issues of life."
 
-**Application:** Guarding your heart means guarding what you let in—through your eyes, ears, and mind.`,
+**Meaning:** Keep your heart with all vigilance, for from it flow the springs of life.  
+**Application:** Guarding your heart means guarding what you let in—through your eyes, ears, and mind.`.trim(),
         },
         {
           id: "d3-phil48",
           type: "scripture",
           title: "Think About These Things",
           reference: "Philippians 4:8",
-          body: `**Plain Meaning:** Whatever is true, honorable, just, pure, lovely, commendable—if there is any excellence, if there is anything worthy of praise, think about these things.
+          body: `**Scripture (KJV)**  
+> "Finally, brethren, whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure, whatsoever things are lovely, whatsoever things are of good report; if there be any virtue, and if there be any praise, think on these things."
 
-**Application:** Don't just avoid impure thoughts—replace them with what is pure, true, and honoring to God.`,
+**Meaning:** Whatever is true, honorable, just, pure, lovely, commendable—if there is any excellence, if there is anything worthy of praise, think about these things.  
+**Application:** Don't just avoid impure thoughts—replace them with what is pure, true, and honoring to God.`.trim(),
         },
       ],
     },
@@ -6367,27 +6987,33 @@ Lord, I confess my sin to You. Forgive me, cleanse me, and give me a fresh start
           type: "scripture",
           title: "He Is Faithful to Forgive",
           reference: "1 John 1:9",
-          body: `**Plain Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.
+          body: `**Scripture (KJV)**  
+> "If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness."
 
-**Application:** God doesn't just forgive—He cleanses. Confession brings freedom.`,
+**Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.  
+**Application:** God doesn't just forgive—He cleanses. Confession brings freedom.`.trim(),
         },
         {
           id: "d4-ps511-2",
           type: "scripture",
           title: "Wash Me and I Shall Be Whiter Than Snow",
           reference: "Psalm 51:1–2",
-          body: `**Plain Meaning:** David prays: Have mercy on me, O God. Wash me thoroughly from my iniquity, and cleanse me from my sin.
+          body: `**Scripture (KJV)**  
+> "Have mercy upon me, O God, according to thy lovingkindness: according unto the multitude of thy tender mercies blot out my transgressions. Wash me throughly from mine iniquity, and cleanse me from my sin."
 
-**Application:** No sin is too great for God to forgive. Come to Him, confess, and be washed clean.`,
+**Meaning:** David prays: Have mercy on me, O God. Wash me thoroughly from my iniquity, and cleanse me from my sin.  
+**Application:** No sin is too great for God to forgive. Come to Him, confess, and be washed clean.`.trim(),
         },
         {
           id: "d4-james516",
           type: "scripture",
           title: "Confess Your Sins to One Another",
           reference: "James 5:16",
-          body: `**Plain Meaning:** Confess your sins to one another and pray for one another, that you may be healed.
+          body: `**Scripture (KJV)**  
+> "Confess your faults one to another, and pray one for another, that ye may be healed. The effectual fervent prayer of a righteous man availeth much."
 
-**Application:** Confession to God is essential, but confession to a trusted believer brings healing and accountability.`,
+**Meaning:** Confess your sins to one another and pray for one another, that you may be healed.  
+**Application:** Confession to God is essential, but confession to a trusted believer brings healing and accountability.`.trim(),
         },
       ],
     },
@@ -6421,27 +7047,33 @@ Lord, give me a heart that loves You more than sin. Help me to pursue holiness, 
           type: "scripture",
           title: "This Is the Will of God: Your Sanctification",
           reference: "1 Thessalonians 4:3–5",
-          body: `**Plain Meaning:** This is the will of God, your sanctification: that you abstain from sexual immorality and control your own body in holiness and honor.
+          body: `**Scripture (KJV)**  
+> "For this is the will of God, even your sanctification, that ye should abstain from fornication: That every one of you should know how to possess his vessel in sanctification and honour; Not in the lust of concupiscence, even as the Gentiles which know not God:"
 
-**Application:** God's will for you is clear—holiness. Pursue it with everything you have.`,
+**Meaning:** This is the will of God, your sanctification: that you abstain from sexual immorality and control your own body in holiness and honor.  
+**Application:** God's will for you is clear—holiness. Pursue it with everything you have.`.trim(),
         },
         {
           id: "d5-heb1214",
           type: "scripture",
           title: "Pursue Holiness",
           reference: "Hebrews 12:14",
-          body: `**Plain Meaning:** Strive for peace with everyone, and for the holiness without which no one will see the Lord.
+          body: `**Scripture (KJV)**  
+> "Follow peace with all men, and holiness, without which no man shall see the Lord:"
 
-**Application:** Holiness is not optional. Pursue it actively, or you will drift into compromise.`,
+**Meaning:** Strive for peace with everyone, and for the holiness without which no one will see the Lord.  
+**Application:** Holiness is not optional. Pursue it actively, or you will drift into compromise.`.trim(),
         },
         {
           id: "d5-2cor71",
           type: "scripture",
           title: "Let Us Cleanse Ourselves",
           reference: "2 Corinthians 7:1",
-          body: `**Plain Meaning:** Since we have these promises, beloved, let us cleanse ourselves from every defilement of body and spirit, bringing holiness to completion in the fear of God.
+          body: `**Scripture (KJV)**  
+> "Having therefore these promises, dearly beloved, let us cleanse ourselves from all filthiness of the flesh and spirit, perfecting holiness in the fear of God."
 
-**Application:** You have a role to play. Cleanse yourself from sin and pursue holiness actively.`,
+**Meaning:** Since we have these promises, beloved, let us cleanse ourselves from every defilement of body and spirit, bringing holiness to completion in the fear of God.  
+**Application:** You have a role to play. Cleanse yourself from sin and pursue holiness actively.`.trim(),
         },
       ],
     },
@@ -6485,27 +7117,33 @@ Lord, I am in the fire. I don't understand why, but I choose to trust that You a
           type: "scripture",
           title: "A Fourth Man in the Fire",
           reference: "Daniel 3:25",
-          body: `**Plain Meaning:** King Nebuchadnezzar saw four men walking in the fire, unbound and unharmed, and the fourth had the appearance of a son of the gods.
+          body: `**Scripture (KJV)**  
+> "He answered and said, Lo, I see four men loose, walking in the midst of the fire, and they have no hurt; and the form of the fourth is like the Son of God."
 
-**Application:** God doesn't always remove your trial, but He always enters it with you. You are not alone.`,
+**Meaning:** King Nebuchadnezzar saw four men walking in the fire, unbound and unharmed, and the fourth had the appearance of a son of the gods.  
+**Application:** God doesn't always remove your trial, but He always enters it with you. You are not alone.`.trim(),
         },
         {
           id: "d1-isa432",
           type: "scripture",
           title: "When You Walk Through the Fire",
           reference: "Isaiah 43:2",
-          body: `**Plain Meaning:** When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you; when you walk through fire you shall not be burned.
+          body: `**Scripture (KJV)**  
+> "When thou passest through the waters, I will be with thee; and through the rivers, they shall not overflow thee: when thou walkest through the fire, thou shalt not be burned; neither shall the flame kindle upon thee."
 
-**Application:** God promises His presence in suffering. The fire may be real, but it will not consume you.`,
+**Meaning:** When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you; when you walk through fire you shall not be burned.  
+**Application:** God promises His presence in suffering. The fire may be real, but it will not consume you.`.trim(),
         },
         {
           id: "d1-ps234",
           type: "scripture",
           title: "Even Though I Walk Through the Valley",
           reference: "Psalm 23:4",
-          body: `**Plain Meaning:** Even though I walk through the valley of the shadow of death, I will fear no evil, for You are with me.
+          body: `**Scripture (KJV)**  
+> "Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me; thy rod and thy staff they comfort me."
 
-**Application:** God's presence is the antidote to fear. Even in the darkest valley, He is with you.`,
+**Meaning:** Even though I walk through the valley of the shadow of death, I will fear no evil, for You are with me.  
+**Application:** God's presence is the antidote to fear. Even in the darkest valley, He is with you.`.trim(),
         },
       ],
     },
@@ -6539,27 +7177,33 @@ Lord, I don't understand this suffering, but I trust that You are working in it.
           type: "scripture",
           title: "All Things Work Together for Good",
           reference: "Romans 8:28–30",
-          body: `**Plain Meaning:** For those who love God, all things work together for good, for those who are called according to His purpose—to be conformed to the image of His Son.
+          body: `**Scripture (KJV)**  
+> "And we know that all things work together for good to them that love God, to them who are the called according to his purpose. For whom he did foreknow, he also did predestinate to be conformed to the image of his Son, that he might be the firstborn among many brethren. Moreover whom he did predestinate, them he also called: and whom he called, them he also justified: and whom he justified, them he also glorified."
 
-**Application:** God's purpose in your suffering is to make you more like Jesus. Trust the process.`,
+**Meaning:** For those who love God, all things work together for good, for those who are called according to His purpose—to be conformed to the image of His Son.  
+**Application:** God's purpose in your suffering is to make you more like Jesus. Trust the process.`.trim(),
         },
         {
           id: "d2-james12-4",
           type: "scripture",
           title: "The Testing of Your Faith Produces Steadfastness",
           reference: "James 1:2–4",
-          body: `**Plain Meaning:** Count it all joy when you meet trials, for the testing of your faith produces steadfastness, and steadfastness leads to maturity.
+          body: `**Scripture (KJV)**  
+> "My brethren, count it all joy when ye fall into divers temptations; Knowing this, that the trying of your faith worketh patience. But let patience have her perfect work, that ye may be perfect and entire, wanting nothing."
 
-**Application:** Trials are not meaningless—they are refining your faith and making you complete.`,
+**Meaning:** Count it all joy when you meet trials, for the testing of your faith produces steadfastness, and steadfastness leads to maturity.  
+**Application:** Trials are not meaningless—they are refining your faith and making you complete.`.trim(),
         },
         {
           id: "d2-1pet16-7",
           type: "scripture",
           title: "Tested by Fire",
           reference: "1 Peter 1:6–7",
-          body: `**Plain Meaning:** Though now for a little while you may have to suffer trials, this is so that the tested genuineness of your faith may result in praise and glory at the revelation of Jesus Christ.
+          body: `**Scripture (KJV)**  
+> "Wherein ye greatly rejoice, though now for a season, if need be, ye are in heaviness through manifold temptations: That the trial of your faith, being much more precious than of gold that perisheth, though it be tried with fire, might be found unto praise and honour and glory at the appearing of Jesus Christ:"
 
-**Application:** Your suffering is temporary. The faith it produces is eternal.`,
+**Meaning:** Though now for a little while you may have to suffer trials, this is so that the tested genuineness of your faith may result in praise and glory at the revelation of Jesus Christ.  
+**Application:** Your suffering is temporary. The faith it produces is eternal.`.trim(),
         },
       ],
     },
@@ -6593,27 +7237,33 @@ Lord, I'm hurting. I don't have it all together, and I don't have all the answer
           type: "scripture",
           title: "How Long, O Lord?",
           reference: "Psalm 13:1–2",
-          body: `**Plain Meaning:** David cries out: How long, O Lord? Will You forget me forever? How long must I take counsel in my soul and have sorrow in my heart all the day?
+          body: `**Scripture (KJV)**  
+> "How long wilt thou forget me, O LORD? for ever? how long wilt thou hide thy face from me? How long shall I take counsel in my soul, having sorrow in my heart daily? how long shall mine enemy be exalted over me?"
 
-**Application:** You can be honest with God about your pain. He welcomes your lament.`,
+**Meaning:** David cries out: How long, O Lord? Will You forget me forever? How long must I take counsel in my soul and have sorrow in my heart all the day?  
+**Application:** You can be honest with God about your pain. He welcomes your lament.`.trim(),
         },
         {
           id: "d3-ps624-8",
           type: "scripture",
           title: "Pour Out Your Heart",
           reference: "Psalm 62:8",
-          body: `**Plain Meaning:** Trust in Him at all times, O people; pour out your heart before Him; God is a refuge for us.
+          body: `**Scripture (KJV)**  
+> "Trust in him at all times; ye people, pour out your heart before him: God is a refuge for us. Selah."
 
-**Application:** God is your refuge. Don't hold back—pour out everything you're feeling.`,
+**Meaning:** Trust in Him at all times, O people; pour out your heart before Him; God is a refuge for us.  
+**Application:** God is your refuge. Don't hold back—pour out everything you're feeling.`.trim(),
         },
         {
           id: "d3-ps5617",
           type: "scripture",
           title: "You Have Kept Count of My Tossings",
           reference: "Psalm 56:8",
-          body: `**Plain Meaning:** You have kept count of my tossings; put my tears in Your bottle. Are they not in Your book?
+          body: `**Scripture (KJV)**  
+> "Thou tellest my wanderings: put thou my tears into thy bottle: are they not in thy book?"
 
-**Application:** God sees every tear you cry. None of your suffering is unseen or unnoticed by Him.`,
+**Meaning:** You have kept count of my tossings; put my tears in Your bottle. Are they not in Your book?  
+**Application:** God sees every tear you cry. None of your suffering is unseen or unnoticed by Him.`.trim(),
         },
       ],
     },
@@ -6647,27 +7297,33 @@ Jesus, thank You for not staying distant from my pain. You entered into it, and 
           type: "scripture",
           title: "A Man of Sorrows, Acquainted with Grief",
           reference: "Isaiah 53:3",
-          body: `**Plain Meaning:** He was despised and rejected by men, a man of sorrows and acquainted with grief.
+          body: `**Scripture (KJV)**  
+> "He is despised and rejected of men; a man of sorrows, and acquainted with grief: and we hid as it were our faces from him; he was despised, and we esteemed him not."
 
-**Application:** Jesus knows your suffering. He walked through it Himself.`,
+**Meaning:** He was despised and rejected by men, a man of sorrows and acquainted with grief.  
+**Application:** Jesus knows your suffering. He walked through it Himself.`.trim(),
         },
         {
           id: "d4-heb415-16",
           type: "scripture",
           title: "He Sympathizes with Our Weaknesses",
           reference: "Hebrews 4:15–16",
-          body: `**Plain Meaning:** We do not have a high priest who is unable to sympathize with our weaknesses, but one who in every respect has been tempted as we are, yet without sin.
+          body: `**Scripture (KJV)**  
+> "For we have not an high priest which cannot be touched with the feeling of our infirmities; but was in all points tempted like as we are, yet without sin. Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need."
 
-**Application:** Jesus understands your pain. Come boldly to Him for mercy and grace.`,
+**Meaning:** We do not have a high priest who is unable to sympathize with our weaknesses, but one who in every respect has been tempted as we are, yet without sin.  
+**Application:** Jesus understands your pain. Come boldly to Him for mercy and grace.`.trim(),
         },
         {
           id: "d4-1pet221-24",
           type: "scripture",
           title: "Christ Suffered for You",
           reference: "1 Peter 2:21–24",
-          body: `**Plain Meaning:** Christ suffered for you, leaving you an example, that you should follow in His steps. He bore our sins in His body on the tree.
+          body: `**Scripture (KJV)**  
+> "For even hereunto were ye called: because Christ also suffered for us, leaving us an example, that ye should follow his steps: Who did no sin, neither was guile found in his mouth: Who, when he was reviled, reviled not again; when he suffered, he threatened not; but committed himself to him that judgeth righteously: Who his own self bare our sins in his own body on the tree, that we, being dead to sins, should live unto righteousness: by whose stripes ye were healed."
 
-**Application:** Jesus' suffering was not meaningless—it purchased your salvation. Your suffering is not meaningless either.`,
+**Meaning:** Christ suffered for you, leaving you an example, that you should follow in His steps. He bore our sins in His body on the tree.  
+**Application:** Jesus' suffering was not meaningless—it purchased your salvation. Your suffering is not meaningless either.`.trim(),
         },
       ],
     },
@@ -6701,27 +7357,33 @@ Lord, help me to hold on to the hope of eternity. When this life feels unbearabl
           type: "scripture",
           title: "Light Momentary Affliction",
           reference: "2 Corinthians 4:17–18",
-          body: `**Plain Meaning:** This light momentary affliction is preparing for us an eternal weight of glory beyond all comparison, as we look not to the things that are seen but to the things that are unseen.
+          body: `**Scripture (KJV)**  
+> "For our light affliction, which is but for a moment, worketh for us a far more exceeding and eternal weight of glory; While we look not at the things which are seen, but at the things which are not seen: for the things which are seen are temporal; but the things which are not seen are eternal."
 
-**Application:** Your suffering is temporary. The glory that awaits you is eternal.`,
+**Meaning:** This light momentary affliction is preparing for us an eternal weight of glory beyond all comparison, as we look not to the things that are seen but to the things that are unseen.  
+**Application:** Your suffering is temporary. The glory that awaits you is eternal.`.trim(),
         },
         {
           id: "d5-rom818",
           type: "scripture",
           title: "The Sufferings of This Present Time",
           reference: "Romans 8:18",
-          body: `**Plain Meaning:** I consider that the sufferings of this present time are not worth comparing with the glory that is to be revealed to us.
+          body: `**Scripture (KJV)**  
+> "For I reckon that the sufferings of this present time are not worthy to be compared with the glory which shall be revealed in us."
 
-**Application:** The weight of eternal glory far outweighs the pain of this present age.`,
+**Meaning:** I consider that the sufferings of this present time are not worth comparing with the glory that is to be revealed to us.  
+**Application:** The weight of eternal glory far outweighs the pain of this present age.`.trim(),
         },
         {
           id: "d5-rev214",
           type: "scripture",
           title: "No More Tears",
           reference: "Revelation 21:4",
-          body: `**Plain Meaning:** He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things have passed away.
+          body: `**Scripture (KJV)**  
+> "And God shall wipe away all tears from their eyes; and there shall be no more death, neither sorrow, nor crying, neither shall there be any more pain: for the former things are passed away."
 
-**Application:** One day, all suffering will end. Hold on to that promise.`,
+**Meaning:** He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things have passed away.  
+**Application:** One day, all suffering will end. Hold on to that promise.`.trim(),
         },
       ],
     },
@@ -6767,27 +7429,33 @@ Lord, forgive me for neglecting prayer. Help me to see it as the privilege it is
           type: "scripture",
           title: "Pray Without Ceasing",
           reference: "1 Thessalonians 5:17",
-          body: `**Plain Meaning:** Pray without ceasing.
+          body: `**Scripture (KJV)**  
+> "Pray without ceasing."
 
-**Application:** Prayer is not confined to a specific time or place. It is a continual conversation with God throughout your day.`,
+**Meaning:** Pray without ceasing.  
+**Application:** Prayer is not confined to a specific time or place. It is a continual conversation with God throughout your day.`.trim(),
         },
         {
           id: "d1-jer2912-13",
           type: "scripture",
           title: "You Will Seek Me and Find Me",
           reference: "Jeremiah 29:12–13",
-          body: `**Plain Meaning:** You will call upon Me and come and pray to Me, and I will hear you. You will seek Me and find Me, when you seek Me with all your heart.
+          body: `**Scripture (KJV)**  
+> "Then shall ye call upon me, and ye shall go and pray unto me, and I will hearken unto you. And ye shall seek me, and find me, when ye shall search for me with all your heart."
 
-**Application:** God promises to hear and respond when you seek Him in prayer. He is not hiding—He is waiting for you to come.`,
+**Meaning:** You will call upon Me and come and pray to Me, and I will hear you. You will seek Me and find Me, when you seek Me with all your heart.  
+**Application:** God promises to hear and respond when you seek Him in prayer. He is not hiding—He is waiting for you to come.`.trim(),
         },
         {
           id: "d1-phil46",
           type: "scripture",
           title: "Let Your Requests Be Made Known",
           reference: "Philippians 4:6",
-          body: `**Plain Meaning:** Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God.
+          body: `**Scripture (KJV)**  
+> "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God."
 
-**Application:** Prayer is the antidote to anxiety. Bring everything to God—big or small.`,
+**Meaning:** Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God.  
+**Application:** Prayer is the antidote to anxiety. Bring everything to God—big or small.`.trim(),
         },
       ],
     },
@@ -6823,27 +7491,33 @@ Father, teach me to pray like Jesus taught. Help me to worship, submit, confess,
           type: "scripture",
           title: "Our Father in Heaven",
           reference: "Matthew 6:9–13",
-          body: `**Plain Meaning:** Jesus teaches His disciples to pray: Our Father in heaven, hallowed be Your name. Your kingdom come, Your will be done. Give us our daily bread. Forgive us our debts. Lead us not into temptation, but deliver us from evil.
+          body: `**Scripture (KJV)**  
+> "After this manner therefore pray ye: Our Father which art in heaven, Hallowed be thy name. Thy kingdom come. Thy will be done in earth, as it is in heaven. Give us this day our daily bread. And forgive us our debts, as we forgive our debtors. And lead us not into temptation, but deliver us from evil: For thine is the kingdom, and the power, and the glory, for ever. Amen."
 
-**Application:** This prayer covers worship, submission, provision, forgiveness, and protection. Let it shape how you pray.`,
+**Meaning:** Jesus teaches His disciples to pray: Our Father in heaven, hallowed be Your name. Your kingdom come, Your will be done. Give us our daily bread. Forgive us our debts. Lead us not into temptation, but deliver us from evil.  
+**Application:** This prayer covers worship, submission, provision, forgiveness, and protection. Let it shape how you pray.`.trim(),
         },
         {
           id: "d2-luke111-4",
           type: "scripture",
           title: "Lord, Teach Us to Pray",
           reference: "Luke 11:1–4",
-          body: `**Plain Meaning:** The disciples ask Jesus to teach them to pray, and He gives them the Lord's Prayer.
+          body: `**Scripture (KJV)**  
+> "And it came to pass, that, as he was praying in a certain place, when he ceased, one of his disciples said unto him, Lord, teach us to pray, as John also taught his disciples. And he said unto them, When ye pray, say, Our Father which art in heaven, Hallowed be thy name. Thy kingdom come. Thy will be done, as in heaven, so in earth. Give us day by day our daily bread. And forgive us our sins; for we also forgive every one that is indebted to us. And lead us not into temptation; but deliver us from evil."
 
-**Application:** If the disciples needed to be taught to pray, so do you. Learn from Jesus.`,
+**Meaning:** The disciples ask Jesus to teach them to pray, and He gives them the Lord's Prayer.  
+**Application:** If the disciples needed to be taught to pray, so do you. Learn from Jesus.`.trim(),
         },
         {
           id: "d2-rom268",
           type: "scripture",
           title: "We Do Not Know What to Pray",
           reference: "Romans 8:26",
-          body: `**Plain Meaning:** The Spirit helps us in our weakness. For we do not know what to pray for as we ought, but the Spirit Himself intercedes for us.
+          body: `**Scripture (KJV)**  
+> "Likewise the Spirit also helpeth our infirmities: for we know not what we should pray for as we ought: but the Spirit itself maketh intercession for us with groanings which cannot be uttered."
 
-**Application:** When you don't know what to pray, the Spirit prays for you. Lean on Him.`,
+**Meaning:** The Spirit helps us in our weakness. For we do not know what to pray for as we ought, but the Spirit Himself intercedes for us.  
+**Application:** When you don't know what to pray, the Spirit prays for you. Lean on Him.`.trim(),
         },
       ],
     },
@@ -6879,27 +7553,33 @@ Lord, teach me to pray Your Word. Help me to know Your promises and to bring the
           type: "scripture",
           title: "Praying According to His Will",
           reference: "1 John 5:14–15",
-          body: `**Plain Meaning:** This is the confidence we have in approaching God: that if we ask anything according to His will, He hears us. And if we know that He hears us, we know that we have what we asked of Him.
+          body: `**Scripture (KJV)**  
+> "And this is the confidence that we have in him, that, if we ask any thing according to his will, he heareth us: And if we know that he hear us, whatsoever we ask, we know that we have the petitions that we desired of him."
 
-**Application:** Praying God's Word is praying according to His will. You can pray with confidence.`,
+**Meaning:** This is the confidence we have in approaching God: that if we ask anything according to His will, He hears us. And if we know that He hears us, we know that we have what we asked of Him.  
+**Application:** Praying God's Word is praying according to His will. You can pray with confidence.`.trim(),
         },
         {
           id: "d3-ps1192-5",
           type: "scripture",
           title: "Your Word Is a Lamp",
           reference: "Psalm 119:105",
-          body: `**Plain Meaning:** Your word is a lamp to my feet and a light to my path.
+          body: `**Scripture (KJV)**  
+> "Thy word is a lamp unto my feet, and a light unto my path."
 
-**Application:** God's Word guides your prayers. Let it light the way as you bring your requests to Him.`,
+**Meaning:** Your word is a lamp to my feet and a light to my path.  
+**Application:** God's Word guides your prayers. Let it light the way as you bring your requests to Him.`.trim(),
         },
         {
           id: "d3-josh18",
           type: "scripture",
           title: "Meditate on It Day and Night",
           reference: "Joshua 1:8",
-          body: `**Plain Meaning:** This Book of the Law shall not depart from your mouth, but you shall meditate on it day and night, so that you may be careful to do according to all that is written in it.
+          body: `**Scripture (KJV)**  
+> "This book of the law shall not depart out of thy mouth; but thou shalt meditate therein day and night, that thou mayest observe to do according to all that is written therein: for then thou shalt make thy way prosperous, and then thou shalt have good success."
 
-**Application:** Meditation on God's Word leads naturally into prayer. Fill your mind with Scripture, and it will overflow into your prayers.`,
+**Meaning:** This Book of the Law shall not depart from your mouth, but you shall meditate on it day and night, so that you may be careful to do according to all that is written in it.  
+**Application:** Meditation on God's Word leads naturally into prayer. Fill your mind with Scripture, and it will overflow into your prayers.`.trim(),
         },
       ],
     },
@@ -6935,27 +7615,33 @@ Lord, give me a heart that prays for others. Show me who needs intercession, and
           type: "scripture",
           title: "Paul's Prayer for the Church",
           reference: "Ephesians 1:16–19",
-          body: `**Plain Meaning:** Paul prays that the Ephesians would have the Spirit of wisdom and revelation in the knowledge of God, that the eyes of their hearts would be enlightened to know His hope, riches, and power.
+          body: `**Scripture (KJV)**  
+> "Cease not to give thanks for you, making mention of you in my prayers; That the God of our Lord Jesus Christ, the Father of glory, may give unto you the spirit of wisdom and revelation in the knowledge of him: The eyes of your understanding being enlightened; that ye may know what is the hope of his calling, and what the riches of the glory of his inheritance in the saints, And what is the exceeding greatness of his power to us-ward who believe, according to the working of his mighty power,"
 
-**Application:** Pray for spiritual growth in others, not just physical needs.`,
+**Meaning:** Paul prays that the Ephesians would have the Spirit of wisdom and revelation in the knowledge of God, that the eyes of their hearts would be enlightened to know His hope, riches, and power.  
+**Application:** Pray for spiritual growth in others, not just physical needs.`.trim(),
         },
         {
           id: "d4-col19-12",
           type: "scripture",
           title: "We Have Not Ceased to Pray for You",
           reference: "Colossians 1:9–12",
-          body: `**Plain Meaning:** Paul prays that the Colossians would be filled with the knowledge of God's will, walk in a manner worthy of the Lord, bear fruit, and be strengthened with all power.
+          body: `**Scripture (KJV)**  
+> "For this cause we also, since the day we heard it, do not cease to pray for you, and to desire that ye might be filled with the knowledge of his will in all wisdom and spiritual understanding; That ye might walk worthy of the Lord unto all pleasing, being fruitful in every good work, and increasing in the knowledge of God; Strengthened with all might, according to his glorious power, unto all patience and longsuffering with joyfulness; Giving thanks unto the Father, which hath made us meet to be partakers of the inheritance of the saints in light:"
 
-**Application:** Consistent intercession is a mark of spiritual maturity. Don't give up praying for others.`,
+**Meaning:** Paul prays that the Colossians would be filled with the knowledge of God's will, walk in a manner worthy of the Lord, bear fruit, and be strengthened with all power.  
+**Application:** Consistent intercession is a mark of spiritual maturity. Don't give up praying for others.`.trim(),
         },
         {
           id: "d4-1tim21-4",
           type: "scripture",
           title: "Pray for All People",
           reference: "1 Timothy 2:1–4",
-          body: `**Plain Meaning:** First of all, then, I urge that supplications, prayers, intercessions, and thanksgivings be made for all people, for kings and all who are in high positions.
+          body: `**Scripture (KJV)**  
+> "I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men; For kings, and for all that are in authority; that we may lead a quiet and peaceable life in all godliness and honesty. For this is good and acceptable in the sight of God our Saviour; Who will have all men to be saved, and to come unto the knowledge of the truth."
 
-**Application:** Pray broadly—for family, friends, leaders, and even those you disagree with.`,
+**Meaning:** First of all, then, I urge that supplications, prayers, intercessions, and thanksgivings be made for all people, for kings and all who are in high positions.  
+**Application:** Pray broadly—for family, friends, leaders, and even those you disagree with.`.trim(),
         },
       ],
     },
@@ -6989,27 +7675,33 @@ Lord, teach me to pray without ceasing. Help me to turn my thoughts toward You a
           type: "scripture",
           title: "Pray Without Ceasing, Give Thanks",
           reference: "1 Thessalonians 5:16–18",
-          body: `**Plain Meaning:** Rejoice always, pray without ceasing, give thanks in all circumstances; for this is the will of God in Christ Jesus for you.
+          body: `**Scripture (KJV)**  
+> "Rejoice evermore. Pray without ceasing. In every thing give thanks: for this is the will of God in Christ Jesus concerning you."
 
-**Application:** Prayer is woven into the rhythm of your day—rejoicing, praying, and giving thanks in all things.`,
+**Meaning:** Rejoice always, pray without ceasing, give thanks in all circumstances; for this is the will of God in Christ Jesus for you.  
+**Application:** Prayer is woven into the rhythm of your day—rejoicing, praying, and giving thanks in all things.`.trim(),
         },
         {
           id: "d5-eph618",
           type: "scripture",
           title: "Pray at All Times in the Spirit",
           reference: "Ephesians 6:18",
-          body: `**Plain Meaning:** Pray at all times in the Spirit, with all prayer and supplication, keeping alert with all perseverance.
+          body: `**Scripture (KJV)**  
+> "Praying always with all prayer and supplication in the Spirit, and watching thereunto with all perseverance and supplication for all saints;"
 
-**Application:** Prayer is not confined to a time or place. It is a constant, Spirit-empowered conversation with God.`,
+**Meaning:** Pray at all times in the Spirit, with all prayer and supplication, keeping alert with all perseverance.  
+**Application:** Prayer is not confined to a time or place. It is a constant, Spirit-empowered conversation with God.`.trim(),
         },
         {
           id: "d5-col42",
           type: "scripture",
           title: "Continue Steadfastly in Prayer",
           reference: "Colossians 4:2",
-          body: `**Plain Meaning:** Continue steadfastly in prayer, being watchful in it with thanksgiving.
+          body: `**Scripture (KJV)**  
+> "Continue in prayer, and watch in the same with thanksgiving;"
 
-**Application:** Persevere in prayer. Don't give up. Stay watchful, alert, and grateful.`,
+**Meaning:** Continue steadfastly in prayer, being watchful in it with thanksgiving.  
+**Application:** Persevere in prayer. Don't give up. Stay watchful, alert, and grateful.`.trim(),
         },
       ],
     },

@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { DiscipleshipPlan, PlanItem } from "./discipleshipPlans";
 import { Button } from "@/components/ui/button";
 
@@ -22,6 +22,11 @@ export function DiscipleshipDayScreen({
 
   const [index, setIndex] = useState(0);
 
+  // Reset index to 0 whenever day or plan changes
+  useEffect(() => {
+    setIndex(0);
+  }, [dayNumber, plan.id]);
+
   if (!day) {
     return (
       <div className="p-4">
@@ -31,25 +36,33 @@ export function DiscipleshipDayScreen({
   }
 
   const totalItems = day.items.length;
-  const currentItem: PlanItem = day.items[index];
+  
+  // Guard against out-of-bounds index
+  const safeIndex = Math.min(Math.max(0, index), totalItems - 1);
+  const currentItem: PlanItem = day.items[safeIndex];
 
-  const isFirst = index === 0;
-  const isLast = index === totalItems - 1;
+  const isFirst = safeIndex === 0;
+  const isLast = safeIndex === totalItems - 1;
   const isLastDay = dayNumber === plan.days[plan.days.length - 1].dayNumber;
 
   const handleNext = () => {
-    if (!isLast) {
-      setIndex((i) => i + 1);
+    if (!isLast && safeIndex < totalItems - 1) {
+      setIndex((i) => Math.min(i + 1, totalItems - 1));
     }
   };
 
   const handleBack = () => {
-    if (!isFirst) {
-      setIndex((i) => i - 1);
+    if (!isFirst && safeIndex > 0) {
+      setIndex((i) => Math.max(i - 1, 0));
     }
   };
 
   const handleNextDay = () => {
+    // Only proceed if we're actually at the last item
+    if (!isLast || safeIndex < totalItems - 1) {
+      return;
+    }
+    
     const nextDay = dayNumber + 1;
     if (nextDay <= plan.days.length) {
       onGoToDay(nextDay);
@@ -68,7 +81,7 @@ export function DiscipleshipDayScreen({
         <div className="h-1 mt-1 rounded-full bg-slate-200 overflow-hidden">
           <div
             className="h-full bg-slate-900 transition-all"
-            style={{ width: `${((index + 1) / totalItems) * 100}%` }}
+            style={{ width: `${((safeIndex + 1) / totalItems) * 100}%` }}
           />
         </div>
       </div>
