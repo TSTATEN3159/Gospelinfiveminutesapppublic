@@ -1,12 +1,16 @@
+import { useState } from "react";
 import BibleSearchSection from "../components/BibleSearchSection";
 import { TopicalSearchSection } from "../components/TopicalSearchSection";
+import AskPastorSection from "../components/AskPastorSection";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import bibleImage from '@assets/stock_images/person_reading_bible_032d0639.jpg';
 import shepherdImage from '@assets/stock_images/shepherd_with_sheep__4d4b4ce4.jpg';
 import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
-import { Facebook, Instagram, Heart, Flame, Share, Share2 } from "lucide-react";
+import pastorImage from '@assets/stock_images/person_reading_bible_7a306a4a.jpg';
+import { Facebook, Instagram, Heart, Flame, Share, Share2, Book, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useTranslations } from "@/lib/translations";
 import { useToast } from "@/hooks/use-toast";
 import { Capacitor } from '@capacitor/core';
@@ -21,6 +25,7 @@ interface SearchPageProps {
 
 export default function SearchPage({ onNavigate, streakDays = 0, language = "en", initialSearchQuery, onSearchUsed }: SearchPageProps) {
   const { toast } = useToast();
+  const [activeTab, setActiveTab] = useState("scripture");
   
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
@@ -110,19 +115,33 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
       </div>
 
       <div className="px-4 py-4 ios-safe-bottom">
-        <div className="max-w-md mx-auto space-y-6">
-          <BibleSearchSection 
-            backgroundImage={bibleImage}
-            initialSearchQuery={initialSearchQuery}
-            onSearchUsed={onSearchUsed}
-            language={language}
-          />
+        <div className="max-w-md mx-auto">
+          {/* Tabbed Interface */}
+          <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
+            <TabsList className="grid w-full grid-cols-2 mb-4">
+              <TabsTrigger value="scripture" className="flex items-center gap-2" data-testid="tab-scripture-search">
+                <Search className="w-4 h-4" />
+                <span>Scripture Search</span>
+              </TabsTrigger>
+              <TabsTrigger value="pastor" className="flex items-center gap-2" data-testid="tab-ask-pastor">
+                <Book className="w-4 h-4" />
+                <span>Ask Pastor</span>
+              </TabsTrigger>
+            </TabsList>
+            
+            <TabsContent value="scripture" className="space-y-6 mt-0">
+              <BibleSearchSection 
+                backgroundImage={bibleImage}
+                initialSearchQuery={initialSearchQuery}
+                onSearchUsed={onSearchUsed}
+                language={language}
+              />
+              
+              {/* Topical Search Section */}
+              <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} onNavigateToTopicSearch={handleTopicSearchNavigation} backgroundImage={shepherdImage} />
           
-          {/* Topical Search Section */}
-          <TopicalSearchSection onNavigateToScripture={handleScriptureNavigation} onNavigateToTopicSearch={handleTopicSearchNavigation} backgroundImage={shepherdImage} />
-          
-          {/* Help Spread God's Word Section - Moved from HomePage */}
-          <div className="relative overflow-hidden rounded-3xl shadow-lg border-2 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
+              {/* Help Spread God's Word Section - Moved from HomePage */}
+              <div className="relative overflow-hidden rounded-3xl shadow-lg border-2 bg-gradient-to-br from-blue-600 via-purple-600 to-indigo-700">
             {/* Background Image */}
             <div 
               className="absolute inset-0 bg-cover bg-center opacity-30"
@@ -205,22 +224,31 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
               </div>
             </div>
           </div>
-        </div>
-        
-        {/* Professional Website Footer */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
-          <div className="text-center">
-            <p className="text-sm text-gray-500 mb-2">{t.visitWebsite}</p>
-            <a 
-              href="https://www.thegospelin5minutes.org" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200"
-              data-testid="link-website-footer-search"
-              aria-label="Visit The Gospel in 5 Minutes website - Opens in new window"
-            >
-              www.thegospelin5minutes.org
-            </a>
+            </TabsContent>
+            
+            <TabsContent value="pastor" className="mt-0">
+              <AskPastorSection 
+                backgroundImage={pastorImage}
+                language={language}
+              />
+            </TabsContent>
+          </Tabs>
+          
+          {/* Professional Website Footer */}
+          <div className="mt-8 pt-6 border-t border-border">
+            <div className="text-center">
+              <p className="text-sm text-muted-foreground mb-2">{t.visitWebsite}</p>
+              <a 
+                href="https://www.thegospelin5minutes.org" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-primary text-sm font-medium transition-colors duration-200"
+                data-testid="link-website-footer-search"
+                aria-label="Visit The Gospel in 5 Minutes website - Opens in new window"
+              >
+                www.thegospelin5minutes.org
+              </a>
+            </div>
           </div>
         </div>
       </div>

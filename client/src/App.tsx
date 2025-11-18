@@ -63,7 +63,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "ask" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading";
+type AppPage = "home" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading";
 
 // Type-safe navigation params for each page
 type AppPageParams = {
@@ -262,8 +262,6 @@ function MainApp() {
     switch (currentPage) {
             case "home":
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
-            case "ask":
-              return <AskPage onNavigate={handleNavigateToLegal} streakDays={streakDays} language={language} />;
             case "search":
               return <SearchPage 
                 onNavigate={handleNavigateToLegal} 
