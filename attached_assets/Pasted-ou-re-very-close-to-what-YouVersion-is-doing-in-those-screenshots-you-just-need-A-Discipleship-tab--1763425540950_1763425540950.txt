@@ -1,0 +1,600 @@
+ou’re very close to what YouVersion is doing in those screenshots—you just need:
+A Discipleship tab at the bottom
+A Plans list screen (stacked tiles)
+A Plan detail screen (days + items)
+A Reading screen for each Devotional / Scripture
+A simple data model so your content is yours (no third-party API needed)
+Below is copy-pasteable React + TypeScript + Tailwind code for:
+Your first plan: “Am I Going to Heaven or Hell?” (5 days)
+A Discipleship tab/page
+Plan list + detail + reading pages
+I’ll assume you’re using react-router-dom and your usual Tailwind setup.
+1️⃣ Data model + Plan #1 content
+Create: client/src/features/discipleship/discipleshipPlans.ts
+// client/src/features/discipleship/discipleshipPlans.ts
+
+export type PlanItemType = "devotional" | "scripture";
+
+export interface PlanItem {
+  id: string;
+  type: PlanItemType;
+  title: string;
+  reference?: string; // for scriptures
+  body: string;       // devotional or explanation
+}
+
+export interface PlanDay {
+  id: string;
+  dayNumber: number;
+  title: string;
+  items: PlanItem[];
+}
+
+export interface DiscipleshipPlan {
+  id: string;
+  title: string;
+  subtitle?: string;
+  imageUrl: string;
+  totalDays: number;
+  days: PlanDay[];
+}
+
+// --- PLAN 1: Am I Going to Heaven or Hell? ---
+
+export const heavenOrHellPlan: DiscipleshipPlan = {
+  id: "heaven-or-hell",
+  title: "Am I Going to Heaven or Hell?",
+  subtitle: "Finding real assurance in Christ",
+  imageUrl: "/assets/discipleship/heaven-or-hell.jpg", // put your actual asset path
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Why This Question Matters",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Why This Question Matters",
+          body:
+            "Everyone dies. No one avoids judgment. We ignore it until a funeral or a health scare forces us to face eternity. " +
+            "Most people assume they are going to heaven: 'I'm a good person... I go to church... God knows my heart.' " +
+            "But Jesus Himself said that not everyone who calls Him 'Lord' will enter the kingdom of heaven. Heaven is not a reward " +
+            "for the good; it is a gift for the forgiven. Today God invites you to move from guessing to knowing, " +
+            "so you can live with confidence instead of fear.",
+        },
+        {
+          id: "d1-heb-9-27",
+          type: "scripture",
+          title: "Hebrews 9:27",
+          reference: "Hebrews 9:27",
+          body:
+            "This verse reminds us that death and judgment are appointments every person will keep. There are no second lives or " +
+            "restarts—what we do with Jesus in this life matters forever.",
+        },
+        {
+          id: "d1-mt-7-21",
+          type: "scripture",
+          title: "Matthew 7:21",
+          reference: "Matthew 7:21",
+          body:
+            "Jesus warns that calling Him 'Lord' with our lips is not enough. True faith shows up in a surrendered life that does " +
+            "the will of the Father.",
+        },
+        {
+          id: "d1-jn-3-16",
+          type: "scripture",
+          title: "John 3:16",
+          reference: "John 3:16",
+          body:
+            "God's love moved Him to give His Son so that anyone who believes in Him will not perish but have eternal life. " +
+            "Eternal life is not earned but received through faith in Christ.",
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "What Jesus Did To Save You",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "What Jesus Did To Save You",
+          body:
+            "Heaven requires perfection because God is holy. None of us meet that standard. Jesus did what we could never do: " +
+            "He lived a sinless life, took our sin upon Himself, and died in our place. On the cross He absorbed the judgment we deserved. " +
+            "He rose again so that His life could be given to us. You don't go to heaven because you are perfect; you go because He is. " +
+            "Salvation is not you paying God back—it is you trusting that Jesus already paid it all.",
+        },
+        {
+          id: "d2-rom-6-23",
+          type: "scripture",
+          title: "Romans 6:23",
+          reference: "Romans 6:23",
+          body:
+            "Sin earns death as its wage, but God offers eternal life as a free gift in Christ Jesus our Lord. The contrast is sharp: " +
+            "what we earn versus what He gives.",
+        },
+        {
+          id: "d2-2cor-5-21",
+          type: "scripture",
+          title: "2 Corinthians 5:21",
+          reference: "2 Corinthians 5:21",
+          body:
+            "Jesus, who knew no sin, was made to be sin for us so that in Him we might become the righteousness of God. " +
+            "He took our place so we could receive His standing before the Father.",
+        },
+        {
+          id: "d2-jn-14-6",
+          type: "scripture",
+          title: "John 14:6",
+          reference: "John 14:6",
+          body:
+            "Jesus does not claim to be one of many ways. He is the Way, the Truth, and the Life. No one comes to the Father except through Him.",
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "What Real Faith Looks Like",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "What Real Faith Looks Like",
+          body:
+            "Faith is more than agreeing that God exists or praying when life is hard. Saving faith trusts Jesus alone for salvation " +
+            "and surrenders to Him as Lord. Real faith shows up in a new direction: not instant perfection, but a new pattern of following Christ. " +
+            "If you are truly trusting Him, your life will gradually reflect that trust.",
+        },
+        {
+          id: "d3-james-2-17",
+          type: "scripture",
+          title: "James 2:17",
+          reference: "James 2:17",
+          body:
+            "Faith without works is dead. Works do not save us, but living faith always produces visible fruit in how we live.",
+        },
+        {
+          id: "d3-lk-9-23",
+          type: "scripture",
+          title: "Luke 9:23",
+          reference: "Luke 9:23",
+          body:
+            "Jesus calls His followers to deny themselves, take up their cross daily, and follow Him. Real faith says yes to that call.",
+        },
+        {
+          id: "d3-2cor-5-17",
+          type: "scripture",
+          title: "2 Corinthians 5:17",
+          reference: "2 Corinthians 5:17",
+          body:
+            "In Christ we become new creations. The old has passed away and the new has come. Salvation brings a real inner change.",
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "The Fruit of Salvation",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "The Fruit of Salvation",
+          body:
+            "You recognize a tree by its fruit. In the same way, a genuine relationship with Jesus produces visible change over time—" +
+            "new desires, a growing hatred of sin, and an increasing love for God and people. We are not saved by fruit, but real salvation " +
+            "does not stay hidden. Where Jesus truly reigns, transformation begins.",
+        },
+        {
+          id: "d4-mt-7-20",
+          type: "scripture",
+          title: "Matthew 7:20",
+          reference: "Matthew 7:20",
+          body:
+            "Jesus says we will recognize people by their fruits. What consistently comes out of our lives reveals what is within.",
+        },
+        {
+          id: "d4-gal-5-22-23",
+          type: "scripture",
+          title: "Galatians 5:22–23",
+          reference: "Galatians 5:22–23",
+          body:
+            "The fruit of the Spirit—love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, and self-control—" +
+            "shows what the Holy Spirit is producing in a believer.",
+        },
+        {
+          id: "d4-phil-1-6",
+          type: "scripture",
+          title: "Philippians 1:6",
+          reference: "Philippians 1:6",
+          body:
+            "God finishes what He starts. The One who began a good work in you will carry it on to completion in Christ Jesus.",
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Blessed Assurance",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Blessed Assurance",
+          body:
+            "God does not want His children living in constant fear about eternity. In Christ, He offers assurance. Our salvation is not " +
+            "held by our grip on God but by His grip on us. When He saves, He keeps. This confidence does not make us careless; it makes us grateful " +
+            "and bold. You do not have to guess about heaven when your life is hidden with Christ.",
+        },
+        {
+          id: "d5-1jn-5-13",
+          type: "scripture",
+          title: "1 John 5:13",
+          reference: "1 John 5:13",
+          body:
+            "John writes so that believers may know they have eternal life. God wants His children assured, not uncertain.",
+        },
+        {
+          id: "d5-rom-8-1",
+          type: "scripture",
+          title: "Romans 8:1",
+          reference: "Romans 8:1",
+          body:
+            "There is now no condemnation for those who are in Christ Jesus. Judgment has already been settled at the cross.",
+        },
+        {
+          id: "d5-jn-10-28",
+          type: "scripture",
+          title: "John 10:28",
+          reference: "John 10:28",
+          body:
+            "Jesus gives His sheep eternal life and says no one can snatch them out of His hand. Your security rests in His power.",
+        },
+      ],
+    },
+  ],
+};
+
+// You can add more plans to this array later.
+export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [heavenOrHellPlan];
+Right now this is all your content, stored safely in your app.
+Later you can move it into your own backend/API if you want.
+2️⃣ Discipleship tab: list of plans (tiles)
+Create: client/src/features/discipleship/DiscipleshipScreen.tsx
+// client/src/features/discipleship/DiscipleshipScreen.tsx
+import { Link } from "react-router-dom";
+import { DISCIPLESHIP_PLANS } from "./discipleshipPlans";
+
+export default function DiscipleshipScreen() {
+  return (
+    <div className="flex flex-col h-full bg-slate-50">
+      <header className="px-4 pt-4 pb-2">
+        <h1 className="text-2xl font-semibold tracking-tight">Discipleship</h1>
+        <p className="text-sm text-slate-500">
+          Short Bible plans to help you follow Jesus in everyday life.
+        </p>
+      </header>
+
+      <main className="flex-1 overflow-y-auto px-4 pb-6 space-y-4">
+        {DISCIPLESHIP_PLANS.map((plan) => (
+          <Link
+            key={plan.id}
+            to={`/discipleship/plans/${plan.id}`}
+            className="flex rounded-2xl bg-white shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+          >
+            <div className="w-24 h-24 flex-shrink-0">
+              <img
+                src={plan.imageUrl}
+                alt={plan.title}
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="flex-1 p-3 flex flex-col justify-between">
+              <div>
+                <h2 className="text-base font-semibold leading-snug">
+                  {plan.title}
+                </h2>
+                {plan.subtitle && (
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {plan.subtitle}
+                  </p>
+                )}
+              </div>
+              <p className="text-[11px] text-slate-500 mt-1">
+                {plan.totalDays} day plan • Gospel in Five Minutes
+              </p>
+            </div>
+          </Link>
+        ))}
+      </main>
+    </div>
+  );
+}
+This gives you the stacked, smaller tiles like in your screenshot.
+3️⃣ Plan detail screen (days + items)
+Create: client/src/features/discipleship/DiscipleshipPlanScreen.tsx
+// client/src/features/discipleship/DiscipleshipPlanScreen.tsx
+import { useMemo, useState } from "react";
+import { useNavigate, useParams, Link } from "react-router-dom";
+import { DISCIPLESHIP_PLANS, DiscipleshipPlan, PlanDay } from "./discipleshipPlans";
+
+export default function DiscipleshipPlanScreen() {
+  const { planId } = useParams<{ planId: string }>();
+  const navigate = useNavigate();
+
+  const plan: DiscipleshipPlan | undefined = useMemo(
+    () => DISCIPLESHIP_PLANS.find((p) => p.id === planId),
+    [planId]
+  );
+
+  const [activeDayIndex, setActiveDayIndex] = useState(0);
+
+  if (!plan) {
+    return (
+      <div className="p-4">
+        <p className="text-sm text-red-600">Plan not found.</p>
+        <Link to="/discipleship" className="text-blue-600 text-sm mt-2 inline-block">
+          Back to Discipleship
+        </Link>
+      </div>
+    );
+  }
+
+  const activeDay: PlanDay = plan.days[activeDayIndex];
+
+  return (
+    <div className="flex flex-col h-full bg-slate-50">
+      {/* Top bar */}
+      <div className="flex items-center px-4 pt-4 pb-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="mr-3 text-sm text-slate-600"
+        >
+          ‹ Back
+        </button>
+        <h1 className="text-lg font-semibold truncate">{plan.title}</h1>
+      </div>
+
+      {/* Header image */}
+      <div className="px-4">
+        <div className="rounded-3xl overflow-hidden shadow-md mb-3">
+          <img
+            src={plan.imageUrl}
+            alt={plan.title}
+            className="w-full h-44 object-cover"
+          />
+        </div>
+      </div>
+
+      {/* Day selector */}
+      <div className="px-4 flex space-x-2 mb-2">
+        {plan.days.map((day, index) => {
+          const isActive = index === activeDayIndex;
+          return (
+            <button
+              key={day.id}
+              onClick={() => setActiveDayIndex(index)}
+              className={`flex-1 rounded-2xl border text-center py-2 text-xs ${
+                isActive
+                  ? "border-slate-900 bg-slate-900 text-white"
+                  : "border-slate-200 bg-white text-slate-700"
+              }`}
+            >
+              <div className="font-semibold text-sm">{day.dayNumber}</div>
+              <div className="text-[11px] text-slate-400">Day {day.dayNumber}</div>
+            </button>
+          );
+        })}
+      </div>
+
+      {/* Day content list */}
+      <div className="flex-1 overflow-y-auto px-4">
+        <p className="text-xs text-slate-500 mb-2">
+          Day {activeDay.dayNumber} of {plan.totalDays}
+        </p>
+
+        <div className="space-y-2">
+          {activeDay.items.map((item) => (
+            <Link
+              key={item.id}
+              to={`/discipleship/plans/${plan.id}/day/${activeDay.dayNumber}/item/${item.id}`}
+              className="flex items-center justify-between rounded-xl bg-white px-3 py-3 shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className="flex items-center space-x-2">
+                <div className="w-5 h-5 border border-slate-300 rounded-full" />
+                <div>
+                  <p className="text-sm font-medium">
+                    {item.type === "devotional"
+                      ? "Devotional"
+                      : item.reference ?? item.title}
+                  </p>
+                  {item.type === "scripture" && item.reference && (
+                    <p className="text-[11px] text-slate-500">{item.title}</p>
+                  )}
+                </div>
+              </div>
+              <span className="text-slate-400 text-base">›</span>
+            </Link>
+          ))}
+        </div>
+      </div>
+
+      {/* Start Reading button */}
+      <div className="px-4 pb-4 pt-2">
+        <button
+          onClick={() => {
+            const firstItem = activeDay.items[0];
+            navigate(
+              `/discipleship/plans/${plan.id}/day/${activeDay.dayNumber}/item/${firstItem.id}`
+            );
+          }}
+          className="w-full rounded-full bg-slate-900 text-white py-3 text-sm font-semibold shadow-lg"
+        >
+          Start Reading
+        </button>
+      </div>
+    </div>
+  );
+}
+This matches the “Day X of Y, list of Devotional + Scriptures” look, but in your own style.
+4️⃣ Reading page (Devotional or Scripture with meaning)
+Create: client/src/features/discipleship/DiscipleshipReadingScreen.tsx
+// client/src/features/discipleship/DiscipleshipReadingScreen.tsx
+import { useMemo } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import {
+  DISCIPLESHIP_PLANS,
+  DiscipleshipPlan,
+  PlanDay,
+  PlanItem,
+} from "./discipleshipPlans";
+
+export default function DiscipleshipReadingScreen() {
+  const { planId, dayNumber, itemId } = useParams<{
+    planId: string;
+    dayNumber: string;
+    itemId: string;
+  }>();
+  const navigate = useNavigate();
+
+  const plan: DiscipleshipPlan | undefined = useMemo(
+    () => DISCIPLESHIP_PLANS.find((p) => p.id === planId),
+    [planId]
+  );
+
+  const day: PlanDay | undefined = useMemo(() => {
+    if (!plan || !dayNumber) return undefined;
+    const num = Number(dayNumber);
+    return plan.days.find((d) => d.dayNumber === num);
+  }, [plan, dayNumber]);
+
+  const item: PlanItem | undefined = useMemo(() => {
+    if (!day || !itemId) return undefined;
+    return day.items.find((i) => i.id === itemId);
+  }, [day, itemId]);
+
+  if (!plan || !day || !item) {
+    return (
+      <div className="p-4">
+        <p className="text-sm text-red-600">Reading not found.</p>
+      </div>
+    );
+  }
+
+  const showReference = item.type === "scripture" && item.reference;
+
+  return (
+    <div className="flex flex-col h-full bg-slate-50">
+      {/* Top bar */}
+      <div className="flex items-center px-4 pt-4 pb-2">
+        <button
+          onClick={() => navigate(-1)}
+          className="mr-3 text-sm text-slate-600"
+        >
+          ‹ Back
+        </button>
+        <div className="flex flex-col">
+          <span className="text-[11px] text-slate-400 uppercase tracking-wide">
+            {plan.title}
+          </span>
+          <h1 className="text-base font-semibold">
+            Day {day.dayNumber} · {item.type === "devotional" ? "Devotional" : item.reference}
+          </h1>
+        </div>
+      </div>
+
+      {/* Content */}
+      <div className="flex-1 overflow-y-auto px-4 pb-6">
+        {showReference && (
+          <p className="text-sm font-semibold text-slate-700 mt-2">
+            {item.reference}
+          </p>
+        )}
+
+        {/* If you want, call your Bible API here to show full verse text */}
+        {/* Example (pseudo-code):
+            const verseText = useBibleApi(item.reference)
+        */}
+
+        <p className="mt-3 text-[15px] leading-relaxed text-slate-800 whitespace-pre-line">
+          {item.body}
+        </p>
+
+        {item.type === "devotional" && (
+          <div className="mt-5 p-3 rounded-2xl bg-slate-100 text-xs text-slate-600">
+            Take a moment to talk with the Lord about what you just read. Ask
+            Him to help you believe and obey His Word today.
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+🔐 API vs. local:
+All the content (devotionals & explanations) lives in your data file or your own backend → safest and most reliable.
+For the actual Bible text, you can call your existing Bible API (or the Bolls backup we wired) in this reading screen using the reference field.
+5️⃣ Hook into navigation (bottom “Discipleship” tab)
+If you’re using react-router-dom, add routes somewhere like client/src/AppRoutes.tsx:
+// client/src/AppRoutes.tsx
+import { Routes, Route, Navigate } from "react-router-dom";
+import DiscipleshipScreen from "./features/discipleship/DiscipleshipScreen";
+import DiscipleshipPlanScreen from "./features/discipleship/DiscipleshipPlanScreen";
+import DiscipleshipReadingScreen from "./features/discipleship/DiscipleshipReadingScreen";
+// import your other screens...
+
+export function AppRoutes() {
+  return (
+    <Routes>
+      {/* other routes... */}
+      <Route path="/discipleship" element={<DiscipleshipScreen />} />
+      <Route path="/discipleship/plans/:planId" element={<DiscipleshipPlanScreen />} />
+      <Route
+        path="/discipleship/plans/:planId/day/:dayNumber/item/:itemId"
+        element={<DiscipleshipReadingScreen />}
+      />
+      <Route path="*" element={<Navigate to="/discipleship" replace />} />
+    </Routes>
+  );
+}
+Then in your bottom nav component, add a new tab:
+// client/src/components/BottomNav.tsx
+import { NavLink } from "react-router-dom";
+
+export default function BottomNav() {
+  return (
+    <nav className="h-14 border-t bg-white flex items-center justify-around">
+      {/* ...existing tabs (Home, Bible, etc.) */}
+
+      <NavLink
+        to="/discipleship"
+        className={({ isActive }) =>
+          `flex flex-col items-center text-[11px] ${
+            isActive ? "text-slate-900" : "text-slate-400"
+          }`
+        }
+      >
+        <span className="mb-0.5">✚</span>
+        <span>Discipleship</span>
+      </NavLink>
+    </nav>
+  );
+}
+(Replace the icon with whatever you prefer.)
+6️⃣ About “hooked to an API” / reliability
+For this feature, the safest and most reliable approach is:
+✅ Your plans & devotionals stored as your own data
+Either bundled in the app (as above)
+Or served from your own Node/Express API + database
+✅ Bible text fetched from your main Bible API with Bolls as backup
+✅ Everything still works even if a third-party Bible API is down:
+Your explanations still show
+You can show verse reference & a fallback message if text fails to load
+That way:
+You fully own the discipleship content
+You can expand to 50+ plans easily
+The user experience is stable and in your control
