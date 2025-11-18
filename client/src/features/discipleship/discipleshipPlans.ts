@@ -13,6 +13,16 @@ import crossSilhouetteImage from '@assets/stock_images/cross_silhouette_sun_9382
 import repentanceCrossImage from '@assets/stock_images/wooden_cross_silhoue_3e88a194.jpg';
 import generousGivingImage from '@assets/stock_images/hands_giving_offerin_3b1b35f2.jpg';
 import spiritualWarfareImage from '@assets/stock_images/medieval_armor_shiel_bcdaa0c2.jpg';
+import identityMirrorImage from '@assets/stock_images/person_looking_in_mi_ea96f742.jpg';
+import overcomingFearImage from '@assets/stock_images/peaceful_calm_person_7cf34fa8.jpg';
+import timeWithGodImage from '@assets/stock_images/person_praying_with__10196106.jpg';
+import servingJesusImage from '@assets/stock_images/helping_hands_commun_81ec3db5.jpg';
+import marriageLoveImage from '@assets/stock_images/wedding_rings_covena_8f9f1053.jpg';
+import parentingGospelImage from '@assets/stock_images/parent_child_family__30b5d4ec.jpg';
+import workCallingImage from '@assets/stock_images/professional_person__259aad65.jpg';
+import purityWorldImage from '@assets/stock_images/pure_heart_clean_han_1a005796.jpg';
+import sufferingFaithfulnessImage from '@assets/stock_images/person_in_difficult__faffc05a.jpg';
+import prayerLifeImage from '@assets/stock_images/hands_folded_in_pray_b98684b0.jpg';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -3947,6 +3957,2949 @@ Lord, teach me to pray as part of my armor. Surround me with brothers and sister
   ],
 };
 
+export const identityInChristPlan: DiscipleshipPlan = {
+  id: "identity-in-christ",
+  title: "Identity in Christ",
+  subtitle: "Seeing yourself the way God sees you",
+  imageUrl: identityMirrorImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "From Guilty to Forgiven",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — From Guilty to Forgiven",
+          body: `Your identity is not who you were—it's who God says you are now. Before Christ, you were guilty, condemned, and separated from God. But in Christ, you are forgiven, redeemed, and brought near.
+
+Too many believers still live under the weight of guilt and shame, forgetting that the cross paid for all of it. God doesn't just tolerate you—He delights in you because you are clothed in the righteousness of Christ.
+
+**Reflection**
+
+Do you live more like a guilty sinner or a forgiven child? What would change if you truly believed God's verdict over you?
+
+**Prayer**
+
+Father, thank You for declaring me forgiven through Jesus. Help me to stop living under guilt and to walk in the freedom You've given me.
+
+**Shareable Truth**
+
+"In Christ, your past does not define you—God's grace does."`,
+        },
+        {
+          id: "d1-eph17",
+          type: "scripture",
+          title: "Redemption Through His Blood",
+          reference: "Ephesians 1:7",
+          body: `**Plain Meaning:** In Christ we have redemption through His blood, the forgiveness of our trespasses, according to the riches of His grace.
+
+**Application:** Forgiveness is not based on your performance but on Christ's blood. You are fully forgiven because of what Jesus did, not what you do.`,
+        },
+        {
+          id: "d1-col113-14",
+          type: "scripture",
+          title: "Transferred to the Kingdom",
+          reference: "Colossians 1:13–14",
+          body: `**Plain Meaning:** God has delivered us from the domain of darkness and transferred us to the kingdom of His beloved Son, in whom we have redemption, the forgiveness of sins.
+
+**Application:** You're not just forgiven—you've been moved from one kingdom to another. You now belong to Jesus and live under His reign.`,
+        },
+        {
+          id: "d1-rom81",
+          type: "scripture",
+          title: "No Condemnation",
+          reference: "Romans 8:1",
+          body: `**Plain Meaning:** There is therefore now no condemnation for those who are in Christ Jesus.
+
+**Application:** If you are in Christ, God does not condemn you. The guilty verdict has been removed. Live like it.`,
+        },
+        {
+          id: "d1-1jn19",
+          type: "scripture",
+          title: "He Is Faithful to Forgive",
+          reference: "1 John 1:9",
+          body: `**Plain Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.
+
+**Application:** When you sin, don't hide. Confess it. God promises to forgive and cleanse you every single time.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "From Orphan to Child of God",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — From Orphan to Child of God",
+          body: `Before Christ, you were spiritually orphaned—separated from God, without hope, and without belonging. But in Christ, you are adopted into God's family. You are not just forgiven—you are His child.
+
+Adoption means you have a Father who loves you, a family who belongs with you, and an inheritance that cannot be taken away. This is not just a legal transaction; it's a relationship of love.
+
+**Reflection**
+
+Do you approach God as a distant stranger or as your loving Father? How does knowing you're His child change the way you live?
+
+**Prayer**
+
+Abba, Father, thank You for adopting me into Your family. Teach me to live as Your beloved child, not as an orphan.
+
+**Shareable Truth**
+
+"You are not an orphan striving for acceptance—you are a child loved by the Father."`,
+        },
+        {
+          id: "d2-jn112-13",
+          type: "scripture",
+          title: "Children of God",
+          reference: "John 1:12–13",
+          body: `**Plain Meaning:** To all who did receive Him, who believed in His name, He gave the right to become children of God, who were born, not of blood nor of the will of the flesh nor of the will of man, but of God.
+
+**Application:** Your identity as God's child is not based on your family background or efforts—it's a gift of grace through faith in Jesus.`,
+        },
+        {
+          id: "d2-rom814-15",
+          type: "scripture",
+          title: "The Spirit of Adoption",
+          reference: "Romans 8:14–15",
+          body: `**Plain Meaning:** All who are led by the Spirit of God are sons of God. For you did not receive the spirit of slavery to fall back into fear, but you have received the Spirit of adoption as sons, by whom we cry, "Abba! Father!"
+
+**Application:** You don't have to be afraid of God. You have the Spirit of adoption, and you can call God "Abba"—your Papa.`,
+        },
+        {
+          id: "d2-gal46-7",
+          type: "scripture",
+          title: "Heirs of God",
+          reference: "Galatians 4:6–7",
+          body: `**Plain Meaning:** Because you are sons, God has sent the Spirit of His Son into our hearts, crying, "Abba! Father!" So you are no longer a slave, but a son, and if a son, then an heir through God.
+
+**Application:** You're not just a child of God—you're also an heir. Everything God has for His children is yours in Christ.`,
+        },
+        {
+          id: "d2-1jn31",
+          type: "scripture",
+          title: "See What Kind of Love",
+          reference: "1 John 3:1",
+          body: `**Plain Meaning:** See what kind of love the Father has given to us, that we should be called children of God; and so we are.
+
+**Application:** It's not just a title—it's reality. You really are God's child, loved deeply by the Father.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "From Slave to Free",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — From Slave to Free",
+          body: `Before Christ, you were enslaved to sin, powerless to break free. But in Christ, you are liberated. Sin no longer has authority over you. You are free to say no to what once controlled you.
+
+Freedom in Christ is not the license to do whatever you want—it's the power to do what is right. You are no longer a slave to sin's demands; you are free to live for God.
+
+**Reflection**
+
+Are there areas where you still live like a slave instead of walking in freedom? What would it look like to surrender those to Christ today?
+
+**Prayer**
+
+Jesus, You broke the chains of sin. Help me to walk in the freedom You purchased for me and to refuse to return to slavery.
+
+**Shareable Truth**
+
+"Freedom in Christ is not doing whatever you want—it's finally being able to do what is right."`,
+        },
+        {
+          id: "d3-rom66-7",
+          type: "scripture",
+          title: "Freed from Sin",
+          reference: "Romans 6:6–7",
+          body: `**Plain Meaning:** We know that our old self was crucified with Him in order that the body of sin might be brought to nothing, so that we would no longer be enslaved to sin. For one who has died has been set free from sin.
+
+**Application:** Your old sinful self died with Christ. You are no longer a slave to sin. It doesn't have to control you anymore.`,
+        },
+        {
+          id: "d3-gal51",
+          type: "scripture",
+          title: "Stand Firm in Freedom",
+          reference: "Galatians 5:1",
+          body: `**Plain Meaning:** For freedom Christ has set us free; stand firm therefore, and do not submit again to a yoke of slavery.
+
+**Application:** Jesus set you free—don't go back to living like a slave. Stand firm in the freedom He bought for you.`,
+        },
+        {
+          id: "d3-jn831-32",
+          type: "scripture",
+          title: "The Truth Will Set You Free",
+          reference: "John 8:31–32",
+          body: `**Plain Meaning:** Jesus said, "If you abide in My word, you are truly My disciples, and you will know the truth, and the truth will set you free."
+
+**Application:** Freedom comes from knowing and abiding in God's truth. The more you know Jesus, the freer you become.`,
+        },
+        {
+          id: "d3-2cor317",
+          type: "scripture",
+          title: "Where the Spirit Is, There Is Freedom",
+          reference: "2 Corinthians 3:17",
+          body: `**Plain Meaning:** Now the Lord is the Spirit, and where the Spirit of the Lord is, there is freedom.
+
+**Application:** The Spirit of God brings freedom. Stay close to Him, and you will experience the liberty Christ died to give you.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "From Broken to New Creation",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — From Broken to New Creation",
+          body: `You are not just a patched-up version of your old self. In Christ, you are a new creation. The old is gone; the new has come. God doesn't just forgive your past—He gives you a new identity and a fresh start.
+
+This means your failures, your shame, your brokenness do not define you. What defines you is the finished work of Christ and the new life He's given you in Him.
+
+**Reflection**
+
+In what ways do you still see yourself through the lens of your old life instead of your new identity in Christ?
+
+**Prayer**
+
+Lord, thank You for making me new. Help me to see myself as You see me—a brand-new creation, not defined by my past but by Your grace.
+
+**Shareable Truth**
+
+"In Christ, you're not a work in progress—you're a new creation with a new identity."`,
+        },
+        {
+          id: "d4-2cor517",
+          type: "scripture",
+          title: "New Creation",
+          reference: "2 Corinthians 5:17",
+          body: `**Plain Meaning:** If anyone is in Christ, he is a new creation. The old has passed away; behold, the new has come.
+
+**Application:** You are not your past. In Christ, you are entirely new. Don't let the old define you—embrace the new life God has given.`,
+        },
+        {
+          id: "d4-eph422-24",
+          type: "scripture",
+          title: "Put On the New Self",
+          reference: "Ephesians 4:22–24",
+          body: `**Plain Meaning:** Put off your old self, which belongs to your former manner of life and is corrupt, and be renewed in the spirit of your minds, and put on the new self, created after the likeness of God in true righteousness and holiness.
+
+**Application:** Stop living like the old you. Put on your new identity—one that reflects God's righteousness and holiness.`,
+        },
+        {
+          id: "d4-ezek3626",
+          type: "scripture",
+          title: "A New Heart",
+          reference: "Ezekiel 36:26",
+          body: `**Plain Meaning:** I will give you a new heart, and a new spirit I will put within you. And I will remove the heart of stone from your flesh and give you a heart of flesh.
+
+**Application:** God doesn't just change your behavior—He gives you a new heart. Your desires change when Christ transforms you from the inside out.`,
+        },
+        {
+          id: "d4-col310",
+          type: "scripture",
+          title: "Renewed in Knowledge",
+          reference: "Colossians 3:10",
+          body: `**Plain Meaning:** You have put on the new self, which is being renewed in knowledge after the image of its creator.
+
+**Application:** Your new identity is continually being renewed. The more you know God, the more you reflect His image.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Living Out Your New Identity",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Living Out Your New Identity",
+          body: `Knowing your identity in Christ is one thing—living it out is another. You are forgiven, adopted, free, and new. Now the call is to live like it.
+
+This means setting your mind on things above, putting to death what belongs to your old self, and actively putting on the character of Christ. Your identity is secure—now let it shape the way you think, speak, and live.
+
+**Reflection**
+
+How would your daily life look different if you fully lived out your identity as a forgiven, adopted, free, new creation in Christ?
+
+**Prayer**
+
+Father, help me to live in light of who You say I am. Let my identity in Christ shape everything I do, say, and think.
+
+**Shareable Truth**
+
+"Your identity is settled in heaven—now live it out on earth."`,
+        },
+        {
+          id: "d5-col31-4",
+          type: "scripture",
+          title: "Set Your Minds on Things Above",
+          reference: "Colossians 3:1–4",
+          body: `**Plain Meaning:** If then you have been raised with Christ, seek the things that are above, where Christ is, seated at the right hand of God. Set your minds on things that are above, not on things that are on earth. For you have died, and your life is hidden with Christ in God.
+
+**Application:** Your true life is with Christ in heaven. Don't let earthly labels define you—live according to your heavenly identity.`,
+        },
+        {
+          id: "d5-gal220",
+          type: "scripture",
+          title: "Christ Lives in Me",
+          reference: "Galatians 2:20",
+          body: `**Plain Meaning:** I have been crucified with Christ. It is no longer I who live, but Christ who lives in me. And the life I now live in the flesh I live by faith in the Son of God, who loved me and gave Himself for me.
+
+**Application:** Your old self is dead. Now Christ lives in you. Every day, you live by faith in His love and power, not your own.`,
+        },
+        {
+          id: "d5-rom612-13",
+          type: "scripture",
+          title: "Do Not Let Sin Reign",
+          reference: "Romans 6:12–13",
+          body: `**Plain Meaning:** Let not sin therefore reign in your mortal body, to make you obey its passions. Do not present your members to sin as instruments for unrighteousness, but present yourselves to God as those who have been brought from death to life.
+
+**Application:** You are alive in Christ. Don't give sin control—present yourself to God as someone who has been made new.`,
+        },
+        {
+          id: "d5-phil313",
+          type: "scripture",
+          title: "Forgetting What Lies Behind",
+          reference: "Philippians 3:13",
+          body: `**Plain Meaning:** Brothers, I do not consider that I have made it my own. But one thing I do: forgetting what lies behind and straining forward to what lies ahead.
+
+**Application:** Don't dwell on your old identity. Press forward into the fullness of who you are in Christ.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const overcomingFearPlan: DiscipleshipPlan = {
+  id: "overcoming-fear-and-anxiety",
+  title: "Overcoming Fear and Anxiety",
+  subtitle: "Learning to trust God with what scares you",
+  imageUrl: overcomingFearImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Naming Your Fears Before God",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Naming Your Fears Before God",
+          body: `Fear thrives in the dark. It grows when you refuse to name it, when you let it lurk unnamed in the corners of your mind. But God invites you to bring your fears into the light—not to shame you, but to heal you.
+
+David didn't hide his fear. He named it honestly before God. "When I am afraid, I put my trust in You" (Psalm 56:3). Notice: he didn't deny the fear. He acknowledged it, then chose trust.
+
+Naming your fears before God is an act of faith. It says, "I'm not okay, but I know You are bigger than this." It opens the door for God to meet you in your weakness.
+
+**Reflection**
+
+What specific fear are you carrying right now that you haven't fully named before God?
+
+**Prayer**
+
+Lord, I am afraid. I bring this fear to You—not to fix it on my own, but to trust You with it. You know what scares me. Help me to believe You are bigger.
+
+**Shareable Truth**
+
+"Fear shrinks in the presence of an honest prayer."`,
+        },
+        {
+          id: "d1-ps563",
+          type: "scripture",
+          title: "When I Am Afraid, I Trust in You",
+          reference: "Psalm 56:3",
+          body: `**Plain Meaning:** David admits his fear but chooses to respond by putting his trust in God.
+
+**Application:** Fear is not sin—it's what you do with the fear that matters. When fear comes, turn toward God, not away from Him.`,
+        },
+        {
+          id: "d1-ps344-5",
+          type: "scripture",
+          title: "Seek the Lord and Be Delivered",
+          reference: "Psalm 34:4–5",
+          body: `**Plain Meaning:** Those who seek the Lord are delivered from their fears, and their faces are radiant with hope.
+
+**Application:** Don't carry fear alone. Seek God actively, and He will meet you in it.`,
+        },
+        {
+          id: "d1-ps3411",
+          type: "scripture",
+          title: "The Lord Hears the Cry of the Afflicted",
+          reference: "Psalm 34:17",
+          body: `**Plain Meaning:** When the righteous cry out, the Lord hears them and delivers them from all their troubles.
+
+**Application:** Your cry doesn't fall on deaf ears. God is attentive to your fear and ready to act.`,
+        },
+        {
+          id: "d1-ps2714",
+          type: "scripture",
+          title: "Wait for the Lord; Be Strong",
+          reference: "Psalm 27:14",
+          body: `**Plain Meaning:** Wait for the Lord; be strong, and let your heart take courage; wait for the Lord!
+
+**Application:** Courage is not the absence of fear—it's trusting God while you wait for Him to act.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "God's Nearness in Anxiety",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — God's Nearness in Anxiety",
+          body: `Anxiety lies. It tells you that you are alone, that the burden is yours to carry, that God is distant. But Scripture declares the opposite: **the Lord is near**.
+
+Paul writes to anxious believers: "Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God" (Philippians 4:6). This is not a dismissal of your concerns—it's an invitation to bring them to a God who is present and listening.
+
+The nearness of God is not dependent on your feelings. It is a fact. He does not abandon you in your anxiety. He meets you there.
+
+**Reflection**
+
+In your anxiety, do you feel God is distant or near? What would it take to believe He is right here with you now?
+
+**Prayer**
+
+Lord, my anxious thoughts tell me You are far away. Remind me of Your nearness. Help me to feel Your presence, even when fear is loud.
+
+**Shareable Truth**
+
+"Anxiety whispers that you're alone. God's Word shouts that He is near."`,
+        },
+        {
+          id: "d2-phil44-7",
+          type: "scripture",
+          title: "Rejoice, the Lord Is at Hand",
+          reference: "Philippians 4:4–7",
+          body: `**Plain Meaning:** Rejoice always, for the Lord is near. Don't be anxious; instead, pray about everything, and God's peace will guard your heart and mind.
+
+**Application:** Anxiety is defeated not by trying harder to calm down, but by turning everything over to God in prayer.`,
+        },
+        {
+          id: "d2-ps469",
+          type: "scripture",
+          title: "Be Still and Know",
+          reference: "Psalm 46:10",
+          body: `**Plain Meaning:** Be still, and know that I am God. I will be exalted among the nations, I will be exalted in the earth!
+
+**Application:** Stillness is an act of trust. When anxiety screams for action, God invites you to rest in His sovereignty.`,
+        },
+        {
+          id: "d2-ps1455-6",
+          type: "scripture",
+          title: "The Lord Upholds the Brokenhearted",
+          reference: "Psalm 145:14",
+          body: `**Plain Meaning:** The Lord upholds all who are falling and raises up all who are bowed down.
+
+**Application:** When anxiety weighs you down, God is the One who lifts you. You don't have to carry it alone.`,
+        },
+        {
+          id: "d2-isa4110",
+          type: "scripture",
+          title: "Fear Not, I Am with You",
+          reference: "Isaiah 41:10",
+          body: `**Plain Meaning:** Fear not, for I am with you; be not dismayed, for I am your God; I will strengthen you, I will help you, I will uphold you with My righteous right hand.
+
+**Application:** God doesn't just tell you not to fear—He gives you reasons not to: His presence, His strength, His help, His upholding hand.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Casting Cares on Him",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Casting Cares on Him",
+          body: `You were never meant to carry the weight of your worries alone. God commands you to **cast** your anxieties on Him—not because He is indifferent, but because He cares for you (1 Peter 5:7).
+
+Casting is an active choice. It means consciously taking the burden off your shoulders and placing it into God's hands. It is not pretending the problem doesn't exist; it is trusting that God is more capable of handling it than you are.
+
+Every time anxiety resurfaces, cast it again. This is not failure—it is faithfulness.
+
+**Reflection**
+
+What burden are you trying to carry on your own that God is inviting you to cast on Him?
+
+**Prayer**
+
+Father, I release this weight to You. I've been trying to carry it, and I can't. You care for me, so I choose to trust You with it.
+
+**Shareable Truth**
+
+"Your worries are not too small for God to care about—and not too big for Him to carry."`,
+        },
+        {
+          id: "d3-1pet57",
+          type: "scripture",
+          title: "Cast All Your Anxieties on Him",
+          reference: "1 Peter 5:6–7",
+          body: `**Plain Meaning:** Humble yourselves under the mighty hand of God, and at the proper time He will exalt you, casting all your anxieties on Him, because He cares for you.
+
+**Application:** Casting your cares is an expression of humility. It admits you cannot carry it—and that you trust God can.`,
+        },
+        {
+          id: "d3-matt1128-30",
+          type: "scripture",
+          title: "Come to Me, You Who Are Weary",
+          reference: "Matthew 11:28–30",
+          body: `**Plain Meaning:** Jesus invites all who are weary and burdened to come to Him for rest. His yoke is easy and His burden is light.
+
+**Application:** Jesus doesn't add more weight—He lifts it. Come to Him with your burdens, and He will give you rest.`,
+        },
+        {
+          id: "d3-ps5522",
+          type: "scripture",
+          title: "Cast Your Burden on the Lord",
+          reference: "Psalm 55:22",
+          body: `**Plain Meaning:** Cast your burden on the Lord, and He will sustain you; He will never permit the righteous to be moved.
+
+**Application:** God doesn't promise to remove every burden instantly, but He does promise to sustain you through it.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Fear of Man vs. Fear of God",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Fear of Man vs. Fear of God",
+          body: `The fear of man is a snare. It makes you a slave to others' opinions, approval, and expectations. But the fear of the Lord—reverence, awe, and trust in Him—sets you free.
+
+When you fear God rightly, human opinion loses its power over you. You stop living to please people and start living to please the One whose opinion actually matters.
+
+This doesn't mean you become reckless or unkind. It means your deepest allegiance shifts from the approval of man to the approval of God.
+
+**Reflection**
+
+Whose approval do you seek most—God's or people's? How is the fear of man holding you back from obedience?
+
+**Prayer**
+
+Lord, forgive me for fearing people more than You. Help me to live for Your approval alone, trusting that You see, You know, and You are enough.
+
+**Shareable Truth**
+
+"When you fear God, you stop fearing people."`,
+        },
+        {
+          id: "d4-prov2925",
+          type: "scripture",
+          title: "The Fear of Man Is a Snare",
+          reference: "Proverbs 29:25",
+          body: `**Plain Meaning:** The fear of man lays a snare, but whoever trusts in the Lord is safe.
+
+**Application:** Trusting God is the antidote to the fear of man. When you trust Him, you are secure—no matter what others think.`,
+        },
+        {
+          id: "d4-gal110",
+          type: "scripture",
+          title: "Am I Trying to Please Man?",
+          reference: "Galatians 1:10",
+          body: `**Plain Meaning:** Paul asks: Am I now seeking the approval of man, or of God? If I were still trying to please man, I would not be a servant of Christ.
+
+**Application:** You cannot serve two masters. Choose today: Will you live for God's approval or man's applause?`,
+        },
+        {
+          id: "d4-acts529",
+          type: "scripture",
+          title: "We Must Obey God Rather Than Men",
+          reference: "Acts 5:29",
+          body: `**Plain Meaning:** Peter and the apostles answered: We must obey God rather than men.
+
+**Application:** When obedience to God conflicts with pleasing people, the choice is clear. Obey God.`,
+        },
+        {
+          id: "d4-matt1028",
+          type: "scripture",
+          title: "Do Not Fear Those Who Kill the Body",
+          reference: "Matthew 10:28",
+          body: `**Plain Meaning:** Do not fear those who kill the body but cannot kill the soul. Rather fear Him who can destroy both soul and body in hell.
+
+**Application:** The worst any person can do is limited. God's authority is eternal. Fear Him, not them.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Practicing Peace Daily",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Practicing Peace Daily",
+          body: `Peace is not the absence of trouble—it is the presence of God in the midst of it. Jesus promised: "Peace I leave with you; My peace I give to you. Not as the world gives do I give to you. Let not your hearts be troubled, neither let them be afraid" (John 14:27).
+
+Practicing peace means setting your mind on God daily, choosing to trust Him with what you cannot control, and resting in His promises instead of your circumstances.
+
+**Reflection**
+
+What daily habit or thought pattern is stealing your peace? What would it look like to practice trust instead?
+
+**Prayer**
+
+Prince of Peace, guard my heart and mind. Teach me to rest in You, to set my thoughts on Your truth, and to walk in the peace You've already given me.
+
+**Shareable Truth**
+
+"Peace is not found in perfect circumstances—it's found in a perfect Savior."`,
+        },
+        {
+          id: "d5-isa263",
+          type: "scripture",
+          title: "Perfect Peace for the Steadfast Mind",
+          reference: "Isaiah 26:3",
+          body: `**Plain Meaning:** You keep him in perfect peace whose mind is stayed on You, because he trusts in You.
+
+**Application:** Peace is the fruit of a mind anchored on God. What you focus on determines your peace.`,
+        },
+        {
+          id: "d5-john1427",
+          type: "scripture",
+          title: "My Peace I Give to You",
+          reference: "John 14:27",
+          body: `**Plain Meaning:** Jesus gives His peace—not as the world gives, but as a gift that calms troubled and fearful hearts.
+
+**Application:** The peace Jesus offers doesn't depend on your circumstances. It is rooted in His presence and His finished work.`,
+        },
+        {
+          id: "d5-col315",
+          type: "scripture",
+          title: "Let the Peace of Christ Rule",
+          reference: "Colossians 3:15",
+          body: `**Plain Meaning:** Let the peace of Christ rule in your hearts, to which indeed you were called in one body. And be thankful.
+
+**Application:** Peace is meant to rule your heart—to be the umpire of your decisions, emotions, and reactions. Let it lead you.`,
+        },
+        {
+          id: "d5-rom158",
+          type: "scripture",
+          title: "The God of Hope Fills You with Peace",
+          reference: "Romans 15:13",
+          body: `**Plain Meaning:** May the God of hope fill you with all joy and peace in believing, so that by the power of the Holy Spirit you may abound in hope.
+
+**Application:** Peace is a gift from the God of hope. As you trust Him, He fills you with peace by the Spirit's power.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const timeWithGodPlan: DiscipleshipPlan = {
+  id: "time-with-god",
+  title: "Time with God: Prayer & Scripture",
+  subtitle: "Building a daily rhythm of meeting with the Lord",
+  imageUrl: timeWithGodImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Why Daily Time with God Matters",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Why Daily Time with God Matters",
+          body: `You cannot love someone you don't spend time with. You cannot know someone you never talk to. And you cannot follow someone you're not listening to. This is why daily time with God is not optional for the Christian—it is essential.
+
+Jesus modeled this. Despite a demanding ministry, He regularly withdrew to pray (Luke 5:16). If the Son of God needed time alone with the Father, how much more do we?
+
+Time with God is not about checking a box or earning His favor. It's about relationship. It's where you hear His voice, align your heart with His, and find the strength to live for Him.
+
+**Reflection**
+
+What is your honest relationship with daily time with God right now—consistent, sporadic, or non-existent? What's holding you back?
+
+**Prayer**
+
+Father, forgive me for treating time with You as optional. Help me to see it as the lifeline it truly is. Give me a hunger to meet with You daily.
+
+**Shareable Truth**
+
+"You can't run on yesterday's time with God—you need fresh bread every day."`,
+        },
+        {
+          id: "d1-ps631-2",
+          type: "scripture",
+          title: "Earnestly Seeking God",
+          reference: "Psalm 63:1–2",
+          body: `**Plain Meaning:** David's soul thirsts for God; he earnestly seeks Him because he has seen God's power and glory.
+
+**Application:** Time with God begins with desire. Ask God to give you a longing for His presence, not just a sense of duty.`,
+        },
+        {
+          id: "d1-luke516",
+          type: "scripture",
+          title: "Jesus Withdrew to Pray",
+          reference: "Luke 5:16",
+          body: `**Plain Meaning:** Jesus would withdraw to desolate places and pray.
+
+**Application:** If Jesus needed time alone with the Father, you do too. Follow His example—make time, protect it, prioritize it.`,
+        },
+        {
+          id: "d1-ps14312",
+          type: "scripture",
+          title: "Satisfy Us in the Morning",
+          reference: "Psalm 90:14",
+          body: `**Plain Meaning:** Satisfy us in the morning with Your steadfast love, that we may rejoice and be glad all our days.
+
+**Application:** Starting your day with God sets the tone for everything. Let His love be the first thing that satisfies your soul.`,
+        },
+        {
+          id: "d1-jer2913",
+          type: "scripture",
+          title: "Seek Me and Find Me",
+          reference: "Jeremiah 29:13",
+          body: `**Plain Meaning:** You will seek Me and find Me, when you seek Me with all your heart.
+
+**Application:** God promises to be found by those who genuinely seek Him. He's not hiding—He's waiting for you to come.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Learning to Pray Honestly",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Learning to Pray Honestly",
+          body: `God doesn't want your polished, "religious" prayers. He wants your heart—raw, honest, and real. The Psalms are filled with honest cries: anger, doubt, fear, desperation, and praise. Nothing is off-limits.
+
+Prayer is not impressing God; it's bringing your real self to Him. You don't have to clean up before you come. In fact, you can't. Come broken, come confused, come desperate—just come.
+
+Jesus taught us to pray, "Our Father"—a relationship word. You're not approaching a distant deity; you're talking to your Father.
+
+**Reflection**
+
+When you pray, are you more focused on saying the "right" things or being honest with God? What would change if you prayed like the Psalms?
+
+**Prayer**
+
+Father, teach me to pray honestly. Help me to stop performing and start pouring out my heart to You—the good, the bad, and the broken.
+
+**Shareable Truth**
+
+"God isn't looking for perfect prayers—He's listening for honest hearts."`,
+        },
+        {
+          id: "d2-matt69-13",
+          type: "scripture",
+          title: "The Lord's Prayer",
+          reference: "Matthew 6:9–13",
+          body: `**Plain Meaning:** Jesus teaches His disciples to pray by honoring God's name, submitting to His will, asking for provision, seeking forgiveness, and requesting deliverance.
+
+**Application:** The Lord's Prayer is a model. It shows you how to balance worship, dependence, confession, and trust in your prayers.`,
+        },
+        {
+          id: "d2-ps624-8",
+          type: "scripture",
+          title: "Pour Out Your Heart Before Him",
+          reference: "Psalm 62:8",
+          body: `**Plain Meaning:** Trust in Him at all times, O people; pour out your heart before Him; God is a refuge for us.
+
+**Application:** Don't hold back. Whatever is in your heart—fear, anger, joy, confusion—pour it out to God. He is your refuge.`,
+        },
+        {
+          id: "d2-phil46-7",
+          type: "scripture",
+          title: "Let Your Requests Be Made Known",
+          reference: "Philippians 4:6–7",
+          body: `**Plain Meaning:** In everything, by prayer and supplication with thanksgiving, let your requests be made known to God.
+
+**Application:** Bring everything to God—big or small. He cares about all of it, and He invites you to ask.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Meditating on the Word, Not Just Reading It",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Meditating on the Word, Not Just Reading It",
+          body: `Reading the Bible is good. Meditating on it is transformative. Meditation is not mindless repetition; it's slow, focused, prayerful reflection on what God is saying.
+
+The psalmist says the blessed person meditates on God's law day and night (Psalm 1:2). Meditation means chewing on a verse, turning it over in your mind, asking God to show you what it means and how to live it.
+
+It's the difference between eating fast food on the run and savoring a home-cooked meal. One fills you temporarily; the other nourishes you deeply.
+
+**Reflection**
+
+Do you tend to rush through Scripture just to check a box, or do you slow down to let it sink in? What would change if you meditated more?
+
+**Prayer**
+
+Lord, slow me down. Help me not to rush past Your Word but to meditate on it, savor it, and let it shape my heart and mind.
+
+**Shareable Truth**
+
+"Don't just read the Bible—let the Bible read you."`,
+        },
+        {
+          id: "d3-ps11-2",
+          type: "scripture",
+          title: "Meditate Day and Night",
+          reference: "Psalm 1:1–2",
+          body: `**Plain Meaning:** Blessed is the one whose delight is in the law of the Lord, and who meditates on it day and night.
+
+**Application:** Meditation is not a burden; it's a delight. When you love God's Word, you naturally want to think about it all day.`,
+        },
+        {
+          id: "d3-josh18",
+          type: "scripture",
+          title: "Do Not Let This Book Depart",
+          reference: "Joshua 1:8",
+          body: `**Plain Meaning:** Meditate on God's Word day and night so that you may be careful to do everything written in it. Then you will prosper and succeed.
+
+**Application:** Success in God's eyes comes from meditating on His Word and obeying it. The two are inseparable.`,
+        },
+        {
+          id: "d3-ps11997",
+          type: "scripture",
+          title: "Oh, How I Love Your Law",
+          reference: "Psalm 119:97",
+          body: `**Plain Meaning:** Oh, how I love Your law! It is my meditation all the day.
+
+**Application:** Love for God's Word and meditation go together. The more you meditate, the more you love it; the more you love it, the more you meditate.`,
+        },
+        {
+          id: "d3-col316",
+          type: "scripture",
+          title: "Let the Word Dwell Richly",
+          reference: "Colossians 3:16",
+          body: `**Plain Meaning:** Let the word of Christ dwell in you richly, teaching and admonishing one another in all wisdom.
+
+**Application:** God's Word should be so deeply embedded in you that it overflows into your relationships, decisions, and worship.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Listening and Responding",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Listening and Responding",
+          body: `It's possible to read the Bible and never truly listen. Listening means opening your heart to what God is saying and being willing to change because of it.
+
+James warns against being hearers only, deceiving yourselves (James 1:22). True listening always leads to obedience. If you hear God's Word and do nothing, you've wasted your time.
+
+God is speaking. The question is: Are you listening—and are you willing to respond?
+
+**Reflection**
+
+What is one thing God has shown you recently in His Word that you have not yet obeyed? What's holding you back?
+
+**Prayer**
+
+Lord, give me ears to hear and a heart willing to obey. Don't let me be a hearer only—make me a doer of Your Word.
+
+**Shareable Truth**
+
+"Hearing without obeying is not faith—it's foolishness."`,
+        },
+        {
+          id: "d4-james122-25",
+          type: "scripture",
+          title: "Be Doers of the Word",
+          reference: "James 1:22–25",
+          body: `**Plain Meaning:** Be doers of the Word, not hearers only. The one who looks into God's Word and acts on it will be blessed.
+
+**Application:** The blessing is not in knowing God's Word—it's in obeying it. Knowledge without obedience puffs up.`,
+        },
+        {
+          id: "d4-luke1128",
+          type: "scripture",
+          title: "Blessed Are Those Who Hear and Keep",
+          reference: "Luke 11:28",
+          body: `**Plain Meaning:** Jesus says, "Blessed rather are those who hear the word of God and keep it!"
+
+**Application:** It's not enough to hear. True blessing comes from hearing and keeping—obeying what God has said.`,
+        },
+        {
+          id: "d4-john1417",
+          type: "scripture",
+          title: "If You Love Me, Keep My Commandments",
+          reference: "John 14:15",
+          body: `**Plain Meaning:** Jesus says, "If you love Me, you will keep My commandments."
+
+**Application:** Love for Jesus is proven by obedience. If you claim to love Him but refuse to obey, your love is only words.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Staying Consistent When Life Is Busy",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Staying Consistent When Life Is Busy",
+          body: `Everyone is busy. But busyness is not the issue—priority is. You make time for what matters most. If your time with God is inconsistent, it's not because you're too busy; it's because other things are more important to you.
+
+That sounds harsh, but it's freeing. You don't need more time—you need to reorder your priorities. Start small. Five focused minutes with God is better than zero. Build from there.
+
+Consistency beats intensity. A little every day beats a lot once in a while.
+
+**Reflection**
+
+What are you currently prioritizing over time with God? What would it look like to rearrange your schedule to put Him first?
+
+**Prayer**
+
+Lord, forgive me for letting other things crowd You out. Help me to prioritize You—not out of guilt, but out of love and dependence.
+
+**Shareable Truth**
+
+"You don't find time for God—you make time for Him."`,
+        },
+        {
+          id: "d5-matt633",
+          type: "scripture",
+          title: "Seek First the Kingdom",
+          reference: "Matthew 6:33",
+          body: `**Plain Meaning:** Seek first the kingdom of God and His righteousness, and all these things will be added to you.
+
+**Application:** When you put God first, everything else falls into place. He promises to provide what you need as you seek Him.`,
+        },
+        {
+          id: "d5-mark135",
+          type: "scripture",
+          title: "Jesus Rose Early to Pray",
+          reference: "Mark 1:35",
+          body: `**Plain Meaning:** Very early in the morning, while it was still dark, Jesus got up, left the house, and went off to a solitary place to pray.
+
+**Application:** Even Jesus prioritized time alone with the Father—before the busyness of the day began.`,
+        },
+        {
+          id: "d5-ps51-3",
+          type: "scripture",
+          title: "In the Morning, O Lord, You Hear My Voice",
+          reference: "Psalm 5:3",
+          body: `**Plain Meaning:** In the morning, O Lord, You hear my voice; in the morning I prepare a sacrifice for You and watch expectantly.
+
+**Application:** Morning time with God sets the tone for your day. Come expectantly—God is ready to meet you.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const servingLikeJesusPlan: DiscipleshipPlan = {
+  id: "serving-like-jesus",
+  title: "Serving Others Like Jesus",
+  subtitle: "From self-focus to servant-hearted living",
+  imageUrl: servingJesusImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Jesus the Servant King",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Jesus the Servant King",
+          body: `Jesus, the King of Kings, took a towel and washed His disciples' feet. This was not a symbolic gesture—it was a living picture of His entire mission. He came not to be served, but to serve.
+
+In John 13, Jesus shows His disciples (and us) that greatness in God's kingdom looks radically different from greatness in the world. True greatness is found in humble, sacrificial service.
+
+If the Son of God served, how much more should we?
+
+**Reflection**
+
+When you think of Jesus, do you see Him more as a King to be worshiped or as a Servant to be imitated? How should that change how you live?
+
+**Prayer**
+
+Jesus, You are the King who became a servant. Teach me to follow Your example—to serve others humbly, sacrificially, and joyfully.
+
+**Shareable Truth**
+
+"Jesus didn't come to be served—He came to serve. So should you."`,
+        },
+        {
+          id: "d1-john131-5",
+          type: "scripture",
+          title: "Jesus Washes the Disciples' Feet",
+          reference: "John 13:1–5",
+          body: `**Plain Meaning:** Jesus, knowing His hour had come and loving His own to the end, took a towel and washed His disciples' feet.
+
+**Application:** Love expresses itself in service. Jesus' act of washing feet was not a one-time gesture—it was a picture of how He constantly serves those He loves.`,
+        },
+        {
+          id: "d1-john1312-15",
+          type: "scripture",
+          title: "I Have Given You an Example",
+          reference: "John 13:12–15",
+          body: `**Plain Meaning:** After washing their feet, Jesus said, "I have given you an example, that you also should do just as I have done to you."
+
+**Application:** Jesus didn't just tell you to serve—He showed you how. His life is the blueprint for servant-hearted living.`,
+        },
+        {
+          id: "d1-phil25-8",
+          type: "scripture",
+          title: "He Took the Form of a Servant",
+          reference: "Philippians 2:5–8",
+          body: `**Plain Meaning:** Jesus, though He was in the form of God, did not count equality with God a thing to be grasped, but emptied Himself, taking the form of a servant.
+
+**Application:** If Jesus, who is God, humbled Himself to serve, no task is beneath you. Serve with the mind of Christ.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Greatness in God's Kingdom",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Greatness in God's Kingdom",
+          body: `The world measures greatness by power, position, and prestige. God's kingdom measures greatness by humility, sacrifice, and service.
+
+Jesus told His disciples: "Whoever would be great among you must be your servant" (Mark 10:43). This is not just counter-cultural—it's counter-intuitive. But it is the way of the cross.
+
+Greatness in God's eyes is not about being served; it's about how faithfully you serve others in Jesus' name.
+
+**Reflection**
+
+Are you pursuing greatness the world's way or God's way? What needs to change?
+
+**Prayer**
+
+Lord, reshape my definition of greatness. Help me to measure my life not by what I've gained, but by how I've served.
+
+**Shareable Truth**
+
+"True greatness is not found in a title—it's found in a towel."`,
+        },
+        {
+          id: "d2-mark1042-45",
+          type: "scripture",
+          title: "The Son of Man Came to Serve",
+          reference: "Mark 10:42–45",
+          body: `**Plain Meaning:** Jesus said the Son of Man came not to be served but to serve, and to give His life as a ransom for many.
+
+**Application:** Jesus' entire mission was service and sacrifice. If you follow Him, your life should reflect the same.`,
+        },
+        {
+          id: "d2-matt2026-28",
+          type: "scripture",
+          title: "Whoever Wants to Be Great Must Be a Servant",
+          reference: "Matthew 20:26–28",
+          body: `**Plain Meaning:** Whoever wants to be great must be a servant, and whoever wants to be first must be a slave—just as the Son of Man came to serve.
+
+**Application:** Ambition is not wrong—but it must be redirected. Seek to be great at serving, not at being served.`,
+        },
+        {
+          id: "d2-luke2226-27",
+          type: "scripture",
+          title: "I Am Among You as One Who Serves",
+          reference: "Luke 22:26–27",
+          body: `**Plain Meaning:** Jesus says, "Let the greatest among you become as the youngest, and the leader as one who serves. I am among you as one who serves."
+
+**Application:** Jesus led by serving. If you want to lead well, follow His example.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Serving in the Local Church",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Serving in the Local Church",
+          body: `The church is not a building you visit—it's a body you belong to. And every part of the body has a function (1 Corinthians 12). You are not a spectator; you are a member with a role to play.
+
+God has given you gifts, not for your own benefit, but to build up the church. Serving in the church is not optional for the "super spiritual"—it is the normal Christian life.
+
+Find where you can serve, and serve faithfully. The church needs you.
+
+**Reflection**
+
+Are you actively serving in your local church, or are you still sitting on the sidelines? What is holding you back?
+
+**Prayer**
+
+Lord, show me where You want me to serve in the body of Christ. Give me a willing heart and faithful hands.
+
+**Shareable Truth**
+
+"The church is not a hotel for saints—it's a hospital where wounded healers serve one another."`,
+        },
+        {
+          id: "d3-1cor1212-27",
+          type: "scripture",
+          title: "Many Members, One Body",
+          reference: "1 Corinthians 12:12–27",
+          body: `**Plain Meaning:** The body is one, yet it has many members. Each member has a role, and all are needed.
+
+**Application:** You are not extra. You are essential. The body of Christ needs your unique gifts and service.`,
+        },
+        {
+          id: "d3-1pet410-11",
+          type: "scripture",
+          title: "Serve One Another with Your Gifts",
+          reference: "1 Peter 4:10–11",
+          body: `**Plain Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.
+
+**Application:** Your gifts are not for you—they are for the benefit of others. Steward them well by serving the church.`,
+        },
+        {
+          id: "d3-rom126-8",
+          type: "scripture",
+          title: "Use Your Gifts According to Grace",
+          reference: "Romans 12:6–8",
+          body: `**Plain Meaning:** Having gifts that differ according to the grace given to us, let us use them—prophecy, service, teaching, exhortation, giving, leading, showing mercy.
+
+**Application:** Whatever your gift, use it. Don't wait for a title or permission—just serve faithfully.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Serving the Least of These",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Serving the Least of These",
+          body: `Jesus said, "As you did it to one of the least of these My brothers, you did it to Me" (Matthew 25:40). Every act of service to the poor, the weak, the forgotten—Jesus counts as service to Him.
+
+This should radically reorient how you see service. You're not just helping people—you're ministering to Christ Himself.
+
+The question is not "Do they deserve it?" but "What would Jesus do?"
+
+**Reflection**
+
+Who are "the least of these" in your life? How is God calling you to serve them?
+
+**Prayer**
+
+Jesus, open my eyes to see You in the faces of the hurting, the lonely, the forgotten. Give me a heart that serves them as if I'm serving You—because I am.
+
+**Shareable Truth**
+
+"When you serve the forgotten, you are serving the One who never forgets."`,
+        },
+        {
+          id: "d4-matt2534-40",
+          type: "scripture",
+          title: "Whatever You Did for the Least, You Did for Me",
+          reference: "Matthew 25:34–40",
+          body: `**Plain Meaning:** Jesus says that when you feed the hungry, welcome the stranger, clothe the naked, or visit the sick and imprisoned, you do it to Him.
+
+**Application:** Every act of service to the vulnerable and overlooked is an act of worship to Christ.`,
+        },
+        {
+          id: "d4-prov1931",
+          type: "scripture",
+          title: "Kindness to the Poor Is Lending to the Lord",
+          reference: "Proverbs 19:17",
+          body: `**Plain Meaning:** Whoever is generous to the poor lends to the Lord, and He will repay him for his deed.
+
+**Application:** Serving the poor is not charity you might regret—it's an investment God Himself will honor.`,
+        },
+        {
+          id: "d4-james115-17",
+          type: "scripture",
+          title: "Pure Religion: Care for Widows and Orphans",
+          reference: "James 1:27",
+          body: `**Plain Meaning:** Pure and undefiled religion is to visit orphans and widows in their affliction.
+
+**Application:** True faith is not just what you believe—it's how you care for the vulnerable.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "A Lifestyle of Service at Home and Work",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — A Lifestyle of Service at Home and Work",
+          body: `Service is not just something you do at church on Sunday—it's a lifestyle you live every day at home, at work, and everywhere you go.
+
+Husbands, serve your wives. Parents, serve your children. Employees, serve your employers as if serving the Lord. Service is not about the spotlight—it's about faithfulness in the everyday, unseen moments.
+
+A servant heart doesn't need applause. It just needs an opportunity to love.
+
+**Reflection**
+
+Where are you most tempted to serve yourself instead of others—at home, at work, or elsewhere? What would change if you approached that area as a servant?
+
+**Prayer**
+
+Lord, make me a servant in every area of my life. Help me to see opportunities to serve, and give me a heart that loves to do it—without needing recognition.
+
+**Shareable Truth**
+
+"A servant heart doesn't need a stage—it just needs an opportunity."`,
+        },
+        {
+          id: "d5-col323-24",
+          type: "scripture",
+          title: "Work as for the Lord",
+          reference: "Colossians 3:23–24",
+          body: `**Plain Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward.
+
+**Application:** Even mundane work becomes worship when done as service to Christ.`,
+        },
+        {
+          id: "d5-eph525-28",
+          type: "scripture",
+          title: "Husbands, Love and Serve Your Wives",
+          reference: "Ephesians 5:25–28",
+          body: `**Plain Meaning:** Husbands, love your wives, as Christ loved the church and gave Himself up for her.
+
+**Application:** Christian marriage is built on sacrificial service, mirroring Christ's love for the church.`,
+        },
+        {
+          id: "d5-gal513",
+          type: "scripture",
+          title: "Serve One Another Through Love",
+          reference: "Galatians 5:13",
+          body: `**Plain Meaning:** You were called to freedom, brothers. Only do not use your freedom as an opportunity for the flesh, but through love serve one another.
+
+**Application:** Freedom in Christ is not freedom to please yourself—it's freedom to love and serve others.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const marriageLovePlan: DiscipleshipPlan = {
+  id: "marriage-and-covenant-love",
+  title: "Marriage & Covenant Love",
+  subtitle: "Reflecting Christ and the Church at home",
+  imageUrl: marriageLoveImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "God's Design for Marriage",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — God's Design for Marriage",
+          body: `Marriage was God's idea, not man's. He created it before the fall, in the perfection of Eden. It is holy, good, and designed to display the covenant love between Christ and the church.
+
+God's design is one man and one woman, united for life, becoming one flesh. This union is not just for companionship or procreation—it is a living picture of the gospel.
+
+When the world distorts marriage, the church must hold fast to God's design. Not out of legalism, but out of love for the One who created it.
+
+**Reflection**
+
+Do you view marriage as something God invented, or something culture defines? How does God's design challenge the way you think about marriage?
+
+**Prayer**
+
+Father, thank You for creating marriage. Help me to honor Your design and to see marriage as a reflection of Your love for the church.
+
+**Shareable Truth**
+
+"Marriage was designed by God to display the gospel, not just to make you happy."`,
+        },
+        {
+          id: "d1-gen224",
+          type: "scripture",
+          title: "One Flesh",
+          reference: "Genesis 2:24",
+          body: `**Plain Meaning:** A man shall leave his father and mother and hold fast to his wife, and they shall become one flesh.
+
+**Application:** Marriage is a covenant of leaving, cleaving, and becoming one. It is meant to be exclusive, permanent, and intimate.`,
+        },
+        {
+          id: "d1-matt194-6",
+          type: "scripture",
+          title: "What God Has Joined Together",
+          reference: "Matthew 19:4–6",
+          body: `**Plain Meaning:** Jesus affirms God's design: one man, one woman, one flesh. What God has joined together, let no one separate.
+
+**Application:** Marriage is not a human contract you can break at will—it is a divine covenant God holds you to.`,
+        },
+        {
+          id: "d1-mal215-16",
+          type: "scripture",
+          title: "Guard Your Spirit; Do Not Be Faithless",
+          reference: "Malachi 2:15–16",
+          body: `**Plain Meaning:** God hates divorce because it breaks the covenant He witnessed. Guard your spirit and do not be faithless to the wife of your youth.
+
+**Application:** God takes your marriage covenant seriously. Guard it fiercely, and do not treat it lightly.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Husbands, Wives, and Mutual Honor",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Husbands, Wives, and Mutual Honor",
+          body: `God's design for marriage includes distinct roles, but both are marked by sacrificial love and mutual honor. Husbands are called to love their wives as Christ loved the church—giving themselves up for her. Wives are called to respect and submit to their husbands as to the Lord.
+
+This is not about superiority or inferiority—it's about order and purpose. Both roles require humility, sacrifice, and a gospel-centered heart.
+
+**Reflection**
+
+Husbands: Are you loving your wife sacrificially, as Christ loves the church? Wives: Are you honoring and respecting your husband as unto the Lord?
+
+**Prayer**
+
+Lord, help me to fulfill my role in marriage with humility and love. Teach me to honor my spouse as You have honored me.
+
+**Shareable Truth**
+
+"In marriage, both spouses are called to die to self and live for the other."`,
+        },
+        {
+          id: "d2-eph525-28",
+          type: "scripture",
+          title: "Husbands, Love Your Wives",
+          reference: "Ephesians 5:25–28",
+          body: `**Plain Meaning:** Husbands, love your wives, as Christ loved the church and gave Himself up for her.
+
+**Application:** Husbands, your love should be sacrificial, not self-serving. Christ's love is the standard.`,
+        },
+        {
+          id: "d2-eph522-24",
+          type: "scripture",
+          title: "Wives, Submit to Your Husbands",
+          reference: "Ephesians 5:22–24",
+          body: `**Plain Meaning:** Wives, submit to your own husbands, as to the Lord, for the husband is the head of the wife even as Christ is the head of the church.
+
+**Application:** Submission is not weakness—it is trust in God's design and in the leadership He has appointed.`,
+        },
+        {
+          id: "d2-1pet37",
+          type: "scripture",
+          title: "Husbands, Live with Understanding",
+          reference: "1 Peter 3:7",
+          body: `**Plain Meaning:** Husbands, live with your wives in an understanding way, showing honor to the woman as the weaker vessel, since they are heirs with you of the grace of life.
+
+**Application:** Husbands, treat your wife with tenderness, honor, and understanding. She is your co-heir in Christ.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Communication, Conflict, and Forgiveness",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Communication, Conflict, and Forgiveness",
+          body: `Every marriage has conflict. The question is not if you will disagree, but how you will handle it. Will you fight to win, or fight to understand? Will you seek reconciliation, or hold on to bitterness?
+
+Healthy communication requires humility, listening, and a commitment to truth spoken in love. And when you sin against each other—and you will—forgiveness must be quick, complete, and sincere.
+
+**Reflection**
+
+How do you typically handle conflict in your marriage? Do you fight to win or to reconcile? What needs to change?
+
+**Prayer**
+
+Lord, teach us to communicate with humility and grace. Help us to forgive quickly and to seek reconciliation, not victory.
+
+**Shareable Truth**
+
+"In marriage, it's not about winning the argument—it's about winning each other's hearts."`,
+        },
+        {
+          id: "d3-eph426-27",
+          type: "scripture",
+          title: "Do Not Let the Sun Go Down on Your Anger",
+          reference: "Ephesians 4:26–27",
+          body: `**Plain Meaning:** Be angry and do not sin; do not let the sun go down on your anger, and give no opportunity to the devil.
+
+**Application:** Deal with conflict quickly. Unresolved anger gives the enemy a foothold in your marriage.`,
+        },
+        {
+          id: "d3-col312-13",
+          type: "scripture",
+          title: "Forgive as the Lord Forgave You",
+          reference: "Colossians 3:12–13",
+          body: `**Plain Meaning:** Put on compassion, kindness, humility, and patience, bearing with one another and forgiving each other as the Lord forgave you.
+
+**Application:** You have been forgiven much. Forgive your spouse the same way Christ forgave you.`,
+        },
+        {
+          id: "d3-prov1520",
+          type: "scripture",
+          title: "A Soft Answer Turns Away Wrath",
+          reference: "Proverbs 15:1",
+          body: `**Plain Meaning:** A soft answer turns away wrath, but a harsh word stirs up anger.
+
+**Application:** The tone you use matters. Choose gentleness over harshness, even when you're frustrated.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Guarding Your Marriage from Drift and Temptation",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Guarding Your Marriage from Drift and Temptation",
+          body: `No marriage is immune to drift. Busyness, neglect, and unmet expectations can slowly erode intimacy. And where there is drift, temptation finds an opportunity.
+
+You must guard your marriage intentionally. That means protecting your time together, your physical intimacy, your emotional connection, and your purity. Set boundaries, flee temptation, and fight for your covenant.
+
+**Reflection**
+
+Are there areas where you've allowed drift in your marriage? What boundaries do you need to set to guard against temptation?
+
+**Prayer**
+
+Lord, protect our marriage from drift and from the enemy's schemes. Help us to fight for our covenant and to flee from anything that threatens it.
+
+**Shareable Truth**
+
+"A strong marriage doesn't happen by accident—it's built by intentional, daily choices."`,
+        },
+        {
+          id: "d4-1cor716",
+          type: "scripture",
+          title: "Let Each Have His Own Wife",
+          reference: "1 Corinthians 7:1–5",
+          body: `**Plain Meaning:** Because of the temptation to sexual immorality, each man should have his own wife and each woman her own husband. Do not deprive one another.
+
+**Application:** Physical intimacy in marriage is a gift and a safeguard. Don't neglect it.`,
+        },
+        {
+          id: "d4-heb134",
+          type: "scripture",
+          title: "Let the Marriage Bed Be Undefiled",
+          reference: "Hebrews 13:4",
+          body: `**Plain Meaning:** Let marriage be held in honor among all, and let the marriage bed be undefiled, for God will judge the sexually immoral and adulterous.
+
+**Application:** Guard the purity of your marriage. Sexual sin has severe consequences—flee from it.`,
+        },
+        {
+          id: "d4-prov427",
+          type: "scripture",
+          title: "Do Not Swerve to the Right or the Left",
+          reference: "Proverbs 4:23–27",
+          body: `**Plain Meaning:** Guard your heart, keep your eyes straight ahead, and do not swerve to the right or left. Keep your foot from evil.
+
+**Application:** Guarding your marriage starts with guarding your heart and your eyes. Be vigilant.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Praying Together and Growing Together",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Praying Together and Growing Together",
+          body: `A couple that prays together grows together. Prayer knits your hearts, aligns your wills, and invites God into the center of your marriage.
+
+If you're not praying together, start. It doesn't have to be long or eloquent. Just come before God together, humble and honest. Ask Him to strengthen your marriage, grow your love, and keep you faithful.
+
+**Reflection**
+
+Do you and your spouse pray together regularly? If not, what's holding you back?
+
+**Prayer**
+
+Father, teach us to pray together. Unite our hearts as we come before You. Grow our marriage into a testimony of Your grace.
+
+**Shareable Truth**
+
+"Couples who pray together don't just stay together—they grow together."`,
+        },
+        {
+          id: "d5-eccl49-12",
+          type: "scripture",
+          title: "Two Are Better Than One",
+          reference: "Ecclesiastes 4:9–12",
+          body: `**Plain Meaning:** Two are better than one. If one falls, the other can lift them up. A cord of three strands is not quickly broken.
+
+**Application:** A marriage with God at the center is strong. He is the third strand that holds you together.`,
+        },
+        {
+          id: "d5-1pet37",
+          type: "scripture",
+          title: "Pray Together So Your Prayers Are Not Hindered",
+          reference: "1 Peter 3:7",
+          body: `**Plain Meaning:** Husbands, live with your wives in an understanding way, showing honor, so that your prayers may not be hindered.
+
+**Application:** Your relationship with your spouse affects your relationship with God. Treat each other with honor.`,
+        },
+        {
+          id: "d5-matt1819-20",
+          type: "scripture",
+          title: "Where Two Agree, God Is Present",
+          reference: "Matthew 18:19–20",
+          body: `**Plain Meaning:** If two of you agree on earth about anything they ask, it will be done for them by My Father in heaven. Where two or three are gathered in My name, I am there.
+
+**Application:** Praying together invites God's presence and power into your marriage.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const parentingGospelPlan: DiscipleshipPlan = {
+  id: "parenting-with-the-gospel",
+  title: "Parenting with the Gospel",
+  subtitle: "Raising children in grace and truth",
+  imageUrl: parentingGospelImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Children as a Stewardship from God",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Children as a Stewardship from God",
+          body: `Your children are not yours—they are God's. You did not create them; He did. You do not own them; you are stewarding them. And one day, you will give an account for how you raised them.
+
+This is both humbling and freeing. Humbling because the responsibility is great. Freeing because the burden is not ultimately yours—it's God's. He entrusted them to you, and He will equip you for the task.
+
+**Reflection**
+
+Do you see your children as yours to control or as God's to steward? How does that shift change your approach to parenting?
+
+**Prayer**
+
+Lord, thank You for the children You have entrusted to me. Help me to steward them well, raising them to know and love You.
+
+**Shareable Truth**
+
+"Your children are not your possession—they are God's gift and your stewardship."`,
+        },
+        {
+          id: "d1-ps1273-5",
+          type: "scripture",
+          title: "Children Are a Heritage from the Lord",
+          reference: "Psalm 127:3–5",
+          body: `**Plain Meaning:** Children are a heritage from the Lord, the fruit of the womb a reward. Blessed is the man whose quiver is full of them.
+
+**Application:** Children are not a burden—they are a blessing from God. Receive them as such.`,
+        },
+        {
+          id: "d1-gen1718",
+          type: "scripture",
+          title: "Abraham Will Command His Children",
+          reference: "Genesis 18:19",
+          body: `**Plain Meaning:** God chose Abraham so that he may command his children and his household after him to keep the way of the Lord.
+
+**Application:** God gives you children so you can teach them to follow Him. Parenting is discipleship.`,
+        },
+        {
+          id: "d1-prov226",
+          type: "scripture",
+          title: "Train Up a Child",
+          reference: "Proverbs 22:6",
+          body: `**Plain Meaning:** Train up a child in the way he should go; even when he is old he will not depart from it.
+
+**Application:** Training takes time and intentionality. Invest in your children's spiritual formation now, trusting God for the future.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Training in Grace, Not Just Rules",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Training in Grace, Not Just Rules",
+          body: `Parenting is not about raising "good kids" who obey the rules. It's about raising children who love Jesus and understand the gospel.
+
+Rules without grace produce either rebellion or self-righteousness. Grace without truth produces entitlement and compromise. You need both: high standards rooted in love and forgiveness.
+
+Point your children to Jesus—not just to behavior modification. Show them that obedience flows from a changed heart, not just fear of consequences.
+
+**Reflection**
+
+Are you raising your children with rules alone, or are you pointing them to the grace of Jesus? What needs to change?
+
+**Prayer**
+
+Lord, help me to parent with both grace and truth. Give me wisdom to discipline in love and to always point my children to You.
+
+**Shareable Truth**
+
+"Rules without grace create Pharisees. Grace without truth creates entitlement. Kids need both."`,
+        },
+        {
+          id: "d2-eph64",
+          type: "scripture",
+          title: "Do Not Provoke Your Children",
+          reference: "Ephesians 6:4",
+          body: `**Plain Meaning:** Fathers, do not provoke your children to anger, but bring them up in the discipline and instruction of the Lord.
+
+**Application:** Discipline your children, but do it in a way that reflects God's heart—firm but loving, just but gracious.`,
+        },
+        {
+          id: "d2-col321",
+          type: "scripture",
+          title: "Do Not Embitter Your Children",
+          reference: "Colossians 3:21",
+          body: `**Plain Meaning:** Fathers, do not embitter your children, or they will become discouraged.
+
+**Application:** Harsh, graceless parenting crushes a child's spirit. Be firm, but always point them to hope in Christ.`,
+        },
+        {
+          id: "d2-titus211-12",
+          type: "scripture",
+          title: "Grace Trains Us",
+          reference: "Titus 2:11–12",
+          body: `**Plain Meaning:** The grace of God has appeared, bringing salvation and training us to renounce ungodliness and to live self-controlled, upright, and godly lives.
+
+**Application:** Grace is not soft—it trains us. Show your children that grace leads to godliness, not license to sin.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Discipline that Reflects God's Heart",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Discipline that Reflects God's Heart",
+          body: `Discipline is not punishment—it's training. God disciplines those He loves (Hebrews 12:6), and so should you. But discipline must always be done in love, not anger. It should point toward restoration, not just correction.
+
+Your goal is not to control your children, but to shepherd their hearts toward God. Discipline is one tool in that shepherding process.
+
+**Reflection**
+
+When you discipline your children, does it reflect God's heart—loving, corrective, and restorative? Or does it reflect your frustration and anger?
+
+**Prayer**
+
+Lord, teach me to discipline my children as You discipline me—with love, patience, and a desire for their good. Help me to shepherd their hearts, not just manage their behavior.
+
+**Shareable Truth**
+
+"Discipline is not about control—it's about shaping a heart toward God."`,
+        },
+        {
+          id: "d3-heb125-11",
+          type: "scripture",
+          title: "The Lord Disciplines Those He Loves",
+          reference: "Hebrews 12:5–11",
+          body: `**Plain Meaning:** The Lord disciplines the one He loves. All discipline seems painful at the time, but later it yields the peaceful fruit of righteousness.
+
+**Application:** Discipline your children because you love them, not because you're angry. And discipline always has a purpose—formation, not just punishment.`,
+        },
+        {
+          id: "d3-prov1324",
+          type: "scripture",
+          title: "Whoever Spares the Rod Hates His Son",
+          reference: "Proverbs 13:24",
+          body: `**Plain Meaning:** Whoever spares the rod hates his son, but he who loves him is diligent to discipline him.
+
+**Application:** Discipline is an act of love. Failing to discipline is not kindness—it's negligence.`,
+        },
+        {
+          id: "d3-prov2215",
+          type: "scripture",
+          title: "Folly Is Bound Up in a Child's Heart",
+          reference: "Proverbs 22:15",
+          body: `**Plain Meaning:** Folly is bound up in the heart of a child, but the rod of discipline drives it far from him.
+
+**Application:** Children are not morally neutral. They are bent toward sin and need discipline to train them in righteousness.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Pointing Kids to Christ in Everyday Life",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Pointing Kids to Christ in Everyday Life",
+          body: `Discipleship doesn't happen once a week at church—it happens in the rhythms of daily life. Deuteronomy 6 calls parents to teach God's Word when they sit, walk, lie down, and rise up.
+
+This means using everyday moments—car rides, meals, bedtime—to talk about God, His Word, and His ways. Don't wait for formal lessons. Weave the gospel into ordinary life.
+
+**Reflection**
+
+Are you using everyday moments to point your children to Christ, or are you leaving their spiritual formation to Sunday school?
+
+**Prayer**
+
+Lord, help me to be intentional about pointing my children to You in the everyday moments of life. Give me wisdom to speak Your truth naturally and consistently.
+
+**Shareable Truth**
+
+"Discipleship happens in the car, at the table, and at bedtime—not just on Sundays."`,
+        },
+        {
+          id: "d4-deut66-9",
+          type: "scripture",
+          title: "Teach Them Diligently",
+          reference: "Deuteronomy 6:6–9",
+          body: `**Plain Meaning:** These words shall be on your heart, and you shall teach them diligently to your children, talking of them when you sit, walk, lie down, and rise.
+
+**Application:** Teaching your children about God is not a one-time event—it's woven into the fabric of daily life.`,
+        },
+        {
+          id: "d4-ps784-7",
+          type: "scripture",
+          title: "Tell the Next Generation",
+          reference: "Psalm 78:4–7",
+          body: `**Plain Meaning:** We will tell the coming generation the glorious deeds of the Lord, that they should set their hope in God and not forget His works.
+
+**Application:** Your children need to know God's story—His faithfulness, His power, His love. Tell them often.`,
+        },
+        {
+          id: "d4-2tim315",
+          type: "scripture",
+          title: "From Childhood You Have Known the Scriptures",
+          reference: "2 Timothy 3:15",
+          body: `**Plain Meaning:** From childhood you have been acquainted with the sacred writings, which are able to make you wise for salvation through faith in Christ Jesus.
+
+**Application:** Teach your children the Scriptures from an early age. God's Word has the power to lead them to salvation.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Praying Over Your Children and Letting Go",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Praying Over Your Children and Letting Go",
+          body: `You cannot save your children. You can teach them, love them, and model Christ for them—but only God can change their hearts.
+
+This is why prayer is essential. You must entrust your children to God daily, asking Him to do what you cannot. And as they grow, you must learn to let go, trusting God to complete the work He started.
+
+**Reflection**
+
+Are you praying over your children daily? Are you trusting God with their future, or trying to control it?
+
+**Prayer**
+
+Father, I entrust my children to You. Do in their hearts what I cannot do. Save them, shape them, and use them for Your glory.
+
+**Shareable Truth**
+
+"You can't save your children—but you can pray to the One who can."`,
+        },
+        {
+          id: "d5-1sam127-28",
+          type: "scripture",
+          title: "I Have Lent Him to the Lord",
+          reference: "1 Samuel 1:27–28",
+          body: `**Plain Meaning:** Hannah prayed for a child, and when God gave her Samuel, she gave him back to the Lord.
+
+**Application:** Your children are not yours to keep—they are God's to use. Dedicate them to Him and trust Him with their lives.`,
+        },
+        {
+          id: "d5-prov35-6",
+          type: "scripture",
+          title: "Trust in the Lord with All Your Heart",
+          reference: "Proverbs 3:5–6",
+          body: `**Plain Meaning:** Trust in the Lord with all your heart, and do not lean on your own understanding. In all your ways acknowledge Him, and He will make straight your paths.
+
+**Application:** You can't control your children's future, but you can trust the God who holds it.`,
+        },
+        {
+          id: "d5-phil16",
+          type: "scripture",
+          title: "He Who Began a Good Work Will Complete It",
+          reference: "Philippians 1:6",
+          body: `**Plain Meaning:** I am sure of this, that He who began a good work in you will bring it to completion at the day of Jesus Christ.
+
+**Application:** If God has begun a work in your child's heart, trust Him to finish it. Pray, and let go.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const workCallingPlan: DiscipleshipPlan = {
+  id: "work-and-calling",
+  title: "Work, Calling, and the Kingdom",
+  subtitle: "Honoring Christ in your daily work",
+  imageUrl: workCallingImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Work as Worship",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Work as Worship",
+          body: `Work is not a curse—it's a calling. Before the fall, God gave Adam work to do in the Garden (Genesis 2:15). Work was always part of God's design, and it is meant to be an act of worship.
+
+When you work as for the Lord and not for men, even mundane tasks become sacred. You're not just earning a paycheck—you're serving the One who created you, redeemed you, and called you.
+
+**Reflection**
+
+Do you see your work as worship, or just as a means to an end? How would your attitude change if you worked for an audience of One?
+
+**Prayer**
+
+Lord, help me to see my work as worship. Whatever I do, let me do it for Your glory and not just for approval, success, or a paycheck.
+
+**Shareable Truth**
+
+"Work done for the Lord is never wasted—even when no one else sees it."`,
+        },
+        {
+          id: "d1-col323-24",
+          type: "scripture",
+          title: "Whatever You Do, Work for the Lord",
+          reference: "Colossians 3:23–24",
+          body: `**Plain Meaning:** Whatever you do, work heartily, as for the Lord and not for men, knowing that from the Lord you will receive the inheritance as your reward.
+
+**Application:** Your boss may not notice, but the Lord does. Work for Him, and He will reward you.`,
+        },
+        {
+          id: "d1-gen215",
+          type: "scripture",
+          title: "Work and Keep the Garden",
+          reference: "Genesis 2:15",
+          body: `**Plain Meaning:** The Lord God took the man and put him in the garden of Eden to work it and keep it.
+
+**Application:** Work existed before the fall. It was part of God's good design, not a result of sin.`,
+        },
+        {
+          id: "d1-1cor1031",
+          type: "scripture",
+          title: "Do All to the Glory of God",
+          reference: "1 Corinthians 10:31",
+          body: `**Plain Meaning:** Whatever you do, do all to the glory of God.
+
+**Application:** No task is too small to be done for God's glory. Even the most ordinary work can bring Him honor.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Calling Beyond Just a Job Title",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Calling Beyond Just a Job Title",
+          body: `Your calling is not just your job title—it's your identity in Christ and the unique way God has wired you to serve His kingdom. Some are called to full-time ministry, but all believers are called to full-time faithfulness wherever God has placed them.
+
+Your vocation (job) is one expression of your calling, but your calling is bigger. It includes how you love your family, serve your church, and reflect Christ in every sphere of life.
+
+**Reflection**
+
+Do you see your job as your calling, or as one part of a larger calling to serve Christ in all of life?
+
+**Prayer**
+
+Lord, help me to see my calling as bigger than my job. Show me how to serve You faithfully in every area of life.
+
+**Shareable Truth**
+
+"Your calling is not what you do for a living—it's who you are in Christ."`,
+        },
+        {
+          id: "d2-1pet29",
+          type: "scripture",
+          title: "Called to Proclaim His Excellencies",
+          reference: "1 Peter 2:9",
+          body: `**Plain Meaning:** You are a chosen race, a royal priesthood, a holy nation, a people for His own possession, that you may proclaim the excellencies of Him who called you.
+
+**Application:** Your primary calling is not a job—it's to proclaim the excellencies of Christ in everything you do.`,
+        },
+        {
+          id: "d2-eph410-12",
+          type: "scripture",
+          title: "Gifts Given to Equip the Saints",
+          reference: "Ephesians 4:11–12",
+          body: `**Plain Meaning:** God gave gifts to equip the saints for the work of ministry, for building up the body of Christ.
+
+**Application:** God has uniquely equipped you for service in His kingdom. Discover your gifts and use them.`,
+        },
+        {
+          id: "d2-rom68",
+          type: "scripture",
+          title: "Each Has Different Gifts",
+          reference: "Romans 12:6–8",
+          body: `**Plain Meaning:** We have different gifts according to the grace given to us. Let us use them.
+
+**Application:** God has given you unique gifts. Your calling is to steward them well for His glory and the good of others.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Integrity and Witness at Work",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Integrity and Witness at Work",
+          body: `Your workplace is a mission field. The way you work—your integrity, your attitude, your work ethic—is a testimony to the gospel. People are watching.
+
+Do you cut corners, gossip, complain, or compromise? Or do you work with excellence, honesty, and kindness—even when no one is watching? Your witness at work is powerful.
+
+**Reflection**
+
+What kind of witness are you at work? Do your coworkers see Christ in you, or just another employee trying to get by?
+
+**Prayer**
+
+Lord, help me to work with integrity and to be a faithful witness for You in my workplace. Let my life point others to You.
+
+**Shareable Truth**
+
+"Your witness at work speaks louder than words—let it point to Christ."`,
+        },
+        {
+          id: "d3-prov1026",
+          type: "scripture",
+          title: "The Integrity of the Upright Guides Them",
+          reference: "Proverbs 11:3",
+          body: `**Plain Meaning:** The integrity of the upright guides them, but the crookedness of the treacherous destroys them.
+
+**Application:** Integrity in your work protects and guides you. Compromise eventually leads to ruin.`,
+        },
+        {
+          id: "d3-eph628",
+          type: "scripture",
+          title: "Serve with a Good Will",
+          reference: "Ephesians 6:5–8",
+          body: `**Plain Meaning:** Bondservants (employees), obey your earthly masters with respect and sincerity, as you would Christ, serving with a good will as to the Lord.
+
+**Application:** Your work ethic is a reflection of your relationship with Christ. Serve with excellence, as if He is your boss.`,
+        },
+        {
+          id: "d3-titus210",
+          type: "scripture",
+          title: "Adorn the Doctrine of God",
+          reference: "Titus 2:9–10",
+          body: `**Plain Meaning:** Bondservants are to be well-pleasing, not argumentative, and to show all good faith, so that in everything they may adorn the doctrine of God our Savior.
+
+**Application:** Your conduct at work either adorns the gospel or tarnishes it. Choose to adorn it.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Rest, Sabbath, and Avoiding Burnout",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Rest, Sabbath, and Avoiding Burnout",
+          body: `God created the Sabbath not as a burden, but as a gift. Rest is not laziness—it's obedience. When you refuse to rest, you're saying, "God, I don't trust You to sustain me if I stop working."
+
+Sabbath is a declaration that God is in control, not you. It's an act of faith that says, "I trust You, Lord, to provide even when I'm not striving."
+
+**Reflection**
+
+Do you regularly rest, or do you work yourself to exhaustion? What is driving you—trust in God or fear of falling behind?
+
+**Prayer**
+
+Lord, teach me to rest. Help me to trust You enough to stop striving and to receive the gift of Sabbath.
+
+**Shareable Truth**
+
+"Sabbath is not about being lazy—it's about trusting that God is God and you are not."`,
+        },
+        {
+          id: "d4-ex208-11",
+          type: "scripture",
+          title: "Remember the Sabbath Day",
+          reference: "Exodus 20:8–11",
+          body: `**Plain Meaning:** Remember the Sabbath day, to keep it holy. Six days you shall labor, but the seventh is a Sabbath to the Lord.
+
+**Application:** God commands rest because you need it. Sabbath is not optional—it's a gift to receive and a command to obey.`,
+        },
+        {
+          id: "d4-matt1128",
+          type: "scripture",
+          title: "Come to Me and Rest",
+          reference: "Matthew 11:28",
+          body: `**Plain Meaning:** Come to Me, all who labor and are heavy laden, and I will give you rest.
+
+**Application:** Jesus offers rest for your soul. You don't have to earn it—just receive it.`,
+        },
+        {
+          id: "d4-ps1272",
+          type: "scripture",
+          title: "It Is in Vain to Rise Early and Go Late to Rest",
+          reference: "Psalm 127:2",
+          body: `**Plain Meaning:** It is in vain that you rise up early and go late to rest, eating the bread of anxious toil; for He gives to His beloved sleep.
+
+**Application:** Overworking is not noble—it's a lack of trust in God's provision. Rest is a gift from Him.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Using Your Gifts for Kingdom Impact",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Using Your Gifts for Kingdom Impact",
+          body: `God has given you gifts, talents, and opportunities—not for your own comfort, but for His kingdom. The question is: Are you using them, or wasting them?
+
+Every resource you have—time, money, skills—is a stewardship from God. One day, you will give an account for how you used what He gave you. Use it well. Use it for eternal impact.
+
+**Reflection**
+
+Are you using your gifts and resources for kingdom impact, or are you living only for yourself? What needs to change?
+
+**Prayer**
+
+Lord, everything I have is Yours. Show me how to use my gifts, my time, and my resources for Your kingdom and Your glory.
+
+**Shareable Truth**
+
+"Your gifts are not for your comfort—they're for God's kingdom."`,
+        },
+        {
+          id: "d5-matt2514-30",
+          type: "scripture",
+          title: "The Parable of the Talents",
+          reference: "Matthew 25:14–30",
+          body: `**Plain Meaning:** The master entrusts his servants with talents (resources) and holds them accountable for how they used them. The faithful are rewarded; the lazy are condemned.
+
+**Application:** God has entrusted you with gifts and opportunities. Use them faithfully. One day, you will give an account.`,
+        },
+        {
+          id: "d5-1pet410",
+          type: "scripture",
+          title: "Use Your Gifts to Serve One Another",
+          reference: "1 Peter 4:10",
+          body: `**Plain Meaning:** As each has received a gift, use it to serve one another, as good stewards of God's varied grace.
+
+**Application:** Your gifts are not for you—they are for serving others and stewarding God's grace.`,
+        },
+        {
+          id: "d5-1tim617-19",
+          type: "scripture",
+          title: "Use Your Wealth for Good Works",
+          reference: "1 Timothy 6:17–19",
+          body: `**Plain Meaning:** Those who are rich in this present age are to do good, to be rich in good works, generous and ready to share, storing up treasure for themselves as a good foundation for the future.
+
+**Application:** Use what God has given you—time, money, talents—for eternal impact, not just temporary comfort.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const purityWorldPlan: DiscipleshipPlan = {
+  id: "purity-in-a-sexualized-world",
+  title: "Purity in a Sexualized World",
+  subtitle: "Honoring Jesus with your body and mind",
+  imageUrl: purityWorldImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "God's Design for Sex and Purity",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — God's Design for Sex and Purity",
+          body: `Sex was God's idea, not the world's. He created it, called it good, and designed it for marriage—one man and one woman in a covenant relationship.
+
+The world distorts sex, treating it as recreational, casual, or an expression of self-fulfillment. But God's design is clear: sex is sacred, reserved for marriage, and meant to be a picture of covenant love.
+
+Purity is not about repression—it's about honoring God's design and trusting that His way is best.
+
+**Reflection**
+
+Do you view sex through the lens of culture or through the lens of Scripture? How does God's design challenge your thinking?
+
+**Prayer**
+
+Lord, forgive me for letting the world shape my view of sex and purity. Help me to honor Your design and to trust that Your way is best.
+
+**Shareable Truth**
+
+"Purity is not repression—it's honoring God's design for sex."`,
+        },
+        {
+          id: "d1-gen127-28",
+          type: "scripture",
+          title: "Male and Female He Created Them",
+          reference: "Genesis 1:27–28",
+          body: `**Plain Meaning:** God created male and female, blessed them, and told them to be fruitful and multiply.
+
+**Application:** Sex is God's idea, created for good. His design is clear: one man, one woman, in marriage.`,
+        },
+        {
+          id: "d1-heb134",
+          type: "scripture",
+          title: "The Marriage Bed Undefiled",
+          reference: "Hebrews 13:4",
+          body: `**Plain Meaning:** Let marriage be held in honor among all, and let the marriage bed be undefiled, for God will judge the sexually immoral and adulterous.
+
+**Application:** Sex within marriage is pure and honorable. Sex outside marriage is sin and will be judged by God.`,
+        },
+        {
+          id: "d1-1cor618-20",
+          type: "scripture",
+          title: "Flee Sexual Immorality",
+          reference: "1 Corinthians 6:18–20",
+          body: `**Plain Meaning:** Flee from sexual immorality. Your body is a temple of the Holy Spirit. You are not your own; you were bought with a price. So glorify God in your body.
+
+**Application:** Sexual sin is uniquely destructive because it sins against your own body, which is God's temple. Honor God with your body.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Battling Lust in Heart and Mind",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Battling Lust in Heart and Mind",
+          body: `Jesus made it clear: lust is not just a behavior problem—it's a heart problem. "Everyone who looks at a woman with lustful intent has already committed adultery with her in his heart" (Matthew 5:28).
+
+The battle for purity is won or lost in your mind. What you look at, what you think about, what you dwell on—these shape your desires. Lust feeds on secrecy, but it dies in the light.
+
+**Reflection**
+
+Are you fighting lust only when it becomes action, or are you battling it at the level of your thoughts? Where do you need to bring light?
+
+**Prayer**
+
+Lord, search my heart and expose any lust hiding there. Give me the strength to fight it at the thought level, not just the action level.
+
+**Shareable Truth**
+
+"Lust thrives in secrecy—bring it to the light and it loses its power."`,
+        },
+        {
+          id: "d2-matt527-30",
+          type: "scripture",
+          title: "Lust in the Heart Is Adultery",
+          reference: "Matthew 5:27–30",
+          body: `**Plain Meaning:** Jesus says that looking at someone with lust is adultery in the heart. If your eye causes you to sin, tear it out.
+
+**Application:** Jesus is not calling for literal self-mutilation—He's calling for radical action against sin. Take lust seriously.`,
+        },
+        {
+          id: "d2-job311",
+          type: "scripture",
+          title: "I Made a Covenant with My Eyes",
+          reference: "Job 31:1",
+          body: `**Plain Meaning:** Job says, "I have made a covenant with my eyes; how then could I gaze at a virgin?"
+
+**Application:** Guard your eyes. Make a covenant to avoid looking at what stirs up lust.`,
+        },
+        {
+          id: "d2-2tim222",
+          type: "scripture",
+          title: "Flee Youthful Passions",
+          reference: "2 Timothy 2:22",
+          body: `**Plain Meaning:** Flee youthful passions and pursue righteousness, faith, love, and peace, along with those who call on the Lord from a pure heart.
+
+**Application:** Don't just avoid sin—replace it. Flee lust and pursue Christ and godly community.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Boundaries, Media, and Guarding Your Eyes",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Boundaries, Media, and Guarding Your Eyes",
+          body: `The world bombards you with sexual images constantly—TV, movies, social media, advertisements. If you don't set boundaries, you will fall.
+
+Guarding your eyes means being intentional about what you watch, what you scroll, and what you allow into your mind. It means accountability, filters, and sometimes cutting off access completely.
+
+This is not legalism—it's wisdom. "I will not set before my eyes anything that is worthless" (Psalm 101:3).
+
+**Reflection**
+
+What media or habits are feeding lust in your life? What boundaries do you need to set?
+
+**Prayer**
+
+Lord, give me the courage to set boundaries and to guard my eyes. Help me to flee temptation and to pursue purity.
+
+**Shareable Truth**
+
+"You can't guard your heart if you don't guard your eyes."`,
+        },
+        {
+          id: "d3-ps1013",
+          type: "scripture",
+          title: "I Will Not Set Worthless Things Before My Eyes",
+          reference: "Psalm 101:3",
+          body: `**Plain Meaning:** I will not set before my eyes anything that is worthless.
+
+**Application:** What you look at matters. Be ruthless about removing anything that stirs up lust.`,
+        },
+        {
+          id: "d3-prov423",
+          type: "scripture",
+          title: "Guard Your Heart",
+          reference: "Proverbs 4:23",
+          body: `**Plain Meaning:** Keep your heart with all vigilance, for from it flow the springs of life.
+
+**Application:** Guarding your heart means guarding what you let in—through your eyes, ears, and mind.`,
+        },
+        {
+          id: "d3-phil48",
+          type: "scripture",
+          title: "Think About These Things",
+          reference: "Philippians 4:8",
+          body: `**Plain Meaning:** Whatever is true, honorable, just, pure, lovely, commendable—if there is any excellence, if there is anything worthy of praise, think about these things.
+
+**Application:** Don't just avoid impure thoughts—replace them with what is pure, true, and honoring to God.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Confession, Cleansing, and a Fresh Start",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Confession, Cleansing, and a Fresh Start",
+          body: `If you've fallen into sexual sin, don't hide. Bring it into the light. Confess it to God and to a trusted believer. "If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness" (1 John 1:9).
+
+God does not condemn you—He cleanses you. You are not defined by your past. In Christ, you are forgiven, washed, and made new.
+
+**Reflection**
+
+Is there sexual sin you've been hiding? What would it look like to bring it to the light today?
+
+**Prayer**
+
+Lord, I confess my sin to You. Forgive me, cleanse me, and give me a fresh start. Help me to walk in purity from this day forward.
+
+**Shareable Truth**
+
+"Confession brings the shame into the light—and God's grace washes it away."`,
+        },
+        {
+          id: "d4-1jn19",
+          type: "scripture",
+          title: "He Is Faithful to Forgive",
+          reference: "1 John 1:9",
+          body: `**Plain Meaning:** If we confess our sins, He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness.
+
+**Application:** God doesn't just forgive—He cleanses. Confession brings freedom.`,
+        },
+        {
+          id: "d4-ps511-2",
+          type: "scripture",
+          title: "Wash Me and I Shall Be Whiter Than Snow",
+          reference: "Psalm 51:1–2",
+          body: `**Plain Meaning:** David prays: Have mercy on me, O God. Wash me thoroughly from my iniquity, and cleanse me from my sin.
+
+**Application:** No sin is too great for God to forgive. Come to Him, confess, and be washed clean.`,
+        },
+        {
+          id: "d4-james516",
+          type: "scripture",
+          title: "Confess Your Sins to One Another",
+          reference: "James 5:16",
+          body: `**Plain Meaning:** Confess your sins to one another and pray for one another, that you may be healed.
+
+**Application:** Confession to God is essential, but confession to a trusted believer brings healing and accountability.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Pursuing Holiness, Not Just Avoidance",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Pursuing Holiness, Not Just Avoidance",
+          body: `Purity is not just about what you avoid—it's about what you pursue. You were created for holiness, not just sin-avoidance.
+
+Pursue Christ. Pursue worship. Pursue community. Fill your life with what is good, true, and beautiful. The more you love God, the less appealing sin becomes.
+
+**Reflection**
+
+Are you just trying to avoid sin, or are you actively pursuing holiness and intimacy with God?
+
+**Prayer**
+
+Lord, give me a heart that loves You more than sin. Help me to pursue holiness, not out of fear, but out of love for You.
+
+**Shareable Truth**
+
+"Holiness is not just avoiding sin—it's loving God more."`,
+        },
+        {
+          id: "d5-1thess43-5",
+          type: "scripture",
+          title: "This Is the Will of God: Your Sanctification",
+          reference: "1 Thessalonians 4:3–5",
+          body: `**Plain Meaning:** This is the will of God, your sanctification: that you abstain from sexual immorality and control your own body in holiness and honor.
+
+**Application:** God's will for you is clear—holiness. Pursue it with everything you have.`,
+        },
+        {
+          id: "d5-heb1214",
+          type: "scripture",
+          title: "Pursue Holiness",
+          reference: "Hebrews 12:14",
+          body: `**Plain Meaning:** Strive for peace with everyone, and for the holiness without which no one will see the Lord.
+
+**Application:** Holiness is not optional. Pursue it actively, or you will drift into compromise.`,
+        },
+        {
+          id: "d5-2cor71",
+          type: "scripture",
+          title: "Let Us Cleanse Ourselves",
+          reference: "2 Corinthians 7:1",
+          body: `**Plain Meaning:** Since we have these promises, beloved, let us cleanse ourselves from every defilement of body and spirit, bringing holiness to completion in the fear of God.
+
+**Application:** You have a role to play. Cleanse yourself from sin and pursue holiness actively.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const sufferingFaithfulnessPlan: DiscipleshipPlan = {
+  id: "suffering-and-gods-faithfulness",
+  title: "Suffering, Trials, and God's Faithfulness",
+  subtitle: "Finding hope when life hurts",
+  imageUrl: sufferingFaithfulnessImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "God's Presence in the Fire",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — God's Presence in the Fire",
+          body: `When Shadrach, Meshach, and Abednego were thrown into the fiery furnace, they were not alone. A fourth figure appeared in the flames—"like a son of the gods" (Daniel 3:25). God did not spare them from the fire, but He met them in it.
+
+You may be in a fire right now—suffering, pain, loss. God has not abandoned you. He is with you in the flames, and He will bring you through.
+
+**Reflection**
+
+Where are you experiencing suffering right now? Do you believe God is with you in it, or do you feel abandoned?
+
+**Prayer**
+
+Lord, I am in the fire. I don't understand why, but I choose to trust that You are with me. Don't let me go through this alone.
+
+**Shareable Truth**
+
+"God doesn't always remove the fire—but He always walks through it with you."`,
+        },
+        {
+          id: "d1-dan325",
+          type: "scripture",
+          title: "A Fourth Man in the Fire",
+          reference: "Daniel 3:25",
+          body: `**Plain Meaning:** King Nebuchadnezzar saw four men walking in the fire, unbound and unharmed, and the fourth had the appearance of a son of the gods.
+
+**Application:** God doesn't always remove your trial, but He always enters it with you. You are not alone.`,
+        },
+        {
+          id: "d1-isa432",
+          type: "scripture",
+          title: "When You Walk Through the Fire",
+          reference: "Isaiah 43:2",
+          body: `**Plain Meaning:** When you pass through the waters, I will be with you; and through the rivers, they shall not overwhelm you; when you walk through fire you shall not be burned.
+
+**Application:** God promises His presence in suffering. The fire may be real, but it will not consume you.`,
+        },
+        {
+          id: "d1-ps234",
+          type: "scripture",
+          title: "Even Though I Walk Through the Valley",
+          reference: "Psalm 23:4",
+          body: `**Plain Meaning:** Even though I walk through the valley of the shadow of death, I will fear no evil, for You are with me.
+
+**Application:** God's presence is the antidote to fear. Even in the darkest valley, He is with you.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Purpose in Pain",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Purpose in Pain",
+          body: `God does not waste your pain. Romans 8:28 promises that "for those who love God all things work together for good." This doesn't mean all things are good—it means God is working in all things for a greater purpose.
+
+Your suffering is not random. God is refining you, shaping you, and conforming you to the image of Christ. Trust that He is working, even when you can't see it.
+
+**Reflection**
+
+Do you believe God can bring good out of your suffering? What might He be teaching you through this pain?
+
+**Prayer**
+
+Lord, I don't understand this suffering, but I trust that You are working in it. Use this pain for Your glory and my good.
+
+**Shareable Truth**
+
+"God doesn't waste your pain—He redeems it."`,
+        },
+        {
+          id: "d2-rom828-30",
+          type: "scripture",
+          title: "All Things Work Together for Good",
+          reference: "Romans 8:28–30",
+          body: `**Plain Meaning:** For those who love God, all things work together for good, for those who are called according to His purpose—to be conformed to the image of His Son.
+
+**Application:** God's purpose in your suffering is to make you more like Jesus. Trust the process.`,
+        },
+        {
+          id: "d2-james12-4",
+          type: "scripture",
+          title: "The Testing of Your Faith Produces Steadfastness",
+          reference: "James 1:2–4",
+          body: `**Plain Meaning:** Count it all joy when you meet trials, for the testing of your faith produces steadfastness, and steadfastness leads to maturity.
+
+**Application:** Trials are not meaningless—they are refining your faith and making you complete.`,
+        },
+        {
+          id: "d2-1pet16-7",
+          type: "scripture",
+          title: "Tested by Fire",
+          reference: "1 Peter 1:6–7",
+          body: `**Plain Meaning:** Though now for a little while you may have to suffer trials, this is so that the tested genuineness of your faith may result in praise and glory at the revelation of Jesus Christ.
+
+**Application:** Your suffering is temporary. The faith it produces is eternal.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Lament: Honest Tears Before God",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Lament: Honest Tears Before God",
+          body: `The Psalms teach us that it's okay to cry out to God in pain. Lament is not a lack of faith—it's honest faith. It says, "God, this hurts, and I don't understand, but I'm bringing it to You."
+
+You don't have to pretend you're okay. God can handle your questions, your anger, your grief. Bring it all to Him.
+
+**Reflection**
+
+Are you allowing yourself to lament, or are you stuffing your pain and pretending it doesn't exist?
+
+**Prayer**
+
+Lord, I'm hurting. I don't have it all together, and I don't have all the answers. I pour out my heart to You and trust that You hear me.
+
+**Shareable Truth**
+
+"Lament is not doubt—it's honest faith crying out to a faithful God."`,
+        },
+        {
+          id: "d3-ps131-2",
+          type: "scripture",
+          title: "How Long, O Lord?",
+          reference: "Psalm 13:1–2",
+          body: `**Plain Meaning:** David cries out: How long, O Lord? Will You forget me forever? How long must I take counsel in my soul and have sorrow in my heart all the day?
+
+**Application:** You can be honest with God about your pain. He welcomes your lament.`,
+        },
+        {
+          id: "d3-ps624-8",
+          type: "scripture",
+          title: "Pour Out Your Heart",
+          reference: "Psalm 62:8",
+          body: `**Plain Meaning:** Trust in Him at all times, O people; pour out your heart before Him; God is a refuge for us.
+
+**Application:** God is your refuge. Don't hold back—pour out everything you're feeling.`,
+        },
+        {
+          id: "d3-ps5617",
+          type: "scripture",
+          title: "You Have Kept Count of My Tossings",
+          reference: "Psalm 56:8",
+          body: `**Plain Meaning:** You have kept count of my tossings; put my tears in Your bottle. Are they not in Your book?
+
+**Application:** God sees every tear you cry. None of your suffering is unseen or unnoticed by Him.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Encouragement from Jesus' Suffering",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Encouragement from Jesus' Suffering",
+          body: `Jesus knows what it's like to suffer. He was despised, rejected, and crushed. He experienced physical pain, emotional anguish, and spiritual separation from the Father.
+
+Because Jesus suffered, He is able to sympathize with you in your weakness (Hebrews 4:15). He doesn't look down on your pain—He entered into it.
+
+**Reflection**
+
+How does it change your perspective on suffering to know that Jesus Himself suffered?
+
+**Prayer**
+
+Jesus, thank You for not staying distant from my pain. You entered into it, and because You did, I can trust You to walk with me through mine.
+
+**Shareable Truth**
+
+"Jesus didn't avoid suffering—He entered into it so you would never suffer alone."`,
+        },
+        {
+          id: "d4-isa533",
+          type: "scripture",
+          title: "A Man of Sorrows, Acquainted with Grief",
+          reference: "Isaiah 53:3",
+          body: `**Plain Meaning:** He was despised and rejected by men, a man of sorrows and acquainted with grief.
+
+**Application:** Jesus knows your suffering. He walked through it Himself.`,
+        },
+        {
+          id: "d4-heb415-16",
+          type: "scripture",
+          title: "He Sympathizes with Our Weaknesses",
+          reference: "Hebrews 4:15–16",
+          body: `**Plain Meaning:** We do not have a high priest who is unable to sympathize with our weaknesses, but one who in every respect has been tempted as we are, yet without sin.
+
+**Application:** Jesus understands your pain. Come boldly to Him for mercy and grace.`,
+        },
+        {
+          id: "d4-1pet221-24",
+          type: "scripture",
+          title: "Christ Suffered for You",
+          reference: "1 Peter 2:21–24",
+          body: `**Plain Meaning:** Christ suffered for you, leaving you an example, that you should follow in His steps. He bore our sins in His body on the tree.
+
+**Application:** Jesus' suffering was not meaningless—it purchased your salvation. Your suffering is not meaningless either.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Eternal Perspective in Temporary Trials",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Eternal Perspective in Temporary Trials",
+          body: `Your suffering is real, but it is also temporary. Paul writes, "This light momentary affliction is preparing for us an eternal weight of glory beyond all comparison" (2 Corinthians 4:17).
+
+One day, every tear will be wiped away. There will be no more suffering, no more pain, no more death. Hold on to that hope.
+
+**Reflection**
+
+Does your suffering feel overwhelming? How does the promise of eternity change the way you see it?
+
+**Prayer**
+
+Lord, help me to hold on to the hope of eternity. When this life feels unbearable, remind me that You are preparing a place where there will be no more tears.
+
+**Shareable Truth**
+
+"This suffering is real—but it's temporary. Glory is forever."`,
+        },
+        {
+          id: "d5-2cor417-18",
+          type: "scripture",
+          title: "Light Momentary Affliction",
+          reference: "2 Corinthians 4:17–18",
+          body: `**Plain Meaning:** This light momentary affliction is preparing for us an eternal weight of glory beyond all comparison, as we look not to the things that are seen but to the things that are unseen.
+
+**Application:** Your suffering is temporary. The glory that awaits you is eternal.`,
+        },
+        {
+          id: "d5-rom818",
+          type: "scripture",
+          title: "The Sufferings of This Present Time",
+          reference: "Romans 8:18",
+          body: `**Plain Meaning:** I consider that the sufferings of this present time are not worth comparing with the glory that is to be revealed to us.
+
+**Application:** The weight of eternal glory far outweighs the pain of this present age.`,
+        },
+        {
+          id: "d5-rev214",
+          type: "scripture",
+          title: "No More Tears",
+          reference: "Revelation 21:4",
+          body: `**Plain Meaning:** He will wipe away every tear from their eyes, and death shall be no more, neither shall there be mourning, nor crying, nor pain anymore, for the former things have passed away.
+
+**Application:** One day, all suffering will end. Hold on to that promise.`,
+        },
+      ],
+    },
+  ],
+};
+
+export const prayerLifePlan: DiscipleshipPlan = {
+  id: "building-a-life-of-prayer",
+  title: "Building a Life of Prayer",
+  subtitle: "Moving from occasional prayer to ongoing conversation with God",
+  imageUrl: prayerLifeImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Why Prayer Matters to God and You",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Why Prayer Matters to God and You",
+          body: `Prayer is not just a religious duty—it is the lifeline of your relationship with God. It is how you talk to Him, listen to Him, and align your heart with His.
+
+God doesn't need your prayers, but He desires them. He wants you to come to Him, not because He is distant, but because He is a Father who loves to hear from His children.
+
+Prayer changes you. It shifts your perspective, strengthens your faith, and deepens your dependence on God.
+
+**Reflection**
+
+Is prayer a priority in your life, or an afterthought? What would change if you saw it as essential, not optional?
+
+**Prayer**
+
+Lord, forgive me for neglecting prayer. Help me to see it as the privilege it is—talking to the God of the universe who calls me His child.
+
+**Shareable Truth**
+
+"Prayer is not a task to check off—it's a relationship to live in."`,
+        },
+        {
+          id: "d1-1thess517",
+          type: "scripture",
+          title: "Pray Without Ceasing",
+          reference: "1 Thessalonians 5:17",
+          body: `**Plain Meaning:** Pray without ceasing.
+
+**Application:** Prayer is not confined to a specific time or place. It is a continual conversation with God throughout your day.`,
+        },
+        {
+          id: "d1-jer2912-13",
+          type: "scripture",
+          title: "You Will Seek Me and Find Me",
+          reference: "Jeremiah 29:12–13",
+          body: `**Plain Meaning:** You will call upon Me and come and pray to Me, and I will hear you. You will seek Me and find Me, when you seek Me with all your heart.
+
+**Application:** God promises to hear and respond when you seek Him in prayer. He is not hiding—He is waiting for you to come.`,
+        },
+        {
+          id: "d1-phil46",
+          type: "scripture",
+          title: "Let Your Requests Be Made Known",
+          reference: "Philippians 4:6",
+          body: `**Plain Meaning:** Do not be anxious about anything, but in everything by prayer and supplication with thanksgiving let your requests be made known to God.
+
+**Application:** Prayer is the antidote to anxiety. Bring everything to God—big or small.`,
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Learning from the Lord's Prayer",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Learning from the Lord's Prayer",
+          body: `Jesus taught His disciples to pray by giving them a model: the Lord's Prayer. It is not a formula to repeat mindlessly, but a framework to follow.
+
+It begins with worship ("Our Father, hallowed be Your name"), moves to submission ("Your kingdom come, Your will be done"), then to dependence ("Give us this day our daily bread"), confession ("Forgive us our debts"), and finally to spiritual warfare ("Deliver us from evil").
+
+This prayer teaches balance: worship and petition, confession and dependence, trust and vigilance.
+
+**Reflection**
+
+Does your prayer life include all these elements, or do you focus only on asking for things?
+
+**Prayer**
+
+Father, teach me to pray like Jesus taught. Help me to worship, submit, confess, and trust—not just ask.
+
+**Shareable Truth**
+
+"The Lord's Prayer is not a script to recite—it's a model to follow."`,
+        },
+        {
+          id: "d2-matt69-13",
+          type: "scripture",
+          title: "Our Father in Heaven",
+          reference: "Matthew 6:9–13",
+          body: `**Plain Meaning:** Jesus teaches His disciples to pray: Our Father in heaven, hallowed be Your name. Your kingdom come, Your will be done. Give us our daily bread. Forgive us our debts. Lead us not into temptation, but deliver us from evil.
+
+**Application:** This prayer covers worship, submission, provision, forgiveness, and protection. Let it shape how you pray.`,
+        },
+        {
+          id: "d2-luke111-4",
+          type: "scripture",
+          title: "Lord, Teach Us to Pray",
+          reference: "Luke 11:1–4",
+          body: `**Plain Meaning:** The disciples ask Jesus to teach them to pray, and He gives them the Lord's Prayer.
+
+**Application:** If the disciples needed to be taught to pray, so do you. Learn from Jesus.`,
+        },
+        {
+          id: "d2-rom268",
+          type: "scripture",
+          title: "We Do Not Know What to Pray",
+          reference: "Romans 8:26",
+          body: `**Plain Meaning:** The Spirit helps us in our weakness. For we do not know what to pray for as we ought, but the Spirit Himself intercedes for us.
+
+**Application:** When you don't know what to pray, the Spirit prays for you. Lean on Him.`,
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Praying Scripture and Promises",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Praying Scripture and Promises",
+          body: `One of the most powerful ways to pray is to pray God's Word back to Him. When you pray Scripture, you are praying what God has already said, aligning your heart with His will.
+
+Take a promise from God's Word and turn it into a prayer. For example: "Lord, You promise to never leave me or forsake me (Hebrews 13:5). Help me to believe that today."
+
+Praying Scripture gives you confidence that you are praying according to God's will.
+
+**Reflection**
+
+Do you pray Scripture, or only your own words? What promise from God's Word do you need to pray today?
+
+**Prayer**
+
+Lord, teach me to pray Your Word. Help me to know Your promises and to bring them before You in prayer.
+
+**Shareable Truth**
+
+"When you pray Scripture, you're praying what God has already promised."`,
+        },
+        {
+          id: "d3-1john514-15",
+          type: "scripture",
+          title: "Praying According to His Will",
+          reference: "1 John 5:14–15",
+          body: `**Plain Meaning:** This is the confidence we have in approaching God: that if we ask anything according to His will, He hears us. And if we know that He hears us, we know that we have what we asked of Him.
+
+**Application:** Praying God's Word is praying according to His will. You can pray with confidence.`,
+        },
+        {
+          id: "d3-ps1192-5",
+          type: "scripture",
+          title: "Your Word Is a Lamp",
+          reference: "Psalm 119:105",
+          body: `**Plain Meaning:** Your word is a lamp to my feet and a light to my path.
+
+**Application:** God's Word guides your prayers. Let it light the way as you bring your requests to Him.`,
+        },
+        {
+          id: "d3-josh18",
+          type: "scripture",
+          title: "Meditate on It Day and Night",
+          reference: "Joshua 1:8",
+          body: `**Plain Meaning:** This Book of the Law shall not depart from your mouth, but you shall meditate on it day and night, so that you may be careful to do according to all that is written in it.
+
+**Application:** Meditation on God's Word leads naturally into prayer. Fill your mind with Scripture, and it will overflow into your prayers.`,
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Interceding for Others",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Interceding for Others",
+          body: `Intercession is praying on behalf of others. It is one of the most loving things you can do—taking someone's needs, burdens, and struggles before the throne of God.
+
+Paul constantly interceded for the churches. He prayed for their faith, their love, their knowledge, and their endurance. He didn't just pray for their physical needs—he prayed for their spiritual growth.
+
+Who in your life needs you to intercede for them?
+
+**Reflection**
+
+Do you regularly pray for others, or are your prayers mostly about yourself? Who can you intercede for today?
+
+**Prayer**
+
+Lord, give me a heart that prays for others. Show me who needs intercession, and help me to stand in the gap for them.
+
+**Shareable Truth**
+
+"Intercession is love on its knees."`,
+        },
+        {
+          id: "d4-eph116-19",
+          type: "scripture",
+          title: "Paul's Prayer for the Church",
+          reference: "Ephesians 1:16–19",
+          body: `**Plain Meaning:** Paul prays that the Ephesians would have the Spirit of wisdom and revelation in the knowledge of God, that the eyes of their hearts would be enlightened to know His hope, riches, and power.
+
+**Application:** Pray for spiritual growth in others, not just physical needs.`,
+        },
+        {
+          id: "d4-col19-12",
+          type: "scripture",
+          title: "We Have Not Ceased to Pray for You",
+          reference: "Colossians 1:9–12",
+          body: `**Plain Meaning:** Paul prays that the Colossians would be filled with the knowledge of God's will, walk in a manner worthy of the Lord, bear fruit, and be strengthened with all power.
+
+**Application:** Consistent intercession is a mark of spiritual maturity. Don't give up praying for others.`,
+        },
+        {
+          id: "d4-1tim21-4",
+          type: "scripture",
+          title: "Pray for All People",
+          reference: "1 Timothy 2:1–4",
+          body: `**Plain Meaning:** First of all, then, I urge that supplications, prayers, intercessions, and thanksgivings be made for all people, for kings and all who are in high positions.
+
+**Application:** Pray broadly—for family, friends, leaders, and even those you disagree with.`,
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Praying Without Ceasing in Everyday Life",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Praying Without Ceasing in Everyday Life",
+          body: `Paul commands believers to "pray without ceasing" (1 Thessalonians 5:17). This doesn't mean you're always on your knees with your eyes closed—it means you live in continual awareness of God's presence, talking to Him throughout your day.
+
+Prayer becomes a lifestyle when you turn your thoughts toward God in every situation: when you're worried, when you're grateful, when you're tempted, when you're joyful. Every moment can become a prayer.
+
+**Reflection**
+
+What would it look like to turn your everyday moments into prayers? How can you cultivate a habit of praying without ceasing?
+
+**Prayer**
+
+Lord, teach me to pray without ceasing. Help me to turn my thoughts toward You all day long, making my whole life a conversation with You.
+
+**Shareable Truth**
+
+"Praying without ceasing doesn't mean never stopping—it means never disconnecting."`,
+        },
+        {
+          id: "d5-1thess517-18",
+          type: "scripture",
+          title: "Pray Without Ceasing, Give Thanks",
+          reference: "1 Thessalonians 5:16–18",
+          body: `**Plain Meaning:** Rejoice always, pray without ceasing, give thanks in all circumstances; for this is the will of God in Christ Jesus for you.
+
+**Application:** Prayer is woven into the rhythm of your day—rejoicing, praying, and giving thanks in all things.`,
+        },
+        {
+          id: "d5-eph618",
+          type: "scripture",
+          title: "Pray at All Times in the Spirit",
+          reference: "Ephesians 6:18",
+          body: `**Plain Meaning:** Pray at all times in the Spirit, with all prayer and supplication, keeping alert with all perseverance.
+
+**Application:** Prayer is not confined to a time or place. It is a constant, Spirit-empowered conversation with God.`,
+        },
+        {
+          id: "d5-col42",
+          type: "scripture",
+          title: "Continue Steadfastly in Prayer",
+          reference: "Colossians 4:2",
+          body: `**Plain Meaning:** Continue steadfastly in prayer, being watchful in it with thanksgiving.
+
+**Application:** Persevere in prayer. Don't give up. Stay watchful, alert, and grateful.`,
+        },
+      ],
+    },
+  ],
+};
+
 export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   heavenOrHellPlan,
   lifeInSpiritPlan,
@@ -3962,4 +6915,14 @@ export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   dailyRepentancePlan,
   generousGivingPlan,
   spiritualWarfarePlan,
+  identityInChristPlan,
+  overcomingFearPlan,
+  timeWithGodPlan,
+  servingLikeJesusPlan,
+  marriageLovePlan,
+  parentingGospelPlan,
+  workCallingPlan,
+  purityWorldPlan,
+  sufferingFaithfulnessPlan,
+  prayerLifePlan,
 ];
