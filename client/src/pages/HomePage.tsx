@@ -9,12 +9,14 @@ import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import ProfilePictureUpload from "../components/ProfilePictureUpload";
 import { DailyVerseHeroCard } from "../components/DailyVerseHeroCard";
+import { KingdomParablesTab } from "../components/KingdomParablesTab";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
-import { Book, FileText, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen, Volume2, VolumeX } from "lucide-react";
+import { Book, FileText, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen, Volume2, VolumeX, Crown } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
 
@@ -159,9 +161,9 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
       <div className="bg-background px-4 py-6 border-b border-border ios-safe-top">
         {/* Streak Badge & Profile Picture - Top Right */}
         <div className="flex justify-end items-center gap-2 mb-6">
-          <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 px-2.5 py-1 rounded-full border border-red-200/50 shadow-sm">
-            <Flame className="w-4 h-4 text-red-600 fill-red-600" />
-            <span className="text-sm font-bold text-red-700">{streakDays}</span>
+          <div className="flex items-center gap-1.5 bg-gradient-to-br from-red-50 to-red-100/70 dark:from-red-950 dark:to-red-900 px-2.5 py-1 rounded-full border border-red-200/50 dark:border-red-800/50 shadow-sm">
+            <Flame className="w-4 h-4 text-red-600 dark:text-red-400 fill-red-600 dark:fill-red-400" />
+            <span className="text-sm font-bold text-red-700 dark:text-red-300">{streakDays}</span>
           </div>
           <ProfilePictureUpload size="md" />
         </div>
@@ -221,7 +223,21 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         </div>
       </div>
 
-      <div className="px-4 py-4 space-y-4 ios-safe-bottom">
+      <Tabs defaultValue="home" className="w-full">
+        <div className="px-4 pt-4 pb-2 border-b border-border sticky top-0 bg-background z-10">
+          <TabsList className="w-full max-w-md mx-auto grid grid-cols-2">
+            <TabsTrigger value="home" data-testid="tab-home" className="gap-2">
+              <BookOpen className="w-4 h-4" />
+              Home
+            </TabsTrigger>
+            <TabsTrigger value="kingdom" data-testid="tab-kingdom" className="gap-2">
+              <Crown className="w-4 h-4" />
+              Kingdom
+            </TabsTrigger>
+          </TabsList>
+        </div>
+
+        <TabsContent value="home" className="px-4 py-4 space-y-4 ios-safe-bottom mt-0">
         {/* Hero Daily Verse Card - Bible App Style */}
         <DailyVerseHeroCard onPress={() => setShowVerseModal(true)} />
 
@@ -366,14 +382,14 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         )}
 
         {/* Professional Website Footer */}
-        <div className="mt-8 pt-6 border-t border-gray-200">
+        <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
           <div className="text-center">
-            <p className="text-sm text-gray-500 mb-2">Visit our website for more resources</p>
+            <p className="text-sm text-gray-500 dark:text-gray-400 mb-2">Visit our website for more resources</p>
             <a 
               href="https://www.thegospelin5minutes.org" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-700 text-sm font-medium transition-colors duration-200"
+              className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-500 text-sm font-medium transition-colors duration-200"
               data-testid="link-website-footer"
               aria-label="Visit The Gospel in 5 Minutes website - Opens in new window"
             >
@@ -381,7 +397,12 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
             </a>
           </div>
         </div>
-      </div>
+        </TabsContent>
+
+        <TabsContent value="kingdom" className="px-4 py-4 ios-safe-bottom mt-0">
+          <KingdomParablesTab />
+        </TabsContent>
+      </Tabs>
 
       {/* Modals */}
       <Dialog open={showVerseModal} onOpenChange={setShowVerseModal}>
