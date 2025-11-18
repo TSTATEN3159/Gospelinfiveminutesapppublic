@@ -1,0 +1,171 @@
+export interface Parable {
+  id: string;
+  title: string;
+  reference: string;
+  parable: string;
+  meaning: string;
+  application: string;
+}
+
+export const JESUS_PARABLES: Parable[] = [
+  {
+    id: "sower",
+    title: "The Parable of the Sower",
+    reference: "Matthew 13:3-9, 18-23",
+    parable: "Behold, a sower went forth to sow; And when he sowed, some seeds fell by the way side, and the fowls came and devoured them up: Some fell upon stony places, where they had not much earth: and forthwith they sprung up, because they had no deepness of earth: And when the sun was up, they were scorched; and because they had no root, they withered away. And some fell among thorns; and the thorns sprung up, and choked them: But other fell into good ground, and brought forth fruit, some an hundredfold, some sixtyfold, some thirtyfold.",
+    meaning: "The seed is the Word of God. The different soils represent different conditions of the human heart. Some hearts are hard, some shallow, some cluttered with worldly concerns, but some are receptive and produce abundant spiritual fruit.",
+    application: "Examine your heart's condition. Are you receptive to God's Word? Remove distractions, cultivate spiritual depth through prayer and study, and allow God's truth to take root deeply in your life. Share the Gospel knowing that results vary, but faithful sowing is always worthwhile."
+  },
+  {
+    id: "good-samaritan",
+    title: "The Good Samaritan",
+    reference: "Luke 10:30-37",
+    parable: "A certain man went down from Jerusalem to Jericho, and fell among thieves, which stripped him of his raiment, and wounded him, and departed, leaving him half dead. And by chance there came down a certain priest that way: and when he saw him, he passed by on the other side. And likewise a Levite, when he was at the place, came and looked on him, and passed by on the other side. But a certain Samaritan, as he journeyed, came where he was: and when he saw him, he had compassion on him, And went to him, and bound up his wounds, pouring in oil and wine, and set him on his own beast, and brought him to an inn, and took care of him.",
+    meaning: "True neighborly love transcends social, ethnic, and religious boundaries. The religious leaders failed to show mercy, but the despised Samaritan demonstrated genuine compassion. Our neighbor is anyone in need whom we can help.",
+    application: "Look beyond social barriers and show practical compassion to those in need. Don't let religious activity substitute for genuine love. Take personal responsibility to help others, even when it's inconvenient or costly. Your faith should produce tangible acts of mercy."
+  },
+  {
+    id: "prodigal-son",
+    title: "The Prodigal Son",
+    reference: "Luke 15:11-32",
+    parable: "A certain man had two sons: And the younger of them said to his father, Father, give me the portion of goods that falleth to me. And he divided unto them his living. And not many days after the younger son gathered all together, and took his journey into a far country, and there wasted his substance with riotous living... And when he came to himself, he said, How many hired servants of my father's have bread enough and to spare, and I perish with hunger! I will arise and go to my father, and will say unto him, Father, I have sinned against heaven, and before thee.",
+    meaning: "God the Father welcomes repentant sinners with joy and celebration. The younger son represents wayward sinners who return, while the older brother represents self-righteous people who resent God's grace to others. God's love is lavish, forgiving, and celebrates restoration.",
+    application: "No matter how far you've strayed, God eagerly awaits your return with open arms. Don't let pride keep you from repenting. If you're like the older brother, examine your heart for resentment toward God's mercy to others. Celebrate when sinners return to God rather than judging them."
+  },
+  {
+    id: "mustard-seed",
+    title: "The Mustard Seed",
+    reference: "Matthew 13:31-32",
+    parable: "The kingdom of heaven is like to a grain of mustard seed, which a man took, and sowed in his field: Which indeed is the least of all seeds: but when it is grown, it is the greatest among herbs, and becometh a tree, so that the birds of the air come and lodge in the branches thereof.",
+    meaning: "God's kingdom starts small but grows to extraordinary proportions. What seems insignificant at first becomes a place of shelter and blessing for many. Small beginnings should not be despised.",
+    application: "Don't despise small acts of faith or humble beginnings. Plant seeds of the Gospel faithfully, trusting God will bring growth. Your small prayers, kind words, and simple obedience can produce surprising kingdom impact. Be patient with spiritual growth in yourself and others."
+  },
+  {
+    id: "lost-sheep",
+    title: "The Lost Sheep",
+    reference: "Luke 15:3-7",
+    parable: "What man of you, having an hundred sheep, if he lose one of them, doth not leave the ninety and nine in the wilderness, and go after that which is lost, until he find it? And when he hath found it, he layeth it on his shoulders, rejoicing. And when he cometh home, he calleth together his friends and neighbours, saying unto them, Rejoice with me; for I have found my sheep which was lost.",
+    meaning: "God values each individual soul and actively seeks the lost. Heaven rejoices over one sinner who repents. Every person matters to God, and He pursues them with persistent love.",
+    application: "Never write anyone off as too far gone for God's grace. Share the Gospel with those who seem lost, praying persistently for their salvation. If you feel lost, know that God is actively seeking you. Rejoice when anyone comes to faith, no matter their background."
+  },
+  {
+    id: "rich-fool",
+    title: "The Rich Fool",
+    reference: "Luke 12:16-21",
+    parable: "The ground of a certain rich man brought forth plentifully: And he thought within himself, saying, What shall I do, because I have no room where to bestow my fruits? And he said, This will I do: I will pull down my barns, and build greater; and there will I bestow all my fruits and my goods. And I will say to my soul, Soul, thou hast much goods laid up for many years; take thine ease, eat, drink, and be merry. But God said unto him, Thou fool, this night thy soul shall be required of thee: then whose shall those things be, which thou hast provided?",
+    meaning: "Material wealth provides no security in eternity. Those who hoard earthly treasures while ignoring their spiritual poverty are foolish. Life is fragile, and we must be ready to meet God.",
+    application: "Invest in eternal treasures, not just earthly wealth. Use your resources generously for God's kingdom and others' needs. Don't assume you have endless time—live each day ready to meet God. Your relationship with God matters infinitely more than your possessions."
+  },
+  {
+    id: "wedding-feast",
+    title: "The Wedding Feast",
+    reference: "Matthew 22:2-14",
+    parable: "The kingdom of heaven is like unto a certain king, which made a marriage for his son, And sent forth his servants to call them that were bidden to the wedding: and they would not come... Then saith he to his servants, The wedding is ready, but they which were bidden were not worthy. Go ye therefore into the highways, and as many as ye shall find, bid to the marriage. So those servants went out into the highways, and gathered together all as many as they found, both bad and good: and the wedding was furnished with guests.",
+    meaning: "God's invitation to salvation is extended to all, but many reject it through indifference or hostility. When religious people reject God's offer, He opens the invitation to everyone. However, we must come on God's terms (the wedding garment represents righteousness through faith).",
+    application: "Don't take God's invitation lightly or delay your response. The Gospel call demands urgency and priority over all else. Share the invitation broadly—God welcomes all who will come. Come to God clothed in Christ's righteousness, not your own merit."
+  },
+  {
+    id: "ten-virgins",
+    title: "The Ten Virgins",
+    reference: "Matthew 25:1-13",
+    parable: "Then shall the kingdom of heaven be likened unto ten virgins, which took their lamps, and went forth to meet the bridegroom. And five of them were wise, and five were foolish. They that were foolish took their lamps, and took no oil with them: But the wise took oil in their vessels with their lamps. While the bridegroom tarried, they all slumbered and slept. And at midnight there was a cry made, Behold, the bridegroom cometh; go ye out to meet him.",
+    meaning: "We must be spiritually prepared for Christ's return at any moment. External religious appearance (having a lamp) isn't enough—we need genuine spiritual life (oil). The foolish virgins represent those with superficial faith who aren't truly ready.",
+    application: "Cultivate a real, ongoing relationship with Christ, not just outward religion. Don't assume you'll have time to get right with God later. Stay spiritually alert through prayer, Word study, and obedience. Examine whether your faith is genuine or merely external."
+  },
+  {
+    id: "talents",
+    title: "The Talents",
+    reference: "Matthew 25:14-30",
+    parable: "For the kingdom of heaven is as a man travelling into a far country, who called his own servants, and delivered unto them his goods. And unto one he gave five talents, to another two, and to another one; to every man according to his several ability; and straightway took his journey... After a long time the lord of those servants cometh, and reckoneth with them.",
+    meaning: "God entrusts each believer with gifts, resources, and opportunities, expecting faithful stewardship. Faithful service will be rewarded, while failure to serve from fear or laziness will result in loss. We're accountable for how we use what God gives us.",
+    application: "Identify and actively use your spiritual gifts to serve God's kingdom. Don't compare your gifts to others—be faithful with what you've been given. Take risks for God rather than playing it safe. You'll give account for your stewardship of time, talents, and resources."
+  },
+  {
+    id: "pharisee-tax-collector",
+    title: "The Pharisee and Tax Collector",
+    reference: "Luke 18:10-14",
+    parable: "Two men went up into the temple to pray; the one a Pharisee, and the other a publican. The Pharisee stood and prayed thus with himself, God, I thank thee, that I am not as other men are, extortioners, unjust, adulterers, or even as this publican. I fast twice in the week, I give tithes of all that I possess. And the publican, standing afar off, would not lift up so much as his eyes unto heaven, but smote upon his breast, saying, God be merciful to me a sinner.",
+    meaning: "Self-righteousness is spiritually deadly. God justifies the humble who acknowledge their sin, not the proud who trust in their own goodness. True prayer comes from recognizing our need for God's mercy.",
+    application: "Approach God with humility, not pride in your spiritual achievements. Recognize your ongoing need for grace. Don't compare yourself favorably to others. Let your prayer be marked by honest confession and dependence on God's mercy, not self-congratulation."
+  },
+  {
+    id: "unforgiving-servant",
+    title: "The Unforgiving Servant",
+    reference: "Matthew 18:23-35",
+    parable: "Therefore is the kingdom of heaven likened unto a certain king, which would take account of his servants. And when he had begun to reckon, one was brought unto him, which owed him ten thousand talents. But forasmuch as he had not to pay, his lord commanded him to be sold, and his wife, and children, and all that he had, and payment to be made. The servant therefore fell down, and worshipped him, saying, Lord, have patience with me, and I will pay thee all. Then the lord of that servant was moved with compassion, and loosed him, and forgave him the debt.",
+    meaning: "Those who have received God's overwhelming forgiveness must extend forgiveness to others. Refusing to forgive others while accepting God's forgiveness is hypocritical and will result in judgment. Our forgiveness of others reflects our understanding of God's forgiveness.",
+    application: "When others hurt you, remember how much God has forgiven you. Release grudges and bitterness—they harm you and displease God. Make reconciliation a priority. Extend grace to others as God has extended grace to you. Unforgiveness is incompatible with experiencing God's forgiveness."
+  },
+  {
+    id: "hidden-treasure",
+    title: "The Hidden Treasure",
+    reference: "Matthew 13:44",
+    parable: "Again, the kingdom of heaven is like unto treasure hid in a field; the which when a man hath found, he hideth, and for joy thereof goeth and selleth all that he hath, and buyeth that field.",
+    meaning: "The kingdom of God is of infinite value, worth sacrificing everything to obtain. When someone truly understands its worth, they joyfully give up everything else to gain it. This isn't burdensome but delightful.",
+    application: "Evaluate what you're living for—is Christ your supreme treasure? Be willing to release anything that competes with Him. Don't hold back from wholehearted discipleship. The joy of knowing Christ far surpasses any earthly pleasure or possession you might sacrifice."
+  },
+  {
+    id: "pearl",
+    title: "The Pearl of Great Price",
+    reference: "Matthew 13:45-46",
+    parable: "Again, the kingdom of heaven is like unto a merchant man, seeking goodly pearls: Who, when he had found one pearl of great price, went and sold all that he had, and bought it.",
+    meaning: "Like the hidden treasure, this emphasizes that knowing Christ and His kingdom is worth more than all earthly treasures combined. The wise person recognizes this supreme value and acts accordingly.",
+    application: "Make Christ your highest priority, above career, relationships, comfort, or possessions. Actively seek spiritual truth with the diligence of a merchant seeking pearls. When you find Christ, let nothing prevent you from following Him wholeheartedly. Count all else as loss for the surpassing worth of knowing Him."
+  },
+  {
+    id: "wise-foolish-builders",
+    title: "The Wise and Foolish Builders",
+    reference: "Matthew 7:24-27",
+    parable: "Therefore whosoever heareth these sayings of mine, and doeth them, I will liken him unto a wise man, which built his house upon a rock: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell not: for it was founded upon a rock. And every one that heareth these sayings of mine, and doeth them not, shall be likened unto a foolish man, which built his house upon the sand: And the rain descended, and the floods came, and the winds blew, and beat upon that house; and it fell: and great was the fall of it.",
+    meaning: "Hearing Jesus's words without obeying them is spiritual foolishness. True wisdom means building your life on Christ's teachings through obedience. Life's storms will test everyone's foundation, revealing what's genuine.",
+    application: "Don't just listen to Scripture—obey it. Make Jesus's teachings the foundation of your decisions, relationships, and priorities. Develop spiritual disciplines now before trials come. Examine your life's foundation—is it built on Christ or on shifting sand like wealth, popularity, or feelings?"
+  },
+  {
+    id: "persistent-widow",
+    title: "The Persistent Widow",
+    reference: "Luke 18:1-8",
+    parable: "There was in a city a judge, which feared not God, neither regarded man: And there was a widow in that city; and she came unto him, saying, Avenge me of mine adversary. And he would not for a while: but afterward he said within himself, Though I fear not God, nor regard man; Yet because this widow troubleth me, I will avenge her, lest by her continual coming she weary me.",
+    meaning: "We should pray persistently and not give up. If an unjust judge responds to persistence, how much more will our loving heavenly Father answer His children who cry out to Him day and night? God's delays aren't denials.",
+    application: "Develop a habit of persistent, faith-filled prayer. Don't give up when God doesn't answer immediately. Bring your needs to God repeatedly with confidence in His character. Trust that God's timing is perfect, even when He seems slow to respond. Keep praying until He answers."
+  },
+  {
+    id: "workers-vineyard",
+    title: "The Workers in the Vineyard",
+    reference: "Matthew 20:1-16",
+    parable: "For the kingdom of heaven is like unto a man that is an householder, which went out early in the morning to hire labourers into his vineyard. And when he had agreed with the labourers for a penny a day, he sent them into his vineyard... And when they came that were hired about the eleventh hour, they received every man a penny. But when the first came, they supposed that they should have received more; and they likewise received every man a penny. And when they had received it, they murmured against the goodman of the house.",
+    meaning: "God's grace and generosity transcend human merit and timing. Whether someone serves God for decades or comes to faith on their deathbed, salvation is equally free. This offends our sense of fairness but reveals God's sovereign generosity and equal grace to all believers.",
+    application: "Don't envy others' spiritual blessings or resent God's grace to latecomers. Be grateful for your own opportunity to serve God. Welcome new believers warmly without considering them 'second-class.' If you've delayed coming to Christ, know that His grace is fully available to you today."
+  },
+  {
+    id: "friend-at-midnight",
+    title: "The Friend at Midnight",
+    reference: "Luke 11:5-8",
+    parable: "Which of you shall have a friend, and shall go unto him at midnight, and say unto him, Friend, lend me three loaves; For a friend of mine in his journey is come to me, and I have nothing to set before him? And he from within shall answer and say, Trouble me not: the door is now shut, and my children are with me in bed; I cannot rise and give thee. I say unto you, Though he will not rise and give him, because he is his friend, yet because of his importunity he will rise and give him as many as he needeth.",
+    meaning: "Bold, persistent asking characterizes effective prayer. If human friendship responds to shameless asking, how much more will our heavenly Father respond to our prayers? We should pray with confident persistence.",
+    application: "Be bold and specific in your prayers—God welcomes your requests. Don't let embarrassment keep you from asking God for what you need. Combine persistence with confidence in God's willingness to answer. Your relationship with God should lead to free, honest communication."
+  },
+  {
+    id: "sheep-goats",
+    title: "The Sheep and the Goats",
+    reference: "Matthew 25:31-46",
+    parable: "When the Son of man shall come in his glory, and all the holy angels with him, then shall he sit upon the throne of his glory: And before him shall be gathered all nations: and he shall separate them one from another, as a shepherd divideth his sheep from the goats... Then shall the King say unto them on his right hand, Come, ye blessed of my Father, inherit the kingdom prepared for you from the foundation of the world: For I was an hungred, and ye gave me meat: I was thirsty, and ye gave me drink: I was a stranger, and ye took me in.",
+    meaning: "True faith produces compassionate action toward the needy. How we treat the vulnerable reveals our relationship with Christ. Judgment will include an examination of whether our faith produced genuine love and service to others.",
+    application: "Demonstrate your faith through practical care for the hungry, thirsty, lonely, sick, and imprisoned. See Christ in those who suffer. Don't separate spiritual concern from physical compassion. Your eternal destiny is connected to whether your faith produces loving action toward others."
+  },
+  {
+    id: "leaven",
+    title: "The Leaven",
+    reference: "Matthew 13:33",
+    parable: "The kingdom of heaven is like unto leaven, which a woman took, and hid in three measures of meal, till the whole was leavened.",
+    meaning: "God's kingdom works invisibly and gradually, like yeast permeating dough, but produces comprehensive transformation. Small influences can have massive, far-reaching effects as the Gospel spreads throughout society.",
+    application: "Trust God's kingdom to spread even when you can't see immediate results. Your faithful witness, though it seems small, can influence entire communities. Be patient with God's transforming work in your own life—it happens gradually but thoroughly. Live in ways that 'leaven' your environment with kingdom values."
+  },
+  {
+    id: "rich-man-lazarus",
+    title: "The Rich Man and Lazarus",
+    reference: "Luke 16:19-31",
+    parable: "There was a certain rich man, which was clothed in purple and fine linen, and fared sumptuously every day: And there was a certain beggar named Lazarus, which was laid at his gate, full of sores, And desiring to be fed with the crumbs which fell from the rich man's table: moreover the dogs came and licked his sores. And it came to pass, that the beggar died, and was carried by the angels into Abraham's bosom: the rich man also died, and was buried; And in hell he lift up his eyes, being in torments.",
+    meaning: "Earthly wealth and poverty are temporary, but our eternal state is permanent. Those who ignore both God and the suffering around them face judgment. After death, no second chances exist. We must respond to God's Word now.",
+    application: "Use your resources to help those in need—your eternal state may depend on it. Don't let material comfort insulate you from compassion. Take seriously the reality of heaven and hell. Respond to Scripture now, for there are no second chances after death. Share the Gospel urgently with those who haven't heard."
+  }
+];
