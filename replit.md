@@ -16,8 +16,9 @@ Preferred communication style: Simple, everyday language.
 - **Framework**: React 18 with TypeScript and Vite.
 - **UI/UX**: Tailwind CSS, shadcn/ui, and Radix UI for accessible design. Custom color palette (soft blues, warm golds, gentle greens) and typography (Inter, Crimson Text). Mobile-first, PWA-ready design with native pinch zoom for iOS.
 - **State Management**: React hooks for local state, TanStack Query for server state.
+- **Navigation**: Custom page state system with type-safe `AppNavigate` interface. Typed `AppPageParams` ensures compile-time validation of route parameters. Bottom nav includes: Home, Ask, Search, Daily, Discipleship.
 - **Accessibility**: Full iOS compliance (44pt tap targets, safe area support, VoiceOver, high contrast, reduced motion).
-- **Internationalization**: Full support for 7 languages (English, Spanish, French, Portuguese, Chinese, Arabic, Hindi) across all 17 pages.
+- **Internationalization**: Full support for 7 languages (English, Spanish, French, Portuguese, Chinese, Arabic, Hindi) across all pages.
 - **Offline Functionality**: Network status indicator, local persistence for bookmarks, notes, and reading progress.
 
 ### Backend
@@ -55,7 +56,7 @@ Preferred communication style: Simple, everyday language.
 - **Bible Trivia**: Interactive game with randomized questions and global progress tracking.
 - **Profile Picture Upload**: LocalStorage-based profile picture management with privacy compliance and UI for upload/deletion.
 - **Scripture Image Generator**: Canvas-based system for creating shareable verse images (1290x2796 mobile-optimized). Features intelligent auto-fit text algorithm (scales from baseFontSize down to 18px minimum, handles long words via character-by-character splitting), 25 curated spiritual backgrounds across 4 categories (Spiritual: 10 images including crosses, Bible, prayer hands, heavenly clouds; Nature: 4 mountain/forest scenes; Water: 4 ocean/lake scenes; Sky: 5 sunrise/sunset/starry scenes), customizable font size (30-96px), text color picker, and Bible version label. Accessible via navigation from TopicSearchPage with verse data pre-filled. Download as high-quality PNG.
-- **Disciple Page (Plans & Teachings)**: Professional dedicated page with hero header "Disciple of Christ Plans & Teachings" featuring high-resolution stock photography of disciples following Christ. Designed as a central hub for individual spiritual growth plans (to be added). Features beautiful gradient hero section with backdrop blur effects, structured placeholder for future plans, and feature cards highlighting structured growth, daily teachings, and practical steps. Accessible from DisciplesOfChristTile on Daily page.
+- **Discipleship Plans System**: Complete YouVersion-style multi-day spiritual growth program accessible via bottom navigation "Discipleship" tab (replaces More). Features: DiscipleshipListPage (main hub with plans, videos, blog, settings, bookmarks, friends, privacy), DiscipleshipPlanDetailPage (day selector with progress tracking), DiscipleshipReadingPage (devotional/scripture content viewer). First plan: "Am I Going to Heaven or Hell?" (5-day salvation plan). Content stored locally in `discipleshipPlans.ts` for reliability. Bible verses fetched via API fallback chain. Type-safe navigation with `AppNavigate` interface ensures compile-time route validation. Plans are easily expandable (50+ planned).
 
 ### Browser Capability Checks & Safe Wrappers
 - **Critical Pattern**: All features dependent on browser APIs utilize `capabilities.ts` for detection and `safe` wrappers (e.g., `safeLocalStorage`, `safeShare`) to ensure graceful degradation and provide fallbacks. UI elements are conditionally rendered based on API availability.

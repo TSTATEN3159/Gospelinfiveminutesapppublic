@@ -3,12 +3,13 @@ import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DISCIPLESHIP_PLANS, DiscipleshipPlan, PlanDay, PlanItem } from "@/features/discipleship/discipleshipPlans";
 import { Card, CardContent } from "@/components/ui/card";
+import { AppNavigate } from "../App";
 
 interface DiscipleshipReadingPageProps {
   planId: string;
   dayNumber: number;
   itemId: string;
-  onNavigate: (page: string, params?: any) => void;
+  onNavigate: AppNavigate;
 }
 
 export default function DiscipleshipReadingPage({

@@ -10,10 +10,11 @@ import { useToast } from "@/hooks/use-toast";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { AppNavigate } from "../App";
 import heavenCloudsImage from '@assets/stock_images/heaven_clouds_eterna_9fe3749f.jpg';
 
 interface DiscipleshipListPageProps {
-  onNavigate: (page: string, params?: any) => void;
+  onNavigate: AppNavigate;
   language: string;
   streakDays?: number;
 }
@@ -70,7 +71,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
   const settingsMenuItems = getSettingsMenuItems(t);
 
   const handleMenuClick = (id: string) => {
-    onNavigate?.(id);
+    onNavigate(id as any);
   };
 
   return (
@@ -95,7 +96,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
         </div>
         
         {/* Professional Logo - Centered Above Social Buttons */}
-        <AppLogo onNavigate={onNavigate} size="medium" className="mb-3" />
+        <AppLogo onNavigate={onNavigate as any} size="medium" className="mb-3" />
         
         {/* Personalized Greeting */}
         <PersonalizedGreeting language={language} />

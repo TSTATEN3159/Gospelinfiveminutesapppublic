@@ -3,11 +3,12 @@ import { Card } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DISCIPLESHIP_PLANS, DiscipleshipPlan, PlanDay } from "@/features/discipleship/discipleshipPlans";
+import { AppNavigate } from "../App";
 import heavenCloudsImage from '@assets/stock_images/heaven_clouds_eterna_9fe3749f.jpg';
 
 interface DiscipleshipPlanDetailPageProps {
   planId: string;
-  onNavigate: (page: string, params?: any) => void;
+  onNavigate: AppNavigate;
 }
 
 export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: DiscipleshipPlanDetailPageProps) {

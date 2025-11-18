@@ -73,6 +73,16 @@ type AppPageParams = {
   "discipleship-reading"?: { planId: string; dayNumber: number; itemId: string };
 };
 
+// Type-safe navigation function signature
+export type AppNavigate = <P extends AppPage>(
+  page: P,
+  ...args: P extends keyof AppPageParams 
+    ? AppPageParams[P] extends undefined 
+      ? [params?: undefined]
+      : [params: AppPageParams[P]]
+    : [params?: undefined]
+) => void;
+
 function MainApp() {
   const [user, setUser] = useState<User | null>(null);
   const [showRegistration, setShowRegistration] = useState(false);
