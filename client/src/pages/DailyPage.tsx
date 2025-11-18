@@ -4,6 +4,8 @@ import { Button } from "@/components/ui/button";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import ScriptureTickerPanel from "../components/ScriptureTickerPanel";
+import EmotionScriptureSection from "../components/EmotionScriptureSection";
+import ScriptureMemorySection from "../components/ScriptureMemorySection";
 import { LiquidGlassFeatureTile } from "@/components/LiquidGlassFeatureTile";
 import { useTranslations } from "@/lib/translations";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
@@ -15,6 +17,8 @@ import dailyDevotionsImage from '@assets/stock_images/open_bible_on_wooden_95d8f
 import readingPlansImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
 import plainMeaningImage from '@assets/stock_images/library_books_shelve_bc687803.jpg';
 import instantApplicationImage from '@assets/stock_images/mountain_peak_summit_3634e7cb.jpg';
+import feelingsImage from '@assets/stock_images/calm_lake_reflection_74c9839d.jpg';
+import memoryImage from '@assets/stock_images/bible_and_journal_wi_4f18af22.jpg';
 
 interface DailyPageProps {
   onNavigate: (page: string) => void;  // Required - parent always provides
@@ -174,6 +178,16 @@ function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPagePro
       {/* Scripture Ticker Panel - FIRST on Daily Page */}
       <div className="px-4 pt-6 pb-3">
         <ScriptureTickerPanel />
+      </div>
+
+      {/* Feelings & Scripture Section */}
+      <div className="px-4 py-3">
+        <EmotionScriptureSection backgroundImage={feelingsImage} />
+      </div>
+
+      {/* Scripture Memory Helper Section */}
+      <div className="px-4 py-3">
+        <ScriptureMemorySection backgroundImage={memoryImage} />
       </div>
 
       {/* Feature Tiles - Premium Liquid Glass */}
