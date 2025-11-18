@@ -142,10 +142,10 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
       </div>
 
       <div className="max-w-sm mx-auto space-y-3 px-4 pt-4">
-        {/* Discipleship Plans Section */}
+        {/* Disciple Plans Section */}
         <div className="mb-4">
           <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 px-1">
-            Discipleship Plans
+            Disciple
           </h2>
           <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 px-1">
             Short Bible plans to help you follow Jesus
