@@ -1,65 +1,39 @@
 # The Gospel in 5 Minutes - Mobile Bible App
 
 ## Overview
-"The Gospel in 5 Minutes" is a mobile-first spiritual wellness application designed to deliver daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. Its core purpose is to blend the serene aesthetic of wellness applications with the robust functionality of Bible study tools, providing meaningful spiritual content in concise, 5-minute sessions. The project aims to be a completely free platform, offering all features without paywalls or in-app purchases, making spiritual growth accessible to everyone. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, gamified streak tracking, and comprehensive Bible reading plans.
-
-**Design Philosophy:** Professional polish inspired by The Bible App, featuring exclusively high-resolution stock photography throughout the entire application. All UI sections use authentic, spiritually-appropriate imagery (Bible study scenes, prayer/fellowship, pastoral landscapes, scripture reading) to create a premium, trustworthy visual experience.
-
-**API Cost Management:** Smart tiered fallback system with usage tracking - API.Bible (5,000 requests/day, primary for reliability) → Bolls.life (unlimited, free) → OpenAI GPT-4o-mini ($85/month budget) → GetContext.xyz (backup). Real-time usage monitoring via `/api/usage-stats` endpoint. Database-backed tracking prevents overages and optimizes costs.
+"The Gospel in 5 Minutes" is a free, mobile-first spiritual wellness application designed to deliver daily Bible verses, emotional scripture guidance, and AI-powered biblical Q&A. Its purpose is to blend the aesthetic of wellness apps with robust Bible study tools, offering meaningful spiritual content in concise, 5-minute sessions. Key capabilities include daily verse delivery, emotion-based scripture recommendations, an AI pastor chat, Bible search, gamified streak tracking, and comprehensive Bible reading plans. The project emphasizes a professional, high-resolution visual experience using spiritually-appropriate imagery.
 
 ## User Preferences
 Preferred communication style: Simple, everyday language.
 
 ## System Architecture
 
-### Frontend
-- **Framework**: React 18 with TypeScript and Vite.
-- **UI/UX**: Tailwind CSS, shadcn/ui, and Radix UI for accessible design. Custom color palette (soft blues, warm golds, gentle greens) and typography (Inter, Crimson Text). Mobile-first, PWA-ready design with native pinch zoom for iOS.
-- **State Management**: React hooks for local state, TanStack Query for server state.
-- **Navigation**: Custom page state system with type-safe `AppNavigate` interface. Typed `AppPageParams` ensures compile-time validation of route parameters. Bottom nav includes: Home, Disciple, Search, Daily, More. Search page features tabbed interface with "Scripture Search" and "Ask Pastor" tabs for seamless access to both Bible lookup and AI pastor chat.
-- **Accessibility**: Full iOS compliance (44pt tap targets, safe area support, VoiceOver, high contrast, reduced motion).
-- **Internationalization**: Full support for 7 languages (English, Spanish, French, Portuguese, Chinese, Arabic, Hindi) across all pages.
-- **Offline Functionality**: Network status indicator, local persistence for bookmarks, notes, and reading progress.
+### UI/UX Decisions
+The application uses React 18 with TypeScript and Vite, styled with Tailwind CSS, shadcn/ui, and Radix UI for accessibility. It features a custom color palette (soft blues, warm golds, gentle greens) and typography (Inter, Crimson Text). The design is mobile-first, PWA-ready, and includes native pinch zoom for iOS, full iOS accessibility compliance, and internationalization support for 7 languages. A custom page state system with type-safe `AppNavigate` and `AppPageParams` manages navigation.
 
-### Backend
-- **Server**: Express.js with TypeScript in ESM mode.
-- **API Design**: RESTful endpoints.
-- **Storage Layer**: Abstracted interface for database integration.
-- **Authentication**: Prepared for session-based authentication.
+### Technical Implementations
+The backend uses Express.js with TypeScript, providing RESTful endpoints. Data storage is managed with Drizzle ORM for PostgreSQL (Neon serverless) and client-side `appStore.js` for local data persistence and real-time reactivity. A unified platform-aware notification system handles daily reminders using Capacitor Local Notifications or the Browser Notification API. Browser capability checks and safe wrappers ensure graceful degradation for features reliant on browser APIs.
 
-### Data Storage
-- **Database**: Drizzle ORM for PostgreSQL (Neon serverless).
-- **Local Storage**: Client-side `appStore.js` for user preferences, streak tracking, offline content, bookmarks, notes, and reading plan progress. Custom event system for real-time reactivity.
-
-### Notification System
-- **Unified Platform-Aware Notifications**: Manages daily verse and Bible reading plan reminders, adapting between Capacitor Local Notifications for native platforms and Browser Notification API for web. Features atomic scheduling, permission-aware initialization, and separate storage for preferences.
-
-### Core Features
+### Feature Specifications
 - **Daily Scripture**: Card-based display with bookmarking, notes, sharing, and copying.
-- **Scripture Ticker Widget**: Beautiful scrolling verse panel positioned FIRST on the Daily page, featuring a static "focus verse" with continuous scrolling ticker of 25 verses. Includes TWO high-definition stock photos (open Bible with golden sunlight, hands holding Bible) that blend seamlessly on the right side within the tile borders. Uses pure CSS animations (no external dependencies).
+- **Scripture Ticker Widget**: Scrolling verse panel with static focus verse and two high-definition stock photos, using pure CSS animations.
 - **AI Pastor Chat**: AI-powered Q&A.
-- **AI Verse Simplifier (Plain Meaning)**: Transforms Bible verses into simple language using OpenAI. Features professional Book/Chapter/Verse dropdown selector (ScriptureReferencePicker) for easy navigation through all 66 Bible books with accurate chapter counts. Now displayed with premium LiquidGlassFeatureTile component on DailyPage for enhanced visual appeal.
-- **AI Instant Application (Try This Today)**: Generates actionable steps from Bible verses using OpenAI. Features professional Book/Chapter/Verse dropdown selector (ScriptureReferencePicker) for easy navigation through all 66 Bible books with accurate chapter counts. Now displayed with premium LiquidGlassFeatureTile component on DailyPage for enhanced visual appeal.
-- **Feelings & Scripture**: Emotion-based guidance.
-- **Scripture Memory Helper**: Interactive memorization.
-- **Topical Bible Search**: Comprehensive topic discovery with 40+ curated Biblical topics (Kingdom of God, Salvation, Faith, Love, Hope, Forgiveness, Prayer, Holy Spirit, Healing, Courage, and more). Features: beautiful dropdown selection, 5-10 KJV verses per topic with full text, **voice playback on each verse** using premium TTS with Listen buttons, **AI-powered "How to Live This Today" application generator** for practical daily obedience (GPT-4o-mini), click-to-load navigation to Scripture Finder, offline functionality, and premium spiritual growth UI. Accessible from Search page with dedicated full-screen topic browser.
-- **Scripture Selector**: Visual dropdown interface with three selection modes (Verse, Range, Chapter). Supports single verses (John 3:16), verse ranges (John 3:16-18), and whole chapters (John 3). Features abbreviation toggle (Genesis ↔ Gen), all 66 books with accurate chapter/verse counts stored locally, smart UI that adapts to selected mode, and Previous/Next navigation buttons for continuous Bible reading.
-- **ScriptureReferencePicker Component**: Reusable Book/Chapter/Verse dropdown component used in Plain Meaning and Instant Application pages. Features all 66 Bible books (Old and New Testament) with accurate chapter counts (stored in `bibleBooks.ts`), dynamic chapter/verse dropdowns, optional verse range support, type-safe selection interface, and `buildReferenceString()` helper for formatting references (e.g., "John 3:16"). Verse dropdown allows up to 176 verses (Psalm 119 maximum).
-- **LiquidGlassFeatureTile Component**: Reusable premium UI component (`client/src/components/LiquidGlassFeatureTile.tsx`) for displaying feature tiles with liquid glass morphism effects. Features: backdrop blur, gradient overlays, customizable accent colors, icon support, responsive sizing, dark mode support with proper text contrast, hover animations, and accessible button semantics. Currently used for Plain Meaning and Instant Application tiles on DailyPage.
-- **Bible Version Preference System**: User-selectable Bible versions (KJV, WEB, BBE, ASV) with localStorage persistence. Features version tabs for quick switching, compare mode for side-by-side or vertical verse comparison, and automatic re-fetching when switching versions. Each verse card includes tap-to-read with word-by-word highlighting.
-- **Bookmark System with Folders & Notes**: Advanced organization with customizable folders, personal notes, and star-based bookmarking. Features: default "My Verses" folder, create/rename/delete folders, one-click star button on Scripture cards, editable notes for meditation and teaching, click-to-load functionality, timestamps (created/updated), all data persists in localStorage (bibleBookmarks_v2). Two-column layout: folder sidebar with verse counts + bookmarks list with inline note editing.
-- **Premium Text-to-Speech with Tap-to-Read**: Capacitor TTS plugin with intelligent voice selection (iOS: Siri Female/Samantha Enhanced; Android: Google Female/Wavenet). Features: automatic selection of highest quality natural female voice (rate: 0.95, pitch: 1.05), user-selectable voices in Voice Settings, tap-to-read on scripture text, and word-by-word highlighting during playback.
-- **Saved Verses & Notes**: Dedicated pages for bookmarked verses and personal reflections.
-- **Streak Tracking**: Consecutive days counter.
-- **Devotional Progress Tracking**: Tracks progress for 365 days of devotionals.
-- **Bible Reading Plans**: Three plans (1-Year Whole Bible, 6-Month Old/New Testament) with localStorage-based progress, streak calculation, and NIV text display.
-- **Bible Trivia**: Interactive game with randomized questions and global progress tracking.
-- **Profile Picture Upload**: LocalStorage-based profile picture management with privacy compliance and UI for upload/deletion.
-- **Scripture Image Generator**: Canvas-based system for creating shareable verse images (1290x2796 mobile-optimized). Features intelligent auto-fit text algorithm (scales from baseFontSize down to 18px minimum, handles long words via character-by-character splitting), 25 curated spiritual backgrounds across 4 categories (Spiritual: 10 images including crosses, Bible, prayer hands, heavenly clouds; Nature: 4 mountain/forest scenes; Water: 4 ocean/lake scenes; Sky: 5 sunrise/sunset/starry scenes), customizable font size (30-96px), text color picker, and Bible version label. Accessible via navigation from TopicSearchPage with verse data pre-filled. Download as high-quality PNG.
-- **Discipleship Plans System**: Complete YouVersion-style multi-day spiritual growth program accessible via bottom navigation "Disciple" tab. Features: DiscipleshipListPage with smart filtering (All Plans/My Saved Plans/Completed Plans with real-time counts), DiscipleshipPlanDetailPage (day selector with progress tracking), DiscipleshipReadingPage (devotional/scripture content viewer). **Enhanced Plans 1-3**: "Am I Going to Heaven or Hell?", "Life in the Spirit", and "Breaking Free from Addiction" now feature enriched ChatGPT blueprint format with Reflection/Prayer/Shareable Truth sections in devotionals, plus Plain Meaning/Application sections for every scripture. **Filter System**: DiscipleshipPlansHeader component with three filter pills - All Plans (shows all 12 plans), My Saved Plans (shows started/manually saved plans excluding completed), Completed Plans (shows fully finished plans). Progress tracking via appStore with markDiscipleshipDayComplete/toggleDiscipleshipPlanSaved functions and custom event system for real-time updates. Twelve active plans with theme-matched stock images: "Am I Going to Heaven or Hell?" (salvation, heaven clouds), "Life in the Spirit" (Holy Spirit journey, worship hands), "Breaking Free from Addiction" (recovery, prayer support), "Winning Over Temptation" (spiritual warfare, group prayer), "Finding God's Will for My Life" (guidance, forest path), "Finding a Godly Relationship" (dating/marriage, couple reading Bible), "Conquering Fear and Anxiety" (peace, calm lake), "Dealing with Anger and Unforgiveness" (forgiveness, peaceful prayer), "Purpose: Why Am I Here?" (life purpose, sunrise mountain), "Growing Strong Roots in Christ" (spiritual foundation, majestic mountain), "Hearing God's Voice Through His Word" (Bible study, open Bible with sunlight), "Walking in Daily Repentance" (redemption, cross silhouette). Content stored locally in `discipleshipPlans.ts` for reliability. Bible verses fetched via API fallback chain. Type-safe navigation with `AppNavigate` interface ensures compile-time route validation. Plans are easily expandable (50+ planned).
+- **AI Verse Simplifier (Plain Meaning)**: Transforms verses into simple language using OpenAI.
+- **AI Instant Application (Try This Today)**: Generates actionable steps from verses using OpenAI.
+- **Feelings & Scripture**: Emotion-based scripture recommendations.
+- **Scripture Memory Helper**: Interactive memorization tool.
+- **Topical Bible Search**: Comprehensive topic discovery with 40+ curated topics, voice playback for verses, and AI-powered "How to Live This Today" application generation.
+- **Scripture Selector**: Visual dropdown for selecting single verses, ranges, or chapters, with abbreviation toggle and continuous navigation.
+- **Bible Version Preference System**: User-selectable Bible versions (KJV, WEB, BBE, ASV) with comparison mode and tap-to-read functionality.
+- **Bookmark System with Folders & Notes**: Advanced organization for bookmarked verses with customizable folders and personal notes.
+- **Premium Text-to-Speech**: High-quality voice playback with word-by-word highlighting.
+- **Streak Tracking & Devotional Progress**: Tracks consecutive days and devotional progress.
+- **Bible Reading Plans**: Three plans (1-Year Whole Bible, 6-Month Old/New Testament) with progress tracking.
+- **Discipleship Plans System**: YouVersion-style multi-day spiritual growth programs with enriched devotionals, reflection questions, prayers, and shareable truths, featuring smart filtering and progress tracking.
+- **Scripture Image Generator**: Canvas-based system for creating shareable verse images with custom backgrounds, fonts, and colors.
 
-### Browser Capability Checks & Safe Wrappers
-- **Critical Pattern**: All features dependent on browser APIs utilize `capabilities.ts` for detection and `safe` wrappers (e.g., `safeLocalStorage`, `safeShare`) to ensure graceful degradation and provide fallbacks. UI elements are conditionally rendered based on API availability.
+### System Design Choices
+The application implements a smart tiered fallback system for Bible APIs (API.Bible → Bolls.life → OpenAI GPT-4o-mini → GetContext.xyz) with real-time usage monitoring and PostgreSQL-backed tracking to manage costs and ensure reliability. Capacitor Live Updates provide over-the-air updates, and an automated script manages iOS versioning.
 
 ## External Dependencies
 
@@ -73,20 +47,10 @@ Preferred communication style: Simple, everyday language.
 - **ws library**: WebSocket support.
 
 ### External APIs
-- **Smart Bible API Fallback Chain**: Tiered system with usage limits - (1) API.Bible (5,000 requests/day, primary for reliability), (2) Bolls.life (unlimited, free, fallback), (3) OpenAI GPT-4o-mini ($85/month budget, tracked), (4) GetContext.xyz (backup). Automatic failover ensures 99.9% uptime.
-- **API Usage Tracking**: PostgreSQL-backed usage monitoring (`api_usage_log` table) with daily/monthly limits, cost tracking, and real-time stats endpoint (`/api/usage-stats`).
-- **OpenAI API**: Powers AI pastor, verse simplification, and practical application generation (GPT-4o-mini). Usage capped at $85/month via tracker.
-- **SendGrid Email Service**: Replit connector integration for blog subscriber emails with automatic API key rotation.
-- **Translation Services**: Multi-language support.
-- **Christian Context API (GetContext.xyz)**: Provides sermon videos, advice, and biblical commentary.
-- **BibleProject (bibleproject.com)**: Provides animated Bible teaching videos via YouTube.
-
-### Development Tools
-- **Vite**: Fast development and optimized builds.
-- **ESBuild**: High-performance server-side bundling.
-- **TypeScript**: Type safety.
-- **TanStack Query**: Data fetching and caching.
-
-### Deployment & Updates
-- **Capacitor Live Updates**: Over-the-air (OTA) updates via Ionic Appflow (background updates, 3 cached versions).
-- **iOS Version Management**: Automated version control script (`scripts/version.js`) that synchronizes version numbers across package.json and Info.plist. Supports semantic versioning (major.minor.patch), auto-incrementing build numbers, and provides commands for showing, incrementing, setting, and syncing versions. See VERSION_MANAGEMENT.md for complete usage guide.
+- **API.Bible**: Primary Bible API.
+- **Bolls.life**: Fallback Bible API.
+- **OpenAI API**: Powers AI Pastor, Verse Simplifier, and Instant Application features.
+- **GetContext.xyz**: Backup Christian Context API.
+- **SendGrid Email Service**: For blog subscriber emails.
+- **Translation Services**: For multi-language support.
+- **BibleProject (bibleproject.com)**: Provides animated Bible teaching videos via YouTube (implicitly through content, not direct API).
