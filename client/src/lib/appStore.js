@@ -8,6 +8,7 @@ const KEY_BOOKMARKS = 'dg_bookmarks';
 const KEY_NOTES = 'dg_notes';
 const KEY_PROFILE = 'dg_profile';
 const KEY_READING_PROGRESS = 'dg_readingProgress';
+const KEY_DISCIPLESHIP_PROGRESS = 'dg_discipleshipProgress';
 
 let hasWarnedAboutStorage = false;
 
@@ -155,6 +156,74 @@ const appStore = {
   
   getAllReadingProgress() {
     const raw = safeGetItem(KEY_READING_PROGRESS);
+    return raw ? JSON.parse(raw) : {};
+  },
+
+  // DISCIPLESHIP PLAN PROGRESS
+  markDiscipleshipDayComplete(planId, dayNumber) {
+    const raw = safeGetItem(KEY_DISCIPLESHIP_PROGRESS);
+    const progress = raw ? JSON.parse(raw) : {};
+    
+    if (!progress[planId]) {
+      progress[planId] = { completedDays: {}, isSaved: false };
+    }
+    
+    progress[planId].completedDays[dayNumber] = {
+      completedAt: new Date().toISOString()
+    };
+    
+    safeSetItem(KEY_DISCIPLESHIP_PROGRESS, JSON.stringify(progress));
+    
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('discipleshipProgressChanged', { 
+        detail: { planId, dayNumber } 
+      }));
+    }
+  },
+  
+  markDiscipleshipDayIncomplete(planId, dayNumber) {
+    const raw = safeGetItem(KEY_DISCIPLESHIP_PROGRESS);
+    const progress = raw ? JSON.parse(raw) : {};
+    
+    if (progress[planId]?.completedDays?.[dayNumber]) {
+      delete progress[planId].completedDays[dayNumber];
+      safeSetItem(KEY_DISCIPLESHIP_PROGRESS, JSON.stringify(progress));
+      
+      if (typeof window !== 'undefined') {
+        window.dispatchEvent(new CustomEvent('discipleshipProgressChanged', { 
+          detail: { planId, dayNumber } 
+        }));
+      }
+    }
+  },
+  
+  toggleDiscipleshipPlanSaved(planId) {
+    const raw = safeGetItem(KEY_DISCIPLESHIP_PROGRESS);
+    const progress = raw ? JSON.parse(raw) : {};
+    
+    if (!progress[planId]) {
+      progress[planId] = { completedDays: {}, isSaved: true };
+    } else {
+      progress[planId].isSaved = !progress[planId].isSaved;
+    }
+    
+    safeSetItem(KEY_DISCIPLESHIP_PROGRESS, JSON.stringify(progress));
+    
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('discipleshipProgressChanged', { 
+        detail: { planId } 
+      }));
+    }
+  },
+  
+  getDiscipleshipPlanProgress(planId) {
+    const raw = safeGetItem(KEY_DISCIPLESHIP_PROGRESS);
+    const progress = raw ? JSON.parse(raw) : {};
+    return progress[planId] || { completedDays: {}, isSaved: false };
+  },
+  
+  getAllDiscipleshipProgress() {
+    const raw = safeGetItem(KEY_DISCIPLESHIP_PROGRESS);
     return raw ? JSON.parse(raw) : {};
   },
 

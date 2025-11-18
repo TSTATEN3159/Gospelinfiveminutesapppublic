@@ -1,3 +1,4 @@
+import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Users, Shield, Settings, Play, BookOpen, BookmarkCheck, ChevronRight, Flame, Share, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,6 +13,8 @@ import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { AppNavigate } from "../App";
+import { DiscipleshipPlansHeader, PlansFilter } from "@/features/discipleship/DiscipleshipPlansHeader";
+import appStore from "@/lib/appStore";
 
 interface DiscipleshipListPageProps {
   onNavigate: AppNavigate;
@@ -73,6 +76,57 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
   const handleMenuClick = (id: string) => {
     onNavigate(id as any);
   };
+
+  // Filter state and progress tracking
+  const [filter, setFilter] = useState<PlansFilter>("all");
+  const [progressData, setProgressData] = useState((appStore as any).getAllDiscipleshipProgress());
+
+  useEffect(() => {
+    const handleProgressChange = () => {
+      setProgressData((appStore as any).getAllDiscipleshipProgress());
+    };
+
+    window.addEventListener('discipleshipProgressChanged', handleProgressChange);
+    return () => window.removeEventListener('discipleshipProgressChanged', handleProgressChange);
+  }, []);
+
+  // Calculate filtered plans and counts
+  const { visiblePlans, counts } = useMemo(() => {
+    const all = DISCIPLESHIP_PLANS;
+    const saved = [];
+    const completed = [];
+
+    for (const plan of all) {
+      const progress = progressData[plan.id] || { completedDays: {}, isSaved: false };
+      
+      const completedDays = Object.keys(progress.completedDays || {}).length;
+      const totalDays = plan.totalDays || plan.days.length;
+      const isComplete = completedDays >= totalDays && totalDays > 0;
+      const isStartedOrSaved = progress.isSaved || completedDays > 0;
+
+      if (isComplete) {
+        completed.push(plan);
+      } else if (isStartedOrSaved) {
+        saved.push(plan);
+      }
+    }
+
+    let visible = all;
+    if (filter === "saved") {
+      visible = saved;
+    } else if (filter === "completed") {
+      visible = completed;
+    }
+
+    return {
+      visiblePlans: visible,
+      counts: {
+        all: all.length,
+        saved: saved.length,
+        completed: completed.length,
+      }
+    };
+  }, [filter, progressData]);
 
   return (
     <div className="min-h-screen pb-20">
@@ -143,15 +197,14 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
       <div className="max-w-sm mx-auto space-y-3 px-4 pt-4">
         {/* Disciple Plans Section */}
         <div className="mb-4">
-          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2 px-1">
-            Disciple
-          </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400 mb-3 px-1">
-            Short Bible plans to help you follow Jesus
-          </p>
+          <DiscipleshipPlansHeader
+            activeFilter={filter}
+            onChangeFilter={setFilter}
+            counts={counts}
+          />
           
           <div className="space-y-3">
-            {DISCIPLESHIP_PLANS.map((plan) => {
+            {visiblePlans.map((plan) => {
               const progress = loadPlanProgress(plan);
               const percent = Math.round(progress.ratio * 100);
 
