@@ -194,7 +194,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
         </div>
       </div>
 
-      <div className="max-w-sm mx-auto space-y-3 px-4 pt-4">
+      <div className="max-w-6xl mx-auto space-y-3 px-4 pt-4">
         {/* Disciple Plans Section */}
         <div className="mb-4">
           <DiscipleshipPlansHeader
@@ -203,7 +203,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
             counts={counts}
           />
           
-          <div className="space-y-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {visiblePlans.map((plan) => {
               const progress = loadPlanProgress(plan);
               const percent = Math.round(progress.ratio * 100);
@@ -215,28 +215,28 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
                   className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition-shadow cursor-pointer"
                   data-testid={`card-plan-${plan.id}`}
                 >
-                  <div className="flex">
-                    <div className="w-24 h-24 flex-shrink-0">
+                  <div className="flex flex-col">
+                    <div className="w-full h-40">
                       <img
                         src={plan.imageUrl}
                         alt={plan.title}
                         className="w-full h-full object-cover"
                       />
                     </div>
-                    <CardContent className="flex-1 p-3 flex flex-col justify-between">
+                    <CardContent className="p-4 flex flex-col justify-between flex-1">
                       <div>
-                        <h3 className="text-base font-semibold leading-snug text-gray-900 dark:text-gray-100" data-testid={`text-plan-title-${plan.id}`}>
+                        <h3 className="text-base font-semibold leading-snug text-gray-900 dark:text-gray-100 line-clamp-2" data-testid={`text-plan-title-${plan.id}`}>
                           {plan.title}
                         </h3>
                         {plan.subtitle && (
-                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5" data-testid={`text-plan-subtitle-${plan.id}`}>
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-1 line-clamp-2" data-testid={`text-plan-subtitle-${plan.id}`}>
                             {plan.subtitle}
                           </p>
                         )}
                       </div>
 
                       {/* Progress meter */}
-                      <div className="mt-2">
+                      <div className="mt-3">
                         <div className="h-1.5 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">
                           <div
                             className="h-full bg-slate-900 dark:bg-slate-300 transition-all"
