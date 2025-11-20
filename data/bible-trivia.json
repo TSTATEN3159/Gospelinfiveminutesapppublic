@@ -2370,6 +2370,507 @@
     "correctIndex": 0
   },
   {
+    "id": "q-chatgpt5-1763662360541-151",
+    "level": "beginner",
+    "question": "According to John 8:12, what did Jesus say He is to the world?",
+    "choices": [
+      "The Door of the sheep",
+      "The True Vine",
+      "The Bread of Life",
+      "The Light of the world"
+    ],
+    "correctIndex": 3,
+    "reference": "John 8:12",
+    "explanation": "Jesus declares that those who follow Him will not walk in darkness.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-154",
+    "level": "beginner",
+    "question": "Who healed the lame beggar at the Beautiful Gate?",
+    "choices": [
+      "Andrew",
+      "Peter (with John)",
+      "James",
+      "John"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 3:1–8",
+    "explanation": "Peter healed the man in the name of Jesus Christ.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-157",
+    "level": "beginner",
+    "question": "Who was swallowed by a great fish after running from God’s command?",
+    "choices": [
+      "Ezekiel",
+      "Elijah",
+      "Jonah",
+      "Jeremiah"
+    ],
+    "correctIndex": 2,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah fled from God’s call to preach to Nineveh and was swallowed by a fish.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-160",
+    "level": "beginner",
+    "question": "Which book is a collection of Psalms, songs, and prayers to God?",
+    "choices": [
+      "Proverbs",
+      "Song of Solomon",
+      "Ecclesiastes",
+      "Psalms"
+    ],
+    "correctIndex": 3,
+    "reference": "Psalm 1:1",
+    "explanation": "The book of Psalms expresses praise, sorrow, and worship to God.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-161",
+    "level": "beginner",
+    "question": "Which book follows the four Gospels in the New Testament?",
+    "choices": [
+      "Romans",
+      "Acts",
+      "Galatians",
+      "1 Corinthians"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 1:1",
+    "explanation": "Acts continues the story of Jesus’ ministry through the apostles.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-164",
+    "level": "beginner",
+    "question": "What did the father do when he saw the prodigal son returning home?",
+    "choices": [
+      "He sent a servant",
+      "He ran to him and embraced him",
+      "He waited at the door",
+      "He called the whole family"
+    ],
+    "correctIndex": 1,
+    "reference": "Luke 15:20",
+    "explanation": "The father ran with compassion, showing God’s grace toward repentant sinners.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-167",
+    "level": "beginner",
+    "question": "According to John 11:25, who is the resurrection and the life?",
+    "choices": [
+      "Jesus",
+      "The Holy Spirit",
+      "The prophets",
+      "God the Father"
+    ],
+    "correctIndex": 0,
+    "reference": "John 11:25",
+    "explanation": "Jesus promises that those who believe in Him will live even if they die.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-170",
+    "level": "beginner",
+    "question": "Who baptized Paul after his conversion?",
+    "choices": [
+      "Silas",
+      "Timothy",
+      "Barnabas",
+      "Ananias"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 9:17–18",
+    "explanation": "Ananias laid hands on Paul to restore his sight and baptize him.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-173",
+    "level": "beginner",
+    "question": "Who was the father of John the Baptist?",
+    "choices": [
+      "Joseph",
+      "Zechariah",
+      "Simeon",
+      "Eli"
+    ],
+    "correctIndex": 1,
+    "reference": "Luke 1:13",
+    "explanation": "Zechariah was a priest and the husband of Elizabeth.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754688-176",
+    "level": "beginner",
+    "question": "According to John 3:3, what must someone do to see the kingdom of God?",
+    "choices": [
+      "Be baptized",
+      "Believe only",
+      "Be born again",
+      "Do good works"
+    ],
+    "correctIndex": 2,
+    "reference": "John 3:3",
+    "explanation": "Jesus teaches that spiritual rebirth is required to enter God's kingdom.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-179",
+    "level": "beginner",
+    "question": "Who ran to the empty tomb with Peter after hearing Jesus had risen?",
+    "choices": [
+      "James",
+      "Andrew",
+      "John",
+      "Peter"
+    ],
+    "correctIndex": 2,
+    "reference": "John 20:2–4",
+    "explanation": "John outran Peter to the tomb after Mary’s news of Jesus’ resurrection.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-182",
+    "level": "beginner",
+    "question": "Who killed Goliath with a sling and a stone?",
+    "choices": [
+      "Jonathan",
+      "Saul",
+      "David",
+      "Solomon"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Samuel 17:49–50",
+    "explanation": "David defeated Goliath by trusting in God, not human weapons.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-185",
+    "level": "beginner",
+    "question": "Which book tells the story of Noah and the flood?",
+    "choices": [
+      "Leviticus",
+      "Genesis",
+      "Numbers",
+      "Exodus"
+    ],
+    "correctIndex": 1,
+    "reference": "Genesis 6–9",
+    "explanation": "Genesis records God’s judgment on the world and His salvation of Noah.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-188",
+    "level": "beginner",
+    "question": "In the parable of the lost coin, how many coins did the woman originally have?",
+    "choices": [
+      "Five",
+      "Seven",
+      "Twelve",
+      "Ten"
+    ],
+    "correctIndex": 3,
+    "reference": "Luke 15:8",
+    "explanation": "Jesus teaches God’s joy in finding the lost, using a lost coin as the picture.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-191",
+    "level": "beginner",
+    "question": "According to Psalm 23:1, what is the Lord to His people?",
+    "choices": [
+      "My King",
+      "My Shepherd",
+      "My Father",
+      "My Redeemer"
+    ],
+    "correctIndex": 1,
+    "reference": "Psalm 23:1",
+    "explanation": "God personally guides, protects, and provides for His people.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-194",
+    "level": "beginner",
+    "question": "Who took Saul (Paul) and introduced him to the apostles in Jerusalem?",
+    "choices": [
+      "Titus",
+      "Timothy",
+      "Silas",
+      "Barnabas"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 9:26–27",
+    "explanation": "Barnabas helped the church accept Paul after his conversion.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-197",
+    "level": "beginner",
+    "question": "Who prayed for rain to stop and then prayed again so that it would rain?",
+    "choices": [
+      "Elisha",
+      "Isaiah",
+      "Jeremiah",
+      "Elijah"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 17:1; 18:41–45; James 5:17–18",
+    "explanation": "Elijah prayed and God withheld rain, then prayed again and God sent rain.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt-batch7-201",
+    "level": "beginner",
+    "question": "What did Jesus turn into wine at the wedding in Cana?",
+    "choices": [
+      "Water",
+      "Miriam",
+      "Jacob",
+      "Caleb"
+    ],
+    "correctIndex": 0,
+    "reference": "John 2:1–11",
+    "explanation": "Jesus' first recorded miracle was turning water into wine.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-204",
+    "level": "beginner",
+    "question": "Which woman became queen of Persia and saved her people from destruction?",
+    "choices": [
+      "Rebekah",
+      "Mary",
+      "Aaron",
+      "Esther"
+    ],
+    "correctIndex": 3,
+    "reference": "Esther 4:14–16",
+    "explanation": "Esther risked her life to intercede for the Jewish people.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch7-207",
+    "level": "beginner",
+    "question": "What sea did God part so the Israelites could escape Egypt?",
+    "choices": [
+      "Ephesus",
+      "Corinth",
+      "Prayer",
+      "The Red Sea"
+    ],
+    "correctIndex": 3,
+    "reference": "Exodus 14:21–22",
+    "explanation": "God opened the Red Sea for Israel to pass on dry ground.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch7-210",
+    "level": "beginner",
+    "question": "How many lepers did Jesus heal who stood afar off?",
+    "choices": [
+      "Ten",
+      "Isaiah",
+      "Rebekah",
+      "Elijah"
+    ],
+    "correctIndex": 0,
+    "reference": "Luke 17:12–19",
+    "explanation": "Jesus healed ten lepers, but only one returned to thank Him.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-213",
+    "level": "beginner",
+    "question": "According to Proverbs 1:7, what is the beginning of knowledge?",
+    "choices": [
+      "Pentecost",
+      "The fear of the Lord",
+      "Temple",
+      "Grace"
+    ],
+    "correctIndex": 1,
+    "reference": "Proverbs 1:7",
+    "explanation": "Wisdom begins with reverence for God.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch7-216",
+    "level": "beginner",
+    "question": "What does the name 'Immanuel' mean?",
+    "choices": [
+      "God with us",
+      "Damascus",
+      "Rome",
+      "Bethel"
+    ],
+    "correctIndex": 0,
+    "reference": "Isaiah 7:14; Matthew 1:23",
+    "explanation": "Immanuel reveals God's presence among His people in Christ.",
+    "category": "Names & Titles of God"
+  },
+  {
+    "id": "q-chatgpt-batch7-219",
+    "level": "beginner",
+    "question": "Who will return to earth the same way He ascended into heaven?",
+    "choices": [
+      "Hebron",
+      "Nazareth",
+      "Mount of Olives",
+      "Jesus Christ"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 1:11",
+    "explanation": "Angels promised Jesus' visible return.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch7-222",
+    "level": "beginner",
+    "question": "Which covenant did God give as a sign that He would never again flood the whole earth?",
+    "choices": [
+      "Nineveh",
+      "Grace",
+      "Faith",
+      "The rainbow"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 9:12–17",
+    "explanation": "God set His bow in the cloud as a covenant sign.",
+    "category": "Feasts & Covenants"
+  },
+  {
+    "id": "q-chatgpt-batch7-225",
+    "level": "beginner",
+    "question": "In what city did the Holy Spirit first come upon believers?",
+    "choices": [
+      "Jerusalem",
+      "Mount Carmel",
+      "Babylon",
+      "Forgiveness"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 2:1–4",
+    "explanation": "The Church began when the Spirit came at Pentecost in Jerusalem.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch7-228",
+    "level": "beginner",
+    "question": "Who is the archangel mentioned by name in the Bible?",
+    "choices": [
+      "Paul",
+      "Saul",
+      "Michael",
+      "Nahum"
+    ],
+    "correctIndex": 2,
+    "reference": "Jude 9; Daniel 10:13",
+    "explanation": "Michael is named as an archangel who defends God's people.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch7-231",
+    "level": "beginner",
+    "question": "How many commandments were written on the tablets of stone?",
+    "choices": [
+      "Thirty",
+      "Eight",
+      "Fifty",
+      "Ten"
+    ],
+    "correctIndex": 3,
+    "reference": "Exodus 20:1–17",
+    "explanation": "God gave ten foundational commandments to Israel.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch7-234",
+    "level": "beginner",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "Saul",
+      "Jeremiah",
+      "Hosea",
+      "Paul"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Samuel 10:1",
+    "explanation": "Saul was anointed by Samuel as Israel's first king.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch7-237",
+    "level": "beginner",
+    "question": "Who received the design for the tabernacle on Mount Sinai?",
+    "choices": [
+      "Moses",
+      "Ark of the Covenant",
+      "Gaza",
+      "Thessalonica"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 25:8–9",
+    "explanation": "God gave Moses exact instructions for the tabernacle's design.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch7-240",
+    "level": "beginner",
+    "question": "Which chapter is known as the Love Chapter?",
+    "choices": [
+      "Hebron",
+      "Gaza",
+      "Bethlehem",
+      "1 Corinthians 13"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Corinthians 13",
+    "explanation": "Paul defines true Christlike love in this famous chapter.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "beginner-1763663767111-0",
+    "level": "beginner",
+    "question": "What miracle did Jesus perform at the wedding in Cana?",
+    "choices": [
+      "Walked on water",
+      "Healed a blind man",
+      "Turned water into wine",
+      "Fed the 5000"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763663767111-1",
+    "level": "beginner",
+    "question": "Who was known for his wisdom and wrote many Proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Isaiah",
+      "Moses"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763663767111-2",
+    "level": "beginner",
+    "question": "Which giant did David defeat with a sling and a stone?",
+    "choices": [
+      "Goliath",
+      "Saul",
+      "Pharaoh",
+      "Samson"
+    ],
+    "correctIndex": 0
+  },
+  {
     "id": "q-1763657896805-21",
     "level": "intermediate",
     "question": "Who was the first king of Israel?",
@@ -3795,6 +4296,456 @@
     "category": "Parables"
   },
   {
+    "id": "q-chatgpt5-1763662360541-152",
+    "level": "intermediate",
+    "question": "According to John 10:11, what kind of shepherd is Jesus?",
+    "choices": [
+      "The Door of the sheep",
+      "The Great Shepherd",
+      "The Chief Shepherd",
+      "The Good Shepherd"
+    ],
+    "correctIndex": 3,
+    "reference": "John 10:11",
+    "explanation": "Jesus lays down His life for His sheep.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-155",
+    "level": "intermediate",
+    "question": "Who was the centurion in Caesarea who feared God and received the gospel?",
+    "choices": [
+      "Julius",
+      "Festus",
+      "Cornelius",
+      "Felix"
+    ],
+    "correctIndex": 2,
+    "reference": "Acts 10:1–48",
+    "explanation": "God sent Peter to Cornelius, marking the gospel’s spread to Gentiles.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-158",
+    "level": "intermediate",
+    "question": "Who built the first temple in Jerusalem?",
+    "choices": [
+      "Saul",
+      "Rehoboam",
+      "David",
+      "Solomon"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 6:1",
+    "explanation": "Solomon fulfilled David’s desire by building the temple for the Lord.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-162",
+    "level": "intermediate",
+    "question": "Which book in the Old Testament contains the story of Gideon?",
+    "choices": [
+      "Judges",
+      "Joshua",
+      "1 Samuel",
+      "Ruth"
+    ],
+    "correctIndex": 0,
+    "reference": "Judges 6–8",
+    "explanation": "Judges records Gideon’s calling and God’s victory with his army of 300.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-165",
+    "level": "intermediate",
+    "question": "In the parable of the talents, what did the servant with one talent do with it?",
+    "choices": [
+      "He invested it",
+      "He gave it to the poor",
+      "He buried it in the ground",
+      "He doubled it"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 25:18",
+    "explanation": "The unfaithful servant hid his talent out of fear and was rebuked.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-168",
+    "level": "intermediate",
+    "question": "According to Romans 8:14, who are the sons of God?",
+    "choices": [
+      "Those who are led by the Spirit of God",
+      "Those who obey the law",
+      "Those who do good works",
+      "All who believe"
+    ],
+    "correctIndex": 0,
+    "reference": "Romans 8:14",
+    "explanation": "Being led by the Spirit is a mark of God’s children.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-171",
+    "level": "intermediate",
+    "question": "Which apostle was exiled on the island of Patmos?",
+    "choices": [
+      "Peter",
+      "Paul",
+      "John",
+      "James"
+    ],
+    "correctIndex": 2,
+    "reference": "Revelation 1:9",
+    "explanation": "John received the revelation of Jesus Christ while exiled.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt5-1763662360541-174",
+    "level": "intermediate",
+    "question": "Who was the first high priest of Israel, the brother of Moses?",
+    "choices": [
+      "Aaron",
+      "Eleazar",
+      "Joshua",
+      "Moses"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 28:1",
+    "explanation": "Aaron and his sons were chosen to serve as priests to the Lord.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754688-177",
+    "level": "intermediate",
+    "question": "According to Galatians 5:16, how should believers walk to avoid fulfilling the lust of the flesh?",
+    "choices": [
+      "Pray without ceasing",
+      "Follow the law",
+      "Deny yourself",
+      "Walk in the Spirit"
+    ],
+    "correctIndex": 3,
+    "reference": "Galatians 5:16",
+    "explanation": "Walking in the Spirit enables believers to resist fleshly desires.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-180",
+    "level": "intermediate",
+    "question": "What was the name of the prophet who foretold a famine during the early church?",
+    "choices": [
+      "Philip",
+      "Stephen",
+      "Agabus",
+      "Barnabas"
+    ],
+    "correctIndex": 2,
+    "reference": "Acts 11:27–28",
+    "explanation": "Agabus prophesied a famine, and believers gave help to others in advance.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-183",
+    "level": "intermediate",
+    "question": "Which prophet confronted David after his sin with Bathsheba?",
+    "choices": [
+      "Nathan",
+      "Elijah",
+      "Samuel",
+      "Gad"
+    ],
+    "correctIndex": 0,
+    "reference": "2 Samuel 12:1–7",
+    "explanation": "Nathan bravely declared God’s judgment and led David to repentance.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-186",
+    "level": "intermediate",
+    "question": "Which Old Testament book contains the vision of the four beasts representing kingdoms?",
+    "choices": [
+      "Daniel",
+      "Isaiah",
+      "Ezekiel",
+      "Jeremiah"
+    ],
+    "correctIndex": 0,
+    "reference": "Daniel 7:1–8",
+    "explanation": "Daniel’s prophecy reveals future kingdoms and God’s eternal rule.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-189",
+    "level": "intermediate",
+    "question": "In the parable of the wedding feast, who refused to come when invited?",
+    "choices": [
+      "The servants",
+      "The king",
+      "The invited guests",
+      "The poor"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 22:1–5",
+    "explanation": "Jesus warns of rejecting God’s gracious invitation.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-192",
+    "level": "intermediate",
+    "question": "According to Ephesians 2:8–9, we are saved by grace through what?",
+    "choices": [
+      "Works",
+      "Faith",
+      "Obedience",
+      "Baptism"
+    ],
+    "correctIndex": 1,
+    "reference": "Ephesians 2:8–9",
+    "explanation": "Salvation is a gift of God’s grace received through faith.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-195",
+    "level": "intermediate",
+    "question": "Who escaped from prison with the help of an angel in Acts 12?",
+    "choices": [
+      "James",
+      "Paul",
+      "John",
+      "Peter"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 12:6–11",
+    "explanation": "God delivered Peter from Herod’s intent to harm him.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-198",
+    "level": "intermediate",
+    "question": "Which king of Israel was known for asking for wisdom instead of riches?",
+    "choices": [
+      "David",
+      "Rehoboam",
+      "Solomon",
+      "Saul"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 3:5–13",
+    "explanation": "Solomon’s request pleased God and he received wisdom in abundance.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-200",
+    "level": "intermediate",
+    "question": "Which prophetic book includes the vision of the Ancient of Days seated on His throne?",
+    "choices": [
+      "Daniel",
+      "Jeremiah",
+      "Isaiah",
+      "Ezekiel"
+    ],
+    "correctIndex": 0,
+    "reference": "Daniel 7:9–10",
+    "explanation": "Daniel describes God’s eternal authority as the Ancient of Days.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch7-202",
+    "level": "intermediate",
+    "question": "How many men were fed in the feeding of the multitude with five loaves and two fish?",
+    "choices": [
+      "Five thousand",
+      "Abraham",
+      "Elizabeth",
+      "Elijah"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 14:19–21",
+    "explanation": "Jesus multiplied the loaves and fish to feed 5000 men plus women and children.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-205",
+    "level": "intermediate",
+    "question": "Who was the mother of Samuel?",
+    "choices": [
+      "Hannah",
+      "Isaac",
+      "Abraham",
+      "Peter"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Samuel 1:10–20",
+    "explanation": "Hannah prayed earnestly for a son, and God granted Samuel.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch7-208",
+    "level": "intermediate",
+    "question": "What river did John baptize in?",
+    "choices": [
+      "The Jordan River",
+      "Ur",
+      "Bethel",
+      "Communion"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 3:5–6",
+    "explanation": "John baptized in the Jordan where Jesus was also baptized.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch7-211",
+    "level": "intermediate",
+    "question": "What physical condition did the man at the pool of Bethesda have for 38 years?",
+    "choices": [
+      "Timothy",
+      "Titus",
+      "James",
+      "He was lame"
+    ],
+    "correctIndex": 3,
+    "reference": "John 5:5–9",
+    "explanation": "Jesus healed a man who had waited decades for healing.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-214",
+    "level": "intermediate",
+    "question": "Which Old Testament book famously reflects on the meaning of life saying, 'Vanity of vanities'?",
+    "choices": [
+      "Sidon",
+      "Rome",
+      "Mount Carmel",
+      "Ecclesiastes"
+    ],
+    "correctIndex": 3,
+    "reference": "Ecclesiastes 1:2",
+    "explanation": "Ecclesiastes reflects on life's fleeting nature and the need to fear God.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch7-217",
+    "level": "intermediate",
+    "question": "What does Jehovah-Jireh mean?",
+    "choices": [
+      "The Lord will provide",
+      "Dead Sea",
+      "Pentecost",
+      "Faith"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 22:14",
+    "explanation": "God provided a ram in place of Isaac, revealing His provision.",
+    "category": "Names & Titles of God"
+  },
+  {
+    "id": "q-chatgpt-batch7-220",
+    "level": "intermediate",
+    "question": "According to Matthew 24:35, what will never pass away?",
+    "choices": [
+      "Thessalonica",
+      "Jesus' words",
+      "Daniel",
+      "Elijah"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 24:35",
+    "explanation": "Jesus declares that His Word is eternal.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch7-223",
+    "level": "intermediate",
+    "question": "Which feast remembers Israel's deliverance from slavery in Egypt?",
+    "choices": [
+      "Peace",
+      "Passover",
+      "Tabernacle",
+      "Corinth"
+    ],
+    "correctIndex": 1,
+    "reference": "Exodus 12:1–28",
+    "explanation": "Passover celebrates God's judgment passing over the houses marked with blood.",
+    "category": "Feasts & Covenants"
+  },
+  {
+    "id": "q-chatgpt-batch7-226",
+    "level": "intermediate",
+    "question": "What visible sign appeared as the believers were filled with the Holy Spirit?",
+    "choices": [
+      "Sea of Galilee",
+      "Covenant",
+      "Hebron",
+      "Tongues of fire"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 2:3",
+    "explanation": "Tongues of fire rested on each believer at Pentecost.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch7-229",
+    "level": "intermediate",
+    "question": "What did the serpent do in Genesis 3?",
+    "choices": [
+      "Deceived Eve",
+      "Zechariah",
+      "Rachel",
+      "Solomon"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 3:1–6",
+    "explanation": "Satan used the serpent to deceive Eve into sinning.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch7-232",
+    "level": "intermediate",
+    "question": "How many days was Jesus in the wilderness being tempted?",
+    "choices": [
+      "Forty days",
+      "Eight",
+      "Thirty",
+      "Three"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 4:2",
+    "explanation": "Jesus fasted and overcame temptation for 40 days.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch7-235",
+    "level": "intermediate",
+    "question": "Who built the temple in Jerusalem?",
+    "choices": [
+      "Leah",
+      "Elizabeth",
+      "Solomon",
+      "Amos"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 6:1",
+    "explanation": "Solomon built the first temple for the Lord.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch7-238",
+    "level": "intermediate",
+    "question": "What object in the Holy Place had seven branches and provided light?",
+    "choices": [
+      "The golden lampstand",
+      "Gaza",
+      "Justice",
+      "Bethlehem"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 25:31–40",
+    "explanation": "The lampstand illuminated the Holy Place continually.",
+    "category": "Tabernacle & Temple"
+  },
+  {
     "id": "q-1763657896805-41",
     "level": "advanced",
     "question": "Which prophet saw a vision of a valley full of dry bones that came to life?",
@@ -4980,36 +5931,6 @@
     "category": "Parables"
   },
   {
-    "id": "q-chatgpt5-1763662360541-151",
-    "level": "beginner",
-    "question": "According to John 8:12, what did Jesus say He is to the world?",
-    "choices": [
-      "The Door of the sheep",
-      "The True Vine",
-      "The Bread of Life",
-      "The Light of the world"
-    ],
-    "correctIndex": 3,
-    "reference": "John 8:12",
-    "explanation": "Jesus declares that those who follow Him will not walk in darkness.",
-    "category": "Doctrine"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-152",
-    "level": "intermediate",
-    "question": "According to John 10:11, what kind of shepherd is Jesus?",
-    "choices": [
-      "The Door of the sheep",
-      "The Great Shepherd",
-      "The Chief Shepherd",
-      "The Good Shepherd"
-    ],
-    "correctIndex": 3,
-    "reference": "John 10:11",
-    "explanation": "Jesus lays down His life for His sheep.",
-    "category": "Doctrine"
-  },
-  {
     "id": "q-chatgpt5-1763662360541-153",
     "level": "advanced",
     "question": "What does Paul call the gospel in Romans 1:16?",
@@ -5023,36 +5944,6 @@
     "reference": "Romans 1:16",
     "explanation": "The gospel is the means through which God saves those who believe.",
     "category": "Doctrine"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-154",
-    "level": "beginner",
-    "question": "Who healed the lame beggar at the Beautiful Gate?",
-    "choices": [
-      "Andrew",
-      "Peter (with John)",
-      "James",
-      "John"
-    ],
-    "correctIndex": 1,
-    "reference": "Acts 3:1–8",
-    "explanation": "Peter healed the man in the name of Jesus Christ.",
-    "category": "Apostles & Early Church"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-155",
-    "level": "intermediate",
-    "question": "Who was the centurion in Caesarea who feared God and received the gospel?",
-    "choices": [
-      "Julius",
-      "Festus",
-      "Cornelius",
-      "Felix"
-    ],
-    "correctIndex": 2,
-    "reference": "Acts 10:1–48",
-    "explanation": "God sent Peter to Cornelius, marking the gospel’s spread to Gentiles.",
-    "category": "Apostles & Early Church"
   },
   {
     "id": "q-chatgpt5-1763662360541-156",
@@ -5070,36 +5961,6 @@
     "category": "Apostles & Early Church"
   },
   {
-    "id": "q-chatgpt5-1763662360541-157",
-    "level": "beginner",
-    "question": "Who was swallowed by a great fish after running from God’s command?",
-    "choices": [
-      "Ezekiel",
-      "Elijah",
-      "Jonah",
-      "Jeremiah"
-    ],
-    "correctIndex": 2,
-    "reference": "Jonah 1:17",
-    "explanation": "Jonah fled from God’s call to preach to Nineveh and was swallowed by a fish.",
-    "category": "People"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-158",
-    "level": "intermediate",
-    "question": "Who built the first temple in Jerusalem?",
-    "choices": [
-      "Saul",
-      "Rehoboam",
-      "David",
-      "Solomon"
-    ],
-    "correctIndex": 3,
-    "reference": "1 Kings 6:1",
-    "explanation": "Solomon fulfilled David’s desire by building the temple for the Lord.",
-    "category": "People"
-  },
-  {
     "id": "q-chatgpt5-1763662360541-159",
     "level": "advanced",
     "question": "Who was the woman judge of Israel who led with wisdom and courage?",
@@ -5113,51 +5974,6 @@
     "reference": "Judges 4:4–9",
     "explanation": "Deborah was a prophetess and judge who led Israel to victory.",
     "category": "People"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-160",
-    "level": "beginner",
-    "question": "Which book is a collection of Psalms, songs, and prayers to God?",
-    "choices": [
-      "Proverbs",
-      "Song of Solomon",
-      "Ecclesiastes",
-      "Psalms"
-    ],
-    "correctIndex": 3,
-    "reference": "Psalm 1:1",
-    "explanation": "The book of Psalms expresses praise, sorrow, and worship to God.",
-    "category": "Books of the Bible"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-161",
-    "level": "beginner",
-    "question": "Which book follows the four Gospels in the New Testament?",
-    "choices": [
-      "Romans",
-      "Acts",
-      "Galatians",
-      "1 Corinthians"
-    ],
-    "correctIndex": 1,
-    "reference": "Acts 1:1",
-    "explanation": "Acts continues the story of Jesus’ ministry through the apostles.",
-    "category": "Books of the Bible"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-162",
-    "level": "intermediate",
-    "question": "Which book in the Old Testament contains the story of Gideon?",
-    "choices": [
-      "Judges",
-      "Joshua",
-      "1 Samuel",
-      "Ruth"
-    ],
-    "correctIndex": 0,
-    "reference": "Judges 6–8",
-    "explanation": "Judges records Gideon’s calling and God’s victory with his army of 300.",
-    "category": "Books of the Bible"
   },
   {
     "id": "q-chatgpt5-1763662360541-163",
@@ -5175,36 +5991,6 @@
     "category": "Books of the Bible"
   },
   {
-    "id": "q-chatgpt5-1763662360541-164",
-    "level": "beginner",
-    "question": "What did the father do when he saw the prodigal son returning home?",
-    "choices": [
-      "He sent a servant",
-      "He ran to him and embraced him",
-      "He waited at the door",
-      "He called the whole family"
-    ],
-    "correctIndex": 1,
-    "reference": "Luke 15:20",
-    "explanation": "The father ran with compassion, showing God’s grace toward repentant sinners.",
-    "category": "Parables"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-165",
-    "level": "intermediate",
-    "question": "In the parable of the talents, what did the servant with one talent do with it?",
-    "choices": [
-      "He invested it",
-      "He gave it to the poor",
-      "He buried it in the ground",
-      "He doubled it"
-    ],
-    "correctIndex": 2,
-    "reference": "Matthew 25:18",
-    "explanation": "The unfaithful servant hid his talent out of fear and was rebuked.",
-    "category": "Parables"
-  },
-  {
     "id": "q-chatgpt5-1763662360541-166",
     "level": "advanced",
     "question": "In the parable of the sower, what do the birds represent that ate the seed?",
@@ -5218,36 +6004,6 @@
     "reference": "Matthew 13:4,19",
     "explanation": "The birds picture Satan snatching the word before it can take root.",
     "category": "Parables"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-167",
-    "level": "beginner",
-    "question": "According to John 11:25, who is the resurrection and the life?",
-    "choices": [
-      "Jesus",
-      "The Holy Spirit",
-      "The prophets",
-      "God the Father"
-    ],
-    "correctIndex": 0,
-    "reference": "John 11:25",
-    "explanation": "Jesus promises that those who believe in Him will live even if they die.",
-    "category": "Doctrine"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-168",
-    "level": "intermediate",
-    "question": "According to Romans 8:14, who are the sons of God?",
-    "choices": [
-      "Those who are led by the Spirit of God",
-      "Those who obey the law",
-      "Those who do good works",
-      "All who believe"
-    ],
-    "correctIndex": 0,
-    "reference": "Romans 8:14",
-    "explanation": "Being led by the Spirit is a mark of God’s children.",
-    "category": "Doctrine"
   },
   {
     "id": "q-chatgpt5-1763662360541-169",
@@ -5265,36 +6021,6 @@
     "category": "Doctrine"
   },
   {
-    "id": "q-chatgpt5-1763662360541-170",
-    "level": "beginner",
-    "question": "Who baptized Paul after his conversion?",
-    "choices": [
-      "Silas",
-      "Timothy",
-      "Barnabas",
-      "Ananias"
-    ],
-    "correctIndex": 3,
-    "reference": "Acts 9:17–18",
-    "explanation": "Ananias laid hands on Paul to restore his sight and baptize him.",
-    "category": "Apostles & Early Church"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-171",
-    "level": "intermediate",
-    "question": "Which apostle was exiled on the island of Patmos?",
-    "choices": [
-      "Peter",
-      "Paul",
-      "John",
-      "James"
-    ],
-    "correctIndex": 2,
-    "reference": "Revelation 1:9",
-    "explanation": "John received the revelation of Jesus Christ while exiled.",
-    "category": "Apostles & Early Church"
-  },
-  {
     "id": "q-chatgpt5-1763662360541-172",
     "level": "advanced",
     "question": "What was the name of the sorcerer in Samaria who tried to buy the power of the Holy Spirit?",
@@ -5308,36 +6034,6 @@
     "reference": "Acts 8:18–20",
     "explanation": "Peter rebuked Simon for thinking God’s gift could be bought with money.",
     "category": "Apostles & Early Church"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-173",
-    "level": "beginner",
-    "question": "Who was the father of John the Baptist?",
-    "choices": [
-      "Joseph",
-      "Zechariah",
-      "Simeon",
-      "Eli"
-    ],
-    "correctIndex": 1,
-    "reference": "Luke 1:13",
-    "explanation": "Zechariah was a priest and the husband of Elizabeth.",
-    "category": "People"
-  },
-  {
-    "id": "q-chatgpt5-1763662360541-174",
-    "level": "intermediate",
-    "question": "Who was the first high priest of Israel, the brother of Moses?",
-    "choices": [
-      "Aaron",
-      "Eleazar",
-      "Joshua",
-      "Moses"
-    ],
-    "correctIndex": 0,
-    "reference": "Exodus 28:1",
-    "explanation": "Aaron and his sons were chosen to serve as priests to the Lord.",
-    "category": "People"
   },
   {
     "id": "q-chatgpt5-1763662360541-175",
@@ -5355,36 +6051,6 @@
     "category": "People"
   },
   {
-    "id": "q-chatgpt6-1763662754688-176",
-    "level": "beginner",
-    "question": "According to John 3:3, what must someone do to see the kingdom of God?",
-    "choices": [
-      "Be baptized",
-      "Believe only",
-      "Be born again",
-      "Do good works"
-    ],
-    "correctIndex": 2,
-    "reference": "John 3:3",
-    "explanation": "Jesus teaches that spiritual rebirth is required to enter God's kingdom.",
-    "category": "Doctrine"
-  },
-  {
-    "id": "q-chatgpt6-1763662754688-177",
-    "level": "intermediate",
-    "question": "According to Galatians 5:16, how should believers walk to avoid fulfilling the lust of the flesh?",
-    "choices": [
-      "Pray without ceasing",
-      "Follow the law",
-      "Deny yourself",
-      "Walk in the Spirit"
-    ],
-    "correctIndex": 3,
-    "reference": "Galatians 5:16",
-    "explanation": "Walking in the Spirit enables believers to resist fleshly desires.",
-    "category": "Doctrine"
-  },
-  {
     "id": "q-chatgpt6-1763662754688-178",
     "level": "advanced",
     "question": "According to Hebrews 9:22, without what is there no remission of sins?",
@@ -5398,36 +6064,6 @@
     "reference": "Hebrews 9:22",
     "explanation": "Forgiveness of sins requires blood — ultimately fulfilled in Christ’s sacrifice.",
     "category": "Doctrine"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-179",
-    "level": "beginner",
-    "question": "Who ran to the empty tomb with Peter after hearing Jesus had risen?",
-    "choices": [
-      "James",
-      "Andrew",
-      "John",
-      "Peter"
-    ],
-    "correctIndex": 2,
-    "reference": "John 20:2–4",
-    "explanation": "John outran Peter to the tomb after Mary’s news of Jesus’ resurrection.",
-    "category": "Apostles & Early Church"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-180",
-    "level": "intermediate",
-    "question": "What was the name of the prophet who foretold a famine during the early church?",
-    "choices": [
-      "Philip",
-      "Stephen",
-      "Agabus",
-      "Barnabas"
-    ],
-    "correctIndex": 2,
-    "reference": "Acts 11:27–28",
-    "explanation": "Agabus prophesied a famine, and believers gave help to others in advance.",
-    "category": "Apostles & Early Church"
   },
   {
     "id": "q-chatgpt6-1763662754689-181",
@@ -5445,36 +6081,6 @@
     "category": "Apostles & Early Church"
   },
   {
-    "id": "q-chatgpt6-1763662754689-182",
-    "level": "beginner",
-    "question": "Who killed Goliath with a sling and a stone?",
-    "choices": [
-      "Jonathan",
-      "Saul",
-      "David",
-      "Solomon"
-    ],
-    "correctIndex": 2,
-    "reference": "1 Samuel 17:49–50",
-    "explanation": "David defeated Goliath by trusting in God, not human weapons.",
-    "category": "People"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-183",
-    "level": "intermediate",
-    "question": "Which prophet confronted David after his sin with Bathsheba?",
-    "choices": [
-      "Nathan",
-      "Elijah",
-      "Samuel",
-      "Gad"
-    ],
-    "correctIndex": 0,
-    "reference": "2 Samuel 12:1–7",
-    "explanation": "Nathan bravely declared God’s judgment and led David to repentance.",
-    "category": "People"
-  },
-  {
     "id": "q-chatgpt6-1763662754689-184",
     "level": "advanced",
     "question": "Who was the priest and scribe who led the spiritual restoration of Israel after the exile?",
@@ -5488,36 +6094,6 @@
     "reference": "Ezra 7:6–10",
     "explanation": "Ezra restored God’s Word among the people after the return from captivity.",
     "category": "People"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-185",
-    "level": "beginner",
-    "question": "Which book tells the story of Noah and the flood?",
-    "choices": [
-      "Leviticus",
-      "Genesis",
-      "Numbers",
-      "Exodus"
-    ],
-    "correctIndex": 1,
-    "reference": "Genesis 6–9",
-    "explanation": "Genesis records God’s judgment on the world and His salvation of Noah.",
-    "category": "Books of the Bible"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-186",
-    "level": "intermediate",
-    "question": "Which Old Testament book contains the vision of the four beasts representing kingdoms?",
-    "choices": [
-      "Daniel",
-      "Isaiah",
-      "Ezekiel",
-      "Jeremiah"
-    ],
-    "correctIndex": 0,
-    "reference": "Daniel 7:1–8",
-    "explanation": "Daniel’s prophecy reveals future kingdoms and God’s eternal rule.",
-    "category": "Books of the Bible"
   },
   {
     "id": "q-chatgpt6-1763662754689-187",
@@ -5535,36 +6111,6 @@
     "category": "Books of the Bible"
   },
   {
-    "id": "q-chatgpt6-1763662754689-188",
-    "level": "beginner",
-    "question": "In the parable of the lost coin, how many coins did the woman originally have?",
-    "choices": [
-      "Five",
-      "Seven",
-      "Twelve",
-      "Ten"
-    ],
-    "correctIndex": 3,
-    "reference": "Luke 15:8",
-    "explanation": "Jesus teaches God’s joy in finding the lost, using a lost coin as the picture.",
-    "category": "Parables"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-189",
-    "level": "intermediate",
-    "question": "In the parable of the wedding feast, who refused to come when invited?",
-    "choices": [
-      "The servants",
-      "The king",
-      "The invited guests",
-      "The poor"
-    ],
-    "correctIndex": 2,
-    "reference": "Matthew 22:1–5",
-    "explanation": "Jesus warns of rejecting God’s gracious invitation.",
-    "category": "Parables"
-  },
-  {
     "id": "q-chatgpt6-1763662754689-190",
     "level": "advanced",
     "question": "What did the unjust steward do to gain favor with his master’s debtors?",
@@ -5578,36 +6124,6 @@
     "reference": "Luke 16:5–7",
     "explanation": "He lessened what others owed to secure their future help.",
     "category": "Parables"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-191",
-    "level": "beginner",
-    "question": "According to Psalm 23:1, what is the Lord to His people?",
-    "choices": [
-      "My King",
-      "My Shepherd",
-      "My Father",
-      "My Redeemer"
-    ],
-    "correctIndex": 1,
-    "reference": "Psalm 23:1",
-    "explanation": "God personally guides, protects, and provides for His people.",
-    "category": "Doctrine"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-192",
-    "level": "intermediate",
-    "question": "According to Ephesians 2:8–9, we are saved by grace through what?",
-    "choices": [
-      "Works",
-      "Faith",
-      "Obedience",
-      "Baptism"
-    ],
-    "correctIndex": 1,
-    "reference": "Ephesians 2:8–9",
-    "explanation": "Salvation is a gift of God’s grace received through faith.",
-    "category": "Doctrine"
   },
   {
     "id": "q-chatgpt6-1763662754689-193",
@@ -5625,36 +6141,6 @@
     "category": "Doctrine"
   },
   {
-    "id": "q-chatgpt6-1763662754689-194",
-    "level": "beginner",
-    "question": "Who took Saul (Paul) and introduced him to the apostles in Jerusalem?",
-    "choices": [
-      "Titus",
-      "Timothy",
-      "Silas",
-      "Barnabas"
-    ],
-    "correctIndex": 3,
-    "reference": "Acts 9:26–27",
-    "explanation": "Barnabas helped the church accept Paul after his conversion.",
-    "category": "Apostles & Early Church"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-195",
-    "level": "intermediate",
-    "question": "Who escaped from prison with the help of an angel in Acts 12?",
-    "choices": [
-      "James",
-      "Paul",
-      "John",
-      "Peter"
-    ],
-    "correctIndex": 3,
-    "reference": "Acts 12:6–11",
-    "explanation": "God delivered Peter from Herod’s intent to harm him.",
-    "category": "Apostles & Early Church"
-  },
-  {
     "id": "q-chatgpt6-1763662754689-196",
     "level": "advanced",
     "question": "Who was sent to Antioch and encouraged the believers to remain steadfast in purpose of heart?",
@@ -5668,36 +6154,6 @@
     "reference": "Acts 11:22–23",
     "explanation": "Barnabas strengthened the disciples and later brought Saul to help.",
     "category": "Apostles & Early Church"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-197",
-    "level": "beginner",
-    "question": "Who prayed for rain to stop and then prayed again so that it would rain?",
-    "choices": [
-      "Elisha",
-      "Isaiah",
-      "Jeremiah",
-      "Elijah"
-    ],
-    "correctIndex": 3,
-    "reference": "1 Kings 17:1; 18:41–45; James 5:17–18",
-    "explanation": "Elijah prayed and God withheld rain, then prayed again and God sent rain.",
-    "category": "People"
-  },
-  {
-    "id": "q-chatgpt6-1763662754689-198",
-    "level": "intermediate",
-    "question": "Which king of Israel was known for asking for wisdom instead of riches?",
-    "choices": [
-      "David",
-      "Rehoboam",
-      "Solomon",
-      "Saul"
-    ],
-    "correctIndex": 2,
-    "reference": "1 Kings 3:5–13",
-    "explanation": "Solomon’s request pleased God and he received wisdom in abundance.",
-    "category": "People"
   },
   {
     "id": "q-chatgpt6-1763662754689-199",
@@ -5715,51 +6171,6 @@
     "category": "People"
   },
   {
-    "id": "q-chatgpt6-1763662754689-200",
-    "level": "intermediate",
-    "question": "Which prophetic book includes the vision of the Ancient of Days seated on His throne?",
-    "choices": [
-      "Daniel",
-      "Jeremiah",
-      "Isaiah",
-      "Ezekiel"
-    ],
-    "correctIndex": 0,
-    "reference": "Daniel 7:9–10",
-    "explanation": "Daniel describes God’s eternal authority as the Ancient of Days.",
-    "category": "Books of the Bible"
-  },
-  {
-    "id": "q-chatgpt-batch7-201",
-    "level": "beginner",
-    "question": "What did Jesus turn into wine at the wedding in Cana?",
-    "choices": [
-      "Water",
-      "Miriam",
-      "Jacob",
-      "Caleb"
-    ],
-    "correctIndex": 0,
-    "reference": "John 2:1–11",
-    "explanation": "Jesus' first recorded miracle was turning water into wine.",
-    "category": "Miracles of Jesus"
-  },
-  {
-    "id": "q-chatgpt-batch7-202",
-    "level": "intermediate",
-    "question": "How many men were fed in the feeding of the multitude with five loaves and two fish?",
-    "choices": [
-      "Five thousand",
-      "Abraham",
-      "Elizabeth",
-      "Elijah"
-    ],
-    "correctIndex": 0,
-    "reference": "Matthew 14:19–21",
-    "explanation": "Jesus multiplied the loaves and fish to feed 5000 men plus women and children.",
-    "category": "Miracles of Jesus"
-  },
-  {
     "id": "q-chatgpt-batch7-203",
     "level": "advanced",
     "question": "Which disciple walked on water toward Jesus before sinking?",
@@ -5773,36 +6184,6 @@
     "reference": "Matthew 14:28–31",
     "explanation": "Peter stepped out in faith but looked at the waves and began to sink.",
     "category": "Miracles of Jesus"
-  },
-  {
-    "id": "q-chatgpt-batch7-204",
-    "level": "beginner",
-    "question": "Which woman became queen of Persia and saved her people from destruction?",
-    "choices": [
-      "Rebekah",
-      "Mary",
-      "Aaron",
-      "Esther"
-    ],
-    "correctIndex": 3,
-    "reference": "Esther 4:14–16",
-    "explanation": "Esther risked her life to intercede for the Jewish people.",
-    "category": "Women of the Bible"
-  },
-  {
-    "id": "q-chatgpt-batch7-205",
-    "level": "intermediate",
-    "question": "Who was the mother of Samuel?",
-    "choices": [
-      "Hannah",
-      "Isaac",
-      "Abraham",
-      "Peter"
-    ],
-    "correctIndex": 0,
-    "reference": "1 Samuel 1:10–20",
-    "explanation": "Hannah prayed earnestly for a son, and God granted Samuel.",
-    "category": "Women of the Bible"
   },
   {
     "id": "q-chatgpt-batch7-206",
@@ -5820,36 +6201,6 @@
     "category": "Women of the Bible"
   },
   {
-    "id": "q-chatgpt-batch7-207",
-    "level": "beginner",
-    "question": "What sea did God part so the Israelites could escape Egypt?",
-    "choices": [
-      "Ephesus",
-      "Corinth",
-      "Prayer",
-      "The Red Sea"
-    ],
-    "correctIndex": 3,
-    "reference": "Exodus 14:21–22",
-    "explanation": "God opened the Red Sea for Israel to pass on dry ground.",
-    "category": "Geography"
-  },
-  {
-    "id": "q-chatgpt-batch7-208",
-    "level": "intermediate",
-    "question": "What river did John baptize in?",
-    "choices": [
-      "The Jordan River",
-      "Ur",
-      "Bethel",
-      "Communion"
-    ],
-    "correctIndex": 0,
-    "reference": "Matthew 3:5–6",
-    "explanation": "John baptized in the Jordan where Jesus was also baptized.",
-    "category": "Geography"
-  },
-  {
     "id": "q-chatgpt-batch7-209",
     "level": "advanced",
     "question": "What mountain did Elijah challenge the prophets of Baal on?",
@@ -5863,36 +6214,6 @@
     "reference": "1 Kings 18:19–40",
     "explanation": "Fire from heaven fell on Mount Carmel when Elijah prayed.",
     "category": "Geography"
-  },
-  {
-    "id": "q-chatgpt-batch7-210",
-    "level": "beginner",
-    "question": "How many lepers did Jesus heal who stood afar off?",
-    "choices": [
-      "Ten",
-      "Isaiah",
-      "Rebekah",
-      "Elijah"
-    ],
-    "correctIndex": 0,
-    "reference": "Luke 17:12–19",
-    "explanation": "Jesus healed ten lepers, but only one returned to thank Him.",
-    "category": "Miracles of Jesus"
-  },
-  {
-    "id": "q-chatgpt-batch7-211",
-    "level": "intermediate",
-    "question": "What physical condition did the man at the pool of Bethesda have for 38 years?",
-    "choices": [
-      "Timothy",
-      "Titus",
-      "James",
-      "He was lame"
-    ],
-    "correctIndex": 3,
-    "reference": "John 5:5–9",
-    "explanation": "Jesus healed a man who had waited decades for healing.",
-    "category": "Miracles of Jesus"
   },
   {
     "id": "q-chatgpt-batch7-212",
@@ -5910,36 +6231,6 @@
     "category": "Miracles of Jesus"
   },
   {
-    "id": "q-chatgpt-batch7-213",
-    "level": "beginner",
-    "question": "According to Proverbs 1:7, what is the beginning of knowledge?",
-    "choices": [
-      "Pentecost",
-      "The fear of the Lord",
-      "Temple",
-      "Grace"
-    ],
-    "correctIndex": 1,
-    "reference": "Proverbs 1:7",
-    "explanation": "Wisdom begins with reverence for God.",
-    "category": "Wisdom Literature"
-  },
-  {
-    "id": "q-chatgpt-batch7-214",
-    "level": "intermediate",
-    "question": "Which Old Testament book famously reflects on the meaning of life saying, 'Vanity of vanities'?",
-    "choices": [
-      "Sidon",
-      "Rome",
-      "Mount Carmel",
-      "Ecclesiastes"
-    ],
-    "correctIndex": 3,
-    "reference": "Ecclesiastes 1:2",
-    "explanation": "Ecclesiastes reflects on life's fleeting nature and the need to fear God.",
-    "category": "Wisdom Literature"
-  },
-  {
     "id": "q-chatgpt-batch7-215",
     "level": "advanced",
     "question": "Which Psalm is the longest chapter in the Bible?",
@@ -5953,36 +6244,6 @@
     "reference": "Psalm 119",
     "explanation": "Psalm 119 has 176 verses and celebrates God's Word.",
     "category": "Wisdom Literature"
-  },
-  {
-    "id": "q-chatgpt-batch7-216",
-    "level": "beginner",
-    "question": "What does the name 'Immanuel' mean?",
-    "choices": [
-      "God with us",
-      "Damascus",
-      "Rome",
-      "Bethel"
-    ],
-    "correctIndex": 0,
-    "reference": "Isaiah 7:14; Matthew 1:23",
-    "explanation": "Immanuel reveals God's presence among His people in Christ.",
-    "category": "Names & Titles of God"
-  },
-  {
-    "id": "q-chatgpt-batch7-217",
-    "level": "intermediate",
-    "question": "What does Jehovah-Jireh mean?",
-    "choices": [
-      "The Lord will provide",
-      "Dead Sea",
-      "Pentecost",
-      "Faith"
-    ],
-    "correctIndex": 0,
-    "reference": "Genesis 22:14",
-    "explanation": "God provided a ram in place of Isaac, revealing His provision.",
-    "category": "Names & Titles of God"
   },
   {
     "id": "q-chatgpt-batch7-218",
@@ -6000,36 +6261,6 @@
     "category": "Names & Titles of God"
   },
   {
-    "id": "q-chatgpt-batch7-219",
-    "level": "beginner",
-    "question": "Who will return to earth the same way He ascended into heaven?",
-    "choices": [
-      "Hebron",
-      "Nazareth",
-      "Mount of Olives",
-      "Jesus Christ"
-    ],
-    "correctIndex": 3,
-    "reference": "Acts 1:11",
-    "explanation": "Angels promised Jesus' visible return.",
-    "category": "Prophecy & End Times"
-  },
-  {
-    "id": "q-chatgpt-batch7-220",
-    "level": "intermediate",
-    "question": "According to Matthew 24:35, what will never pass away?",
-    "choices": [
-      "Thessalonica",
-      "Jesus' words",
-      "Daniel",
-      "Elijah"
-    ],
-    "correctIndex": 1,
-    "reference": "Matthew 24:35",
-    "explanation": "Jesus declares that His Word is eternal.",
-    "category": "Prophecy & End Times"
-  },
-  {
     "id": "q-chatgpt-batch7-221",
     "level": "advanced",
     "question": "According to 1 Thessalonians 4:16, what will the archangel do at Christ's return?",
@@ -6043,36 +6274,6 @@
     "reference": "1 Thessalonians 4:16",
     "explanation": "The return of Christ will be announced with a shout and trumpet.",
     "category": "Prophecy & End Times"
-  },
-  {
-    "id": "q-chatgpt-batch7-222",
-    "level": "beginner",
-    "question": "Which covenant did God give as a sign that He would never again flood the whole earth?",
-    "choices": [
-      "Nineveh",
-      "Grace",
-      "Faith",
-      "The rainbow"
-    ],
-    "correctIndex": 3,
-    "reference": "Genesis 9:12–17",
-    "explanation": "God set His bow in the cloud as a covenant sign.",
-    "category": "Feasts & Covenants"
-  },
-  {
-    "id": "q-chatgpt-batch7-223",
-    "level": "intermediate",
-    "question": "Which feast remembers Israel's deliverance from slavery in Egypt?",
-    "choices": [
-      "Peace",
-      "Passover",
-      "Tabernacle",
-      "Corinth"
-    ],
-    "correctIndex": 1,
-    "reference": "Exodus 12:1–28",
-    "explanation": "Passover celebrates God's judgment passing over the houses marked with blood.",
-    "category": "Feasts & Covenants"
   },
   {
     "id": "q-chatgpt-batch7-224",
@@ -6090,36 +6291,6 @@
     "category": "Feasts & Covenants"
   },
   {
-    "id": "q-chatgpt-batch7-225",
-    "level": "beginner",
-    "question": "In what city did the Holy Spirit first come upon believers?",
-    "choices": [
-      "Jerusalem",
-      "Mount Carmel",
-      "Babylon",
-      "Forgiveness"
-    ],
-    "correctIndex": 0,
-    "reference": "Acts 2:1–4",
-    "explanation": "The Church began when the Spirit came at Pentecost in Jerusalem.",
-    "category": "Birth of the Church"
-  },
-  {
-    "id": "q-chatgpt-batch7-226",
-    "level": "intermediate",
-    "question": "What visible sign appeared as the believers were filled with the Holy Spirit?",
-    "choices": [
-      "Sea of Galilee",
-      "Covenant",
-      "Hebron",
-      "Tongues of fire"
-    ],
-    "correctIndex": 3,
-    "reference": "Acts 2:3",
-    "explanation": "Tongues of fire rested on each believer at Pentecost.",
-    "category": "Birth of the Church"
-  },
-  {
     "id": "q-chatgpt-batch7-227",
     "level": "advanced",
     "question": "How many were baptized on the day of Pentecost?",
@@ -6133,36 +6304,6 @@
     "reference": "Acts 2:41",
     "explanation": "Peter's sermon led to the baptism of about 3000 souls.",
     "category": "Birth of the Church"
-  },
-  {
-    "id": "q-chatgpt-batch7-228",
-    "level": "beginner",
-    "question": "Who is the archangel mentioned by name in the Bible?",
-    "choices": [
-      "Paul",
-      "Saul",
-      "Michael",
-      "Nahum"
-    ],
-    "correctIndex": 2,
-    "reference": "Jude 9; Daniel 10:13",
-    "explanation": "Michael is named as an archangel who defends God's people.",
-    "category": "Angels & Spiritual Warfare"
-  },
-  {
-    "id": "q-chatgpt-batch7-229",
-    "level": "intermediate",
-    "question": "What did the serpent do in Genesis 3?",
-    "choices": [
-      "Deceived Eve",
-      "Zechariah",
-      "Rachel",
-      "Solomon"
-    ],
-    "correctIndex": 0,
-    "reference": "Genesis 3:1–6",
-    "explanation": "Satan used the serpent to deceive Eve into sinning.",
-    "category": "Angels & Spiritual Warfare"
   },
   {
     "id": "q-chatgpt-batch7-230",
@@ -6180,36 +6321,6 @@
     "category": "Angels & Spiritual Warfare"
   },
   {
-    "id": "q-chatgpt-batch7-231",
-    "level": "beginner",
-    "question": "How many commandments were written on the tablets of stone?",
-    "choices": [
-      "Thirty",
-      "Eight",
-      "Fifty",
-      "Ten"
-    ],
-    "correctIndex": 3,
-    "reference": "Exodus 20:1–17",
-    "explanation": "God gave ten foundational commandments to Israel.",
-    "category": "Numbers in Scripture"
-  },
-  {
-    "id": "q-chatgpt-batch7-232",
-    "level": "intermediate",
-    "question": "How many days was Jesus in the wilderness being tempted?",
-    "choices": [
-      "Forty days",
-      "Eight",
-      "Thirty",
-      "Three"
-    ],
-    "correctIndex": 0,
-    "reference": "Matthew 4:2",
-    "explanation": "Jesus fasted and overcame temptation for 40 days.",
-    "category": "Numbers in Scripture"
-  },
-  {
     "id": "q-chatgpt-batch7-233",
     "level": "advanced",
     "question": "How many years did Israel wander in the wilderness?",
@@ -6223,36 +6334,6 @@
     "reference": "Numbers 14:33",
     "explanation": "Israel wandered 40 years due to unbelief.",
     "category": "Numbers in Scripture"
-  },
-  {
-    "id": "q-chatgpt-batch7-234",
-    "level": "beginner",
-    "question": "Who was the first king of Israel?",
-    "choices": [
-      "Saul",
-      "Jeremiah",
-      "Hosea",
-      "Paul"
-    ],
-    "correctIndex": 0,
-    "reference": "1 Samuel 10:1",
-    "explanation": "Saul was anointed by Samuel as Israel's first king.",
-    "category": "Kings of Israel & Judah"
-  },
-  {
-    "id": "q-chatgpt-batch7-235",
-    "level": "intermediate",
-    "question": "Who built the temple in Jerusalem?",
-    "choices": [
-      "Leah",
-      "Elizabeth",
-      "Solomon",
-      "Amos"
-    ],
-    "correctIndex": 2,
-    "reference": "1 Kings 6:1",
-    "explanation": "Solomon built the first temple for the Lord.",
-    "category": "Kings of Israel & Judah"
   },
   {
     "id": "q-chatgpt-batch7-236",
@@ -6270,36 +6351,6 @@
     "category": "Kings of Israel & Judah"
   },
   {
-    "id": "q-chatgpt-batch7-237",
-    "level": "beginner",
-    "question": "Who received the design for the tabernacle on Mount Sinai?",
-    "choices": [
-      "Moses",
-      "Ark of the Covenant",
-      "Gaza",
-      "Thessalonica"
-    ],
-    "correctIndex": 0,
-    "reference": "Exodus 25:8–9",
-    "explanation": "God gave Moses exact instructions for the tabernacle's design.",
-    "category": "Tabernacle & Temple"
-  },
-  {
-    "id": "q-chatgpt-batch7-238",
-    "level": "intermediate",
-    "question": "What object in the Holy Place had seven branches and provided light?",
-    "choices": [
-      "The golden lampstand",
-      "Gaza",
-      "Justice",
-      "Bethlehem"
-    ],
-    "correctIndex": 0,
-    "reference": "Exodus 25:31–40",
-    "explanation": "The lampstand illuminated the Holy Place continually.",
-    "category": "Tabernacle & Temple"
-  },
-  {
     "id": "q-chatgpt-batch7-239",
     "level": "advanced",
     "question": "What was inside the Ark of the Covenant?",
@@ -6315,18 +6366,603 @@
     "category": "Tabernacle & Temple"
   },
   {
-    "id": "q-chatgpt-batch7-240",
-    "level": "beginner",
-    "question": "Which chapter is known as the Love Chapter?",
+    "id": "q-chatgpt-batch8-241",
+    "level": "intermediate",
+    "question": "Which chapter of the Bible contains the Ten Commandments?",
     "choices": [
-      "Hebron",
-      "Gaza",
-      "Bethlehem",
-      "1 Corinthians 13"
+      "Exodus 20",
+      "Psalm 119",
+      "Psalm 23",
+      "Hebrews 11"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 20:1–17",
+    "explanation": "The Ten Commandments were given to Moses on Mount Sinai in Exodus 20.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-242",
+    "level": "advanced",
+    "question": "Which psalm is known as the Shepherd's Psalm?",
+    "choices": [
+      "Psalm 23",
+      "Genesis 1",
+      "Exodus 20",
+      "Isaiah 53"
+    ],
+    "correctIndex": 0,
+    "reference": "Psalm 23",
+    "explanation": "Psalm 23 describes the Lord as our Shepherd who cares for us.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-243",
+    "level": "beginner",
+    "question": "What did Jesus calm when the disciples were afraid?",
+    "choices": [
+      "A storm",
+      "Jeremiah",
+      "Lydia",
+      "Moses"
+    ],
+    "correctIndex": 0,
+    "reference": "Mark 4:37–41",
+    "explanation": "Jesus rebuked the wind and the sea, and there was a great calm.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch8-244",
+    "level": "intermediate",
+    "question": "What did Jesus feed to the four thousand in the wilderness?",
+    "choices": [
+      "Eve",
+      "Seven loaves and a few small fish",
+      "Esther",
+      "Leah"
+    ],
+    "correctIndex": 1,
+    "reference": "Mark 8:1–9",
+    "explanation": "Jesus fed four thousand with seven loaves and a few fish.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch8-245",
+    "level": "advanced",
+    "question": "Which miracle involved Jesus spitting on the ground and making clay?",
+    "choices": [
+      "Philip",
+      "Enoch",
+      "Hannah",
+      "Healing the man born blind"
     ],
     "correctIndex": 3,
-    "reference": "1 Corinthians 13",
-    "explanation": "Paul defines true Christlike love in this famous chapter.",
+    "reference": "John 9:1–7",
+    "explanation": "Jesus used clay and sent the man to wash in the Pool of Siloam.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch8-246",
+    "level": "beginner",
+    "question": "Who was the first woman created?",
+    "choices": [
+      "Isaiah",
+      "Eve",
+      "Andrew",
+      "Timothy"
+    ],
+    "correctIndex": 1,
+    "reference": "Genesis 2:21–22",
+    "explanation": "God created Eve from Adam's rib.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch8-247",
+    "level": "intermediate",
+    "question": "Who was the wife of Abraham?",
+    "choices": [
+      "Sarah",
+      "Moses",
+      "Peter",
+      "David"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 17:15",
+    "explanation": "Sarah was renamed from Sarai and became the mother of Isaac.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch8-248",
+    "level": "advanced",
+    "question": "Who was the woman who hid the spies Joshua sent to Jericho?",
+    "choices": [
+      "Rahab",
+      "Barnabas",
+      "Joseph",
+      "Aaron"
+    ],
+    "correctIndex": 0,
+    "reference": "Joshua 2:1–14",
+    "explanation": "Rahab protected the spies and was spared when Jericho fell.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch8-249",
+    "level": "beginner",
+    "question": "What river parted for Joshua and Israel before they entered the Promised Land?",
+    "choices": [
+      "Love",
+      "Living Water",
+      "Mount Carmel",
+      "Jordan River"
+    ],
+    "correctIndex": 3,
+    "reference": "Joshua 3:14–17",
+    "explanation": "The Jordan River parted during flood stage as the priests stepped in.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch8-250",
+    "level": "intermediate",
+    "question": "What was the hometown of Jesus?",
+    "choices": [
+      "Mount Sinai",
+      "Nazareth",
+      "Mount Zion",
+      "Gospel"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 2:23",
+    "explanation": "Jesus was called a Nazarene because He grew up in Nazareth.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch8-251",
+    "level": "advanced",
+    "question": "What was the capital of Israel when David was king?",
+    "choices": [
+      "Jerusalem",
+      "Baptism",
+      "Bread of Life",
+      "Holiness"
+    ],
+    "correctIndex": 0,
+    "reference": "2 Samuel 5:6–10",
+    "explanation": "David captured Jerusalem and made it the capital.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch8-252",
+    "level": "beginner",
+    "question": "Which book asks, 'Can two walk together, unless they are agreed?'",
+    "choices": [
+      "Amos",
+      "Samuel",
+      "Dead Sea",
+      "Tabernacle"
+    ],
+    "correctIndex": 0,
+    "reference": "Amos 3:3",
+    "explanation": "This teaches the necessity of unity and agreement.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch8-253",
+    "level": "intermediate",
+    "question": "Which book urges, 'Trust in the LORD with all your heart'?",
+    "choices": [
+      "Canaan",
+      "Mount Zion",
+      "Ezekiel",
+      "Proverbs"
+    ],
+    "correctIndex": 3,
+    "reference": "Proverbs 3:5–6",
+    "explanation": "Proverbs encourages trust in God rather than self.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch8-254",
+    "level": "advanced",
+    "question": "Which book features a conversation between a suffering man and his friends?",
+    "choices": [
+      "Job",
+      "Jacob",
+      "Damascus",
+      "Justice"
+    ],
+    "correctIndex": 0,
+    "reference": "Job 2–37",
+    "explanation": "Job and his friends wrestle with the meaning of suffering.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch8-255",
+    "level": "beginner",
+    "question": "Who preached the sermon on the Day of Pentecost?",
+    "choices": [
+      "Babylon",
+      "Peter",
+      "Aaron",
+      "Canaan"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 2:14–40",
+    "explanation": "Peter preached boldly and thousands believed.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch8-256",
+    "level": "intermediate",
+    "question": "What did believers devote themselves to in Acts 2:42?",
+    "choices": [
+      "Philippi",
+      "Law",
+      "Joseph",
+      "The apostles' doctrine, fellowship, breaking of bread, and prayers"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 2:42",
+    "explanation": "Four priorities marked the early Church community.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch8-257",
+    "level": "advanced",
+    "question": "Who was the first Christian martyr?",
+    "choices": [
+      "Rome",
+      "Stephen",
+      "Nehemiah",
+      "Passover"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 7:54–60",
+    "explanation": "Stephen was stoned for boldly proclaiming the truth.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch8-258",
+    "level": "beginner",
+    "question": "Who tempted Jesus in the wilderness?",
+    "choices": [
+      "Mark",
+      "Lot",
+      "Leah",
+      "The devil"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 4:1–10",
+    "explanation": "Satan tempted Jesus with power and glory, but Jesus resisted.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch8-259",
+    "level": "intermediate",
+    "question": "Who ministered to Jesus after His temptation?",
+    "choices": [
+      "Jeremiah",
+      "Lydia",
+      "Moses",
+      "Angels"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 4:11",
+    "explanation": "Angels strengthened Jesus after Satan left Him.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch8-260",
+    "level": "advanced",
+    "question": "Who stood to oppose Balaam when he was riding his donkey?",
+    "choices": [
+      "Jacob",
+      "The Angel of the Lord",
+      "Elijah",
+      "Peter"
+    ],
+    "correctIndex": 1,
+    "reference": "Numbers 22:22–35",
+    "explanation": "The Angel of the Lord blocked Balaam's reckless path.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch8-261",
+    "level": "beginner",
+    "question": "In Revelation, what creature is loosed for a little season at the end of the millennium?",
+    "choices": [
+      "Grace",
+      "Nazareth",
+      "Ruth",
+      "Satan"
+    ],
+    "correctIndex": 3,
+    "reference": "Revelation 20:7",
+    "explanation": "Satan is released briefly before final judgment.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch8-262",
+    "level": "intermediate",
+    "question": "What book contains the vision of four horsemen?",
+    "choices": [
+      "Joshua",
+      "Revelation",
+      "Priscilla",
+      "Jordan River"
+    ],
+    "correctIndex": 1,
+    "reference": "Revelation 6:1–8",
+    "explanation": "The four horsemen symbolize judgments during the end times.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch8-263",
+    "level": "advanced",
+    "question": "What is the mark required to buy or sell in Revelation 13?",
+    "choices": [
+      "The mark of the beast",
+      "Peace",
+      "Dead Sea",
+      "Passover"
+    ],
+    "correctIndex": 0,
+    "reference": "Revelation 13:16–18",
+    "explanation": "The mark is imposed by the beast as a sign of allegiance.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch8-264",
+    "level": "beginner",
+    "question": "How many days and nights did it rain in the flood?",
+    "choices": [
+      "Five",
+      "One",
+      "Two",
+      "Forty days and forty nights"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 7:12",
+    "explanation": "God sent rain for forty days and forty nights.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch8-265",
+    "level": "intermediate",
+    "question": "How many books are in the Bible?",
+    "choices": [
+      "Forty",
+      "Three",
+      "One thousand",
+      "66"
+    ],
+    "correctIndex": 3,
+    "reference": "Protestant Canon",
+    "explanation": "The Bible contains 39 Old Testament and 27 New Testament books.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch8-266",
+    "level": "advanced",
+    "question": "How many souls were saved on Noah's ark?",
+    "choices": [
+      "Four",
+      "Seventy",
+      "Three",
+      "Eight"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Peter 3:20",
+    "explanation": "Eight were saved — Noah, his wife, his three sons, and their wives.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch8-267",
+    "level": "beginner",
+    "question": "Who was the first high priest of Israel?",
+    "choices": [
+      "Ephesus",
+      "Aaron",
+      "Philippi",
+      "Jerusalem"
+    ],
+    "correctIndex": 1,
+    "reference": "Exodus 28:1",
+    "explanation": "Aaron and his sons were appointed priests for Israel.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch8-268",
+    "level": "intermediate",
+    "question": "What veil in the temple was torn when Jesus died?",
+    "choices": [
+      "Samaria",
+      "Prayer",
+      "Babylon",
+      "The veil separating the Holy Place and Most Holy Place"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 27:51",
+    "explanation": "The torn veil showed access to God through Christ.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch8-269",
+    "level": "advanced",
+    "question": "Who saw the heavenly temple open and the ark of the covenant inside?",
+    "choices": [
+      "Bread of Life",
+      "Tyre",
+      "Kingdom of God",
+      "John"
+    ],
+    "correctIndex": 3,
+    "reference": "Revelation 11:19",
+    "explanation": "John saw God's heavenly temple and the ark revealed.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch8-270",
+    "level": "beginner",
+    "question": "Which chapter describes the armor of God?",
+    "choices": [
+      "Ephesians 6",
+      "Psalm 23",
+      "Hebrews 11",
+      "Psalm 119"
+    ],
+    "correctIndex": 0,
+    "reference": "Ephesians 6:10–18",
+    "explanation": "Believers are told to put on the whole armor of God.",
     "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-271",
+    "level": "intermediate",
+    "question": "Which chapter famously contains the fruit of the Spirit?",
+    "choices": [
+      "Revelation 21",
+      "Galatians 5",
+      "Genesis 1",
+      "Matthew 5"
+    ],
+    "correctIndex": 1,
+    "reference": "Galatians 5:22–23",
+    "explanation": "The fruit of the Spirit describes godly character.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-272",
+    "level": "advanced",
+    "question": "Which chapter is known for the Valley of Dry Bones prophecy?",
+    "choices": [
+      "Psalm 23",
+      "Psalm 119",
+      "Genesis 1",
+      "Ezekiel 37"
+    ],
+    "correctIndex": 3,
+    "reference": "Ezekiel 37:1–14",
+    "explanation": "Ezekiel's vision pictures Israel's restoration to life.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-273",
+    "level": "beginner",
+    "question": "Who was thrown into the lions' den?",
+    "choices": [
+      "Daniel",
+      "Elizabeth",
+      "Elisha",
+      "Deborah"
+    ],
+    "correctIndex": 0,
+    "reference": "Daniel 6:16–24",
+    "explanation": "God shut the mouths of the lions to protect Daniel.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt-batch8-274",
+    "level": "intermediate",
+    "question": "Who interpreted dreams for Pharaoh and later for the cupbearer and baker?",
+    "choices": [
+      "Joseph",
+      "Barnabas",
+      "David",
+      "Enoch"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 40–41",
+    "explanation": "Joseph interpreted dreams which led to his rise to power in Egypt.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt-batch8-275",
+    "level": "advanced",
+    "question": "Who was taken up to heaven in a whirlwind without dying?",
+    "choices": [
+      "Mary",
+      "Silas",
+      "Rebekah",
+      "Elijah"
+    ],
+    "correctIndex": 3,
+    "reference": "2 Kings 2:11",
+    "explanation": "Elijah was taken by a chariot of fire into heaven.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt-batch8-276",
+    "level": "beginner",
+    "question": "Who was the wisest king that ever lived?",
+    "choices": [
+      "Abraham",
+      "Barnabas",
+      "Aaron",
+      "Solomon"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 3:12",
+    "explanation": "God gave Solomon wisdom beyond all others.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch8-277",
+    "level": "intermediate",
+    "question": "Which king tore his kingdom into two parts because of sin?",
+    "choices": [
+      "Joseph",
+      "Ezra",
+      "Rehoboam",
+      "Deborah"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 12:1–19",
+    "explanation": "After Solomon's death, Rehoboam's harsh policy led to division.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch8-278",
+    "level": "advanced",
+    "question": "Which king was humbled for his pride and ate grass like an ox?",
+    "choices": [
+      "Nebuchadnezzar",
+      "Jeremiah",
+      "Joshua",
+      "Timothy"
+    ],
+    "correctIndex": 0,
+    "reference": "Daniel 4:28–37",
+    "explanation": "Nebuchadnezzar was humbled until he acknowledged God's sovereignty.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch8-279",
+    "level": "beginner",
+    "question": "Which feast required Israelites to live in booths for seven days?",
+    "choices": [
+      "Eve",
+      "Nehemiah",
+      "Feast of Tabernacles",
+      "Rome"
+    ],
+    "correctIndex": 2,
+    "reference": "Leviticus 23:33–43",
+    "explanation": "This feast remembers Israel's journey in the wilderness.",
+    "category": "Feasts & Covenants"
+  },
+  {
+    "id": "q-chatgpt-batch8-280",
+    "level": "intermediate",
+    "question": "Which covenant did God make with Abraham involving circumcision?",
+    "choices": [
+      "The covenant of circumcision",
+      "Canaan",
+      "Abraham",
+      "Light of the World"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 17:9–14",
+    "explanation": "Circumcision was the sign of God's covenant with Abraham.",
+    "category": "Feasts & Covenants"
   }
 ]

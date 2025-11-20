@@ -1,0 +1,122 @@
+import fs from 'fs';
+import path from 'path';
+
+// ChatGPT Batch 8 questions (IDs 241-280)
+const chatGPTQuestions = [
+  { "id": 241, "difficulty": "Medium", "category": "Bible Chapter Breakdown", "question": "Which chapter of the Bible contains the Ten Commandments?", "correct_answer": "Exodus 20", "accepted_answers": ["Exodus 20", "Ex 20"], "reference": "Exodus 20:1–17", "explanation": "The Ten Commandments were given to Moses on Mount Sinai in Exodus 20.", "context_verse": "Exodus 20:3 — \"You shall have no other gods before Me.\"" },
+  { "id": 242, "difficulty": "Difficult", "category": "Bible Chapter Breakdown", "question": "Which psalm is known as the Shepherd's Psalm?", "correct_answer": "Psalm 23", "accepted_answers": ["Psalm 23", "Ps 23"], "reference": "Psalm 23", "explanation": "Psalm 23 describes the Lord as our Shepherd who cares for us.", "context_verse": "Psalm 23:1 — \"The Lord is my shepherd; I shall not want.\"" },
+  { "id": 243, "difficulty": "Easy", "category": "Miracles of Jesus", "question": "What did Jesus calm when the disciples were afraid?", "correct_answer": "A storm", "accepted_answers": ["A storm", "The storm"], "reference": "Mark 4:37–41", "explanation": "Jesus rebuked the wind and the sea, and there was a great calm.", "context_verse": "Mark 4:39 — \"Peace, be still!\"" },
+  { "id": 244, "difficulty": "Medium", "category": "Miracles of Jesus", "question": "What did Jesus feed to the four thousand in the wilderness?", "correct_answer": "Seven loaves and a few small fish", "accepted_answers": ["Seven loaves and a few small fish", "Seven loaves", "Few fish"], "reference": "Mark 8:1–9", "explanation": "Jesus fed four thousand with seven loaves and a few fish.", "context_verse": "Mark 8:8 — \"They ate and were filled…\"" },
+  { "id": 245, "difficulty": "Difficult", "category": "Miracles of Jesus", "question": "Which miracle involved Jesus spitting on the ground and making clay?", "correct_answer": "Healing the man born blind", "accepted_answers": ["Healing the man born blind", "Healing a blind man", "Healing the blind man"], "reference": "John 9:1–7", "explanation": "Jesus used clay and sent the man to wash in the Pool of Siloam.", "context_verse": "John 9:7 — \"So he went and washed, and came back seeing.\"" },
+  { "id": 246, "difficulty": "Easy", "category": "Women of the Bible", "question": "Who was the first woman created?", "correct_answer": "Eve", "accepted_answers": ["Eve"], "reference": "Genesis 2:21–22", "explanation": "God created Eve from Adam's rib.", "context_verse": "Genesis 2:22 — \"He made into a woman…\"" },
+  { "id": 247, "difficulty": "Medium", "category": "Women of the Bible", "question": "Who was the wife of Abraham?", "correct_answer": "Sarah", "accepted_answers": ["Sarah", "Sarai"], "reference": "Genesis 17:15", "explanation": "Sarah was renamed from Sarai and became the mother of Isaac.", "context_verse": "Genesis 17:16 — \"I will bless her… she shall be a mother of nations.\"" },
+  { "id": 248, "difficulty": "Difficult", "category": "Women of the Bible", "question": "Who was the woman who hid the spies Joshua sent to Jericho?", "correct_answer": "Rahab", "accepted_answers": ["Rahab"], "reference": "Joshua 2:1–14", "explanation": "Rahab protected the spies and was spared when Jericho fell.", "context_verse": "Joshua 2:14 — \"Our lives for yours…\"" },
+  { "id": 249, "difficulty": "Easy", "category": "Geography", "question": "What river parted for Joshua and Israel before they entered the Promised Land?", "correct_answer": "Jordan River", "accepted_answers": ["Jordan River", "Jordan"], "reference": "Joshua 3:14–17", "explanation": "The Jordan River parted during flood stage as the priests stepped in.", "context_verse": "Joshua 3:17 — \"All Israel crossed over on dry ground…\"" },
+  { "id": 250, "difficulty": "Medium", "category": "Geography", "question": "What was the hometown of Jesus?", "correct_answer": "Nazareth", "accepted_answers": ["Nazareth"], "reference": "Matthew 2:23", "explanation": "Jesus was called a Nazarene because He grew up in Nazareth.", "context_verse": "Matthew 2:23 — \"He shall be called a Nazarene.\"" },
+  { "id": 251, "difficulty": "Difficult", "category": "Geography", "question": "What was the capital of Israel when David was king?", "correct_answer": "Jerusalem", "accepted_answers": ["Jerusalem"], "reference": "2 Samuel 5:6–10", "explanation": "David captured Jerusalem and made it the capital.", "context_verse": "2 Samuel 5:7 — \"David took the stronghold of Zion…\"" },
+  { "id": 252, "difficulty": "Easy", "category": "Wisdom Literature", "question": "Which book asks, 'Can two walk together, unless they are agreed?'", "correct_answer": "Amos", "accepted_answers": ["Amos"], "reference": "Amos 3:3", "explanation": "This teaches the necessity of unity and agreement.", "context_verse": "Amos 3:3 — \"Can two walk together, unless they are agreed?\"" },
+  { "id": 253, "difficulty": "Medium", "category": "Wisdom Literature", "question": "Which book urges, 'Trust in the LORD with all your heart'?", "correct_answer": "Proverbs", "accepted_answers": ["Proverbs"], "reference": "Proverbs 3:5–6", "explanation": "Proverbs encourages trust in God rather than self.", "context_verse": "Proverbs 3:5 — \"Trust in the LORD with all your heart…\"" },
+  { "id": 254, "difficulty": "Difficult", "category": "Wisdom Literature", "question": "Which book features a conversation between a suffering man and his friends?", "correct_answer": "Job", "accepted_answers": ["Job"], "reference": "Job 2–37", "explanation": "Job and his friends wrestle with the meaning of suffering.", "context_verse": "Job 2:10 — \"Shall we indeed accept good from God…?\"" },
+  { "id": 255, "difficulty": "Easy", "category": "Birth of the Church", "question": "Who preached the sermon on the Day of Pentecost?", "correct_answer": "Peter", "accepted_answers": ["Peter"], "reference": "Acts 2:14–40", "explanation": "Peter preached boldly and thousands believed.", "context_verse": "Acts 2:14 — \"Peter… raised his voice…\"" },
+  { "id": 256, "difficulty": "Medium", "category": "Birth of the Church", "question": "What did believers devote themselves to in Acts 2:42?", "correct_answer": "The apostles' doctrine, fellowship, breaking of bread, and prayers", "accepted_answers": ["The apostles' doctrine, fellowship, breaking of bread, and prayers", "Doctrine, fellowship, breaking of bread, prayers"], "reference": "Acts 2:42", "explanation": "Four priorities marked the early Church community.", "context_verse": "Acts 2:42 — \"They continued steadfastly…\"" },
+  { "id": 257, "difficulty": "Difficult", "category": "Birth of the Church", "question": "Who was the first Christian martyr?", "correct_answer": "Stephen", "accepted_answers": ["Stephen"], "reference": "Acts 7:54–60", "explanation": "Stephen was stoned for boldly proclaiming the truth.", "context_verse": "Acts 7:59 — \"They stoned Stephen…\"" },
+  { "id": 258, "difficulty": "Easy", "category": "Angels & Spiritual Warfare", "question": "Who tempted Jesus in the wilderness?", "correct_answer": "The devil", "accepted_answers": ["Devil", "Satan", "The devil"], "reference": "Matthew 4:1–10", "explanation": "Satan tempted Jesus with power and glory, but Jesus resisted.", "context_verse": "Matthew 4:1 — \"…to be tempted by the devil.\"" },
+  { "id": 259, "difficulty": "Medium", "category": "Angels & Spiritual Warfare", "question": "Who ministered to Jesus after His temptation?", "correct_answer": "Angels", "accepted_answers": ["Angels"], "reference": "Matthew 4:11", "explanation": "Angels strengthened Jesus after Satan left Him.", "context_verse": "Matthew 4:11 — \"Then the devil left Him, and behold, angels came…\"" },
+  { "id": 260, "difficulty": "Difficult", "category": "Angels & Spiritual Warfare", "question": "Who stood to oppose Balaam when he was riding his donkey?", "correct_answer": "The Angel of the Lord", "accepted_answers": ["The Angel of the Lord", "Angel of the Lord"], "reference": "Numbers 22:22–35", "explanation": "The Angel of the Lord blocked Balaam's reckless path.", "context_verse": "Numbers 22:32 — \"Your way is perverse before Me.\"" },
+  { "id": 261, "difficulty": "Easy", "category": "Prophecy & End Times", "question": "In Revelation, what creature is loosed for a little season at the end of the millennium?", "correct_answer": "Satan", "accepted_answers": ["Satan"], "reference": "Revelation 20:7", "explanation": "Satan is released briefly before final judgment.", "context_verse": "Revelation 20:7 — \"Satan will be released…\"" },
+  { "id": 262, "difficulty": "Medium", "category": "Prophecy & End Times", "question": "What book contains the vision of four horsemen?", "correct_answer": "Revelation", "accepted_answers": ["Revelation"], "reference": "Revelation 6:1–8", "explanation": "The four horsemen symbolize judgments during the end times.", "context_verse": "Revelation 6:2 — \"He who sat on it…\"" },
+  { "id": 263, "difficulty": "Difficult", "category": "Prophecy & End Times", "question": "What is the mark required to buy or sell in Revelation 13?", "correct_answer": "The mark of the beast", "accepted_answers": ["The mark of the beast", "Mark of the beast", "666"], "reference": "Revelation 13:16–18", "explanation": "The mark is imposed by the beast as a sign of allegiance.", "context_verse": "Revelation 13:17 — \"No one may buy or sell…\"" },
+  { "id": 264, "difficulty": "Easy", "category": "Numbers in Scripture", "question": "How many days and nights did it rain in the flood?", "correct_answer": "Forty days and forty nights", "accepted_answers": ["Forty days and forty nights", "40 days and 40 nights", "40 days"], "reference": "Genesis 7:12", "explanation": "God sent rain for forty days and forty nights.", "context_verse": "Genesis 7:12 — \"…forty days and forty nights.\"" },
+  { "id": 265, "difficulty": "Medium", "category": "Numbers in Scripture", "question": "How many books are in the Bible?", "correct_answer": "66", "accepted_answers": ["66"], "reference": "Protestant Canon", "explanation": "The Bible contains 39 Old Testament and 27 New Testament books.", "context_verse": "\"39 + 27 = 66\" (Canonical summary)" },
+  { "id": 266, "difficulty": "Difficult", "category": "Numbers in Scripture", "question": "How many souls were saved on Noah's ark?", "correct_answer": "Eight", "accepted_answers": ["Eight", "8"], "reference": "1 Peter 3:20", "explanation": "Eight were saved — Noah, his wife, his three sons, and their wives.", "context_verse": "1 Peter 3:20 — \"Eight souls were saved through water.\"" },
+  { "id": 267, "difficulty": "Easy", "category": "Tabernacle & Temple", "question": "Who was the first high priest of Israel?", "correct_answer": "Aaron", "accepted_answers": ["Aaron"], "reference": "Exodus 28:1", "explanation": "Aaron and his sons were appointed priests for Israel.", "context_verse": "Exodus 28:1 — \"Aaron your brother… to minister to Me as priest.\"" },
+  { "id": 268, "difficulty": "Medium", "category": "Tabernacle & Temple", "question": "What veil in the temple was torn when Jesus died?", "correct_answer": "The veil separating the Holy Place and Most Holy Place", "accepted_answers": ["The veil separating the Holy Place and Most Holy Place", "The temple veil"], "reference": "Matthew 27:51", "explanation": "The torn veil showed access to God through Christ.", "context_verse": "Matthew 27:51 — \"…the veil of the temple was torn in two…\"" },
+  { "id": 269, "difficulty": "Difficult", "category": "Tabernacle & Temple", "question": "Who saw the heavenly temple open and the ark of the covenant inside?", "correct_answer": "John", "accepted_answers": ["John", "The Apostle John"], "reference": "Revelation 11:19", "explanation": "John saw God's heavenly temple and the ark revealed.", "context_verse": "Revelation 11:19 — \"The temple of God was opened in heaven…\"" },
+  { "id": 270, "difficulty": "Easy", "category": "Bible Chapter Breakdown", "question": "Which chapter describes the armor of God?", "correct_answer": "Ephesians 6", "accepted_answers": ["Ephesians 6", "Eph 6"], "reference": "Ephesians 6:10–18", "explanation": "Believers are told to put on the whole armor of God.", "context_verse": "Ephesians 6:11 — \"Put on the whole armor of God…\"" },
+  { "id": 271, "difficulty": "Medium", "category": "Bible Chapter Breakdown", "question": "Which chapter famously contains the fruit of the Spirit?", "correct_answer": "Galatians 5", "accepted_answers": ["Galatians 5", "Gal 5"], "reference": "Galatians 5:22–23", "explanation": "The fruit of the Spirit describes godly character.", "context_verse": "Galatians 5:22 — \"The fruit of the Spirit is…\"" },
+  { "id": 272, "difficulty": "Difficult", "category": "Bible Chapter Breakdown", "question": "Which chapter is known for the Valley of Dry Bones prophecy?", "correct_answer": "Ezekiel 37", "accepted_answers": ["Ezekiel 37", "Ezek 37"], "reference": "Ezekiel 37:1–14", "explanation": "Ezekiel's vision pictures Israel's restoration to life.", "context_verse": "Ezekiel 37:5 — \"I will cause breath to enter you…\"" },
+  { "id": 273, "difficulty": "Easy", "category": "People", "question": "Who was thrown into the lions' den?", "correct_answer": "Daniel", "accepted_answers": ["Daniel"], "reference": "Daniel 6:16–24", "explanation": "God shut the mouths of the lions to protect Daniel.", "context_verse": "Daniel 6:22 — \"God sent His angel…\"" },
+  { "id": 274, "difficulty": "Medium", "category": "People", "question": "Who interpreted dreams for Pharaoh and later for the cupbearer and baker?", "correct_answer": "Joseph", "accepted_answers": ["Joseph"], "reference": "Genesis 40–41", "explanation": "Joseph interpreted dreams which led to his rise to power in Egypt.", "context_verse": "Genesis 41:16 — \"God will give Pharaoh an answer of peace.\"" },
+  { "id": 275, "difficulty": "Difficult", "category": "People", "question": "Who was taken up to heaven in a whirlwind without dying?", "correct_answer": "Elijah", "accepted_answers": ["Elijah"], "reference": "2 Kings 2:11", "explanation": "Elijah was taken by a chariot of fire into heaven.", "context_verse": "2 Kings 2:11 — \"Elijah went up by a whirlwind into heaven.\"" },
+  { "id": 276, "difficulty": "Easy", "category": "Kings of Israel & Judah", "question": "Who was the wisest king that ever lived?", "correct_answer": "Solomon", "accepted_answers": ["Solomon", "King Solomon"], "reference": "1 Kings 3:12", "explanation": "God gave Solomon wisdom beyond all others.", "context_verse": "1 Kings 3:12 — \"I have given you a wise and understanding heart…\"" },
+  { "id": 277, "difficulty": "Medium", "category": "Kings of Israel & Judah", "question": "Which king tore his kingdom into two parts because of sin?", "correct_answer": "Rehoboam", "accepted_answers": ["Rehoboam"], "reference": "1 Kings 12:1–19", "explanation": "After Solomon's death, Rehoboam's harsh policy led to division.", "context_verse": "1 Kings 12:16 — \"What share do we have in David?\"" },
+  { "id": 278, "difficulty": "Difficult", "category": "Kings of Israel & Judah", "question": "Which king was humbled for his pride and ate grass like an ox?", "correct_answer": "Nebuchadnezzar", "accepted_answers": ["Nebuchadnezzar"], "reference": "Daniel 4:28–37", "explanation": "Nebuchadnezzar was humbled until he acknowledged God's sovereignty.", "context_verse": "Daniel 4:33 — \"He was driven from men…\"" },
+  { "id": 279, "difficulty": "Easy", "category": "Feasts & Covenants", "question": "Which feast required Israelites to live in booths for seven days?", "correct_answer": "Feast of Tabernacles", "accepted_answers": ["Feast of Tabernacles", "Tabernacles"], "reference": "Leviticus 23:33–43", "explanation": "This feast remembers Israel's journey in the wilderness.", "context_verse": "Leviticus 23:42 — \"You shall dwell in booths…\"" },
+  { "id": 280, "difficulty": "Medium", "category": "Feasts & Covenants", "question": "Which covenant did God make with Abraham involving circumcision?", "correct_answer": "The covenant of circumcision", "accepted_answers": ["The covenant of circumcision", "Covenant of circumcision"], "reference": "Genesis 17:9–14", "explanation": "Circumcision was the sign of God's covenant with Abraham.", "context_verse": "Genesis 17:11 — \"You shall be circumcised… as a sign of the covenant…\"" }
+];
+
+const biblicalNames = ['Abraham', 'Isaac', 'Jacob', 'Joseph', 'Moses', 'Aaron', 'Joshua', 'Caleb', 'Gideon', 'Samson', 'Samuel', 'Saul', 'David', 'Solomon', 'Elijah', 'Elisha', 'Isaiah', 'Jeremiah', 'Ezekiel', 'Daniel', 'Ezra', 'Nehemiah', 'Peter', 'John', 'James', 'Andrew', 'Philip', 'Thomas', 'Matthew', 'Paul', 'Timothy', 'Titus', 'Luke', 'Mark', 'Barnabas', 'Silas', 'Sarah', 'Rebekah', 'Rachel', 'Leah', 'Miriam', 'Deborah', 'Ruth', 'Hannah', 'Esther', 'Mary', 'Martha', 'Elizabeth', 'Lydia', 'Priscilla', 'Adam', 'Eve', 'Noah', 'Lot', 'Enoch', 'Job', 'Jonah'];
+
+const biblicalPlaces = ['Jerusalem', 'Bethlehem', 'Nazareth', 'Jericho', 'Babylon', 'Egypt', 'Canaan', 'Damascus', 'Tyre', 'Sidon', 'Antioch', 'Rome', 'Corinth', 'Ephesus', 'Philippi', 'Thessalonica', 'Mount Sinai', 'Mount Carmel', 'Mount Zion', 'Red Sea', 'Jordan River', 'Sea of Galilee', 'Dead Sea', 'Mediterranean Sea', 'Bethel', 'Hebron', 'Samaria', 'Gaza'];
+
+const biblicalConcepts = ['Faith', 'Grace', 'Mercy', 'Justice', 'Righteousness', 'Holiness', 'Love', 'Peace', 'Covenant', 'Tabernacle', 'Temple', 'Ark of the Covenant', 'Altar', 'Sacrifice', 'Passover', 'Pentecost', 'Sabbath', 'Manna', 'Bread of Life', 'Living Water', 'Good Shepherd', 'Light of the World', 'Law', 'Prophets', 'Psalms', 'Proverbs', 'Gospel', 'Kingdom of God', 'Baptism', 'Prayer', 'Fasting', 'Repentance'];
+
+const numbers = ['One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Twelve', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Seventy', 'One hundred', 'One thousand'];
+
+const bibleChapters = ['Genesis 1', 'Exodus 20', 'Psalm 23', 'Psalm 119', 'Isaiah 53', 'Ezekiel 37', 'Matthew 5', 'John 3', 'Romans 8', '1 Corinthians 13', 'Ephesians 6', 'Galatians 5', 'Hebrews 11', 'Revelation 21'];
+
+function generateWrongAnswers(correctAnswer: string, category: string, count: number = 3): string[] {
+  const wrong: string[] = [];
+  let pool: string[] = [];
+
+  if (category.includes('Chapter Breakdown')) {
+    pool = [...bibleChapters];
+  } else if (category.includes('Geography') || category.includes('Temple')) {
+    pool = [...biblicalPlaces, ...biblicalConcepts];
+  } else if (category.includes('Miracles') || category.includes('Women') || category.includes('Kings') || category.includes('Angels') || category.includes('People')) {
+    pool = [...biblicalNames];
+  } else if (category.includes('Numbers')) {
+    pool = [...numbers];
+  } else {
+    pool = [...biblicalNames, ...biblicalPlaces, ...biblicalConcepts];
+  }
+
+  const filtered = pool.filter(item => item !== correctAnswer && !correctAnswer.includes(item) && !item.includes(correctAnswer.split(' ')[0]));
+  const shuffled = filtered.sort(() => Math.random() - 0.5);
+  
+  for (let i = 0; i < count && i < shuffled.length; i++) {
+    wrong.push(shuffled[i]);
+  }
+
+  while (wrong.length < count) {
+    wrong.push(`Option ${wrong.length + 1}`);
+  }
+
+  return wrong;
+}
+
+function convertToMultipleChoice(chatGPTQ: any) {
+  const correctAnswer = chatGPTQ.correct_answer;
+  const wrongAnswers = generateWrongAnswers(correctAnswer, chatGPTQ.category, 3);
+  
+  const allChoices = [correctAnswer, ...wrongAnswers];
+  const shuffled = allChoices.sort(() => Math.random() - 0.5);
+  const correctIndex = shuffled.indexOf(correctAnswer);
+
+  const level = chatGPTQ.difficulty === 'Easy' ? 'beginner' : chatGPTQ.difficulty === 'Medium' ? 'intermediate' : 'advanced';
+
+  return {
+    id: `q-chatgpt-batch8-${chatGPTQ.id}`,
+    level,
+    question: chatGPTQ.question,
+    choices: shuffled,
+    correctIndex,
+    reference: chatGPTQ.reference,
+    explanation: chatGPTQ.explanation,
+    category: chatGPTQ.category
+  };
+}
+
+const convertedQuestions = chatGPTQuestions.map(convertToMultipleChoice);
+const triviaPath = path.join(process.cwd(), 'data', 'bible-trivia.json');
+const existingTrivia = JSON.parse(fs.readFileSync(triviaPath, 'utf-8'));
+const updatedTrivia = [...existingTrivia, ...convertedQuestions];
+
+fs.writeFileSync(triviaPath, JSON.stringify(updatedTrivia, null, 2), 'utf-8');
+
+console.log(`✅ Added ${convertedQuestions.length} questions from ChatGPT Batch 8 (IDs 241-280)`);
+console.log(`📊 Total questions in database: ${updatedTrivia.length}`);
+console.log('\n📋 Breakdown by difficulty:');
+console.log(`  • Beginner: ${convertedQuestions.filter((q: any) => q.level === 'beginner').length}`);
+console.log(`  • Intermediate: ${convertedQuestions.filter((q: any) => q.level === 'intermediate').length}`);
+console.log(`  • Advanced: ${convertedQuestions.filter((q: any) => q.level === 'advanced').length}`);
