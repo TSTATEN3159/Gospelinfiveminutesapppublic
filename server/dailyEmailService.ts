@@ -41,56 +41,124 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
 
   const subject = `Your Daily Verse & Bible Trivia – ${verseReference}`;
 
-  const triviaLine =
-    triviaStreak > 0
-      ? `Your Bible Trivia streak is currently <strong>${triviaStreak} day${
-          triviaStreak === 1 ? "" : "s"
-        }</strong>. Keep going as a <strong>${triviaTitle}</strong>!`
-      : `Start your Bible Trivia journey today and begin your first streak as a <strong>${triviaTitle}</strong>.`;
+  const PARCHMENT_BG_URL = "https://images.unsplash.com/photo-1509266272358-7701da638078?w=1600&q=80";
 
   const html = `
-  <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color:#0f172a; padding:24px;">
-    <h1 style="font-size:20px; margin:0 0 12px;">Good morning, ${name}</h1>
-    <p style="font-size:14px; margin:0 0 16px;">Here is your daily verse and a reminder to grow in God's Word.</p>
+<body style="margin:0;padding:0;background:#f5eee1;">
+  <div style="font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color:#1f2933; padding:24px 0;">
+    <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%">
+      <tr>
+        <td align="center">
+          <table role="presentation" cellspacing="0" cellpadding="0" border="0" width="600" style="max-width:100%; background:#fdf7eb; border-radius:24px; box-shadow:0 16px 40px rgba(15,23,42,0.25); overflow:hidden;">
+            
+            <!-- Header -->
+            <tr>
+              <td style="padding:20px 24px 8px 24px;">
+                <h1 style="font-size:20px; margin:0 0 6px; color:#1f2933;">Good morning, ${name}</h1>
+                <p style="font-size:13px; margin:0; color:#4b5563;">
+                  Here is today's Scripture and a gentle nudge to keep growing in God's Word.
+                </p>
+              </td>
+            </tr>
 
-    <div style="border-radius:12px; padding:16px; background:#fefce8; border:1px solid #facc15; margin-bottom:16px;">
-      <p style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:#854d0e; margin:0 0 4px;">
-        Verse of the Day
-      </p>
-      <p style="font-size:15px; font-weight:600; margin:0 0 4px;">${verseReference}</p>
-      <p style="font-size:14px; margin:0;">"${verseText}"</p>
-    </div>
+            <!-- Parchment Scripture block -->
+            <tr>
+              <td style="padding:12px 24px 0 24px;">
+                <div
+                  style="
+                    background-image:url('${PARCHMENT_BG_URL}');
+                    background-size:cover;
+                    background-position:center;
+                    border-radius:18px;
+                    padding:20px 18px 22px 18px;
+                    border:1px solid #e2c79f;
+                  "
+                >
+                  <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#92400e; margin:0 0 6px;">
+                    Verse of the Day
+                  </p>
+                  <p style="font-size:15px; font-weight:700; margin:0 0 6px; color:#3b2f2f;">
+                    ${verseReference}
+                  </p>
+                  <p style="font-size:14px; line-height:1.5; margin:0 0 12px; color:#3b2f2f;">
+                    "${verseText}"
+                  </p>
+                  <p style="font-size:12px; font-weight:600; margin:0 0 4px; color:#6b4a2e;">
+                    Meaning
+                  </p>
+                  <p style="font-size:13px; line-height:1.5; margin:0 0 8px; color:#3f2f23;">
+                    ${meaning}
+                  </p>
+                  <p style="font-size:12px; font-weight:600; margin:8px 0 4px; color:#6b4a2e;">
+                    Application for today
+                  </p>
+                  <p style="font-size:13px; line-height:1.5; margin:0; color:#3f2f23;">
+                    ${application}
+                  </p>
+                </div>
+              </td>
+            </tr>
 
-    <div style="margin-bottom:16px;">
-      <h2 style="font-size:15px; margin:0 0 4px;">Meaning</h2>
-      <p style="font-size:14px; margin:0;">${meaning}</p>
-    </div>
+            <!-- Spacer -->
+            <tr>
+              <td style="height:16px;"></td>
+            </tr>
 
-    <div style="margin-bottom:20px;">
-      <h2 style="font-size:15px; margin:0 0 4px;">Application for Today</h2>
-      <p style="font-size:14px; margin:0;">${application}</p>
-    </div>
+            <!-- Trivia reminder block -->
+            <tr>
+              <td style="padding:0 24px 20px 24px;">
+                <div style="border-radius:18px; background:#0f172a; padding:16px 18px; color:#e5e7eb;">
+                  <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#93c5fd; margin:0 0 4px;">
+                    Bible Trivia Challenge
+                  </p>
+                  <p style="font-size:13px; margin:0 0 6px;">
+                    ${
+                      triviaStreak > 0
+                        ? `Your Bible Trivia streak is <strong>${triviaStreak} day${
+                            triviaStreak === 1 ? "" : "s"
+                          }</strong>. Keep going as a <strong>${triviaTitle}</strong>!`
+                        : `Start your Bible Trivia journey today and begin your first streak as a <strong>${triviaTitle}</strong>.`
+                    }
+                  </p>
+                  <p style="font-size:12px; margin:0 0 12px; color:#cbd5e1;">
+                    10 quick questions from Scripture. Keep your crown, deepen your roots in Christ.
+                  </p>
+                  <a
+                    href="${APP_BASE_URL}/trivia"
+                    style="
+                      display:inline-block;
+                      padding:8px 18px;
+                      border-radius:999px;
+                      background:#f59e0b;
+                      color:#111827;
+                      font-size:13px;
+                      font-weight:600;
+                      text-decoration:none;
+                      box-shadow:0 10px 25px rgba(245,158,11,0.65);
+                    "
+                  >
+                    Continue today's Bible Trivia
+                  </a>
+                </div>
+              </td>
+            </tr>
 
-    <div style="border-radius:12px; padding:16px; background:#eff6ff; border:1px solid #60a5fa; margin-bottom:20px;">
-      <p style="font-size:13px; text-transform:uppercase; letter-spacing:0.05em; color:#1d4ed8; margin:0 0 4px;">
-        Bible Trivia Challenge
-      </p>
-      <p style="font-size:14px; margin:0 0 8px;">
-        ${triviaLine}
-      </p>
-      <a href="${APP_BASE_URL}/trivia"
-         style="display:inline-block; margin-top:8px; background:#f59e0b; color:#111827;
-                padding:8px 16px; border-radius:999px; font-size:13px; font-weight:600;
-                text-decoration:none;">
-        Continue today's Bible Trivia
-      </a>
-    </div>
+            <!-- Footer -->
+            <tr>
+              <td style="padding:0 24px 18px 24px;">
+                <p style="font-size:11px; color:#9ca3af; margin:8px 0 0;">
+                  You are receiving this because you subscribed to the Daily Verse & Trivia email in the app.
+                  You can turn this off in Settings at any time.
+                </p>
+              </td>
+            </tr>
 
-    <p style="font-size:11px; color:#6b7280; margin-top:16px;">
-      You're receiving this because you subscribed to the Daily Verse & Trivia email in the app.
-      You can turn this off in Settings at any time.
-    </p>
+          </table>
+        </td>
+      </tr>
+    </table>
   </div>
+</body>
   `;
 
   const msg = {
