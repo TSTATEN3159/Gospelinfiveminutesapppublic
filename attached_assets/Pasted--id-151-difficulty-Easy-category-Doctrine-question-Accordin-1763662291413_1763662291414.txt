@@ -1,0 +1,281 @@
+{
+    "id": 151,
+    "difficulty": "Easy",
+    "category": "Doctrine",
+    "question": "According to John 8:12, what did Jesus say He is to the world?",
+    "correct_answer": "The Light of the world",
+    "accepted_answers": ["The Light of the world", "Light of the world"],
+    "reference": "John 8:12",
+    "explanation": "Jesus declares that those who follow Him will not walk in darkness.",
+    "context_verse": "John 8:12 — \"I am the light of the world…\""
+},
+{
+    "id": 152,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to John 10:11, what kind of shepherd is Jesus?",
+    "correct_answer": "The Good Shepherd",
+    "accepted_answers": ["The Good Shepherd", "Good Shepherd"],
+    "reference": "John 10:11",
+    "explanation": "Jesus lays down His life for His sheep.",
+    "context_verse": "John 10:11 — \"I am the good shepherd.\""
+},
+{
+    "id": 153,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "What does Paul call the gospel in Romans 1:16?",
+    "correct_answer": "The power of God to salvation",
+    "accepted_answers": [
+        "The power of God to salvation",
+        "Power of God to salvation"
+    ],
+    "reference": "Romans 1:16",
+    "explanation": "The gospel is the means through which God saves those who believe.",
+    "context_verse": "Romans 1:16 — \"For I am not ashamed of the gospel…\""
+},
+{
+    "id": 154,
+    "difficulty": "Easy",
+    "category": "Apostles & Early Church",
+    "question": "Who healed the lame beggar at the Beautiful Gate?",
+    "correct_answer": "Peter (with John)",
+    "accepted_answers": ["Peter", "Peter and John"],
+    "reference": "Acts 3:1–8",
+    "explanation": "Peter healed the man in the name of Jesus Christ.",
+    "context_verse": "Acts 3:6 — \"In the name of Jesus Christ… rise up and walk.\""
+},
+{
+    "id": 155,
+    "difficulty": "Medium",
+    "category": "Apostles & Early Church",
+    "question": "Who was the centurion in Caesarea who feared God and received the gospel?",
+    "correct_answer": "Cornelius",
+    "accepted_answers": ["Cornelius"],
+    "reference": "Acts 10:1–48",
+    "explanation": "God sent Peter to Cornelius, marking the gospel’s spread to Gentiles.",
+    "context_verse": "Acts 10:34–35 — \"God shows no partiality…\""
+},
+{
+    "id": 156,
+    "difficulty": "Difficult",
+    "category": "Apostles & Early Church",
+    "question": "What was Paul’s Roman name before his conversion?",
+    "correct_answer": "Saul",
+    "accepted_answers": ["Saul"],
+    "reference": "Acts 13:9",
+    "explanation": "He was called Saul until he later became widely known as Paul.",
+    "context_verse": "Acts 13:9 — \"Saul, who also is called Paul…\""
+},
+{
+    "id": 157,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who was swallowed by a great fish after running from God’s command?",
+    "correct_answer": "Jonah",
+    "accepted_answers": ["Jonah"],
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah fled from God’s call to preach to Nineveh and was swallowed by a fish.",
+    "context_verse": "Jonah 1:17 — \"The Lord had prepared a great fish…\""
+},
+{
+    "id": 158,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Who built the first temple in Jerusalem?",
+    "correct_answer": "Solomon",
+    "accepted_answers": ["Solomon", "King Solomon"],
+    "reference": "1 Kings 6:1",
+    "explanation": "Solomon fulfilled David’s desire by building the temple for the Lord.",
+    "context_verse": "1 Kings 6:1 — \"Solomon began to build the house of the Lord…\""
+},
+{
+    "id": 159,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Who was the woman judge of Israel who led with wisdom and courage?",
+    "correct_answer": "Deborah",
+    "accepted_answers": ["Deborah"],
+    "reference": "Judges 4:4–9",
+    "explanation": "Deborah was a prophetess and judge who led Israel to victory.",
+    "context_verse": "Judges 4:4 — \"Deborah, a prophetess… was judging Israel.\""
+},
+{
+    "id": 160,
+    "difficulty": "Easy",
+    "category": "Books of the Bible",
+    "question": "Which book is a collection of Psalms, songs, and prayers to God?",
+    "correct_answer": "Psalms",
+    "accepted_answers": ["Psalms", "The Book of Psalms"],
+    "reference": "Psalm 1:1",
+    "explanation": "The book of Psalms expresses praise, sorrow, and worship to God.",
+    "context_verse": "Psalm 1:1 — \"Blessed is the man…\""
+},
+{
+    "id": 161,
+    "difficulty": "Easy",
+    "category": "Books of the Bible",
+    "question": "Which book follows the four Gospels in the New Testament?",
+    "correct_answer": "Acts",
+    "accepted_answers": ["Acts", "The Acts of the Apostles"],
+    "reference": "Acts 1:1",
+    "explanation": "Acts continues the story of Jesus’ ministry through the apostles.",
+    "context_verse": "Acts 1:1 — \"The former account I made, O Theophilus…\""
+},
+{
+    "id": 162,
+    "difficulty": "Medium",
+    "category": "Books of the Bible",
+    "question": "Which book in the Old Testament contains the story of Gideon?",
+    "correct_answer": "Judges",
+    "accepted_answers": ["Judges"],
+    "reference": "Judges 6–8",
+    "explanation": "Judges records Gideon’s calling and God’s victory with his army of 300.",
+    "context_verse": "Judges 6:12 — \"The Lord is with you, you mighty man of valor!\""
+},
+{
+    "id": 163,
+    "difficulty": "Difficult",
+    "category": "Books of the Bible",
+    "question": "Which book contains the prophecy of the valley of dry bones?",
+    "correct_answer": "Ezekiel",
+    "accepted_answers": ["Ezekiel"],
+    "reference": "Ezekiel 37:1–14",
+    "explanation": "Ezekiel’s vision pictures God restoring Israel to life.",
+    "context_verse": "Ezekiel 37:5 — \"I will cause breath to enter you…\""
+},
+{
+    "id": 164,
+    "difficulty": "Easy",
+    "category": "Parables",
+    "question": "What did the father do when he saw the prodigal son returning home?",
+    "correct_answer": "He ran to him and embraced him",
+    "accepted_answers": ["He ran to him and embraced him", "He ran to him"],
+    "reference": "Luke 15:20",
+    "explanation": "The father ran with compassion, showing God’s grace toward repentant sinners.",
+    "context_verse": "Luke 15:20 — \"…ran and fell on his neck and kissed him.\""
+},
+{
+    "id": 165,
+    "difficulty": "Medium",
+    "category": "Parables",
+    "question": "In the parable of the talents, what did the servant with one talent do with it?",
+    "correct_answer": "He buried it in the ground",
+    "accepted_answers": ["He buried it in the ground", "Buried it"],
+    "reference": "Matthew 25:18",
+    "explanation": "The unfaithful servant hid his talent out of fear and was rebuked.",
+    "context_verse": "Matthew 25:26 — \"You wicked and lazy servant…\""
+},
+{
+    "id": 166,
+    "difficulty": "Difficult",
+    "category": "Parables",
+    "question": "In the parable of the sower, what do the birds represent that ate the seed?",
+    "correct_answer": "The wicked one (Satan)",
+    "accepted_answers": ["The wicked one", "Satan", "The devil"],
+    "reference": "Matthew 13:4,19",
+    "explanation": "The birds picture Satan snatching the word before it can take root.",
+    "context_verse": "Matthew 13:19 — \"…the wicked one comes and snatches away…\""
+},
+{
+    "id": 167,
+    "difficulty": "Easy",
+    "category": "Doctrine",
+    "question": "According to John 11:25, who is the resurrection and the life?",
+    "correct_answer": "Jesus",
+    "accepted_answers": ["Jesus", "Christ"],
+    "reference": "John 11:25",
+    "explanation": "Jesus promises that those who believe in Him will live even if they die.",
+    "context_verse": "John 11:25 — \"I am the resurrection and the life…\""
+},
+{
+    "id": 168,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to Romans 8:14, who are the sons of God?",
+    "correct_answer": "Those who are led by the Spirit of God",
+    "accepted_answers": [
+        "Those who are led by the Spirit of God",
+        "Led by the Spirit of God"
+    ],
+    "reference": "Romans 8:14",
+    "explanation": "Being led by the Spirit is a mark of God’s children.",
+    "context_verse": "Romans 8:14 — \"For as many as are led by the Spirit of God…\""
+},
+{
+    "id": 169,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "According to 1 Peter 1:18–19, what were we redeemed with?",
+    "correct_answer": "The precious blood of Christ",
+    "accepted_answers": ["The precious blood of Christ", "Christ’s blood"],
+    "reference": "1 Peter 1:18–19",
+    "explanation": "Our redemption was purchased not with silver or gold but the blood of Jesus.",
+    "context_verse": "1 Peter 1:19 — \"…with the precious blood of Christ…\""
+},
+{
+    "id": 170,
+    "difficulty": "Easy",
+    "category": "Apostles & Early Church",
+    "question": "Who baptized Paul after his conversion?",
+    "correct_answer": "Ananias",
+    "accepted_answers": ["Ananias"],
+    "reference": "Acts 9:17–18",
+    "explanation": "Ananias laid hands on Paul to restore his sight and baptize him.",
+    "context_verse": "Acts 9:18 — \"He arose and was baptized.\""
+},
+{
+    "id": 171,
+    "difficulty": "Medium",
+    "category": "Apostles & Early Church",
+    "question": "Which apostle was exiled on the island of Patmos?",
+    "correct_answer": "John",
+    "accepted_answers": ["John", "The apostle John"],
+    "reference": "Revelation 1:9",
+    "explanation": "John received the revelation of Jesus Christ while exiled.",
+    "context_verse": "Revelation 1:9 — \"…was on the island called Patmos…\""
+},
+{
+    "id": 172,
+    "difficulty": "Difficult",
+    "category": "Apostles & Early Church",
+    "question": "What was the name of the sorcerer in Samaria who tried to buy the power of the Holy Spirit?",
+    "correct_answer": "Simon",
+    "accepted_answers": ["Simon", "Simon the sorcerer", "Simon Magus"],
+    "reference": "Acts 8:18–20",
+    "explanation": "Peter rebuked Simon for thinking God’s gift could be bought with money.",
+    "context_verse": "Acts 8:20 — \"Your money perish with you…\""
+},
+{
+    "id": 173,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who was the father of John the Baptist?",
+    "correct_answer": "Zechariah",
+    "accepted_answers": ["Zechariah", "Zacharias"],
+    "reference": "Luke 1:13",
+    "explanation": "Zechariah was a priest and the husband of Elizabeth.",
+    "context_verse": "Luke 1:13 — \"Your wife Elizabeth will bear you a son…\""
+},
+{
+    "id": 174,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Who was the first high priest of Israel, the brother of Moses?",
+    "correct_answer": "Aaron",
+    "accepted_answers": ["Aaron"],
+    "reference": "Exodus 28:1",
+    "explanation": "Aaron and his sons were chosen to serve as priests to the Lord.",
+    "context_verse": "Exodus 28:1 — \"Take Aaron your brother… to minister to Me as priest.\""
+},
+{
+    "id": 175,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Who prophesied to David saying the sword would not depart from his house?",
+    "correct_answer": "Nathan",
+    "accepted_answers": ["Nathan", "The prophet Nathan"],
+    "reference": "2 Samuel 12:10",
+    "explanation": "Nathan confronted David after his sin with Bathsheba.",
+    "context_verse": "2 Samuel 12:10 — \"The sword shall never depart from your house…\""
+}
