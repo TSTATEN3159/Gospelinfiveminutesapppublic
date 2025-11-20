@@ -51,6 +51,25 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
 - **Bolls.life**: Fallback Bible API.
 - **OpenAI API**: Powers AI Pastor, Verse Simplifier, and Instant Application features.
 - **GetContext.xyz**: Backup Christian Context API.
-- **SendGrid Email Service**: For blog subscriber emails.
+- **SendGrid Email Service**: For daily reminder emails and blog subscriber emails.
 - **Translation Services**: For multi-language support.
 - **BibleProject (bibleproject.com)**: Provides animated Bible teaching videos via YouTube (implicitly through content, not direct API).
+
+## Recent Changes
+
+### Daily Email Reminders (November 20, 2025)
+- **Email Infrastructure**: Fully functional daily email reminder system using SendGrid
+  - Verified sender email: `info@thegospelin5minutes.org`
+  - Daily emails sent at 7:00 AM featuring today's verse, meaning, application, and trivia reminder
+  - Beautiful parchment-background email template with white text for readability
+  - Visible parchment paper edges with proper padding
+  - HTTPS links to published app at `https://thegospelin5minutes.org`
+- **Personalization**: Emails use subscriber's first name in greeting ("Good morning, [FirstName]!")
+- **Unsubscribe Feature**: Full unsubscribe functionality with visible link in email footer
+  - Dedicated unsubscribe page (`/unsubscribe`) with user-friendly interface
+  - Backend endpoint (`/api/unsubscribe-daily-reminder`) handles opt-out requests
+  - Updates both `subscribers` and `appUsers` tables to disable emails
+- **Subscription Management**: Smart data merging between blog subscribers and daily reminder subscribers
+  - "Daily Reminders" button on DailyVerseCard and DailyVerseHeroCard
+  - `/api/subscribe-daily-reminder` endpoint captures user's first name
+  - Prevents duplicate subscriptions across tables

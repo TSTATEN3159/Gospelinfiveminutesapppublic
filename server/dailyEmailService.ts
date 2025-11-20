@@ -94,6 +94,9 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
   const subject = `Your Daily Verse & Bible Trivia – ${verseReference}`;
 
   const PARCHMENT_BG_URL = "https://images.unsplash.com/photo-1509266272358-7701da638078?w=1600&q=80";
+  
+  // Create unsubscribe link
+  const unsubscribeUrl = `${APP_BASE_URL}/unsubscribe?email=${encodeURIComponent(to)}`;
 
   const html = `
 <body style="margin:0;padding:0;background:#f5eee1;">
@@ -106,7 +109,7 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
             <!-- Header -->
             <tr>
               <td style="padding:20px 24px 8px 24px;">
-                <h1 style="font-size:20px; margin:0 0 6px; color:#1f2933;">Good morning, ${name}</h1>
+                <h1 style="font-size:20px; margin:0 0 6px; color:#1f2933;">Good morning, ${name}!</h1>
                 <p style="font-size:13px; margin:0; color:#4b5563;">
                   Here is today's Scripture and a gentle nudge to keep growing in God's Word.
                 </p>
@@ -219,9 +222,11 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
             <!-- Footer -->
             <tr>
               <td style="padding:0 24px 18px 24px;">
-                <p style="font-size:11px; color:#9ca3af; margin:8px 0 0;">
-                  You are receiving this because you subscribed to the Daily Verse & Trivia email in the app.
-                  You can turn this off in Settings at any time.
+                <p style="font-size:11px; color:#9ca3af; margin:8px 0 4px;">
+                  You are receiving this because you subscribed to daily reminders from The Gospel in 5 Minutes.
+                </p>
+                <p style="font-size:11px; margin:4px 0 0;">
+                  <a href="${unsubscribeUrl}" style="color:#f59e0b; text-decoration:underline;">Unsubscribe from daily emails</a>
                 </p>
               </td>
             </tr>

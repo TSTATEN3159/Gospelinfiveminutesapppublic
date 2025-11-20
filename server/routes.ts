@@ -4,7 +4,7 @@ import { z } from "zod";
 import OpenAI from "openai";
 import Stripe from "stripe";
 import { storage } from "./storage";
-import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema, triviaStats, appUsers } from "@shared/schema";
+import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema, triviaStats, appUsers, subscribers } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
 import { db } from "./db";
@@ -2568,6 +2568,18 @@ Return only the application paragraph.
           })
           .where(eq(appUsers.id, existingUser.id));
         
+        // Also ensure they're in the subscribers table for unsubscribe management
+        await db.insert(subscribers)
+          .values({ 
+            email, 
+            name: firstName || existingUser.firstName,
+            isActive: true 
+          })
+          .onConflictDoUpdate({
+            target: subscribers.email,
+            set: { isActive: true, name: firstName || existingUser.firstName }
+          });
+        
         return res.json({
           success: true,
           message: "Daily reminders activated! You'll receive the Daily Verse every morning at 7 AM."
@@ -2589,6 +2601,18 @@ Return only the application paragraph.
         wantsDailyEmail: true
       }).returning();
       
+      // Also ensure they're in the subscribers table for unsubscribe management
+      await db.insert(subscribers)
+        .values({ 
+          email, 
+          name: nameToUse,
+          isActive: true 
+        })
+        .onConflictDoUpdate({
+          target: subscribers.email,
+          set: { isActive: true, name: nameToUse }
+        });
+      
       res.json({
         success: true,
         message: "Welcome! You'll receive the Daily Verse every morning at 7 AM."
@@ -2607,6 +2631,48 @@ Return only the application paragraph.
       res.status(500).json({
         success: false,
         error: "There was an issue processing your signup. Please try again."
+      });
+    }
+  });
+
+  // Unsubscribe from Daily Reminder Emails
+  app.post("/api/unsubscribe-daily-reminder", async (req, res) => {
+    try {
+      const { email } = z.object({
+        email: z.string().email()
+      }).parse(req.body);
+      
+      // Update app user to disable daily emails
+      const existingUser = await storage.getAppUserByEmail(email);
+      if (existingUser) {
+        await db.update(appUsers)
+          .set({ wantsDailyEmail: false })
+          .where(eq(appUsers.id, existingUser.id));
+      }
+      
+      // Update subscriber to inactive
+      await db.update(subscribers)
+        .set({ isActive: false })
+        .where(eq(subscribers.email, email));
+      
+      res.json({
+        success: true,
+        message: "You've been unsubscribed from daily reminder emails. We're sorry to see you go!"
+      });
+      
+    } catch (error) {
+      console.error("Unsubscribe error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Please provide a valid email address."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "There was an issue processing your unsubscribe request."
       });
     }
   });

@@ -51,6 +51,7 @@ import ScriptureImagePage from "./pages/ScriptureImagePage";
 import DiscipleshipListPage from "./pages/DiscipleshipListPage";
 import DiscipleshipPlanDetailPage from "./pages/DiscipleshipPlanDetailPage";
 import DiscipleshipReadingPage from "./pages/DiscipleshipReadingPage";
+import UnsubscribePage from "./pages/UnsubscribePage";
 import { BibleVersionCode } from "./config/bibleVersions";
 
 interface User {
@@ -63,7 +64,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading";
+type AppPage = "home" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading" | "unsubscribe";
 
 // Type-safe navigation params for each page
 type AppPageParams = {
@@ -328,6 +329,8 @@ function MainApp() {
                 dayNumber={readingParams.dayNumber || 1}
                 onNavigate={handleNavigate}
               />;
+            case "unsubscribe":
+              return <UnsubscribePage />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
