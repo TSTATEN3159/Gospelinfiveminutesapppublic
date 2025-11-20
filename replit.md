@@ -29,7 +29,7 @@ The backend uses Express.js with TypeScript, providing RESTful endpoints. Data s
 - **Premium Text-to-Speech**: High-quality voice playback with word-by-word highlighting.
 - **Streak Tracking & Devotional Progress**: Tracks consecutive days and devotional progress.
 - **Bible Reading Plans**: Three plans (1-Year Whole Bible, 6-Month Old/New Testament) with progress tracking.
-- **Discipleship Plans System**: 24 comprehensive YouVersion-style multi-day spiritual growth programs with enriched devotionals, reflection questions, prayers, and shareable truths, featuring smart filtering and progress tracking. Topics include salvation, Spirit-filled living, freedom from addiction/temptation/fear, relationships, marriage, parenting, work/calling, purity, suffering, prayer, identity in Christ, serving, and spiritual warfare.
+- **Discipleship Plans System**: 34 comprehensive YouVersion-style multi-day spiritual growth programs with enriched devotionals, reflection questions, prayers, and shareable truths, featuring smart filtering and progress tracking. Topics include salvation, Spirit-filled living, freedom from addiction/temptation/fear, relationships, marriage, parenting, work/calling, purity, suffering, prayer, identity in Christ, serving, spiritual warfare, fasting & spiritual hunger, overcoming depression, breaking people-pleasing, contentment in every circumstance, hearing God's voice, forgiveness & reconciliation, witnessing & evangelism, stewardship & generosity, biblical decision making, and social media & technology.
 - **Scripture Image Generator**: Canvas-based system for creating shareable verse images with custom backgrounds, fonts, and colors.
 
 ### System Design Choices
