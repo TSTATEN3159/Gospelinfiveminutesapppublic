@@ -1,0 +1,307 @@
+{
+    "id": 124,
+    "difficulty": "Difficult",
+    "category": "Parables",
+    "question": "In the parable of the unforgiving servant, how much did the servant owe the king?",
+    "correct_answer": "Ten thousand talents",
+    "accepted_answers": ["Ten thousand talents", "10,000 talents"],
+    "reference": "Matthew 18:23–24",
+    "explanation": "Jesus used an unpayable debt to picture our need for God’s mercy.",
+    "context_verse": "Matthew 18:27 — \"The master… forgave him the debt.\""
+},
+{
+    "id": 125,
+    "difficulty": "Easy",
+    "category": "Doctrine",
+    "question": "According to Hebrews 4:12, what is the Word of God?",
+    "correct_answer": "Living and powerful",
+    "accepted_answers": ["Living and powerful", "Alive and active"],
+    "reference": "Hebrews 4:12",
+    "explanation": "God’s Word is alive and penetrates the human heart.",
+    "context_verse": "Hebrews 4:12 — \"For the word of God is living and powerful…\""
+},
+{
+    "id": 126,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to 2 Timothy 3:16, all Scripture is given by what?",
+    "correct_answer": "Inspiration of God",
+    "accepted_answers": ["Inspiration of God", "God’s inspiration", "God-breathed"],
+    "reference": "2 Timothy 3:16",
+    "explanation": "Scripture is divinely breathed out by God and profitable for teaching.",
+    "context_verse": "2 Timothy 3:16 — \"All Scripture is given by inspiration of God…\""
+},
+{
+    "id": 127,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "According to James 1:27, what is pure and undefiled religion before God?",
+    "correct_answer": "To visit orphans and widows in their trouble and keep oneself unspotted from the world",
+    "accepted_answers": [
+        "To visit orphans and widows in their trouble and keep oneself unspotted from the world",
+        "Visit orphans and widows and stay unspotted from the world"
+    ],
+    "reference": "James 1:27",
+    "explanation": "True religion involves mercy toward the needy and personal holiness.",
+    "context_verse": "James 1:27 — \"Pure and undefiled religion… is this…\""
+},
+{
+    "id": 128,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who wrestled with a Man until daybreak and had his name changed to Israel?",
+    "correct_answer": "Jacob",
+    "accepted_answers": ["Jacob", "Israel"],
+    "reference": "Genesis 32:24–28",
+    "explanation": "Jacob wrestled with God and received a new name meaning ‘he struggles with God.’",
+    "context_verse": "Genesis 32:28 — \"Your name shall no longer be called Jacob, but Israel…\""
+},
+{
+    "id": 129,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Who prayed, ‘Speak, Lord, for Your servant hears’?",
+    "correct_answer": "Samuel",
+    "accepted_answers": ["Samuel"],
+    "reference": "1 Samuel 3:10",
+    "explanation": "Young Samuel responded obediently when God called his name.",
+    "context_verse": "1 Samuel 3:10 — \"Speak, for Your servant hears.\""
+},
+{
+    "id": 130,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Which prophet confronted King Ahab with the words, ‘Have you murdered and also taken possession?’",
+    "correct_answer": "Elijah",
+    "accepted_answers": ["Elijah"],
+    "reference": "1 Kings 21:19",
+    "explanation": "Elijah confronted Ahab for killing Naboth and taking his vineyard.",
+    "context_verse": "1 Kings 21:19 — \"In the place where dogs licked the blood of Naboth…\""
+},
+{
+    "id": 131,
+    "difficulty": "Easy",
+    "category": "Apostles & Early Church",
+    "question": "Which apostle walked on the water toward Jesus?",
+    "correct_answer": "Peter",
+    "accepted_answers": ["Peter"],
+    "reference": "Matthew 14:28–29",
+    "explanation": "Peter walked on water until he looked at the storm and began to sink.",
+    "context_verse": "Matthew 14:31 — \"O you of little faith, why did you doubt?\""
+},
+{
+    "id": 132,
+    "difficulty": "Medium",
+    "category": "Apostles & Early Church",
+    "question": "Who was stoned to death while testifying that he saw Jesus standing at the right hand of God?",
+    "correct_answer": "Stephen",
+    "accepted_answers": ["Stephen"],
+    "reference": "Acts 7:55–60",
+    "explanation": "Stephen was the first Christian martyr, boldly witnessing to Christ.",
+    "context_verse": "Acts 7:56 — \"I see the heavens opened…\""
+},
+{
+    "id": 133,
+    "difficulty": "Difficult",
+    "category": "Apostles & Early Church",
+    "question": "Which apostle did King Herod kill with the sword?",
+    "correct_answer": "James the son of Zebedee",
+    "accepted_answers": ["James the son of Zebedee", "James"],
+    "reference": "Acts 12:1–2",
+    "explanation": "Herod executed James, the brother of John, making him the first apostle martyred.",
+    "context_verse": "Acts 12:2 — \"He killed James the brother of John with the sword.\""
+},
+{
+    "id": 134,
+    "difficulty": "Easy",
+    "category": "Books of the Bible",
+    "question": "Which book begins with ‘In the beginning God created the heavens and the earth’?",
+    "correct_answer": "Genesis",
+    "accepted_answers": ["Genesis"],
+    "reference": "Genesis 1:1",
+    "explanation": "Genesis begins the Bible with God’s creation.",
+    "context_verse": "Genesis 1:1 — \"In the beginning God created the heavens and the earth.\""
+},
+{
+    "id": 135,
+    "difficulty": "Medium",
+    "category": "Books of the Bible",
+    "question": "Which Old Testament book records the fall of man in the Garden of Eden?",
+    "correct_answer": "Genesis",
+    "accepted_answers": ["Genesis"],
+    "reference": "Genesis 3:1–24",
+    "explanation": "Genesis 3 tells how Adam and Eve disobeyed and brought sin into the world.",
+    "context_verse": "Genesis 3:6 — \"She took of its fruit and ate…\""
+},
+{
+    "id": 136,
+    "difficulty": "Difficult",
+    "category": "Books of the Bible",
+    "question": "Which minor prophet’s book ends with the promise of Elijah coming before the great and dreadful day of the Lord?",
+    "correct_answer": "Malachi",
+    "accepted_answers": ["Malachi"],
+    "reference": "Malachi 4:5",
+    "explanation": "Malachi ends the Old Testament with prophecy about Elijah’s role before the Lord’s coming.",
+    "context_verse": "Malachi 4:5 — \"I will send you Elijah the prophet…\""
+},
+{
+    "id": 137,
+    "difficulty": "Easy",
+    "category": "Parables",
+    "question": "In the parable of the mustard seed, what does the mustard seed represent?",
+    "correct_answer": "The kingdom of heaven",
+    "accepted_answers": ["The kingdom of heaven", "The kingdom"],
+    "reference": "Matthew 13:31–32",
+    "explanation": "Jesus describes the kingdom’s growth from small beginnings to great expansion.",
+    "context_verse": "Matthew 13:32 — \"…becomes a tree…\""
+},
+{
+    "id": 138,
+    "difficulty": "Medium",
+    "category": "Parables",
+    "question": "In the parable of the wise and foolish virgins, what cry rang out at midnight?",
+    "correct_answer": "‘Behold, the bridegroom is coming’",
+    "accepted_answers": ["Behold, the bridegroom is coming", "The bridegroom is coming"],
+    "reference": "Matthew 25:6",
+    "explanation": "The midnight cry announces the bridegroom’s arrival, calling people to readiness.",
+    "context_verse": "Matthew 25:6 — \"Behold, the bridegroom is coming; go out to meet him!\""
+},
+{
+    "id": 139,
+    "difficulty": "Difficult",
+    "category": "Parables",
+    "question": "In the parable of the dishonest steward, why did the master commend the steward?",
+    "correct_answer": "Because he acted shrewdly",
+    "accepted_answers": ["Because he acted shrewdly", "He acted wisely"],
+    "reference": "Luke 16:1–8",
+    "explanation": "Jesus highlights the steward’s clever foresight, not his dishonesty.",
+    "context_verse": "Luke 16:8 — \"For the sons of this world are more shrewd…\""
+},
+{
+    "id": 140,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to Romans 3:23, who has sinned?",
+    "correct_answer": "All have sinned and fall short of the glory of God",
+    "accepted_answers": ["All have sinned", "All have sinned and fall short of the glory of God"],
+    "reference": "Romans 3:23",
+    "explanation": "Every human being is sinful and needs God’s grace.",
+    "context_verse": "Romans 3:23 — \"For all have sinned…\""
+},
+{
+    "id": 141,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to John 1:12, what right is given to all who receive Jesus?",
+    "correct_answer": "The right to become children of God",
+    "accepted_answers": ["The right to become children of God", "To become children of God"],
+    "reference": "John 1:12",
+    "explanation": "Those who believe in Jesus are adopted into God’s family.",
+    "context_verse": "John 1:12 — \"He gave the right to become children of God…\""
+},
+{
+    "id": 142,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "According to Colossians 2:9, what dwells in Christ bodily?",
+    "correct_answer": "All the fullness of the Godhead",
+    "accepted_answers": [
+      "All the fullness of the Godhead",
+      "The fullness of God",
+      "Fullness of the Godhead"
+    ],
+    "reference": "Colossians 2:9",
+    "explanation": "Paul teaches that Christ fully embodies God in human flesh.",
+    "context_verse": "Colossians 2:9 — \"For in Him dwells all the fullness of the Godhead bodily.\""
+},
+{
+    "id": 143,
+    "difficulty": "Easy",
+    "category": "Apostles & Early Church",
+    "question": "Who baptized the Ethiopian eunuch?",
+    "correct_answer": "Philip",
+    "accepted_answers": ["Philip"],
+    "reference": "Acts 8:36–38",
+    "explanation": "Philip explained Isaiah’s prophecy and baptized the eunuch after he believed.",
+    "context_verse": "Acts 8:37 — \"If you believe with all your heart, you may.\""
+},
+{
+    "id": 144,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who was preserved during a famine by being fed by ravens at the brook Cherith?",
+    "correct_answer": "Elijah",
+    "accepted_answers": ["Elijah"],
+    "reference": "1 Kings 17:2–6",
+    "explanation": "God miraculously fed Elijah during the drought.",
+    "context_verse": "1 Kings 17:6 — \"The ravens brought him bread and meat…\""
+},
+{
+    "id": 145,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Who struck down a thousand Philistines with a donkey’s jawbone?",
+    "correct_answer": "Samson",
+    "accepted_answers": ["Samson"],
+    "reference": "Judges 15:15",
+    "explanation": "Samson used a donkey’s jawbone to defeat many attackers by God’s strength.",
+    "context_verse": "Judges 15:15 — \"He killed a thousand men with it.\""
+},
+{
+    "id": 146,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Which queen visited Solomon to test his wisdom with difficult questions?",
+    "correct_answer": "The Queen of Sheba",
+    "accepted_answers": ["The Queen of Sheba", "Queen of Sheba"],
+    "reference": "1 Kings 10:1",
+    "explanation": "She came with great wealth and was astonished by Solomon’s wisdom.",
+    "context_verse": "1 Kings 10:7 — \"The half was not told me…\""
+},
+{
+    "id": 147,
+    "difficulty": "Easy",
+    "category": "Books of the Bible",
+    "question": "Which gospel writer was a physician?",
+    "correct_answer": "Luke",
+    "accepted_answers": ["Luke"],
+    "reference": "Colossians 4:14",
+    "explanation": "Paul refers to Luke as the beloved physician.",
+    "context_verse": "Colossians 4:14 — \"Luke the beloved physician…\""
+},
+{
+    "id": 148,
+    "difficulty": "Medium",
+    "category": "Books of the Bible",
+    "question": "Which Old Testament book records the rebuilding of the temple under Zerubbabel?",
+    "correct_answer": "Ezra",
+    "accepted_answers": ["Ezra"],
+    "reference": "Ezra 3:8–13",
+    "explanation": "Ezra tells the story of the temple’s restoration after the exile.",
+    "context_verse": "Ezra 3:10 — \"They sang… praising the Lord.\""
+},
+{
+    "id": 149,
+    "difficulty": "Medium",
+    "category": "Parables",
+    "question": "In the parable of the prodigal son, what did the father give the returning son?",
+    "correct_answer": "A robe, a ring, and sandals",
+    "accepted_answers": [
+        "A robe, a ring, and sandals",
+        "Robe, ring, and sandals"
+    ],
+    "reference": "Luke 15:22",
+    "explanation": "These items symbolized sonship restored by grace.",
+    "context_verse": "Luke 15:22 — \"Put a ring on his hand and sandals on his feet.\""
+},
+{
+    "id": 150,
+    "difficulty": "Difficult",
+    "category": "Parables",
+    "question": "What is the field in the parable of the wheat and tares said to represent?",
+    "correct_answer": "The world",
+    "accepted_answers": ["The world"],
+    "reference": "Matthew 13:38",
+    "explanation": "Jesus explains all elements of this parable — the field is the world.",
+    "context_verse": "Matthew 13:38 — \"The field is the world…\""
+}
