@@ -49,6 +49,7 @@ export const appUsers = pgTable("app_users", {
   birthDay: text("birth_day"),
   joinDate: timestamp("join_date").notNull().default(sql`now()`),
   isActive: boolean("is_active").notNull().default(true),
+  wantsDailyEmail: boolean("wants_daily_email").notNull().default(false),
 });
 
 export const insertAppUserSchema = createInsertSchema(appUsers).pick({
