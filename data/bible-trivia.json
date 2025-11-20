@@ -5353,5 +5353,380 @@
     "reference": "2 Samuel 12:10",
     "explanation": "Nathan confronted David after his sin with Bathsheba.",
     "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754688-176",
+    "level": "beginner",
+    "question": "According to John 3:3, what must someone do to see the kingdom of God?",
+    "choices": [
+      "Be baptized",
+      "Believe only",
+      "Be born again",
+      "Do good works"
+    ],
+    "correctIndex": 2,
+    "reference": "John 3:3",
+    "explanation": "Jesus teaches that spiritual rebirth is required to enter God's kingdom.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754688-177",
+    "level": "intermediate",
+    "question": "According to Galatians 5:16, how should believers walk to avoid fulfilling the lust of the flesh?",
+    "choices": [
+      "Pray without ceasing",
+      "Follow the law",
+      "Deny yourself",
+      "Walk in the Spirit"
+    ],
+    "correctIndex": 3,
+    "reference": "Galatians 5:16",
+    "explanation": "Walking in the Spirit enables believers to resist fleshly desires.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754688-178",
+    "level": "advanced",
+    "question": "According to Hebrews 9:22, without what is there no remission of sins?",
+    "choices": [
+      "The shedding of blood",
+      "Good works",
+      "Confession of sins",
+      "Repentance"
+    ],
+    "correctIndex": 0,
+    "reference": "Hebrews 9:22",
+    "explanation": "Forgiveness of sins requires blood — ultimately fulfilled in Christ’s sacrifice.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-179",
+    "level": "beginner",
+    "question": "Who ran to the empty tomb with Peter after hearing Jesus had risen?",
+    "choices": [
+      "James",
+      "Andrew",
+      "John",
+      "Peter"
+    ],
+    "correctIndex": 2,
+    "reference": "John 20:2–4",
+    "explanation": "John outran Peter to the tomb after Mary’s news of Jesus’ resurrection.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-180",
+    "level": "intermediate",
+    "question": "What was the name of the prophet who foretold a famine during the early church?",
+    "choices": [
+      "Philip",
+      "Stephen",
+      "Agabus",
+      "Barnabas"
+    ],
+    "correctIndex": 2,
+    "reference": "Acts 11:27–28",
+    "explanation": "Agabus prophesied a famine, and believers gave help to others in advance.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-181",
+    "level": "advanced",
+    "question": "Who was struck blind by Paul for opposing the gospel on Cyprus?",
+    "choices": [
+      "Elymas the sorcerer",
+      "Ananias",
+      "Sapphira",
+      "Simon the sorcerer"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 13:8–11",
+    "explanation": "Elymas attempted to hinder the gospel, and Paul pronounced God’s judgment on him.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-182",
+    "level": "beginner",
+    "question": "Who killed Goliath with a sling and a stone?",
+    "choices": [
+      "Jonathan",
+      "Saul",
+      "David",
+      "Solomon"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Samuel 17:49–50",
+    "explanation": "David defeated Goliath by trusting in God, not human weapons.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-183",
+    "level": "intermediate",
+    "question": "Which prophet confronted David after his sin with Bathsheba?",
+    "choices": [
+      "Nathan",
+      "Elijah",
+      "Samuel",
+      "Gad"
+    ],
+    "correctIndex": 0,
+    "reference": "2 Samuel 12:1–7",
+    "explanation": "Nathan bravely declared God’s judgment and led David to repentance.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-184",
+    "level": "advanced",
+    "question": "Who was the priest and scribe who led the spiritual restoration of Israel after the exile?",
+    "choices": [
+      "Ezra",
+      "Nehemiah",
+      "Joshua",
+      "Zerubbabel"
+    ],
+    "correctIndex": 0,
+    "reference": "Ezra 7:6–10",
+    "explanation": "Ezra restored God’s Word among the people after the return from captivity.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-185",
+    "level": "beginner",
+    "question": "Which book tells the story of Noah and the flood?",
+    "choices": [
+      "Leviticus",
+      "Genesis",
+      "Numbers",
+      "Exodus"
+    ],
+    "correctIndex": 1,
+    "reference": "Genesis 6–9",
+    "explanation": "Genesis records God’s judgment on the world and His salvation of Noah.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-186",
+    "level": "intermediate",
+    "question": "Which Old Testament book contains the vision of the four beasts representing kingdoms?",
+    "choices": [
+      "Daniel",
+      "Isaiah",
+      "Ezekiel",
+      "Jeremiah"
+    ],
+    "correctIndex": 0,
+    "reference": "Daniel 7:1–8",
+    "explanation": "Daniel’s prophecy reveals future kingdoms and God’s eternal rule.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-187",
+    "level": "advanced",
+    "question": "Which prophet’s book contains the prophecy, “A virgin shall conceive and bear a Son”?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Daniel",
+      "Ezekiel"
+    ],
+    "correctIndex": 0,
+    "reference": "Isaiah 7:14",
+    "explanation": "Isaiah foretold the virgin birth of the Messiah, fulfilled in Christ.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-188",
+    "level": "beginner",
+    "question": "In the parable of the lost coin, how many coins did the woman originally have?",
+    "choices": [
+      "Five",
+      "Seven",
+      "Twelve",
+      "Ten"
+    ],
+    "correctIndex": 3,
+    "reference": "Luke 15:8",
+    "explanation": "Jesus teaches God’s joy in finding the lost, using a lost coin as the picture.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-189",
+    "level": "intermediate",
+    "question": "In the parable of the wedding feast, who refused to come when invited?",
+    "choices": [
+      "The servants",
+      "The king",
+      "The invited guests",
+      "The poor"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 22:1–5",
+    "explanation": "Jesus warns of rejecting God’s gracious invitation.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-190",
+    "level": "advanced",
+    "question": "What did the unjust steward do to gain favor with his master’s debtors?",
+    "choices": [
+      "Forgave them completely",
+      "Reduced their debts",
+      "Increased their debts",
+      "Demanded immediate payment"
+    ],
+    "correctIndex": 1,
+    "reference": "Luke 16:5–7",
+    "explanation": "He lessened what others owed to secure their future help.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-191",
+    "level": "beginner",
+    "question": "According to Psalm 23:1, what is the Lord to His people?",
+    "choices": [
+      "My King",
+      "My Shepherd",
+      "My Father",
+      "My Redeemer"
+    ],
+    "correctIndex": 1,
+    "reference": "Psalm 23:1",
+    "explanation": "God personally guides, protects, and provides for His people.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-192",
+    "level": "intermediate",
+    "question": "According to Ephesians 2:8–9, we are saved by grace through what?",
+    "choices": [
+      "Works",
+      "Faith",
+      "Obedience",
+      "Baptism"
+    ],
+    "correctIndex": 1,
+    "reference": "Ephesians 2:8–9",
+    "explanation": "Salvation is a gift of God’s grace received through faith.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-193",
+    "level": "advanced",
+    "question": "According to Jude 3, what are believers urged to earnestly contend for?",
+    "choices": [
+      "Modern interpretations",
+      "The faith once delivered to the saints",
+      "Your personal beliefs",
+      "Church traditions"
+    ],
+    "correctIndex": 1,
+    "reference": "Jude 3",
+    "explanation": "Jude commands believers to defend the true gospel.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-194",
+    "level": "beginner",
+    "question": "Who took Saul (Paul) and introduced him to the apostles in Jerusalem?",
+    "choices": [
+      "Titus",
+      "Timothy",
+      "Silas",
+      "Barnabas"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 9:26–27",
+    "explanation": "Barnabas helped the church accept Paul after his conversion.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-195",
+    "level": "intermediate",
+    "question": "Who escaped from prison with the help of an angel in Acts 12?",
+    "choices": [
+      "James",
+      "Paul",
+      "John",
+      "Peter"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 12:6–11",
+    "explanation": "God delivered Peter from Herod’s intent to harm him.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-196",
+    "level": "advanced",
+    "question": "Who was sent to Antioch and encouraged the believers to remain steadfast in purpose of heart?",
+    "choices": [
+      "Timothy",
+      "Titus",
+      "Silas",
+      "Barnabas"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 11:22–23",
+    "explanation": "Barnabas strengthened the disciples and later brought Saul to help.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-197",
+    "level": "beginner",
+    "question": "Who prayed for rain to stop and then prayed again so that it would rain?",
+    "choices": [
+      "Elisha",
+      "Isaiah",
+      "Jeremiah",
+      "Elijah"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 17:1; 18:41–45; James 5:17–18",
+    "explanation": "Elijah prayed and God withheld rain, then prayed again and God sent rain.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-198",
+    "level": "intermediate",
+    "question": "Which king of Israel was known for asking for wisdom instead of riches?",
+    "choices": [
+      "David",
+      "Rehoboam",
+      "Solomon",
+      "Saul"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 3:5–13",
+    "explanation": "Solomon’s request pleased God and he received wisdom in abundance.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-199",
+    "level": "advanced",
+    "question": "Who was the high priest who confronted Peter and John after the healing of the lame man?",
+    "choices": [
+      "Caiaphas",
+      "Herod",
+      "Pilate",
+      "Annas"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 4:6–7",
+    "explanation": "Annas, a powerful religious leader, opposed the apostles’ teaching.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt6-1763662754689-200",
+    "level": "intermediate",
+    "question": "Which prophetic book includes the vision of the Ancient of Days seated on His throne?",
+    "choices": [
+      "Daniel",
+      "Jeremiah",
+      "Isaiah",
+      "Ezekiel"
+    ],
+    "correctIndex": 0,
+    "reference": "Daniel 7:9–10",
+    "explanation": "Daniel describes God’s eternal authority as the Ancient of Days.",
+    "category": "Books of the Bible"
   }
 ]
