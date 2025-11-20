@@ -241,6 +241,7 @@ export class DatabaseStorage implements IStorage {
         birthDay: appUsers.birthDay,
         joinDate: appUsers.joinDate,
         isActive: appUsers.isActive,
+        wantsDailyEmail: appUsers.wantsDailyEmail,
       })
       .from(appUsers)
       .innerJoin(
@@ -272,6 +273,7 @@ export class DatabaseStorage implements IStorage {
         birthDay: appUsers.birthDay,
         joinDate: appUsers.joinDate,
         isActive: appUsers.isActive,
+        wantsDailyEmail: appUsers.wantsDailyEmail,
       })
       .from(friendships)
       .innerJoin(appUsers, 
@@ -302,6 +304,7 @@ export class DatabaseStorage implements IStorage {
         birthDay: request.birthDay,
         joinDate: request.joinDate,
         isActive: request.isActive,
+        wantsDailyEmail: request.wantsDailyEmail,
       };
 
       // Use initiatorId to determine direction (not requesterId/addresseeId due to canonical ordering)
@@ -620,6 +623,7 @@ export class MemStorage implements IStorage {
       birthDay: data.birthDay || null,
       joinDate: new Date(),
       isActive: true,
+      wantsDailyEmail: false,
     };
     this.appUsersMap.set(id, appUser);
     return appUser;
