@@ -25,6 +25,7 @@ import sufferingFaithfulnessImage from '@assets/stock_images/person_in_difficult
 import prayerLifeImage from '@assets/stock_images/hands_folded_in_pray_b98684b0.jpg';
 import ruggedChurchImage from '@assets/stock_images/old_rustic_stone_chu_610102d9.jpg';
 import manAtBarImage from '@assets/generated_images/man_contemplating_at_bar.png';
+import angryWomanImage from '@assets/generated_images/angry_frustrated_woman_portrait.png';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -2169,7 +2170,7 @@ export const dealingWithAngerPlan: DiscipleshipPlan = {
   id: "dealing-anger-unforgiveness",
   title: "Dealing with Anger and Unforgiveness",
   subtitle: "From bitterness to Christlike mercy",
-  imageUrl: peacefulPrayerImage,
+  imageUrl: angryWomanImage,
   totalDays: 5,
   days: [
     {
