@@ -5728,5 +5728,605 @@
     "reference": "Daniel 7:9–10",
     "explanation": "Daniel describes God’s eternal authority as the Ancient of Days.",
     "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch7-201",
+    "level": "beginner",
+    "question": "What did Jesus turn into wine at the wedding in Cana?",
+    "choices": [
+      "Water",
+      "Miriam",
+      "Jacob",
+      "Caleb"
+    ],
+    "correctIndex": 0,
+    "reference": "John 2:1–11",
+    "explanation": "Jesus' first recorded miracle was turning water into wine.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-202",
+    "level": "intermediate",
+    "question": "How many men were fed in the feeding of the multitude with five loaves and two fish?",
+    "choices": [
+      "Five thousand",
+      "Abraham",
+      "Elizabeth",
+      "Elijah"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 14:19–21",
+    "explanation": "Jesus multiplied the loaves and fish to feed 5000 men plus women and children.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-203",
+    "level": "advanced",
+    "question": "Which disciple walked on water toward Jesus before sinking?",
+    "choices": [
+      "Micah",
+      "Peter",
+      "Moses",
+      "Caleb"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 14:28–31",
+    "explanation": "Peter stepped out in faith but looked at the waves and began to sink.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-204",
+    "level": "beginner",
+    "question": "Which woman became queen of Persia and saved her people from destruction?",
+    "choices": [
+      "Rebekah",
+      "Mary",
+      "Aaron",
+      "Esther"
+    ],
+    "correctIndex": 3,
+    "reference": "Esther 4:14–16",
+    "explanation": "Esther risked her life to intercede for the Jewish people.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch7-205",
+    "level": "intermediate",
+    "question": "Who was the mother of Samuel?",
+    "choices": [
+      "Hannah",
+      "Isaac",
+      "Abraham",
+      "Peter"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Samuel 1:10–20",
+    "explanation": "Hannah prayed earnestly for a son, and God granted Samuel.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch7-206",
+    "level": "advanced",
+    "question": "Which Old Testament judge was a prophetess under the Palm of Deborah?",
+    "choices": [
+      "Lydia",
+      "Nehemiah",
+      "Deborah",
+      "Abraham"
+    ],
+    "correctIndex": 2,
+    "reference": "Judges 4:4–5",
+    "explanation": "Deborah served as both judge and prophetess.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch7-207",
+    "level": "beginner",
+    "question": "What sea did God part so the Israelites could escape Egypt?",
+    "choices": [
+      "Ephesus",
+      "Corinth",
+      "Prayer",
+      "The Red Sea"
+    ],
+    "correctIndex": 3,
+    "reference": "Exodus 14:21–22",
+    "explanation": "God opened the Red Sea for Israel to pass on dry ground.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch7-208",
+    "level": "intermediate",
+    "question": "What river did John baptize in?",
+    "choices": [
+      "The Jordan River",
+      "Ur",
+      "Bethel",
+      "Communion"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 3:5–6",
+    "explanation": "John baptized in the Jordan where Jesus was also baptized.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch7-209",
+    "level": "advanced",
+    "question": "What mountain did Elijah challenge the prophets of Baal on?",
+    "choices": [
+      "Nazareth",
+      "Sidon",
+      "Ephesus",
+      "Mount Carmel"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 18:19–40",
+    "explanation": "Fire from heaven fell on Mount Carmel when Elijah prayed.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch7-210",
+    "level": "beginner",
+    "question": "How many lepers did Jesus heal who stood afar off?",
+    "choices": [
+      "Ten",
+      "Isaiah",
+      "Rebekah",
+      "Elijah"
+    ],
+    "correctIndex": 0,
+    "reference": "Luke 17:12–19",
+    "explanation": "Jesus healed ten lepers, but only one returned to thank Him.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-211",
+    "level": "intermediate",
+    "question": "What physical condition did the man at the pool of Bethesda have for 38 years?",
+    "choices": [
+      "Timothy",
+      "Titus",
+      "James",
+      "He was lame"
+    ],
+    "correctIndex": 3,
+    "reference": "John 5:5–9",
+    "explanation": "Jesus healed a man who had waited decades for healing.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-212",
+    "level": "advanced",
+    "question": "What did Jesus say when He raised Jairus's daughter?",
+    "choices": [
+      "Talitha cumi",
+      "David",
+      "Caleb",
+      "Deborah"
+    ],
+    "correctIndex": 0,
+    "reference": "Mark 5:41",
+    "explanation": "Jesus commanded the girl to rise, restoring her to life.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch7-213",
+    "level": "beginner",
+    "question": "According to Proverbs 1:7, what is the beginning of knowledge?",
+    "choices": [
+      "Pentecost",
+      "The fear of the Lord",
+      "Temple",
+      "Grace"
+    ],
+    "correctIndex": 1,
+    "reference": "Proverbs 1:7",
+    "explanation": "Wisdom begins with reverence for God.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch7-214",
+    "level": "intermediate",
+    "question": "Which Old Testament book famously reflects on the meaning of life saying, 'Vanity of vanities'?",
+    "choices": [
+      "Sidon",
+      "Rome",
+      "Mount Carmel",
+      "Ecclesiastes"
+    ],
+    "correctIndex": 3,
+    "reference": "Ecclesiastes 1:2",
+    "explanation": "Ecclesiastes reflects on life's fleeting nature and the need to fear God.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch7-215",
+    "level": "advanced",
+    "question": "Which Psalm is the longest chapter in the Bible?",
+    "choices": [
+      "Thessalonica",
+      "Psalm 119",
+      "Justice",
+      "Gaza"
+    ],
+    "correctIndex": 1,
+    "reference": "Psalm 119",
+    "explanation": "Psalm 119 has 176 verses and celebrates God's Word.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch7-216",
+    "level": "beginner",
+    "question": "What does the name 'Immanuel' mean?",
+    "choices": [
+      "God with us",
+      "Damascus",
+      "Rome",
+      "Bethel"
+    ],
+    "correctIndex": 0,
+    "reference": "Isaiah 7:14; Matthew 1:23",
+    "explanation": "Immanuel reveals God's presence among His people in Christ.",
+    "category": "Names & Titles of God"
+  },
+  {
+    "id": "q-chatgpt-batch7-217",
+    "level": "intermediate",
+    "question": "What does Jehovah-Jireh mean?",
+    "choices": [
+      "The Lord will provide",
+      "Dead Sea",
+      "Pentecost",
+      "Faith"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 22:14",
+    "explanation": "God provided a ram in place of Isaac, revealing His provision.",
+    "category": "Names & Titles of God"
+  },
+  {
+    "id": "q-chatgpt-batch7-218",
+    "level": "advanced",
+    "question": "What title does Isaiah 9:6 give Jesus that shows His deity and power?",
+    "choices": [
+      "Mighty God",
+      "Prophets",
+      "Fasting",
+      "Ark of the Covenant"
+    ],
+    "correctIndex": 0,
+    "reference": "Isaiah 9:6",
+    "explanation": "Jesus is called Mighty God, proving His divine identity.",
+    "category": "Names & Titles of God"
+  },
+  {
+    "id": "q-chatgpt-batch7-219",
+    "level": "beginner",
+    "question": "Who will return to earth the same way He ascended into heaven?",
+    "choices": [
+      "Hebron",
+      "Nazareth",
+      "Mount of Olives",
+      "Jesus Christ"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 1:11",
+    "explanation": "Angels promised Jesus' visible return.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch7-220",
+    "level": "intermediate",
+    "question": "According to Matthew 24:35, what will never pass away?",
+    "choices": [
+      "Thessalonica",
+      "Jesus' words",
+      "Daniel",
+      "Elijah"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 24:35",
+    "explanation": "Jesus declares that His Word is eternal.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch7-221",
+    "level": "advanced",
+    "question": "According to 1 Thessalonians 4:16, what will the archangel do at Christ's return?",
+    "choices": [
+      "Give a shout",
+      "Peter",
+      "Mary",
+      "Altar"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Thessalonians 4:16",
+    "explanation": "The return of Christ will be announced with a shout and trumpet.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch7-222",
+    "level": "beginner",
+    "question": "Which covenant did God give as a sign that He would never again flood the whole earth?",
+    "choices": [
+      "Nineveh",
+      "Grace",
+      "Faith",
+      "The rainbow"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 9:12–17",
+    "explanation": "God set His bow in the cloud as a covenant sign.",
+    "category": "Feasts & Covenants"
+  },
+  {
+    "id": "q-chatgpt-batch7-223",
+    "level": "intermediate",
+    "question": "Which feast remembers Israel's deliverance from slavery in Egypt?",
+    "choices": [
+      "Peace",
+      "Passover",
+      "Tabernacle",
+      "Corinth"
+    ],
+    "correctIndex": 1,
+    "reference": "Exodus 12:1–28",
+    "explanation": "Passover celebrates God's judgment passing over the houses marked with blood.",
+    "category": "Feasts & Covenants"
+  },
+  {
+    "id": "q-chatgpt-batch7-224",
+    "level": "advanced",
+    "question": "What feast celebrates God giving the Law at Sinai and the Holy Spirit in Acts 2?",
+    "choices": [
+      "Pentecost",
+      "Dead Sea",
+      "Faith",
+      "Peace"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 34:22; Acts 2:1–4",
+    "explanation": "Pentecost marks both the giving of the Law and the birth of the Church.",
+    "category": "Feasts & Covenants"
+  },
+  {
+    "id": "q-chatgpt-batch7-225",
+    "level": "beginner",
+    "question": "In what city did the Holy Spirit first come upon believers?",
+    "choices": [
+      "Jerusalem",
+      "Mount Carmel",
+      "Babylon",
+      "Forgiveness"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 2:1–4",
+    "explanation": "The Church began when the Spirit came at Pentecost in Jerusalem.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch7-226",
+    "level": "intermediate",
+    "question": "What visible sign appeared as the believers were filled with the Holy Spirit?",
+    "choices": [
+      "Sea of Galilee",
+      "Covenant",
+      "Hebron",
+      "Tongues of fire"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 2:3",
+    "explanation": "Tongues of fire rested on each believer at Pentecost.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch7-227",
+    "level": "advanced",
+    "question": "How many were baptized on the day of Pentecost?",
+    "choices": [
+      "About three thousand",
+      "Jerusalem",
+      "Thessalonica",
+      "Ur"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 2:41",
+    "explanation": "Peter's sermon led to the baptism of about 3000 souls.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch7-228",
+    "level": "beginner",
+    "question": "Who is the archangel mentioned by name in the Bible?",
+    "choices": [
+      "Paul",
+      "Saul",
+      "Michael",
+      "Nahum"
+    ],
+    "correctIndex": 2,
+    "reference": "Jude 9; Daniel 10:13",
+    "explanation": "Michael is named as an archangel who defends God's people.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch7-229",
+    "level": "intermediate",
+    "question": "What did the serpent do in Genesis 3?",
+    "choices": [
+      "Deceived Eve",
+      "Zechariah",
+      "Rachel",
+      "Solomon"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 3:1–6",
+    "explanation": "Satan used the serpent to deceive Eve into sinning.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch7-230",
+    "level": "advanced",
+    "question": "Where did Jesus say He saw Satan fall like lightning?",
+    "choices": [
+      "Barnabas",
+      "Hosea",
+      "Abraham",
+      "From heaven"
+    ],
+    "correctIndex": 3,
+    "reference": "Luke 10:18",
+    "explanation": "Jesus spoke of Satan's defeat and fall from heavenly glory.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch7-231",
+    "level": "beginner",
+    "question": "How many commandments were written on the tablets of stone?",
+    "choices": [
+      "Thirty",
+      "Eight",
+      "Fifty",
+      "Ten"
+    ],
+    "correctIndex": 3,
+    "reference": "Exodus 20:1–17",
+    "explanation": "God gave ten foundational commandments to Israel.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch7-232",
+    "level": "intermediate",
+    "question": "How many days was Jesus in the wilderness being tempted?",
+    "choices": [
+      "Forty days",
+      "Eight",
+      "Thirty",
+      "Three"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 4:2",
+    "explanation": "Jesus fasted and overcame temptation for 40 days.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch7-233",
+    "level": "advanced",
+    "question": "How many years did Israel wander in the wilderness?",
+    "choices": [
+      "Thirty",
+      "Seventy",
+      "Eight",
+      "Forty years"
+    ],
+    "correctIndex": 3,
+    "reference": "Numbers 14:33",
+    "explanation": "Israel wandered 40 years due to unbelief.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch7-234",
+    "level": "beginner",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "Saul",
+      "Jeremiah",
+      "Hosea",
+      "Paul"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Samuel 10:1",
+    "explanation": "Saul was anointed by Samuel as Israel's first king.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch7-235",
+    "level": "intermediate",
+    "question": "Who built the temple in Jerusalem?",
+    "choices": [
+      "Leah",
+      "Elizabeth",
+      "Solomon",
+      "Amos"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 6:1",
+    "explanation": "Solomon built the first temple for the Lord.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch7-236",
+    "level": "advanced",
+    "question": "Which wicked king and his wife introduced Baal worship to Israel?",
+    "choices": [
+      "Ahab and Jezebel",
+      "Ruth",
+      "Andrew",
+      "Elijah"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Kings 21:25–26",
+    "explanation": "Ahab and Jezebel promoted idolatry in Israel.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch7-237",
+    "level": "beginner",
+    "question": "Who received the design for the tabernacle on Mount Sinai?",
+    "choices": [
+      "Moses",
+      "Ark of the Covenant",
+      "Gaza",
+      "Thessalonica"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 25:8–9",
+    "explanation": "God gave Moses exact instructions for the tabernacle's design.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch7-238",
+    "level": "intermediate",
+    "question": "What object in the Holy Place had seven branches and provided light?",
+    "choices": [
+      "The golden lampstand",
+      "Gaza",
+      "Justice",
+      "Bethlehem"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 25:31–40",
+    "explanation": "The lampstand illuminated the Holy Place continually.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch7-239",
+    "level": "advanced",
+    "question": "What was inside the Ark of the Covenant?",
+    "choices": [
+      "Jerusalem",
+      "Covenant",
+      "Egypt",
+      "The tablets of the covenant, Aaron's rod, and manna"
+    ],
+    "correctIndex": 3,
+    "reference": "Hebrews 9:4",
+    "explanation": "The ark contained reminders of God's covenant faithfulness.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch7-240",
+    "level": "beginner",
+    "question": "Which chapter is known as the Love Chapter?",
+    "choices": [
+      "Hebron",
+      "Gaza",
+      "Bethlehem",
+      "1 Corinthians 13"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Corinthians 13",
+    "explanation": "Paul defines true Christlike love in this famous chapter.",
+    "category": "Bible Chapter Breakdown"
   }
 ]
