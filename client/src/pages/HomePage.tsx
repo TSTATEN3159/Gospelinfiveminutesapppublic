@@ -10,12 +10,14 @@ import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import ProfilePictureUpload from "../components/ProfilePictureUpload";
 import { DailyVerseHeroCard } from "../components/DailyVerseHeroCard";
 import { KingdomParablesTab } from "../components/KingdomParablesTab";
+import { BibleTriviaTile } from "../components/home/BibleTriviaTile";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
+import { useTriviaHomeStats } from "@/hooks/useTriviaHomeStats";
 import { Book, FileText, Flame, Facebook, Instagram, Loader2, AlertCircle, Heart, Share, Play, BookOpen, Volume2, VolumeX, Crown } from "lucide-react";
 import { Share2 } from "lucide-react";
 import { Capacitor } from '@capacitor/core';
@@ -53,6 +55,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   const { toast } = useToast();
   const t = useTranslations(language);
   const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
+  const { streakDays: triviaStreak, dailyCrowns, highestTitle } = useTriviaHomeStats();
   const hasShownTTSWarning = useRef(false);
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
@@ -241,35 +244,13 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         {/* Hero Daily Verse Card - Bible App Style */}
         <DailyVerseHeroCard onPress={() => setShowVerseModal(true)} />
 
-        {/* Bible Trivia Section */}
-        <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-700">
-          <div className="relative h-40">
-            <img 
-              src={mountainLakeImage}
-              alt="Bible Trivia"
-              className="w-full h-full object-cover"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-          </div>
-          <div className="p-4">
-            <div className="flex items-center mb-3">
-              <div className="w-8 h-8 bg-amber-100 dark:bg-amber-900 rounded-full flex items-center justify-center mr-3">
-                <BookOpen className="w-4 h-4 text-amber-600 dark:text-amber-400" />
-              </div>
-              <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100" data-testid="text-sectionTitle-bibleTrivia">Bible Trivia</h2>
-            </div>
-            <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
-              Test your biblical knowledge with challenging questions from Scripture.
-            </p>
-            <Button 
-              className="w-full bg-amber-600 hover:bg-amber-700" 
-              onClick={() => onNavigate?.('bibletrivia')}
-              data-testid="button-bibleTrivia"
-            >
-              Start Trivia
-            </Button>
-          </div>
-        </div>
+        {/* Bible Trivia Section - World-Class Design */}
+        <BibleTriviaTile 
+          streakDays={triviaStreak}
+          dailyCrowns={dailyCrowns}
+          highestTitle={highestTitle}
+          onStart={() => onNavigate?.('bibletrivia')}
+        />
 
         {/* Bible Study Section */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-700">
