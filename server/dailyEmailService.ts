@@ -240,8 +240,11 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
   try {
     await sgMail.send(msg);
     console.log(`[DailyEmail] ✅ Sent to ${to}`);
-  } catch (error) {
+  } catch (error: any) {
     console.error(`[DailyEmail] ❌ Failed to send to ${to}:`, error);
+    if (error.response?.body?.errors) {
+      console.error('[DailyEmail] SendGrid error details:', JSON.stringify(error.response.body.errors, null, 2));
+    }
     throw error;
   }
 }
