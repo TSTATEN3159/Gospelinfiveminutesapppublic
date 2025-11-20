@@ -57,14 +57,18 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
 
 ## Recent Changes
 
-### Daily Email Reminders (November 20, 2025)
+### Daily Email Reminders & Progress Tracking (November 20, 2025)
 - **Email Infrastructure**: Fully functional daily email reminder system using SendGrid
   - Verified sender email: `info@thegospelin5minutes.org`
   - Daily emails sent at 7:00 AM featuring today's verse, meaning, application, and trivia reminder
   - Beautiful parchment-background email template with white text for readability
   - Visible parchment paper edges with proper padding
   - HTTPS links to published app at `https://thegospelin5minutes.org`
-- **Personalization**: Emails use subscriber's first name in greeting ("Good morning, [FirstName]!")
+- **Email Personalization**: Smart first name detection and usage
+  - Emails use subscriber's first name in greeting ("Good morning, [FirstName]!")
+  - Test endpoint checks database (appUsers and subscribers tables) for existing first names
+  - Accepts optional firstName parameter for manual override
+  - Falls back to "Friend" if no name is found
 - **Unsubscribe Feature**: Full unsubscribe functionality with visible link in email footer
   - Dedicated unsubscribe page (`/unsubscribe`) with user-friendly interface
   - Backend endpoint (`/api/unsubscribe-daily-reminder`) handles opt-out requests
@@ -73,3 +77,9 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - "Daily Reminders" button on DailyVerseCard and DailyVerseHeroCard
   - `/api/subscribe-daily-reminder` endpoint captures user's first name
   - Prevents duplicate subscriptions across tables
+- **Discipleship Progress Tracking Fix**: Dual-layer completion system ensures reliable progress tracking
+  - **Immediate marking**: Items marked complete instantly when users click Next or Next Day buttons
+  - **Backup timer**: Items auto-marked after 2 seconds of viewing (catches passive reading without clicking)
+  - Handles all navigation patterns: rapid clicking, slow reading, back navigation, exiting mid-day
+  - Real-time UI updates via localStorage event dispatching across detail/list views
+  - No duplicate marking issues - storage safely ignores redundant writes
