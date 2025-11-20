@@ -489,7 +489,9 @@
       "Animals",
       "Humans"
     ],
-    "correctIndex": 0
+    "correctIndex": 1,
+    "reference": "Genesis 1:3-5",
+    "explanation": "On the first day of creation, God said 'Let there be light,' and there was light."
   },
   {
     "id": "beginner-1763608652049-1",
@@ -525,7 +527,9 @@
       "Matthew",
       "Andrew"
     ],
-    "correctIndex": 0
+    "correctIndex": 1,
+    "reference": "Matthew 3:13-17",
+    "explanation": "John the Baptist baptized Jesus in the Jordan River, and the heavens opened."
   },
   {
     "id": "beginner-1763608652049-4",
@@ -549,7 +553,9 @@
       "Solomon",
       "Hezekiah"
     ],
-    "correctIndex": 0
+    "correctIndex": 2,
+    "reference": "1 Kings 6:1",
+    "explanation": "King Solomon built the temple in Jerusalem, though his father David had prepared for it."
   },
   {
     "id": "beginner-1763608652049-6",
@@ -801,7 +807,9 @@
       "Isaiah",
       "Ecclesiastes"
     ],
-    "correctIndex": 0
+    "correctIndex": 1,
+    "reference": "Psalm 23:1",
+    "explanation": "'The Lord is my shepherd' begins Psalm 23:1, one of the most beloved psalms written by David."
   },
   {
     "id": "beginner-1763609370686-7",
@@ -825,7 +833,9 @@
       "Paul",
       "James"
     ],
-    "correctIndex": 0
+    "correctIndex": 2,
+    "reference": "Romans 1:1",
+    "explanation": "Paul wrote 13 letters (epistles) in the New Testament, more than any other apostle."
   },
   {
     "id": "beginner-1763609370686-9",
@@ -837,7 +847,9 @@
       "Samuel",
       "Kings"
     ],
-    "correctIndex": 0
+    "correctIndex": 1,
+    "reference": "Judges 16",
+    "explanation": "The story of Samson and Delilah is found in the book of Judges, chapters 13-16."
   },
   {
     "id": "beginner-1763609528267-0",
@@ -1076,6 +1088,126 @@
       "Corinthians",
       "Galatians",
       "Ephesians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Plants",
+      "Man"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-1",
+    "level": "beginner",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "Saul",
+      "David",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-2",
+    "level": "beginner",
+    "question": "What is the longest chapter in the Bible?",
+    "choices": [
+      "Psalm 119",
+      "Psalm 23",
+      "Genesis 1",
+      "Isaiah 53"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-3",
+    "level": "beginner",
+    "question": "In which book of the New Testament is the 'Fruit of the Spirit' described?",
+    "choices": [
+      "Romans",
+      "Galatians",
+      "Ephesians",
+      "Philippians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-4",
+    "level": "beginner",
+    "question": "Who was thrown into the lion's den?",
+    "choices": [
+      "Shadrach",
+      "Meshach",
+      "Daniel",
+      "Ezra"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-5",
+    "level": "beginner",
+    "question": "What miracle did Jesus perform at a wedding in Cana?",
+    "choices": [
+      "Healed a blind man",
+      "Turned water into wine",
+      "Walked on water",
+      "Fed 5000"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-6",
+    "level": "beginner",
+    "question": "What did Moses receive on Mount Sinai?",
+    "choices": [
+      "The Ark of the Covenant",
+      "The Ten Commandments",
+      "The Tabernacle",
+      "The Book of the Law"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-7",
+    "level": "beginner",
+    "question": "Who is known for his wisdom in the Bible?",
+    "choices": [
+      "Moses",
+      "David",
+      "Solomon",
+      "Job"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-8",
+    "level": "beginner",
+    "question": "Who betrayed Jesus for thirty pieces of silver?",
+    "choices": [
+      "Peter",
+      "Judas",
+      "Thomas",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609872640-9",
+    "level": "beginner",
+    "question": "Which prophet was swallowed by a great fish?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Ezekiel",
+      "Jonah"
     ],
     "correctIndex": 0
   },

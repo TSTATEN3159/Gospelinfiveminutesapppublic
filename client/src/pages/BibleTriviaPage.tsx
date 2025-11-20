@@ -518,16 +518,28 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
                               ? "✗ Incorrect – That ends your survival run"
                               : "✗ Not quite right"}
                           </p>
-                          {!lastAnswerCorrect && (
-                            <div className="mt-3 pt-3 border-t border-rose-200 dark:border-rose-800">
-                              <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
-                                The correct answer is:
+                          
+                          <div className="mt-3 pt-3 border-t border-slate-200 dark:border-slate-600">
+                            <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                              Correct answer:
+                            </p>
+                            <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 mb-2">
+                              {String.fromCharCode(65 + currentQuestion.correctIndex)}. {currentQuestion.choices[currentQuestion.correctIndex]}
+                            </p>
+                            
+                            {currentQuestion.reference && (
+                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
+                                <span className="font-semibold">Scripture: </span>
+                                {currentQuestion.reference}
                               </p>
-                              <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
-                                {String.fromCharCode(65 + currentQuestion.correctIndex)}. {currentQuestion.choices[currentQuestion.correctIndex]}
+                            )}
+                            
+                            {currentQuestion.explanation && (
+                              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                {currentQuestion.explanation}
                               </p>
-                            </div>
-                          )}
+                            )}
+                          </div>
                         </div>
                       )}
 

@@ -1,0 +1,321 @@
+You’re absolutely right—if Trivia lies about the Bible, the whole feature is useless. What you’re seeing (Proverbs marked correct instead of Psalms) means:
+
+* The **backend question data itself is wrong** (e.g., `correctIndex` is pointing to the wrong option or the AI “fact” is wrong), **not** just a UI color bug.
+
+We need to fix **two things**:
+
+1. **Guarantee the correct answer is truly correct**
+2. **Show clear, immediate feedback + explanation + reference**
+
+Below is a **safe, concrete way** to do that.
+
+---
+
+## 1. Stop trusting AI for the “correct answer”
+
+Right now your AI generator is probably returning something like:
+
+```json
+{
+  "question": "Which book contains the verse 'The Lord is my shepherd'?",
+  "options": ["Proverbs", "Psalms", "Isaiah", "Ecclesiastes"],
+  "correctIndex": 0,
+  "reference": "Psalm 23:1"
+}
+```
+
+The UI is doing exactly what you told it: it marks `options[correctIndex]` (Proverbs) as correct. The **bug is in the data**.
+
+To **guarantee correctness**, we should **anchor the answers in a curated dataset**, *not* in AI’s memory. AI can help you phrase questions later, but **the correct answer and index must come from your own data.**
+
+### 1.1 Add a curated question set (truth source)
+
+Create a file like:
+
+**`server/staticTriviaQuestions.ts`**
+
+```ts
+// server/staticTriviaQuestions.ts
+
+export type TriviaLevel = "beginner" | "intermediate" | "advanced";
+
+export interface StaticTriviaQuestion {
+  id: string;
+  level: TriviaLevel;
+  question: string;
+  choices: string[];
+  correctIndex: number;
+  reference: string;      // "Psalm 23:1"
+  explanation: string;    // short explanation
+  category?: string;
+}
+
+export const STATIC_TRIVIA_QUESTIONS: StaticTriviaQuestion[] = [
+  {
+    id: "psalm-23-1-book",
+    level: "beginner",
+    question: "Which book contains the verse, “The Lord is my shepherd”?",
+    choices: ["Proverbs", "Psalms", "Isaiah", "Ecclesiastes"],
+    correctIndex: 1, // <-- Psalms, NOT Proverbs
+    reference: "Psalm 23:1",
+    explanation:
+      "“The Lord is my shepherd” begins Psalm 23:1, one of the most loved psalms written by David in the book of Psalms.",
+    category: "oldTestament",
+  },
+
+  // add more beginner questions here…
+
+  // example:
+  {
+    id: "john-3-16-reference",
+    level: "beginner",
+    question: "In which book do we find the verse, “For God so loved the world”?",
+    choices: ["Matthew", "Mark", "Luke", "John"],
+    correctIndex: 3,
+    reference: "John 3:16",
+    explanation:
+      "“For God so loved the world” is found in John 3:16, where Jesus explains God’s love and the gift of eternal life.",
+    category: "gospels",
+  },
+
+  // intermediate, advanced, etc…
+];
+```
+
+You can keep expanding this array over time. Every entry here is **100% under your control and can be checked once for biblical accuracy**.
+
+---
+
+### 1.2 Use curated questions in the trivia route (instead of free AI)
+
+In `server/routes.ts`, change your `/api/bible-trivia` route to draw from this dataset:
+
+```ts
+// server/routes.ts
+import { z } from "zod";
+import {
+  STATIC_TRIVIA_QUESTIONS,
+  TriviaLevel,
+  StaticTriviaQuestion,
+} from "./staticTriviaQuestions";
+
+const bibleTriviaSchema = z.object({
+  level: z.enum(["beginner", "intermediate", "advanced"]).default("beginner"),
+  count: z.number().min(1).max(10).default(10),
+});
+
+function sampleQuestions(level: TriviaLevel, count: number): StaticTriviaQuestion[] {
+  const pool = STATIC_TRIVIA_QUESTIONS.filter((q) => q.level === level);
+  if (pool.length <= count) return pool;
+
+  const indices = Array.from({ length: pool.length }, (_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return indices.slice(0, count).map((idx) => pool[idx]);
+}
+
+app.post("/api/bible-trivia", async (req, res) => {
+  try {
+    const { level, count } = bibleTriviaSchema.parse(req.body);
+    const typedLevel = level as TriviaLevel;
+
+    const questions = sampleQuestions(typedLevel, count);
+
+    res.json({
+      questions: questions.map((q) => ({
+        id: q.id,
+        question: q.question,
+        options: q.choices,
+        correctIndex: q.correctIndex,
+        reference: q.reference,
+        explanation: q.explanation,
+        category: q.category,
+      })),
+    });
+  } catch (err: any) {
+    console.error("Bible trivia error:", err);
+    res.status(500).json({ error: "Failed to get trivia questions." });
+  }
+});
+```
+
+Now the **“Proverbs vs Psalms” type errors disappear**, because **YOU** set the `correctIndex` and reference, not the model.
+
+> Later, if you still want “thousands of questions,” we can design a safe offline pipeline where AI proposes candidates that you verify before adding them to `STATIC_TRIVIA_QUESTIONS`.
+
+---
+
+## 2. Show immediate feedback + explanation + verse reference
+
+Now that the data is correct, let’s make the user experience match what you described:
+
+> “The user should be able to see immediately if their answer was right or wrong, with a short explanation of the right answer that shows what Book and Verse in the Bible contains the right answer.”
+
+### 2.1 Extend the frontend question type
+
+In `client/src/services/triviaService.ts`, make sure `TriviaQuestion` includes `reference` and `explanation`:
+
+```ts
+export interface TriviaQuestion {
+  id: string;
+  text: string;
+  choices: string[];
+  correctIndex: number;
+  reference?: string;
+  explanation?: string;
+}
+```
+
+And in the normalizer, read them from the API:
+
+```ts
+function normalizeQuestion(raw: RawTriviaQuestion, index: number): TriviaQuestion {
+  const text = raw.question ?? raw.text ?? raw.prompt ?? "Question missing from API response";
+  const choices = raw.choices ?? raw.options ?? [];
+  const correctIndex =
+    raw.correctIndex ?? raw.answerIndex ?? raw.correctOptionIndex ?? 0;
+
+  return {
+    id: raw.id ?? String(index),
+    text,
+    choices,
+    correctIndex,
+    reference: raw.reference,
+    explanation: raw.explanation,
+  };
+}
+```
+
+Make sure `RawTriviaQuestion` includes these fields:
+
+```ts
+export interface RawTriviaQuestion {
+  // ...
+  reference?: string;
+  explanation?: string;
+}
+```
+
+---
+
+### 2.2 Color the answers correctly and show explanation
+
+In `BibleTriviaPage.tsx`, adjust the rendering of choices and feedback.
+
+Find the part where you render each choice button. Replace it with logic that:
+
+* After checking:
+
+  * **Correct answer is always green**
+  * If the user chose a wrong answer, **their choice is red**
+
+Example:
+
+```tsx
+{currentQuestion.choices.map((choice, index) => {
+  const isSelected = index === selectedIndex;
+  const isCorrect = index === currentQuestion.correctIndex;
+
+  let variant: "default" | "outline" = "outline";
+  let extraClass = "";
+
+  if (hasCheckedAnswer) {
+    if (isCorrect) {
+      // always highlight the correct answer
+      variant = "default";
+      extraClass = "bg-emerald-600 hover:bg-emerald-600 text-white border-none";
+    } else if (isSelected && !isCorrect) {
+      // user’s wrong choice
+      variant = "default";
+      extraClass = "bg-rose-500 hover:bg-rose-500 text-white border-none";
+    }
+  } else if (isSelected) {
+    variant = "default";
+  }
+
+  return (
+    <Button
+      key={index}
+      type="button"
+      variant={variant}
+      className={cn(
+        "w-full justify-start text-left whitespace-normal",
+        extraClass
+      )}
+      onClick={() => handleOptionClick(index)}
+    >
+      <span className="mr-2 font-semibold">
+        {String.fromCharCode(65 + index)}.
+      </span>
+      <span>{choice}</span>
+    </Button>
+  );
+})}
+```
+
+Then, right under the choices, replace the feedback paragraph with something that uses the reference and explanation:
+
+```tsx
+{hasCheckedAnswer && (
+  <div className="mt-3 space-y-1 text-sm">
+    {lastAnswerCorrect ? (
+      <p className="text-emerald-600 font-semibold">
+        Correct! Well done.
+      </p>
+    ) : (
+      <p className="text-rose-600 font-semibold">
+        That’s not quite right this time.
+      </p>
+    )}
+
+    <p className="text-slate-700">
+      Correct answer:{" "}
+      <span className="font-semibold">
+        {currentQuestion.choices[currentQuestion.correctIndex]}
+      </span>
+      {currentQuestion.reference && (
+        <>
+          {" "}
+          – found in{" "}
+          <span className="font-semibold">{currentQuestion.reference}</span>.
+        </>
+      )}
+    </p>
+
+    {currentQuestion.explanation && (
+      <p className="text-slate-600 text-sm">
+        {currentQuestion.explanation}
+      </p>
+    )}
+  </div>
+)}
+```
+
+Now the user sees:
+
+* **Immediately** whether they were right/wrong
+* The **true correct answer**
+* The **book + verse reference** (e.g., “Psalm 23:1”)
+* A **short explanation** anchored in Scripture
+
+---
+
+## 3. Summary
+
+What we fixed:
+
+1. **Truth source moved from AI to curated data**
+
+   * No more “Proverbs is correct for ‘The Lord is my shepherd’” errors.
+2. **UI now clearly shows:**
+
+   * Green = correct answer, always
+   * Red = your wrong choice
+   * Correct answer text + **book and verse**
+   * Optional short explanation line
+
+If you paste your current `server/ai-trivia-generator.ts` or `/api/bible-trivia` route, I can adapt this exactly to your existing structure instead of you having to wire it yourself—but the key idea is:
+
+> **Never let AI decide what is biblically correct. Let AI help with wording; let *Scripture* and your curated data decide the answer.**
