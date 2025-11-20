@@ -242,7 +242,12 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
 
         <TabsContent value="home" className="px-4 py-4 space-y-4 ios-safe-bottom mt-0">
         {/* Hero Daily Verse Card - Bible App Style */}
-        <DailyVerseHeroCard onPress={() => setShowVerseModal(true)} />
+        <DailyVerseHeroCard 
+          onPress={() => setShowVerseModal(true)}
+          reference={dailyVerse?.reference}
+          text={dailyVerse?.text}
+          loading={loading}
+        />
 
         {/* Bible Trivia Section - World-Class Design */}
         <BibleTriviaTile 

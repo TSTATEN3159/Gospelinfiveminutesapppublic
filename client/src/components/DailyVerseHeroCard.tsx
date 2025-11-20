@@ -1,6 +1,4 @@
 import { Heart, Share2, BookmarkPlus } from "lucide-react";
-import { useQuery } from "@tanstack/react-query";
-import { apiUrl } from "@/lib/api-config";
 import { useToast } from "@/hooks/use-toast";
 import { safeShare } from "@/utils/capabilities";
 import { MoreTranslationsCard } from "./MoreTranslationsCard";
@@ -8,21 +6,21 @@ import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e0171
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
+  reference?: string;
+  text?: string;
+  loading?: boolean;
 }
 
-export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
+export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyVerseHeroCardProps) {
   const { toast } = useToast();
-  const { data: verseData } = useQuery<{ verse: { reference: string; text: string } }>({
-    queryKey: ["/api/daily-verse"],
-  });
 
-  const verse = verseData?.verse;
-  const reference = verse?.reference || "John 3:16";
-  const text = verse?.text || "For God so loved the world, that he gave his only begotten Son...";
+  // Use provided verse data or fallback while loading
+  const displayReference = reference || "John 3:16";
+  const displayText = text || "For God so loved the world, that he gave his only begotten Son...";
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const shareText = `"${text}"\n\n— ${reference}\n\nShared from The Gospel in 5 Minutes`;
+    const shareText = `"${displayText}"\n\n— ${displayReference}\n\nShared from The Gospel in 5 Minutes`;
     const shared = await safeShare({
       title: "Today's Focus Verse",
       text: shareText
@@ -41,8 +39,8 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
     const bookmarks = JSON.parse(localStorage.getItem('bibleBookmarks_v2') || '[]');
     const newBookmark = {
       id: Date.now().toString(),
-      reference,
-      text,
+      reference: displayReference,
+      text: displayText,
       folder: 'My Verses',
       note: '',
       createdAt: new Date().toISOString(),
@@ -53,13 +51,13 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
     
     toast({
       title: "Verse Saved",
-      description: `${reference} saved to My Verses`,
+      description: `${displayReference} saved to My Verses`,
     });
   };
 
   const handleCopy = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const copyText = `${text}\n\n— ${reference}`;
+    const copyText = `${displayText}\n\n— ${displayReference}`;
     try {
       await navigator.clipboard.writeText(copyText);
       toast({
@@ -88,7 +86,7 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
         <div className="relative w-full aspect-[16/10]">
         <img
           src={mountainPeakImage}
-          alt={reference}
+          alt={displayReference}
           className="w-full h-full object-cover"
           loading="eager"
         />
@@ -98,9 +96,9 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
           <p className="text-xs font-semibold text-slate-300/90 tracking-wide uppercase">
             Daily Verse
           </p>
-          <p className="text-sm font-bold text-amber-300 mt-0.5">{reference}</p>
+          <p className="text-sm font-bold text-amber-300 mt-0.5">{displayReference}</p>
           <p className="mt-2 text-[15px] leading-relaxed text-white font-light">
-            {text}
+            {loading ? "Loading today's verse..." : displayText}
           </p>
         </div>
       </div>
@@ -137,7 +135,7 @@ export function DailyVerseHeroCard({ onPress }: DailyVerseHeroCardProps) {
       </div>
 
       <div className="bg-black/95">
-        <MoreTranslationsCard reference={reference} tone="dark" className="mx-4 mt-4 mb-4" />
+        <MoreTranslationsCard reference={displayReference} tone="dark" className="mx-4 mt-4 mb-4" />
       </div>
     </div>
   );

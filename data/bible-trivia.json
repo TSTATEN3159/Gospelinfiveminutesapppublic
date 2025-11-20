@@ -480,6 +480,126 @@
     "correctIndex": 0
   },
   {
+    "id": "beginner-1763608652049-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land and sea",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-1",
+    "level": "beginner",
+    "question": "Who was the giant defeated by David?",
+    "choices": [
+      "Goliath",
+      "Saul",
+      "Absalom",
+      "Samson"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-2",
+    "level": "beginner",
+    "question": "Which book contains the verse 'Trust in the Lord with all your heart'?",
+    "choices": [
+      "Proverbs",
+      "Psalms",
+      "Ecclesiastes",
+      "Song of Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-3",
+    "level": "beginner",
+    "question": "Who baptized Jesus in the Jordan River?",
+    "choices": [
+      "Peter",
+      "John the Baptist",
+      "Matthew",
+      "Andrew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-4",
+    "level": "beginner",
+    "question": "What did Jesus turn water into at a wedding in Cana?",
+    "choices": [
+      "Wine",
+      "Blood",
+      "Juice",
+      "Oil"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-5",
+    "level": "beginner",
+    "question": "Which king of Israel built the temple in Jerusalem?",
+    "choices": [
+      "David",
+      "Saul",
+      "Solomon",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-6",
+    "level": "beginner",
+    "question": "In which book can you find the Beatitudes?",
+    "choices": [
+      "Luke",
+      "Matthew",
+      "Mark",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-7",
+    "level": "beginner",
+    "question": "What was the sign of the covenant between God and Noah?",
+    "choices": [
+      "Rainbow",
+      "Dove",
+      "Circumcision",
+      "Fire"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-8",
+    "level": "beginner",
+    "question": "What does 'Immanuel' mean?",
+    "choices": [
+      "God with us",
+      "Holy One",
+      "Chosen One",
+      "Savior"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763608652049-9",
+    "level": "beginner",
+    "question": "Who wrote the majority of the New Testament letters?",
+    "choices": [
+      "John",
+      "Peter",
+      "Paul",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
     "id": "intermediate-1763607966720-0",
     "level": "intermediate",
     "question": "What is the first book of the Bible?",
