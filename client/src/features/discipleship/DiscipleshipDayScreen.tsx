@@ -90,27 +90,27 @@ export function DiscipleshipDayScreen({
       {/* Content */}
       <div className="flex-1 overflow-y-auto pb-2">
         {currentItem.type === "devotional" && (
-          <div className="rounded-xl bg-gradient-to-br from-amber-50 to-orange-50 dark:from-amber-950/30 dark:to-orange-950/30 p-6 shadow-md border border-amber-100 dark:border-amber-900/50">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="p-2 rounded-lg bg-amber-100 dark:bg-amber-900/50">
-                <Sparkles className="w-5 h-5 text-amber-600 dark:text-amber-400" />
+          <div className="rounded-2xl bg-gradient-to-br from-amber-50/95 to-orange-50/95 dark:from-amber-950/40 dark:to-orange-950/40 p-7 shadow-xl shadow-amber-200/20 dark:shadow-amber-900/10 border border-amber-200/50 dark:border-amber-800/30 backdrop-blur-sm">
+            <div className="flex items-center gap-3 mb-5">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/60 dark:to-orange-900/60 shadow-sm">
+                <Sparkles className="w-5 h-5 text-amber-700 dark:text-amber-300" />
               </div>
-              <h2 className="text-xl font-semibold text-amber-900 dark:text-amber-100">
+              <h2 className="text-xl font-bold text-amber-900 dark:text-amber-50 leading-tight">
                 {currentItem.title}
               </h2>
             </div>
-            <div className="space-y-3 text-amber-950/90 dark:text-amber-50/90 leading-relaxed">
+            <div className="space-y-4 text-amber-950/95 dark:text-amber-50/95 leading-relaxed">
               {currentItem.body.split("\n").map((line: string, idx: number) => {
                 if (line.startsWith("**") && line.endsWith("**")) {
                   const text = line.slice(2, -2);
                   return (
-                    <p key={idx} className="font-semibold text-amber-900 dark:text-amber-200 mt-4 first:mt-0">
+                    <p key={idx} className="font-bold text-amber-900 dark:text-amber-100 mt-5 first:mt-0 text-base">
                       {text}
                     </p>
                   );
                 }
                 return line.trim() ? (
-                  <p key={idx} className="text-base">{line}</p>
+                  <p key={idx} className="text-[15px] leading-relaxed">{line}</p>
                 ) : null;
               })}
             </div>
@@ -118,39 +118,39 @@ export function DiscipleshipDayScreen({
         )}
 
         {currentItem.type === "scripture" && (
-          <div className="rounded-xl bg-gradient-to-br from-sky-50 to-blue-50 dark:from-sky-950/30 dark:to-blue-950/30 p-6 shadow-md border border-sky-100 dark:border-sky-900/50">
-            <div className="flex items-center gap-2 mb-3">
-              <div className="p-2 rounded-lg bg-sky-100 dark:bg-sky-900/50">
-                <BookOpen className="w-5 h-5 text-sky-600 dark:text-sky-400" />
+          <div className="rounded-2xl bg-gradient-to-br from-sky-50/95 to-blue-50/95 dark:from-sky-950/40 dark:to-blue-950/40 p-7 shadow-xl shadow-sky-200/20 dark:shadow-sky-900/10 border border-sky-200/50 dark:border-sky-800/30 backdrop-blur-sm">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="p-2.5 rounded-xl bg-gradient-to-br from-sky-100 to-blue-100 dark:from-sky-900/60 dark:to-blue-900/60 shadow-sm">
+                <BookOpen className="w-5 h-5 text-sky-700 dark:text-sky-300" />
               </div>
               <div className="flex-1">
-                <h2 className="text-lg font-semibold text-sky-900 dark:text-sky-100">
+                <h2 className="text-lg font-bold text-sky-900 dark:text-sky-50 leading-tight">
                   {currentItem.title}
                 </h2>
-                <p className="text-xs text-sky-600 dark:text-sky-400 font-medium mt-0.5">
+                <p className="text-xs text-sky-700 dark:text-sky-300 font-semibold mt-1 tracking-wide">
                   {currentItem.reference} · KJV
                 </p>
               </div>
             </div>
-            <div className="space-y-3 text-sky-950/90 dark:text-sky-50/90 leading-relaxed">
+            <div className="space-y-4 text-sky-950/95 dark:text-sky-50/95 leading-relaxed">
               {currentItem.body.split("\n").map((line: string, idx: number) => {
                 if (line.startsWith("**") && line.endsWith("**")) {
                   const text = line.slice(2, -2);
                   return (
-                    <p key={idx} className="font-semibold text-sky-900 dark:text-sky-200 mt-4 first:mt-0">
+                    <p key={idx} className="font-bold text-sky-900 dark:text-sky-100 mt-5 first:mt-0 text-base">
                       {text}
                     </p>
                   );
                 }
                 if (line.startsWith(">")) {
                   return (
-                    <blockquote key={idx} className="border-l-4 border-sky-300 dark:border-sky-700 pl-4 py-1 italic text-sky-900 dark:text-sky-100 bg-white/50 dark:bg-sky-950/30 rounded-r">
+                    <blockquote key={idx} className="border-l-4 border-sky-400/70 dark:border-sky-600/70 pl-4 py-2 my-3 italic text-sky-900 dark:text-sky-50 bg-white/60 dark:bg-sky-950/40 rounded-r-lg shadow-sm font-serif text-[15px] leading-relaxed">
                       {line.slice(1).trim()}
                     </blockquote>
                   );
                 }
                 return line.trim() ? (
-                  <p key={idx} className="text-base">{line}</p>
+                  <p key={idx} className="text-[15px] leading-relaxed">{line}</p>
                 ) : null;
               })}
             </div>
