@@ -33,7 +33,7 @@
       "James",
       "Ephesians"
     ],
-    "correctIndex": 0
+    "correctIndex": 1
   },
   {
     "id": "beginner-1763607957829-3",
@@ -45,7 +45,7 @@
       "David",
       "Asaph"
     ],
-    "correctIndex": 0
+    "correctIndex": 2
   },
   {
     "id": "beginner-1763607957829-4",
@@ -57,7 +57,7 @@
       "Camel",
       "Horse"
     ],
-    "correctIndex": 0
+    "correctIndex": 1
   },
   {
     "id": "beginner-1763607957829-5",
@@ -81,7 +81,7 @@
       "Jonah",
       "Daniel"
     ],
-    "correctIndex": 0
+    "correctIndex": 2
   },
   {
     "id": "beginner-1763607957829-7",
@@ -105,7 +105,7 @@
       "Animals",
       "Humans"
     ],
-    "correctIndex": 0
+    "correctIndex": 1
   },
   {
     "id": "beginner-1763607957829-9",
@@ -117,7 +117,7 @@
       "Solomon",
       "Samuel"
     ],
-    "correctIndex": 0
+    "correctIndex": 1
   },
   {
     "id": "beginner-1763607967358-0",
@@ -596,6 +596,246 @@
       "Peter",
       "Paul",
       "James"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "beginner-1763609026128-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Plants",
+      "Humans"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "beginner-1763609026128-1",
+    "level": "beginner",
+    "question": "Who defeated the giant Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Jonathan",
+      "Samuel"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "beginner-1763609026128-2",
+    "level": "beginner",
+    "question": "In which book of the Bible is the 'Golden Rule' found?",
+    "choices": [
+      "Matthew",
+      "Luke",
+      "John",
+      "Mark"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609026128-3",
+    "level": "beginner",
+    "question": "What was the first miracle performed by Jesus?",
+    "choices": [
+      "Walking on water",
+      "Feeding the 5000",
+      "Turning water into wine",
+      "Healing the blind"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "beginner-1763609026128-4",
+    "level": "beginner",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Isaiah",
+      "Job"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "beginner-1763609026128-5",
+    "level": "beginner",
+    "question": "What does the book of Psalms primarily consist of?",
+    "choices": [
+      "Prophecies",
+      "Songs and prayers",
+      "Laws",
+      "Genealogies"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "beginner-1763609026128-6",
+    "level": "beginner",
+    "question": "Who received the Ten Commandments from God?",
+    "choices": [
+      "Aaron",
+      "Moses",
+      "Joshua",
+      "Abraham"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "beginner-1763609026128-7",
+    "level": "beginner",
+    "question": "Which apostle denied Jesus three times?",
+    "choices": [
+      "Peter",
+      "John",
+      "Judas",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609026128-8",
+    "level": "beginner",
+    "question": "In which garden did Jesus pray before His crucifixion?",
+    "choices": [
+      "Eden",
+      "Gethsemane",
+      "Golgotha",
+      "Bethlehem"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "beginner-1763609026128-9",
+    "level": "beginner",
+    "question": "Who interpreted dreams for Pharaoh?",
+    "choices": [
+      "Joseph",
+      "Daniel",
+      "Moses",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-0",
+    "level": "beginner",
+    "question": "What fruit did Adam and Eve eat in the Garden of Eden?",
+    "choices": [
+      "Apple",
+      "Fig",
+      "Grape",
+      "Pomegranate"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-1",
+    "level": "beginner",
+    "question": "Who fought against Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Jonathan",
+      "Solomon"
+    ],
+    "correctIndex": 1
+  },
+  {
+    "id": "beginner-1763609370686-2",
+    "level": "beginner",
+    "question": "Which king is known for his wisdom?",
+    "choices": [
+      "Saul",
+      "David",
+      "Solomon",
+      "Hezekiah"
+    ],
+    "correctIndex": 2
+  },
+  {
+    "id": "beginner-1763609370686-3",
+    "level": "beginner",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Moses",
+      "Daniel",
+      "Jonah",
+      "Elijah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-4",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "God is love.",
+      "Pray without ceasing.",
+      "I can do all things."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-5",
+    "level": "beginner",
+    "question": "What did Jesus turn water into at the wedding in Cana?",
+    "choices": [
+      "Wine",
+      "Oil",
+      "Vinegar",
+      "Juice"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-6",
+    "level": "beginner",
+    "question": "Which book contains the verse 'The Lord is my shepherd'?",
+    "choices": [
+      "Proverbs",
+      "Psalms",
+      "Isaiah",
+      "Ecclesiastes"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-7",
+    "level": "beginner",
+    "question": "What miracle did Jesus perform with five loaves and two fish?",
+    "choices": [
+      "He fed 5,000 people.",
+      "He turned them into wine.",
+      "He multiplied them into a banquet.",
+      "He healed the sick."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-8",
+    "level": "beginner",
+    "question": "Who wrote most of the letters in the New Testament?",
+    "choices": [
+      "Peter",
+      "John",
+      "Paul",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609370686-9",
+    "level": "beginner",
+    "question": "In which book do we find the story of Samson and Delilah?",
+    "choices": [
+      "Ruth",
+      "Judges",
+      "Samuel",
+      "Kings"
     ],
     "correctIndex": 0
   },

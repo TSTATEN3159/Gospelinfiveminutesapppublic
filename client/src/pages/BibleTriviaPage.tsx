@@ -388,24 +388,26 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
                 </Button>
               </div>
 
-              <Card className="shadow-lg">
-                <CardHeader>
+              <Card className="shadow-xl border-2 bg-gradient-to-br from-white via-amber-50/30 to-white dark:from-slate-800 dark:via-amber-900/10 dark:to-slate-800">
+                <CardHeader className="border-b border-amber-200/50 dark:border-amber-700/30 bg-gradient-to-r from-amber-50/50 to-orange-50/30 dark:from-slate-700/50 dark:to-slate-700/30">
                   <div className="flex items-center justify-between mb-1">
                     <div className="flex flex-col">
-                      <span className="text-xs uppercase tracking-wide text-slate-500 dark:text-slate-400">
+                      <span className="text-xs uppercase tracking-wide font-semibold text-amber-700 dark:text-amber-400">
                         {headerTitle}
                       </span>
-                      <span className="text-xs text-slate-500 dark:text-slate-400">
+                      <span className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">
                         {headerSubtitle}
                       </span>
                     </div>
-                    <span className="text-xs text-slate-500 dark:text-slate-400">
-                      Correct: <span className="font-semibold">{correctCount}</span>
-                      {questions.length ? ` / ${questions.length}` : null}
-                    </span>
+                    <div className="flex flex-col items-end">
+                      <span className="text-xs font-medium text-slate-500 dark:text-slate-400">Score</span>
+                      <span className="text-lg font-bold text-amber-600 dark:text-amber-400">
+                        {correctCount}<span className="text-sm text-slate-500">/{questions.length || 0}</span>
+                      </span>
+                    </div>
                   </div>
                   {mode === "classic" && (
-                    <CardTitle className="text-lg font-semibold">
+                    <CardTitle className="text-lg font-bold text-slate-800 dark:text-slate-100 mt-2">
                       {currentLevelConfig.label} Level
                     </CardTitle>
                   )}
@@ -429,38 +431,38 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
 
                   {phase !== "loading" && currentQuestion && (
                     <>
-                      <div className="flex items-center justify-between text-xs text-slate-500 dark:text-slate-400">
-                        <span>
+                      <div className="flex items-center justify-between py-2 px-3 bg-amber-50/50 dark:bg-amber-900/20 rounded-lg border border-amber-100 dark:border-amber-800/30">
+                        <span className="text-xs font-semibold text-amber-700 dark:text-amber-400">
                           Question {questionNumber} of {questions.length}
                         </span>
                         {currentQuestion.reference && (
-                          <span className="italic">
-                            {powerUpsInGame.revealedScripture
-                              ? `Scripture: ${currentQuestion.reference}`
-                              : "Scripture hidden (use Reveal Scripture)"}
+                          <span className="text-xs italic text-slate-600 dark:text-slate-300">
+                            {currentQuestion.reference}
                           </span>
                         )}
                       </div>
 
-                      <p className="text-base text-slate-800 dark:text-slate-200 mt-1">
-                        {currentQuestion.text}
-                      </p>
+                      <div className="bg-gradient-to-br from-slate-50 to-slate-100/50 dark:from-slate-700/30 dark:to-slate-800/30 p-4 rounded-xl border border-slate-200 dark:border-slate-600">
+                        <p className="text-lg leading-relaxed text-slate-800 dark:text-slate-100 font-medium">
+                          {currentQuestion.text}
+                        </p>
+                      </div>
 
-                      <div className="space-y-2 mt-3">
+                      <div className="space-y-3 mt-4">
                         {currentQuestion.choices.map((choice, index) => {
                           if (!availableChoices.includes(index)) {
                             return (
                               <Button
                                 key={index}
                                 variant="outline"
-                                className="w-full justify-start text-left whitespace-normal opacity-40 cursor-not-allowed"
+                                className="w-full justify-start text-left whitespace-normal opacity-40 cursor-not-allowed h-auto py-3 px-4"
                                 disabled
                                 data-testid={`option-${index}`}
                               >
-                                <span className="mr-2 font-semibold">
+                                <span className="mr-3 font-bold text-base">
                                   {String.fromCharCode(65 + index)}.
                                 </span>
-                                <span>{choice}</span>
+                                <span className="text-sm">{choice}</span>
                               </Button>
                             );
                           }
@@ -483,90 +485,94 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
                                   : "outline"
                               }
                               className={cn(
-                                "w-full justify-start text-left whitespace-normal",
-                                isCorrect && "bg-emerald-500 hover:bg-emerald-600",
-                                isWrong && "bg-rose-500 hover:bg-rose-600"
+                                "w-full justify-start text-left whitespace-normal h-auto py-3 px-4 transition-all",
+                                isCorrect && "bg-emerald-600 hover:bg-emerald-700 border-emerald-700 text-white shadow-lg shadow-emerald-500/30",
+                                isWrong && "bg-rose-600 hover:bg-rose-700 border-rose-700 text-white shadow-lg shadow-rose-500/30",
+                                isSelected && !hasCheckedAnswer && "border-amber-500 bg-amber-50 dark:bg-amber-900/20"
                               )}
                               onClick={() => handleOptionClick(index)}
                               disabled={hasCheckedAnswer}
                               data-testid={`option-${index}`}
                             >
-                              <span className="mr-2 font-semibold">
+                              <span className="mr-3 font-bold text-base">
                                 {String.fromCharCode(65 + index)}.
                               </span>
-                              <span>{choice}</span>
+                              <span className="text-sm font-medium">{choice}</span>
                             </Button>
                           );
                         })}
                       </div>
 
                       {hasCheckedAnswer && lastAnswerCorrect !== null && (
-                        <p
-                          className={cn(
-                            "text-sm mt-2",
-                            lastAnswerCorrect ? "text-emerald-600" : "text-rose-600"
+                        <div className={cn(
+                          "mt-4 p-4 rounded-xl border-2",
+                          lastAnswerCorrect 
+                            ? "bg-emerald-50 dark:bg-emerald-900/20 border-emerald-300 dark:border-emerald-700" 
+                            : "bg-rose-50 dark:bg-rose-900/20 border-rose-300 dark:border-rose-700"
+                        )}>
+                          <p className={cn(
+                            "text-base font-semibold mb-2",
+                            lastAnswerCorrect ? "text-emerald-700 dark:text-emerald-400" : "text-rose-700 dark:text-rose-400"
+                          )}>
+                            {lastAnswerCorrect
+                              ? "✓ Excellent! That's correct!"
+                              : mode === "survival"
+                              ? "✗ Incorrect – That ends your survival run"
+                              : "✗ Not quite right"}
+                          </p>
+                          {!lastAnswerCorrect && (
+                            <div className="mt-3 pt-3 border-t border-rose-200 dark:border-rose-800">
+                              <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
+                                The correct answer is:
+                              </p>
+                              <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400">
+                                {String.fromCharCode(65 + currentQuestion.correctIndex)}. {currentQuestion.choices[currentQuestion.correctIndex]}
+                              </p>
+                            </div>
                           )}
-                        >
-                          {lastAnswerCorrect
-                            ? "✓ Correct! Well done."
-                            : mode === "survival"
-                            ? "✗ That ends your run in Survival mode – check your results below."
-                            : "✗ Not quite right – keep going, you're learning!"}
-                        </p>
+                        </div>
                       )}
 
-                      {/* Power-ups row */}
-                      {stats && phase === "question" && !hasCheckedAnswer && (
-                        <div className="flex flex-wrap gap-2 text-xs mt-3">
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={useSecondChance}
-                            disabled={!canUseSecondChance}
-                            data-testid="powerup-second-chance"
-                          >
-                            Second Chance ({stats.powerUps.secondChance})
-                          </Button>
+                      {/* Power-up: Remove 2 */}
+                      {stats && phase === "question" && !hasCheckedAnswer && canUseRemoveTwo && (
+                        <div className="mt-4 p-3 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/30 rounded-lg">
+                          <p className="text-xs font-medium text-slate-600 dark:text-slate-300 mb-2">
+                            Need help? Use a power-up:
+                          </p>
                           <Button
                             size="sm"
                             variant="outline"
                             onClick={useRemoveTwo}
                             disabled={!canUseRemoveTwo}
                             data-testid="powerup-remove-two"
+                            className="bg-white dark:bg-slate-700 border-amber-300 dark:border-amber-600 hover:bg-amber-50 dark:hover:bg-amber-900/30"
                           >
-                            Remove 2 ({stats.powerUps.removeTwo})
-                          </Button>
-                          <Button
-                            size="sm"
-                            variant="outline"
-                            onClick={useRevealScripture}
-                            disabled={!canUseRevealScripture}
-                            data-testid="powerup-reveal-scripture"
-                          >
-                            Reveal Scripture ({stats.powerUps.revealScripture})
+                            🎯 Remove 2 Wrong Answers ({stats.powerUps.removeTwo} available)
                           </Button>
                         </div>
                       )}
 
-                      <div className="flex gap-3 pt-4">
+                      <div className="flex gap-3 pt-4 border-t border-slate-200 dark:border-slate-600 mt-4">
                         <Button
-                          variant="outline"
-                          className="flex-1"
+                          variant="default"
+                          size="lg"
+                          className="flex-1 bg-amber-600 hover:bg-amber-700 text-white font-semibold"
                           onClick={handleCheckAnswer}
                           disabled={selectedIndex === null || hasCheckedAnswer}
                           data-testid="button-check-answer"
                         >
-                          {hasCheckedAnswer ? "Answer checked" : "Check answer"}
+                          {hasCheckedAnswer ? "✓ Answer Checked" : "Check Answer"}
                         </Button>
 
                         {phase === "question" && mode !== "survival" && (
                           <Button
-                            className="flex-1"
+                            size="lg"
+                            className="flex-1 bg-blue-600 hover:bg-blue-700 font-semibold"
                             onClick={handleNextQuestion}
                             disabled={!hasCheckedAnswer}
                             data-testid="button-next-question"
                           >
-                            {questionNumber === questions.length ? "See results" : "Next question"}
+                            {questionNumber === questions.length ? "See Results →" : "Next Question →"}
                           </Button>
                         )}
                       </div>
