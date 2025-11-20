@@ -1,0 +1,1154 @@
+Love it. Let’s turn this into the **“I have to play this today”** part of your app.
+
+Since you asked to “implement all of this immediately,” I’ll give you **concrete code** you can drop into Replit. You don’t have to use all of it at once, but everything is wired to support:
+
+* Daily Challenge + streaks + crowns
+* Titles (Bible Student / Scholar / Expert / Defender of the Faith)
+* Power-ups
+* Mastery dashboard (OT / NT / Gospels / Epistles / People / Geography)
+* Friends / family challenge leaderboard
+* Endgame modes (Survival + Speed Round)
+
+I’ll focus on **core logic and UI**, and leave DB wiring as simple in-memory placeholders you or Replit can tie into your real user system.
+
+---
+
+## 0. Big Picture – What We’re Adding
+
+We’ll add three main layers:
+
+1. **Backend (server/routes.ts)**
+
+   * Trivia stats store (streaks, titles, mastery, power-ups)
+   * Endpoints:
+
+     * `GET /api/trivia/stats`
+     * `POST /api/trivia/record-result`
+     * `GET /api/trivia/leaderboard`
+     * (Existing) `POST /api/bible-trivia` for questions
+
+2. **Frontend Service (client/src/services/triviaService.ts)**
+
+   * Already fetching questions
+   * Now also:
+
+     * `getTriviaStats`
+     * `recordTriviaResult`
+     * `getTriviaLeaderboard`
+
+3. **Frontend UI (client/src/pages/BibleTriviaPage.tsx)**
+
+   * Adds:
+
+     * Tabs for **Classic Levels / Daily Challenge / Survival / Speed Round**
+     * Tracks streak, crowns, titles, mastery
+     * Shows friend leaderboard
+     * Uses power-ups (Second Chance, Remove 2 wrong, Reveal Reference)
+
+---
+
+## 1. Backend – Stats, Leaderboard, and Result Recording
+
+### 1.1 Add types + in-memory store (server/routes.ts)
+
+At the **top** of `server/routes.ts` (or near other types), add:
+
+```ts
+// server/routes.ts (near top)
+
+interface TriviaStats {
+  userId: string;
+  displayName: string;
+
+  // Daily streak
+  dailyStreak: number;
+  lastDailyDate: string | null; // ISO date string "YYYY-MM-DD"
+
+  // Crowns earned for daily 9/10+
+  dailyCrowns: number;
+
+  // Titles
+  highestTitle: "None" | "Bible Student" | "Bible Scholar" | "Bible Expert" | "Defender of the Faith";
+
+  // Mastery percentages (0–100)
+  mastery: {
+    oldTestament: number;
+    gospels: number;
+    epistles: number;
+    prophecy: number;
+    peopleOfGod: number;
+    geography: number;
+  };
+
+  // Power-ups owned
+  powerUps: {
+    secondChance: number;
+    revealScripture: number;
+    removeTwo: number;
+  };
+}
+
+// In-memory store – REPLACE with DB in production
+const triviaStatsStore = new Map<string, TriviaStats>();
+
+// Helper – get or create default stats for a user
+function getOrCreateTriviaStats(userId: string, displayName: string = "Guest"): TriviaStats {
+  const existing = triviaStatsStore.get(userId);
+  if (existing) return existing;
+
+  const initial: TriviaStats = {
+    userId,
+    displayName,
+    dailyStreak: 0,
+    lastDailyDate: null,
+    dailyCrowns: 0,
+    highestTitle: "None",
+    mastery: {
+      oldTestament: 0,
+      gospels: 0,
+      epistles: 0,
+      prophecy: 0,
+      peopleOfGod: 0,
+      geography: 0,
+    },
+    powerUps: {
+      secondChance: 0,
+      revealScripture: 0,
+      removeTwo: 0,
+    },
+  };
+
+  triviaStatsStore.set(userId, initial);
+  return initial;
+}
+
+// For now we’ll just use a fake user; wire this into your auth later
+function getCurrentUserId(req: any): { userId: string; displayName: string } {
+  // TODO: replace with real auth
+  return { userId: "demo-user-1", displayName: "Guest" };
+}
+```
+
+### 1.2 Stats endpoints
+
+Still in `server/routes.ts`, **after your existing trivia route**, add:
+
+```ts
+// Get current user's trivia stats
+app.get("/api/trivia/stats", (req, res) => {
+  const { userId, displayName } = getCurrentUserId(req);
+  const stats = getOrCreateTriviaStats(userId, displayName);
+  res.json(stats);
+});
+
+// Record a game result (used for daily, classic, survival, speed, etc.)
+const recordResultSchema = z.object({
+  mode: z.enum(["classic", "daily", "survival", "speed"]),
+  level: z.enum(["beginner", "intermediate", "advanced"]).optional(),
+  correctCount: z.number().int().min(0),
+  totalCount: z.number().int().min(1),
+  categoriesHit: z.array(
+    z.enum(["oldTestament", "gospels", "epistles", "prophecy", "peopleOfGod", "geography"])
+  ).optional(),
+});
+
+app.post("/api/trivia/record-result", (req, res) => {
+  try {
+    const { userId, displayName } = getCurrentUserId(req);
+    const stats = getOrCreateTriviaStats(userId, displayName);
+    const { mode, level, correctCount, totalCount, categoriesHit = [] } = recordResultSchema.parse(req.body);
+
+    // 1) Daily streak & crowns
+    if (mode === "daily") {
+      const today = new Date().toISOString().slice(0, 10); // YYYY-MM-DD
+
+      if (stats.lastDailyDate === today) {
+        // already played today – no streak change
+      } else if (stats.lastDailyDate === null) {
+        stats.dailyStreak = 1;
+      } else {
+        // check if last day is exactly yesterday
+        const last = new Date(stats.lastDailyDate);
+        const diffMs = new Date(today).getTime() - last.getTime();
+        const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+        if (diffDays === 1) {
+          stats.dailyStreak += 1;
+        } else {
+          stats.dailyStreak = 1; // streak reset
+        }
+      }
+
+      stats.lastDailyDate = today;
+
+      if (correctCount >= 9) {
+        stats.dailyCrowns += 1;
+        // occasional reward: power-up
+        stats.powerUps.secondChance += 1;
+      }
+    }
+
+    // 2) Titles from classic levels
+    if (mode === "classic" && level && correctCount >= 9) {
+      if (level === "beginner" && stats.highestTitle === "None") {
+        stats.highestTitle = "Bible Student";
+      } else if (level === "intermediate") {
+        if (stats.highestTitle === "None" || stats.highestTitle === "Bible Student") {
+          stats.highestTitle = "Bible Scholar";
+        }
+      } else if (level === "advanced") {
+        if (
+          stats.highestTitle === "None" ||
+          stats.highestTitle === "Bible Student" ||
+          stats.highestTitle === "Bible Scholar"
+        ) {
+          stats.highestTitle = "Bible Expert";
+        }
+      }
+    }
+
+    // 3) Endgame “Defender of the Faith” for perfect advanced or strong survival
+    if (
+      (mode === "classic" && level === "advanced" && correctCount === totalCount) ||
+      (mode === "survival" && correctCount >= 30)
+    ) {
+      stats.highestTitle = "Defender of the Faith";
+      // Bonus power-ups
+      stats.powerUps.secondChance += 2;
+      stats.powerUps.revealScripture += 2;
+    }
+
+    // 4) Mastery update – simple incremental approach
+    categoriesHit.forEach((cat) => {
+      const current = stats.mastery[cat];
+      stats.mastery[cat] = Math.min(100, current + Math.round((correctCount / totalCount) * 5));
+    });
+
+    triviaStatsStore.set(userId, stats);
+    res.json(stats);
+  } catch (err: any) {
+    console.error("record-result error:", err);
+    res.status(400).json({ error: err.message ?? "Invalid payload" });
+  }
+});
+
+// Simple friends leaderboard (top stats by dailyStreak + crowns)
+app.get("/api/trivia/leaderboard", (req, res) => {
+  const all = Array.from(triviaStatsStore.values());
+  const sorted = all
+    .slice()
+    .sort((a, b) => {
+      // primary: dailyStreak, secondary: crowns
+      if (b.dailyStreak !== a.dailyStreak) {
+        return b.dailyStreak - a.dailyStreak;
+      }
+      return b.dailyCrowns - a.dailyCrowns;
+    })
+    .slice(0, 20); // top 20
+
+  res.json(sorted);
+});
+```
+
+> ✅ Now the backend can track streaks, crowns, titles, power-ups, mastery, and leaderboards.
+
+---
+
+## 2. Frontend Service – Stats + Leaderboard + Results
+
+Update `client/src/services/triviaService.ts` to include stats and leaderboard calls.
+
+Replace your current file with this full version (it includes the earlier question-fetch logic):
+
+```ts
+// client/src/services/triviaService.ts
+
+export type TriviaLevel = "beginner" | "intermediate" | "advanced";
+
+export interface RawTriviaQuestion {
+  id?: string;
+  question?: string;
+  text?: string;
+  prompt?: string;
+  options?: string[];
+  choices?: string[];
+  correctIndex?: number;
+  answerIndex?: number;
+  correctOptionIndex?: number;
+  reference?: string;
+  verseReference?: string;
+  scripture?: string;
+  category?: "oldTestament" | "gospels" | "epistles" | "prophecy" | "peopleOfGod" | "geography";
+}
+
+export interface TriviaQuestion {
+  id: string;
+  text: string;
+  choices: string[];
+  correctIndex: number;
+  reference?: string;
+  category?: RawTriviaQuestion["category"];
+}
+
+function normalizeQuestion(raw: RawTriviaQuestion, index: number): TriviaQuestion {
+  const text = raw.question ?? raw.text ?? raw.prompt ?? "Question missing from API response";
+  const choices = raw.choices ?? raw.options ?? [];
+  const correctIndex =
+    raw.correctIndex ?? raw.answerIndex ?? raw.correctOptionIndex ?? 0;
+  const reference = raw.reference ?? raw.verseReference ?? raw.scripture ?? undefined;
+
+  return {
+    id: raw.id ?? String(index),
+    text,
+    choices,
+    correctIndex,
+    reference,
+    category: raw.category,
+  };
+}
+
+export async function fetchBibleTriviaQuestions(
+  level: TriviaLevel,
+  count = 10
+): Promise<TriviaQuestion[]> {
+  const response = await fetch("/api/bible-trivia", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      level,
+      count,
+      useAI: true,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch bible trivia: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+  const rawList: RawTriviaQuestion[] = Array.isArray(data.questions)
+    ? data.questions
+    : Array.isArray(data)
+    ? data
+    : [];
+
+  return rawList.map(normalizeQuestion);
+}
+
+// ─────────── Stats / Leaderboard / Result recording ───────────
+
+export type TriviaMode = "classic" | "daily" | "survival" | "speed";
+
+export interface TriviaStats {
+  userId: string;
+  displayName: string;
+  dailyStreak: number;
+  lastDailyDate: string | null;
+  dailyCrowns: number;
+  highestTitle: "None" | "Bible Student" | "Bible Scholar" | "Bible Expert" | "Defender of the Faith";
+  mastery: {
+    oldTestament: number;
+    gospels: number;
+    epistles: number;
+    prophecy: number;
+    peopleOfGod: number;
+    geography: number;
+  };
+  powerUps: {
+    secondChance: number;
+    revealScripture: number;
+    removeTwo: number;
+  };
+}
+
+export async function getTriviaStats(): Promise<TriviaStats> {
+  const res = await fetch("/api/trivia/stats");
+  if (!res.ok) throw new Error("Failed to load trivia stats");
+  return res.json();
+}
+
+export async function recordTriviaResult(params: {
+  mode: TriviaMode;
+  level?: TriviaLevel;
+  correctCount: number;
+  totalCount: number;
+  categoriesHit?: RawTriviaQuestion["category"][];
+}): Promise<TriviaStats> {
+  const res = await fetch("/api/trivia/record-result", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) throw new Error("Failed to record trivia result");
+  return res.json();
+}
+
+export async function getTriviaLeaderboard(): Promise<TriviaStats[]> {
+  const res = await fetch("/api/trivia/leaderboard");
+  if (!res.ok) throw new Error("Failed to load leaderboard");
+  return res.json();
+}
+```
+
+---
+
+## 3. Frontend UI – All Modes, Dashboard, Friend Challenge
+
+Now here’s the big one: a **full BibleTriviaPage** that includes:
+
+* Tabs: **Classic Levels / Daily / Survival / Speed**
+* Right-side **dashboard**:
+
+  * Streak, crowns, best title
+  * Mastery bars
+  * Power-ups
+  * Friends leaderboard (for now, global “friends” = top users in store)
+* Game logic for:
+
+  * Classic (Beginner → Intermediate → Advanced)
+  * Daily (one round per calendar day)
+  * Survival (play until wrong)
+  * Speed (timer per question, but simple for now)
+
+> You can replace `client/src/pages/BibleTriviaPage.tsx` with this file.
+
+If your app expects a different layout wrapper, Replit can wrap this in your existing `<Page>` shell.
+
+```tsx
+// client/src/pages/BibleTriviaPage.tsx
+import { useEffect, useMemo, useState } from "react";
+import {
+  fetchBibleTriviaQuestions,
+  TriviaLevel,
+  TriviaQuestion,
+  TriviaMode,
+  getTriviaStats,
+  recordTriviaResult,
+  getTriviaLeaderboard,
+  TriviaStats,
+} from "@/services/triviaService";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+type GamePhase = "loading" | "question" | "results" | "idle";
+
+type Tab = "classic" | "daily" | "survival" | "speed";
+
+interface PowerUpState {
+  secondChanceUsed: boolean;
+  removeTwoUsed: boolean;
+  revealedScripture: boolean;
+}
+
+const LEVELS: { key: TriviaLevel; label: string; titleOnPass: string }[] = [
+  { key: "beginner", label: "Beginner", titleOnPass: "Bible Student" },
+  { key: "intermediate", label: "Intermediate", titleOnPass: "Bible Scholar" },
+  { key: "advanced", label: "Advanced", titleOnPass: "Bible Expert" },
+];
+
+export default function BibleTriviaPage() {
+  const [tab, setTab] = useState<Tab>("classic");
+
+  // Game state
+  const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
+  const [mode, setMode] = useState<TriviaMode>("classic");
+  const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [phase, setPhase] = useState<GamePhase>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(null);
+  const [hasCheckedAnswer, setHasCheckedAnswer] = useState(false);
+  const [availableChoices, setAvailableChoices] = useState<number[]>([]); // for Remove Two
+
+  // Stats / leaderboard
+  const [stats, setStats] = useState<TriviaStats | null>(null);
+  const [leaderboard, setLeaderboard] = useState<TriviaStats[]>([]);
+  const [loadingStats, setLoadingStats] = useState(true);
+  const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
+
+  // Power-ups
+  const [powerUpsInGame, setPowerUpsInGame] = useState<PowerUpState>({
+    secondChanceUsed: false,
+    removeTwoUsed: false,
+    revealedScripture: false,
+  });
+
+  const currentLevelConfig = LEVELS[currentLevelIndex];
+  const currentQuestion = questions[currentQuestionIndex];
+
+  // Load initial stats and leaderboard
+  useEffect(() => {
+    (async () => {
+      try {
+        setLoadingStats(true);
+        const s = await getTriviaStats();
+        setStats(s);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingStats(false);
+      }
+    })();
+
+    (async () => {
+      try {
+        setLoadingLeaderboard(true);
+        const lb = await getTriviaLeaderboard();
+        setLeaderboard(lb);
+      } catch (err) {
+        console.error(err);
+      } finally {
+        setLoadingLeaderboard(false);
+      }
+    })();
+  }, []);
+
+  // When tab changes, reset and start appropriate mode
+  useEffect(() => {
+    if (tab === "classic") {
+      setMode("classic");
+      setCurrentLevelIndex(0);
+      startGame("classic", "beginner");
+    } else if (tab === "daily") {
+      setMode("daily");
+      startGame("daily", "intermediate"); // moderate difficulty daily
+    } else if (tab === "survival") {
+      setMode("survival");
+      setCurrentLevelIndex(2); // advanced-ish questions
+      startGame("survival", "advanced");
+    } else if (tab === "speed") {
+      setMode("speed");
+      setCurrentLevelIndex(1); // intermediate for speed
+      startGame("speed", "intermediate");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [tab]);
+
+  async function startGame(gameMode: TriviaMode, level: TriviaLevel) {
+    try {
+      setPhase("loading");
+      setErrorMessage(null);
+      setQuestions([]);
+      setCurrentQuestionIndex(0);
+      setSelectedIndex(null);
+      setCorrectCount(0);
+      setLastAnswerCorrect(null);
+      setHasCheckedAnswer(false);
+      setAvailableChoices([]);
+
+      // Reset power-up state for this round
+      setPowerUpsInGame({
+        secondChanceUsed: false,
+        removeTwoUsed: false,
+        revealedScripture: false,
+      });
+
+      const fetched = await fetchBibleTriviaQuestions(level, 10);
+      if (!fetched.length) throw new Error("No questions returned from trivia API");
+
+      setQuestions(fetched);
+      setAvailableChoices(fetched[0].choices.map((_, idx) => idx));
+      setPhase("question");
+    } catch (err: any) {
+      console.error(err);
+      setErrorMessage(err.message ?? "Unable to load trivia questions.");
+      setPhase("idle");
+    }
+  }
+
+  function handleOptionClick(index: number) {
+    if (phase !== "question") return;
+    if (!availableChoices.includes(index)) return; // can't pick removed options
+    setSelectedIndex(index);
+    setHasCheckedAnswer(false);
+    setLastAnswerCorrect(null);
+  }
+
+  function handleCheckAnswer() {
+    if (selectedIndex === null || phase !== "question") return;
+    const isCorrect = selectedIndex === currentQuestion.correctIndex;
+    setLastAnswerCorrect(isCorrect);
+    setHasCheckedAnswer(true);
+    if (isCorrect) {
+      setCorrectCount((prev) => prev + 1);
+    } else if (mode === "survival") {
+      // Survival ends on first wrong
+      finishGame();
+    }
+  }
+
+  function finishGame() {
+    setPhase("results");
+    // Collect categories hit for mastery
+    const categories = questions
+      .map((q) => q.category)
+      .filter((c): c is NonNullable<typeof c> => Boolean(c));
+    const uniqueCats = Array.from(new Set(categories));
+
+    recordTriviaResult({
+      mode,
+      level: currentLevelConfig?.key,
+      correctCount,
+      totalCount: questions.length,
+      categoriesHit: uniqueCats,
+    })
+      .then((updated) => {
+        setStats(updated);
+        // reload leaderboard
+        return getTriviaLeaderboard();
+      })
+      .then((lb) => setLeaderboard(lb))
+      .catch((err) => console.error("recordTriviaResult error:", err));
+  }
+
+  function handleNextQuestion() {
+    if (!hasCheckedAnswer) return;
+    const isLast = currentQuestionIndex === questions.length - 1;
+    if (mode !== "survival" && isLast) {
+      finishGame();
+    } else if (!isLast) {
+      const nextIndex = currentQuestionIndex + 1;
+      setCurrentQuestionIndex(nextIndex);
+      setSelectedIndex(null);
+      setHasCheckedAnswer(false);
+      setLastAnswerCorrect(null);
+      setAvailableChoices(questions[nextIndex].choices.map((_, idx) => idx));
+      setPowerUpsInGame({
+        secondChanceUsed: false,
+        removeTwoUsed: false,
+        revealedScripture: false,
+      });
+    }
+  }
+
+  function handleTryAgain() {
+    startGame(mode, currentLevelConfig.key);
+  }
+
+  function handleNextClassicLevel() {
+    const passed = correctCount >= 9;
+    if (!passed || mode !== "classic") return;
+    const nextIndex = currentLevelIndex + 1;
+    if (nextIndex >= LEVELS.length) return;
+    setCurrentLevelIndex(nextIndex);
+    startGame("classic", LEVELS[nextIndex].key);
+  }
+
+  const passedLevel = correctCount >= 9;
+  const isFinalClassicLevel = currentLevelIndex === LEVELS.length - 1 && mode === "classic";
+
+  // ───────────── Power-ups (client-only UI, backed by stats.powerUps) ─────────────
+
+  const canUseSecondChance =
+    stats && stats.powerUps.secondChance > 0 && !powerUpsInGame.secondChanceUsed;
+  const canUseRemoveTwo =
+    stats && stats.powerUps.removeTwo > 0 && !powerUpsInGame.removeTwoUsed;
+  const canUseRevealScripture =
+    stats && stats.powerUps.revealScripture > 0 && !powerUpsInGame.revealedScripture;
+
+  function useSecondChance() {
+    if (!canUseSecondChance) return;
+    setLastAnswerCorrect(null);
+    setHasCheckedAnswer(false);
+    setPowerUpsInGame((s) => ({ ...s, secondChanceUsed: true }));
+    if (!stats) return;
+    setStats({
+      ...stats,
+      powerUps: { ...stats.powerUps, secondChance: stats.powerUps.secondChance - 1 },
+    });
+  }
+
+  function useRemoveTwo() {
+    if (!canUseRemoveTwo || !currentQuestion) return;
+    const wrongOptions = availableChoices.filter(
+      (idx) => idx !== currentQuestion.correctIndex
+    );
+    const toRemove = wrongOptions.slice(0, 2);
+    const remaining = availableChoices.filter((idx) => !toRemove.includes(idx));
+    setAvailableChoices(remaining);
+    setPowerUpsInGame((s) => ({ ...s, removeTwoUsed: true }));
+    if (!stats) return;
+    setStats({
+      ...stats,
+      powerUps: { ...stats.powerUps, removeTwo: stats.powerUps.removeTwo - 1 },
+    });
+  }
+
+  function useRevealScripture() {
+    if (!canUseRevealScripture) return;
+    setPowerUpsInGame((s) => ({ ...s, revealedScripture: true }));
+    if (!stats) return;
+    setStats({
+      ...stats,
+      powerUps: {
+        ...stats.powerUps,
+        revealScripture: stats.powerUps.revealScripture - 1,
+      },
+    });
+  }
+
+  // ───────────── Derived UI helpers ─────────────
+
+  const headerTitle = useMemo(() => {
+    switch (tab) {
+      case "classic":
+        return "Bible Trivia – Classic Levels";
+      case "daily":
+        return "Daily Bible Challenge";
+      case "survival":
+        return "Survival Mode – Don’t Miss!";
+      case "speed":
+        return "Speed Round – Beat the Clock";
+      default:
+        return "Bible Trivia";
+    }
+  }, [tab]);
+
+  const headerSubtitle = useMemo(() => {
+    switch (tab) {
+      case "classic":
+        return `${currentLevelConfig.label} Level – score 9/10 to advance`;
+      case "daily":
+        return "One unique challenge today. Keep your streak alive!";
+      case "survival":
+        return "How many can you get right in a row?";
+      case "speed":
+        return "Answer quickly and accurately.";
+    }
+  }, [tab, currentLevelConfig.label]);
+
+  const questionNumber = currentQuestionIndex + 1;
+
+  // ───────────── Layout ─────────────
+
+  return (
+    <div className="max-w-6xl mx-auto py-6 px-4 grid gap-6 md:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)]">
+      {/* LEFT: Game panel */}
+      <div>
+        <div className="flex gap-2 mb-4">
+          <Button
+            size="sm"
+            variant={tab === "classic" ? "default" : "outline"}
+            onClick={() => setTab("classic")}
+          >
+            Classic Levels
+          </Button>
+          <Button
+            size="sm"
+            variant={tab === "daily" ? "default" : "outline"}
+            onClick={() => setTab("daily")}
+          >
+            Daily Challenge
+          </Button>
+          <Button
+            size="sm"
+            variant={tab === "survival" ? "default" : "outline"}
+            onClick={() => setTab("survival")}
+          >
+            Survival
+          </Button>
+          <Button
+            size="sm"
+            variant={tab === "speed" ? "default" : "outline"}
+            onClick={() => setTab("speed")}
+          >
+            Speed
+          </Button>
+        </div>
+
+        <Card className="rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.35)]">
+          <CardHeader>
+            <div className="flex items-center justify-between mb-1">
+              <div className="flex flex-col">
+                <span className="text-xs uppercase tracking-wide text-slate-500">
+                  {headerTitle}
+                </span>
+                <span className="text-xs text-slate-500">{headerSubtitle}</span>
+              </div>
+              <span className="text-xs text-slate-500">
+                Correct: <span className="font-semibold">{correctCount}</span>
+                {questions.length ? ` / ${questions.length}` : null}
+              </span>
+            </div>
+            {mode === "classic" && (
+              <CardTitle className="text-lg font-semibold">
+                {currentLevelConfig.label} Level
+              </CardTitle>
+            )}
+          </CardHeader>
+
+          <CardContent className="space-y-4">
+            {phase === "loading" && (
+              <div className="flex flex-col items-center justify-center py-12">
+                <Loader2 className="animate-spin mb-4" />
+                <p className="text-sm text-slate-500">Loading Bible Trivia questions…</p>
+              </div>
+            )}
+
+            {phase !== "loading" && !currentQuestion && (
+              <p className="text-sm text-rose-600">
+                {errorMessage ?? "No question available right now."}
+              </p>
+            )}
+
+            {phase !== "loading" && currentQuestion && (
+              <>
+                <div className="flex items-center justify-between text-xs text-slate-500">
+                  <span>
+                    Question {questionNumber} of {questions.length}
+                  </span>
+                  {currentQuestion.reference && (
+                    <span className="italic">
+                      {powerUpsInGame.revealedScripture
+                        ? `Scripture: ${currentQuestion.reference}`
+                        : "Scripture hidden (use Reveal Scripture)"}
+                    </span>
+                  )}
+                </div>
+
+                <p className="text-base text-slate-800 mt-1">{currentQuestion.text}</p>
+
+                <div className="space-y-2 mt-3">
+                  {currentQuestion.choices.map((choice, index) => {
+                    if (!availableChoices.includes(index)) {
+                      return (
+                        <Button
+                          key={index}
+                          variant="outline"
+                          className="w-full justify-start text-left whitespace-normal opacity-40 cursor-not-allowed"
+                          disabled
+                        >
+                          <span className="mr-2 font-semibold">
+                            {String.fromCharCode(65 + index)}.
+                          </span>
+                          <span>{choice}</span>
+                        </Button>
+                      );
+                    }
+
+                    const isSelected = index === selectedIndex;
+                    return (
+                      <Button
+                        key={index}
+                        type="button"
+                        variant={isSelected ? "default" : "outline"}
+                        className="w-full justify-start text-left whitespace-normal"
+                        onClick={() => handleOptionClick(index)}
+                      >
+                        <span className="mr-2 font-semibold">
+                          {String.fromCharCode(65 + index)}.
+                        </span>
+                        <span>{choice}</span>
+                      </Button>
+                    );
+                  })}
+                </div>
+
+                {hasCheckedAnswer && lastAnswerCorrect !== null && (
+                  <p
+                    className={cn(
+                      "text-sm mt-2",
+                      lastAnswerCorrect ? "text-emerald-600" : "text-rose-600"
+                    )}
+                  >
+                    {lastAnswerCorrect
+                      ? "Correct! Well done."
+                      : mode === "survival"
+                      ? "That ends your run in Survival mode – check your results below."
+                      : "That’s not quite right this time – keep going, you’re learning!"}
+                  </p>
+                )}
+
+                {/* Power-ups row */}
+                {stats && (
+                  <div className="flex flex-wrap gap-2 text-xs mt-3">
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      onClick={useSecondChance}
+                      disabled={!canUseSecondChance}
+                    >
+                      Second Chance ({stats.powerUps.secondChance})
+                    </Button>
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      onClick={useRemoveTwo}
+                      disabled={!canUseRemoveTwo}
+                    >
+                      Remove 2 ({stats.powerUps.removeTwo})
+                    </Button>
+                    <Button
+                      size="xs"
+                      variant="outline"
+                      onClick={useRevealScripture}
+                      disabled={!canUseRevealScripture}
+                    >
+                      Reveal Scripture ({stats.powerUps.revealScripture})
+                    </Button>
+                  </div>
+                )}
+
+                <div className="flex gap-3 pt-4">
+                  <Button
+                    variant="outline"
+                    className="flex-1"
+                    onClick={handleCheckAnswer}
+                    disabled={selectedIndex === null || hasCheckedAnswer}
+                  >
+                    {hasCheckedAnswer ? "Answer checked" : "Check answer"}
+                  </Button>
+
+                  {phase === "question" && mode !== "survival" && (
+                    <Button
+                      className="flex-1"
+                      onClick={handleNextQuestion}
+                      disabled={!hasCheckedAnswer}
+                    >
+                      {questionNumber === questions.length ? "See results" : "Next question"}
+                    </Button>
+                  )}
+                </div>
+              </>
+            )}
+
+            {phase === "results" && (
+              <div className="mt-4 space-y-3 border-t pt-4">
+                <p className="text-lg font-semibold">
+                  You answered <span className="text-emerald-600">{correctCount}</span> out of{" "}
+                  {questions.length} correctly.
+                </p>
+
+                {mode === "classic" && (
+                  <>
+                    {passedLevel ? (
+                      <p className="text-emerald-700 font-semibold">
+                        🎉 Congratulations! You passed the {currentLevelConfig.label} level!
+                      </p>
+                    ) : (
+                      <p className="text-sky-700 font-semibold">
+                        Great job! Try again and aim for at least 9/10 to advance.
+                      </p>
+                    )}
+
+                    <div className="flex flex-wrap gap-3 pt-1">
+                      <Button variant="outline" onClick={handleTryAgain}>
+                        Try this level again
+                      </Button>
+                      {!isFinalClassicLevel && (
+                        <Button
+                          onClick={handleNextClassicLevel}
+                          disabled={!passedLevel}
+                        >
+                          {passedLevel
+                            ? `Go to ${LEVELS[currentLevelIndex + 1].label} level`
+                            : `Score 9/10 to unlock next level`}
+                        </Button>
+                      )}
+                      {isFinalClassicLevel && passedLevel && (
+                        <span className="text-sm text-emerald-700 font-semibold">
+                          🌟 You’ve completed all levels – you’re a Bible Expert!
+                        </span>
+                      )}
+                    </div>
+                  </>
+                )}
+
+                {mode === "daily" && (
+                  <>
+                    {correctCount >= 9 ? (
+                      <p className="text-emerald-700 font-semibold">
+                        🌅 Daily Crown earned! You kept your streak alive.
+                      </p>
+                    ) : (
+                      <p className="text-sky-700 font-semibold">
+                        Great effort today! Come back tomorrow and aim for 9/10.
+                      </p>
+                    )}
+                    <Button variant="outline" onClick={handleTryAgain}>
+                      Play today&apos;s challenge again
+                    </Button>
+                  </>
+                )}
+
+                {mode === "survival" && (
+                  <>
+                    <p className="text-slate-700 text-sm">
+                      Survival mode ends at your first miss. See how high you can go next time!
+                    </p>
+                    <Button variant="outline" onClick={handleTryAgain}>
+                      Try Survival mode again
+                    </Button>
+                  </>
+                )}
+
+                {mode === "speed" && (
+                  <>
+                    <p className="text-slate-700 text-sm">
+                      Speed Round pushes you to answer quickly. Challenge yourself again!
+                    </p>
+                    <Button variant="outline" onClick={handleTryAgain}>
+                      Replay Speed Round
+                    </Button>
+                  </>
+                )}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+
+      {/* RIGHT: Dashboard / Streak / Mastery / Leaderboard */}
+      <div className="space-y-4">
+        <Card className="rounded-3xl">
+          <CardHeader>
+            <CardTitle className="text-base">Your Bible Trivia Journey</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-3 text-sm">
+            {loadingStats && (
+              <p className="text-slate-500 text-xs flex items-center gap-2">
+                <Loader2 className="w-3 h-3 animate-spin" />
+                Loading stats…
+              </p>
+            )}
+            {stats && (
+              <>
+                <p>
+                  Title:{" "}
+                  <span className="font-semibold">
+                    {stats.highestTitle === "None" ? "Getting Started" : stats.highestTitle}
+                  </span>
+                </p>
+                <p>
+                  Daily streak: <span className="font-semibold">{stats.dailyStreak}</span> days
+                </p>
+                <p>
+                  Daily crowns earned:{" "}
+                  <span className="font-semibold">{stats.dailyCrowns}</span>
+                </p>
+
+                <div className="mt-2 space-y-1">
+                  <p className="text-xs text-slate-500 uppercase tracking-wide">
+                    Bible Mastery
+                  </p>
+                  {Object.entries(stats.mastery).map(([key, value]) => (
+                    <div key={key} className="space-y-0.5">
+                      <div className="flex justify-between text-xs">
+                        <span className="capitalize">
+                          {key.replace(/([A-Z])/g, " $1")}
+                        </span>
+                        <span>{value}%</span>
+                      </div>
+                      <div className="h-1.5 rounded-full bg-slate-200 overflow-hidden">
+                        <div
+                          className="h-full bg-emerald-500"
+                          style={{ width: `${value}%` }}
+                        />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-3 space-y-1">
+                  <p className="text-xs text-slate-500 uppercase tracking-wide">
+                    Power-Ups
+                  </p>
+                  <p>
+                    Second Chance:{" "}
+                    <span className="font-semibold">{stats.powerUps.secondChance}</span>
+                  </p>
+                  <p>
+                    Reveal Scripture:{" "}
+                    <span className="font-semibold">{stats.powerUps.revealScripture}</span>
+                  </p>
+                  <p>
+                    Remove 2 Options:{" "}
+                    <span className="font-semibold">{stats.powerUps.removeTwo}</span>
+                  </p>
+                </div>
+              </>
+            )}
+          </CardContent>
+        </Card>
+
+        <Card className="rounded-3xl">
+          <CardHeader>
+            <CardTitle className="text-base">Friends & Family Challenge</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-2 text-sm">
+            <p className="text-xs text-slate-500">
+              Compare your streak and crowns with others who are playing.
+            </p>
+            {loadingLeaderboard && (
+              <p className="text-slate-500 text-xs flex items-center gap-2">
+                <Loader2 className="w-3 h-3 animate-spin" />
+                Loading leaderboard…
+              </p>
+            )}
+            {!loadingLeaderboard && leaderboard.length === 0 && (
+              <p className="text-xs text-slate-500">No players yet. You can be first!</p>
+            )}
+            {!loadingLeaderboard && leaderboard.length > 0 && (
+              <div className="space-y-1">
+                {leaderboard.map((entry, index) => (
+                  <div
+                    key={entry.userId}
+                    className="flex items-center justify-between text-xs py-1 border-b border-slate-100 last:border-0"
+                  >
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold w-4 text-right">
+                        {index + 1}.
+                      </span>
+                      <span>{entry.displayName}</span>
+                    </div>
+                    <div className="text-right">
+                      <div>🔥 Streak: {entry.dailyStreak}</div>
+                      <div>👑 Crowns: {entry.dailyCrowns}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </CardContent>
+        </Card>
+      </div>
+    </div>
+  );
+}
+```
+
+---
+
+## What You’ve Got Now
+
+With these three pieces in place:
+
+* **Classic mode**:
+
+  * 9/10 to advance
+  * Titles unlocked: Bible Student → Bible Scholar → Bible Expert
+* **Daily Challenge**:
+
+  * Tracks **streak**, **crowns**, gives second-chance power-ups as rewards
+* **Survival mode**:
+
+  * Ends on first miss; long runs can award “Defender of the Faith”
+* **Speed Round**:
+
+  * Fast session mode to make it easy to play daily
+* **Power-ups**:
+
+  * Second Chance, Remove 2, Reveal Scripture – tracked and consumable
+* **Mastery dashboard**:
+
+  * Shows how much of Scripture they’ve “mastered” by category
+* **Friends challenge**:
+
+  * Leaderboard sorted by streak and crowns
+
+This is the kind of experience that makes people feel, *“I want to see my streak, my crowns, and if I can keep my title today.”*
+
+If you paste these into Replit and something doesn’t compile (e.g., missing `cn` or `Card` imports), send me the error message and I’ll adjust the code to your exact component library.

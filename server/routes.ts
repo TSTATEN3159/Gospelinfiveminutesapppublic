@@ -31,6 +31,66 @@ const getStripeClient = (): Stripe => {
   return stripe;
 };
 
+// Bible Trivia Stats Tracking System
+interface TriviaStats {
+  userId: string;
+  displayName: string;
+  dailyStreak: number;
+  lastDailyDate: string | null;
+  dailyCrowns: number;
+  highestTitle: "None" | "Bible Student" | "Bible Scholar" | "Bible Expert" | "Defender of the Faith";
+  mastery: {
+    oldTestament: number;
+    gospels: number;
+    epistles: number;
+    prophecy: number;
+    peopleOfGod: number;
+    geography: number;
+  };
+  powerUps: {
+    secondChance: number;
+    revealScripture: number;
+    removeTwo: number;
+  };
+}
+
+const triviaStatsStore = new Map<string, TriviaStats>();
+
+function getOrCreateTriviaStats(userId: string, displayName: string = "Guest"): TriviaStats {
+  const existing = triviaStatsStore.get(userId);
+  if (existing) return existing;
+
+  const initial: TriviaStats = {
+    userId,
+    displayName,
+    dailyStreak: 0,
+    lastDailyDate: null,
+    dailyCrowns: 0,
+    highestTitle: "None",
+    mastery: {
+      oldTestament: 0,
+      gospels: 0,
+      epistles: 0,
+      prophecy: 0,
+      peopleOfGod: 0,
+      geography: 0,
+    },
+    powerUps: {
+      secondChance: 3,
+      revealScripture: 2,
+      removeTwo: 2,
+    },
+  };
+
+  triviaStatsStore.set(userId, initial);
+  return initial;
+}
+
+function getCurrentUserId(req: any): { userId: string; displayName: string } {
+  // TODO: Wire into real auth system later
+  return { userId: "demo-user-1", displayName: "Guest" };
+}
+
 export async function registerRoutes(app: Express): Promise<Server> {
   // Serve static privacy policy and terms pages for Apple App Store compliance
   app.get('/privacy', (req, res) => {
@@ -1748,6 +1808,118 @@ Return only the application paragraph.
         error: "I'm having trouble loading trivia questions right now. Please try again in a moment."
       });
     }
+  });
+
+  // Bible Trivia Stats & Leaderboard Endpoints
+  
+  // Get current user's trivia stats
+  app.get("/api/trivia/stats", (req, res) => {
+    const { userId, displayName } = getCurrentUserId(req);
+    const stats = getOrCreateTriviaStats(userId, displayName);
+    res.json(stats);
+  });
+
+  // Record a game result (used for daily, classic, survival, speed, etc.)
+  const recordResultSchema = z.object({
+    mode: z.enum(["classic", "daily", "survival", "speed"]),
+    level: z.enum(["beginner", "intermediate", "advanced"]).optional(),
+    correctCount: z.number().int().min(0),
+    totalCount: z.number().int().min(1),
+    categoriesHit: z.array(
+      z.enum(["oldTestament", "gospels", "epistles", "prophecy", "peopleOfGod", "geography"])
+    ).optional(),
+  });
+
+  app.post("/api/trivia/record-result", (req, res) => {
+    try {
+      const { userId, displayName } = getCurrentUserId(req);
+      const stats = getOrCreateTriviaStats(userId, displayName);
+      const { mode, level, correctCount, totalCount, categoriesHit = [] } = recordResultSchema.parse(req.body);
+
+      // 1) Daily streak & crowns
+      if (mode === "daily") {
+        const today = new Date().toISOString().slice(0, 10);
+
+        if (stats.lastDailyDate === today) {
+          // already played today – no streak change
+        } else if (stats.lastDailyDate === null) {
+          stats.dailyStreak = 1;
+        } else {
+          const last = new Date(stats.lastDailyDate);
+          const diffMs = new Date(today).getTime() - last.getTime();
+          const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+          if (diffDays === 1) {
+            stats.dailyStreak += 1;
+          } else {
+            stats.dailyStreak = 1;
+          }
+        }
+
+        stats.lastDailyDate = today;
+
+        if (correctCount >= 9) {
+          stats.dailyCrowns += 1;
+          stats.powerUps.secondChance += 1;
+        }
+      }
+
+      // 2) Titles from classic levels
+      if (mode === "classic" && level && correctCount >= 9) {
+        if (level === "beginner" && stats.highestTitle === "None") {
+          stats.highestTitle = "Bible Student";
+        } else if (level === "intermediate") {
+          if (stats.highestTitle === "None" || stats.highestTitle === "Bible Student") {
+            stats.highestTitle = "Bible Scholar";
+          }
+        } else if (level === "advanced") {
+          if (
+            stats.highestTitle === "None" ||
+            stats.highestTitle === "Bible Student" ||
+            stats.highestTitle === "Bible Scholar"
+          ) {
+            stats.highestTitle = "Bible Expert";
+          }
+        }
+      }
+
+      // 3) Endgame "Defender of the Faith" for perfect advanced or strong survival
+      if (
+        (mode === "classic" && level === "advanced" && correctCount === totalCount) ||
+        (mode === "survival" && correctCount >= 30)
+      ) {
+        stats.highestTitle = "Defender of the Faith";
+        stats.powerUps.secondChance += 2;
+        stats.powerUps.revealScripture += 2;
+      }
+
+      // 4) Mastery update – simple incremental approach
+      categoriesHit.forEach((cat) => {
+        const current = stats.mastery[cat];
+        stats.mastery[cat] = Math.min(100, current + Math.round((correctCount / totalCount) * 5));
+      });
+
+      triviaStatsStore.set(userId, stats);
+      res.json(stats);
+    } catch (err: any) {
+      console.error("record-result error:", err);
+      res.status(400).json({ error: err.message ?? "Invalid payload" });
+    }
+  });
+
+  // Simple friends leaderboard (top stats by dailyStreak + crowns)
+  app.get("/api/trivia/leaderboard", (req, res) => {
+    const all = Array.from(triviaStatsStore.values());
+    const sorted = all
+      .slice()
+      .sort((a, b) => {
+        if (b.dailyStreak !== a.dailyStreak) {
+          return b.dailyStreak - a.dailyStreak;
+        }
+        return b.dailyCrowns - a.dailyCrowns;
+      })
+      .slice(0, 20);
+
+    res.json(sorted);
   });
 
   // Stripe donation route for one-time payments
