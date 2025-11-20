@@ -8191,6 +8191,1345 @@ Lord, I choose to hope in You, even when I cannot feel hope. Carry me through th
   ],
 };
 
+export const breakingPeoplePleasingPlan: DiscipleshipPlan = {
+  id: "breaking-people-pleasing",
+  title: "Breaking People-Pleasing",
+  subtitle: "Finding freedom in God's approval alone",
+  imageUrl: purityWorldImage,
+  totalDays: 4,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "The Root of People-Pleasing",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — The Root of People-Pleasing",
+          body: `People-pleasing feels noble—you want to be kind, liked, and helpful. But beneath the surface, it is often **fear**—fear of rejection, fear of conflict, or fear that you are not enough unless others approve of you.
+
+The gospel frees you from this. You already have the approval of God through Christ. You do not need to perform for people's acceptance because you are already accepted by the One who matters most.
+
+People-pleasing is exhausting because you can never satisfy everyone. But living for God's approval is freeing because His love for you never changes based on your performance.
+
+**Reflection**
+
+Do you find yourself saying "yes" when you want to say "no" out of fear of disappointing others?
+
+**Prayer**
+
+Lord, show me where I have been living for people's approval instead of Yours. Help me find my security in You alone.
+
+**Shareable Truth**
+
+"When you live for God's approval, you are freed from the prison of people's opinions."`,
+        },
+        {
+          id: "d1-gal110",
+          type: "scripture",
+          title: "Servant of Christ, Not Men",
+          reference: "Galatians 1:10",
+          body: `**Scripture (KJV)**  
+> "For do I now persuade men, or God? or do I seek to please men? for if I yet pleased men, I should not be the servant of Christ."
+
+**Meaning:** Paul asks whether he is trying to please men or God, declaring that pleasing men would make him unfit to serve Christ.  
+**Application:** You cannot serve both God and people's approval. Choose to please God, even when it costs you human approval.`.trim(),
+        },
+        {
+          id: "d1-prov2925",
+          type: "scripture",
+          title: "The Fear of Man",
+          reference: "Proverbs 29:25",
+          body: `**Scripture (KJV)**  
+> "The fear of man bringeth a snare: but whoso putteth his trust in the LORD shall be safe."
+
+**Meaning:** Fearing what people think sets a trap for you, but trusting in the Lord brings safety.  
+**Application:** People-pleasing is a snare that traps you. Trust God instead.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Learning to Say No",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Learning to Say No",
+          body: `Saying "no" is not selfish—it is wise. Jesus Himself set boundaries. He did not heal every person, attend every event, or meet every need. He only did what the Father called Him to do.
+
+You are not God. You cannot be everywhere, do everything, or please everyone. Saying "no" to some things allows you to say "yes" to the right things—the things God has called you to.
+
+When you say "yes" out of guilt or fear, you often say "no" to what God actually wants for you.
+
+**Reflection**
+
+What commitments are you carrying that God never asked you to carry?
+
+**Prayer**
+
+Father, give me the courage to say "no" when I need to. Help me discern Your will and follow it, even when it disappoints others.
+
+**Shareable Truth**
+
+"Every 'yes' to the wrong thing is a 'no' to the right thing."`,
+        },
+        {
+          id: "d2-matt11-28-30",
+          type: "scripture",
+          title: "My Yoke Is Easy",
+          reference: "Matthew 11:28–30",
+          body: `**Scripture (KJV)**  
+> "Come unto me, all ye that labour and are heavy laden, and I will give you rest. Take my yoke upon you, and learn of me; for I am meek and lowly in heart: and ye shall find rest unto your souls. For my yoke is easy, and my burden is light."
+
+**Meaning:** Jesus offers rest to those who are weary and burdened, promising that His yoke is easy and His burden is light.  
+**Application:** If you are exhausted, you may be carrying burdens Jesus never asked you to carry. Come to Him for rest.`.trim(),
+        },
+        {
+          id: "d2-luke515-16",
+          type: "scripture",
+          title: "Jesus Withdrew to Pray",
+          reference: "Luke 5:15–16",
+          body: `**Scripture (KJV)**  
+> "But so much the more went there a fame abroad of him: and great multitudes came together to hear, and to be healed by him of their infirmities. And he withdrew himself into the wilderness, and prayed."
+
+**Meaning:** Even though crowds came to Jesus, He withdrew to spend time alone with the Father in prayer.  
+**Application:** Jesus set boundaries and prioritized time with God. You can too.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Speaking Truth in Love",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Speaking Truth in Love",
+          body: `People-pleasers often avoid hard conversations. You stay silent when you should speak up, fearing conflict or rejection. But love sometimes requires **speaking truth**, even when it is uncomfortable.
+
+Ephesians 4:15 calls us to speak the truth in love. This is not harsh, condemning speech—it is honest, gracious, God-honoring communication.
+
+You can disagree with someone and still love them. You can set a boundary and still be kind. You can speak truth without being cruel.
+
+**Reflection**
+
+Is there a hard conversation you have been avoiding because you fear how the other person will respond?
+
+**Prayer**
+
+Lord, give me courage to speak truth in love. Help me trust You with the outcome, even if it costs me someone's approval.
+
+**Shareable Truth**
+
+"Speaking truth in love is not unloving—it is the most loving thing you can do."`,
+        },
+        {
+          id: "d3-eph415",
+          type: "scripture",
+          title: "Speaking the Truth in Love",
+          reference: "Ephesians 4:15",
+          body: `**Scripture (KJV)**  
+> "But speaking the truth in love, may grow up into him in all things, which is the head, even Christ:"
+
+**Meaning:** Believers are to speak truth in love, growing into maturity in Christ.  
+**Application:** Do not avoid truth to keep the peace. Speak it lovingly.`.trim(),
+        },
+        {
+          id: "d3-prov275-6",
+          type: "scripture",
+          title: "Honest Wounds",
+          reference: "Proverbs 27:5–6",
+          body: `**Scripture (KJV)**  
+> "Open rebuke is better than secret love. Faithful are the wounds of a friend; but the kisses of an enemy are deceitful."
+
+**Meaning:** Honest correction from a friend is better than flattery from an enemy.  
+**Application:** Real love sometimes requires hard conversations. Do not withhold truth to keep someone happy.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Living for an Audience of One",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Living for an Audience of One",
+          body: `The antidote to people-pleasing is not self-centered independence—it is **God-centered dependence**. Instead of asking, "What will people think?" ask, "What does God think?"
+
+You have one ultimate Judge, and He has already declared you righteous in Christ. You do not need to prove yourself to anyone. You are free to obey God, love people, and let the opinions of others fall where they may.
+
+Living for an audience of One is liberating. When God's approval is enough, you are finally free to love people without needing anything from them.
+
+**Reflection**
+
+What would change in your life if you truly believed God's approval was enough?
+
+**Prayer**
+
+Father, help me live for You alone. Free me from the fear of man and anchor me in Your unfailing love.
+
+**Shareable Truth**
+
+"When God's approval is enough, you are finally free."`,
+        },
+        {
+          id: "d4-col323-24",
+          type: "scripture",
+          title: "Working for the Lord",
+          reference: "Colossians 3:23–24",
+          body: `**Scripture (KJV)**  
+> "And whatsoever ye do, do it heartily, as to the Lord, and not unto men; Knowing that of the Lord ye shall receive the reward of the inheritance: for ye serve the Lord Christ."
+
+**Meaning:** Whatever you do, do it for the Lord, not for people, knowing that your reward comes from Him.  
+**Application:** Stop performing for people's applause. Do everything as if God is your only audience.`.trim(),
+        },
+        {
+          id: "d4-john1242-43",
+          type: "scripture",
+          title: "Love of Men More Than Love of God",
+          reference: "John 12:42–43",
+          body: `**Scripture (KJV)**  
+> "Nevertheless among the chief rulers also many believed on him; but because of the Pharisees they did not confess him, lest they should be put out of the synagogue: For they loved the praise of men more than the praise of God."
+
+**Meaning:** Many believed in Jesus but would not confess Him publicly because they loved human praise more than God's approval.  
+**Application:** Do not hide your faith or convictions to gain people's approval. Choose God's praise over man's.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
+export const contentmentPlan: DiscipleshipPlan = {
+  id: "contentment-every-circumstance",
+  title: "Contentment in Every Circumstance",
+  subtitle: "Learning to find satisfaction in Christ alone",
+  imageUrl: sufferingFaithfulnessImage,
+  totalDays: 3,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "The Secret of Contentment",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — The Secret of Contentment",
+          body: `Contentment is not about having everything you want—it is about **wanting what you have** because you trust that God has given you exactly what you need for this season.
+
+The world says, "You will be happy when you get more." The gospel says, "You are complete in Christ right now." Contentment is not pretending you have no needs—it is trusting that God knows your needs and will supply them according to His wisdom and timing.
+
+Paul says he learned the secret of contentment. It is not automatic—it must be learned through trusting God in every season.
+
+**Reflection**
+
+What are you waiting to have before you allow yourself to be content?
+
+**Prayer**
+
+Lord, teach me to be content in every circumstance. Help me trust that You are enough, even when I lack what I think I need.
+
+**Shareable Truth**
+
+"Contentment is not getting what you want—it is wanting what God has given."`,
+        },
+        {
+          id: "d1-phil411-13",
+          type: "scripture",
+          title: "I Have Learned",
+          reference: "Philippians 4:11–13",
+          body: `**Scripture (KJV)**  
+> "Not that I speak in respect of want: for I have learned, in whatsoever state I am, therewith to be content. I know both how to be abased, and I know how to abound: every where and in all things I am instructed both to be full and to be hungry, both to abound and to suffer need. I can do all things through Christ which strengtheneth me."
+
+**Meaning:** Paul says he learned to be content in every situation—plenty or need—because Christ strengthened him.  
+**Application:** Contentment is a learned discipline, and Christ gives you the strength to live it.`.trim(),
+        },
+        {
+          id: "d1-1tim66-8",
+          type: "scripture",
+          title: "Godliness With Contentment",
+          reference: "1 Timothy 6:6–8",
+          body: `**Scripture (KJV)**  
+> "But godliness with contentment is great gain. For we brought nothing into this world, and it is certain we can carry nothing out. And having food and raiment let us be therewith content."
+
+**Meaning:** Godliness combined with contentment is great gain. If you have food and clothing, be content.  
+**Application:** Contentment is not about having everything—it is about being satisfied with what God provides.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "The Trap of Comparison",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — The Trap of Comparison",
+          body: `One of the greatest enemies of contentment is **comparison**. When you measure your life against others, you will always find someone with more—more success, more money, more recognition, more ease.
+
+Comparison steals joy and breeds envy. It shifts your focus from God's goodness in your life to what you think you are missing.
+
+God has given you a unique calling, unique gifts, and a unique story. Stop comparing your chapter 3 to someone else's chapter 20. Trust that God is writing your story, and it is good.
+
+**Reflection**
+
+Who do you tend to compare yourself to, and how does it affect your joy?
+
+**Prayer**
+
+Father, forgive me for comparing my life to others. Help me see Your goodness in my own story.
+
+**Shareable Truth**
+
+"Comparison is the thief of joy."`,
+        },
+        {
+          id: "d2-2cor1012",
+          type: "scripture",
+          title: "Measuring Ourselves by Ourselves",
+          reference: "2 Corinthians 10:12",
+          body: `**Scripture (KJV)**  
+> "For we dare not make ourselves of the number, or compare ourselves with some that commend themselves: but they measuring themselves by themselves, and comparing themselves among themselves, are not wise."
+
+**Meaning:** Paul says it is unwise to compare yourself to others.  
+**Application:** Stop the comparison game. Run your own race, and trust God's plan for your life.`.trim(),
+        },
+        {
+          id: "d2-gal64-5",
+          type: "scripture",
+          title: "Test Your Own Work",
+          reference: "Galatians 6:4–5",
+          body: `**Scripture (KJV)**  
+> "But let every man prove his own work, and then shall he have rejoicing in himself alone, and not in another. For every man shall bear his own burden."
+
+**Meaning:** Test your own work rather than comparing it to others, and rejoice in what God has done in you.  
+**Application:** Your joy should come from faithfulness to God's calling for you—not from how you measure up to others.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Grateful in All Things",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Grateful in All Things",
+          body: `Contentment and gratitude go hand in hand. When you practice **thanksgiving**, you begin to see God's goodness even in hard seasons.
+
+Gratitude shifts your focus from what you lack to what you have been given. It opens your eyes to the thousand small mercies God pours out every day—breath in your lungs, food on your table, relationships, Scripture, the gospel.
+
+Even in suffering, you can give thanks—not for the suffering itself, but for God's presence, faithfulness, and purpose in it.
+
+**Reflection**
+
+What are three things you can thank God for right now, even in this season?
+
+**Prayer**
+
+Lord, teach me to give thanks in all circumstances. Help me see Your goodness and trust Your purposes.
+
+**Shareable Truth**
+
+"A grateful heart is a contented heart."`,
+        },
+        {
+          id: "d3-1thess516-18",
+          type: "scripture",
+          title: "Give Thanks in Everything",
+          reference: "1 Thessalonians 5:16–18",
+          body: `**Scripture (KJV)**  
+> "Rejoice evermore. Pray without ceasing. In every thing give thanks: for this is the will of God in Christ Jesus concerning you."
+
+**Meaning:** Rejoice always, pray without ceasing, give thanks in everything—this is God's will for you.  
+**Application:** Thanksgiving is not optional—it is God's will. Practice it daily.`.trim(),
+        },
+        {
+          id: "d3-ps1031-5",
+          type: "scripture",
+          title: "Forget Not All His Benefits",
+          reference: "Psalm 103:1–5",
+          body: `**Scripture (KJV)**  
+> "Bless the LORD, O my soul: and all that is within me, bless his holy name. Bless the LORD, O my soul, and forget not all his benefits: Who forgiveth all thine iniquities; who healeth all thy diseases; Who redeemeth thy life from destruction; who crowneth thee with lovingkindness and tender mercies; Who satisfieth thy mouth with good things; so that thy youth is renewed like the eagle's."
+
+**Meaning:** David calls his soul to bless the Lord and remember all His benefits—forgiveness, healing, redemption, love, and satisfaction.  
+**Application:** Make a habit of remembering God's benefits. When you recall His goodness, contentment follows.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
+export const forgivenessReconciliationPlan: DiscipleshipPlan = {
+  id: "forgiveness-reconciliation",
+  title: "Forgiveness & Reconciliation",
+  subtitle: "Letting go of bitterness and pursuing peace",
+  imageUrl: angryWomanImage,
+  totalDays: 4,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "The Call to Forgive",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — The Call to Forgive",
+          body: `Forgiveness is not optional for Christians—it is **commanded**. Jesus says, "If you forgive men their trespasses, your heavenly Father will also forgive you. But if you do not forgive men their trespasses, neither will your Father forgive your trespasses."
+
+This is hard. Forgiveness does not mean pretending you were not hurt or that what happened was okay. It means releasing the person from your judgment and entrusting them to God's justice.
+
+Unforgiveness is a prison. You may think you are punishing the other person by withholding forgiveness, but you are the one trapped. Forgiveness sets you free.
+
+**Reflection**
+
+Is there someone you have been refusing to forgive?
+
+**Prayer**
+
+Lord, I need Your help to forgive. Show me the depth of how You have forgiven me, and give me grace to forgive others.
+
+**Shareable Truth**
+
+"Unforgiveness is drinking poison and expecting the other person to die."`,
+        },
+        {
+          id: "d1-matt614-15",
+          type: "scripture",
+          title: "Forgive or You Will Not Be Forgiven",
+          reference: "Matthew 6:14–15",
+          body: `**Scripture (KJV)**  
+> "For if ye forgive men their trespasses, your heavenly Father will also forgive you: But if ye forgive not men their trespasses, neither will your Father forgive your trespasses."
+
+**Meaning:** Jesus says that if you do not forgive others, God will not forgive you.  
+**Application:** Forgiveness is not a suggestion—it is a command. Withholding forgiveness blocks your own forgiveness.`.trim(),
+        },
+        {
+          id: "d1-eph432",
+          type: "scripture",
+          title: "Be Kind, Forgiving One Another",
+          reference: "Ephesians 4:31–32",
+          body: `**Scripture (KJV)**  
+> "Let all bitterness, and wrath, and anger, and clamour, and evil speaking, be put away from you, with all malice: And be ye kind one to another, tenderhearted, forgiving one another, even as God for Christ's sake hath forgiven you."
+
+**Meaning:** Put away bitterness and anger, and forgive one another as God in Christ has forgiven you.  
+**Application:** You forgive others because God has first forgiven you. Remember how much you have been forgiven, and extend that grace to others.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Releasing the Debt",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Releasing the Debt",
+          body: `When someone wrongs you, they owe you a debt—they owe you justice, apology, and restitution. But forgiveness is the decision to **cancel the debt**, whether or not they ever pay it.
+
+This does not mean you pretend the offense did not happen. It means you stop demanding payment from the person and trust God to handle it.
+
+Jesus paid a debt He did not owe to cancel a debt you could never pay. In light of the cross, how can you withhold forgiveness from others?
+
+**Reflection**
+
+What "debt" are you still holding over someone's head?
+
+**Prayer**
+
+Father, help me release the debt. I give this person to You. I trust You to bring justice in Your way and time.
+
+**Shareable Truth**
+
+"Forgiveness is canceling a debt that will never be paid."`,
+        },
+        {
+          id: "d2-matt1821-35",
+          type: "scripture",
+          title: "The Unforgiving Servant",
+          reference: "Matthew 18:21–35",
+          body: `**Scripture (KJV)**  
+> "Then came Peter to him, and said, Lord, how oft shall my brother sin against me, and I forgive him? till seven times? Jesus saith unto him, I say not unto thee, Until seven times: but, Until seventy times seven... So likewise shall my heavenly Father do also unto you, if ye from your hearts forgive not every one his brother their trespasses."
+
+**Meaning:** Jesus tells the parable of a servant who was forgiven a massive debt but refused to forgive a small debt owed to him. God will judge those who refuse to forgive others.  
+**Application:** You have been forgiven an incalculable debt by God. Do not withhold forgiveness from others.`.trim(),
+        },
+        {
+          id: "d2-col313",
+          type: "scripture",
+          title: "As Christ Forgave You",
+          reference: "Colossians 3:13",
+          body: `**Scripture (KJV)**  
+> "Forbearing one another, and forgiving one another, if any man have a quarrel against any: even as Christ forgave you, so also do ye."
+
+**Meaning:** Bear with one another and forgive one another as Christ forgave you.  
+**Application:** The measure of your forgiveness should be the forgiveness you have received from Christ—complete and unconditional.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Pursuing Reconciliation",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Pursuing Reconciliation",
+          body: `Forgiveness and reconciliation are not the same. **Forgiveness** is a one-way decision you make in your heart. **Reconciliation** is a two-way process that requires both parties to pursue peace.
+
+You are responsible to forgive, whether or not the other person repents. But reconciliation may not always be possible—especially if the other person is unrepentant or unsafe.
+
+Still, as much as it depends on you, pursue peace. Do not let bitterness grow in your heart.
+
+**Reflection**
+
+Is there a relationship where God is calling you to pursue reconciliation?
+
+**Prayer**
+
+Lord, give me courage to take the first step toward peace. Help me forgive fully and pursue reconciliation where it is possible.
+
+**Shareable Truth**
+
+"Forgiveness is always required. Reconciliation is not always possible. But pursue peace as much as it depends on you."`,
+        },
+        {
+          id: "d3-rom1218",
+          type: "scripture",
+          title: "Live Peaceably With All",
+          reference: "Romans 12:18",
+          body: `**Scripture (KJV)**  
+> "If it be possible, as much as lieth in you, live peaceably with all men."
+
+**Meaning:** As much as it depends on you, live at peace with everyone.  
+**Application:** You cannot control the other person's response, but you can control your own. Do your part to pursue peace.`.trim(),
+        },
+        {
+          id: "d3-matt518-24",
+          type: "scripture",
+          title: "Be Reconciled First",
+          reference: "Matthew 5:23–24",
+          body: `**Scripture (KJV)**  
+> "Therefore if thou bring thy gift to the altar, and there rememberest that thy brother hath ought against thee; Leave there thy gift before the altar, and go thy way; first be reconciled to thy brother, and then come and offer thy gift."
+
+**Meaning:** Jesus says if you remember you have offended someone, go and be reconciled before you worship God.  
+**Application:** God cares about your relationships. Pursue reconciliation with those you have wronged.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "The Freedom of Letting Go",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — The Freedom of Letting Go",
+          body: `When you finally forgive, you will feel the weight lift. Bitterness is a burden you were never meant to carry. Letting go does not mean you approve of what happened—it means you trust God enough to release it into His hands.
+
+You may need to forgive the same person multiple times as new layers of hurt surface. That is okay. Keep bringing it to God. He will give you grace to forgive again and again.
+
+**Reflection**
+
+What burden of unforgiveness is God asking you to lay down today?
+
+**Prayer**
+
+Lord, I release this person and this hurt into Your hands. I choose to forgive. Help me walk in the freedom of that choice.
+
+**Shareable Truth**
+
+"Forgiveness is not weakness—it is strength. It is trusting God enough to let go."`,
+        },
+        {
+          id: "d4-ps377",
+          type: "scripture",
+          title: "Rest in the Lord",
+          reference: "Psalm 37:7–8",
+          body: `**Scripture (KJV)**  
+> "Rest in the LORD, and wait patiently for him: fret not thyself because of him who prospereth in his way, because of the man who bringeth wicked devices to pass. Cease from anger, and forsake wrath: fret not thyself in any wise to do evil."
+
+**Meaning:** Rest in the Lord and do not fret about those who do evil. Let go of anger and wrath.  
+**Application:** Trust God to handle injustice. Do not let anger consume you. Rest in Him.`.trim(),
+        },
+        {
+          id: "d4-heb1215",
+          type: "scripture",
+          title: "No Root of Bitterness",
+          reference: "Hebrews 12:15",
+          body: `**Scripture (KJV)**  
+> "Looking diligently lest any man fail of the grace of God; lest any root of bitterness springing up trouble you, and thereby many be defiled;"
+
+**Meaning:** Watch carefully that no root of bitterness grows up to cause trouble and defile many.  
+**Application:** Bitterness spreads like poison. Uproot it before it takes hold.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
+export const witnessingEvangelismPlan: DiscipleshipPlan = {
+  id: "witnessing-evangelism",
+  title: "Witnessing & Evangelism",
+  subtitle: "Sharing the gospel with boldness and love",
+  imageUrl: servingJesusImage,
+  totalDays: 4,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "You Are a Witness",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — You Are a Witness",
+          body: `Every believer is called to be a **witness** for Christ. You do not need a seminary degree or a special calling—you simply share what Jesus has done in your life.
+
+The gospel is the best news in the world: God offers forgiveness and eternal life through Jesus Christ. Yet many Christians live their entire lives without telling anyone.
+
+Fear, shame, or uncertainty may hold you back. But the same Holy Spirit who empowered the early church empowers you today.
+
+**Reflection**
+
+When was the last time you shared the gospel with someone who does not know Jesus?
+
+**Prayer**
+
+Lord, give me boldness to share the gospel. Help me see the people around me who need to hear about Jesus.
+
+**Shareable Truth**
+
+"Every believer is a missionary. Your mission field is wherever you are."`,
+        },
+        {
+          id: "d1-acts18",
+          type: "scripture",
+          title: "You Will Be My Witnesses",
+          reference: "Acts 1:8",
+          body: `**Scripture (KJV)**  
+> "But ye shall receive power, after that the Holy Ghost is come upon you: and ye shall be witnesses unto me both in Jerusalem, and in all Judaea, and in Samaria, and unto the uttermost part of the earth."
+
+**Meaning:** Jesus promises the Holy Spirit's power to make His followers witnesses to the ends of the earth.  
+**Application:** You are not left on your own. The Holy Spirit empowers you to be a witness for Christ.`.trim(),
+        },
+        {
+          id: "d1-matt2819-20",
+          type: "scripture",
+          title: "The Great Commission",
+          reference: "Matthew 28:19–20",
+          body: `**Scripture (KJV)**  
+> "Go ye therefore, and teach all nations, baptizing them in the name of the Father, and of the Son, and of the Holy Ghost: Teaching them to observe all things whatsoever I have commanded you: and, lo, I am with you alway, even unto the end of the world. Amen."
+
+**Meaning:** Jesus commands His disciples to go and make disciples of all nations, teaching them to obey all He commanded.  
+**Application:** Evangelism is not optional—it is a command from Jesus Himself.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Equipped by the Gospel",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Equipped by the Gospel",
+          body: `You do not need complex arguments or perfect answers to share the gospel. You simply need to **know the message**: All have sinned, Jesus died for sinners, and salvation is by faith alone in Christ alone.
+
+The gospel is the **power of God** for salvation. Your job is not to convince or convert—that is the Holy Spirit's work. Your job is to faithfully proclaim the good news and leave the results to God.
+
+**Reflection**
+
+Could you explain the gospel clearly to someone in two minutes or less?
+
+**Prayer**
+
+Lord, help me understand the gospel more deeply so I can share it more clearly. Give me opportunities to speak.
+
+**Shareable Truth**
+
+"The gospel is simple enough for a child to understand and profound enough to change the world."`,
+        },
+        {
+          id: "d2-rom116",
+          type: "scripture",
+          title: "The Power of God",
+          reference: "Romans 1:16",
+          body: `**Scripture (KJV)**  
+> "For I am not ashamed of the gospel of Christ: for it is the power of God unto salvation to every one that believeth; to the Jew first, and also to the Greek."
+
+**Meaning:** Paul is not ashamed of the gospel because it is the power of God for salvation to everyone who believes.  
+**Application:** The gospel itself has power. Trust it to do what only God can do—save souls.`.trim(),
+        },
+        {
+          id: "d2-1cor153-4",
+          type: "scripture",
+          title: "The Gospel in a Nutshell",
+          reference: "1 Corinthians 15:3–4",
+          body: `**Scripture (KJV)**  
+> "For I delivered unto you first of all that which I also received, how that Christ died for our sins according to the scriptures; And that he was buried, and that he rose again the third day according to the scriptures:"
+
+**Meaning:** Paul defines the gospel: Christ died for our sins, was buried, and rose again on the third day.  
+**Application:** This is the core message. Keep it simple and clear.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Overcoming Fear",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Overcoming Fear",
+          body: `Fear is the greatest barrier to evangelism. You fear rejection, looking foolish, or saying the wrong thing. But **love casts out fear**. When you truly love people, you cannot stay silent about the hope you have in Christ.
+
+Remember: rejection of the gospel is not personal rejection of you—it is rejection of Jesus. And even if they reject the message today, the seed you plant may bear fruit later.
+
+Pray for boldness. Pray for opportunities. Then step out in faith, trusting God with the results.
+
+**Reflection**
+
+What specific fear is holding you back from sharing the gospel?
+
+**Prayer**
+
+Lord, cast out my fear and fill me with love for the lost. Help me care more about their souls than my comfort.
+
+**Shareable Truth**
+
+"Love for people and fear of God will always overcome fear of man."`,
+        },
+        {
+          id: "d3-2tim17",
+          type: "scripture",
+          title: "A Spirit of Power, Not Fear",
+          reference: "2 Timothy 1:7–8",
+          body: `**Scripture (KJV)**  
+> "For God hath not given us the spirit of fear; but of power, and of love, and of a sound mind. Be not thou therefore ashamed of the testimony of our Lord, nor of me his prisoner: but be thou partaker of the afflictions of the gospel according to the power of God;"
+
+**Meaning:** God has given us a spirit of power, love, and self-control—not fear.  
+**Application:** Do not be ashamed of the gospel. God has given you everything you need to share it boldly.`.trim(),
+        },
+        {
+          id: "d3-1pet315",
+          type: "scripture",
+          title: "Always Be Ready",
+          reference: "1 Peter 3:15",
+          body: `**Scripture (KJV)**  
+> "But sanctify the Lord God in your hearts: and be ready always to give an answer to every man that asketh you a reason of the hope that is in you with meekness and fear:"
+
+**Meaning:** Always be ready to give an answer for the hope you have, with gentleness and respect.  
+**Application:** Prepare your heart and mind so you are ready to share when the opportunity comes.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Living It Out",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Living It Out",
+          body: `Your **life** is part of your witness. People are watching how you live, and your actions either support or undermine your words.
+
+Live with integrity, love with sincerity, and serve with humility. Then, when opportunities come to share the gospel, your life will have already prepared the way.
+
+Evangelism is not a one-time event—it is a lifestyle of loving people and pointing them to Jesus in word and deed.
+
+**Reflection**
+
+Does your life reflect the gospel you claim to believe?
+
+**Prayer**
+
+Lord, help me live in a way that makes people curious about You. Let my life back up my words.
+
+**Shareable Truth**
+
+"Preach the gospel at all times. When necessary, use words."`,
+        },
+        {
+          id: "d4-matt516",
+          type: "scripture",
+          title: "Let Your Light Shine",
+          reference: "Matthew 5:16",
+          body: `**Scripture (KJV)**  
+> "Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven."
+
+**Meaning:** Let your light shine so that people see your good works and glorify God.  
+**Application:** Your life should point people to God. Live in a way that makes Him look glorious.`.trim(),
+        },
+        {
+          id: "d4-col44-6",
+          type: "scripture",
+          title: "Walk in Wisdom, Make the Most of Every Opportunity",
+          reference: "Colossians 4:5–6",
+          body: `**Scripture (KJV)**  
+> "Walk in wisdom toward them that are without, redeeming the time. Let your speech be alway with grace, seasoned with salt, that ye may know how ye ought to answer every man."
+
+**Meaning:** Live wisely toward outsiders, making the most of every opportunity. Let your speech be gracious and thoughtful.  
+**Application:** Be wise, gracious, and intentional in how you speak to unbelievers. Every conversation is an opportunity.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
+export const stewardshipGenerosityPlan: DiscipleshipPlan = {
+  id: "stewardship-generosity",
+  title: "Stewardship & Generosity",
+  subtitle: "Managing God's resources with open hands",
+  imageUrl: generousGivingImage,
+  totalDays: 3,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "It All Belongs to God",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — It All Belongs to God",
+          body: `The first principle of stewardship is this: **everything you have belongs to God**. You are not the owner; you are the manager. Your money, time, talents, and possessions are all entrusted to you by God, and one day you will give an account for how you used them.
+
+This changes everything. You do not ask, "How much of my money should I give to God?" You ask, "How does God want me to use His money?"
+
+Stewardship is not about guilt or legalism—it is about **faithfulness**. God has blessed you so you can bless others and advance His kingdom.
+
+**Reflection**
+
+Do you view your money and possessions as yours to manage, or as God's to steward?
+
+**Prayer**
+
+Lord, help me see that everything I have is Yours. Teach me to manage it faithfully for Your glory.
+
+**Shareable Truth**
+
+"We are not owners. We are stewards of what God has entrusted to us."`,
+        },
+        {
+          id: "d1-ps2414",
+          type: "scripture",
+          title: "The Earth Is the Lord's",
+          reference: "Psalm 24:1",
+          body: `**Scripture (KJV)**  
+> "The earth is the LORD'S, and the fulness thereof; the world, and they that dwell therein."
+
+**Meaning:** The earth and everything in it belongs to the Lord.  
+**Application:** God owns it all. You are simply a steward of what He has given you.`.trim(),
+        },
+        {
+          id: "d1-1chr2914",
+          type: "scripture",
+          title: "All Things Come from You",
+          reference: "1 Chronicles 29:14",
+          body: `**Scripture (KJV)**  
+> "But who am I, and what is my people, that we should be able to offer so willingly after this sort? for all things come of thee, and of thine own have we given thee."
+
+**Meaning:** David acknowledges that everything they gave to God came from God in the first place.  
+**Application:** When you give to God, you are simply returning what He first gave to you.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "The Heart of Generosity",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — The Heart of Generosity",
+          body: `God loves a **cheerful giver**—not a reluctant, guilt-driven, or begrudging one. Generosity flows from a heart that trusts God's provision and delights in blessing others.
+
+When you hold your possessions with open hands, you are free. When you grip them tightly, you become enslaved to them. The ironic truth is that **the more you give, the richer you become**—not necessarily in money, but in joy, purpose, and spiritual treasure.
+
+God does not need your money. He wants your heart. Giving reveals where your treasure really is.
+
+**Reflection**
+
+Do you give generously and joyfully, or reluctantly and sparingly?
+
+**Prayer**
+
+Lord, make me a cheerful giver. Help me trust You enough to give generously without fear.
+
+**Shareable Truth**
+
+"You cannot out-give God."`,
+        },
+        {
+          id: "d2-2cor97",
+          type: "scripture",
+          title: "God Loves a Cheerful Giver",
+          reference: "2 Corinthians 9:6–7",
+          body: `**Scripture (KJV)**  
+> "But this I say, He which soweth sparingly shall reap also sparingly; and he which soweth bountifully shall reap also bountifully. Every man according as he purposeth in his heart, so let him give; not grudgingly, or of necessity: for God loveth a cheerful giver."
+
+**Meaning:** Give generously, not reluctantly or under compulsion, for God loves a cheerful giver.  
+**Application:** Your attitude in giving matters more than the amount. Give joyfully.`.trim(),
+        },
+        {
+          id: "d2-luke638",
+          type: "scripture",
+          title: "Give, and It Will Be Given",
+          reference: "Luke 6:38",
+          body: `**Scripture (KJV)**  
+> "Give, and it shall be given unto you; good measure, pressed down, and shaken together, and running over, shall men give into your bosom. For with the same measure that ye mete withal it shall be measured to you again."
+
+**Meaning:** Give generously, and you will receive generously—pressed down, shaken together, and running over.  
+**Application:** God promises to bless those who give generously. Trust Him and give freely.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Storing Up Treasure",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Storing Up Treasure",
+          body: `Jesus says, "Do not store up treasures on earth... but store up treasures in heaven." Everything you invest in God's kingdom lasts forever. Everything you hoard on earth will one day be gone.
+
+This does not mean you cannot own things or save money. It means your **ultimate treasure** must be in heaven, not on earth.
+
+Every dollar you give to advance the gospel, care for the poor, or disciple believers is an investment in eternity. You are sending treasure ahead to a place where it will never rust, decay, or be stolen.
+
+**Reflection**
+
+Where is your treasure? Are you investing in what lasts forever?
+
+**Prayer**
+
+Lord, help me store up treasure in heaven. Let my generosity reflect eternal priorities.
+
+**Shareable Truth**
+
+"You cannot take it with you, but you can send it ahead."`,
+        },
+        {
+          id: "d3-matt619-21",
+          type: "scripture",
+          title: "Treasure in Heaven",
+          reference: "Matthew 6:19–21",
+          body: `**Scripture (KJV)**  
+> "Lay not up for yourselves treasures upon earth, where moth and rust doth corrupt, and where thieves break through and steal: But lay up for yourselves treasures in heaven, where neither moth nor rust doth corrupt, and where thieves do not break through nor steal: For where your treasure is, there will your heart be also."
+
+**Meaning:** Do not store up treasures on earth, but in heaven—for where your treasure is, your heart will be also.  
+**Application:** Invest in what lasts forever. Your heart follows your treasure.`.trim(),
+        },
+        {
+          id: "d3-1tim617-19",
+          type: "scripture",
+          title: "Rich in Good Works",
+          reference: "1 Timothy 6:17–19",
+          body: `**Scripture (KJV)**  
+> "Charge them that are rich in this world, that they be not highminded, nor trust in uncertain riches, but in the living God, who giveth us richly all things to enjoy; That they do good, that they be rich in good works, ready to distribute, willing to communicate; Laying up in store for themselves a good foundation against the time to come, that they may lay hold on eternal life."
+
+**Meaning:** Do not trust in riches, but in God. Be generous, rich in good works, storing up treasure for eternity.  
+**Application:** Use your resources to build eternal treasure, not earthly empires.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
+export const biblicalDecisionMakingPlan: DiscipleshipPlan = {
+  id: "biblical-decision-making",
+  title: "Biblical Decision Making",
+  subtitle: "Discerning God's will in everyday choices",
+  imageUrl: forestPathImage,
+  totalDays: 4,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "God Has a Will for Your Life",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — God Has a Will for Your Life",
+          body: `God cares about your decisions. He is not a distant deity who wound up the universe and left it to run on its own. He is a **personal Father** who guides, directs, and leads His children.
+
+The challenge is learning to discern His will. Some decisions are clearly addressed in Scripture (do not lie, love your neighbor). Others require wisdom, prayer, and trusting the Holy Spirit's leading.
+
+God's will is not a tightrope you must perfectly balance on, fearing one wrong step will ruin everything. It is a path He lovingly guides you on, even when you stumble.
+
+**Reflection**
+
+Do you trust that God cares about the decisions you face?
+
+**Prayer**
+
+Lord, teach me to seek Your will in all things. Help me trust that You will guide me as I walk with You.
+
+**Shareable Truth**
+
+"God's will is not a mystery to be solved—it is a relationship to be walked in."`,
+        },
+        {
+          id: "d1-prov35-6",
+          type: "scripture",
+          title: "Trust in the Lord",
+          reference: "Proverbs 3:5–6",
+          body: `**Scripture (KJV)**  
+> "Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths."
+
+**Meaning:** Trust in the Lord fully, do not rely solely on your own understanding, and acknowledge Him in all your ways—He will make your paths straight.  
+**Application:** Seek God first in every decision. Trust Him to guide you, even when you do not see the full picture.`.trim(),
+        },
+        {
+          id: "d1-ps3224",
+          type: "scripture",
+          title: "I Will Instruct You",
+          reference: "Psalm 32:8",
+          body: `**Scripture (KJV)**  
+> "I will instruct thee and teach thee in the way which thou shalt go: I will guide thee with mine eye."
+
+**Meaning:** God promises to instruct, teach, and guide His people.  
+**Application:** God will show you the way. Trust Him to lead you step by step.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "The Role of Scripture",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — The Role of Scripture",
+          body: `The Bible is the **foundation** for all decision-making. Before you ask, "What do I feel led to do?" ask, "What does Scripture say?"
+
+God will never lead you to do something that contradicts His Word. If a decision violates a biblical command or principle, it is not God's will—no matter how you feel about it.
+
+Saturate your mind with Scripture. The more you know God's Word, the easier it is to recognize His voice and discern His will.
+
+**Reflection**
+
+Do you make decisions based on God's Word, or based on your feelings and circumstances?
+
+**Prayer**
+
+Lord, let Your Word be a lamp to my feet and a light to my path. Teach me to filter every decision through Scripture.
+
+**Shareable Truth**
+
+"If it contradicts Scripture, it is not from God."`,
+        },
+        {
+          id: "d2-ps119105",
+          type: "scripture",
+          title: "A Lamp and a Light",
+          reference: "Psalm 119:105",
+          body: `**Scripture (KJV)**  
+> "Thy word is a lamp unto my feet, and a light unto my path."
+
+**Meaning:** God's Word illuminates the path before you.  
+**Application:** Scripture is your primary guide. Walk in the light of God's Word.`.trim(),
+        },
+        {
+          id: "d2-2tim316-17",
+          type: "scripture",
+          title: "Equipped for Every Good Work",
+          reference: "2 Timothy 3:16–17",
+          body: `**Scripture (KJV)**  
+> "All scripture is given by inspiration of God, and is profitable for doctrine, for reproof, for correction, for instruction in righteousness: That the man of God may be perfect, throughly furnished unto all good works."
+
+**Meaning:** All Scripture is God-breathed and profitable for teaching, correction, and training in righteousness, equipping believers for every good work.  
+**Application:** Scripture equips you for life and godliness. Use it as your foundation for decision-making.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Prayer, Wisdom, and Counsel",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Prayer, Wisdom, and Counsel",
+          body: `After grounding yourself in Scripture, seek God in **prayer**. Ask for wisdom, not just answers. James 1:5 says, "If any of you lack wisdom, let him ask of God, who giveth to all men liberally."
+
+God also provides wisdom through **godly counsel**. Proverbs says there is safety in a multitude of counselors. Seek advice from mature believers who know Scripture and love Jesus.
+
+Beware of making decisions in isolation. The enemy loves to isolate you and whisper lies. Surround yourself with wise, Spirit-filled people.
+
+**Reflection**
+
+Do you regularly pray for wisdom in your decisions? Do you seek godly counsel?
+
+**Prayer**
+
+Lord, I need wisdom. I ask You for clarity, guidance, and discernment. Surround me with wise counsel.
+
+**Shareable Truth**
+
+"God gives wisdom generously to those who ask."`,
+        },
+        {
+          id: "d3-james15",
+          type: "scripture",
+          title: "Ask for Wisdom",
+          reference: "James 1:5",
+          body: `**Scripture (KJV)**  
+> "If any of you lack wisdom, let him ask of God, that giveth to all men liberally, and upbraideth not; and it shall be given him."
+
+**Meaning:** If you lack wisdom, ask God, who gives generously to all without finding fault.  
+**Application:** God promises to give wisdom when you ask. Pray for it.`.trim(),
+        },
+        {
+          id: "d3-prov1122",
+          type: "scripture",
+          title: "Safety in Many Counselors",
+          reference: "Proverbs 11:14",
+          body: `**Scripture (KJV)**  
+> "Where no counsel is, the people fall: but in the multitude of counsellors there is safety."
+
+**Meaning:** Without guidance, people fall, but in an abundance of counselors there is safety.  
+**Application:** Seek wise counsel. Do not make major decisions alone.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Peace, Patience, and Trust",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Peace, Patience, and Trust",
+          body: `When you have sought God in Scripture and prayer, and received godly counsel, **trust God's leading**. If you have peace about a decision, move forward. If you do not have peace, wait.
+
+God is not in a hurry. Do not make decisions out of anxiety or pressure. Wait on the Lord. He will make the path clear in His timing.
+
+And remember: even if you make a mistake, God is sovereign. He can redeem your errors and use them for His purposes. Trust Him.
+
+**Reflection**
+
+Do you have peace about the decision before you? If not, are you willing to wait?
+
+**Prayer**
+
+Lord, I trust You. Help me wait patiently for Your timing and walk forward in faith when You make the way clear.
+
+**Shareable Truth**
+
+"Peace is the umpire of God's will."`,
+        },
+        {
+          id: "d4-phil47",
+          type: "scripture",
+          title: "The Peace of God",
+          reference: "Philippians 4:6–7",
+          body: `**Scripture (KJV)**  
+> "Be careful for nothing; but in every thing by prayer and supplication with thanksgiving let your requests be made known unto God. And the peace of God, which passeth all understanding, shall keep your hearts and minds through Christ Jesus."
+
+**Meaning:** Do not be anxious, but in everything, by prayer and petition with thanksgiving, present your requests to God—and His peace will guard your heart and mind.  
+**Application:** When you pray, God gives peace. Let His peace guide your decisions.`.trim(),
+        },
+        {
+          id: "d4-isa4031",
+          type: "scripture",
+          title: "Wait on the Lord",
+          reference: "Isaiah 40:31",
+          body: `**Scripture (KJV)**  
+> "But they that wait upon the LORD shall renew their strength; they shall mount up with wings as eagles; they shall run, and not be weary; and they shall walk, and not faint."
+
+**Meaning:** Those who wait on the Lord will renew their strength.  
+**Application:** Do not rush ahead of God. Wait on Him, and He will renew your strength and make the path clear.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
+export const socialMediaTechnologyPlan: DiscipleshipPlan = {
+  id: "social-media-technology",
+  title: "Social Media & Technology",
+  subtitle: "Using digital tools for God's glory",
+  imageUrl: purityWorldImage,
+  totalDays: 3,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Stewards of Technology",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Stewards of Technology",
+          body: `Technology is not evil, but it is **powerful**—and like all power, it can be used for good or for harm. Social media, smartphones, and the internet can connect you to encouraging content, edify the church, and spread the gospel. They can also become idols, feed sinful desires, and consume your time.
+
+The question is not "Should I use technology?" but "How does God want me to use it?" You are a **steward** of your attention, your time, and your influence online.
+
+**Reflection**
+
+Does your use of technology draw you closer to God or distract you from Him?
+
+**Prayer**
+
+Lord, help me use technology wisely. Show me where I have let it become an idol or a stumbling block.
+
+**Shareable Truth**
+
+"Technology is a tool. Use it for God's glory, not your distraction."`,
+        },
+        {
+          id: "d1-1cor1031",
+          type: "scripture",
+          title: "Do All for the Glory of God",
+          reference: "1 Corinthians 10:31",
+          body: `**Scripture (KJV)**  
+> "Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God."
+
+**Meaning:** Whatever you do, do it all for the glory of God.  
+**Application:** This includes your use of technology. Does your social media, entertainment, and screen time glorify God?`.trim(),
+        },
+        {
+          id: "d1-eph516",
+          type: "scripture",
+          title: "Redeeming the Time",
+          reference: "Ephesians 5:15–16",
+          body: `**Scripture (KJV)**  
+> "See then that ye walk circumspectly, not as fools, but as wise, Redeeming the time, because the days are evil."
+
+**Meaning:** Be very careful how you live—not as unwise but as wise, making the most of every opportunity.  
+**Application:** Your time is precious. Do not waste it scrolling mindlessly. Use it wisely.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Guarding Your Heart Online",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Guarding Your Heart Online",
+          body: `Social media can expose you to **envy, comparison, lust, anger, and false teaching** faster than almost anything else. What you consume shapes your heart. Proverbs 4:23 says, "Guard your heart, for out of it flow the springs of life."
+
+You must be **intentional** about what you allow into your mind. Unfollow accounts that stir up lust, envy, or anger. Limit your time online. Set boundaries.
+
+If social media makes you more anxious, envious, or angry, it is harming you. Cut it off or drastically limit it.
+
+**Reflection**
+
+What content are you consuming online? Is it feeding your soul or poisoning it?
+
+**Prayer**
+
+Lord, help me guard my heart. Give me discernment to recognize what is harmful and the discipline to cut it off.
+
+**Shareable Truth**
+
+"What you consume online shapes who you become."`,
+        },
+        {
+          id: "d2-prov423",
+          type: "scripture",
+          title: "Guard Your Heart",
+          reference: "Proverbs 4:23",
+          body: `**Scripture (KJV)**  
+> "Keep thy heart with all diligence; for out of it are the issues of life."
+
+**Meaning:** Guard your heart above all else, for it determines the course of your life.  
+**Application:** Be vigilant about what you let into your heart and mind through technology.`.trim(),
+        },
+        {
+          id: "d2-phil48",
+          type: "scripture",
+          title: "Think on These Things",
+          reference: "Philippians 4:8",
+          body: `**Scripture (KJV)**  
+> "Finally, brethren, whatsoever things are true, whatsoever things are honest, whatsoever things are just, whatsoever things are pure, whatsoever things are lovely, whatsoever things are of good report; if there be any virtue, and if there be any praise, think on these things."
+
+**Meaning:** Focus your thoughts on what is true, noble, right, pure, lovely, and admirable.  
+**Application:** Filter your social media, entertainment, and screen time through this standard.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Using Technology for Good",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Using Technology for Good",
+          body: `Technology can be a powerful tool for the kingdom of God. You can share the gospel, encourage believers, and point people to truth. Your words online have weight—use them wisely.
+
+Ask yourself: "Is my online presence reflecting Christ? Am I using my influence to glorify God or to build my own platform?"
+
+Set healthy rhythms: Sabbath from screens, fast from social media periodically, and prioritize face-to-face relationships over digital ones.
+
+**Reflection**
+
+How can you use technology to advance God's kingdom this week?
+
+**Prayer**
+
+Lord, help me use technology as a tool for Your glory. Let my words and presence online point people to You.
+
+**Shareable Truth**
+
+"Your digital footprint should reflect the gospel."`,
+        },
+        {
+          id: "d3-col44-6",
+          type: "scripture",
+          title: "Gracious Speech",
+          reference: "Colossians 4:5–6",
+          body: `**Scripture (KJV)**  
+> "Walk in wisdom toward them that are without, redeeming the time. Let your speech be alway with grace, seasoned with salt, that ye may know how ye ought to answer every man."
+
+**Meaning:** Be wise in your conduct toward outsiders, making the most of every opportunity. Let your conversation be gracious and seasoned with salt.  
+**Application:** This applies to your online speech too. Let your words online be gracious, truthful, and edifying.`.trim(),
+        },
+        {
+          id: "d3-matt516",
+          type: "scripture",
+          title: "Let Your Light Shine",
+          reference: "Matthew 5:16",
+          body: `**Scripture (KJV)**  
+> "Let your light so shine before men, that they may see your good works, and glorify your Father which is in heaven."
+
+**Meaning:** Let your light shine before others so they see your good deeds and glorify God.  
+**Application:** Let your online presence point people to God, not yourself.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
 export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   heavenOrHellPlan,
   lifeInSpiritPlan,
@@ -8216,4 +9555,13 @@ export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   purityWorldPlan,
   sufferingFaithfulnessPlan,
   prayerLifePlan,
+  fastingHungerPlan,
+  overcomingDepressionPlan,
+  breakingPeoplePleasingPlan,
+  contentmentPlan,
+  forgivenessReconciliationPlan,
+  witnessingEvangelismPlan,
+  stewardshipGenerosityPlan,
+  biblicalDecisionMakingPlan,
+  socialMediaTechnologyPlan,
 ];
