@@ -677,18 +677,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
   };
 
   // Daily verse selection based on day of year for consistency
-  const getDailyVerseReference = (): string => {
-    const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
-    const verses = [
-      'JHN.3.16', 'PSA.23.1', 'PRO.3.5-6', 'JER.29.11', 'PHP.4.13',
-      'ROM.8.28', 'ISA.41.10', 'JHN.14.6', 'PSA.119.105', 'MAT.28.20',
-      'HEB.11.1', 'ROM.10.9', 'EPH.2.8-9', 'PSA.46.10', 'JHN.15.13',
-      'ROM.5.8', 'PSA.121.1-2', 'JHN.10.10', 'PHP.4.19', 'MAT.11.28',
-      'PSA.34.18', 'ROM.12.2', 'JHN.1.1', 'PSA.91.2', 'EPH.6.10',
-      'JOS.1.9', 'PSA.27.1', 'ROM.15.13', 'JHN.16.33', 'PSA.18.2'
-    ];
-    return verses[dayOfYear % verses.length];
-  };
+  // Import centralized verse list
+  const { getDailyVerseReference, bookNames: verseBookNames } = await import('./dailyVerseList.js');
 
   // Get daily verse using smart API fallback chain
   app.get("/api/daily-verse", async (req, res) => {
@@ -707,12 +697,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const dailyReferenceApiBible = getDailyVerseReference();
       // Parse "JHN.3.16" -> "John 3:16"
       const [bookCode, chapter, verseNum] = dailyReferenceApiBible.split('.');
-      const bookNames: { [key: string]: string } = {
-        'JHN': 'John', 'PSA': 'Psalms', 'PRO': 'Proverbs', 'JER': 'Jeremiah',
-        'PHP': 'Philippians', 'ROM': 'Romans', 'ISA': 'Isaiah', 'HEB': 'Hebrews',
-        'MAT': 'Matthew', 'EPH': 'Ephesians', 'JOS': 'Joshua'
-      };
-      const bookName = bookNames[bookCode] || bookCode;
+      const bookName = verseBookNames[bookCode] || bookCode;
       const dailyReference = `${bookName} ${chapter}:${verseNum}`;
       
       // Use smart fallback system: Bolls.life → API.Bible → OpenAI → GetContext
