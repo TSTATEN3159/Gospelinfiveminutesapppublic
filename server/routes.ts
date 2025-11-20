@@ -4,7 +4,7 @@ import { z } from "zod";
 import OpenAI from "openai";
 import Stripe from "stripe";
 import { storage } from "./storage";
-import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema, triviaStats } from "@shared/schema";
+import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema, triviaStats, appUsers } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
 import { db } from "./db";
@@ -2477,6 +2477,73 @@ Return only the application paragraph.
       res.status(500).json({
         success: false,
         error: "Failed to get subscriber count."
+      });
+    }
+  });
+
+  // Daily Reminder Email Subscription
+  app.post("/api/subscribe-daily-reminder", async (req, res) => {
+    try {
+      const { email, name } = z.object({
+        email: z.string().email(),
+        name: z.string().optional()
+      }).parse(req.body);
+      
+      // Check if user already exists
+      const existingUser = await storage.getAppUserByEmail(email);
+      
+      if (existingUser) {
+        if (existingUser.wantsDailyEmail) {
+          return res.json({
+            success: true,
+            message: "You're already signed up for daily reminders!"
+          });
+        }
+        
+        // Update existing user to enable daily emails
+        await db.update(appUsers)
+          .set({ wantsDailyEmail: true })
+          .where(eq(appUsers.id, existingUser.id));
+        
+        return res.json({
+          success: true,
+          message: "Daily reminders activated! You'll receive the Daily Verse every morning at 7 AM."
+        });
+      }
+      
+      // Create new app user with daily email enabled
+      const newUser = await storage.createAppUser({
+        firstName: name || "Friend",
+        lastName: "",
+        email: email,
+        phone: null,
+        birthMonth: null,
+        birthDay: null
+      });
+      
+      // Update to enable daily emails
+      await db.update(appUsers)
+        .set({ wantsDailyEmail: true })
+        .where(eq(appUsers.id, newUser.id));
+      
+      res.json({
+        success: true,
+        message: "Welcome! You'll receive the Daily Verse every morning at 7 AM."
+      });
+      
+    } catch (error) {
+      console.error("Daily reminder signup error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Please provide a valid email address."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "There was an issue processing your signup. Please try again."
       });
     }
   });

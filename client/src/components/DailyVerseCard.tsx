@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX, Image as ImageIcon } from "lucide-react";
+import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX, Image as ImageIcon, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
@@ -46,6 +46,10 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   const [hasExistingNote, setHasExistingNote] = useState(false);
   const [isImageGeneratorOpen, setIsImageGeneratorOpen] = useState(false);
   const [highlightedWordIndex, setHighlightedWordIndex] = useState<number | null>(null);
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
 
   useEffect(() => {
     const bookmarks = appStore.getBookmarks();
@@ -185,6 +189,57 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
 
   const getApplication = () => {
     return verse.application || "Today, bring every decision—big or small—to God in prayer. Before acting on your own understanding, pause and ask for His wisdom. Trust that His guidance, even when it doesn't align with your plans, leads to the best outcome for your life.";
+  };
+
+  const handleEmailSignup = async () => {
+    if (!emailInput.trim()) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+    
+    try {
+      const response = await fetch("/api/subscribe-daily-reminder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: emailInput.trim(),
+          name: nameInput.trim() || undefined,
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        toast({
+          title: "Welcome!",
+          description: data.message || "You're now signed up for daily verse reminders!",
+        });
+        setEmailInput("");
+        setNameInput("");
+        setIsEmailDialogOpen(false);
+      } else {
+        toast({
+          title: "Signup Failed",
+          description: data.error || "Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Email signup error:", error);
+      toast({
+        title: "Connection Error",
+        description: "Unable to process your signup. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubscribing(false);
+    }
   };
 
   return (
@@ -392,6 +447,75 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             <Book className="w-4 h-4 mr-2" />
             Read Chapter
           </Button>
+          
+          <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
+            <DialogTrigger asChild>
+              <Button
+                variant="outline"
+                size="sm"
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+                data-testid="button-daily-reminder-signup"
+              >
+                <Mail className="w-4 h-4 mr-2" />
+                Daily Reminders
+              </Button>
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px]">
+              <DialogHeader>
+                <DialogTitle>Sign Up for Daily Reminders</DialogTitle>
+                <DialogDescription>
+                  Receive the Daily Verse with meaning and application in your inbox every morning at 7 AM.
+                </DialogDescription>
+              </DialogHeader>
+              <div className="grid gap-4 py-4">
+                <div className="grid gap-2">
+                  <label htmlFor="reminder-name" className="text-sm font-medium">
+                    Name (Optional)
+                  </label>
+                  <input
+                    id="reminder-name"
+                    type="text"
+                    placeholder="Your name"
+                    value={nameInput}
+                    onChange={(e) => setNameInput(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                    data-testid="input-reminder-name"
+                  />
+                </div>
+                <div className="grid gap-2">
+                  <label htmlFor="reminder-email" className="text-sm font-medium">
+                    Email Address *
+                  </label>
+                  <input
+                    id="reminder-email"
+                    type="email"
+                    placeholder="your.email@example.com"
+                    value={emailInput}
+                    onChange={(e) => setEmailInput(e.target.value)}
+                    className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                    data-testid="input-reminder-email"
+                    required
+                  />
+                </div>
+              </div>
+              <div className="flex justify-end gap-2">
+                <Button 
+                  variant="outline" 
+                  onClick={() => setIsEmailDialogOpen(false)}
+                  data-testid="button-cancel-reminder"
+                >
+                  Cancel
+                </Button>
+                <Button 
+                  onClick={handleEmailSignup}
+                  disabled={isSubscribing}
+                  data-testid="button-subscribe-reminder"
+                >
+                  {isSubscribing ? "Signing Up..." : "Sign Up"}
+                </Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </CardContent>
       
