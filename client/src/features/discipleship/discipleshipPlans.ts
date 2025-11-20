@@ -24,6 +24,7 @@ import purityWorldImage from '@assets/stock_images/pure_heart_clean_han_1a005796
 import sufferingFaithfulnessImage from '@assets/stock_images/person_in_difficult__faffc05a.jpg';
 import prayerLifeImage from '@assets/stock_images/hands_folded_in_pray_b98684b0.jpg';
 import ruggedChurchImage from '@assets/stock_images/old_rustic_stone_chu_610102d9.jpg';
+import manAtBarImage from '@assets/generated_images/man_contemplating_at_bar.png';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -822,7 +823,7 @@ export const breakingFreeAddictionPlan: DiscipleshipPlan = {
   id: "breaking-free-addiction",
   title: "Breaking Free from Addiction",
   subtitle: "Walking out of bondage and into freedom in Christ",
-  imageUrl: prayerSupportImage,
+  imageUrl: manAtBarImage,
   totalDays: 5,
   days: [
     {
