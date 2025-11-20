@@ -118,12 +118,12 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
         <div className="max-w-md mx-auto">
           {/* Tabbed Interface */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-            <TabsList className="grid w-full grid-cols-2 mb-4">
-              <TabsTrigger value="scripture" className="flex items-center gap-2" data-testid="tab-scripture-search">
+            <TabsList className="grid w-full grid-cols-2 mb-4 backdrop-blur-lg bg-white/20 dark:bg-black/20 border border-white/30 dark:border-white/10 shadow-lg">
+              <TabsTrigger value="scripture" className="flex items-center gap-2 data-[state=active]:backdrop-blur-md data-[state=active]:bg-white/40 dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-md" data-testid="tab-scripture-search">
                 <Search className="w-4 h-4" />
                 <span>Scripture Search</span>
               </TabsTrigger>
-              <TabsTrigger value="pastor" className="flex items-center gap-2" data-testid="tab-ask-pastor">
+              <TabsTrigger value="pastor" className="flex items-center gap-2 data-[state=active]:backdrop-blur-md data-[state=active]:bg-white/40 dark:data-[state=active]:bg-white/10 data-[state=active]:shadow-md" data-testid="tab-ask-pastor">
                 <Book className="w-4 h-4" />
                 <span>Ask Pastor</span>
               </TabsTrigger>
