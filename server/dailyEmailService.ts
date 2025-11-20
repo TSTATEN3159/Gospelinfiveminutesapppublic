@@ -1,14 +1,36 @@
 import sgMail from "@sendgrid/mail";
 
-const SENDGRID_API_KEY = process.env.SENDGRID_API_KEY;
 const APP_BASE_URL = process.env.REPL_ID 
   ? `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
   : "http://localhost:5000";
 
-if (!SENDGRID_API_KEY) {
-  console.warn("[DailyEmail] SENDGRID_API_KEY is not set – emails will NOT send.");
-} else {
-  sgMail.setApiKey(SENDGRID_API_KEY);
+// Use Replit's SendGrid integration
+async function getSendGridCredentials() {
+  const hostname = process.env.REPLIT_CONNECTORS_HOSTNAME;
+  const xReplitToken = process.env.REPL_IDENTITY 
+    ? 'repl ' + process.env.REPL_IDENTITY 
+    : process.env.WEB_REPL_RENEWAL 
+    ? 'depl ' + process.env.WEB_REPL_RENEWAL 
+    : null;
+
+  if (!xReplitToken) {
+    throw new Error('SendGrid integration not available - missing authentication');
+  }
+
+  const connectionSettings = await fetch(
+    'https://' + hostname + '/api/v2/connection?include_secrets=true&connector_names=sendgrid',
+    {
+      headers: {
+        'Accept': 'application/json',
+        'X_REPLIT_TOKEN': xReplitToken
+      }
+    }
+  ).then(res => res.json()).then(data => data.items?.[0]);
+
+  if (!connectionSettings || (!connectionSettings.settings.api_key || !connectionSettings.settings.from_email)) {
+    throw new Error('SendGrid not connected');
+  }
+  return {apiKey: connectionSettings.settings.api_key, fromEmail: connectionSettings.settings.from_email};
 }
 
 export interface DailyEmailPayload {
@@ -23,11 +45,6 @@ export interface DailyEmailPayload {
 }
 
 export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
-  if (!SENDGRID_API_KEY) {
-    console.log("[DailyEmail] Skipping email - no API key configured");
-    return;
-  }
-
   const {
     to,
     name = "Friend",
@@ -38,6 +55,23 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
     triviaTitle,
     triviaStreak,
   } = payload;
+  
+  let apiKey: string;
+  let fromEmail: string;
+  
+  try {
+    const credentials = await getSendGridCredentials();
+    apiKey = credentials.apiKey;
+    fromEmail = credentials.fromEmail;
+    sgMail.setApiKey(apiKey);
+  } catch (error: any) {
+    if (error.message?.includes('SendGrid not connected')) {
+      console.log('[DailyEmail] SendGrid integration not configured - skipping email');
+      return;
+    }
+    console.error('[DailyEmail] Error getting SendGrid credentials:', error);
+    throw error;
+  }
 
   const subject = `Your Daily Verse & Bible Trivia – ${verseReference}`;
 
@@ -179,7 +213,7 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
 
   const msg = {
     to,
-    from: "noreply@thegospelin5minutes.com",
+    from: fromEmail, // Use the from_email configured in SendGrid integration
     subject,
     html,
   };
