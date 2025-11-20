@@ -100,6 +100,21 @@ export default function PrivacyPolicyPage({ onBack, language = "en" }: PrivacyPo
           </section>
 
           <section>
+            <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.emailCommunications}</h2>
+            <div className="space-y-3">
+              <p className="text-muted-foreground">
+                <strong>{t.emailCommunicationsLabel}</strong> {t.emailCommunicationsDesc}
+              </p>
+              <p className="text-muted-foreground">
+                <strong>{t.sendGridLabel}</strong> {t.sendGridDesc}
+              </p>
+              <p className="text-muted-foreground">
+                <strong>{t.unsubscribeLabel}</strong> {t.unsubscribeDesc}
+              </p>
+            </div>
+          </section>
+
+          <section>
             <h2 className="text-lg font-semibold text-foreground mb-3 text-center">{t.childrensPrivacy}</h2>
             <p className="text-muted-foreground">
               {t.childrensPrivacyDesc}
