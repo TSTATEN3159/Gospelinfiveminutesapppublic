@@ -7712,6 +7712,485 @@ Lord, teach me to pray without ceasing. Help me to turn my thoughts toward You a
   ],
 };
 
+export const fastingHungerPlan: DiscipleshipPlan = {
+  id: "fasting-spiritual-hunger",
+  title: "Fasting & Spiritual Hunger",
+  subtitle: "Learning to feast on God through fasting",
+  imageUrl: openBibleSunlightImage,
+  totalDays: 4,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "Why Fast?",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — Why Fast?",
+          body: `Fasting is not about proving your devotion or earning God's favor. It is about **creating space** for God by saying "no" to legitimate things so you can say "yes" to Him more fully.
+
+When you fast from food, entertainment, or technology, you discover how much you depend on created things instead of the Creator. Fasting reveals your hidden idols and draws you into deeper dependence on God's Word and presence.
+
+Jesus Himself fasted, and He assumed His followers would too. Fasting is not merely an Old Testament practice—it is a New Testament privilege for those who hunger for more of God.
+
+**Reflection**
+
+What are you hungering for most—comfort, entertainment, or God Himself?
+
+**Prayer**
+
+Lord, give me a hunger for You that surpasses my appetite for anything else. Teach me to feast on Your Word and presence.
+
+**Shareable Truth**
+
+"Fasting is feasting on God."`,
+        },
+        {
+          id: "d1-matt617-18",
+          type: "scripture",
+          title: "Fasting in Secret",
+          reference: "Matthew 6:16–18",
+          body: `**Scripture (KJV)**  
+> "Moreover when ye fast, be not, as the hypocrites, of a sad countenance: for they disfigure their faces, that they may appear unto men to fast. Verily I say unto you, They have their reward. But thou, when thou fastest, anoint thine head, and wash thy face; That thou appear not unto men to fast, but unto thy Father which is in secret: and thy Father, which seeth in secret, shall reward thee openly."
+
+**Meaning:** Jesus teaches that fasting should be done in secret before God, not for public show.  
+**Application:** Fasting is between you and God. Do not use it to impress people, or you will miss the reward God has for those who seek Him alone.`.trim(),
+        },
+        {
+          id: "d1-matt42-4",
+          type: "scripture",
+          title: "Man Does Not Live by Bread Alone",
+          reference: "Matthew 4:2–4",
+          body: `**Scripture (KJV)**  
+> "And when he had fasted forty days and forty nights, he was afterward an hungred. And when the tempter came to him, he said, If thou be the Son of God, command that these stones be made bread. But he answered and said, It is written, Man shall not live by bread alone, but by every word that proceedeth out of the mouth of God."
+
+**Meaning:** Jesus fasted for forty days, then resisted Satan's temptation by affirming that true life comes from God's Word, not just physical food.  
+**Application:** Fasting teaches you to feed on Scripture. Your soul needs God's Word more than your body needs food.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Fasting With Purpose",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Fasting With Purpose",
+          body: `Fasting without purpose is just skipping meals. Biblical fasting is always **directed toward God** with a specific aim—seeking His will, repenting of sin, interceding for others, or breaking spiritual bondage.
+
+Throughout Scripture, God's people fasted when they faced crises, mourned sin, or desperately needed God's intervention. Fasting says, "I need You more than I need this meal. I am serious about hearing from You."
+
+Combine fasting with prayer and Scripture reading. Use the time you would spend eating to worship, intercede, and listen to God.
+
+**Reflection**
+
+If you were to fast this week, what would you be seeking God for?
+
+**Prayer**
+
+Father, teach me to fast with focus. Help me seek You with desperation and expectancy, trusting You will meet me.
+
+**Shareable Truth**
+
+"Fasting is not about giving up food—it's about setting your heart on fire for God."`,
+        },
+        {
+          id: "d2-acts1323",
+          type: "scripture",
+          title: "Fasting and Praying Before Decisions",
+          reference: "Acts 13:2–3",
+          body: `**Scripture (KJV)**  
+> "As they ministered to the Lord, and fasted, the Holy Ghost said, Separate me Barnabas and Saul for the work whereunto I have called them. And when they had fasted and prayed, and laid their hands on them, they sent them away."
+
+**Meaning:** The early church fasted and prayed as they sought God's direction for ministry, and the Holy Spirit spoke clearly to them.  
+**Application:** Fasting helps you hear God's voice more clearly. When facing big decisions, fast and pray.`.trim(),
+        },
+        {
+          id: "d2-ezra821-23",
+          type: "scripture",
+          title: "Fasting for Protection and Guidance",
+          reference: "Ezra 8:21–23",
+          body: `**Scripture (KJV)**  
+> "Then I proclaimed a fast there, at the river of Ahava, that we might afflict ourselves before our God, to seek of him a right way for us, and for our little ones, and for all our substance. For I was ashamed to require of the king a band of soldiers and horsemen to help us against the enemy in the way: because we had spoken unto the king, saying, The hand of our God is upon all them for good that seek him; but his power and his wrath is against all them that forsake him. So we fasted and besought our God for this: and he was intreated of us."
+
+**Meaning:** Ezra led the people in fasting to seek God's protection and guidance on a dangerous journey, and God answered their prayer.  
+**Application:** When you face danger, uncertainty, or great need, fast and seek God's help.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "The Fast God Chooses",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — The Fast God Chooses",
+          body: `God is not impressed with religious fasting that ignores justice and mercy. In Isaiah 58, God rebukes Israel for fasting while oppressing the poor and living in sin.
+
+The fast God chooses is one that flows from a heart transformed by the gospel—caring for the needy, breaking chains of injustice, and living in humility and obedience. True fasting leads to **action**, not just religious feelings.
+
+If your fast does not make you more loving, humble, and obedient, you have missed the point.
+
+**Reflection**
+
+Is your spiritual life marked by genuine love for God and people, or just external religious practices?
+
+**Prayer**
+
+Lord, let my fasting result in real change—more love, more justice, more obedience to Your Word.
+
+**Shareable Truth**
+
+"God wants your heart, not just your hunger."`,
+        },
+        {
+          id: "d3-isa586-7",
+          type: "scripture",
+          title: "True Fasting",
+          reference: "Isaiah 58:6–7",
+          body: `**Scripture (KJV)**  
+> "Is not this the fast that I have chosen? to loose the bands of wickedness, to undo the heavy burdens, and to let the oppressed go free, and that ye break every yoke? Is it not to deal thy bread to the hungry, and that thou bring the poor that are cast out to thy house? when thou seest the naked, that thou cover him; and that thou hide not thyself from thine own flesh?"
+
+**Meaning:** God desires fasting that leads to justice, mercy, and compassion—not just outward religious ritual.  
+**Application:** Fasting should make you more generous, more just, and more loving. If it doesn't, examine your heart.`.trim(),
+        },
+        {
+          id: "d3-joel212-13",
+          type: "scripture",
+          title: "Rend Your Heart",
+          reference: "Joel 2:12–13",
+          body: `**Scripture (KJV)**  
+> "Therefore also now, saith the LORD, turn ye even to me with all your heart, and with fasting, and with weeping, and with mourning: And rend your heart, and not your garments, and turn unto the LORD your God: for he is gracious and merciful, slow to anger, and of great kindness, and repenteth him of the evil."
+
+**Meaning:** God calls His people to return to Him with genuine heart repentance, not just outward religious displays.  
+**Application:** Fasting without a broken, repentant heart is empty ritual. God desires your whole heart.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Sustained by God's Word",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Sustained by God's Word",
+          body: `When you fast, you quickly discover how much your body craves food—but you also discover that **God's Word can satisfy** in ways food never could.
+
+Fasting is not an end in itself; it is a means to draw closer to God. Use your hunger as a reminder to pray, meditate on Scripture, and worship. Let every pang of hunger turn your thoughts back to God.
+
+Jesus said man does not live by bread alone. Fasting proves it.
+
+**Reflection**
+
+Do you treat God's Word as optional, or as essential nourishment for your soul?
+
+**Prayer**
+
+Lord, as I fast, feed my soul with Your Word. Let my hunger for food remind me of my deeper hunger for You.
+
+**Shareable Truth**
+
+"Your soul craves what you feed it. Fast from the world and feast on the Word."`,
+        },
+        {
+          id: "d4-deut83",
+          type: "scripture",
+          title: "Humbled and Fed With Manna",
+          reference: "Deuteronomy 8:3",
+          body: `**Scripture (KJV)**  
+> "And he humbled thee, and suffered thee to hunger, and fed thee with manna, which thou knewest not, neither did thy fathers know; that he might make thee know that man doth not live by bread only, but by every word that proceedeth out of the mouth of the LORD doth man live."
+
+**Meaning:** God allowed Israel to hunger in the wilderness, then fed them with manna to teach them dependence on His Word.  
+**Application:** Physical hunger teaches spiritual truth: you need God's Word more than physical food.`.trim(),
+        },
+        {
+          id: "d4-jer1516",
+          type: "scripture",
+          title: "God's Words Are Food",
+          reference: "Jeremiah 15:16",
+          body: `**Scripture (KJV)**  
+> "Thy words were found, and I did eat them; and thy word was unto me the joy and rejoicing of mine heart: for I am called by thy name, O LORD God of hosts."
+
+**Meaning:** Jeremiah delighted in God's Word, consuming it like food, and it brought him joy.  
+**Application:** Meditate on Scripture as if you were eating a meal—slowly, intentionally, savoring every word.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
+export const overcomingDepressionPlan: DiscipleshipPlan = {
+  id: "overcoming-depression",
+  title: "Overcoming Depression",
+  subtitle: "Finding hope when darkness feels overwhelming",
+  imageUrl: sufferingFaithfulnessImage,
+  totalDays: 5,
+  days: [
+    {
+      id: "day-1",
+      dayNumber: 1,
+      title: "You Are Not Alone",
+      items: [
+        {
+          id: "d1-devotional",
+          type: "devotional",
+          title: "Day 1 — You Are Not Alone",
+          body: `Depression can feel like a dark pit where no one else can reach you. But the Bible reveals that many of God's most faithful servants experienced deep despair—David, Elijah, Jeremiah, and even Jesus Himself in the Garden of Gethsemane.
+
+You are not weak for feeling this way. You are not less spiritual. Depression is real, and God does not condemn you for it. He meets you in the darkness and offers hope.
+
+This week is not about quick fixes or pretending everything is fine. It is about bringing your pain honestly to God and letting Him speak truth into the lies depression whispers.
+
+**Reflection**
+
+Have you been hiding your pain, thinking God is disappointed in you for feeling this way?
+
+**Prayer**
+
+Lord, I feel lost in darkness. Meet me here. Help me believe You are with me even when I cannot feel You.
+
+**Shareable Truth**
+
+"God is not afraid of your darkness. He enters it to bring you light."`,
+        },
+        {
+          id: "d1-ps426-11",
+          type: "scripture",
+          title: "Why Are You Downcast?",
+          reference: "Psalm 42:5–6, 11",
+          body: `**Scripture (KJV)**  
+> "Why art thou cast down, O my soul? and why art thou disquieted in me? hope thou in God: for I shall yet praise him for the help of his countenance. O my God, my soul is cast down within me: therefore will I remember thee from the land of Jordan, and of the Hermonites, from the hill Mizar... Why art thou cast down, O my soul? and why art thou disquieted within me? hope thou in God: for I shall yet praise him, who is the health of my countenance, and my God."
+
+**Meaning:** David speaks to his own soul, reminding himself to hope in God even in the midst of despair.  
+**Application:** When depression overwhelms, preach hope to yourself. Remind your soul that God is still your help and your God.`.trim(),
+        },
+        {
+          id: "d1-ps3422",
+          type: "scripture",
+          title: "The Brokenhearted",
+          reference: "Psalm 34:18",
+          body: `**Scripture (KJV)**  
+> "The LORD is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit."
+
+**Meaning:** God draws near to those who are brokenhearted and crushed in spirit.  
+**Application:** Your brokenness does not drive God away—it draws Him near. He is close to you right now.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-2",
+      dayNumber: 2,
+      title: "Honest Prayers",
+      items: [
+        {
+          id: "d2-devotional",
+          type: "devotional",
+          title: "Day 2 — Honest Prayers",
+          body: `The Psalms are full of raw, honest prayers—cries for help, questions about where God is, and desperate pleas for relief. God does not want your polished, religious language. He wants your **real heart**.
+
+You can tell God you feel abandoned. You can admit you are angry, confused, or numb. He already knows. Honest prayer does not offend God—it honors Him by trusting Him with the truth.
+
+Depression lies and tells you that God does not care. Prayer, even when it feels like shouting into the void, is an act of faith that says, "I still believe You are there."
+
+**Reflection**
+
+When was the last time you prayed with complete honesty, holding nothing back?
+
+**Prayer**
+
+God, I am struggling to feel anything. I am tired, empty, and afraid. Meet me in this pain. Help me trust You even when I cannot see the way forward.
+
+**Shareable Truth**
+
+"God is big enough to handle your honest prayers."`,
+        },
+        {
+          id: "d2-ps881-2",
+          type: "scripture",
+          title: "I Cry Day and Night",
+          reference: "Psalm 88:1–3",
+          body: `**Scripture (KJV)**  
+> "O LORD God of my salvation, I have cried day and night before thee: Let my prayer come before thee: incline thine ear unto my cry; For my soul is full of troubles: and my life draweth nigh unto the grave."
+
+**Meaning:** The psalmist cries out to God in anguish, pouring out his soul day and night.  
+**Application:** It is okay to cry out to God in pain. He listens, and He cares.`.trim(),
+        },
+        {
+          id: "d2-ps628",
+          type: "scripture",
+          title: "God Hears Your Weeping",
+          reference: "Psalm 6:8–9",
+          body: `**Scripture (KJV)**  
+> "Depart from me, all ye workers of iniquity; for the LORD hath heard the voice of my weeping. The LORD hath heard my supplication; the LORD will receive my prayer."
+
+**Meaning:** David declares that God has heard his weeping and will receive his prayer.  
+**Application:** Your tears are not wasted. God hears every one and will answer in His time.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-3",
+      dayNumber: 3,
+      title: "Lies Depression Tells",
+      items: [
+        {
+          id: "d3-devotional",
+          type: "devotional",
+          title: "Day 3 — Lies Depression Tells",
+          body: `Depression is a liar. It tells you that you are worthless, that things will never get better, that no one cares, and that God has abandoned you. **None of these things are true.**
+
+God's Word is your weapon against these lies. When depression whispers, "You are alone," Scripture declares, "I will never leave you nor forsake you." When it says, "You are worthless," God says, "You are precious in My sight."
+
+You must fight lies with truth. Write down Scripture. Speak it aloud. Ask trusted believers to remind you of what is true when you cannot see it yourself.
+
+**Reflection**
+
+What lie has depression been telling you most often? What truth from God's Word can you fight it with?
+
+**Prayer**
+
+Lord, help me recognize the lies and cling to Your truth. When I cannot see clearly, remind me of who You say I am.
+
+**Shareable Truth**
+
+"Depression lies. God's Word tells the truth."`,
+        },
+        {
+          id: "d3-heb135",
+          type: "scripture",
+          title: "I Will Never Leave You",
+          reference: "Hebrews 13:5",
+          body: `**Scripture (KJV)**  
+> "Let your conversation be without covetousness; and be content with such things as ye have: for he hath said, I will never leave thee, nor forsake thee."
+
+**Meaning:** God promises He will never leave or forsake His children.  
+**Application:** Even when you feel abandoned, God has not left you. His promise stands.`.trim(),
+        },
+        {
+          id: "d3-isa4310",
+          type: "scripture",
+          title: "Precious in My Sight",
+          reference: "Isaiah 43:4",
+          body: `**Scripture (KJV)**  
+> "Since thou wast precious in my sight, thou hast been honourable, and I have loved thee: therefore will I give men for thee, and people for thy life."
+
+**Meaning:** God declares His people precious and loved in His sight.  
+**Application:** You are not worthless. You are precious to God, loved beyond measure.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-4",
+      dayNumber: 4,
+      title: "Practical Steps Forward",
+      items: [
+        {
+          id: "d4-devotional",
+          type: "devotional",
+          title: "Day 4 — Practical Steps Forward",
+          body: `Depression is not only spiritual—it affects your body, mind, and relationships. While God is your ultimate hope, He often works through **practical means** as well: rest, exercise, nutrition, counseling, medication, and community.
+
+Do not despise these tools. They are gifts from God. Seeking help is not a lack of faith—it is wisdom. Tell a trusted friend or pastor what you are experiencing. Consider talking to a Christian counselor.
+
+Small steps forward are still steps. Get out of bed. Read one verse. Take a walk. Call a friend. Do the next right thing, even if it feels impossible.
+
+**Reflection**
+
+What is one small, practical step you can take today toward healing?
+
+**Prayer**
+
+Father, give me the strength to take one step forward today. Help me reach out for help and receive it with humility.
+
+**Shareable Truth**
+
+"Small steps forward are still forward."`,
+        },
+        {
+          id: "d4-prov1822",
+          type: "scripture",
+          title: "A Friend Helps",
+          reference: "Proverbs 18:14, 24",
+          body: `**Scripture (KJV)**  
+> "The spirit of a man will sustain his infirmity; but a wounded spirit who can bear?... A man that hath friends must shew himself friendly: and there is a friend that sticketh closer than a brother."
+
+**Meaning:** A wounded spirit is a heavy burden, but true friends help bear it.  
+**Application:** Do not isolate yourself. Reach out to godly friends who will walk with you through the darkness.`.trim(),
+        },
+        {
+          id: "d4-gal62",
+          type: "scripture",
+          title: "Bear One Another's Burdens",
+          reference: "Galatians 6:2",
+          body: `**Scripture (KJV)**  
+> "Bear ye one another's burdens, and so fulfil the law of Christ."
+
+**Meaning:** Believers are called to help carry each other's burdens.  
+**Application:** Let others help you. It is not weakness—it is obedience to God's design for His church.`.trim(),
+        },
+      ],
+    },
+    {
+      id: "day-5",
+      dayNumber: 5,
+      title: "Hope Is Coming",
+      items: [
+        {
+          id: "d5-devotional",
+          type: "devotional",
+          title: "Day 5 — Hope Is Coming",
+          body: `Healing from depression rarely happens overnight. But God is faithful, and **hope is coming**. Even if you cannot see it yet, the sunrise is on the horizon.
+
+God has carried you this far, and He will not abandon you now. He is working in ways you cannot see, bringing light into your darkness step by step.
+
+One day, you will look back and see His faithfulness. One day, the weight will lift. Until then, hold on to His promises and take it one day at a time.
+
+**Reflection**
+
+What promise from God can you hold onto today, even if you do not feel it yet?
+
+**Prayer**
+
+Lord, I choose to hope in You, even when I cannot feel hope. Carry me through this. Bring the light.
+
+**Shareable Truth**
+
+"Weeping may endure for a night, but joy comes in the morning."`,
+        },
+        {
+          id: "d5-ps305",
+          type: "scripture",
+          title: "Joy Comes in the Morning",
+          reference: "Psalm 30:5",
+          body: `**Scripture (KJV)**  
+> "For his anger endureth but a moment; in his favour is life: weeping may endure for a night, but joy cometh in the morning."
+
+**Meaning:** Sorrow lasts for a season, but God's joy will come.  
+**Application:** The night feels long, but morning is coming. Hold on to hope.`.trim(),
+        },
+        {
+          id: "d5-rom828",
+          type: "scripture",
+          title: "All Things for Good",
+          reference: "Romans 8:28",
+          body: `**Scripture (KJV)**  
+> "And we know that all things work together for good to them that love God, to them who are the called according to his purpose."
+
+**Meaning:** God works all things together for the good of those who love Him.  
+**Application:** Even this season of pain is not wasted. God is using it for your ultimate good and His glory.`.trim(),
+        },
+      ],
+    },
+  ],
+};
+
 export const DISCIPLESHIP_PLANS: DiscipleshipPlan[] = [
   heavenOrHellPlan,
   lifeInSpiritPlan,
