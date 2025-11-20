@@ -1,11 +1,11 @@
-export type PlansFilter = "all" | "saved" | "completed";
+export type PlansFilter = "all" | "started" | "completed";
 
 interface DiscipleshipPlansHeaderProps {
   activeFilter: PlansFilter;
   onChangeFilter: (filter: PlansFilter) => void;
   counts?: {
     all?: number;
-    saved?: number;
+    started?: number;
     completed?: number;
   };
 }
@@ -52,7 +52,7 @@ export function DiscipleshipPlansHeader({
 
       <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-1">
         {pill("all", "All Plans", counts?.all)}
-        {pill("saved", "My Saved Plans", counts?.saved)}
+        {pill("started", "Started Plans", counts?.started)}
         {pill("completed", "Completed Plans", counts?.completed)}
       </div>
     </div>

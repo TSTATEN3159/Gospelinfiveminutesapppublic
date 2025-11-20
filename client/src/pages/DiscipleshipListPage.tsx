@@ -93,7 +93,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
   // Calculate filtered plans and counts
   const { visiblePlans, counts } = useMemo(() => {
     const all = DISCIPLESHIP_PLANS;
-    const saved = [];
+    const started = [];
     const completed = [];
 
     for (const plan of all) {
@@ -107,13 +107,13 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
       if (isComplete) {
         completed.push(plan);
       } else if (isStartedOrSaved) {
-        saved.push(plan);
+        started.push(plan);
       }
     }
 
     let visible = all;
-    if (filter === "saved") {
-      visible = saved;
+    if (filter === "started") {
+      visible = started;
     } else if (filter === "completed") {
       visible = completed;
     }
@@ -122,7 +122,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
       visiblePlans: visible,
       counts: {
         all: all.length,
-        saved: saved.length,
+        started: started.length,
         completed: completed.length,
       }
     };
