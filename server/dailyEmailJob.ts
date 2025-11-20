@@ -31,31 +31,42 @@ async function getAllEmailSubscribers(): Promise<EmailUser[]> {
   }
 }
 
-async function getTodaysVerse() {
-  const today = new Date();
-  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / 1000 / 60 / 60 / 24);
-  
+function getDailyVerseReference(): string {
+  const dayOfYear = Math.floor((new Date().getTime() - new Date(new Date().getFullYear(), 0, 0).getTime()) / 86400000);
   const verses = [
-    { ref: "JHN.3.16", text: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life." },
-    { ref: "ROM.8.28", text: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose." },
-    { ref: "PSA.23.1", text: "The LORD is my shepherd; I shall not want." },
-    { ref: "PHP.4.13", text: "I can do all things through Christ which strengtheneth me." },
-    { ref: "PRO.3.5-6", text: "Trust in the LORD with all thine heart; and lean not unto thine own understanding. In all thy ways acknowledge him, and he shall direct thy paths." },
+    'JHN.3.16', 'PSA.23.1', 'PRO.3.5-6', 'JER.29.11', 'PHP.4.13',
+    'ROM.8.28', 'ISA.41.10', 'JHN.14.6', 'PSA.119.105', 'MAT.28.20',
+    'HEB.11.1', 'ROM.10.9', 'EPH.2.8-9', 'PSA.46.10', 'JHN.15.13',
+    'ROM.5.8', 'PSA.121.1-2', 'JHN.10.10', 'PHP.4.19', 'MAT.11.28',
+    'PSA.34.18', 'ROM.12.2', 'JHN.1.1', 'PSA.91.2', 'EPH.6.10',
+    'JOS.1.9', 'PSA.27.1', 'ROM.15.13', 'JHN.16.33', 'PSA.18.2'
   ];
+  return verses[dayOfYear % verses.length];
+}
+
+async function getTodaysVerse() {
+  const dailyReferenceApiBible = getDailyVerseReference();
   
-  const selectedVerse = verses[dayOfYear % verses.length];
+  const [bookCode, chapter, verseNum] = dailyReferenceApiBible.split('.');
+  const bookNames: { [key: string]: string } = {
+    'JHN': 'John', 'PSA': 'Psalms', 'PRO': 'Proverbs', 'JER': 'Jeremiah',
+    'PHP': 'Philippians', 'ROM': 'Romans', 'ISA': 'Isaiah', 'HEB': 'Hebrews',
+    'MAT': 'Matthew', 'EPH': 'Ephesians', 'JOS': 'Joshua'
+  };
+  const bookName = bookNames[bookCode] || bookCode;
+  const dailyReference = `${bookName} ${chapter}:${verseNum}`;
   
   try {
-    const verseData = await bibleApiFallback.getVerse("de4e12af7f28f599-02", selectedVerse.ref);
+    const verseData = await bibleApiFallback.getVerse(dailyReference, 'KJV');
     return {
-      reference: verseData.reference || selectedVerse.ref,
-      text: verseData.text?.replace(/<[^>]*>/g, '').trim() || selectedVerse.text
+      reference: verseData.reference || dailyReference,
+      text: verseData.text?.replace(/<[^>]*>/g, '').trim() || verseData.text
     };
   } catch (error) {
-    console.log("[DailyEmail] Using fallback verse");
+    console.log("[DailyEmail] Error fetching verse, using fallback");
     return {
-      reference: selectedVerse.ref,
-      text: selectedVerse.text
+      reference: dailyReference,
+      text: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life."
     };
   }
 }
