@@ -840,6 +840,126 @@
     "correctIndex": 0
   },
   {
+    "id": "beginner-1763609528267-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-1",
+    "level": "beginner",
+    "question": "Who fought against Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Samson",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-2",
+    "level": "beginner",
+    "question": "Which book contains the verse 'For I know the plans I have for you'?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Ezekiel",
+      "Daniel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-3",
+    "level": "beginner",
+    "question": "What is the shortest book in the New Testament?",
+    "choices": [
+      "2 John",
+      "3 John",
+      "Philemon",
+      "Jude"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-4",
+    "level": "beginner",
+    "question": "What is the 'Golden Rule' as taught by Jesus?",
+    "choices": [
+      "Love your neighbor",
+      "Do unto others as you would have them do unto you",
+      "Forgive others",
+      "Pray always"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-5",
+    "level": "beginner",
+    "question": "Who is known for wisdom and wrote many proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Moses",
+      "Job"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-6",
+    "level": "beginner",
+    "question": "In the book of Acts, who was the first martyr?",
+    "choices": [
+      "Peter",
+      "Stephen",
+      "James",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-7",
+    "level": "beginner",
+    "question": "What did Jesus turn water into at a wedding?",
+    "choices": [
+      "Wine",
+      "Juice",
+      "Oil",
+      "Milk"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-8",
+    "level": "beginner",
+    "question": "Which Psalm begins with 'The Lord is my shepherd'?",
+    "choices": [
+      "Psalm 23",
+      "Psalm 1",
+      "Psalm 100",
+      "Psalm 119"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609528267-9",
+    "level": "beginner",
+    "question": "Who betrayed Jesus for thirty pieces of silver?",
+    "choices": [
+      "Peter",
+      "Judas",
+      "John",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
     "id": "intermediate-1763607966720-0",
     "level": "intermediate",
     "question": "What is the first book of the Bible?",
