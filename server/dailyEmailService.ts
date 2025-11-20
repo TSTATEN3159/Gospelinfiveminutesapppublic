@@ -72,7 +72,7 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
   
   if (envApiKey && envApiKey.startsWith('SG.')) {
     apiKey = envApiKey;
-    fromEmail = "noreply@thegospelin5minutes.com"; // Use default from email
+    fromEmail = "timothystaten@gmail.com"; // Verified sender email
     sgMail.setApiKey(apiKey);
     console.log('[DailyEmail] Using SENDGRID_API_KEY from environment');
   } else {
