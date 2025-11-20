@@ -27,6 +27,15 @@ import ruggedChurchImage from '@assets/stock_images/old_rustic_stone_chu_610102d
 import manAtBarImage from '@assets/generated_images/man_contemplating_at_bar.png';
 import angryWomanImage from '@assets/generated_images/angry_frustrated_woman_portrait.png';
 import blurredIdCardImage from '@assets/generated_images/blurred_identity_card_closeup.png';
+import fastingPrayerImage from '@assets/generated_images/person_fasting_in_prayer.png';
+import hopeInDarknessImage from '@assets/generated_images/hope_breaking_through_darkness.png';
+import freedomConfidenceImage from '@assets/generated_images/freedom_and_confidence_portrait.png';
+import contentmentPeaceImage from '@assets/generated_images/contentment_and_peace.png';
+import forgivenessImage from '@assets/generated_images/forgiveness_and_reconciliation.png';
+import sharingGospelImage from '@assets/generated_images/sharing_gospel_with_friend.png';
+import generosityImage from '@assets/generated_images/generous_giving_and_stewardship.png';
+import decisionCrossroadsImage from '@assets/generated_images/biblical_decision_making_crossroads.png';
+import technologyFaithImage from '@assets/generated_images/faithful_technology_use.png';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -7716,7 +7725,7 @@ export const fastingHungerPlan: DiscipleshipPlan = {
   id: "fasting-spiritual-hunger",
   title: "Fasting & Spiritual Hunger",
   subtitle: "Learning to feast on God through fasting",
-  imageUrl: openBibleSunlightImage,
+  imageUrl: fastingPrayerImage,
   totalDays: 4,
   days: [
     {
@@ -7930,7 +7939,7 @@ export const overcomingDepressionPlan: DiscipleshipPlan = {
   id: "overcoming-depression",
   title: "Overcoming Depression",
   subtitle: "Finding hope when darkness feels overwhelming",
-  imageUrl: sufferingFaithfulnessImage,
+  imageUrl: hopeInDarknessImage,
   totalDays: 5,
   days: [
     {
@@ -8195,7 +8204,7 @@ export const breakingPeoplePleasingPlan: DiscipleshipPlan = {
   id: "breaking-people-pleasing",
   title: "Breaking People-Pleasing",
   subtitle: "Finding freedom in God's approval alone",
-  imageUrl: purityWorldImage,
+  imageUrl: freedomConfidenceImage,
   totalDays: 4,
   days: [
     {
@@ -8409,7 +8418,7 @@ export const contentmentPlan: DiscipleshipPlan = {
   id: "contentment-every-circumstance",
   title: "Contentment in Every Circumstance",
   subtitle: "Learning to find satisfaction in Christ alone",
-  imageUrl: sufferingFaithfulnessImage,
+  imageUrl: contentmentPeaceImage,
   totalDays: 3,
   days: [
     {
@@ -8572,7 +8581,7 @@ export const forgivenessReconciliationPlan: DiscipleshipPlan = {
   id: "forgiveness-reconciliation",
   title: "Forgiveness & Reconciliation",
   subtitle: "Letting go of bitterness and pursuing peace",
-  imageUrl: angryWomanImage,
+  imageUrl: forgivenessImage,
   totalDays: 4,
   days: [
     {
@@ -8784,7 +8793,7 @@ export const witnessingEvangelismPlan: DiscipleshipPlan = {
   id: "witnessing-evangelism",
   title: "Witnessing & Evangelism",
   subtitle: "Sharing the gospel with boldness and love",
-  imageUrl: servingJesusImage,
+  imageUrl: sharingGospelImage,
   totalDays: 4,
   days: [
     {
@@ -8996,7 +9005,7 @@ export const stewardshipGenerosityPlan: DiscipleshipPlan = {
   id: "stewardship-generosity",
   title: "Stewardship & Generosity",
   subtitle: "Managing God's resources with open hands",
-  imageUrl: generousGivingImage,
+  imageUrl: generosityImage,
   totalDays: 3,
   days: [
     {
@@ -9159,7 +9168,7 @@ export const biblicalDecisionMakingPlan: DiscipleshipPlan = {
   id: "biblical-decision-making",
   title: "Biblical Decision Making",
   subtitle: "Discerning God's will in everyday choices",
-  imageUrl: forestPathImage,
+  imageUrl: decisionCrossroadsImage,
   totalDays: 4,
   days: [
     {
@@ -9373,7 +9382,7 @@ export const socialMediaTechnologyPlan: DiscipleshipPlan = {
   id: "social-media-technology",
   title: "Social Media & Technology",
   subtitle: "Using digital tools for God's glory",
-  imageUrl: purityWorldImage,
+  imageUrl: technologyFaithImage,
   totalDays: 3,
   days: [
     {
