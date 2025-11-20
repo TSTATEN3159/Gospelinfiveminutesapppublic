@@ -1,0 +1,454 @@
+{
+  "questions": [
+    {
+      "id": 1,
+      "question": "How many days did God take to create the world?",
+      "answer": "6 days",
+      "category": "Old Testament"
+    },
+    {
+      "id": 2,
+      "question": "Who built the ark?",
+      "answer": "Noah",
+      "category": "Old Testament"
+    },
+    {
+      "id": 3,
+      "question": "What was the name of Abraham's wife?",
+      "answer": "Sarah",
+      "category": "Old Testament"
+    },
+    {
+      "id": 4,
+      "question": "Who was sold into slavery by his brothers?",
+      "answer": "Joseph",
+      "category": "Old Testament"
+    },
+    {
+      "id": 5,
+      "question": "What river was baby Moses found in?",
+      "answer": "The Nile River",
+      "category": "Old Testament"
+    },
+    {
+      "id": 6,
+      "question": "How many plagues did God send on Egypt?",
+      "answer": "10",
+      "category": "Old Testament"
+    },
+    {
+      "id": 7,
+      "question": "What sea did Moses part?",
+      "answer": "The Red Sea",
+      "category": "Old Testament"
+    },
+    {
+      "id": 8,
+      "question": "How many commandments did God give Moses?",
+      "answer": "10",
+      "category": "Old Testament"
+    },
+    {
+      "id": 9,
+      "question": "Who was the strongest man in the Bible?",
+      "answer": "Samson",
+      "category": "Old Testament"
+    },
+    {
+      "id": 10,
+      "question": "What weapon did David use to kill Goliath?",
+      "answer": "A sling and stone",
+      "category": "Old Testament"
+    },
+    {
+      "id": 11,
+      "question": "Who was David's best friend?",
+      "answer": "Jonathan",
+      "category": "Old Testament"
+    },
+    {
+      "id": 12,
+      "question": "Who was the wisest king of Israel?",
+      "answer": "Solomon",
+      "category": "Old Testament"
+    },
+    {
+      "id": 13,
+      "question": "What did Solomon build for God?",
+      "answer": "The Temple",
+      "category": "Old Testament"
+    },
+    {
+      "id": 14,
+      "question": "Who was swallowed by a great fish?",
+      "answer": "Jonah",
+      "category": "Old Testament"
+    },
+    {
+      "id": 15,
+      "question": "How many days was Jonah in the belly of the fish?",
+      "answer": "3 days",
+      "category": "Old Testament"
+    },
+    {
+      "id": 16,
+      "question": "Who was thrown into the lion's den?",
+      "answer": "Daniel",
+      "category": "Old Testament"
+    },
+    {
+      "id": 17,
+      "question": "What did God give Daniel the ability to interpret?",
+      "answer": "Dreams",
+      "category": "Old Testament"
+    },
+    {
+      "id": 18,
+      "question": "Who were the three friends thrown into the fiery furnace?",
+      "answer": "Shadrach, Meshach, and Abednego",
+      "category": "Old Testament"
+    },
+    {
+      "id": 19,
+      "question": "What was the name of the garden where Adam and Eve lived?",
+      "answer": "Garden of Eden",
+      "category": "Old Testament"
+    },
+    {
+      "id": 20,
+      "question": "Who was the first murderer in the Bible?",
+      "answer": "Cain",
+      "category": "Old Testament"
+    },
+    {
+      "id": 21,
+      "question": "In what town was Jesus born?",
+      "answer": "Bethlehem",
+      "category": "New Testament"
+    },
+    {
+      "id": 22,
+      "question": "Who were Jesus' earthly parents?",
+      "answer": "Mary and Joseph",
+      "category": "New Testament"
+    },
+    {
+      "id": 23,
+      "question": "What gifts did the wise men bring to Jesus?",
+      "answer": "Gold, frankincense, and myrrh",
+      "category": "New Testament"
+    },
+    {
+      "id": 24,
+      "question": "Who baptized Jesus?",
+      "answer": "John the Baptist",
+      "category": "New Testament"
+    },
+    {
+      "id": 25,
+      "question": "How many disciples did Jesus have?",
+      "answer": "12",
+      "category": "New Testament"
+    },
+    {
+      "id": 26,
+      "question": "Who was the disciple that betrayed Jesus?",
+      "answer": "Judas Iscariot",
+      "category": "New Testament"
+    },
+    {
+      "id": 27,
+      "question": "Who denied Jesus three times?",
+      "answer": "Peter",
+      "category": "New Testament"
+    },
+    {
+      "id": 28,
+      "question": "What was Matthew's occupation before following Jesus?",
+      "answer": "Tax collector",
+      "category": "New Testament"
+    },
+    {
+      "id": 29,
+      "question": "What is the shortest verse in the Bible?",
+      "answer": "Jesus wept",
+      "category": "New Testament"
+    },
+    {
+      "id": 30,
+      "question": "Who did Jesus raise from the dead after four days?",
+      "answer": "Lazarus",
+      "category": "New Testament"
+    },
+    {
+      "id": 31,
+      "question": "What did Jesus turn water into at the wedding?",
+      "answer": "Wine",
+      "category": "New Testament"
+    },
+    {
+      "id": 32,
+      "question": "How many loaves and fish did Jesus use to feed 5,000?",
+      "answer": "5 loaves and 2 fish",
+      "category": "New Testament"
+    },
+    {
+      "id": 33,
+      "question": "What did Jesus walk on?",
+      "answer": "Water",
+      "category": "New Testament"
+    },
+    {
+      "id": 34,
+      "question": "On what mountain was Jesus transfigured?",
+      "answer": "Mount of Transfiguration (or Mount Tabor)",
+      "category": "New Testament"
+    },
+    {
+      "id": 35,
+      "question": "What garden did Jesus pray in before his arrest?",
+      "answer": "Garden of Gethsemane",
+      "category": "New Testament"
+    },
+    {
+      "id": 36,
+      "question": "Who sentenced Jesus to death?",
+      "answer": "Pontius Pilate",
+      "category": "New Testament"
+    },
+    {
+      "id": 37,
+      "question": "What day of the week did Jesus rise from the dead?",
+      "answer": "Sunday",
+      "category": "New Testament"
+    },
+    {
+      "id": 38,
+      "question": "How many days after his resurrection did Jesus ascend to heaven?",
+      "answer": "40 days",
+      "category": "New Testament"
+    },
+    {
+      "id": 39,
+      "question": "Who replaced Judas as a disciple?",
+      "answer": "Matthias",
+      "category": "New Testament"
+    },
+    {
+      "id": 40,
+      "question": "What happened on the day of Pentecost?",
+      "answer": "The Holy Spirit came upon the disciples",
+      "category": "New Testament"
+    },
+    {
+      "id": 41,
+      "question": "Who was the first Christian martyr?",
+      "answer": "Stephen",
+      "category": "New Testament"
+    },
+    {
+      "id": 42,
+      "question": "What was Paul's name before his conversion?",
+      "answer": "Saul",
+      "category": "New Testament"
+    },
+    {
+      "id": 43,
+      "question": "On what road did Paul encounter Jesus?",
+      "answer": "Road to Damascus",
+      "category": "New Testament"
+    },
+    {
+      "id": 44,
+      "question": "Who wrote most of the New Testament letters?",
+      "answer": "Paul",
+      "category": "New Testament"
+    },
+    {
+      "id": 45,
+      "question": "What island was John on when he wrote Revelation?",
+      "answer": "Patmos",
+      "category": "New Testament"
+    },
+    {
+      "id": 46,
+      "question": "How many books are in the Bible?",
+      "answer": "66",
+      "category": "General"
+    },
+    {
+      "id": 47,
+      "question": "How many books are in the Old Testament?",
+      "answer": "39",
+      "category": "General"
+    },
+    {
+      "id": 48,
+      "question": "How many books are in the New Testament?",
+      "answer": "27",
+      "category": "General"
+    },
+    {
+      "id": 49,
+      "question": "What is the longest book in the Bible?",
+      "answer": "Psalms",
+      "category": "General"
+    },
+    {
+      "id": 50,
+      "question": "What is the longest chapter in the Bible?",
+      "answer": "Psalm 119",
+      "category": "General"
+    },
+    {
+      "id": 51,
+      "question": "What is the first book of the Bible?",
+      "answer": "Genesis",
+      "category": "General"
+    },
+    {
+      "id": 52,
+      "question": "What is the last book of the Bible?",
+      "answer": "Revelation",
+      "category": "General"
+    },
+    {
+      "id": 53,
+      "question": "What are the first five books of the Bible called?",
+      "answer": "The Pentateuch or Torah",
+      "category": "General"
+    },
+    {
+      "id": 54,
+      "question": "What language was most of the Old Testament written in?",
+      "answer": "Hebrew",
+      "category": "General"
+    },
+    {
+      "id": 55,
+      "question": "What language was most of the New Testament written in?",
+      "answer": "Greek",
+      "category": "General"
+    },
+    {
+      "id": 56,
+      "question": "What is the Golden Rule found in Matthew 7:12?",
+      "answer": "Do unto others as you would have them do unto you",
+      "category": "New Testament"
+    },
+    {
+      "id": 57,
+      "question": "What famous sermon did Jesus preach on a mountain?",
+      "answer": "The Sermon on the Mount",
+      "category": "New Testament"
+    },
+    {
+      "id": 58,
+      "question": "What prayer did Jesus teach his disciples?",
+      "answer": "The Lord's Prayer",
+      "category": "New Testament"
+    },
+    {
+      "id": 59,
+      "question": "Who was the oldest man in the Bible?",
+      "answer": "Methuselah",
+      "category": "Old Testament"
+    },
+    {
+      "id": 60,
+      "question": "How old was Methuselah when he died?",
+      "answer": "969 years old",
+      "category": "Old Testament"
+    },
+    {
+      "id": 61,
+      "question": "What did Jacob see in his dream at Bethel?",
+      "answer": "A ladder reaching to heaven",
+      "category": "Old Testament"
+    },
+    {
+      "id": 62,
+      "question": "What was Jacob's name changed to?",
+      "answer": "Israel",
+      "category": "Old Testament"
+    },
+    {
+      "id": 63,
+      "question": "How many sons did Jacob have?",
+      "answer": "12",
+      "category": "Old Testament"
+    },
+    {
+      "id": 64,
+      "question": "What did Joseph's brothers dip his coat in?",
+      "answer": "Blood (goat's blood)",
+      "category": "Old Testament"
+    },
+    {
+      "id": 65,
+      "question": "Who was Ruth's mother-in-law?",
+      "answer": "Naomi",
+      "category": "Old Testament"
+    },
+    {
+      "id": 66,
+      "question": "Who was the first king of Israel?",
+      "answer": "Saul",
+      "category": "Old Testament"
+    },
+    {
+      "id": 67,
+      "question": "What instrument did David play?",
+      "answer": "The harp (or lyre)",
+      "category": "Old Testament"
+    },
+    {
+      "id": 68,
+      "question": "Who was Bathsheba's first husband?",
+      "answer": "Uriah",
+      "category": "Old Testament"
+    },
+    {
+      "id": 69,
+      "question": "What prophet confronted David about his sin?",
+      "answer": "Nathan",
+      "category": "Old Testament"
+    },
+    {
+      "id": 70,
+      "question": "Who was the queen that visited Solomon?",
+      "answer": "The Queen of Sheba",
+      "category": "Old Testament"
+    },
+    {
+      "id": 71,
+      "question": "What prophet was taken up to heaven in a whirlwind?",
+      "answer": "Elijah",
+      "category": "Old Testament"
+    },
+    {
+      "id": 72,
+      "question": "Who was Elijah's successor?",
+      "answer": "Elisha",
+      "category": "Old Testament"
+    },
+    {
+      "id": 73,
+      "question": "What woman helped hide the Israelite spies in Jericho?",
+      "answer": "Rahab",
+      "category": "Old Testament"
+    },
+    {
+      "id": 74,
+      "question": "Who led the Israelites after Moses died?",
+      "answer": "Joshua",
+      "category": "Old Testament"
+    },
+    {
+      "id": 75,
+      "question": "What city's walls fell down after the Israelites marched around it?",
+      "answer": "Jericho",
+      "category": "Old Testament"
+    }
+  ]
+}

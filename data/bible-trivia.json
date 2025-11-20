@@ -300,6 +300,126 @@
     "category": "Events"
   },
   {
+    "id": "beginner-1763658041919-0",
+    "level": "beginner",
+    "question": "Who was the first man created according to Genesis?",
+    "choices": [
+      "Noah",
+      "Moses",
+      "Adam",
+      "Abraham"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-1",
+    "level": "beginner",
+    "question": "Which giant did David defeat with a sling and a stone?",
+    "choices": [
+      "Goliath",
+      "Saul",
+      "Pharaoh",
+      "Samson"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-2",
+    "level": "beginner",
+    "question": "In which book of the Bible are the Ten Commandments found?",
+    "choices": [
+      "Genesis",
+      "Leviticus",
+      "Exodus",
+      "Numbers"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-3",
+    "level": "beginner",
+    "question": "Who interpreted Pharaoh's dreams in Egypt?",
+    "choices": [
+      "Daniel",
+      "Joseph",
+      "Moses",
+      "Aaron"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-4",
+    "level": "beginner",
+    "question": "What type of tree did Zacchaeus climb to see Jesus?",
+    "choices": [
+      "Sycamore",
+      "Oak",
+      "Cedar",
+      "Palm"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-5",
+    "level": "beginner",
+    "question": "In the Book of Psalms, what is the primary theme expressed throughout?",
+    "choices": [
+      "Wisdom",
+      "Praise and Worship",
+      "Law",
+      "Prophecy"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-6",
+    "level": "beginner",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Jonah",
+      "Elijah",
+      "Moses",
+      "Peter"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-7",
+    "level": "beginner",
+    "question": "What was the occupation of Peter before following Jesus?",
+    "choices": [
+      "Tax Collector",
+      "Fisherman",
+      "Shepherd",
+      "Carpenter"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-8",
+    "level": "beginner",
+    "question": "In which book is the fruit of the Spirit described?",
+    "choices": [
+      "Romans",
+      "Galatians",
+      "Ephesians",
+      "Philippians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763658041919-9",
+    "level": "beginner",
+    "question": "What did Jesus turn water into at the wedding in Cana?",
+    "choices": [
+      "Wine",
+      "Oil",
+      "Juice",
+      "Vinegar"
+    ],
+    "correctIndex": 0
+  },
+  {
     "id": "q-1763657896805-21",
     "level": "intermediate",
     "question": "Who was the first king of Israel?",
@@ -898,5 +1018,1130 @@
     "reference": "Luke 4:16–21; Isaiah 61:1–2",
     "explanation": "Jesus reads from Isaiah 61 and announces that He is the One anointed to preach good news and set the oppressed free.",
     "category": "Jesus’ Life & Ministry"
+  },
+  {
+    "id": "q-claude-1763660782311-1",
+    "level": "beginner",
+    "question": "How many days did God take to create the world?",
+    "choices": [
+      "8 days",
+      "7 days",
+      "5 days",
+      "6 days"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782311-2",
+    "level": "beginner",
+    "question": "Who built the ark?",
+    "choices": [
+      "David",
+      "Elisha",
+      "James",
+      "Noah"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-3",
+    "level": "beginner",
+    "question": "What was the name of Abraham's wife?",
+    "choices": [
+      "Not specified",
+      "Sarah",
+      "Not mentioned in the Bible",
+      "Unknown"
+    ],
+    "correctIndex": 1,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-4",
+    "level": "beginner",
+    "question": "Who was sold into slavery by his brothers?",
+    "choices": [
+      "Silas",
+      "James",
+      "Joseph",
+      "Andrew"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-5",
+    "level": "beginner",
+    "question": "What river was baby Moses found in?",
+    "choices": [
+      "The Jordan River",
+      "The Tigris River",
+      "The Nile River",
+      "The Euphrates River"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-6",
+    "level": "beginner",
+    "question": "How many plagues did God send on Egypt?",
+    "choices": [
+      "40",
+      "12",
+      "10",
+      "7"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-7",
+    "level": "beginner",
+    "question": "What sea did Moses part?",
+    "choices": [
+      "The Mediterranean Sea",
+      "The Sea of Galilee",
+      "The Red Sea",
+      "The Dead Sea"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-8",
+    "level": "beginner",
+    "question": "How many commandments did God give Moses?",
+    "choices": [
+      "40",
+      "7",
+      "10",
+      "12"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-9",
+    "level": "beginner",
+    "question": "Who was the strongest man in the Bible?",
+    "choices": [
+      "Samson",
+      "Isaiah",
+      "Joseph",
+      "Abraham"
+    ],
+    "correctIndex": 0,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-10",
+    "level": "beginner",
+    "question": "What weapon did David use to kill Goliath?",
+    "choices": [
+      "A sling and stone",
+      "A sword",
+      "A spear",
+      "A bow and arrow"
+    ],
+    "correctIndex": 0,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-11",
+    "level": "beginner",
+    "question": "Who was David's best friend?",
+    "choices": [
+      "Jonathan",
+      "Samuel",
+      "Gideon",
+      "Matthew"
+    ],
+    "correctIndex": 0,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-12",
+    "level": "beginner",
+    "question": "Who was the wisest king of Israel?",
+    "choices": [
+      "Solomon",
+      "Samson",
+      "Moses",
+      "Jacob"
+    ],
+    "correctIndex": 0,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-13",
+    "level": "beginner",
+    "question": "What did Solomon build for God?",
+    "choices": [
+      "The Palace",
+      "The Tabernacle",
+      "The Temple",
+      "The Ark"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-14",
+    "level": "beginner",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Bartholomew",
+      "Philip",
+      "Jonah",
+      "Elisha"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-15",
+    "level": "beginner",
+    "question": "How many days was Jonah in the belly of the fish?",
+    "choices": [
+      "2 days",
+      "3 days",
+      "40 days",
+      "7 days"
+    ],
+    "correctIndex": 1,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-16",
+    "level": "beginner",
+    "question": "Who was thrown into the lion's den?",
+    "choices": [
+      "Daniel",
+      "Andrew",
+      "Aaron",
+      "Abraham"
+    ],
+    "correctIndex": 0,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-17",
+    "level": "intermediate",
+    "question": "What did God give Daniel the ability to interpret?",
+    "choices": [
+      "Languages",
+      "Prophecies",
+      "Dreams",
+      "Visions"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-18",
+    "level": "advanced",
+    "question": "Who were the three friends thrown into the fiery furnace?",
+    "choices": [
+      "Peter, James, and John",
+      "Daniel, Ezra, and Nehemiah",
+      "Shadrach, Meshach, and Abednego",
+      "Abraham, Isaac, and Jacob"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-19",
+    "level": "beginner",
+    "question": "What was the name of the garden where Adam and Eve lived?",
+    "choices": [
+      "Garden of Gethsemane",
+      "Hanging Gardens of Babylon",
+      "Garden of Solomon",
+      "Garden of Eden"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-20",
+    "level": "beginner",
+    "question": "Who was the first murderer in the Bible?",
+    "choices": [
+      "Moses",
+      "Samuel",
+      "Silas",
+      "Cain"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-21",
+    "level": "beginner",
+    "question": "In what town was Jesus born?",
+    "choices": [
+      "Jerusalem",
+      "Bethlehem",
+      "Nineveh",
+      "Nazareth"
+    ],
+    "correctIndex": 1,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-22",
+    "level": "beginner",
+    "question": "Who were Jesus' earthly parents?",
+    "choices": [
+      "Mary and Joseph",
+      "Isaac and Rebecca",
+      "Elizabeth and Zechariah",
+      "Abraham and Sarah"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-23",
+    "level": "beginner",
+    "question": "What gifts did the wise men bring to Jesus?",
+    "choices": [
+      "Sheep, cattle, and doves",
+      "Bread, wine, and oil",
+      "Gold, frankincense, and myrrh",
+      "Silver, gold, and jewels"
+    ],
+    "correctIndex": 2,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-24",
+    "level": "beginner",
+    "question": "Who baptized Jesus?",
+    "choices": [
+      "John the Baptist",
+      "Mark",
+      "Barnabas",
+      "Paul"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-25",
+    "level": "beginner",
+    "question": "How many disciples did Jesus have?",
+    "choices": [
+      "10",
+      "11",
+      "12",
+      "7"
+    ],
+    "correctIndex": 2,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-26",
+    "level": "beginner",
+    "question": "Who was the disciple that betrayed Jesus?",
+    "choices": [
+      "Judas Iscariot",
+      "David",
+      "Jacob",
+      "Thomas"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-27",
+    "level": "beginner",
+    "question": "Who denied Jesus three times?",
+    "choices": [
+      "Peter",
+      "Mark",
+      "Barnabas",
+      "Abraham"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-28",
+    "level": "intermediate",
+    "question": "What was Matthew's occupation before following Jesus?",
+    "choices": [
+      "Tentmaker",
+      "Carpenter",
+      "Tax collector",
+      "Fisherman"
+    ],
+    "correctIndex": 2,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-29",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept",
+      "God is love",
+      "Jesus saves",
+      "Rejoice always"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-30",
+    "level": "beginner",
+    "question": "Who did Jesus raise from the dead after four days?",
+    "choices": [
+      "Timothy",
+      "Paul",
+      "John",
+      "Lazarus"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-31",
+    "level": "beginner",
+    "question": "What did Jesus turn water into at the wedding?",
+    "choices": [
+      "Bread",
+      "Wine",
+      "Milk",
+      "Oil"
+    ],
+    "correctIndex": 1,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-32",
+    "level": "beginner",
+    "question": "How many loaves and fish did Jesus use to feed 5,000?",
+    "choices": [
+      "5 loaves and 2 fish",
+      "12",
+      "40",
+      "7"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-33",
+    "level": "beginner",
+    "question": "What did Jesus walk on?",
+    "choices": [
+      "Air",
+      "Fire",
+      "Water",
+      "Clouds"
+    ],
+    "correctIndex": 2,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-34",
+    "level": "beginner",
+    "question": "On what mountain was Jesus transfigured?",
+    "choices": [
+      "Mount Sinai",
+      "Mount of Olives",
+      "Mount Carmel",
+      "Mount of Transfiguration (or Mount Tabor)"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-35",
+    "level": "beginner",
+    "question": "What garden did Jesus pray in before his arrest?",
+    "choices": [
+      "Solomon's Garden",
+      "Olive Garden",
+      "Garden of Eden",
+      "Garden of Gethsemane"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-36",
+    "level": "beginner",
+    "question": "Who sentenced Jesus to death?",
+    "choices": [
+      "Jeremiah",
+      "Philip",
+      "Isaac",
+      "Pontius Pilate"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-37",
+    "level": "beginner",
+    "question": "What day of the week did Jesus rise from the dead?",
+    "choices": [
+      "Saturday",
+      "Monday",
+      "Friday",
+      "Sunday"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-38",
+    "level": "beginner",
+    "question": "How many days after his resurrection did Jesus ascend to heaven?",
+    "choices": [
+      "50 days",
+      "7 days",
+      "3 days",
+      "40 days"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-39",
+    "level": "advanced",
+    "question": "Who replaced Judas as a disciple?",
+    "choices": [
+      "Matthias",
+      "Mark",
+      "Aaron",
+      "Philip"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-40",
+    "level": "beginner",
+    "question": "What happened on the day of Pentecost?",
+    "choices": [
+      "The temple veil was torn",
+      "The disciples received power",
+      "Jesus ascended to heaven",
+      "The Holy Spirit came upon the disciples"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-41",
+    "level": "beginner",
+    "question": "Who was the first Christian martyr?",
+    "choices": [
+      "Stephen",
+      "Moses",
+      "Paul",
+      "Elijah"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-42",
+    "level": "intermediate",
+    "question": "What was Paul's name before his conversion?",
+    "choices": [
+      "Not specified",
+      "Unknown",
+      "Saul",
+      "Not mentioned in the Bible"
+    ],
+    "correctIndex": 2,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-43",
+    "level": "beginner",
+    "question": "On what road did Paul encounter Jesus?",
+    "choices": [
+      "Road to Emmaus",
+      "Road to Jericho",
+      "Road to Jerusalem",
+      "Road to Damascus"
+    ],
+    "correctIndex": 3,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-44",
+    "level": "beginner",
+    "question": "Who wrote most of the New Testament letters?",
+    "choices": [
+      "Silas",
+      "Paul",
+      "Joseph",
+      "Elijah"
+    ],
+    "correctIndex": 1,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-45",
+    "level": "beginner",
+    "question": "What island was John on when he wrote Revelation?",
+    "choices": [
+      "Patmos",
+      "Egypt",
+      "Gomorrah",
+      "Jericho"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-46",
+    "level": "advanced",
+    "question": "How many books are in the Bible?",
+    "choices": [
+      "67",
+      "70",
+      "66",
+      "65"
+    ],
+    "correctIndex": 2,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-47",
+    "level": "advanced",
+    "question": "How many books are in the Old Testament?",
+    "choices": [
+      "38",
+      "40",
+      "27",
+      "39"
+    ],
+    "correctIndex": 3,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-48",
+    "level": "advanced",
+    "question": "How many books are in the New Testament?",
+    "choices": [
+      "39",
+      "28",
+      "27",
+      "26"
+    ],
+    "correctIndex": 2,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-49",
+    "level": "beginner",
+    "question": "What is the longest book in the Bible?",
+    "choices": [
+      "Not specified",
+      "Not mentioned in the Bible",
+      "Psalms",
+      "Unknown"
+    ],
+    "correctIndex": 2,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-50",
+    "level": "beginner",
+    "question": "What is the longest chapter in the Bible?",
+    "choices": [
+      "Unknown",
+      "Psalm 119",
+      "Not specified",
+      "Not mentioned in the Bible"
+    ],
+    "correctIndex": 1,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-51",
+    "level": "beginner",
+    "question": "What is the first book of the Bible?",
+    "choices": [
+      "Not specified",
+      "Unknown",
+      "Not mentioned in the Bible",
+      "Genesis"
+    ],
+    "correctIndex": 3,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-52",
+    "level": "beginner",
+    "question": "What is the last book of the Bible?",
+    "choices": [
+      "Not mentioned in the Bible",
+      "Revelation",
+      "Unknown",
+      "Not specified"
+    ],
+    "correctIndex": 1,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-53",
+    "level": "beginner",
+    "question": "What are the first five books of the Bible called?",
+    "choices": [
+      "The Epistles",
+      "The Pentateuch or Torah",
+      "The Gospels",
+      "The Prophets"
+    ],
+    "correctIndex": 1,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-54",
+    "level": "advanced",
+    "question": "What language was most of the Old Testament written in?",
+    "choices": [
+      "Greek",
+      "Aramaic",
+      "Latin",
+      "Hebrew"
+    ],
+    "correctIndex": 3,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-55",
+    "level": "advanced",
+    "question": "What language was most of the New Testament written in?",
+    "choices": [
+      "Aramaic",
+      "Hebrew",
+      "Latin",
+      "Greek"
+    ],
+    "correctIndex": 3,
+    "reference": "General",
+    "explanation": "Biblical knowledge question from the General.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude-1763660782312-56",
+    "level": "beginner",
+    "question": "What is the Golden Rule found in Matthew 7:12?",
+    "choices": [
+      "Do unto others as you would have them do unto you",
+      "Love your enemies",
+      "Give to the poor",
+      "Turn the other cheek"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-57",
+    "level": "beginner",
+    "question": "What famous sermon did Jesus preach on a mountain?",
+    "choices": [
+      "The Sermon on the Mount",
+      "The Sermon on the Plain",
+      "The Great Commission",
+      "The Olivet Discourse"
+    ],
+    "correctIndex": 0,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-58",
+    "level": "beginner",
+    "question": "What prayer did Jesus teach his disciples?",
+    "choices": [
+      "The Great Commission",
+      "The Golden Rule",
+      "The Lord's Prayer",
+      "The Beatitudes"
+    ],
+    "correctIndex": 2,
+    "reference": "New Testament",
+    "explanation": "Biblical knowledge question from the New Testament.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-59",
+    "level": "beginner",
+    "question": "Who was the oldest man in the Bible?",
+    "choices": [
+      "Elisha",
+      "Methuselah",
+      "Aaron",
+      "Solomon"
+    ],
+    "correctIndex": 1,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-60",
+    "level": "advanced",
+    "question": "How old was Methuselah when he died?",
+    "choices": [
+      "Unknown",
+      "Not specified",
+      "Not mentioned in the Bible",
+      "969 years old"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-61",
+    "level": "beginner",
+    "question": "What did Jacob see in his dream at Bethel?",
+    "choices": [
+      "A burning bush",
+      "A ladder reaching to heaven",
+      "A pillar of fire",
+      "Angels ascending and descending"
+    ],
+    "correctIndex": 1,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-62",
+    "level": "intermediate",
+    "question": "What was Jacob's name changed to?",
+    "choices": [
+      "Israel",
+      "Unknown",
+      "Not specified",
+      "Not mentioned in the Bible"
+    ],
+    "correctIndex": 0,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-63",
+    "level": "beginner",
+    "question": "How many sons did Jacob have?",
+    "choices": [
+      "11",
+      "7",
+      "10",
+      "12"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-64",
+    "level": "beginner",
+    "question": "What did Joseph's brothers dip his coat in?",
+    "choices": [
+      "Ink",
+      "Wine",
+      "Mud",
+      "Blood (goat's blood)"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-65",
+    "level": "intermediate",
+    "question": "Who was Ruth's mother-in-law?",
+    "choices": [
+      "Moses",
+      "Naomi",
+      "Saul",
+      "Caleb"
+    ],
+    "correctIndex": 1,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-66",
+    "level": "beginner",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "Gideon",
+      "Elijah",
+      "Abraham",
+      "Saul"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-67",
+    "level": "intermediate",
+    "question": "What instrument did David play?",
+    "choices": [
+      "The flute",
+      "The trumpet",
+      "The drum",
+      "The harp (or lyre)"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-68",
+    "level": "beginner",
+    "question": "Who was Bathsheba's first husband?",
+    "choices": [
+      "Isaac",
+      "James",
+      "Uriah",
+      "Moses"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-69",
+    "level": "beginner",
+    "question": "What prophet confronted David about his sin?",
+    "choices": [
+      "Not mentioned in the Bible",
+      "Unknown",
+      "Nathan",
+      "Not specified"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-70",
+    "level": "intermediate",
+    "question": "Who was the queen that visited Solomon?",
+    "choices": [
+      "John",
+      "The Queen of Sheba",
+      "Jacob",
+      "Thomas"
+    ],
+    "correctIndex": 1,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-71",
+    "level": "beginner",
+    "question": "What prophet was taken up to heaven in a whirlwind?",
+    "choices": [
+      "Not mentioned in the Bible",
+      "Unknown",
+      "Not specified",
+      "Elijah"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-72",
+    "level": "intermediate",
+    "question": "Who was Elijah's successor?",
+    "choices": [
+      "Timothy",
+      "Moses",
+      "Isaiah",
+      "Elisha"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-73",
+    "level": "intermediate",
+    "question": "What woman helped hide the Israelite spies in Jericho?",
+    "choices": [
+      "Unknown",
+      "Not mentioned in the Bible",
+      "Not specified",
+      "Rahab"
+    ],
+    "correctIndex": 3,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-74",
+    "level": "beginner",
+    "question": "Who led the Israelites after Moses died?",
+    "choices": [
+      "Silas",
+      "Joshua",
+      "Elijah",
+      "Paul"
+    ],
+    "correctIndex": 1,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude-1763660782312-75",
+    "level": "beginner",
+    "question": "What city's walls fell down after the Israelites marched around it?",
+    "choices": [
+      "Corinth",
+      "Jerusalem",
+      "Jericho",
+      "Athens"
+    ],
+    "correctIndex": 2,
+    "reference": "Old Testament",
+    "explanation": "Biblical knowledge question from the Old Testament.",
+    "category": "Old Testament"
   }
 ]
