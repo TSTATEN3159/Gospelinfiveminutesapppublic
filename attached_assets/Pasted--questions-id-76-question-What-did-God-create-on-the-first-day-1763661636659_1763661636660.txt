@@ -1,0 +1,604 @@
+{
+  "questions": [
+    {
+      "id": 76,
+      "question": "What did God create on the first day?",
+      "answer": "Light",
+      "scripture": "Genesis 1:3",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 77,
+      "question": "Who was the first woman?",
+      "answer": "Eve",
+      "scripture": "Genesis 3:20",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 78,
+      "question": "What was the sign of God's promise to never flood the earth again?",
+      "answer": "A rainbow",
+      "scripture": "Genesis 9:13",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 79,
+      "question": "What did God ask Abraham to sacrifice?",
+      "answer": "His son Isaac",
+      "scripture": "Genesis 22:2",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 80,
+      "question": "Who was Isaac's wife?",
+      "answer": "Rebekah",
+      "scripture": "Genesis 24:67",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 81,
+      "question": "What food did God provide for the Israelites in the wilderness?",
+      "answer": "Manna",
+      "scripture": "Exodus 16:15",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 82,
+      "question": "What did Moses strike to bring water from a rock?",
+      "answer": "The rock at Horeb",
+      "scripture": "Exodus 17:6",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 83,
+      "question": "Who was the tax collector that climbed a tree to see Jesus?",
+      "answer": "Zacchaeus",
+      "scripture": "Luke 19:2-4",
+      "difficulty": "beginner",
+      "category": "New Testament"
+    },
+    {
+      "id": 84,
+      "question": "What did the Good Samaritan do?",
+      "answer": "Helped an injured man",
+      "scripture": "Luke 10:33-34",
+      "difficulty": "beginner",
+      "category": "New Testament"
+    },
+    {
+      "id": 85,
+      "question": "Who was the mother of Jesus?",
+      "answer": "Mary",
+      "scripture": "Luke 1:27",
+      "difficulty": "beginner",
+      "category": "New Testament"
+    },
+    {
+      "id": 86,
+      "question": "What did Jesus ride into Jerusalem on Palm Sunday?",
+      "answer": "A donkey",
+      "scripture": "Matthew 21:7",
+      "difficulty": "beginner",
+      "category": "New Testament"
+    },
+    {
+      "id": 87,
+      "question": "How many pieces of silver did Judas receive for betraying Jesus?",
+      "answer": "30",
+      "scripture": "Matthew 26:15",
+      "difficulty": "beginner",
+      "category": "New Testament"
+    },
+    {
+      "id": 88,
+      "question": "Who rolled away the stone from Jesus' tomb?",
+      "answer": "An angel",
+      "scripture": "Matthew 28:2",
+      "difficulty": "beginner",
+      "category": "New Testament"
+    },
+    {
+      "id": 89,
+      "question": "What are the first four books of the New Testament called?",
+      "answer": "The Gospels",
+      "scripture": "Matthew, Mark, Luke, John",
+      "difficulty": "beginner",
+      "category": "General"
+    },
+    {
+      "id": 90,
+      "question": "What is the last word in the Bible?",
+      "answer": "Amen",
+      "scripture": "Revelation 22:21",
+      "difficulty": "beginner",
+      "category": "General"
+    },
+    {
+      "id": 91,
+      "question": "What did Esau sell to Jacob for a bowl of stew?",
+      "answer": "His birthright",
+      "scripture": "Genesis 25:33",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 92,
+      "question": "What were the names of Moses' brother and sister?",
+      "answer": "Aaron and Miriam",
+      "scripture": "Exodus 15:20, Numbers 26:59",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 93,
+      "question": "What did Delilah cut off while Samson slept?",
+      "answer": "His hair",
+      "scripture": "Judges 16:19",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 94,
+      "question": "Who was Goliath's nationality?",
+      "answer": "Philistine",
+      "scripture": "1 Samuel 17:4",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 95,
+      "question": "What type of wood was Noah's ark made from?",
+      "answer": "Gopher wood (or cypress)",
+      "scripture": "Genesis 6:14",
+      "difficulty": "beginner",
+      "category": "Old Testament"
+    },
+    {
+      "id": 96,
+      "question": "What did Aaron's rod turn into?",
+      "answer": "A serpent",
+      "scripture": "Exodus 7:10",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 97,
+      "question": "Who was the mother of Samuel?",
+      "answer": "Hannah",
+      "scripture": "1 Samuel 1:20",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 98,
+      "question": "What king did the witch of Endor summon?",
+      "answer": "Samuel",
+      "scripture": "1 Samuel 28:14",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 99,
+      "question": "Who killed Goliath's brother Lahmi?",
+      "answer": "Elhanan",
+      "scripture": "1 Chronicles 20:5",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 100,
+      "question": "What did Solomon ask God for?",
+      "answer": "Wisdom and understanding",
+      "scripture": "1 Kings 3:9",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 101,
+      "question": "Who was the father of King David?",
+      "answer": "Jesse",
+      "scripture": "1 Samuel 16:13",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 102,
+      "question": "What prophet was fed by ravens?",
+      "answer": "Elijah",
+      "scripture": "1 Kings 17:4",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 103,
+      "question": "What city did Nehemiah rebuild the walls of?",
+      "answer": "Jerusalem",
+      "scripture": "Nehemiah 2:17",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 104,
+      "question": "Who was the cupbearer to King Artaxerxes?",
+      "answer": "Nehemiah",
+      "scripture": "Nehemiah 1:11",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 105,
+      "question": "What did Esther risk her life to do?",
+      "answer": "Approach the king without being summoned",
+      "scripture": "Esther 4:16",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 106,
+      "question": "Who was Esther's cousin who raised her?",
+      "answer": "Mordecai",
+      "scripture": "Esther 2:7",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 107,
+      "question": "What book comes after Job in the Bible?",
+      "answer": "Psalms",
+      "scripture": "Bible structure",
+      "difficulty": "intermediate",
+      "category": "General"
+    },
+    {
+      "id": 108,
+      "question": "Who wrote the book of Proverbs?",
+      "answer": "Solomon (primarily)",
+      "scripture": "Proverbs 1:1",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 109,
+      "question": "What did Cain say when God asked where Abel was?",
+      "answer": "Am I my brother's keeper?",
+      "scripture": "Genesis 4:9",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 110,
+      "question": "How many years did the Israelites wander in the wilderness?",
+      "answer": "40 years",
+      "scripture": "Numbers 14:33",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 111,
+      "question": "What was Peter's original name?",
+      "answer": "Simon",
+      "scripture": "Matthew 4:18",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 112,
+      "question": "Who were the sons of Zebedee?",
+      "answer": "James and John",
+      "scripture": "Matthew 4:21",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 113,
+      "question": "What was the name of the high priest who questioned Jesus?",
+      "answer": "Caiaphas",
+      "scripture": "Matthew 26:57",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 114,
+      "question": "Who was the Roman centurion whose servant Jesus healed?",
+      "answer": "The centurion of Capernaum",
+      "scripture": "Matthew 8:5-13",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 115,
+      "question": "What was the name of the beggar in Jesus' parable about the rich man?",
+      "answer": "Lazarus",
+      "scripture": "Luke 16:20",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 116,
+      "question": "Who was the Pharisee who visited Jesus at night?",
+      "answer": "Nicodemus",
+      "scripture": "John 3:1-2",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 117,
+      "question": "What was the name of the woman Jesus met at the well?",
+      "answer": "The Samaritan woman (unnamed)",
+      "scripture": "John 4:7",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 118,
+      "question": "Who were Mary and Martha's brother?",
+      "answer": "Lazarus",
+      "scripture": "John 11:1",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 119,
+      "question": "What was Paul's occupation?",
+      "answer": "Tentmaker",
+      "scripture": "Acts 18:3",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 120,
+      "question": "Who was Paul's companion on his first missionary journey?",
+      "answer": "Barnabas",
+      "scripture": "Acts 13:2",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 121,
+      "question": "What was the name of Timothy's mother?",
+      "answer": "Eunice",
+      "scripture": "2 Timothy 1:5",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 122,
+      "question": "Who wrote the book of Acts?",
+      "answer": "Luke",
+      "scripture": "Acts 1:1",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 123,
+      "question": "What were the names of the two criminals crucified with Jesus?",
+      "answer": "They were unnamed in Scripture",
+      "scripture": "Luke 23:32-33",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 124,
+      "question": "How many churches are addressed in Revelation?",
+      "answer": "7",
+      "scripture": "Revelation 1:4",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 125,
+      "question": "What was the occupation of Lydia in Acts?",
+      "answer": "Seller of purple cloth",
+      "scripture": "Acts 16:14",
+      "difficulty": "intermediate",
+      "category": "New Testament"
+    },
+    {
+      "id": 126,
+      "question": "Who succeeded Moses as the leader of Israel?",
+      "answer": "Joshua",
+      "scripture": "Deuteronomy 31:23",
+      "difficulty": "intermediate",
+      "category": "Old Testament"
+    },
+    {
+      "id": 127,
+      "question": "What was the name of Abraham's nephew?",
+      "answer": "Lot",
+      "scripture": "Genesis 11:27",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 128,
+      "question": "What were the names of Noah's three sons?",
+      "answer": "Shem, Ham, and Japheth",
+      "scripture": "Genesis 6:10",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 129,
+      "question": "Who was the king of Salem who blessed Abraham?",
+      "answer": "Melchizedek",
+      "scripture": "Genesis 14:18",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 130,
+      "question": "What was the name of Isaac's firstborn son?",
+      "answer": "Esau",
+      "scripture": "Genesis 25:25",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 131,
+      "question": "Who was the father-in-law of Moses?",
+      "answer": "Jethro (also called Reuel)",
+      "scripture": "Exodus 3:1",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 132,
+      "question": "What was the name of Caleb's daughter?",
+      "answer": "Achsah",
+      "scripture": "Joshua 15:16",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 133,
+      "question": "Who was the judge of Israel who was left-handed?",
+      "answer": "Ehud",
+      "scripture": "Judges 3:15",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 134,
+      "question": "What prophetess was married to Lappidoth?",
+      "answer": "Deborah",
+      "scripture": "Judges 4:4",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 135,
+      "question": "Who was the commander of Saul's army?",
+      "answer": "Abner",
+      "scripture": "1 Samuel 14:50",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 136,
+      "question": "What was the name of David's son who rebelled against him?",
+      "answer": "Absalom",
+      "scripture": "2 Samuel 15:10",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 137,
+      "question": "Who was David's commander who killed Absalom?",
+      "answer": "Joab",
+      "scripture": "2 Samuel 18:14",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 138,
+      "question": "What king of Israel reigned for only seven days?",
+      "answer": "Zimri",
+      "scripture": "1 Kings 16:15",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 139,
+      "question": "Who was the evil queen of Israel married to Ahab?",
+      "answer": "Jezebel",
+      "scripture": "1 Kings 16:31",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 140,
+      "question": "What king of Judah was eight years old when he began to reign?",
+      "answer": "Josiah",
+      "scripture": "2 Kings 22:1",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 141,
+      "question": "Who was the prophet that anointed both Saul and David as king?",
+      "answer": "Samuel",
+      "scripture": "1 Samuel 10:1, 16:13",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 142,
+      "question": "What was the name of Job's wife?",
+      "answer": "She is unnamed in Scripture",
+      "scripture": "Job 2:9",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 143,
+      "question": "Who was the Babylonian king who went insane and ate grass?",
+      "answer": "Nebuchadnezzar",
+      "scripture": "Daniel 4:33",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 144,
+      "question": "What prophet married a prostitute named Gomer?",
+      "answer": "Hosea",
+      "scripture": "Hosea 1:3",
+      "difficulty": "expert",
+      "category": "Old Testament"
+    },
+    {
+      "id": 145,
+      "question": "Who was the father of John the Baptist?",
+      "answer": "Zechariah",
+      "scripture": "Luke 1:13",
+      "difficulty": "expert",
+      "category": "New Testament"
+    },
+    {
+      "id": 146,
+      "question": "What was the name of the garden where Jesus was buried?",
+      "answer": "A garden near Golgotha (unnamed)",
+      "scripture": "John 19:41",
+      "difficulty": "expert",
+      "category": "New Testament"
+    },
+    {
+      "id": 147,
+      "question": "Who was the disciple known as the twin?",
+      "answer": "Thomas (called Didymus)",
+      "scripture": "John 11:16",
+      "difficulty": "expert",
+      "category": "New Testament"
+    },
+    {
+      "id": 148,
+      "question": "What was the name of the sorcerer who tried to buy the Holy Spirit?",
+      "answer": "Simon",
+      "scripture": "Acts 8:18-19",
+      "difficulty": "expert",
+      "category": "New Testament"
+    },
+    {
+      "id": 149,
+      "question": "Who was the governor of Syria during Jesus' birth?",
+      "answer": "Quirinius",
+      "scripture": "Luke 2:2",
+      "difficulty": "expert",
+      "category": "New Testament"
+    },
+    {
+      "id": 150,
+      "question": "What was the name of the man who carried Jesus' cross?",
+      "answer": "Simon of Cyrene",
+      "scripture": "Mark 15:21",
+      "difficulty": "expert",
+      "category": "New Testament"
+    }
+  ]
+}

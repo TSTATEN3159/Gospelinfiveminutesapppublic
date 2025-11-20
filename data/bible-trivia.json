@@ -2983,5 +2983,1130 @@
     "reference": "Judges 13:5; Judges 16:4–6",
     "explanation": "Samson was set apart as a Nazirite and given great strength by God, yet fell into sin with Delilah.",
     "category": "People"
+  },
+  {
+    "id": "q-claude2-1763661762563-76",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Light",
+      "The sun and moon",
+      "The heavens and earth",
+      "Day and night"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 1:3",
+    "explanation": "According to Genesis 1:3, the answer is Light.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-77",
+    "level": "beginner",
+    "question": "Who was the first woman?",
+    "choices": [
+      "Eve",
+      "Rachel",
+      "Rebekah",
+      "Sarah"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 3:20",
+    "explanation": "According to Genesis 3:20, the answer is Eve.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-78",
+    "level": "beginner",
+    "question": "What was the sign of God's promise to never flood the earth again?",
+    "choices": [
+      "A rainbow",
+      "A covenant",
+      "An altar",
+      "A dove"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 9:13",
+    "explanation": "According to Genesis 9:13, the answer is A rainbow.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-79",
+    "level": "beginner",
+    "question": "What did God ask Abraham to sacrifice?",
+    "choices": [
+      "A lamb",
+      "His firstborn",
+      "A ram",
+      "His son Isaac"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 22:2",
+    "explanation": "According to Genesis 22:2, the answer is His son Isaac.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-80",
+    "level": "beginner",
+    "question": "Who was Isaac's wife?",
+    "choices": [
+      "Rebekah",
+      "Rachel",
+      "Sarah",
+      "Leah"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 24:67",
+    "explanation": "According to Genesis 24:67, the answer is Rebekah.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-81",
+    "level": "beginner",
+    "question": "What food did God provide for the Israelites in the wilderness?",
+    "choices": [
+      "Manna",
+      "Quail",
+      "Bread",
+      "Grain"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 16:15",
+    "explanation": "According to Exodus 16:15, the answer is Manna.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-82",
+    "level": "beginner",
+    "question": "What did Moses strike to bring water from a rock?",
+    "choices": [
+      "The ground",
+      "A rod",
+      "The rock at Horeb",
+      "A stone tablet"
+    ],
+    "correctIndex": 2,
+    "reference": "Exodus 17:6",
+    "explanation": "According to Exodus 17:6, the answer is The rock at Horeb.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-83",
+    "level": "beginner",
+    "question": "Who was the tax collector that climbed a tree to see Jesus?",
+    "choices": [
+      "Levi",
+      "Nicodemus",
+      "Matthew",
+      "Zacchaeus"
+    ],
+    "correctIndex": 3,
+    "reference": "Luke 19:2-4",
+    "explanation": "According to Luke 19:2-4, the answer is Zacchaeus.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-84",
+    "level": "beginner",
+    "question": "What did the Good Samaritan do?",
+    "choices": [
+      "Preached to the crowd",
+      "Gave money to the poor",
+      "Healed the sick",
+      "Helped an injured man"
+    ],
+    "correctIndex": 3,
+    "reference": "Luke 10:33-34",
+    "explanation": "According to Luke 10:33-34, the answer is Helped an injured man.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-85",
+    "level": "beginner",
+    "question": "Who was the mother of Jesus?",
+    "choices": [
+      "Martha",
+      "Mary",
+      "Mary Magdalene",
+      "Elizabeth"
+    ],
+    "correctIndex": 1,
+    "reference": "Luke 1:27",
+    "explanation": "According to Luke 1:27, the answer is Mary.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-86",
+    "level": "beginner",
+    "question": "What did Jesus ride into Jerusalem on Palm Sunday?",
+    "choices": [
+      "A horse",
+      "A camel",
+      "A colt",
+      "A donkey"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 21:7",
+    "explanation": "According to Matthew 21:7, the answer is A donkey.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-87",
+    "level": "beginner",
+    "question": "How many pieces of silver did Judas receive for betraying Jesus?",
+    "choices": [
+      "50",
+      "40",
+      "30",
+      "20"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 26:15",
+    "explanation": "According to Matthew 26:15, the answer is 30.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-88",
+    "level": "beginner",
+    "question": "Who rolled away the stone from Jesus' tomb?",
+    "choices": [
+      "The disciples",
+      "Peter",
+      "An angel",
+      "Mary Magdalene"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 28:2",
+    "explanation": "According to Matthew 28:2, the answer is An angel.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-89",
+    "level": "beginner",
+    "question": "What are the first four books of the New Testament called?",
+    "choices": [
+      "The Writings",
+      "The Gospels",
+      "The Epistles",
+      "The Prophets"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew, Mark, Luke, John",
+    "explanation": "According to Matthew, Mark, Luke, John, the answer is The Gospels.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude2-1763661762563-90",
+    "level": "beginner",
+    "question": "What is the last word in the Bible?",
+    "choices": [
+      "The End",
+      "Forever",
+      "Amen",
+      "Hallelujah"
+    ],
+    "correctIndex": 2,
+    "reference": "Revelation 22:21",
+    "explanation": "According to Revelation 22:21, the answer is Amen.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude2-1763661762563-91",
+    "level": "beginner",
+    "question": "What did Esau sell to Jacob for a bowl of stew?",
+    "choices": [
+      "His blessing",
+      "His inheritance",
+      "His father's love",
+      "His birthright"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 25:33",
+    "explanation": "According to Genesis 25:33, the answer is His birthright.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-92",
+    "level": "beginner",
+    "question": "What were the names of Moses' brother and sister?",
+    "choices": [
+      "Aaron and Miriam",
+      "Nadab and Abihu",
+      "Eleazar and Ithamar",
+      "Joshua and Caleb"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 15:20, Numbers 26:59",
+    "explanation": "According to Exodus 15:20, Numbers 26:59, the answer is Aaron and Miriam.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-93",
+    "level": "beginner",
+    "question": "What did Delilah cut off while Samson slept?",
+    "choices": [
+      "His beard",
+      "His chains",
+      "His hair",
+      "His strength"
+    ],
+    "correctIndex": 2,
+    "reference": "Judges 16:19",
+    "explanation": "According to Judges 16:19, the answer is His hair.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-94",
+    "level": "beginner",
+    "question": "Who was Goliath's nationality?",
+    "choices": [
+      "Edomite",
+      "Moabite",
+      "Philistine",
+      "Ammonite"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Samuel 17:4",
+    "explanation": "According to 1 Samuel 17:4, the answer is Philistine.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-95",
+    "level": "beginner",
+    "question": "What type of wood was Noah's ark made from?",
+    "choices": [
+      "Acacia",
+      "Oak",
+      "Cedar",
+      "Gopher wood (or cypress)"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 6:14",
+    "explanation": "According to Genesis 6:14, the answer is Gopher wood (or cypress).",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-96",
+    "level": "intermediate",
+    "question": "What did Aaron's rod turn into?",
+    "choices": [
+      "Water",
+      "A snake",
+      "A staff",
+      "A serpent"
+    ],
+    "correctIndex": 3,
+    "reference": "Exodus 7:10",
+    "explanation": "According to Exodus 7:10, the answer is A serpent.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-97",
+    "level": "intermediate",
+    "question": "Who was the mother of Samuel?",
+    "choices": [
+      "Hannah",
+      "Rebekah",
+      "Leah",
+      "Rachel"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Samuel 1:20",
+    "explanation": "According to 1 Samuel 1:20, the answer is Hannah.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-98",
+    "level": "intermediate",
+    "question": "What king did the witch of Endor summon?",
+    "choices": [
+      "Saul",
+      "Elijah",
+      "Samuel",
+      "David"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Samuel 28:14",
+    "explanation": "According to 1 Samuel 28:14, the answer is Samuel.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-99",
+    "level": "intermediate",
+    "question": "Who killed Goliath's brother Lahmi?",
+    "choices": [
+      "Jonathan",
+      "Abishai",
+      "David",
+      "Elhanan"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Chronicles 20:5",
+    "explanation": "According to 1 Chronicles 20:5, the answer is Elhanan.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-100",
+    "level": "intermediate",
+    "question": "What did Solomon ask God for?",
+    "choices": [
+      "Riches and honor",
+      "Victory over enemies",
+      "Wisdom and understanding",
+      "Long life"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 3:9",
+    "explanation": "According to 1 Kings 3:9, the answer is Wisdom and understanding.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-101",
+    "level": "intermediate",
+    "question": "Who was the father of King David?",
+    "choices": [
+      "Samuel",
+      "Jesse",
+      "Saul",
+      "Eliab"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Samuel 16:13",
+    "explanation": "According to 1 Samuel 16:13, the answer is Jesse.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-102",
+    "level": "intermediate",
+    "question": "What prophet was fed by ravens?",
+    "choices": [
+      "Elijah",
+      "Jeremiah",
+      "Elisha",
+      "Isaiah"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Kings 17:4",
+    "explanation": "According to 1 Kings 17:4, the answer is Elijah.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-103",
+    "level": "intermediate",
+    "question": "What city did Nehemiah rebuild the walls of?",
+    "choices": [
+      "Jerusalem",
+      "Jericho",
+      "Babylon",
+      "Samaria"
+    ],
+    "correctIndex": 0,
+    "reference": "Nehemiah 2:17",
+    "explanation": "According to Nehemiah 2:17, the answer is Jerusalem.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-104",
+    "level": "intermediate",
+    "question": "Who was the cupbearer to King Artaxerxes?",
+    "choices": [
+      "Nehemiah",
+      "Ezra",
+      "Zerubbabel",
+      "Haggai"
+    ],
+    "correctIndex": 0,
+    "reference": "Nehemiah 1:11",
+    "explanation": "According to Nehemiah 1:11, the answer is Nehemiah.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-105",
+    "level": "intermediate",
+    "question": "What did Esther risk her life to do?",
+    "choices": [
+      "Reveal Haman's plot",
+      "Approach the king without being summoned",
+      "Fast for three days",
+      "Save her people"
+    ],
+    "correctIndex": 1,
+    "reference": "Esther 4:16",
+    "explanation": "According to Esther 4:16, the answer is Approach the king without being summoned.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-106",
+    "level": "intermediate",
+    "question": "Who was Esther's cousin who raised her?",
+    "choices": [
+      "Ahasuerus",
+      "Xerxes",
+      "Mordecai",
+      "Haman"
+    ],
+    "correctIndex": 2,
+    "reference": "Esther 2:7",
+    "explanation": "According to Esther 2:7, the answer is Mordecai.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-107",
+    "level": "intermediate",
+    "question": "What book comes after Job in the Bible?",
+    "choices": [
+      "Song of Solomon",
+      "Proverbs",
+      "Ecclesiastes",
+      "Psalms"
+    ],
+    "correctIndex": 3,
+    "reference": "Bible structure",
+    "explanation": "According to Bible structure, the answer is Psalms.",
+    "category": "General"
+  },
+  {
+    "id": "q-claude2-1763661762563-108",
+    "level": "intermediate",
+    "question": "Who wrote the book of Proverbs?",
+    "choices": [
+      "Isaiah",
+      "Moses",
+      "Solomon (primarily)",
+      "David"
+    ],
+    "correctIndex": 2,
+    "reference": "Proverbs 1:1",
+    "explanation": "According to Proverbs 1:1, the answer is Solomon (primarily).",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-109",
+    "level": "intermediate",
+    "question": "What did Cain say when God asked where Abel was?",
+    "choices": [
+      "I do not know",
+      "He is in the field",
+      "He went away",
+      "Am I my brother's keeper?"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 4:9",
+    "explanation": "According to Genesis 4:9, the answer is Am I my brother's keeper?.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-110",
+    "level": "intermediate",
+    "question": "How many years did the Israelites wander in the wilderness?",
+    "choices": [
+      "20 years",
+      "7 years",
+      "70 years",
+      "40 years"
+    ],
+    "correctIndex": 3,
+    "reference": "Numbers 14:33",
+    "explanation": "According to Numbers 14:33, the answer is 40 years.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-111",
+    "level": "intermediate",
+    "question": "What was Peter's original name?",
+    "choices": [
+      "Simon",
+      "Jonah",
+      "Cephas",
+      "Andrew"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 4:18",
+    "explanation": "According to Matthew 4:18, the answer is Simon.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-112",
+    "level": "intermediate",
+    "question": "Who were the sons of Zebedee?",
+    "choices": [
+      "Matthew and Thomas",
+      "Peter and Andrew",
+      "James and John",
+      "Philip and Bartholomew"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 4:21",
+    "explanation": "According to Matthew 4:21, the answer is James and John.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-113",
+    "level": "intermediate",
+    "question": "What was the name of the high priest who questioned Jesus?",
+    "choices": [
+      "Pilate",
+      "Caiaphas",
+      "Annas",
+      "Herod"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 26:57",
+    "explanation": "According to Matthew 26:57, the answer is Caiaphas.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-114",
+    "level": "intermediate",
+    "question": "Who was the Roman centurion whose servant Jesus healed?",
+    "choices": [
+      "Julius",
+      "The centurion at the cross",
+      "The centurion of Capernaum",
+      "Cornelius"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 8:5-13",
+    "explanation": "According to Matthew 8:5-13, the answer is The centurion of Capernaum.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-115",
+    "level": "intermediate",
+    "question": "What was the name of the beggar in Jesus' parable about the rich man?",
+    "choices": [
+      "Lazarus",
+      "The beggar",
+      "The rich man",
+      "The leper"
+    ],
+    "correctIndex": 0,
+    "reference": "Luke 16:20",
+    "explanation": "According to Luke 16:20, the answer is Lazarus.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-116",
+    "level": "intermediate",
+    "question": "Who was the Pharisee who visited Jesus at night?",
+    "choices": [
+      "Gamaliel",
+      "Joseph of Arimathea",
+      "Nicodemus",
+      "Caiaphas"
+    ],
+    "correctIndex": 2,
+    "reference": "John 3:1-2",
+    "explanation": "According to John 3:1-2, the answer is Nicodemus.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-117",
+    "level": "intermediate",
+    "question": "What was the name of the woman Jesus met at the well?",
+    "choices": [
+      "Mary of Bethany",
+      "Mary Magdalene",
+      "Martha",
+      "The Samaritan woman (unnamed)"
+    ],
+    "correctIndex": 3,
+    "reference": "John 4:7",
+    "explanation": "According to John 4:7, the answer is The Samaritan woman (unnamed).",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-118",
+    "level": "intermediate",
+    "question": "Who were Mary and Martha's brother?",
+    "choices": [
+      "The rich man",
+      "Lazarus",
+      "The leper",
+      "The beggar"
+    ],
+    "correctIndex": 1,
+    "reference": "John 11:1",
+    "explanation": "According to John 11:1, the answer is Lazarus.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-119",
+    "level": "intermediate",
+    "question": "What was Paul's occupation?",
+    "choices": [
+      "Fisherman",
+      "Tentmaker",
+      "Physician",
+      "Tax collector"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 18:3",
+    "explanation": "According to Acts 18:3, the answer is Tentmaker.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-120",
+    "level": "intermediate",
+    "question": "Who was Paul's companion on his first missionary journey?",
+    "choices": [
+      "Titus",
+      "Timothy",
+      "Silas",
+      "Barnabas"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 13:2",
+    "explanation": "According to Acts 13:2, the answer is Barnabas.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-121",
+    "level": "intermediate",
+    "question": "What was the name of Timothy's mother?",
+    "choices": [
+      "Lydia",
+      "Lois",
+      "Eunice",
+      "Priscilla"
+    ],
+    "correctIndex": 2,
+    "reference": "2 Timothy 1:5",
+    "explanation": "According to 2 Timothy 1:5, the answer is Eunice.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-122",
+    "level": "intermediate",
+    "question": "Who wrote the book of Acts?",
+    "choices": [
+      "Luke",
+      "Matthew",
+      "Paul",
+      "Mark"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 1:1",
+    "explanation": "According to Acts 1:1, the answer is Luke.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-123",
+    "level": "intermediate",
+    "question": "What were the names of the two criminals crucified with Jesus?",
+    "choices": [
+      "They were unnamed in Scripture",
+      "Simon and Alexander",
+      "Barabbas and Judas",
+      "Dismas and Gestas"
+    ],
+    "correctIndex": 0,
+    "reference": "Luke 23:32-33",
+    "explanation": "According to Luke 23:32-33, the answer is They were unnamed in Scripture.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-124",
+    "level": "intermediate",
+    "question": "How many churches are addressed in Revelation?",
+    "choices": [
+      "10",
+      "12",
+      "5",
+      "7"
+    ],
+    "correctIndex": 3,
+    "reference": "Revelation 1:4",
+    "explanation": "According to Revelation 1:4, the answer is 7.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-125",
+    "level": "intermediate",
+    "question": "What was the occupation of Lydia in Acts?",
+    "choices": [
+      "Seller of purple cloth",
+      "Weaver",
+      "Merchant",
+      "Businesswoman"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 16:14",
+    "explanation": "According to Acts 16:14, the answer is Seller of purple cloth.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-126",
+    "level": "intermediate",
+    "question": "Who succeeded Moses as the leader of Israel?",
+    "choices": [
+      "Aaron",
+      "Joshua",
+      "Eleazar",
+      "Caleb"
+    ],
+    "correctIndex": 1,
+    "reference": "Deuteronomy 31:23",
+    "explanation": "According to Deuteronomy 31:23, the answer is Joshua.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-127",
+    "level": "advanced",
+    "question": "What was the name of Abraham's nephew?",
+    "choices": [
+      "Terah",
+      "Lot",
+      "Haran",
+      "Nahor"
+    ],
+    "correctIndex": 1,
+    "reference": "Genesis 11:27",
+    "explanation": "According to Genesis 11:27, the answer is Lot.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-128",
+    "level": "advanced",
+    "question": "What were the names of Noah's three sons?",
+    "choices": [
+      "Shem, Ham, and Japheth",
+      "Isaac, Ishmael, and Esau",
+      "Cain, Abel, and Seth",
+      "Reuben, Simeon, and Levi"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 6:10",
+    "explanation": "According to Genesis 6:10, the answer is Shem, Ham, and Japheth.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-129",
+    "level": "advanced",
+    "question": "Who was the king of Salem who blessed Abraham?",
+    "choices": [
+      "Lot",
+      "Melchizedek",
+      "Abimelech",
+      "Mamre"
+    ],
+    "correctIndex": 1,
+    "reference": "Genesis 14:18",
+    "explanation": "According to Genesis 14:18, the answer is Melchizedek.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762563-130",
+    "level": "advanced",
+    "question": "What was the name of Isaac's firstborn son?",
+    "choices": [
+      "Esau",
+      "Ishmael",
+      "Esau's son",
+      "Jacob"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 25:25",
+    "explanation": "According to Genesis 25:25, the answer is Esau.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-131",
+    "level": "advanced",
+    "question": "Who was the father-in-law of Moses?",
+    "choices": [
+      "Hobab",
+      "Aaron",
+      "Zipporah's father",
+      "Jethro (also called Reuel)"
+    ],
+    "correctIndex": 3,
+    "reference": "Exodus 3:1",
+    "explanation": "According to Exodus 3:1, the answer is Jethro (also called Reuel).",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-132",
+    "level": "advanced",
+    "question": "What was the name of Caleb's daughter?",
+    "choices": [
+      "Achsah",
+      "Rahab",
+      "Jael",
+      "Deborah"
+    ],
+    "correctIndex": 0,
+    "reference": "Joshua 15:16",
+    "explanation": "According to Joshua 15:16, the answer is Achsah.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-133",
+    "level": "advanced",
+    "question": "Who was the judge of Israel who was left-handed?",
+    "choices": [
+      "Othniel",
+      "Gideon",
+      "Shamgar",
+      "Ehud"
+    ],
+    "correctIndex": 3,
+    "reference": "Judges 3:15",
+    "explanation": "According to Judges 3:15, the answer is Ehud.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-134",
+    "level": "advanced",
+    "question": "What prophetess was married to Lappidoth?",
+    "choices": [
+      "Huldah",
+      "Deborah",
+      "Jael",
+      "Miriam"
+    ],
+    "correctIndex": 1,
+    "reference": "Judges 4:4",
+    "explanation": "According to Judges 4:4, the answer is Deborah.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-135",
+    "level": "advanced",
+    "question": "Who was the commander of Saul's army?",
+    "choices": [
+      "Abishai",
+      "Abner",
+      "Amasa",
+      "Joab"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Samuel 14:50",
+    "explanation": "According to 1 Samuel 14:50, the answer is Abner.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-136",
+    "level": "advanced",
+    "question": "What was the name of David's son who rebelled against him?",
+    "choices": [
+      "Absalom",
+      "Amnon",
+      "Solomon",
+      "Adonijah"
+    ],
+    "correctIndex": 0,
+    "reference": "2 Samuel 15:10",
+    "explanation": "According to 2 Samuel 15:10, the answer is Absalom.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-137",
+    "level": "advanced",
+    "question": "Who was David's commander who killed Absalom?",
+    "choices": [
+      "Abner",
+      "Joab",
+      "Asahel",
+      "Abishai"
+    ],
+    "correctIndex": 1,
+    "reference": "2 Samuel 18:14",
+    "explanation": "According to 2 Samuel 18:14, the answer is Joab.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-138",
+    "level": "advanced",
+    "question": "What king of Israel reigned for only seven days?",
+    "choices": [
+      "Omri",
+      "Tibni",
+      "Ahab",
+      "Zimri"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 16:15",
+    "explanation": "According to 1 Kings 16:15, the answer is Zimri.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-139",
+    "level": "advanced",
+    "question": "Who was the evil queen of Israel married to Ahab?",
+    "choices": [
+      "Athaliah",
+      "Jezebel",
+      "Michal",
+      "Bathsheba"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Kings 16:31",
+    "explanation": "According to 1 Kings 16:31, the answer is Jezebel.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-140",
+    "level": "advanced",
+    "question": "What king of Judah was eight years old when he began to reign?",
+    "choices": [
+      "Amon",
+      "Hezekiah",
+      "Josiah",
+      "Manasseh"
+    ],
+    "correctIndex": 2,
+    "reference": "2 Kings 22:1",
+    "explanation": "According to 2 Kings 22:1, the answer is Josiah.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-141",
+    "level": "advanced",
+    "question": "Who was the prophet that anointed both Saul and David as king?",
+    "choices": [
+      "David",
+      "Samuel",
+      "Elijah",
+      "Saul"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Samuel 10:1, 16:13",
+    "explanation": "According to 1 Samuel 10:1, 16:13, the answer is Samuel.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-142",
+    "level": "advanced",
+    "question": "What was the name of Job's wife?",
+    "choices": [
+      "Rachel",
+      "Sarah",
+      "Dinah",
+      "She is unnamed in Scripture"
+    ],
+    "correctIndex": 3,
+    "reference": "Job 2:9",
+    "explanation": "According to Job 2:9, the answer is She is unnamed in Scripture.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-143",
+    "level": "advanced",
+    "question": "Who was the Babylonian king who went insane and ate grass?",
+    "choices": [
+      "Belshazzar",
+      "Darius",
+      "Cyrus",
+      "Nebuchadnezzar"
+    ],
+    "correctIndex": 3,
+    "reference": "Daniel 4:33",
+    "explanation": "According to Daniel 4:33, the answer is Nebuchadnezzar.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-144",
+    "level": "advanced",
+    "question": "What prophet married a prostitute named Gomer?",
+    "choices": [
+      "Micah",
+      "Amos",
+      "Joel",
+      "Hosea"
+    ],
+    "correctIndex": 3,
+    "reference": "Hosea 1:3",
+    "explanation": "According to Hosea 1:3, the answer is Hosea.",
+    "category": "Old Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-145",
+    "level": "advanced",
+    "question": "Who was the father of John the Baptist?",
+    "choices": [
+      "Simeon",
+      "Zechariah",
+      "Zacharias",
+      "Joseph"
+    ],
+    "correctIndex": 1,
+    "reference": "Luke 1:13",
+    "explanation": "According to Luke 1:13, the answer is Zechariah.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-146",
+    "level": "advanced",
+    "question": "What was the name of the garden where Jesus was buried?",
+    "choices": [
+      "A garden near Golgotha (unnamed)",
+      "The King's garden",
+      "Garden of Gethsemane",
+      "Joseph's garden"
+    ],
+    "correctIndex": 0,
+    "reference": "John 19:41",
+    "explanation": "According to John 19:41, the answer is A garden near Golgotha (unnamed).",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-147",
+    "level": "advanced",
+    "question": "Who was the disciple known as the twin?",
+    "choices": [
+      "James the Less",
+      "Simon the Zealot",
+      "Thomas (called Didymus)",
+      "Thaddaeus"
+    ],
+    "correctIndex": 2,
+    "reference": "John 11:16",
+    "explanation": "According to John 11:16, the answer is Thomas (called Didymus).",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-148",
+    "level": "advanced",
+    "question": "What was the name of the sorcerer who tried to buy the Holy Spirit?",
+    "choices": [
+      "Simon",
+      "Andrew",
+      "Cephas",
+      "Jonah"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 8:18-19",
+    "explanation": "According to Acts 8:18-19, the answer is Simon.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-149",
+    "level": "advanced",
+    "question": "Who was the governor of Syria during Jesus' birth?",
+    "choices": [
+      "Pilate",
+      "Herod",
+      "Quirinius",
+      "Caesar Augustus"
+    ],
+    "correctIndex": 2,
+    "reference": "Luke 2:2",
+    "explanation": "According to Luke 2:2, the answer is Quirinius.",
+    "category": "New Testament"
+  },
+  {
+    "id": "q-claude2-1763661762564-150",
+    "level": "advanced",
+    "question": "What was the name of the man who carried Jesus' cross?",
+    "choices": [
+      "Simon of Cyrene",
+      "Simon the leper",
+      "Simon Peter",
+      "Simon the Zealot"
+    ],
+    "correctIndex": 0,
+    "reference": "Mark 15:21",
+    "explanation": "According to Mark 15:21, the answer is Simon of Cyrene.",
+    "category": "New Testament"
   }
 ]
