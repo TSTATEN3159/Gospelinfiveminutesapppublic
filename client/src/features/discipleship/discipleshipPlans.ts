@@ -26,6 +26,7 @@ import prayerLifeImage from '@assets/stock_images/hands_folded_in_pray_b98684b0.
 import ruggedChurchImage from '@assets/stock_images/old_rustic_stone_chu_610102d9.jpg';
 import manAtBarImage from '@assets/generated_images/man_contemplating_at_bar.png';
 import angryWomanImage from '@assets/generated_images/angry_frustrated_woman_portrait.png';
+import blurredIdCardImage from '@assets/generated_images/blurred_identity_card_closeup.png';
 
 export type PlanItemType = "devotional" | "scripture";
 
@@ -4450,7 +4451,7 @@ export const identityInChristPlan: DiscipleshipPlan = {
   id: "identity-in-christ",
   title: "Identity in Christ",
   subtitle: "Seeing yourself the way God sees you",
-  imageUrl: identityMirrorImage,
+  imageUrl: blurredIdCardImage,
   totalDays: 5,
   days: [
     {
