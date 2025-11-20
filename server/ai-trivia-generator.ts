@@ -59,28 +59,48 @@ export async function generateAITriviaQuestions(
 
   console.log(`[AI Trivia] Generating ${count} ${level} questions with session: ${sessionSeed}`);
 
-  const prompt = `You are a Biblical scholar creating trivia questions based solely on the Christian Bible (Old and New Testament). Generate ${count} multiple-choice questions at the ${levelConfig.name} level.
+  const prompt = `You are a Biblical scholar creating unique Bible trivia questions. Generate ${count} completely unique multiple-choice questions at the ${levelConfig.name} level.
 
 SESSION_ID: ${sessionSeed}
-
 LEVEL: ${levelConfig.name}
 DIFFICULTY: ${levelConfig.difficulty}
 
-STRICT REQUIREMENTS:
-1. ALL questions must be based ONLY on the Holy Bible (66 books of Protestant Canon)
-2. Questions must be factually accurate according to Scripture
-3. Include specific Bible verse references in OSIS format (Book.Chapter.Verse, e.g., "JHN.3.16")
-4. Each question has exactly 4 options (A, B, C, D)
-5. Only ONE correct answer
-6. Provide a brief explanation citing the specific verse
-7. DISTRIBUTION: Cover a variety of books and a mix of Old and New Testament. Do NOT cluster questions around the same story or chapter.
-8. VARIETY: For different SESSION_ID values at the same level, you must produce noticeably different combinations of questions, topics, and wording. Avoid reusing the same exact questions or explanations.
+CRITICAL ANTI-REPETITION RULES:
+1. NEVER repeat the same question wording within this batch
+2. NEVER repeat the same answer wording within this batch
+3. Each question MUST come from a DIFFERENT book of the Bible
+4. Vary categories widely: narrative, wisdom, prophecy, epistles, gospels, law, psalms
+5. Mix Old Testament (at least 40%) and New Testament (at least 40%) questions
+6. For each new SESSION_ID, generate COMPLETELY DIFFERENT questions - do not reuse patterns
 
-DIFFICULTY GUIDELINES BY LEVEL:
-- Beginner: Well-known stories, main characters, famous verses (e.g., Noah's ark, 10 Commandments)
-- Student: Specific events, lesser-known characters, context (e.g., Who wrote Philippians? What city was Lydia from?)
-- Scholar: Theological concepts, prophecy fulfillment, cross-references (e.g., How many years between Abraham and Moses?)
-- Expert: Original language nuances, detailed chronology, obscure facts (e.g., How many stones did David pick for Goliath?)
+STRICT REQUIREMENTS:
+1. ALL questions based ONLY on the Holy Bible (66 books of Protestant Canon)
+2. Questions must be factually accurate according to Scripture
+3. Include specific verse references in OSIS format (Book.Chapter.Verse, e.g., "JHN.3.16")
+4. Each question has exactly 4 options
+5. Only ONE correct answer
+6. Brief explanation citing the specific verse
+
+DIFFICULTY GUIDELINES:
+- Beginner: Famous stories, well-known characters, basic teachings (e.g., Creation, David & Goliath, Lord's Prayer)
+- Student: Specific events, lesser-known characters, connections (e.g., Paul's missionary journeys, minor prophets)
+- Scholar: Theological concepts, prophecy fulfillment, detailed cross-references (e.g., Types of Christ, covenants, chronology)
+- Expert: Deep knowledge, original language insights, obscure details (e.g., Genealogies, specific numbers, Hebrew/Greek context)
+
+TOPIC VARIETY CHECKLIST (use different topics from this list):
+- Creation & Genesis narratives
+- Exodus & wilderness wandering
+- Judges & early Israel
+- Kings & kingdoms
+- Major prophets (Isaiah, Jeremiah, Ezekiel, Daniel)
+- Minor prophets
+- Wisdom literature (Proverbs, Ecclesiastes, Job)
+- Psalms & worship
+- Gospel narratives (Matthew, Mark, Luke, John)
+- Acts & early church
+- Paul's epistles
+- General epistles
+- Revelation & prophecy
 
 FORMAT YOUR RESPONSE AS VALID JSON ARRAY:
 [
@@ -93,7 +113,7 @@ FORMAT YOUR RESPONSE AS VALID JSON ARRAY:
   }
 ]
 
-Generate ${count} questions now. Return ONLY the JSON array, no additional text.`;
+Generate ${count} COMPLETELY UNIQUE questions now. Return ONLY the JSON array, no additional text.`;
 
   try {
     const completion = await openai.chat.completions.create({
@@ -148,6 +168,11 @@ Generate ${count} questions now. Return ONLY the JSON array, no additional text.
         throw new Error('Invalid question structure');
       }
     }
+
+    // Log book distribution to help verify variety
+    const books = questions.map(q => q.verse?.split('.')[0]).filter(Boolean);
+    const uniqueBooks = new Set(books);
+    console.log(`[AI Trivia] Generated ${questions.length} questions from ${uniqueBooks.size} unique books:`, Array.from(uniqueBooks).join(', '));
 
     return questions.slice(0, count);
     
