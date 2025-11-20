@@ -29,18 +29,6 @@ export function DiscipleshipDayScreen({
     setIndex(0);
   }, [dayNumber, plan.id]);
 
-  // Auto-mark the current item as completed when user views it
-  // This ensures progress is saved even if they navigate away without clicking Next
-  useEffect(() => {
-    if (currentItem) {
-      const timer = setTimeout(() => {
-        markItemCompleted(plan, currentItem.id);
-      }, 2000); // Mark as complete after viewing for 2 seconds
-      
-      return () => clearTimeout(timer);
-    }
-  }, [currentItem.id, plan]);
-
   if (!day) {
     return (
       <div className="p-4">
@@ -55,13 +43,24 @@ export function DiscipleshipDayScreen({
   const safeIndex = Math.min(Math.max(0, index), totalItems - 1);
   const currentItem: PlanItem = day.items[safeIndex];
 
+  // Auto-mark the current item as completed after viewing for 2 seconds
+  // This is a BACKUP for users who view content but navigate away without clicking Next
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      markItemCompleted(plan, currentItem.id);
+    }, 2000); // Mark as complete after viewing for 2 seconds
+    
+    return () => clearTimeout(timer);
+  }, [currentItem.id, plan]);
+
   const isFirst = safeIndex === 0;
   const isLast = safeIndex === totalItems - 1;
   const isLastDay = dayNumber === plan.days[plan.days.length - 1].dayNumber;
 
   const handleNext = () => {
     if (!isLast && safeIndex < totalItems - 1) {
-      // Item is already marked by auto-complete effect, just navigate
+      // Immediately mark current item as completed before moving to next
+      markItemCompleted(plan, currentItem.id);
       setIndex((i) => Math.min(i + 1, totalItems - 1));
     }
   };
@@ -78,7 +77,9 @@ export function DiscipleshipDayScreen({
       return;
     }
     
-    // Item is already marked by auto-complete effect, just navigate
+    // Immediately mark the final item as completed before moving to next day
+    markItemCompleted(plan, currentItem.id);
+    
     const nextDay = dayNumber + 1;
     if (nextDay <= plan.days.length) {
       onGoToDay(nextDay);
