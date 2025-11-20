@@ -1,544 +1,183 @@
-import { useState, useEffect, useCallback, useRef } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useEffect, useState } from "react";
+import { fetchBibleTriviaQuestions, TriviaLevel, TriviaQuestion } from "@/services/triviaService";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import {
   ArrowLeft,
-  Brain,
   Trophy,
   BookOpen,
+  Brain,
   Star,
-  RotateCcw,
-  Sparkles,
   Award,
-  Lock,
+  Sparkles,
 } from "lucide-react";
-import { useToast } from "@/hooks/use-toast";
-import { useTranslations } from "@/lib/translations";
-import { useBibleTriviaMutation } from "@/hooks/useTrivia";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
+
+type GamePhase = "loading" | "question" | "results" | "error";
 
 type LevelKey = "beginner" | "intermediate" | "advanced";
 
-interface TriviaQuestion {
-  id: number;
-  question: string;
-  options: string[];
-  correctAnswer: number;
-  verse?: string | null;
-  verseText?: string | null;
-  explanation?: string | null;
-  level: string;
+interface LevelConfig {
+  key: LevelKey;
+  label: string;
+  titleOnPass: string;
+  color: string;
+  icon: typeof BookOpen;
+  gradient: string;
+  description: string;
 }
 
-type GameState = "idle" | "playing" | "finished";
-
-interface BibleTriviaProps {
-  onNavigate?: (page: string) => void;
-  language?: string;
-}
-
-// UI levels for this screen
-const LEVEL_ORDER: LevelKey[] = ["beginner", "intermediate", "advanced"];
-const QUESTIONS_PER_GAME = 10;
-const PASSING_SCORE = 9;
-
-const STORAGE_KEY_UNLOCKED = "bible-trivia-unlocked-level";
-const STORAGE_KEY_GLOBAL_STATS = "bible-trivia-global-stats";
-
-// Backend levels (server)
-type GlobalLevelKey = "beginner" | "student" | "scholar" | "expert";
-
-const LEVEL_MAP: Record<LevelKey, string> = {
-  beginner: "beginner",
-  intermediate: "student",
-  advanced: "expert",
-};
-
-// Global rank progression: aligned with game levels
-// Map game level to rank earned by beating it
-const LEVEL_TO_RANK: Record<LevelKey, GlobalLevelKey> = {
-  beginner: "student",       // Beat Beginner → earn Student rank
-  intermediate: "scholar",   // Beat Intermediate → earn Scholar rank
-  advanced: "expert",        // Beat Advanced → earn Expert rank
-};
-
-// Rank display names
-const RANK_NAMES: Record<GlobalLevelKey, string> = {
-  beginner: "Beginner",
-  student: "Student",
-  scholar: "Scholar",
-  expert: "Expert",
-};
-
-// Level display names for UI
-const LEVEL_NAMES: Record<LevelKey, string> = {
-  beginner: "Beginner",
-  intermediate: "Intermediate",
-  advanced: "Advanced",
-};
-
-function calculateGlobalRank(levelsBeaten: LevelKey[]): GlobalLevelKey {
-  const beatenSet = new Set(levelsBeaten);
-  if (beatenSet.has("advanced")) return "expert";
-  if (beatenSet.has("intermediate")) return "scholar";
-  if (beatenSet.has("beginner")) return "student";
-  return "beginner";
-}
-
-function getNextRankInfo(currentRank: GlobalLevelKey): {
-  nextRank: GlobalLevelKey | null;
-  requiredLevel: LevelKey | null;
-} {
-  const rankOrder: GlobalLevelKey[] = ["beginner", "student", "scholar", "expert"];
-  const levelOrder: LevelKey[] = ["beginner", "intermediate", "advanced"];
-  const currentIndex = rankOrder.indexOf(currentRank);
-  
-  if (currentIndex === rankOrder.length - 1) {
-    return { nextRank: null, requiredLevel: null };
-  }
-  
-  const nextRank = rankOrder[currentIndex + 1];
-  const requiredLevel = levelOrder[currentIndex];
-  
-  return { nextRank, requiredLevel };
-}
-
-// Migrate legacy data: infer beaten levels from totalCorrect
-function migrateLegacyStats(totalCorrect: number): LevelKey[] {
-  if (totalCorrect >= 60) {
-    return ["beginner", "intermediate", "advanced"];
-  } else if (totalCorrect >= 40) {
-    return ["beginner", "intermediate"];
-  } else if (totalCorrect >= 20) {
-    return ["beginner"];
-  }
-  return [];
-}
-
-type GlobalStats = {
-  totalCorrect: number;      // Keep for display
-  totalQuestions: number;    // Keep for display
-  levelsBeaten: LevelKey[];  // NEW: track which levels beaten
-  currentRank: GlobalLevelKey; // Derived from levelsBeaten
-  nextRank: GlobalLevelKey | null; // Next rank to earn
-  nextRequiredLevel: LevelKey | null; // Level needed to earn next rank
-};
-
-const LEVEL_CONFIG = {
-  beginner: {
-    name: "Beginner",
-    color:
-      "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
+const LEVELS: LevelConfig[] = [
+  {
+    key: "beginner",
+    label: "Beginner",
+    titleOnPass: "Bible Student",
+    color: "bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400",
     icon: BookOpen,
     gradient: "from-green-400 to-emerald-500",
     description: "Basic Bible knowledge",
   },
-  intermediate: {
-    name: "Intermediate",
-    color:
-      "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
+  {
+    key: "intermediate",
+    label: "Intermediate",
+    titleOnPass: "Bible Scholar",
+    color: "bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400",
     icon: Brain,
     gradient: "from-blue-400 to-cyan-500",
     description: "Deeper understanding",
   },
-  advanced: {
-    name: "Advanced",
-    color:
-      "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
+  {
+    key: "advanced",
+    label: "Advanced",
+    titleOnPass: "Bible Expert",
+    color: "bg-purple-100 text-purple-800 dark:bg-purple-900/30 dark:text-purple-400",
     icon: Star,
     gradient: "from-purple-400 to-pink-500",
     description: "Expert knowledge",
   },
-} as const;
+];
 
-function BibleTriviaPage({
-  onNavigate,
-  language = "en",
-}: BibleTriviaProps) {
-  const t = useTranslations(language);
-  const { toast } = useToast();
-  const triviaMutation = useBibleTriviaMutation();
+function toTriviaLevel(level: LevelKey): TriviaLevel {
+  return level;
+}
 
-  // Per-session level gating
-  const [currentLevel, setCurrentLevel] = useState<LevelKey>("beginner");
-  const [highestUnlockedLevel, setHighestUnlockedLevel] =
-    useState<LevelKey>("beginner");
-  const [justUnlockedLevel, setJustUnlockedLevel] =
-    useState<LevelKey | null>(null);
+function awardProfileTitle(title: string) {
+  console.log("🏆 Awarded trivia title:", title);
+  // TODO: Integrate with user profile system when ready
+}
 
-  // Global stats (lifetime on device)
-  const [globalStats, setGlobalStats] = useState<GlobalStats>({
-    totalCorrect: 0,
-    totalQuestions: 0,
-    levelsBeaten: [],
-    currentRank: "beginner",
-    nextRank: "student",
-    nextRequiredLevel: "beginner",
-  });
-  // Game state
+interface BibleTriviaPageProps {
+  onNavigate?: (page: string) => void;
+  language?: string;
+}
+
+function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) {
+  const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-  const [score, setScore] = useState(0);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [phase, setPhase] = useState<GamePhase>("loading");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(null);
+  const [hasCheckedAnswer, setHasCheckedAnswer] = useState(false);
 
-  const [gameState, setGameState] = useState<GameState>("idle");
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  // Ref to guard against double-invocation in Strict Mode
-  const fetchInProgressRef = useRef(false);
+  const currentLevelConfig = LEVELS[currentLevelIndex];
+  const currentQuestion = questions[currentQuestionIndex];
 
-  // -------------------------
-  // Load persisted state
-  // -------------------------
   useEffect(() => {
-    if (typeof window === "undefined") return;
-
-    // Highest unlocked level determines locks
-    const storedLevel = window.localStorage.getItem(STORAGE_KEY_UNLOCKED);
-    if (storedLevel && (LEVEL_ORDER as string[]).includes(storedLevel)) {
-      setHighestUnlockedLevel(storedLevel as LevelKey);
-    }
-
-    // Global stats with migration support
-    const storedStats = window.localStorage.getItem(STORAGE_KEY_GLOBAL_STATS);
-    if (storedStats) {
-      try {
-        const parsed = JSON.parse(storedStats) as {
-          totalCorrect?: number;
-          totalQuestions?: number;
-          levelsBeaten?: LevelKey[];
-        };
-        
-        const totalCorrect = parsed.totalCorrect ?? 0;
-        const totalQuestions = parsed.totalQuestions ?? 0;
-        
-        // Migration: if levelsBeaten missing, infer from totalCorrect
-        let levelsBeaten: LevelKey[] = parsed.levelsBeaten ?? migrateLegacyStats(totalCorrect);
-        
-        const currentRank = calculateGlobalRank(levelsBeaten);
-        const { nextRank, requiredLevel } = getNextRankInfo(currentRank);
-        
-        setGlobalStats({
-          totalCorrect,
-          totalQuestions,
-          levelsBeaten,
-          currentRank,
-          nextRank,
-          nextRequiredLevel: requiredLevel,
-        });
-        
-        // Save migrated format if it was legacy data
-        if (!parsed.levelsBeaten) {
-          window.localStorage.setItem(
-            STORAGE_KEY_GLOBAL_STATS,
-            JSON.stringify({
-              totalCorrect,
-              totalQuestions,
-              levelsBeaten,
-            })
-          );
-        }
-      } catch {
-        // ignore bad stored data
-      }
-    }
-  }, []);
-  const saveUnlockedLevel = useCallback((level: LevelKey) => {
-    setHighestUnlockedLevel(level);
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(STORAGE_KEY_UNLOCKED, level);
-    }
+    startLevel("beginner");
   }, []);
 
-  const updateGlobalStats = useCallback(
-    (correctIncrement: number, questionsIncrement: number) => {
-      setGlobalStats((prev) => {
-        const totalCorrect = prev.totalCorrect + correctIncrement;
-        const totalQuestions = prev.totalQuestions + questionsIncrement;
+  async function startLevel(levelKey: LevelKey) {
+    try {
+      setPhase("loading");
+      setErrorMessage(null);
+      setQuestions([]);
+      setCurrentQuestionIndex(0);
+      setSelectedIndex(null);
+      setCorrectCount(0);
+      setLastAnswerCorrect(null);
+      setHasCheckedAnswer(false);
 
-        const updated: GlobalStats = {
-          ...prev,
-          totalCorrect,
-          totalQuestions,
-        };
+      const triviaLevel = toTriviaLevel(levelKey);
+      const fetched = await fetchBibleTriviaQuestions(triviaLevel, 10);
 
-        // Save to localStorage
-        if (typeof window !== "undefined") {
-          window.localStorage.setItem(
-            STORAGE_KEY_GLOBAL_STATS,
-            JSON.stringify({
-              totalCorrect: updated.totalCorrect,
-              totalQuestions: updated.totalQuestions,
-              levelsBeaten: updated.levelsBeaten,
-            })
-          );
-        }
-
-        return updated;
-      });
-    },
-    []
-  );
-
-  // Mark a level as beaten (called when game completes with passing score)
-  const markLevelBeaten = useCallback((level: LevelKey) => {
-    setGlobalStats((prev) => {
-      const beatenSet = new Set(prev.levelsBeaten);
-      if (beatenSet.has(level)) {
-        return prev; // Already beaten, no change
+      if (!fetched.length) {
+        throw new Error("No questions returned from trivia API");
       }
 
-      const levelsBeaten = [...prev.levelsBeaten, level];
-      const currentRank = calculateGlobalRank(levelsBeaten);
-      const { nextRank, requiredLevel } = getNextRankInfo(currentRank);
+      setQuestions(fetched);
+      setPhase("question");
+    } catch (err: any) {
+      console.error(err);
+      setErrorMessage(err.message ?? "Unable to load trivia questions.");
+      setPhase("error");
+    }
+  }
 
-      const updated: GlobalStats = {
-        ...prev,
-        levelsBeaten,
-        currentRank,
-        nextRank,
-        nextRequiredLevel: requiredLevel,
-      };
-
-      // Save to localStorage
-      if (typeof window !== "undefined") {
-        window.localStorage.setItem(
-          STORAGE_KEY_GLOBAL_STATS,
-          JSON.stringify({
-            totalCorrect: updated.totalCorrect,
-            totalQuestions: updated.totalQuestions,
-            levelsBeaten: updated.levelsBeaten,
-          })
-        );
-      }
-
-      return updated;
-    });
-  }, []);
-
-  // -------------------------
-  // Fetch questions for level
-  // -------------------------
-  const fetchQuestionsForLevel = useCallback(
-    async (level: LevelKey) => {
-      // Guard against double-invocation in Strict Mode
-      if (fetchInProgressRef.current) return;
-      fetchInProgressRef.current = true;
-
-      setLoading(true);
-      setError(null);
-      setJustUnlockedLevel(null);
-
-      try {
-        const backendLevel = LEVEL_MAP[level];
-
-        const result = await triviaMutation.mutateAsync({
-          level: backendLevel,
-          count: QUESTIONS_PER_GAME,
-          useAI: true,
-        });
-
-        if (!result.success || !result.questions || result.questions.length === 0) {
-          throw new Error("No questions were returned.");
-        }
-
-        // Shuffle questions each time for variety
-        const shuffled = [...result.questions];
-        for (let i = shuffled.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-        }
-
-        setQuestions(shuffled);
-        setCurrentIndex(0);
-        setSelectedIndex(null);
-        setScore(0);
-        setGameState("playing");
-      } catch (err: any) {
-        console.error("Error fetching trivia questions:", err);
-        const msg =
-          "Sorry, I couldn't load questions right now. Please try again in a moment.";
-        setError(msg);
-        toast({
-          title: "Error",
-          description: msg,
-          variant: "destructive",
-        });
-        // Reset game state on failure
-        setGameState("idle");
-        setQuestions([]);
-        setCurrentIndex(0);
-        setSelectedIndex(null);
-        setScore(0);
-      } finally {
-        setLoading(false);
-        fetchInProgressRef.current = false;
-      }
-    },
-    [triviaMutation, toast]
-  );
-
-  const handleStartGame = () => {
-    fetchQuestionsForLevel(currentLevel);
-  };
-
-  // -------------------------
-  // Playing logic
-  // -------------------------
-  const handleSelectOption = (index: number) => {
-    // Do not allow changes after already answered this question
-    if (gameState !== "playing" || selectedIndex !== null) return;
+  function handleOptionClick(index: number) {
+    if (phase !== "question" || hasCheckedAnswer) return;
     setSelectedIndex(index);
-  };
+  }
 
-  const handleNextQuestion = () => {
-    if (gameState !== "playing") return;
-    if (selectedIndex === null) return; // require a choice
+  function handleCheckAnswer() {
+    if (selectedIndex === null || phase !== "question" || hasCheckedAnswer) return;
 
-    const currentQuestion = questions[currentIndex];
-    if (!currentQuestion) return;
+    const isCorrect = selectedIndex === currentQuestion.correctIndex;
+    setLastAnswerCorrect(isCorrect);
+    setHasCheckedAnswer(true);
 
-    const isCorrect = selectedIndex === currentQuestion.correctAnswer;
-
-    // Update global stats (lifetime)
-    updateGlobalStats(isCorrect ? 1 : 0, 1);
-
-    // Update local score
-    setScore((prev) => prev + (isCorrect ? 1 : 0));
-
-    const nextIndex = currentIndex + 1;
-    const reachedEnd =
-      nextIndex >= questions.length;
-
-    if (reachedEnd) {
-      setGameState("finished");
-      setSelectedIndex(null); // clear selection for safety
-    } else {
-      setCurrentIndex(nextIndex);
-      setSelectedIndex(null); // IMPORTANT: clear so we don't auto-advance
+    if (isCorrect) {
+      setCorrectCount((prev) => prev + 1);
     }
-  };
+  }
 
-  const handleQuitToIdle = () => {
-    setGameState("idle");
-    setQuestions([]);
-    setCurrentIndex(0);
-    setSelectedIndex(null);
-    setScore(0);
-  };
+  function handleNextQuestion() {
+    if (!hasCheckedAnswer) return;
 
-  const handlePlayAgainSameLevel = () => {
-    fetchQuestionsForLevel(currentLevel);
-  };
-
-  const handleGoToNextLevel = () => {
-    const currentLevelIndex = LEVEL_ORDER.indexOf(currentLevel);
-    if (currentLevelIndex < 0) return;
-
-    const nextLevel = LEVEL_ORDER[currentLevelIndex + 1];
-    if (!nextLevel) return;
-
-    const highestLevelIndex = LEVEL_ORDER.indexOf(highestUnlockedLevel);
-    const nextLevelIndex = LEVEL_ORDER.indexOf(nextLevel);
-    if (nextLevelIndex > highestLevelIndex) {
-      // Next level still locked
-      return;
-    }
-
-    setCurrentLevel(nextLevel);
-    fetchQuestionsForLevel(nextLevel);
-  };
-
-
-  const handleResetGlobalStats = () => {
-    if (window.confirm("Reset all your trivia progress? This cannot be undone.")) {
-      // Clear from localStorage
-      if (typeof window !== "undefined") {
-        window.localStorage.removeItem(STORAGE_KEY_GLOBAL_STATS);
+    const isLast = currentQuestionIndex === questions.length - 1;
+    if (isLast) {
+      setPhase("results");
+      const passed = correctCount >= 9;
+      if (passed) {
+        awardProfileTitle(currentLevelConfig.titleOnPass);
       }
-      
-      // Reset state to initial values
-      // Reset state to initial values
-      setGlobalStats({
-        totalCorrect: 0,
-        totalQuestions: 0,
-        levelsBeaten: [],
-        currentRank: "beginner",
-        nextRank: "student",
-        nextRequiredLevel: "beginner",
-      });
-      toast({
-        title: "Progress Reset",
-        description: "Your trivia stats have been cleared.",
-      });
-    }
-  };
-  // -------------------------
-  // Unlock next level on finish
-  // -------------------------
-  useEffect(() => {
-    if (gameState !== "finished") return;
-
-    const didPass = score >= PASSING_SCORE;
-    const currentIndexInOrder = LEVEL_ORDER.indexOf(currentLevel);
-    const highestIndexInOrder = LEVEL_ORDER.indexOf(highestUnlockedLevel);
-
-    if (!didPass) {
-      setJustUnlockedLevel(null);
-      return;
-    }
-
-    // Mark level as beaten (earns next rank)
-    markLevelBeaten(currentLevel);
-    
-    const nextLevel = LEVEL_ORDER[currentIndexInOrder + 1];
-    if (!nextLevel) {
-      setJustUnlockedLevel(null);
-      return;
-    }
-
-    // Unlock only if this level was at/above previous highest level
-    if (currentIndexInOrder >= highestIndexInOrder) {
-      setJustUnlockedLevel(nextLevel);
-      saveUnlockedLevel(nextLevel);
     } else {
-      setJustUnlockedLevel(null);
+      setCurrentQuestionIndex((prev) => prev + 1);
+      setSelectedIndex(null);
+      setHasCheckedAnswer(false);
+      setLastAnswerCorrect(null);
     }
-  }, [gameState, score, currentLevel, highestUnlockedLevel, saveUnlockedLevel]);
+  }
 
-  // -------------------------
-  // Derived values
-  // -------------------------
-  const currentQuestion = questions[currentIndex];
-  const isLastQuestion =
-    currentIndex >= questions.length - 1 ||
-    currentIndex >= questions.length - 1;
+  function handleTryAgain() {
+    const levelKey = currentLevelConfig.key;
+    startLevel(levelKey);
+  }
 
-  const passed = score >= PASSING_SCORE;
-  const currentLevelIndex = LEVEL_ORDER.indexOf(currentLevel);
-  const highestLevelIndex = LEVEL_ORDER.indexOf(highestUnlockedLevel);
-  const hasNextLevel = currentLevelIndex < LEVEL_ORDER.length - 1;
+  function handleNextLevel() {
+    const passed = correctCount >= 9;
+    if (!passed) return;
 
-  const levelConfig = LEVEL_CONFIG[currentLevel];
-  const LevelIcon = levelConfig.icon;
+    const isLastLevel = currentLevelIndex === LEVELS.length - 1;
+    if (isLastLevel) return;
 
-  const questionProgressPercent =
-    questions.length > 0
-      ? ((currentIndex + 1) / questions.length) * 100
-      : 0;
-  const globalNextRankName = globalStats.nextRank ? RANK_NAMES[globalStats.nextRank] : null;
-  const requiredLevelName = globalStats.nextRequiredLevel ? LEVEL_NAMES[globalStats.nextRequiredLevel] : null;
+    const nextIndex = currentLevelIndex + 1;
+    const nextLevelKey = LEVELS[nextIndex].key;
+    setCurrentLevelIndex(nextIndex);
+    startLevel(nextLevelKey);
+  }
 
-  // -------------------------
-  // IDLE (SETUP) SCREEN
-  // -------------------------
-  if (gameState === "idle") {
+  const passedLevel = correctCount >= 9;
+  const isFinalLevel = currentLevelIndex === LEVELS.length - 1;
+
+  if (phase === "loading") {
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
-        {/* Header */}
         <div className="bg-white dark:bg-gray-900 px-4 py-6 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center gap-3">
             <Button
               variant="ghost"
               size="icon"
@@ -553,354 +192,56 @@ function BibleTriviaPage({
                 Bible Trivia
               </h1>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                Test your Biblical knowledge
+                Loading questions...
               </p>
             </div>
           </div>
         </div>
+        <div className="flex flex-col items-center justify-center min-h-[60vh]">
+          <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-blue-500 mb-4" />
+          <p className="text-sm text-gray-600 dark:text-gray-400">Loading Bible Trivia questions…</p>
+        </div>
+      </div>
+    );
+  }
 
-        <div className="p-6 max-w-2xl mx-auto space-y-6">
-          {/* Global Progress Card */}
-          <Card>
-            <CardHeader>
-              <div className="flex items-center justify-between">
-                <CardTitle className="text-lg flex items-center gap-2">
-                  <Trophy className="w-5 h-5 text-yellow-500" />
-                  Overall Progress
-                </CardTitle>
-                <Button
-                  variant="ghost"
-                  size="sm"
-                  onClick={handleResetGlobalStats}
-                  className="text-xs text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400"
-                  data-testid="button-reset-stats"
-                >
-                  <RotateCcw className="w-4 h-4 mr-1" />
-                  Reset
-                </Button>
-              </div>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Your lifetime Bible trivia progress on this device.
-              </p>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              <div className="flex justify-between text-sm">
-                <span>
-                  Correct answers: <strong>{globalStats.totalCorrect}</strong>
-                </span>
-                <span>
-                  Questions answered:{" "}
-                  <strong>{globalStats.totalQuestions}</strong>
-                </span>
-              </div>
-
-              <div className="flex items-center justify-between text-sm">
-                <span>
-                  Global Rank:{" "}
-                  <strong>
-                    {RANK_NAMES[globalStats.currentRank]}
-                  </strong>
-                </span>
-                {globalNextRankName && requiredLevelName ? (
-                  <span className="text-xs text-gray-600 dark:text-gray-400 text-right">
-                    Beat {requiredLevelName} level to reach {globalNextRankName}
-                  </span>
-                ) : (
-                  <span className="text-xs text-gray-600 dark:text-gray-400 text-right">
-                    You've reached the highest rank!
-                  </span>
-                )}
-              </div>
-
-              {/* Progress: Show levels beaten */}
-              <div className="flex gap-2 items-center">
-                {LEVEL_ORDER.map((level) => {
-                  const isBeaten = globalStats.levelsBeaten.includes(level);
-                  const earnedRank = LEVEL_TO_RANK[level];
-                  return (
-                    <div
-                      key={level}
-                      className={`flex-1 h-2 rounded-full transition-all duration-300 ${
-                        isBeaten
-                          ? "bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500"
-                          : "bg-gray-200 dark:bg-gray-700"
-                      }`}
-                      title={`${LEVEL_NAMES[level]} → ${RANK_NAMES[earnedRank]}`}
-                    />
-                  );
-                })}
-              </div>
-            </CardContent>
-          </Card>
-
-          {/* Error banner */}
-          {error && (
-            <Card className="bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800">
-              <CardContent className="p-4">
-                <strong className="text-red-800 dark:text-red-400">
-                  Error
-                </strong>
-                <p className="text-sm text-red-700 dark:text-red-300 mt-1">
-                  {error}
-                </p>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Level Selection */}
-          <Card>
-            <CardHeader>
-              <CardTitle className="text-lg">Choose Your Level</CardTitle>
-              <p className="text-sm text-gray-600 dark:text-gray-400">
-                Answer {QUESTIONS_PER_GAME} questions. Score{" "}
-                {PASSING_SCORE} or more to unlock the next level.
-              </p>
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {LEVEL_ORDER.map((level) => {
-                const config = LEVEL_CONFIG[level];
-                const Icon = config.icon;
-                const locked =
-                  LEVEL_ORDER.indexOf(level) >
-                  LEVEL_ORDER.indexOf(highestUnlockedLevel);
-                const isSelected = currentLevel === level;
-
-                return (
-                  <button
-                    key={level}
-                    disabled={locked || loading}
-                    onClick={() => !locked && setCurrentLevel(level)}
-                    className={`w-full p-4 rounded-lg border-2 transition-all duration-200 text-left ${
-                      isSelected
-                        ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
-                        : locked
-                        ? "border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 opacity-60 cursor-not-allowed"
-                        : "border-gray-200 dark:border-gray-700 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 cursor-pointer"
-                    }`}
-                    data-testid={`button-level-${level}`}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-3">
-                        <div
-                          className={`flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center bg-gradient-to-br ${config.gradient}`}
-                        >
-                          <Icon className="w-6 h-6 text-white" />
-                        </div>
-                        <div>
-                          <div className="font-semibold text-gray-900 dark:text-foreground flex items-center gap-2">
-                            {config.name}
-                            {locked && (
-                              <Lock className="w-4 h-4 text-gray-400" />
-                            )}
-                          </div>
-                          <p className="text-sm text-gray-600 dark:text-gray-400">
-                            {config.description}
-                          </p>
-                        </div>
-                      </div>
-                      {isSelected && !locked && (
-                        <div className="flex-shrink-0 w-6 h-6 rounded-full bg-blue-500 flex items-center justify-center text-white text-sm font-bold">
-                          ✓
-                        </div>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </CardContent>
-          </Card>
-
-          {/* Start Button */}
-          <Button
-            onClick={handleStartGame}
-            disabled={loading}
-            className="w-full h-14 text-lg font-semibold"
-            data-testid="button-start-game"
-          >
-            {loading ? (
-              <>
-                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white mr-2" />
-                Preparing Questions...
-              </>
-            ) : (
-              <>
-                <Sparkles className="w-5 h-5 mr-2" />
-                Start {levelConfig.name} Trivia
-              </>
-            )}
+  if (phase === "error") {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
+        <div className="bg-white dark:bg-gray-900 px-4 py-6 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onNavigate?.("home")}
+              className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+              data-testid="button-back-to-home"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">
+                Bible Trivia
+              </h1>
+            </div>
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4 px-4">
+          <p className="text-red-600 dark:text-red-400 font-semibold">Something went wrong.</p>
+          <p className="text-sm text-gray-600 dark:text-gray-400">{errorMessage}</p>
+          <Button onClick={() => startLevel(currentLevelConfig.key)} data-testid="button-retry">
+            Try Again
           </Button>
         </div>
       </div>
     );
   }
 
-  // -------------------------
-  // PLAYING SCREEN
-  // -------------------------
-  if (gameState === "playing" && currentQuestion) {
-    return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
-        {/* Header */}
-        <div className="bg-white dark:bg-gray-900 px-4 py-4 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
-          <div className="flex items-center justify-between mb-4">
-            <div className="flex items-center gap-3">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={handleQuitToIdle}
-                className="h-9 w-9"
-                data-testid="button-quit-game"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </Button>
-              <div>
-                <span className="text-sm font-medium">
-                  Question {currentIndex + 1}/{questions.length}
-                </span>
-                <Badge
-                  className={levelConfig.color}
-                  data-testid="badge-level-indicator"
-                >
-                  <LevelIcon className="w-3 h-3 mr-1" />
-                  {levelConfig.name}
-                </Badge>
-              </div>
-            </div>
-
-            <div className="text-sm font-medium">
-              Score: <strong>{score}</strong>
-            </div>
-          </div>
-
-          {/* Progress Bar */}
-          <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
-            <div
-              className={`h-full bg-gradient-to-r ${levelConfig.gradient} transition-all duration-300`}
-              style={{ width: `${questionProgressPercent}%` }}
-            />
-          </div>
-        </div>
-
-        <div className="p-6 max-w-2xl mx-auto">
-          {/* Question Card */}
-          <Card className="mb-6">
-            <CardHeader>
-              <CardTitle className="text-lg leading-relaxed">
-                {currentQuestion.question}
-              </CardTitle>
-              {currentQuestion.verse && (
-                <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">
-                  Reference: {currentQuestion.verse}
-                </p>
-              )}
-            </CardHeader>
-            <CardContent className="space-y-3">
-              {currentQuestion.options.map((option, index) => {
-                const isSelected = selectedIndex === index;
-                const isCorrect = index === currentQuestion.correctAnswer;
-                const showResult = selectedIndex !== null;
-
-                return (
-                  <button
-                    key={index}
-                    onClick={() => handleSelectOption(index)}
-                    disabled={selectedIndex !== null}
-                    className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 ${
-                      showResult
-                        ? isCorrect
-                          ? "border-green-500 bg-green-50 dark:bg-green-900/30"
-                          : isSelected
-                          ? "border-red-500 bg-red-50 dark:bg-red-900/30"
-                          : "border-gray-200 dark:border-gray-700"
-                        : isSelected
-                        ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
-                        : "border-gray-200 dark:border-gray-700 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
-                    } ${
-                      selectedIndex !== null ? "cursor-not-allowed" : "cursor-pointer"
-                    }`}
-                    data-testid={`button-answer-${index}`}
-                  >
-                    <div className="flex items-center gap-3">
-                      <div
-                        className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
-                          showResult
-                            ? isCorrect
-                              ? "bg-green-500 text-white"
-                              : isSelected
-                              ? "bg-red-500 text-white"
-                              : "bg-gray-100 dark:bg-gray-800"
-                            : isSelected
-                            ? "bg-blue-500 text-white"
-                            : "bg-gray-100 dark:bg-gray-800"
-                        }`}
-                      >
-                        {String.fromCharCode(65 + index)}
-                      </div>
-                      <span className="flex-1">{option}</span>
-                      {showResult && isCorrect && (
-                        <span className="text-green-600 dark:text-green-400 font-bold">
-                          ✓
-                        </span>
-                      )}
-                      {showResult && isSelected && !isCorrect && (
-                        <span className="text-red-600 dark:text-red-400 font-bold">
-                          ✗
-                        </span>
-                      )}
-                    </div>
-                  </button>
-                );
-              })}
-            </CardContent>
-          </Card>
-
-          {/* Explanation */}
-          {selectedIndex !== null && currentQuestion.explanation && (
-            <Card className="mb-4 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
-              <CardContent className="p-4">
-                <p className="text-sm text-gray-700 dark:text-gray-300">
-                  <span className="font-semibold">Explanation: </span>
-                  {currentQuestion.explanation}
-                </p>
-              </CardContent>
-            </Card>
-          )}
-
-          {/* Next Button */}
-          {selectedIndex !== null && (
-            <Button
-              onClick={handleNextQuestion}
-              className="w-full"
-              size="lg"
-              data-testid="button-next-question"
-            >
-              {isLastQuestion ? "See Results" : "Next Question"}
-            </Button>
-          )}
-        </div>
-      </div>
-    );
-  }
-
-  // -------------------------
-  // RESULTS SCREEN
-  // -------------------------
-  if (gameState === "finished") {
-    const currentLevelIndexRes = LEVEL_ORDER.indexOf(currentLevel);
-    const highestLevelIndexRes = LEVEL_ORDER.indexOf(highestUnlockedLevel);
-    const hasNextLevelRes = currentLevelIndexRes < LEVEL_ORDER.length - 1;
-
-    const nextLevelRes = hasNextLevelRes
-      ? LEVEL_ORDER[currentLevelIndexRes + 1]
-      : null;
-    const justUnlockedIsNext = justUnlockedLevel === nextLevelRes;
-    const canGoToNextLevel =
-      !!nextLevelRes &&
-      highestLevelIndexRes >= LEVEL_ORDER.indexOf(nextLevelRes);
+  if (phase === "results") {
+    const LevelIcon = currentLevelConfig.icon;
 
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
-        {/* Header */}
         <div className="bg-white dark:bg-gray-900 px-4 py-6 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
           <div className="flex items-center justify-between gap-3">
             <div className="flex items-center gap-3">
@@ -913,101 +254,102 @@ function BibleTriviaPage({
               >
                 <ArrowLeft className="w-5 h-5" />
               </Button>
-              <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">
-                Results
-              </h1>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-foreground">Results</h1>
             </div>
-
-            <Badge
-              className={levelConfig.color}
-              data-testid="badge-current-level"
-            >
+            <Badge className={currentLevelConfig.color} data-testid="badge-current-level">
               <LevelIcon className="w-3 h-3 mr-1" />
-              {levelConfig.name}
+              {currentLevelConfig.label}
             </Badge>
           </div>
         </div>
 
         <div className="p-6 max-w-2xl mx-auto">
-          {/* Results Card */}
           <Card className="mb-6">
             <CardHeader className="text-center">
               <div
-                className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-br ${levelConfig.gradient} rounded-full flex items-center justify-center`}
+                className={`w-20 h-20 mx-auto mb-4 bg-gradient-to-br ${currentLevelConfig.gradient} rounded-full flex items-center justify-center`}
               >
                 <Award className="w-10 h-10 text-white" />
               </div>
               <CardTitle className="text-2xl mb-2">
-                {passed ? "Great Job! 🎉" : "Keep Going! 💪"}
+                {passedLevel ? "Great Job! 🎉" : "Keep Going! 💪"}
               </CardTitle>
               <div className="text-4xl font-bold text-blue-600 dark:text-blue-400 mb-2">
-                {score}/{questions.length}
+                {correctCount}/{questions.length}
               </div>
               <p className="text-sm text-gray-600 dark:text-gray-400">
-                {passed
-                  ? `You passed the ${levelConfig.name} level!`
-                  : `You need ${PASSING_SCORE} correct answers to pass this level.`}
+                You answered <span className="text-emerald-600 dark:text-emerald-400 font-semibold">{correctCount}</span> out of{" "}
+                {questions.length} questions correctly.
               </p>
             </CardHeader>
           </Card>
 
-          {/* Congratulations + Unlock Banner */}
-          {passed && (
-            <Card
-              className={`mb-6 bg-gradient-to-br ${levelConfig.gradient} text-white border-0`}
-            >
+          {passedLevel ? (
+            <Card className={`mb-6 bg-gradient-to-br ${currentLevelConfig.gradient} text-white border-0`}>
               <CardContent className="p-6 text-center">
                 <Trophy className="w-12 h-12 mx-auto mb-3" />
                 <h2 className="text-xl font-bold mb-2">Congratulations!</h2>
                 <p className="text-sm opacity-90 mb-2">
-                  You passed the {levelConfig.name} level with a score of{" "}
-                  {score}/{questions.length}!
+                  You passed the {currentLevelConfig.label} level!
                 </p>
-                {justUnlockedLevel && nextLevelRes === justUnlockedLevel && (
-                  <p className="text-sm font-semibold opacity-95 mt-3 pt-3 border-t border-white/30">
-                    🎉 You've unlocked the{" "}
-                    {LEVEL_CONFIG[justUnlockedLevel].name} level!
-                  </p>
-                )}
+                <p className="text-sm font-semibold opacity-95 mt-3 pt-3 border-t border-white/30">
+                  You've earned the title{" "}
+                  <span className="font-bold">{currentLevelConfig.titleOnPass}</span>
+                </p>
+              </CardContent>
+            </Card>
+          ) : (
+            <Card className="mb-6 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+              <CardContent className="p-6 text-center">
+                <p className="font-semibold text-blue-900 dark:text-blue-300 mb-2">
+                  Great job! Keep going – you're growing in God's Word.
+                </p>
+                <p className="text-sm text-blue-800 dark:text-blue-400">
+                  Try again and aim for at least <span className="font-semibold">9 out of 10</span>{" "}
+                  correct to advance.
+                </p>
               </CardContent>
             </Card>
           )}
 
-          {/* Action Buttons */}
           <div className="space-y-3">
             <Button
-              onClick={handlePlayAgainSameLevel}
+              onClick={handleTryAgain}
               className="w-full h-12 font-semibold"
-              data-testid="button-play-again"
+              variant="outline"
+              data-testid="button-try-again"
             >
-              <RotateCcw className="w-4 h-4 mr-2" />
-              New Questions – Same Level
+              <Sparkles className="w-4 h-4 mr-2" />
+              Try {currentLevelConfig.label} Level Again
             </Button>
 
-            {hasNextLevelRes && (
+            {!isFinalLevel && (
               <Button
-                onClick={handleGoToNextLevel}
-                disabled={!canGoToNextLevel}
+                onClick={handleNextLevel}
+                disabled={!passedLevel}
                 className="w-full h-12 font-semibold"
-                variant={justUnlockedIsNext ? "default" : "outline"}
                 data-testid="button-next-level"
               >
-                {canGoToNextLevel ? (
-                  justUnlockedIsNext ? (
-                    <>
-                      <Star className="w-4 h-4 mr-2" />
-                      Try {LEVEL_CONFIG[nextLevelRes!].name} Level
-                    </>
-                  ) : (
-                    <>Go to {LEVEL_CONFIG[nextLevelRes!].name} Level</>
-                  )
-                ) : (
+                {passedLevel ? (
                   <>
-                    <Lock className="w-4 h-4 mr-2" />
-                    Next Level Locked
+                    <Star className="w-4 h-4 mr-2" />
+                    Go to {LEVELS[currentLevelIndex + 1].label} Level
                   </>
+                ) : (
+                  <>Score 9/10 to unlock next level</>
                 )}
               </Button>
+            )}
+
+            {isFinalLevel && passedLevel && (
+              <Card className="bg-gradient-to-r from-purple-500 to-pink-500 text-white border-0">
+                <CardContent className="p-4 text-center">
+                  <p className="font-semibold">
+                    🌟 You've completed all levels and are a{" "}
+                    <span className="font-bold">Bible Expert</span>!
+                  </p>
+                </CardContent>
+              </Card>
             )}
 
             <Button
@@ -1024,12 +366,165 @@ function BibleTriviaPage({
     );
   }
 
-  return null;
+  if (!currentQuestion) {
+    return null;
+  }
+
+  const questionNumber = currentQuestionIndex + 1;
+  const LevelIcon = currentLevelConfig.icon;
+  const questionProgressPercent = (questionNumber / questions.length) * 100;
+
+  return (
+    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-gray-900 dark:to-gray-800 pb-20">
+      <div className="bg-white dark:bg-gray-900 px-4 py-4 border-b border-gray-200 dark:border-gray-700 ios-safe-top">
+        <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => onNavigate?.("home")}
+              className="h-9 w-9"
+              data-testid="button-back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <div>
+              <span className="text-sm font-medium">
+                Question {questionNumber}/{questions.length}
+              </span>
+              <Badge className={currentLevelConfig.color} data-testid="badge-level">
+                <LevelIcon className="w-3 h-3 mr-1" />
+                {currentLevelConfig.label}
+              </Badge>
+            </div>
+          </div>
+
+          <div className="text-sm font-medium">
+            Score: <strong>{correctCount}</strong>
+          </div>
+        </div>
+
+        <div className="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+          <div
+            className={`h-full bg-gradient-to-r ${currentLevelConfig.gradient} transition-all duration-300`}
+            style={{ width: `${questionProgressPercent}%` }}
+          />
+        </div>
+      </div>
+
+      <div className="p-6 max-w-2xl mx-auto">
+        <Card className="mb-6">
+          <CardHeader>
+            <CardTitle className="text-lg leading-relaxed">{currentQuestion.text}</CardTitle>
+            {currentQuestion.reference && (
+              <p className="text-sm text-blue-600 dark:text-blue-400 mt-2">
+                Scripture: {currentQuestion.reference}
+              </p>
+            )}
+          </CardHeader>
+          <CardContent className="space-y-3">
+            {currentQuestion.choices.map((choice, index) => {
+              const isSelected = index === selectedIndex;
+              const isCorrect = index === currentQuestion.correctIndex;
+              const showResult = hasCheckedAnswer;
+
+              return (
+                <button
+                  key={index}
+                  onClick={() => handleOptionClick(index)}
+                  disabled={hasCheckedAnswer}
+                  className={`w-full p-4 text-left rounded-lg border-2 transition-all duration-200 ${
+                    showResult
+                      ? isCorrect
+                        ? "border-green-500 bg-green-50 dark:bg-green-900/30"
+                        : isSelected
+                        ? "border-red-500 bg-red-50 dark:bg-red-900/30"
+                        : "border-gray-200 dark:border-gray-700"
+                      : isSelected
+                      ? "border-blue-500 bg-blue-50 dark:bg-blue-900/30"
+                      : "border-gray-200 dark:border-gray-700 hover:border-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20"
+                  } ${hasCheckedAnswer ? "cursor-not-allowed" : "cursor-pointer"}`}
+                  data-testid={`button-option-${index}`}
+                >
+                  <div className="flex items-center gap-3">
+                    <div
+                      className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-semibold ${
+                        showResult
+                          ? isCorrect
+                            ? "bg-green-500 text-white"
+                            : isSelected
+                            ? "bg-red-500 text-white"
+                            : "bg-gray-100 dark:bg-gray-800"
+                          : isSelected
+                          ? "bg-blue-500 text-white"
+                          : "bg-gray-100 dark:bg-gray-800"
+                      }`}
+                    >
+                      {String.fromCharCode(65 + index)}
+                    </div>
+                    <span className="flex-1">{choice}</span>
+                    {showResult && isCorrect && (
+                      <span className="text-green-600 dark:text-green-400 font-bold">✓</span>
+                    )}
+                    {showResult && isSelected && !isCorrect && (
+                      <span className="text-red-600 dark:text-red-400 font-bold">✗</span>
+                    )}
+                  </div>
+                </button>
+              );
+            })}
+          </CardContent>
+        </Card>
+
+        {hasCheckedAnswer && currentQuestion.explanation && (
+          <Card className="mb-4 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+            <CardContent className="p-4">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
+                <span className="font-semibold">Explanation: </span>
+                {currentQuestion.explanation}
+              </p>
+            </CardContent>
+          </Card>
+        )}
+
+        {hasCheckedAnswer && lastAnswerCorrect !== null && !currentQuestion.explanation && (
+          <Card className="mb-4 bg-blue-50 dark:bg-blue-900/20 border-blue-200 dark:border-blue-800">
+            <CardContent className="p-4">
+              <p className="text-sm text-gray-700 dark:text-gray-300">
+                {lastAnswerCorrect
+                  ? "✓ Correct! Well done."
+                  : "That's not quite right this time – keep going, you're learning!"}
+              </p>
+            </CardContent>
+          </Card>
+        )}
+
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            className="flex-1"
+            onClick={handleCheckAnswer}
+            disabled={selectedIndex === null || hasCheckedAnswer}
+            data-testid="button-check-answer"
+          >
+            {hasCheckedAnswer ? "Answer checked" : "Check answer"}
+          </Button>
+          <Button
+            className="flex-1"
+            onClick={handleNextQuestion}
+            disabled={!hasCheckedAnswer}
+            data-testid="button-next-question"
+          >
+            {questionNumber === questions.length ? "See results" : "Next question"}
+          </Button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
-// Wrap the entire component with FeatureBoundary to ensure error isolation
 export default FeatureBoundary.with(
   BibleTriviaPage,
   "Bible Trivia Game",
-  (props) => () => props.onNavigate?.('home')  // Factory called on each render with fresh props
+  (props) => () => props.onNavigate?.('home')
 );

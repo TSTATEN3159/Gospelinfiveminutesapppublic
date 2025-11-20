@@ -1,0 +1,611 @@
+You’re right to be annoyed – what you described (repeating questions, wrong level messaging) is pure state-logic chaos, not “world-class Bible Trivia.”
+
+Since I don’t have the exact Replit files, I’ll give you **drop-in style replacements** you can paste into your project that:
+
+* Use **clear, simple level logic** (no more weird levelsBeaten / rank bugs).
+* Enforce **“9 out of 10 to advance”** exactly.
+* Give the correct titles:
+
+  * ✅ Beginner → “Bible Student”
+  * ✅ Intermediate → “Bible Scholar”
+  * ✅ Advanced → “Bible Expert”
+* Always **pull fresh questions from the API** and reset state so you don’t get stuck with stale / repeated questions from the frontend.
+* Include an obvious **place to hook into your profile** to show their moniker.
+
+You can hand this straight to “Replit ChatGPT” and say: *“Replace my existing trivia files with this structure”*.
+
+---
+
+## 1. Frontend service – make sure we actually call the Trivia API correctly
+
+**File:** `client/src/services/triviaService.ts`
+
+Replace the whole file with this (or adapt it if you already export a `getBibleTrivia` function):
+
+```ts
+// client/src/services/triviaService.ts
+
+export type TriviaLevel = 'beginner' | 'intermediate' | 'advanced';
+
+export interface RawTriviaQuestion {
+  id?: string;
+  question?: string;
+  text?: string;
+  prompt?: string;
+  options?: string[];
+  choices?: string[];
+  correctIndex?: number;
+  answerIndex?: number;
+  correctOptionIndex?: number;
+  reference?: string;
+  verseReference?: string;
+  scripture?: string;
+}
+
+export interface TriviaQuestion {
+  id: string;
+  text: string;
+  choices: string[];
+  correctIndex: number;
+  reference?: string;
+}
+
+/**
+ * Normalizes whatever shape the backend returns into a clean TriviaQuestion
+ */
+function normalizeQuestion(raw: RawTriviaQuestion, index: number): TriviaQuestion {
+  const text =
+    raw.question ??
+    raw.text ??
+    raw.prompt ??
+    'Question missing from API response';
+
+  const choices = raw.choices ?? raw.options ?? [];
+
+  const correctIndex =
+    raw.correctIndex ??
+    raw.answerIndex ??
+    raw.correctOptionIndex ??
+    0;
+
+  const reference =
+    raw.reference ??
+    raw.verseReference ??
+    raw.scripture ??
+    undefined;
+
+  return {
+    id: raw.id ?? String(index),
+    text,
+    choices,
+    correctIndex,
+    reference,
+  };
+}
+
+/**
+ * Fetches one round of trivia (10 questions) from your backend.
+ * IMPORTANT: useAI: true ensures we use the AI generator and not a dummy list.
+ */
+export async function fetchBibleTriviaQuestions(
+  level: TriviaLevel,
+  count = 10
+): Promise<TriviaQuestion[]> {
+  const response = await fetch('/api/bible-trivia', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      level,
+      count,
+      useAI: true,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error(`Failed to fetch bible trivia: ${response.statusText}`);
+  }
+
+  const data = await response.json();
+
+  // Support either { questions: [...] } or just [...] from backend
+  const rawList: RawTriviaQuestion[] = Array.isArray(data.questions)
+    ? data.questions
+    : Array.isArray(data)
+    ? data
+    : [];
+
+  return rawList.map(normalizeQuestion);
+}
+```
+
+This fixes two big things:
+
+1. **Forces `useAI: true`** so we don’t silently hit some static/local question set.
+2. **Normalizes any question shape** coming from the backend so you don’t have weird undefined property bugs.
+
+---
+
+## 2. Bible Trivia page – clean, bulletproof level progression
+
+**File:** `client/src/pages/BibleTriviaPage.tsx`
+
+This is a full, self-contained page that:
+
+* Starts at **Beginner**.
+* Shows **10 questions** per round.
+* Requires **9/10** correct to unlock the next level.
+* Shows **Try Again** and **Next Level** buttons with correct enable/disable logic.
+* Assigns the right **titles/monikers**.
+
+Replace your current `BibleTriviaPage.tsx` with this (or merge carefully if you already have layout wrappers):
+
+```tsx
+// client/src/pages/BibleTriviaPage.tsx
+
+import { useEffect, useState } from "react";
+import { fetchBibleTriviaQuestions, TriviaLevel, TriviaQuestion } from "@/services/triviaService";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader2 } from "lucide-react";
+
+type GamePhase = "loading" | "question" | "results" | "error";
+
+type LevelKey = "beginner" | "intermediate" | "advanced";
+
+interface LevelConfig {
+  key: LevelKey;
+  label: string;
+  titleOnPass: string; // the moniker awarded at this level
+}
+
+const LEVELS: LevelConfig[] = [
+  { key: "beginner",     label: "Beginner",    titleOnPass: "Bible Student" },
+  { key: "intermediate", label: "Intermediate", titleOnPass: "Bible Scholar" },
+  { key: "advanced",     label: "Advanced",    titleOnPass: "Bible Expert" },
+];
+
+// Helper to map LevelKey to backend TriviaLevel type
+function toTriviaLevel(level: LevelKey): TriviaLevel {
+  return level;
+}
+
+// Stub – hook this into your user profile system
+function awardProfileTitle(title: string) {
+  // TODO: Replace this with your real profile update logic
+  // Example:
+  // updateUserProfile({ bibleTriviaTitle: title });
+  console.log("Awarded trivia title:", title);
+}
+
+export default function BibleTriviaPage() {
+  const [currentLevelIndex, setCurrentLevelIndex] = useState(0);
+  const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
+  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+  const [correctCount, setCorrectCount] = useState(0);
+  const [phase, setPhase] = useState<GamePhase>("loading");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(null);
+  const [hasCheckedAnswer, setHasCheckedAnswer] = useState(false);
+
+  const currentLevelConfig = LEVELS[currentLevelIndex];
+  const currentQuestion = questions[currentQuestionIndex];
+
+  // Load the first level on mount
+  useEffect(() => {
+    startLevel("beginner");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  async function startLevel(levelKey: LevelKey) {
+    try {
+      setPhase("loading");
+      setErrorMessage(null);
+      setQuestions([]);
+      setCurrentQuestionIndex(0);
+      setSelectedIndex(null);
+      setCorrectCount(0);
+      setLastAnswerCorrect(null);
+      setHasCheckedAnswer(false);
+
+      const triviaLevel = toTriviaLevel(levelKey);
+      const fetched = await fetchBibleTriviaQuestions(triviaLevel, 10);
+
+      if (!fetched.length) {
+        throw new Error("No questions returned from trivia API");
+      }
+
+      setQuestions(fetched);
+      setPhase("question");
+    } catch (err: any) {
+      console.error(err);
+      setErrorMessage(err.message ?? "Unable to load trivia questions.");
+      setPhase("error");
+    }
+  }
+
+  function handleOptionClick(index: number) {
+    if (phase !== "question") return;
+    setSelectedIndex(index);
+    setHasCheckedAnswer(false);
+    setLastAnswerCorrect(null);
+  }
+
+  function handleCheckAnswer() {
+    if (selectedIndex === null || phase !== "question") return;
+
+    const isCorrect = selectedIndex === currentQuestion.correctIndex;
+    setLastAnswerCorrect(isCorrect);
+    setHasCheckedAnswer(true);
+
+    if (isCorrect) {
+      setCorrectCount((prev) => prev + 1);
+    }
+  }
+
+  function handleNextQuestion() {
+    if (!hasCheckedAnswer) {
+      // Require them to check the answer before advancing
+      return;
+    }
+
+    const isLast = currentQuestionIndex === questions.length - 1;
+    if (isLast) {
+      setPhase("results");
+      // Award title for this level IF they passed
+      const passed = correctCount >= 9;
+      if (passed) {
+        awardProfileTitle(currentLevelConfig.titleOnPass);
+      }
+    } else {
+      setCurrentQuestionIndex((prev) => prev + 1);
+      setSelectedIndex(null);
+      setHasCheckedAnswer(false);
+      setLastAnswerCorrect(null);
+    }
+  }
+
+  function handleTryAgain() {
+    const levelKey = currentLevelConfig.key;
+    startLevel(levelKey);
+  }
+
+  function handleNextLevel() {
+    const passed = correctCount >= 9;
+    if (!passed) return;
+
+    const isLastLevel = currentLevelIndex === LEVELS.length - 1;
+    if (isLastLevel) {
+      // Already at Advanced; nothing further to unlock
+      return;
+    }
+
+    const nextIndex = currentLevelIndex + 1;
+    const nextLevelKey = LEVELS[nextIndex].key;
+    setCurrentLevelIndex(nextIndex);
+    startLevel(nextLevelKey);
+  }
+
+  const passedLevel = correctCount >= 9;
+  const isFinalLevel = currentLevelIndex === LEVELS.length - 1;
+
+  // ───────────────────────── RENDERING ─────────────────────────
+
+  if (phase === "loading") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh]">
+        <Loader2 className="animate-spin mb-4" />
+        <p className="text-sm text-slate-500">Loading Bible Trivia questions…</p>
+      </div>
+    );
+  }
+
+  if (phase === "error") {
+    return (
+      <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-4">
+        <p className="text-red-600 font-semibold">Something went wrong.</p>
+        <p className="text-sm text-slate-600">{errorMessage}</p>
+        <Button onClick={() => startLevel(currentLevelConfig.key)}>Try Again</Button>
+      </div>
+    );
+  }
+
+  // Results screen
+  if (phase === "results") {
+    return (
+      <div className="max-w-xl mx-auto py-6 px-4">
+        <Card className="rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.35)]">
+          <CardHeader>
+            <CardTitle className="text-xl font-bold">
+              {currentLevelConfig.label} Level Results
+            </CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <p className="text-lg font-semibold">
+              You answered <span className="text-emerald-600">{correctCount}</span> out of{" "}
+              {questions.length} questions correctly.
+            </p>
+
+            {passedLevel ? (
+              <>
+                <p className="font-semibold text-emerald-700">
+                  🎉 Congratulations! You passed the {currentLevelConfig.label} level!
+                </p>
+                <p className="text-sm text-slate-700">
+                  You’ve earned the title{" "}
+                  <span className="font-bold">{currentLevelConfig.titleOnPass}</span>.
+                </p>
+              </>
+            ) : (
+              <>
+                <p className="font-semibold text-sky-700">
+                  Great job! Keep going – you’re growing in God’s Word.
+                </p>
+                <p className="text-sm text-slate-700">
+                  Try again and aim for at least <span className="font-semibold">9 out of 10</span>{" "}
+                  correct to advance.
+                </p>
+              </>
+            )}
+
+            <div className="flex flex-col sm:flex-row gap-3 pt-2">
+              <Button
+                variant="outline"
+                className="flex-1"
+                onClick={handleTryAgain}
+              >
+                Try this level again
+              </Button>
+
+              {!isFinalLevel && (
+                <Button
+                  className="flex-1"
+                  onClick={handleNextLevel}
+                  disabled={!passedLevel}
+                >
+                  {passedLevel
+                    ? `Go to ${LEVELS[currentLevelIndex + 1].label} level`
+                    : `Score 9/10 to unlock next level`}
+                </Button>
+              )}
+
+              {isFinalLevel && passedLevel && (
+                <div className="w-full text-center text-sm text-emerald-700 font-semibold mt-2">
+                  🌟 You’ve completed all levels and are a{" "}
+                  <span className="font-bold">Bible Expert</span>!
+                </div>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      </div>
+    );
+  }
+
+  // Question screen
+  if (!currentQuestion) {
+    return null;
+  }
+
+  const questionNumber = currentQuestionIndex + 1;
+
+  return (
+    <div className="max-w-xl mx-auto py-6 px-4">
+      <Card className="rounded-3xl shadow-[0_20px_60px_rgba(15,23,42,0.35)]">
+        <CardHeader>
+          <div className="flex items-center justify-between mb-1">
+            <span className="text-xs uppercase tracking-wide text-slate-500">
+              Bible Trivia – {currentLevelConfig.label} Level
+            </span>
+            <span className="text-xs text-slate-500">
+              Correct: <span className="font-semibold">{correctCount}</span> / {questions.length}
+            </span>
+          </div>
+          <CardTitle className="text-lg font-semibold">
+            Question {questionNumber} of {questions.length}
+          </CardTitle>
+        </CardHeader>
+
+        <CardContent className="space-y-4">
+          <p className="text-base text-slate-800">{currentQuestion.text}</p>
+
+          {currentQuestion.reference && (
+            <p className="text-xs text-slate-500">
+              Scripture: <span className="italic">{currentQuestion.reference}</span>
+            </p>
+          )}
+
+          <div className="space-y-2 mt-3">
+            {currentQuestion.choices.map((choice, index) => {
+              const isSelected = index === selectedIndex;
+              return (
+                <Button
+                  key={index}
+                  type="button"
+                  variant={isSelected ? "default" : "outline"}
+                  className="w-full justify-start text-left whitespace-normal"
+                  onClick={() => handleOptionClick(index)}
+                >
+                  <span className="mr-2 font-semibold">
+                    {String.fromCharCode(65 + index)}.
+                  </span>
+                  <span>{choice}</span>
+                </Button>
+              );
+            })}
+          </div>
+
+          {hasCheckedAnswer && lastAnswerCorrect !== null && (
+            <p
+              className={
+                "text-sm mt-2 " +
+                (lastAnswerCorrect ? "text-emerald-600" : "text-rose-600")
+              }
+            >
+              {lastAnswerCorrect
+                ? "Correct! Well done."
+                : "That’s not quite right this time – keep going, you’re learning!"}
+            </p>
+          )}
+
+          <div className="flex gap-3 pt-4">
+            <Button
+              variant="outline"
+              className="flex-1"
+              onClick={handleCheckAnswer}
+              disabled={selectedIndex === null || hasCheckedAnswer}
+            >
+              {hasCheckedAnswer ? "Answer checked" : "Check answer"}
+            </Button>
+            <Button
+              className="flex-1"
+              onClick={handleNextQuestion}
+              disabled={!hasCheckedAnswer}
+            >
+              {questionNumber === questions.length ? "See results" : "Next question"}
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+    </div>
+  );
+}
+```
+
+### What this *fixes* vs Replit’s current logic
+
+* No more “you passed Intermediate” when you actually only did Beginner – each round is **self-contained** and the results screen is **tied to the current level only**.
+* No reused “levelsBeaten” / “highestUnlockedLevel” weirdness.
+* No stale questions: starting a level always calls `fetchBibleTriviaQuestions` and fully resets state.
+* “Try again” **reloads fresh questions** at the same level.
+* “Go to next level” **only becomes usable** if `correctCount >= 9`.
+
+---
+
+## 3. Backend route – tighten schema and randomness (optional but recommended)
+
+If your `server/routes.ts` currently has a `bibleTriviaSchema` like this:
+
+```ts
+const bibleTriviaSchema = z.object({
+  level: z.enum(['beginner', 'student', 'scholar', 'expert']).default('beginner'),
+  count: z.number().min(1).max(10).default(10),
+  useAI: z.boolean().default(true)
+});
+```
+
+You can **simplify it to match the three levels we’re using**:
+
+```ts
+// server/routes.ts – near /api/bible-trivia route
+
+const bibleTriviaSchema = z.object({
+  level: z.enum(['beginner', 'intermediate', 'advanced']).default('beginner'),
+  count: z.number().min(1).max(10).default(10),
+  useAI: z.boolean().default(true),
+});
+
+// Example route handler (adjust to your structure)
+app.post("/api/bible-trivia", async (req, res) => {
+  try {
+    const { level, count, useAI } = bibleTriviaSchema.parse(req.body);
+
+    const questions = await generateBibleTriviaQuestions({
+      level,
+      count,
+      useAI,
+    });
+
+    res.json({ questions });
+  } catch (err: any) {
+    console.error("Bible trivia error:", err);
+    res.status(500).json({ error: "Failed to generate trivia questions." });
+  }
+});
+```
+
+Then in `server/ai-trivia-generator.ts`, make sure your prompt **explicitly forbids duplicates** and uses higher randomness, e.g.:
+
+```ts
+// Pseudocode / skeleton
+export async function generateBibleTriviaQuestions({
+  level,
+  count,
+  useAI,
+}: {
+  level: 'beginner' | 'intermediate' | 'advanced';
+  count: number;
+  useAI: boolean;
+}) {
+  if (!useAI) {
+    // fall back to some static list if you want
+  }
+
+  const systemPrompt = `
+You are generating Bible trivia questions.
+
+Rules:
+- Return exactly ${count} questions.
+- NEVER repeat the same question wording or answer wording inside one batch.
+- Vary topics widely (OT, NT, Gospels, Paul, narrative, wisdom, prophecy, etc.).
+- Difficulties:
+  - beginner: simpler, well-known stories and verses.
+  - intermediate: deeper details, less obvious connections.
+  - advanced: very challenging questions that require strong Bible knowledge.
+- For each question, return:
+  - question (string)
+  - options (array of 4 strings)
+  - correctIndex (0-based index of the correct option)
+  - reference (book chapter:verse)
+`;
+
+  // call OpenAI with higher temperature to reduce repetition, e.g. 0.8–0.9
+  // const completion = await openai.chat.completions.create({
+  //   model: "gpt-4o-mini",
+  //   temperature: 0.9,
+  //   ...
+  // });
+
+  // parse JSON and return array of questions
+}
+```
+
+This won’t *guarantee* “never repeat across the entire universe of time,” but it will:
+
+* Strongly **discourage internal duplicates** in a single batch.
+* **Increase variety** across batches so you’re not seeing “same 5 questions” constantly.
+
+---
+
+## 4. Where to show “Bible Expert” in the profile
+
+You said:
+
+> Then once in advanced and finished they get Bible Expert level which places this moniker on their profile somewhere in a very professional way in the app.
+
+In the page above, I left this hook:
+
+```ts
+function awardProfileTitle(title: string) {
+  // TODO: Replace this with your real profile update logic
+  // Example:
+  // updateUserProfile({ bibleTriviaTitle: title });
+  console.log("Awarded trivia title:", title);
+}
+```
+
+Wherever you keep your user context (maybe `useCurrentUser()` or `UserContext`), you can:
+
+* Call your profile update endpoint here.
+* Or update a local user store so the title displays on their Home/Profile page.
+
+---
+
+If you paste these **three pieces** into Replit (service, page, and updated schema/route), you should end up with:
+
+* Clean level transitions.
+* No more wrong “Intermediate” messages.
+* Fresh AI-powered question batches for each round.
+* The exact “Bible Student / Bible Scholar / Bible Expert” flow you described.
+
+If you want, you can paste your current `ai-trivia-generator.ts` in the next message and I’ll rewrite just the prompt + parsing part so it plugs straight into your existing OpenAI call.

@@ -1436,11 +1436,19 @@ Return only the application paragraph.
   app.post("/api/topical-application", topicApplicationHandler);
 
   // Bible Trivia Route - Using curated questions with Bible API verses
+  // Map frontend 3-level system to backend AI generator levels
   const bibleTriviaSchema = z.object({
-    level: z.enum(['beginner', 'student', 'scholar', 'expert']).default('beginner'),
+    level: z.enum(['beginner', 'intermediate', 'advanced']).default('beginner'),
     count: z.number().min(1).max(10).default(10),
     useAI: z.boolean().default(true)
   });
+
+  // Map frontend levels to backend AI difficulty levels
+  const levelMap: Record<string, 'beginner' | 'student' | 'scholar' | 'expert'> = {
+    beginner: 'beginner',
+    intermediate: 'scholar',
+    advanced: 'expert'
+  };
 
   // Curated Bible trivia questions organized by difficulty
   const triviaQuestions = {
@@ -1641,8 +1649,12 @@ Return only the application paragraph.
 
       if (useAI) {
         // Use AI to generate dynamic questions
+        // Map frontend level to backend AI difficulty
+        const aiLevel = levelMap[level] || 'beginner';
+        console.log(`[Bible Trivia] Mapping frontend level '${level}' → AI level '${aiLevel}'`);
+        
         const { generateAITriviaQuestions } = await import('./ai-trivia-generator.js');
-        const aiQuestions = await generateAITriviaQuestions(level, count);
+        const aiQuestions = await generateAITriviaQuestions(aiLevel, count);
         
         // Fetch verse text from Bible API
         questions = await Promise.all(
@@ -1673,14 +1685,13 @@ Return only the application paragraph.
           })
         );
       } else {
-        // Fallback to static questions (map old difficulty to new levels)
+        // Fallback to static questions (map new 3-level system to static difficulties)
         const difficultyMap: Record<string, 'easy' | 'medium' | 'difficult'> = {
           beginner: 'easy',
-          student: 'medium',
-          scholar: 'difficult',
-          expert: 'difficult'
+          intermediate: 'medium',
+          advanced: 'difficult'
         };
-        const difficulty = difficultyMap[level];
+        const difficulty = difficultyMap[level] || 'easy';
         const questionPool = triviaQuestions[difficulty];
         
         const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
