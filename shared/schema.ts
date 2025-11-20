@@ -361,3 +361,36 @@ export const insertApiUsageLogSchema = createInsertSchema(apiUsageLog).pick({
 
 export type InsertApiUsageLog = z.infer<typeof insertApiUsageLogSchema>;
 export type ApiUsageLog = typeof apiUsageLog.$inferSelect;
+
+// Bible Trivia Stats - Track user progress, streaks, titles, mastery, and power-ups
+export const triviaStats = pgTable("trivia_stats", {
+  userId: varchar("user_id").primaryKey(),
+  displayName: text("display_name").notNull().default("Guest"),
+  dailyStreak: integer("daily_streak").notNull().default(0),
+  lastDailyDate: text("last_daily_date"),
+  dailyCrowns: integer("daily_crowns").notNull().default(0),
+  highestTitle: text("highest_title").notNull().default("None"),
+  
+  // Mastery percentages (0-100)
+  masteryOldTestament: integer("mastery_old_testament").notNull().default(0),
+  masteryGospels: integer("mastery_gospels").notNull().default(0),
+  masteryEpistles: integer("mastery_epistles").notNull().default(0),
+  masteryProphecy: integer("mastery_prophecy").notNull().default(0),
+  masteryPeopleOfGod: integer("mastery_people_of_god").notNull().default(0),
+  masteryGeography: integer("mastery_geography").notNull().default(0),
+  
+  // Power-ups inventory
+  powerUpSecondChance: integer("power_up_second_chance").notNull().default(3),
+  powerUpRevealScripture: integer("power_up_reveal_scripture").notNull().default(2),
+  powerUpRemoveTwo: integer("power_up_remove_two").notNull().default(2),
+  
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+});
+
+export const insertTriviaStatsSchema = createInsertSchema(triviaStats).pick({
+  userId: true,
+  displayName: true,
+});
+
+export type InsertTriviaStats = z.infer<typeof insertTriviaStatsSchema>;
+export type TriviaStatsRecord = typeof triviaStats.$inferSelect;

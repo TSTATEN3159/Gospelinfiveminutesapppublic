@@ -150,6 +150,11 @@ export async function recordTriviaResult(params: {
   correctCount: number;
   totalCount: number;
   categoriesHit?: TriviaQuestion["category"][];
+  powerUpsUsed?: {
+    secondChance: number;
+    removeTwo: number;
+    revealScripture: number;
+  };
 }): Promise<TriviaStats> {
   const res = await fetch(apiUrl('/api/trivia/record-result'), {
     method: 'POST',

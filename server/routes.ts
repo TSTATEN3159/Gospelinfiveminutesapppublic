@@ -4,11 +4,11 @@ import { z } from "zod";
 import OpenAI from "openai";
 import Stripe from "stripe";
 import { storage } from "./storage";
-import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema } from "@shared/schema";
+import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema, triviaStats } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
 import { db } from "./db";
-import { sql } from "drizzle-orm";
+import { sql, eq } from "drizzle-orm";
 import devotionals365Router from "./devotionals-365";
 import { getAllPlans, getPlan, getDayReading, type PlanType } from "./reading-plans";
 import { bibleApiFallback } from "./services/bibleApiFallback";
@@ -31,7 +31,7 @@ const getStripeClient = (): Stripe => {
   return stripe;
 };
 
-// Bible Trivia Stats Tracking System
+// Bible Trivia Stats Tracking System - Database Backed
 interface TriviaStats {
   userId: string;
   displayName: string;
@@ -54,36 +54,65 @@ interface TriviaStats {
   };
 }
 
-const triviaStatsStore = new Map<string, TriviaStats>();
-
-function getOrCreateTriviaStats(userId: string, displayName: string = "Guest"): TriviaStats {
-  const existing = triviaStatsStore.get(userId);
-  if (existing) return existing;
-
-  const initial: TriviaStats = {
-    userId,
-    displayName,
-    dailyStreak: 0,
-    lastDailyDate: null,
-    dailyCrowns: 0,
-    highestTitle: "None",
+function dbToStats(record: any): TriviaStats {
+  return {
+    userId: record.userId,
+    displayName: record.displayName,
+    dailyStreak: record.dailyStreak,
+    lastDailyDate: record.lastDailyDate,
+    dailyCrowns: record.dailyCrowns,
+    highestTitle: record.highestTitle,
     mastery: {
-      oldTestament: 0,
-      gospels: 0,
-      epistles: 0,
-      prophecy: 0,
-      peopleOfGod: 0,
-      geography: 0,
+      oldTestament: record.masteryOldTestament,
+      gospels: record.masteryGospels,
+      epistles: record.masteryEpistles,
+      prophecy: record.masteryProphecy,
+      peopleOfGod: record.masteryPeopleOfGod,
+      geography: record.masteryGeography,
     },
     powerUps: {
-      secondChance: 3,
-      revealScripture: 2,
-      removeTwo: 2,
+      secondChance: record.powerUpSecondChance,
+      revealScripture: record.powerUpRevealScripture,
+      removeTwo: record.powerUpRemoveTwo,
     },
   };
+}
 
-  triviaStatsStore.set(userId, initial);
-  return initial;
+async function getOrCreateTriviaStats(userId: string, displayName: string = "Guest"): Promise<TriviaStats> {
+  const existing = await db.select().from(triviaStats).where(eq(triviaStats.userId, userId)).limit(1);
+  
+  if (existing.length > 0) {
+    return dbToStats(existing[0]);
+  }
+
+  const newRecord = await db.insert(triviaStats).values({
+    userId,
+    displayName,
+  }).returning();
+
+  return dbToStats(newRecord[0]);
+}
+
+async function updateTriviaStats(stats: TriviaStats): Promise<void> {
+  await db.update(triviaStats)
+    .set({
+      displayName: stats.displayName,
+      dailyStreak: stats.dailyStreak,
+      lastDailyDate: stats.lastDailyDate,
+      dailyCrowns: stats.dailyCrowns,
+      highestTitle: stats.highestTitle,
+      masteryOldTestament: stats.mastery.oldTestament,
+      masteryGospels: stats.mastery.gospels,
+      masteryEpistles: stats.mastery.epistles,
+      masteryProphecy: stats.mastery.prophecy,
+      masteryPeopleOfGod: stats.mastery.peopleOfGod,
+      masteryGeography: stats.mastery.geography,
+      powerUpSecondChance: stats.powerUps.secondChance,
+      powerUpRevealScripture: stats.powerUps.revealScripture,
+      powerUpRemoveTwo: stats.powerUps.removeTwo,
+      updatedAt: new Date(),
+    })
+    .where(eq(triviaStats.userId, stats.userId));
 }
 
 function getCurrentUserId(req: any): { userId: string; displayName: string } {
@@ -1813,9 +1842,9 @@ Return only the application paragraph.
   // Bible Trivia Stats & Leaderboard Endpoints
   
   // Get current user's trivia stats
-  app.get("/api/trivia/stats", (req, res) => {
+  app.get("/api/trivia/stats", async (req, res) => {
     const { userId, displayName } = getCurrentUserId(req);
-    const stats = getOrCreateTriviaStats(userId, displayName);
+    const stats = await getOrCreateTriviaStats(userId, displayName);
     res.json(stats);
   });
 
@@ -1828,13 +1857,25 @@ Return only the application paragraph.
     categoriesHit: z.array(
       z.enum(["oldTestament", "gospels", "epistles", "prophecy", "peopleOfGod", "geography"])
     ).optional(),
+    powerUpsUsed: z.object({
+      secondChance: z.number().int().min(0).default(0),
+      removeTwo: z.number().int().min(0).default(0),
+      revealScripture: z.number().int().min(0).default(0),
+    }).optional(),
   });
 
-  app.post("/api/trivia/record-result", (req, res) => {
+  app.post("/api/trivia/record-result", async (req, res) => {
     try {
       const { userId, displayName } = getCurrentUserId(req);
-      const stats = getOrCreateTriviaStats(userId, displayName);
-      const { mode, level, correctCount, totalCount, categoriesHit = [] } = recordResultSchema.parse(req.body);
+      const stats = await getOrCreateTriviaStats(userId, displayName);
+      const { mode, level, correctCount, totalCount, categoriesHit = [], powerUpsUsed } = recordResultSchema.parse(req.body);
+      
+      // Deduct power-ups that were actually used during gameplay
+      if (powerUpsUsed) {
+        stats.powerUps.secondChance = Math.max(0, stats.powerUps.secondChance - powerUpsUsed.secondChance);
+        stats.powerUps.removeTwo = Math.max(0, stats.powerUps.removeTwo - powerUpsUsed.removeTwo);
+        stats.powerUps.revealScripture = Math.max(0, stats.powerUps.revealScripture - powerUpsUsed.revealScripture);
+      }
 
       // 1) Daily streak & crowns
       if (mode === "daily") {
@@ -1898,7 +1939,7 @@ Return only the application paragraph.
         stats.mastery[cat] = Math.min(100, current + Math.round((correctCount / totalCount) * 5));
       });
 
-      triviaStatsStore.set(userId, stats);
+      await updateTriviaStats(stats);
       res.json(stats);
     } catch (err: any) {
       console.error("record-result error:", err);
@@ -1907,10 +1948,11 @@ Return only the application paragraph.
   });
 
   // Simple friends leaderboard (top stats by dailyStreak + crowns)
-  app.get("/api/trivia/leaderboard", (req, res) => {
-    const all = Array.from(triviaStatsStore.values());
-    const sorted = all
-      .slice()
+  app.get("/api/trivia/leaderboard", async (req, res) => {
+    const allRecords = await db.select().from(triviaStats);
+    const allStats = allRecords.map(dbToStats);
+    
+    const sorted = allStats
       .sort((a, b) => {
         if (b.dailyStreak !== a.dailyStreak) {
           return b.dailyStreak - a.dailyStreak;

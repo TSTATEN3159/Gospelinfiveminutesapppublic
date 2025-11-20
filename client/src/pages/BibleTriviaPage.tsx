@@ -58,11 +58,18 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
   const [loadingStats, setLoadingStats] = useState(true);
   const [loadingLeaderboard, setLoadingLeaderboard] = useState(true);
 
-  // Power-ups
+  // Power-ups (track what was used this game)
   const [powerUpsInGame, setPowerUpsInGame] = useState<PowerUpState>({
     secondChanceUsed: false,
     removeTwoUsed: false,
     revealedScripture: false,
+  });
+  
+  // Track cumulative power-up consumption for backend
+  const [powerUpsConsumed, setPowerUpsConsumed] = useState({
+    secondChance: 0,
+    removeTwo: 0,
+    revealScripture: 0,
   });
 
   const currentLevelConfig = LEVELS[currentLevelIndex];
@@ -133,6 +140,12 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
         removeTwoUsed: false,
         revealedScripture: false,
       });
+      
+      setPowerUpsConsumed({
+        secondChance: 0,
+        removeTwo: 0,
+        revealScripture: 0,
+      });
 
       const fetched = await fetchBibleTriviaQuestions(level, 10);
       if (!fetched.length) throw new Error("No questions returned from trivia API");
@@ -174,12 +187,16 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
       .filter((c): c is NonNullable<typeof c> => Boolean(c));
     const uniqueCats = Array.from(new Set(categories));
 
+    // For survival mode, totalCount is the actual questions answered (not the full quiz length)
+    const actualTotalCount = mode === "survival" ? currentQuestionIndex + 1 : questions.length;
+
     recordTriviaResult({
       mode,
       level: currentLevelConfig?.key,
       correctCount,
-      totalCount: questions.length,
+      totalCount: actualTotalCount,
       categoriesHit: uniqueCats,
+      powerUpsUsed: powerUpsConsumed,
     })
       .then((updated) => {
         setStats(updated);
@@ -238,6 +255,7 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
     setLastAnswerCorrect(null);
     setHasCheckedAnswer(false);
     setPowerUpsInGame((s) => ({ ...s, secondChanceUsed: true }));
+    setPowerUpsConsumed((p) => ({ ...p, secondChance: p.secondChance + 1 }));
     if (!stats) return;
     setStats({
       ...stats,
@@ -254,6 +272,7 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
     const remaining = availableChoices.filter((idx) => !toRemove.includes(idx));
     setAvailableChoices(remaining);
     setPowerUpsInGame((s) => ({ ...s, removeTwoUsed: true }));
+    setPowerUpsConsumed((p) => ({ ...p, removeTwo: p.removeTwo + 1 }));
     if (!stats) return;
     setStats({
       ...stats,
@@ -264,6 +283,7 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
   function useRevealScripture() {
     if (!canUseRevealScripture) return;
     setPowerUpsInGame((s) => ({ ...s, revealedScripture: true }));
+    setPowerUpsConsumed((p) => ({ ...p, revealScripture: p.revealScripture + 1 }));
     if (!stats) return;
     setStats({
       ...stats,
@@ -305,7 +325,7 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
   const questionNumber = currentQuestionIndex + 1;
 
   return (
-    <FeatureBoundary>
+    <FeatureBoundary featureName="Bible Trivia">
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <div className="max-w-7xl mx-auto py-6 px-4">
           {/* Header with back button */}
