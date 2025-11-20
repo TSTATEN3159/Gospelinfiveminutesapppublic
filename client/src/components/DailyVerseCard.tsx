@@ -192,10 +192,23 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   };
 
   const handleEmailSignup = async () => {
-    if (!emailInput.trim()) {
+    const trimmedEmail = emailInput.trim();
+    
+    if (!trimmedEmail) {
       toast({
         title: "Email Required",
         description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
         variant: "destructive",
       });
       return;
@@ -208,8 +221,8 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          email: emailInput.trim(),
-          name: nameInput.trim() || undefined,
+          email: trimmedEmail,
+          firstName: nameInput.trim() || undefined,
         }),
       });
       
@@ -502,6 +515,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
                 <Button 
                   variant="outline" 
                   onClick={() => setIsEmailDialogOpen(false)}
+                  disabled={isSubscribing}
                   data-testid="button-cancel-reminder"
                 >
                   Cancel

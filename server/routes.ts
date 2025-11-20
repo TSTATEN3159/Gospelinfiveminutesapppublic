@@ -2481,18 +2481,19 @@ Return only the application paragraph.
     }
   });
 
-  // Daily Reminder Email Subscription
+  // Daily Reminder Email Subscription - For daily verse emails in appUsers table
   app.post("/api/subscribe-daily-reminder", async (req, res) => {
     try {
-      const { email, name } = z.object({
+      const { email, firstName } = z.object({
         email: z.string().email(),
-        name: z.string().optional()
+        firstName: z.string().optional()
       }).parse(req.body);
       
-      // Check if user already exists
+      // Check if app user already exists
       const existingUser = await storage.getAppUserByEmail(email);
       
       if (existingUser) {
+        // User exists in appUsers table
         if (existingUser.wantsDailyEmail) {
           return res.json({
             success: true,
@@ -2502,7 +2503,10 @@ Return only the application paragraph.
         
         // Update existing user to enable daily emails
         await db.update(appUsers)
-          .set({ wantsDailyEmail: true })
+          .set({ 
+            wantsDailyEmail: true,
+            ...(firstName && { firstName })
+          })
           .where(eq(appUsers.id, existingUser.id));
         
         return res.json({
@@ -2511,20 +2515,20 @@ Return only the application paragraph.
         });
       }
       
+      // User doesn't exist in appUsers - check if they're a blog subscriber
+      const existingSubscriber = await storage.getSubscriber(email);
+      const nameToUse = firstName || (existingSubscriber?.name) || "Friend";
+      
       // Create new app user with daily email enabled
-      const newUser = await storage.createAppUser({
-        firstName: name || "Friend",
+      const [newUser] = await db.insert(appUsers).values({
+        firstName: nameToUse,
         lastName: "",
         email: email,
         phone: null,
         birthMonth: null,
-        birthDay: null
-      });
-      
-      // Update to enable daily emails
-      await db.update(appUsers)
-        .set({ wantsDailyEmail: true })
-        .where(eq(appUsers.id, newUser.id));
+        birthDay: null,
+        wantsDailyEmail: true
+      }).returning();
       
       res.json({
         success: true,

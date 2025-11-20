@@ -1,7 +1,10 @@
-import { Heart, Share2, BookmarkPlus } from "lucide-react";
+import { useState } from "react";
+import { Heart, Share2, BookmarkPlus, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { safeShare } from "@/utils/capabilities";
 import { MoreTranslationsCard } from "./MoreTranslationsCard";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Button } from "@/components/ui/button";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
 
 interface DailyVerseHeroCardProps {
@@ -13,6 +16,10 @@ interface DailyVerseHeroCardProps {
 
 export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyVerseHeroCardProps) {
   const { toast } = useToast();
+  const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
+  const [emailInput, setEmailInput] = useState("");
+  const [nameInput, setNameInput] = useState("");
+  const [isSubscribing, setIsSubscribing] = useState(false);
 
   // Use provided verse data or fallback while loading
   const displayReference = reference || "John 3:16";
@@ -70,6 +77,70 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
         description: "Could not copy verse",
         variant: "destructive",
       });
+    }
+  };
+
+  const handleEmailSignup = async () => {
+    const trimmedEmail = emailInput.trim();
+    
+    if (!trimmedEmail) {
+      toast({
+        title: "Email Required",
+        description: "Please enter your email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(trimmedEmail)) {
+      toast({
+        title: "Invalid Email",
+        description: "Please enter a valid email address.",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    setIsSubscribing(true);
+    
+    try {
+      const response = await fetch("/api/subscribe-daily-reminder", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: trimmedEmail,
+          firstName: nameInput.trim() || undefined,
+        }),
+      });
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        toast({
+          title: "Welcome!",
+          description: data.message || "You're now signed up for daily verse reminders!",
+        });
+        setEmailInput("");
+        setNameInput("");
+        setIsEmailDialogOpen(false);
+      } else {
+        toast({
+          title: "Signup Failed",
+          description: data.error || "Please try again.",
+          variant: "destructive",
+        });
+      }
+    } catch (error) {
+      console.error("Email signup error:", error);
+      toast({
+        title: "Connection Error",
+        description: "Unable to process your signup. Please try again.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubscribing(false);
     }
   };
 
@@ -131,7 +202,74 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
             Copy
           </button>
         </div>
-        <span className="text-[11px] text-slate-500">Tap to explore</span>
+        
+        <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
+          <DialogTrigger asChild>
+            <button
+              className="inline-flex items-center gap-1.5 text-[11px] text-amber-400 hover:text-amber-300 transition-colors font-medium"
+              data-testid="button-daily-reminder-hero"
+            >
+              <Mail className="w-3.5 h-3.5" />
+              Daily Reminders
+            </button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-[425px]">
+            <DialogHeader>
+              <DialogTitle>Sign Up for Daily Reminders</DialogTitle>
+              <DialogDescription>
+                Receive the Daily Verse with meaning and application in your inbox every morning at 7 AM.
+              </DialogDescription>
+            </DialogHeader>
+            <div className="grid gap-4 py-4">
+              <div className="grid gap-2">
+                <label htmlFor="reminder-name-hero" className="text-sm font-medium">
+                  Name (Optional)
+                </label>
+                <input
+                  id="reminder-name-hero"
+                  type="text"
+                  placeholder="Your name"
+                  value={nameInput}
+                  onChange={(e) => setNameInput(e.target.value)}
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  data-testid="input-reminder-name-hero"
+                />
+              </div>
+              <div className="grid gap-2">
+                <label htmlFor="reminder-email-hero" className="text-sm font-medium">
+                  Email Address *
+                </label>
+                <input
+                  id="reminder-email-hero"
+                  type="email"
+                  placeholder="your.email@example.com"
+                  value={emailInput}
+                  onChange={(e) => setEmailInput(e.target.value)}
+                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  data-testid="input-reminder-email-hero"
+                  required
+                />
+              </div>
+            </div>
+            <div className="flex justify-end gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setIsEmailDialogOpen(false)}
+                disabled={isSubscribing}
+                data-testid="button-cancel-reminder-hero"
+              >
+                Cancel
+              </Button>
+              <Button 
+                onClick={handleEmailSignup}
+                disabled={isSubscribing}
+                data-testid="button-subscribe-reminder-hero"
+              >
+                {isSubscribing ? "Signing Up..." : "Sign Up"}
+              </Button>
+            </div>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="bg-black/95">
