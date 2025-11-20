@@ -1,8 +1,7 @@
 import sgMail from "@sendgrid/mail";
 
-const APP_BASE_URL = process.env.REPL_ID 
-  ? `https://${process.env.REPL_SLUG}.${process.env.REPL_OWNER}.repl.co`
-  : "http://localhost:5000";
+// Use the published app URL for email links
+const APP_BASE_URL = "https://thegospelin5minutes.org";
 
 // Use Replit's SendGrid integration
 async function getSendGridCredentials() {
@@ -114,55 +113,60 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
               </td>
             </tr>
 
-            <!-- Parchment Scripture block (split style) -->
+            <!-- Parchment Scripture block with visible edges -->
             <tr>
               <td style="padding:12px 24px 0 24px;">
-                <div
-                  style="
-                    background-image:url('${PARCHMENT_BG_URL}');
-                    background-size:cover;
-                    background-position:center;
-                    border-radius:18px;
-                    padding:18px 16px 20px 16px;
-                    border:1px solid #e2c79f;
-                  "
-                >
-                  <!-- Top: Verse only -->
-                  <div style="margin-bottom:8px;">
-                    <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#92400e; margin:0 0 4px;">
-                      Verse of the Day
-                    </p>
-                    <p style="font-size:15px; font-weight:700; margin:0 0 4px; color:#3b2f2f;">
-                      ${verseReference}
-                    </p>
-                    <p style="font-size:14px; line-height:1.5; margin:0; color:#3b2f2f;">
-                      "${verseText}"
-                    </p>
-                  </div>
-
-                  <!-- Divider -->
-                  <div style="height:1px; margin:10px 0 10px 0; background:rgba(148,90,40,0.35);"></div>
-
-                  <!-- Bottom: Meaning + Application on a lighter parchment overlay -->
+                <!-- Outer container to show parchment edges -->
+                <div style="background:#f5eee1; padding:20px; border-radius:18px;">
                   <div
                     style="
-                      background:rgba(253,244,224,0.82);
-                      border-radius:12px;
-                      padding:10px 12px;
+                      background-image:url('${PARCHMENT_BG_URL}');
+                      background-size:contain;
+                      background-repeat:no-repeat;
+                      background-position:center;
+                      padding:40px 30px;
+                      min-height:280px;
+                      position:relative;
                     "
                   >
-                    <p style="font-size:12px; font-weight:600; margin:0 0 4px; color:#6b4a2e;">
-                      Meaning
-                    </p>
-                    <p style="font-size:13px; line-height:1.5; margin:0 0 8px; color:#3f2f23;">
-                      ${meaning}
-                    </p>
-                    <p style="font-size:12px; font-weight:600; margin:8px 0 4px; color:#6b4a2e;">
-                      Application for today
-                    </p>
-                    <p style="font-size:13px; line-height:1.5; margin:0; color:#3f2f23;">
-                      ${application}
-                    </p>
+                    <!-- Top: Verse only -->
+                    <div style="margin-bottom:12px;">
+                      <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#f5d7a1; margin:0 0 6px; text-shadow:0 1px 3px rgba(0,0,0,0.3);">
+                        Verse of the Day
+                      </p>
+                      <p style="font-size:15px; font-weight:700; margin:0 0 8px; color:#ffffff; text-shadow:0 2px 4px rgba(0,0,0,0.4);">
+                        ${verseReference}
+                      </p>
+                      <p style="font-size:14px; line-height:1.6; margin:0; color:#ffffff; text-shadow:0 2px 4px rgba(0,0,0,0.5);">
+                        "${verseText}"
+                      </p>
+                    </div>
+
+                    <!-- Divider -->
+                    <div style="height:1px; margin:14px 0; background:rgba(255,255,255,0.3);"></div>
+
+                    <!-- Bottom: Meaning + Application -->
+                    <div
+                      style="
+                        background:rgba(15,23,42,0.75);
+                        border-radius:12px;
+                        padding:14px 16px;
+                        backdrop-filter:blur(10px);
+                      "
+                    >
+                      <p style="font-size:12px; font-weight:600; margin:0 0 6px; color:#fbbf24;">
+                        Meaning
+                      </p>
+                      <p style="font-size:13px; line-height:1.5; margin:0 0 10px; color:#e5e7eb;">
+                        ${meaning}
+                      </p>
+                      <p style="font-size:12px; font-weight:600; margin:0 0 6px; color:#fbbf24;">
+                        Application for today
+                      </p>
+                      <p style="font-size:13px; line-height:1.5; margin:0; color:#e5e7eb;">
+                        ${application}
+                      </p>
+                    </div>
                   </div>
                 </div>
               </td>
