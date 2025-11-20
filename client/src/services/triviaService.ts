@@ -1,4 +1,5 @@
 import { apiUrl } from '@/lib/api-config';
+import appStore from '@/lib/appStore';
 
 export type TriviaLevel = 'beginner' | 'intermediate' | 'advanced';
 
@@ -136,15 +137,25 @@ export async function fetchBibleTriviaQuestions(
 
 /**
  * Get current user's trivia stats (streak, titles, mastery, power-ups)
+ * Now using client-side localStorage for proper per-device tracking
  */
 export async function getTriviaStats(): Promise<TriviaStats> {
-  const res = await fetch(apiUrl('/api/trivia/stats'));
-  if (!res.ok) throw new Error('Failed to load trivia stats');
-  return res.json();
+  const stats = appStore.getTriviaStats();
+  return {
+    userId: 'local-user',
+    displayName: stats.displayName,
+    dailyStreak: stats.dailyStreak,
+    lastDailyDate: stats.lastDailyDate,
+    dailyCrowns: stats.dailyCrowns,
+    highestTitle: stats.highestTitle as any,
+    mastery: stats.mastery,
+    powerUps: stats.powerUps,
+  };
 }
 
 /**
  * Record a trivia game result and get updated stats
+ * Now using client-side localStorage for proper per-device tracking
  */
 export async function recordTriviaResult(params: {
   mode: TriviaMode;
@@ -158,22 +169,103 @@ export async function recordTriviaResult(params: {
     revealScripture: number;
   };
 }): Promise<TriviaStats> {
-  const res = await fetch(apiUrl('/api/trivia/record-result'), {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(params),
+  const { mode, level, correctCount, totalCount, categoriesHit = [], powerUpsUsed } = params;
+  const stats = appStore.getTriviaStats();
+  
+  // Deduct power-ups that were actually used during gameplay
+  if (powerUpsUsed) {
+    stats.powerUps.secondChance = Math.max(0, stats.powerUps.secondChance - powerUpsUsed.secondChance);
+    stats.powerUps.removeTwo = Math.max(0, stats.powerUps.removeTwo - powerUpsUsed.removeTwo);
+    stats.powerUps.revealScripture = Math.max(0, stats.powerUps.revealScripture - powerUpsUsed.revealScripture);
+  }
+
+  // 1) Daily streak & crowns
+  if (mode === "daily") {
+    const today = new Date().toISOString().slice(0, 10);
+
+    if (stats.lastDailyDate === today) {
+      // already played today – no streak change
+    } else if (stats.lastDailyDate === null) {
+      stats.dailyStreak = 1;
+    } else {
+      const last = new Date(stats.lastDailyDate);
+      const diffMs = new Date(today).getTime() - last.getTime();
+      const diffDays = Math.round(diffMs / (1000 * 60 * 60 * 24));
+      if (diffDays === 1) {
+        stats.dailyStreak += 1;
+      } else {
+        stats.dailyStreak = 1;
+      }
+    }
+
+    stats.lastDailyDate = today;
+
+    if (correctCount >= 9) {
+      stats.dailyCrowns += 1;
+      stats.powerUps.secondChance += 1;
+    }
+  }
+
+  // 2) Titles from classic levels
+  if (mode === "classic" && level && correctCount >= 9) {
+    if (level === "beginner" && stats.highestTitle === "None") {
+      stats.highestTitle = "Bible Student";
+    } else if (level === "intermediate") {
+      if (stats.highestTitle === "None" || stats.highestTitle === "Bible Student") {
+        stats.highestTitle = "Bible Scholar";
+      }
+    } else if (level === "advanced") {
+      if (
+        stats.highestTitle === "None" ||
+        stats.highestTitle === "Bible Student" ||
+        stats.highestTitle === "Bible Scholar"
+      ) {
+        stats.highestTitle = "Bible Expert";
+      }
+    }
+  }
+
+  // 3) Endgame "Defender of the Faith" for perfect advanced or strong survival
+  if (
+    (mode === "classic" && level === "advanced" && correctCount === totalCount) ||
+    (mode === "survival" && correctCount >= 30)
+  ) {
+    stats.highestTitle = "Defender of the Faith";
+    stats.powerUps.secondChance += 2;
+    stats.powerUps.revealScripture += 2;
+  }
+
+  // 4) Mastery update – simple incremental approach
+  categoriesHit.forEach((cat) => {
+    if (cat && stats.mastery[cat] !== undefined) {
+      const current = stats.mastery[cat];
+      stats.mastery[cat] = Math.min(100, current + Math.round((correctCount / totalCount) * 5));
+    }
   });
-  if (!res.ok) throw new Error('Failed to record trivia result');
-  return res.json();
+
+  // Save to localStorage
+  appStore.saveTriviaStats(stats);
+  
+  return {
+    userId: 'local-user',
+    displayName: stats.displayName,
+    dailyStreak: stats.dailyStreak,
+    lastDailyDate: stats.lastDailyDate,
+    dailyCrowns: stats.dailyCrowns,
+    highestTitle: stats.highestTitle as any,
+    mastery: stats.mastery,
+    powerUps: stats.powerUps,
+  };
 }
 
 /**
  * Get friends & family leaderboard (top 20 users by streak and crowns)
+ * Note: With client-side storage, leaderboard only shows current user's stats
  */
 export async function getTriviaLeaderboard(): Promise<TriviaStats[]> {
-  const res = await fetch(apiUrl('/api/trivia/leaderboard'));
-  if (!res.ok) throw new Error('Failed to load leaderboard');
-  return res.json();
+  const currentStats = await getTriviaStats();
+  // Return just the current user for now (leaderboard requires server-side storage)
+  return [currentStats];
 }
 
 /**

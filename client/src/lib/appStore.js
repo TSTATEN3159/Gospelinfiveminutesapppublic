@@ -9,6 +9,7 @@ const KEY_NOTES = 'dg_notes';
 const KEY_PROFILE = 'dg_profile';
 const KEY_READING_PROGRESS = 'dg_readingProgress';
 const KEY_DISCIPLESHIP_PROGRESS = 'dg_discipleshipProgress';
+const KEY_TRIVIA_STATS = 'dg_triviaStats';
 
 let hasWarnedAboutStorage = false;
 
@@ -225,6 +226,74 @@ const appStore = {
   getAllDiscipleshipProgress() {
     const raw = safeGetItem(KEY_DISCIPLESHIP_PROGRESS);
     return raw ? JSON.parse(raw) : {};
+  },
+
+  // TRIVIA STATS (streaks, crowns, mastery, titles, power-ups)
+  getTriviaStats() {
+    // Default stats for new users
+    const defaults = {
+      displayName: "Guest",
+      dailyStreak: 0,
+      lastDailyDate: null,
+      dailyCrowns: 0,
+      highestTitle: "None",
+      mastery: {
+        oldTestament: 0,
+        gospels: 0,
+        epistles: 0,
+        prophecy: 0,
+        peopleOfGod: 0,
+        geography: 0,
+      },
+      powerUps: {
+        secondChance: 3,
+        revealScripture: 2,
+        removeTwo: 2,
+      },
+    };
+    
+    const raw = safeGetItem(KEY_TRIVIA_STATS);
+    if (!raw) {
+      return JSON.parse(JSON.stringify(defaults)); // Return deep clone of defaults
+    }
+    
+    try {
+      const stored = JSON.parse(raw);
+      
+      // Defensive schema validation - merge stored data with defaults
+      // This handles corrupted or legacy data gracefully
+      return {
+        displayName: stored.displayName || defaults.displayName,
+        dailyStreak: typeof stored.dailyStreak === 'number' ? stored.dailyStreak : defaults.dailyStreak,
+        lastDailyDate: stored.lastDailyDate || defaults.lastDailyDate,
+        dailyCrowns: typeof stored.dailyCrowns === 'number' ? stored.dailyCrowns : defaults.dailyCrowns,
+        highestTitle: stored.highestTitle || defaults.highestTitle,
+        mastery: {
+          oldTestament: typeof stored.mastery?.oldTestament === 'number' ? stored.mastery.oldTestament : defaults.mastery.oldTestament,
+          gospels: typeof stored.mastery?.gospels === 'number' ? stored.mastery.gospels : defaults.mastery.gospels,
+          epistles: typeof stored.mastery?.epistles === 'number' ? stored.mastery.epistles : defaults.mastery.epistles,
+          prophecy: typeof stored.mastery?.prophecy === 'number' ? stored.mastery.prophecy : defaults.mastery.prophecy,
+          peopleOfGod: typeof stored.mastery?.peopleOfGod === 'number' ? stored.mastery.peopleOfGod : defaults.mastery.peopleOfGod,
+          geography: typeof stored.mastery?.geography === 'number' ? stored.mastery.geography : defaults.mastery.geography,
+        },
+        powerUps: {
+          secondChance: typeof stored.powerUps?.secondChance === 'number' ? stored.powerUps.secondChance : defaults.powerUps.secondChance,
+          revealScripture: typeof stored.powerUps?.revealScripture === 'number' ? stored.powerUps.revealScripture : defaults.powerUps.revealScripture,
+          removeTwo: typeof stored.powerUps?.removeTwo === 'number' ? stored.powerUps.removeTwo : defaults.powerUps.removeTwo,
+        },
+      };
+    } catch (err) {
+      console.error('[appStore] Failed to parse trivia stats, returning defaults:', err);
+      return JSON.parse(JSON.stringify(defaults)); // Return deep clone of defaults
+    }
+  },
+
+  saveTriviaStats(stats) {
+    safeSetItem(KEY_TRIVIA_STATS, JSON.stringify(stats));
+  },
+
+  resetTriviaStats() {
+    safeRemoveItem(KEY_TRIVIA_STATS);
   },
 
   // GENERIC GET/SET
