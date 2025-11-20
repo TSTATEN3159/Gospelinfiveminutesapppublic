@@ -92,8 +92,6 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
   }
 
   const subject = `Your Daily Verse & Bible Trivia – ${verseReference}`;
-
-  const PARCHMENT_BG_URL = "https://images.unsplash.com/photo-1509266272358-7701da638078?w=1600&q=80";
   
   // Create unsubscribe link
   const unsubscribeUrl = `${APP_BASE_URL}/unsubscribe?email=${encodeURIComponent(to)}`;
@@ -116,61 +114,46 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
               </td>
             </tr>
 
-            <!-- Parchment Scripture block with visible edges -->
+            <!-- Single tile for Verse, Meaning, and Application -->
             <tr>
               <td style="padding:12px 24px 0 24px;">
-                <!-- Outer container to show parchment edges -->
-                <div style="background:#f5eee1; padding:20px; border-radius:18px;">
-                  <div
-                    style="
-                      background-image:url('${PARCHMENT_BG_URL}');
-                      background-size:contain;
-                      background-repeat:no-repeat;
-                      background-position:center;
-                      padding:40px 30px;
-                      min-height:280px;
-                      position:relative;
-                    "
-                  >
-                    <!-- Top: Verse only -->
-                    <div style="margin-bottom:12px;">
-                      <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#f5d7a1; margin:0 0 6px; text-shadow:0 1px 3px rgba(0,0,0,0.3);">
-                        Verse of the Day
-                      </p>
-                      <p style="font-size:15px; font-weight:700; margin:0 0 8px; color:#ffffff; text-shadow:0 2px 4px rgba(0,0,0,0.4);">
-                        ${verseReference}
-                      </p>
-                      <p style="font-size:14px; line-height:1.6; margin:0; color:#ffffff; text-shadow:0 2px 4px rgba(0,0,0,0.5);">
-                        "${verseText}"
-                      </p>
-                    </div>
+                <div
+                  style="
+                    background:#f4e4c1;
+                    border-radius:16px;
+                    padding:24px;
+                    box-shadow:0 4px 12px rgba(0,0,0,0.1);
+                  "
+                >
+                  <!-- Verse of the Day -->
+                  <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#92400e; margin:0 0 8px; font-weight:600;">
+                    Verse of the Day
+                  </p>
+                  <p style="font-size:15px; font-weight:700; margin:0 0 8px; color:#1f2937;">
+                    ${verseReference}
+                  </p>
+                  <p style="font-size:14px; line-height:1.6; margin:0 0 16px; color:#374151;">
+                    "${verseText}"
+                  </p>
 
-                    <!-- Divider -->
-                    <div style="height:1px; margin:14px 0; background:rgba(255,255,255,0.3);"></div>
+                  <!-- Divider -->
+                  <div style="height:1px; margin:16px 0; background:rgba(146,64,14,0.2);"></div>
 
-                    <!-- Bottom: Meaning + Application -->
-                    <div
-                      style="
-                        background:rgba(15,23,42,0.75);
-                        border-radius:12px;
-                        padding:14px 16px;
-                        backdrop-filter:blur(10px);
-                      "
-                    >
-                      <p style="font-size:12px; font-weight:600; margin:0 0 6px; color:#fbbf24;">
-                        Meaning
-                      </p>
-                      <p style="font-size:13px; line-height:1.5; margin:0 0 10px; color:#e5e7eb;">
-                        ${meaning}
-                      </p>
-                      <p style="font-size:12px; font-weight:600; margin:0 0 6px; color:#fbbf24;">
-                        Application for today
-                      </p>
-                      <p style="font-size:13px; line-height:1.5; margin:0; color:#e5e7eb;">
-                        ${application}
-                      </p>
-                    </div>
-                  </div>
+                  <!-- Meaning -->
+                  <p style="font-size:12px; font-weight:600; margin:0 0 6px; color:#92400e;">
+                    Meaning
+                  </p>
+                  <p style="font-size:13px; line-height:1.5; margin:0 0 14px; color:#374151;">
+                    ${meaning}
+                  </p>
+
+                  <!-- Application for today -->
+                  <p style="font-size:12px; font-weight:600; margin:0 0 6px; color:#92400e;">
+                    Application for today
+                  </p>
+                  <p style="font-size:13px; line-height:1.5; margin:0; color:#374151;">
+                    ${application}
+                  </p>
                 </div>
               </td>
             </tr>
