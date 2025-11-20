@@ -13,6 +13,7 @@ import devotionals365Router from "./devotionals-365";
 import { getAllPlans, getPlan, getDayReading, type PlanType } from "./reading-plans";
 import { bibleApiFallback } from "./services/bibleApiFallback";
 import { apiUsageTracker } from "./services/apiUsageTracker";
+import { getRandomTriviaQuestions, TriviaLevel } from "./triviaStore";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -1731,91 +1732,22 @@ Return only the application paragraph.
 
   app.post("/api/bible-trivia", async (req, res) => {
     try {
-      const { level, count, useAI } = bibleTriviaSchema.parse(req.body);
-      console.log("Bible Trivia - Level:", level, "Count:", count, "AI:", useAI);
+      const { level, count } = bibleTriviaSchema.parse(req.body);
+      console.log("Bible Trivia [INSTANT POOL] - Level:", level, "Count:", count);
 
-      let questions: any[];
+      const typedLevel = level as TriviaLevel;
+      const poolQuestions = await getRandomTriviaQuestions(typedLevel, count);
 
-      if (useAI) {
-        // Use AI to generate dynamic questions
-        // Map frontend level to backend AI difficulty
-        const aiLevel = levelMap[level] || 'beginner';
-        console.log(`[Bible Trivia] Mapping frontend level '${level}' → AI level '${aiLevel}'`);
-        
-        const { generateAITriviaQuestions } = await import('./ai-trivia-generator.js');
-        const aiQuestions = await generateAITriviaQuestions(aiLevel, count);
-        
-        // Fetch verse text from Bible API
-        questions = await Promise.all(
-          aiQuestions.map(async (q, index) => {
-            let verseText = null;
-            
-            if (q.verse) {
-              try {
-                const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
-                if (verseData) {
-                  verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
-                }
-              } catch (error) {
-                console.log(`Could not fetch verse ${q.verse}:`, error);
-              }
-            }
-
-            return {
-              id: index + 1,
-              question: q.question,
-              options: q.options,
-              correctAnswer: q.correctAnswer,
-              verse: q.verse,
-              verseText: verseText,
-              explanation: q.explanation,
-              level: level
-            };
-          })
-        );
-      } else {
-        // Fallback to static questions (map new 3-level system to static difficulties)
-        const difficultyMap: Record<string, 'easy' | 'medium' | 'difficult'> = {
-          beginner: 'easy',
-          intermediate: 'medium',
-          advanced: 'difficult'
-        };
-        const difficulty = difficultyMap[level] || 'easy';
-        const questionPool = triviaQuestions[difficulty];
-        
-        const shuffled = [...questionPool].sort(() => Math.random() - 0.5);
-        const selectedQuestions = shuffled.slice(0, Math.min(count, questionPool.length));
-
-        questions = await Promise.all(
-          selectedQuestions.map(async (q, index) => {
-            let verseReference = null;
-            let verseText = null;
-            
-            if (q.verse) {
-              try {
-                const verseData = await getApiBibleVerse('de4e12af7f28f599-02', q.verse);
-                if (verseData) {
-                  verseReference = verseData.reference;
-                  verseText = verseData.content?.replace(/<[^>]*>/g, '').trim();
-                }
-              } catch (error) {
-                console.log(`Could not fetch verse ${q.verse}:`, error);
-                verseReference = q.verse;
-              }
-            }
-
-            return {
-              id: index + 1,
-              question: q.question,
-              options: q.options,
-              correctAnswer: q.correctAnswer,
-              verse: verseReference || q.verse,
-              verseText: verseText,
-              level: level
-            };
-          })
-        );
-      }
+      const questions = poolQuestions.map((q, index) => ({
+        id: index + 1,
+        question: q.question,
+        options: q.choices,
+        correctAnswer: q.correctIndex,
+        verse: q.reference,
+        verseText: null,
+        explanation: null,
+        level: level
+      }));
 
       res.json({
         success: true,
