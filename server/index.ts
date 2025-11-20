@@ -2,6 +2,8 @@ import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes";
 import { setupVite, serveStatic, log } from "./vite";
 import { BlogUpdateScheduler } from "./scheduler";
+import cron from "node-cron";
+import { runDailyEmailJob } from "./dailyEmailJob";
 
 const app = express();
 
@@ -113,6 +115,16 @@ app.use((req, res, next) => {
     // Start the blog update scheduler
     const scheduler = new BlogUpdateScheduler();
     scheduler.start();
+    
+    // Start daily email cron job (runs at 7:00 AM server time every day)
+    log("Starting daily email scheduler - will send devotional emails at 7:00 AM");
+    cron.schedule("0 7 * * *", async () => {
+      try {
+        await runDailyEmailJob();
+      } catch (err) {
+        console.error("[DailyEmail] Cron job error:", err);
+      }
+    });
     
     // Graceful shutdown
     process.on('SIGINT', () => {
