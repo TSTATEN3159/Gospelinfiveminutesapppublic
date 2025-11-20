@@ -29,6 +29,31 @@ export interface TriviaQuestion {
   correctIndex: number;
   reference?: string;
   explanation?: string;
+  category?: "oldTestament" | "gospels" | "epistles" | "prophecy" | "peopleOfGod" | "geography";
+}
+
+export type TriviaMode = "classic" | "daily" | "survival" | "speed";
+
+export interface TriviaStats {
+  userId: string;
+  displayName: string;
+  dailyStreak: number;
+  lastDailyDate: string | null;
+  dailyCrowns: number;
+  highestTitle: "None" | "Bible Student" | "Bible Scholar" | "Bible Expert" | "Defender of the Faith";
+  mastery: {
+    oldTestament: number;
+    gospels: number;
+    epistles: number;
+    prophecy: number;
+    peopleOfGod: number;
+    geography: number;
+  };
+  powerUps: {
+    secondChance: number;
+    revealScripture: number;
+    removeTwo: number;
+  };
 }
 
 /**
@@ -105,4 +130,41 @@ export async function fetchBibleTriviaQuestions(
     : [];
 
   return rawList.map(normalizeQuestion);
+}
+
+/**
+ * Get current user's trivia stats (streak, titles, mastery, power-ups)
+ */
+export async function getTriviaStats(): Promise<TriviaStats> {
+  const res = await fetch(apiUrl('/api/trivia/stats'));
+  if (!res.ok) throw new Error('Failed to load trivia stats');
+  return res.json();
+}
+
+/**
+ * Record a trivia game result and get updated stats
+ */
+export async function recordTriviaResult(params: {
+  mode: TriviaMode;
+  level?: TriviaLevel;
+  correctCount: number;
+  totalCount: number;
+  categoriesHit?: TriviaQuestion["category"][];
+}): Promise<TriviaStats> {
+  const res = await fetch(apiUrl('/api/trivia/record-result'), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(params),
+  });
+  if (!res.ok) throw new Error('Failed to record trivia result');
+  return res.json();
+}
+
+/**
+ * Get friends & family leaderboard (top 20 users by streak and crowns)
+ */
+export async function getTriviaLeaderboard(): Promise<TriviaStats[]> {
+  const res = await fetch(apiUrl('/api/trivia/leaderboard'));
+  if (!res.ok) throw new Error('Failed to load leaderboard');
+  return res.json();
 }
