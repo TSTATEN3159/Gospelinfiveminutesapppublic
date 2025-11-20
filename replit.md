@@ -83,3 +83,10 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Handles all navigation patterns: rapid clicking, slow reading, back navigation, exiting mid-day
   - Real-time UI updates via localStorage event dispatching across detail/list views
   - No duplicate marking issues - storage safely ignores redundant writes
+- **Bible Trivia Tracking Migration**: Moved from broken server-side storage to reliable client-side localStorage
+  - **Per-user tracking**: Each device/browser now maintains its own trivia stats (streaks, crowns, mastery, titles, power-ups)
+  - **Defensive programming**: Deep cloning prevents shared reference mutations across React components
+  - **Schema validation**: Gracefully handles corrupted or legacy localStorage data with fallback to defaults
+  - **Type safety**: All numeric fields validated before use to prevent runtime errors
+  - **Data integrity**: Removed unsafe shallow merge helper that could wipe nested objects (mastery, powerUps)
+  - Trivia stats fully functional: daily streaks, crowns, Bible mastery scores, title progression, and power-ups
