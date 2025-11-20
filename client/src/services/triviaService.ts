@@ -26,10 +26,19 @@ export interface TriviaQuestion {
   id: string;
   text: string;
   choices: string[];
-  correctIndex: number;
+  // correctIndex is NEVER sent to frontend - kept server-side for security
   reference?: string;
   explanation?: string;
   category?: "oldTestament" | "gospels" | "epistles" | "prophecy" | "peopleOfGod" | "geography";
+}
+
+export interface CheckAnswerResult {
+  success: boolean;
+  isCorrect: boolean;
+  correctIndex: number;
+  correctAnswer: string;
+  reference?: string;
+  explanation?: string;
 }
 
 export type TriviaMode = "classic" | "daily" | "survival" | "speed";
@@ -68,13 +77,6 @@ function normalizeQuestion(raw: RawTriviaQuestion, index: number): TriviaQuestio
 
   const choices = raw.choices ?? raw.options ?? [];
 
-  const correctIndex =
-    raw.correctAnswer ??
-    raw.correctIndex ??
-    raw.answerIndex ??
-    raw.correctOptionIndex ??
-    0;
-
   const reference =
     raw.verse ??
     raw.reference ??
@@ -88,7 +90,7 @@ function normalizeQuestion(raw: RawTriviaQuestion, index: number): TriviaQuestio
     id: raw.id ? String(raw.id) : String(index),
     text,
     choices,
-    correctIndex,
+    // correctIndex is NOT included - kept server-side for security
     reference,
     explanation,
   };
@@ -172,4 +174,34 @@ export async function getTriviaLeaderboard(): Promise<TriviaStats[]> {
   const res = await fetch(apiUrl('/api/trivia/leaderboard'));
   if (!res.ok) throw new Error('Failed to load leaderboard');
   return res.json();
+}
+
+/**
+ * Check answer server-side - the answer key NEVER leaves the server
+ * This ensures the correct answer is always accurate
+ */
+export async function checkTriviaAnswer(
+  questionId: string,
+  selectedIndex: number
+): Promise<CheckAnswerResult> {
+  const res = await fetch(apiUrl('/api/trivia/check-answer'), {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({
+      questionId,
+      selectedIndex,
+    }),
+  });
+  
+  if (!res.ok) {
+    throw new Error('Failed to check answer');
+  }
+  
+  const data = await res.json();
+  
+  if (!data.success) {
+    throw new Error(data.error || 'Failed to check answer');
+  }
+  
+  return data;
 }

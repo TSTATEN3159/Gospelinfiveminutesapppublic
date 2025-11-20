@@ -8,6 +8,8 @@ import {
   recordTriviaResult,
   getTriviaLeaderboard,
   TriviaStats,
+  checkTriviaAnswer,
+  CheckAnswerResult,
 } from "@/services/triviaService";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,6 +53,8 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
   const [lastAnswerCorrect, setLastAnswerCorrect] = useState<boolean | null>(null);
   const [hasCheckedAnswer, setHasCheckedAnswer] = useState(false);
   const [availableChoices, setAvailableChoices] = useState<number[]>([]);
+  const [answerResult, setAnswerResult] = useState<CheckAnswerResult | null>(null);
+  const [checkingAnswer, setCheckingAnswer] = useState(false);
 
   // Stats / leaderboard
   const [stats, setStats] = useState<TriviaStats | null>(null);
@@ -168,15 +172,29 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
     setLastAnswerCorrect(null);
   }
 
-  function handleCheckAnswer() {
-    if (selectedIndex === null || phase !== "question") return;
-    const isCorrect = selectedIndex === currentQuestion.correctIndex;
-    setLastAnswerCorrect(isCorrect);
-    setHasCheckedAnswer(true);
-    if (isCorrect) {
-      setCorrectCount((prev) => prev + 1);
-    } else if (mode === "survival") {
-      finishGame();
+  async function handleCheckAnswer() {
+    if (selectedIndex === null || phase !== "question" || checkingAnswer) return;
+    
+    setCheckingAnswer(true);
+    
+    try {
+      // Server-side answer validation - answer key never leaves the server
+      const result = await checkTriviaAnswer(currentQuestion.id, selectedIndex);
+      
+      setAnswerResult(result);
+      setLastAnswerCorrect(result.isCorrect);
+      setHasCheckedAnswer(true);
+      
+      if (result.isCorrect) {
+        setCorrectCount((prev) => prev + 1);
+      } else if (mode === "survival") {
+        finishGame();
+      }
+    } catch (err) {
+      console.error("Error checking answer:", err);
+      setErrorMessage("Failed to check answer. Please try again.");
+    } finally {
+      setCheckingAnswer(false);
     }
   }
 
@@ -263,21 +281,28 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
     });
   }
 
-  function useRemoveTwo() {
+  async function useRemoveTwo() {
     if (!canUseRemoveTwo || !currentQuestion) return;
-    const wrongOptions = availableChoices.filter(
-      (idx) => idx !== currentQuestion.correctIndex
-    );
-    const toRemove = wrongOptions.slice(0, 2);
-    const remaining = availableChoices.filter((idx) => !toRemove.includes(idx));
-    setAvailableChoices(remaining);
-    setPowerUpsInGame((s) => ({ ...s, removeTwoUsed: true }));
-    setPowerUpsConsumed((p) => ({ ...p, removeTwo: p.removeTwo + 1 }));
-    if (!stats) return;
-    setStats({
-      ...stats,
-      powerUps: { ...stats.powerUps, removeTwo: stats.powerUps.removeTwo - 1 },
-    });
+    
+    // Get correct answer from server to identify wrong options
+    try {
+      const result = await checkTriviaAnswer(currentQuestion.id, 0); // Just to get correctIndex
+      const wrongOptions = availableChoices.filter(
+        (idx) => idx !== result.correctIndex
+      );
+      const toRemove = wrongOptions.slice(0, 2);
+      const remaining = availableChoices.filter((idx) => !toRemove.includes(idx));
+      setAvailableChoices(remaining);
+      setPowerUpsInGame((s) => ({ ...s, removeTwoUsed: true }));
+      setPowerUpsConsumed((p) => ({ ...p, removeTwo: p.removeTwo + 1 }));
+      if (!stats) return;
+      setStats({
+        ...stats,
+        powerUps: { ...stats.powerUps, removeTwo: stats.powerUps.removeTwo - 1 },
+      });
+    } catch (err) {
+      console.error("Error using Remove Two power-up:", err);
+    }
   }
 
   function useRevealScripture() {
@@ -468,7 +493,7 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
                           }
 
                           const isSelected = index === selectedIndex;
-                          const isCorrect = hasCheckedAnswer && index === currentQuestion.correctIndex;
+                          const isCorrect = hasCheckedAnswer && answerResult && index === answerResult.correctIndex;
                           const isWrong = hasCheckedAnswer && isSelected && !isCorrect;
 
                           return (
@@ -523,21 +548,25 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
                             <p className="text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">
                               Correct answer:
                             </p>
-                            <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 mb-2">
-                              {String.fromCharCode(65 + currentQuestion.correctIndex)}. {currentQuestion.choices[currentQuestion.correctIndex]}
-                            </p>
-                            
-                            {currentQuestion.reference && (
-                              <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
-                                <span className="font-semibold">Scripture: </span>
-                                {currentQuestion.reference}
-                              </p>
-                            )}
-                            
-                            {currentQuestion.explanation && (
-                              <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
-                                {currentQuestion.explanation}
-                              </p>
+                            {answerResult && (
+                              <>
+                                <p className="text-sm font-semibold text-emerald-700 dark:text-emerald-400 mb-2">
+                                  {String.fromCharCode(65 + answerResult.correctIndex)}. {answerResult.correctAnswer}
+                                </p>
+                                
+                                {answerResult.reference && (
+                                  <p className="text-xs text-slate-600 dark:text-slate-400 mb-2">
+                                    <span className="font-semibold">Scripture: </span>
+                                    {answerResult.reference}
+                                  </p>
+                                )}
+                                
+                                {answerResult.explanation && (
+                                  <p className="text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+                                    {answerResult.explanation}
+                                  </p>
+                                )}
+                              </>
                             )}
                           </div>
                         </div>
