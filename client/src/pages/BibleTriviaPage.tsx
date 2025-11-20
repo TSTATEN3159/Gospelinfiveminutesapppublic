@@ -476,18 +476,16 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
                               key={index}
                               type="button"
                               variant={
-                                isCorrect
-                                  ? "default"
-                                  : isWrong
-                                  ? "destructive"
+                                isCorrect || isWrong
+                                  ? "ghost"
                                   : isSelected
                                   ? "default"
                                   : "outline"
                               }
                               className={cn(
                                 "w-full justify-start text-left whitespace-normal h-auto py-3 px-4 transition-all",
-                                isCorrect && "bg-emerald-600 hover:bg-emerald-700 border-emerald-700 text-white shadow-lg shadow-emerald-500/30",
-                                isWrong && "bg-rose-600 hover:bg-rose-700 border-rose-700 text-white shadow-lg shadow-rose-500/30",
+                                isCorrect && "!bg-emerald-600 hover:!bg-emerald-700 !border-emerald-700 !text-white shadow-lg shadow-emerald-500/30",
+                                isWrong && "!bg-rose-600 hover:!bg-rose-700 !border-rose-700 !text-white shadow-lg shadow-rose-500/30",
                                 isSelected && !hasCheckedAnswer && "border-amber-500 bg-amber-50 dark:bg-amber-900/20"
                               )}
                               onClick={() => handleOptionClick(index)}
