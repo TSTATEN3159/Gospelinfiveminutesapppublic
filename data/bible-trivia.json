@@ -1212,6 +1212,1446 @@
     "correctIndex": 0
   },
   {
+    "id": "beginner-1763610228333-0",
+    "level": "beginner",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "David",
+      "Saul",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-1",
+    "level": "beginner",
+    "question": "Which giant did David defeat with a slingshot?",
+    "choices": [
+      "Goliath",
+      "Og",
+      "Sihon",
+      "Nimrod"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-2",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-3",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "God is love.",
+      "Pray without ceasing.",
+      "For God so loved the world."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-4",
+    "level": "beginner",
+    "question": "Who interpreted dreams for Pharaoh?",
+    "choices": [
+      "Joseph",
+      "Daniel",
+      "Moses",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-5",
+    "level": "beginner",
+    "question": "In which book of the Bible is the 'Love Chapter' found?",
+    "choices": [
+      "Romans",
+      "1 Corinthians",
+      "Galatians",
+      "Ephesians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-6",
+    "level": "beginner",
+    "question": "What did Noah send out to see if the floodwaters had receded?",
+    "choices": [
+      "A dove",
+      "A raven",
+      "A sparrow",
+      "An eagle"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-7",
+    "level": "beginner",
+    "question": "Which disciple walked on water with Jesus?",
+    "choices": [
+      "Peter",
+      "John",
+      "James",
+      "Andrew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-8",
+    "level": "beginner",
+    "question": "What was the first miracle performed by Jesus?",
+    "choices": [
+      "Healing a blind man",
+      "Turning water into wine",
+      "Feeding the 5000",
+      "Walking on water"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763610228333-9",
+    "level": "beginner",
+    "question": "Which book contains the verse 'The Lord is my shepherd?'",
+    "choices": [
+      "Proverbs",
+      "Psalms",
+      "Isaiah",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-1",
+    "level": "beginner",
+    "question": "Who fought the giant Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Samuel",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-2",
+    "level": "beginner",
+    "question": "What is the golden rule taught by Jesus?",
+    "choices": [
+      "Love your neighbor",
+      "Do unto others",
+      "Forgive others",
+      "Help the poor"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-3",
+    "level": "beginner",
+    "question": "Who wrote the Book of Proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Moses",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-4",
+    "level": "beginner",
+    "question": "What was the name of Noah's ark?",
+    "choices": [
+      "Ark of the Covenant",
+      "Ark of Noah",
+      "The Boat",
+      "The Ark"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-5",
+    "level": "beginner",
+    "question": "Who was thrown into the lions' den?",
+    "choices": [
+      "Moses",
+      "Daniel",
+      "Jonah",
+      "Joseph"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-6",
+    "level": "beginner",
+    "question": "What did Jesus turn water into?",
+    "choices": [
+      "Wine",
+      "Bread",
+      "Fish",
+      "Oil"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-7",
+    "level": "beginner",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "David",
+      "Saul",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-8",
+    "level": "beginner",
+    "question": "What did the people of Israel eat in the wilderness?",
+    "choices": [
+      "Manna",
+      "Bread",
+      "Fish",
+      "Fruits"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763642969956-9",
+    "level": "beginner",
+    "question": "In which book is the Lord's Prayer found?",
+    "choices": [
+      "Mark",
+      "Luke",
+      "John",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069534-0",
+    "level": "beginner",
+    "question": "Who was swallowed by a great fish after trying to flee from God's command?",
+    "choices": [
+      "Moses",
+      "Jonah",
+      "Elijah",
+      "Daniel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069534-1",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Light",
+      "Land",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069534-2",
+    "level": "beginner",
+    "question": "Which king of Israel defeated Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Solomon",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069534-3",
+    "level": "beginner",
+    "question": "Which book contains the verse, 'For I know the plans I have for you'?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Ezekiel",
+      "Daniel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069534-4",
+    "level": "beginner",
+    "question": "What is the shortest book in the New Testament?",
+    "choices": [
+      "2 John",
+      "Philemon",
+      "Jude",
+      "3 John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069534-5",
+    "level": "beginner",
+    "question": "Who interpreted dreams for Pharaoh in Egypt?",
+    "choices": [
+      "Joseph",
+      "Moses",
+      "Daniel",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069535-6",
+    "level": "beginner",
+    "question": "What fruit did Adam and Eve eat in the Garden of Eden?",
+    "choices": [
+      "Apple",
+      "Fig",
+      "Pomegranate",
+      "None specified"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069535-7",
+    "level": "beginner",
+    "question": "Which disciple is known for doubting Jesus' resurrection?",
+    "choices": [
+      "Peter",
+      "John",
+      "Thomas",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069535-8",
+    "level": "beginner",
+    "question": "What is the main theme of the book of Proverbs?",
+    "choices": [
+      "Love",
+      "Wisdom",
+      "Faith",
+      "Obedience"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643069535-9",
+    "level": "beginner",
+    "question": "Who baptized Jesus in the Jordan River?",
+    "choices": [
+      "John the Baptist",
+      "Peter",
+      "James",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Humans",
+      "Plants"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-1",
+    "level": "beginner",
+    "question": "Who fought Goliath?",
+    "choices": [
+      "David",
+      "Saul",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-2",
+    "level": "beginner",
+    "question": "What did Solomon ask God for?",
+    "choices": [
+      "Wealth",
+      "Wisdom",
+      "Long life",
+      "Power"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-3",
+    "level": "beginner",
+    "question": "What fruit did Eve eat in the Garden of Eden?",
+    "choices": [
+      "Apple",
+      "Fig",
+      "Grape",
+      "Pomegranate"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-4",
+    "level": "beginner",
+    "question": "Who is known as the 'weeping prophet'?",
+    "choices": [
+      "Isaiah",
+      "Ezekiel",
+      "Jeremiah",
+      "Daniel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-5",
+    "level": "beginner",
+    "question": "In which book do we find the story of the Prodigal Son?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-6",
+    "level": "beginner",
+    "question": "What is the greatest commandment according to Jesus?",
+    "choices": [
+      "Love your neighbor",
+      "Love the Lord your God",
+      "Do not steal",
+      "Honor your father and mother"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-7",
+    "level": "beginner",
+    "question": "Who was thrown into the lion's den?",
+    "choices": [
+      "Shadrach",
+      "Meshach",
+      "Daniel",
+      "Nebuchadnezzar"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-8",
+    "level": "beginner",
+    "question": "What does Psalm 23 say the Lord is to us?",
+    "choices": [
+      "A rock",
+      "A fortress",
+      "A shepherd",
+      "A light"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087114-9",
+    "level": "beginner",
+    "question": "Which book emphasizes that there is a time for everything?",
+    "choices": [
+      "Proverbs",
+      "Ecclesiastes",
+      "Job",
+      "Psalms"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Humans",
+      "Land"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-1",
+    "level": "beginner",
+    "question": "Who defeated Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Samuel",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-2",
+    "level": "beginner",
+    "question": "What did Moses receive on Mount Sinai?",
+    "choices": [
+      "The Ark of the Covenant",
+      "The Ten Commandments",
+      "The Law of the Land",
+      "The Book of Psalms"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-3",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "For God so loved the world.",
+      "Rejoice always.",
+      "Pray without ceasing."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-4",
+    "level": "beginner",
+    "question": "Which king of Israel was known for his wisdom?",
+    "choices": [
+      "Saul",
+      "David",
+      "Solomon",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-5",
+    "level": "beginner",
+    "question": "In which book is the Lord's Prayer found?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-6",
+    "level": "beginner",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Elijah",
+      "Jonah",
+      "Moses",
+      "Daniel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-7",
+    "level": "beginner",
+    "question": "What is the main theme of the Book of Proverbs?",
+    "choices": [
+      "Faith",
+      "Love",
+      "Wisdom",
+      "Prayer"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-8",
+    "level": "beginner",
+    "question": "Which apostle is known for doubting Jesus' resurrection?",
+    "choices": [
+      "Peter",
+      "John",
+      "James",
+      "Thomas"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643087697-9",
+    "level": "beginner",
+    "question": "What does the fruit of the Spirit include?",
+    "choices": [
+      "Love, joy, peace",
+      "Wisdom, understanding, counsel",
+      "Faith, hope, charity",
+      "Patience, kindness, goodness"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-0",
+    "level": "beginner",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "Saul",
+      "David",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-1",
+    "level": "beginner",
+    "question": "What did David use to defeat Goliath?",
+    "choices": [
+      "Sword",
+      "Sling and stones",
+      "Bow and arrow",
+      "Net"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-2",
+    "level": "beginner",
+    "question": "Which book contains the verse 'For I know the plans I have for you'?",
+    "choices": [
+      "Proverbs",
+      "Jeremiah",
+      "Psalms",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-3",
+    "level": "beginner",
+    "question": "What did Jesus turn into wine at a wedding?",
+    "choices": [
+      "Water",
+      "Oil",
+      "Milk",
+      "Fruit"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-4",
+    "level": "beginner",
+    "question": "Which prophet was swallowed by a great fish?",
+    "choices": [
+      "Daniel",
+      "Elijah",
+      "Jonah",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-5",
+    "level": "beginner",
+    "question": "In which garden did Jesus pray before His crucifixion?",
+    "choices": [
+      "Eden",
+      "Gethsemane",
+      "Nazareth",
+      "Bethany"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-6",
+    "level": "beginner",
+    "question": "Who wrote most of the New Testament letters?",
+    "choices": [
+      "John",
+      "Peter",
+      "Paul",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-7",
+    "level": "beginner",
+    "question": "What is the shortest book in the New Testament?",
+    "choices": [
+      "2 John",
+      "3 John",
+      "Philemon",
+      "Jude"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-8",
+    "level": "beginner",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Moses",
+      "Job"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643089348-9",
+    "level": "beginner",
+    "question": "What animal spoke to Balaam?",
+    "choices": [
+      "Horse",
+      "Donkey",
+      "Camel",
+      "Ox"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-0",
+    "level": "beginner",
+    "question": "What is the first book of the Bible?",
+    "choices": [
+      "Exodus",
+      "Genesis",
+      "Psalms",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-1",
+    "level": "beginner",
+    "question": "Who was the giant that David defeated?",
+    "choices": [
+      "Goliath",
+      "Saul",
+      "Abimelech",
+      "Samson"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-2",
+    "level": "beginner",
+    "question": "Which prophet was swallowed by a great fish?",
+    "choices": [
+      "Elijah",
+      "Jeremiah",
+      "Jonah",
+      "Ezekiel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-3",
+    "level": "beginner",
+    "question": "What did Jesus turn water into at the wedding in Cana?",
+    "choices": [
+      "Wine",
+      "Oil",
+      "Milk",
+      "Vinegar"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-4",
+    "level": "beginner",
+    "question": "In which book of the Bible do we find the Ten Commandments?",
+    "choices": [
+      "Exodus",
+      "Leviticus",
+      "Numbers",
+      "Deuteronomy"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-5",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "John 3:16",
+      "Luke 2:52",
+      "1 Thessalonians 5:16",
+      "John 11:35"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-6",
+    "level": "beginner",
+    "question": "What book contains the story of Samson and Delilah?",
+    "choices": [
+      "Judges",
+      "Kings",
+      "Samuel",
+      "Ruth"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-7",
+    "level": "beginner",
+    "question": "Which New Testament book contains the 'fruits of the Spirit'?",
+    "choices": [
+      "Romans",
+      "Galatians",
+      "Ephesians",
+      "Philippians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-8",
+    "level": "beginner",
+    "question": "Who is known as the 'weeping prophet'?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Daniel",
+      "Ezekiel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643090168-9",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Man"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-1",
+    "level": "beginner",
+    "question": "Who was thrown into a den of lions for praying to God?",
+    "choices": [
+      "Daniel",
+      "David",
+      "Moses",
+      "Joseph"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-2",
+    "level": "beginner",
+    "question": "Which giant did David defeat with a sling and a stone?",
+    "choices": [
+      "Goliath",
+      "Saul",
+      "Samson",
+      "Absalom"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-3",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "God is love.",
+      "Pray without ceasing.",
+      "In the beginning was the Word."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-4",
+    "level": "beginner",
+    "question": "Which book contains the verse 'The fear of the Lord is the beginning of wisdom'?",
+    "choices": [
+      "Psalms",
+      "Proverbs",
+      "Ecclesiastes",
+      "Job"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-5",
+    "level": "beginner",
+    "question": "Who betrayed Jesus for thirty pieces of silver?",
+    "choices": [
+      "Peter",
+      "Judas",
+      "John",
+      "Thomas"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-6",
+    "level": "beginner",
+    "question": "What did the people of Israel wander in the wilderness for 40 years?",
+    "choices": [
+      "A new home",
+      "The promised land",
+      "Freedom from Egypt",
+      "God's provision"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-7",
+    "level": "beginner",
+    "question": "Which book is known as the 'Book of Songs'?",
+    "choices": [
+      "Ecclesiastes",
+      "Psalms",
+      "Proverbs",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-8",
+    "level": "beginner",
+    "question": "What is the last book of the New Testament?",
+    "choices": [
+      "Hebrews",
+      "Revelation",
+      "Acts",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643102486-9",
+    "level": "beginner",
+    "question": "Who is known for building an ark to save his family and animals from a flood?",
+    "choices": [
+      "Moses",
+      "Abraham",
+      "Noah",
+      "Isaac"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Humans",
+      "Plants"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-1",
+    "level": "beginner",
+    "question": "Who defeated the giant Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Samson",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-2",
+    "level": "beginner",
+    "question": "In which book are the Ten Commandments found?",
+    "choices": [
+      "Leviticus",
+      "Numbers",
+      "Exodus",
+      "Deuteronomy"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-3",
+    "level": "beginner",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "Moses",
+      "Solomon",
+      "David",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-4",
+    "level": "beginner",
+    "question": "Which prophet was swallowed by a great fish?",
+    "choices": [
+      "Elijah",
+      "Isaiah",
+      "Jonah",
+      "Daniel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-5",
+    "level": "beginner",
+    "question": "What miracle did Jesus perform at a wedding in Cana?",
+    "choices": [
+      "Healed a blind man",
+      "Walked on water",
+      "Turned water into wine",
+      "Fed 5000 people"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-6",
+    "level": "beginner",
+    "question": "What is the main theme of Psalm 23?",
+    "choices": [
+      "Creation",
+      "Forgiveness",
+      "God's guidance",
+      "Prophecy"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-7",
+    "level": "beginner",
+    "question": "Which apostle denied knowing Jesus three times?",
+    "choices": [
+      "Peter",
+      "John",
+      "James",
+      "Thomas"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-8",
+    "level": "beginner",
+    "question": "Who received the vision of the valley of dry bones?",
+    "choices": [
+      "Isaiah",
+      "Ezekiel",
+      "Jeremiah",
+      "Daniel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643124942-9",
+    "level": "beginner",
+    "question": "Which letter is known for the fruit of the Spirit?",
+    "choices": [
+      "Romans",
+      "Corinthians",
+      "Galatians",
+      "Ephesians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-1",
+    "level": "beginner",
+    "question": "Who defeated Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Jonathan",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-2",
+    "level": "beginner",
+    "question": "Which king built the first temple in Jerusalem?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Hezekiah",
+      "Josiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-3",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "Rejoice always.",
+      "Pray without ceasing.",
+      "For God so loved the world."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-4",
+    "level": "beginner",
+    "question": "In which book is the Lord's Prayer found?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-5",
+    "level": "beginner",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Elijah",
+      "Noah",
+      "Jonah",
+      "Moses"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-6",
+    "level": "beginner",
+    "question": "What did God give Moses on Mount Sinai?",
+    "choices": [
+      "The Ten Commandments",
+      "The Ark of the Covenant",
+      "The Holy Spirit",
+      "The Promise Land"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-7",
+    "level": "beginner",
+    "question": "Which disciple betrayed Jesus?",
+    "choices": [
+      "Peter",
+      "Judas",
+      "John",
+      "Andrew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-8",
+    "level": "beginner",
+    "question": "What did Jesus turn into wine at a wedding?",
+    "choices": [
+      "Water",
+      "Juice",
+      "Bread",
+      "Fish"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643125784-9",
+    "level": "beginner",
+    "question": "Who wrote the Book of Proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Isaiah",
+      "Paul"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-1",
+    "level": "beginner",
+    "question": "Who was thrown into a lion's den for praying to God?",
+    "choices": [
+      "Daniel",
+      "Shadrach",
+      "Meshach",
+      "Abednego"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-2",
+    "level": "beginner",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "Solomon",
+      "David",
+      "Job",
+      "Moses"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-3",
+    "level": "beginner",
+    "question": "What food did God provide the Israelites in the wilderness?",
+    "choices": [
+      "Manna",
+      "Quail",
+      "Bread",
+      "Fish"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-4",
+    "level": "beginner",
+    "question": "In which book do we find the Lord's Prayer?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-5",
+    "level": "beginner",
+    "question": "Who betrayed Jesus for thirty pieces of silver?",
+    "choices": [
+      "Peter",
+      "John",
+      "Judas",
+      "Thomas"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-6",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "God is love.",
+      "Pray without ceasing.",
+      "Faith can move mountains."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-7",
+    "level": "beginner",
+    "question": "Which king is famous for building the temple in Jerusalem?",
+    "choices": [
+      "Saul",
+      "David",
+      "Solomon",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-8",
+    "level": "beginner",
+    "question": "Who was the first murderer in the Bible?",
+    "choices": [
+      "Cain",
+      "Abel",
+      "Noah",
+      "Lamech"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643127738-9",
+    "level": "beginner",
+    "question": "Which book of the Bible contains the Beatitudes?",
+    "choices": [
+      "Luke",
+      "John",
+      "Matthew",
+      "Mark"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-0",
+    "level": "beginner",
+    "question": "What was the first miracle performed by Jesus?",
+    "choices": [
+      "Turning water into wine",
+      "Healing the blind",
+      "Feeding the 5000",
+      "Walking on water"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-1",
+    "level": "beginner",
+    "question": "Who was thrown into the lion's den for praying to God?",
+    "choices": [
+      "Moses",
+      "Daniel",
+      "Joseph",
+      "David"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-2",
+    "level": "beginner",
+    "question": "Which book contains the verse, 'For I know the plans I have for you'?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Proverbs",
+      "Psalms"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-3",
+    "level": "beginner",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "Solomon",
+      "David",
+      "Job",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-4",
+    "level": "beginner",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "God is love.",
+      "Pray without ceasing.",
+      "The Lord is my shepherd."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-5",
+    "level": "beginner",
+    "question": "In which book do we find the story of David and Goliath?",
+    "choices": [
+      "1 Samuel",
+      "Exodus",
+      "Kings",
+      "Judges"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-6",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land and seas",
+      "Animals",
+      "Light",
+      "Man"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-7",
+    "level": "beginner",
+    "question": "Who denied Jesus three times before the rooster crowed?",
+    "choices": [
+      "Judas",
+      "Peter",
+      "John",
+      "Thomas"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-8",
+    "level": "beginner",
+    "question": "What is the greatest commandment according to Jesus?",
+    "choices": [
+      "Love your neighbor",
+      "Honor your parents",
+      "Love the Lord your God",
+      "Do not steal"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763643128113-9",
+    "level": "beginner",
+    "question": "Who is known as the 'father of many nations'?",
+    "choices": [
+      "Isaac",
+      "Jacob",
+      "Abraham",
+      "Moses"
+    ],
+    "correctIndex": 0
+  },
+  {
     "id": "intermediate-1763607966720-0",
     "level": "intermediate",
     "question": "What is the first book of the Bible?",
@@ -1688,6 +3128,126 @@
       "To keep the Sabbath",
       "To honor your father and mother",
       "To love God with all your heart"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-0",
+    "level": "intermediate",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-1",
+    "level": "intermediate",
+    "question": "Who was thrown into a den of lions?",
+    "choices": [
+      "Daniel",
+      "Shadrach",
+      "Meshach",
+      "Abednego"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-2",
+    "level": "intermediate",
+    "question": "What did Jesus turn water into at a wedding?",
+    "choices": [
+      "Wine",
+      "Bread",
+      "Fish",
+      "Oil"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-3",
+    "level": "intermediate",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "David",
+      "Saul",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-4",
+    "level": "intermediate",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept",
+      "God is love",
+      "Rejoice always",
+      "Pray without ceasing"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-5",
+    "level": "intermediate",
+    "question": "What did David use to defeat Goliath?",
+    "choices": [
+      "A sword",
+      "A slingshot",
+      "A spear",
+      "A bow"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-6",
+    "level": "intermediate",
+    "question": "Which book contains the verse 'For I know the plans I have for you'?",
+    "choices": [
+      "Proverbs",
+      "Isaiah",
+      "Jeremiah",
+      "Psalms"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-7",
+    "level": "intermediate",
+    "question": "Who wrote most of the New Testament letters?",
+    "choices": [
+      "Peter",
+      "John",
+      "Paul",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-8",
+    "level": "intermediate",
+    "question": "In which city was Jesus born?",
+    "choices": [
+      "Nazareth",
+      "Jerusalem",
+      "Bethlehem",
+      "Capernaum"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1763610243820-9",
+    "level": "intermediate",
+    "question": "What fruit did Adam and Eve eat?",
+    "choices": [
+      "Apple",
+      "Fig",
+      "Grape",
+      "Banana"
     ],
     "correctIndex": 0
   }
