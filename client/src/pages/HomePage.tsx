@@ -227,13 +227,21 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
       </div>
 
       <Tabs defaultValue="home" className="w-full">
-        <div className="px-4 pt-4 pb-2 border-b border-border sticky top-0 bg-background z-10">
-          <TabsList className="w-full max-w-md mx-auto grid grid-cols-2">
-            <TabsTrigger value="home" data-testid="tab-home" className="gap-2">
+        <div className="px-4 pt-4 pb-2 sticky top-0 z-10" style={{ backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)' }}>
+          <TabsList className="w-full max-w-md mx-auto grid grid-cols-2 bg-white/40 dark:bg-gray-900/40 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-lg shadow-black/5">
+            <TabsTrigger 
+              value="home" 
+              data-testid="tab-home" 
+              className="gap-2 data-[state=active]:bg-white/80 data-[state=active]:dark:bg-white/20 data-[state=active]:shadow-md data-[state=active]:shadow-black/10 data-[state=inactive]:text-gray-600 data-[state=inactive]:dark:text-gray-400 backdrop-blur-md"
+            >
               <BookOpen className="w-4 h-4" />
               Home
             </TabsTrigger>
-            <TabsTrigger value="kingdom" data-testid="tab-kingdom" className="gap-2">
+            <TabsTrigger 
+              value="kingdom" 
+              data-testid="tab-kingdom" 
+              className="gap-2 data-[state=active]:bg-white/80 data-[state=active]:dark:bg-white/20 data-[state=active]:shadow-md data-[state=active]:shadow-black/10 data-[state=inactive]:text-gray-600 data-[state=inactive]:dark:text-gray-400 backdrop-blur-md"
+            >
               <Crown className="w-4 h-4" />
               Kingdom
             </TabsTrigger>
