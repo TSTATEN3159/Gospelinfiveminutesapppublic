@@ -2383,5 +2383,605 @@
     "reference": "Old Testament",
     "explanation": "Biblical knowledge question from the Old Testament.",
     "category": "Old Testament"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-61",
+    "level": "beginner",
+    "question": "According to John 3:16, why did God give His only begotten Son?",
+    "choices": [
+      "So that whoever believes in Him should not perish but have everlasting life",
+      "To condemn the world",
+      "To show His power",
+      "To establish a kingdom"
+    ],
+    "correctIndex": 0,
+    "reference": "John 3:16",
+    "explanation": "John 3:16 reveals that God gave His Son so that all who believe in Him will be saved and receive eternal life.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-62",
+    "level": "beginner",
+    "question": "According to Romans 10:9, what must we confess with our mouth to be saved?",
+    "choices": [
+      "The cross",
+      "The Lord Jesus",
+      "The Gospel",
+      "The Holy Spirit"
+    ],
+    "correctIndex": 1,
+    "reference": "Romans 10:9",
+    "explanation": "Paul teaches that salvation involves confessing Jesus as Lord and believing that God raised Him from the dead.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-63",
+    "level": "beginner",
+    "question": "According to 1 John 1:9, what does God do if we confess our sins?",
+    "choices": [
+      "He remembers our sins no more",
+      "He casts our sins into the sea",
+      "He covers our sins with His blood",
+      "He is faithful and just to forgive us our sins and to cleanse us from all unrighteousness"
+    ],
+    "correctIndex": 3,
+    "reference": "1 John 1:9",
+    "explanation": "When we confess our sins, God promises forgiveness and cleansing because He is faithful and just.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-64",
+    "level": "beginner",
+    "question": "According to Ephesians 1:7, through whose blood do we have redemption and the forgiveness of sins?",
+    "choices": [
+      "Jesus Christ",
+      "The Father",
+      "God's grace",
+      "The Holy Spirit"
+    ],
+    "correctIndex": 0,
+    "reference": "Ephesians 1:7",
+    "explanation": "Paul explains that redemption and forgiveness come through the blood of Jesus Christ.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-65",
+    "level": "intermediate",
+    "question": "According to 2 Corinthians 5:7, how are believers called to walk?",
+    "choices": [
+      "By faith, not by sight",
+      "By hope, not by despair",
+      "By love, not by knowledge",
+      "By works, not by grace"
+    ],
+    "correctIndex": 0,
+    "reference": "2 Corinthians 5:7",
+    "explanation": "Believers are called to live trusting God’s word and promises rather than what they see.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-66",
+    "level": "intermediate",
+    "question": "According to Romans 8:1, there is now no condemnation to those who are where?",
+    "choices": [
+      "In God's love",
+      "In Christ Jesus",
+      "In the Spirit",
+      "In the church"
+    ],
+    "correctIndex": 1,
+    "reference": "Romans 8:1",
+    "explanation": "Paul declares that there is no condemnation for those who are united to Christ Jesus.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-67",
+    "level": "intermediate",
+    "question": "According to Galatians 2:20, by what does Paul say he now lives in the flesh?",
+    "choices": [
+      "By the law",
+      "By the Spirit",
+      "By grace alone",
+      "By faith in the Son of God"
+    ],
+    "correctIndex": 3,
+    "reference": "Galatians 2:20",
+    "explanation": "Paul explains that his life is now lived by faith in Christ, who loved him and gave Himself for him.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-68",
+    "level": "advanced",
+    "question": "According to Titus 3:5, are we saved by works of righteousness which we have done or by something else?",
+    "choices": [
+      "According to His mercy",
+      "By His power",
+      "By our faith",
+      "By God's grace"
+    ],
+    "correctIndex": 0,
+    "reference": "Titus 3:5",
+    "explanation": "Titus 3:5 teaches that salvation is not achieved by our works but by God’s mercy.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-69",
+    "level": "advanced",
+    "question": "According to 1 Corinthians 6:19–20, believers are said to be the temple of whom?",
+    "choices": [
+      "God the Father",
+      "The Word of God",
+      "Jesus Christ",
+      "The Holy Spirit"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Corinthians 6:19–20",
+    "explanation": "Paul teaches that believers are the temple of the Holy Spirit and are bought with a price.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-70",
+    "level": "intermediate",
+    "question": "According to Hebrews 11:6, what is impossible without faith?",
+    "choices": [
+      "To please God",
+      "To be saved",
+      "To do good works",
+      "To enter heaven"
+    ],
+    "correctIndex": 0,
+    "reference": "Hebrews 11:6",
+    "explanation": "Hebrews teaches that without faith it is impossible to please God, because we must believe that He is and rewards those who seek Him.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-71",
+    "level": "beginner",
+    "question": "Who preached the sermon on the Day of Pentecost when about three thousand souls were added?",
+    "choices": [
+      "John",
+      "Andrew",
+      "James",
+      "Peter"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 2:14–41",
+    "explanation": "On the Day of Pentecost, Peter stood up and preached Jesus as Lord and Christ, and many believed.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-72",
+    "level": "beginner",
+    "question": "Who was chosen to replace Judas Iscariot as one of the twelve apostles?",
+    "choices": [
+      "Silas",
+      "Timothy",
+      "Matthias",
+      "Barnabas"
+    ],
+    "correctIndex": 2,
+    "reference": "Acts 1:23–26",
+    "explanation": "After Judas’s betrayal and death, the apostles prayed and cast lots, and Matthias was chosen.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-73",
+    "level": "intermediate",
+    "question": "Before he was called Paul, what was the apostle Paul’s name?",
+    "choices": [
+      "Philip",
+      "Saul",
+      "Stephen",
+      "Barnabas"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 13:9",
+    "explanation": "The man later known as Paul was first called Saul, a persecutor of the church before Christ saved him.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-74",
+    "level": "intermediate",
+    "question": "Who was the companion of Paul on his first missionary journey, sometimes called the son of encouragement?",
+    "choices": [
+      "Silas",
+      "Titus",
+      "Timothy",
+      "Barnabas"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 4:36; Acts 13:2",
+    "explanation": "Barnabas, whose name means son of encouragement, served alongside Paul on missionary journeys.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-75",
+    "level": "intermediate",
+    "question": "Which young man fell asleep during Paul’s long sermon and fell from a window, then was raised up alive?",
+    "choices": [
+      "Timothy",
+      "Apollos",
+      "Eutychus",
+      "Titus"
+    ],
+    "correctIndex": 2,
+    "reference": "Acts 20:9–10",
+    "explanation": "Eutychus fell from the third story while Paul preached, but God restored him to life.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-76",
+    "level": "advanced",
+    "question": "Who took the place of Paul and Barnabas when they had a sharp disagreement, accompanying Barnabas to Cyprus?",
+    "choices": [
+      "Timothy",
+      "John Mark",
+      "Luke",
+      "Matthew"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 15:37–39",
+    "explanation": "Barnabas chose John Mark and sailed to Cyprus after he and Paul parted ways.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-77",
+    "level": "advanced",
+    "question": "In Acts 6, what group of servants was appointed to help with the daily distribution so the apostles could devote themselves to prayer and the word?",
+    "choices": [
+      "Twelve apostles",
+      "Elders",
+      "Seven men (often called deacons)",
+      "Seventy disciples"
+    ],
+    "correctIndex": 2,
+    "reference": "Acts 6:1–6",
+    "explanation": "The apostles led the church to choose seven qualified men to oversee the daily distribution.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-78",
+    "level": "beginner",
+    "question": "Who was sold by his brothers and later became second in command in Egypt?",
+    "choices": [
+      "Benjamin",
+      "Judah",
+      "Joseph",
+      "Reuben"
+    ],
+    "correctIndex": 2,
+    "reference": "Genesis 37:28; Genesis 41:39–41",
+    "explanation": "Joseph’s brothers sold him into slavery, but God exalted him in Egypt to save many people.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-79",
+    "level": "beginner",
+    "question": "Who led Israel out of Egypt through the Red Sea? ",
+    "choices": [
+      "Aaron",
+      "Joshua",
+      "Moses",
+      "Caleb"
+    ],
+    "correctIndex": 2,
+    "reference": "Exodus 3:10; Exodus 14:21–22",
+    "explanation": "God chose Moses to confront Pharaoh and lead Israel out of bondage through the Red Sea.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-80",
+    "level": "intermediate",
+    "question": "Who was the prophet that succeeded Elijah and received a double portion of his spirit?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Elijah",
+      "Elisha"
+    ],
+    "correctIndex": 3,
+    "reference": "2 Kings 2:9–15",
+    "explanation": "Elisha asked for and received a double portion of Elijah’s spirit as he took up Elijah’s mantle.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-81",
+    "level": "intermediate",
+    "question": "Which woman from Moab said to her mother-in-law, \"Your people shall be my people, and your God, my God\"?",
+    "choices": [
+      "Naomi",
+      "Ruth",
+      "Deborah",
+      "Esther"
+    ],
+    "correctIndex": 1,
+    "reference": "Ruth 1:16",
+    "explanation": "Ruth, a Moabite woman, committed herself to Naomi and to the God of Israel.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-82",
+    "level": "advanced",
+    "question": "Which Old Testament priest had two wicked sons named Hophni and Phinehas?",
+    "choices": [
+      "Aaron",
+      "Eli",
+      "Samuel",
+      "Saul"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Samuel 1:3; 1 Samuel 2:12",
+    "explanation": "Eli served as priest in Shiloh, but his sons Hophni and Phinehas were corrupt.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-83",
+    "level": "advanced",
+    "question": "Which Persian queen risked her life to plead for her people and said, \"If I perish, I perish\"?",
+    "choices": [
+      "Ruth",
+      "Esther",
+      "Vashti",
+      "Deborah"
+    ],
+    "correctIndex": 1,
+    "reference": "Esther 4:16",
+    "explanation": "Esther courageously went before the king unsummoned to plead for the Jews’ deliverance.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-84",
+    "level": "beginner",
+    "question": "Which Gospel records the Sermon on the Mount beginning with the Beatitudes?",
+    "choices": [
+      "Luke",
+      "John",
+      "Matthew",
+      "Mark"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 5:1–2",
+    "explanation": "Matthew’s Gospel records the Sermon on the Mount, where Jesus begins with the Beatitudes.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-85",
+    "level": "beginner",
+    "question": "Which Old Testament book tells the story of David and Goliath?",
+    "choices": [
+      "1 Samuel",
+      "1 Kings",
+      "2 Samuel",
+      "Judges"
+    ],
+    "correctIndex": 0,
+    "reference": "1 Samuel 17:1–50",
+    "explanation": "The story of David and Goliath is found in 1 Samuel, where David defeats the Philistine giant.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-86",
+    "level": "intermediate",
+    "question": "Which book in the New Testament is addressed \"To Theophilus\" and continues the account of Jesus’ work through the apostles?",
+    "choices": [
+      "1 Corinthians",
+      "Acts",
+      "Romans",
+      "Luke"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 1:1",
+    "explanation": "Acts is written to Theophilus and records the spread of the gospel through the early church.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-87",
+    "level": "intermediate",
+    "question": "Which Old Testament book is a collection of laments over the destruction of Jerusalem?",
+    "choices": [
+      "Lamentations",
+      "Ezekiel",
+      "Jeremiah",
+      "Isaiah"
+    ],
+    "correctIndex": 0,
+    "reference": "Lamentations 1:1",
+    "explanation": "Lamentations expresses deep sorrow over Jerusalem’s fall and the people’s suffering.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-88",
+    "level": "advanced",
+    "question": "Which Old Testament prophet wrote a book addressed to Nineveh, declaring that \"Salvation is of the Lord\"?",
+    "choices": [
+      "Habakkuk",
+      "Nahum",
+      "Jonah",
+      "Micah"
+    ],
+    "correctIndex": 2,
+    "reference": "Jonah 2:9; Jonah 3:1–4",
+    "explanation": "Jonah’s book tells how God sent him to Nineveh and how he declared, \"Salvation is of the Lord.\"",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-89",
+    "level": "advanced",
+    "question": "Which New Testament letter emphasizes joy in Christ despite imprisonment and contains the words, \"Rejoice in the Lord always\"?",
+    "choices": [
+      "Colossians",
+      "1 Thessalonians",
+      "Ephesians",
+      "Philippians"
+    ],
+    "correctIndex": 3,
+    "reference": "Philippians 4:4",
+    "explanation": "Philippians is a prison letter in which Paul repeatedly calls believers to rejoice in the Lord.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-90",
+    "level": "beginner",
+    "question": "In which parable did Jesus speak of a shepherd leaving ninety-nine sheep to seek one that was lost?",
+    "choices": [
+      "The Parable of the Lost Coin",
+      "The Parable of the Lost Sheep",
+      "The Parable of the Good Shepherd",
+      "The Parable of the Prodigal Son"
+    ],
+    "correctIndex": 1,
+    "reference": "Luke 15:3–7",
+    "explanation": "The parable shows God’s joy over one sinner who repents, like a shepherd finding a lost sheep.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-91",
+    "level": "beginner",
+    "question": "In the parable of the Good Samaritan, who showed mercy to the man who fell among thieves?",
+    "choices": [
+      "The Samaritan",
+      "The Levite",
+      "The priest",
+      "A merchant"
+    ],
+    "correctIndex": 0,
+    "reference": "Luke 10:33–37",
+    "explanation": "Jesus teaches that the true neighbor was the Samaritan who had compassion and helped the wounded man.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-92",
+    "level": "intermediate",
+    "question": "In the parable of the sower, what do the thorns represent that choke the word?",
+    "choices": [
+      "Persecution and tribulation",
+      "False teachers",
+      "The world",
+      "The cares, riches, and pleasures of life"
+    ],
+    "correctIndex": 3,
+    "reference": "Luke 8:14",
+    "explanation": "Jesus explains that the thorns picture worries, riches, and pleasures that choke spiritual growth.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-93",
+    "level": "intermediate",
+    "question": "In the parable of the talents, what did the faithful servants do with the talents they received?",
+    "choices": [
+      "They buried them for safekeeping",
+      "They traded with them and gained more talents",
+      "They gave them to the poor",
+      "They kept them for themselves"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 25:14–23",
+    "explanation": "The faithful servants used what they were given and gained more, receiving praise from their master.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-94",
+    "level": "advanced",
+    "question": "In the parable of the wheat and the tares, who sows the tares among the wheat?",
+    "choices": [
+      "The world",
+      "False prophets",
+      "Evil spirits",
+      "The enemy, the devil"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 13:24–30; Matthew 13:39",
+    "explanation": "Jesus explains that the enemy who sows the tares is the devil, and the harvest is the end of the age.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-95",
+    "level": "advanced",
+    "question": "In the parable of the rich man and Lazarus, where was Lazarus comforted after death?",
+    "choices": [
+      "In Abraham’s bosom",
+      "Persecution",
+      "The world",
+      "False teachers"
+    ],
+    "correctIndex": 0,
+    "reference": "Luke 16:22–25",
+    "explanation": "Lazarus is pictured as being comforted in Abraham’s bosom, while the rich man is in torment.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-96",
+    "level": "intermediate",
+    "question": "According to Colossians 1:18, who is the head of the body, the church?",
+    "choices": [
+      "The elders",
+      "Christ",
+      "The Holy Spirit",
+      "The apostles"
+    ],
+    "correctIndex": 1,
+    "reference": "Colossians 1:18",
+    "explanation": "Paul teaches that Christ is the head of the body, the church, having preeminence in all things.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-97",
+    "level": "intermediate",
+    "question": "In Acts 16, whose household was baptized after she believed and invited Paul and Silas to stay at her house?",
+    "choices": [
+      "Priscilla",
+      "Mary",
+      "Lydia",
+      "Martha"
+    ],
+    "correctIndex": 2,
+    "reference": "Acts 16:14–15",
+    "explanation": "Lydia, a seller of purple from Thyatira, believed the gospel and her household was baptized.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-98",
+    "level": "advanced",
+    "question": "Which couple lied about the price of their land and fell down dead when confronted by Peter?",
+    "choices": [
+      "Aquila and Priscilla",
+      "Joseph and Mary",
+      "Zacharias and Elizabeth",
+      "Ananias and Sapphira"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 5:1–10",
+    "explanation": "Ananias and Sapphira lied to the Holy Spirit about their gift and were judged by God.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-99",
+    "level": "advanced",
+    "question": "Which Old Testament prophet’s book begins with the words, \"The burden which the prophet saw\" and includes the phrase, \"In wrath remember mercy\"?",
+    "choices": [
+      "Zephaniah",
+      "Haggai",
+      "Nahum",
+      "Habakkuk"
+    ],
+    "correctIndex": 3,
+    "reference": "Habakkuk 1:1; Habakkuk 3:2",
+    "explanation": "Habakkuk records a dialogue with God and prays that in wrath God would remember mercy.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt2-1763661062786-100",
+    "level": "advanced",
+    "question": "Which Old Testament character was a Nazirite from the womb and known for his great physical strength and failure with Delilah?",
+    "choices": [
+      "Isaiah",
+      "Eutychus",
+      "Samson",
+      "Paul"
+    ],
+    "correctIndex": 2,
+    "reference": "Judges 13:5; Judges 16:4–6",
+    "explanation": "Samson was set apart as a Nazirite and given great strength by God, yet fell into sin with Delilah.",
+    "category": "People"
   }
 ]
