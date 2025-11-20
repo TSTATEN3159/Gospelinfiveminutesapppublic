@@ -13,7 +13,7 @@ import devotionals365Router from "./devotionals-365";
 import { getAllPlans, getPlan, getDayReading, type PlanType } from "./reading-plans";
 import { bibleApiFallback } from "./services/bibleApiFallback";
 import { apiUsageTracker } from "./services/apiUsageTracker";
-import { getRandomTriviaQuestions, TriviaLevel } from "./triviaStore";
+import { getRandomTriviaQuestions, TriviaLevel, checkAnswer } from "./triviaStore";
 
 // the newest OpenAI model is "gpt-5" which was released August 7, 2025. do not change this unless explicitly requested by the user
 const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
@@ -1723,15 +1723,13 @@ Return only the application paragraph.
       const typedLevel = level as TriviaLevel;
       const poolQuestions = await getRandomTriviaQuestions(typedLevel, count);
 
-      const questions = poolQuestions.map((q, index) => ({
-        id: index + 1,
+      // SECURITY: Never send correctIndex to frontend - answers are graded server-side only
+      const questions = poolQuestions.map((q) => ({
+        id: q.id, // Use actual question ID for server-side validation
         question: q.question,
         options: q.choices,
-        correctAnswer: q.correctIndex,
-        verse: q.reference,
-        verseText: null,
-        explanation: null,
         level: level
+        // correctIndex is intentionally omitted - kept server-side only
       }));
 
       res.json({
@@ -1752,6 +1750,47 @@ Return only the application paragraph.
       res.status(500).json({
         success: false,
         error: "I'm having trouble loading trivia questions right now. Please try again in a moment."
+      });
+    }
+  });
+
+  // Server-side answer validation - the answer key NEVER leaves the server
+  const checkAnswerSchema = z.object({
+    questionId: z.string(),
+    selectedIndex: z.number().int().min(0).max(3),
+  });
+
+  app.post("/api/trivia/check-answer", (req, res) => {
+    try {
+      const { questionId, selectedIndex } = checkAnswerSchema.parse(req.body);
+      
+      const result = checkAnswer(questionId, selectedIndex);
+      
+      if (!result) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid question ID"
+        });
+      }
+
+      res.json({
+        success: true,
+        ...result
+      });
+
+    } catch (error) {
+      console.error("Check answer error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request format."
+        });
+      }
+
+      res.status(500).json({
+        success: false,
+        error: "Error checking answer"
       });
     }
   });

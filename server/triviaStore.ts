@@ -23,6 +23,7 @@ export interface StoredTriviaQuestion {
   choices: string[];
   correctIndex: number;
   reference?: string;
+  explanation?: string;
   category?: TriviaCategory;
 }
 
@@ -153,4 +154,35 @@ export async function getRandomTriviaQuestions(
   );
 
   return selected;
+}
+
+export interface CheckAnswerResult {
+  isCorrect: boolean;
+  correctIndex: number;
+  correctAnswer: string;
+  reference?: string;
+  explanation?: string;
+}
+
+export function checkAnswer(
+  questionId: string,
+  selectedIndex: number
+): CheckAnswerResult | null {
+  // Search all pools for the question
+  for (const level of ["beginner", "intermediate", "advanced"] as TriviaLevel[]) {
+    const question = memoryPool[level].find((q) => q.id === questionId);
+    if (question) {
+      const isCorrect = selectedIndex === question.correctIndex;
+      return {
+        isCorrect,
+        correctIndex: question.correctIndex,
+        correctAnswer: question.choices[question.correctIndex],
+        reference: question.reference,
+        explanation: question.explanation,
+      };
+    }
+  }
+  
+  console.error(`[TriviaStore] Question not found: ${questionId}`);
+  return null;
 }
