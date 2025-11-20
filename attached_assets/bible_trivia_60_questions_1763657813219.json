@@ -1,0 +1,826 @@
+[
+  {
+    "id": 1,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who built an ark to survive the great flood?",
+    "correct_answer": "Noah",
+    "accepted_answers": [
+      "Noah"
+    ],
+    "reference": "Genesis 6:13–14",
+    "explanation": "God warned Noah about the coming flood and commanded him to build an ark as an act of obedience and faith.",
+    "context_verse": "Genesis 6:22 — \"Thus Noah did; according to all that God commanded him, so he did.\""
+  },
+  {
+    "id": 2,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who killed the giant Goliath with a sling and a stone?",
+    "correct_answer": "David",
+    "accepted_answers": [
+      "David",
+      "King David"
+    ],
+    "reference": "1 Samuel 17:49–50",
+    "explanation": "David trusted in the Lord, not in armor or weapons, and God gave him victory over Goliath with just a sling and a stone.",
+    "context_verse": "1 Samuel 17:47 — \"The battle is the Lord’s, and He will give you into our hands.\""
+  },
+  {
+    "id": 3,
+    "difficulty": "Easy",
+    "category": "Jesus’ Life & Ministry",
+    "question": "Where was Jesus born?",
+    "correct_answer": "Bethlehem",
+    "accepted_answers": [
+      "Bethlehem"
+    ],
+    "reference": "Luke 2:4–7",
+    "explanation": "Jesus, the promised Messiah, was born in Bethlehem, fulfilling Old Testament prophecy.",
+    "context_verse": "Micah 5:2 — \"But you, Bethlehem Ephrathah… out of you shall come forth to Me the One to be Ruler in Israel.\""
+  },
+  {
+    "id": 4,
+    "difficulty": "Easy",
+    "category": "Jesus’ Life & Ministry",
+    "question": "Who was the mother of Jesus?",
+    "correct_answer": "Mary",
+    "accepted_answers": [
+      "Mary"
+    ],
+    "reference": "Luke 1:30–31",
+    "explanation": "God chose Mary, a young woman from Nazareth, to miraculously conceive and give birth to Jesus by the Holy Spirit.",
+    "context_verse": "Luke 1:38 — \"Then Mary said, ‘Behold the maidservant of the Lord! Let it be to me according to your word.’\""
+  },
+  {
+    "id": 5,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who was thrown into a den of lions for praying to God?",
+    "correct_answer": "Daniel",
+    "accepted_answers": [
+      "Daniel"
+    ],
+    "reference": "Daniel 6:16–17",
+    "explanation": "Daniel continued praying to God despite the king’s decree, and God shut the mouths of the lions to protect him.",
+    "context_verse": "Daniel 6:23 — \"So Daniel was taken up out of the den, and no injury whatever was found on him, because he believed in his God.\""
+  },
+  {
+    "id": 6,
+    "difficulty": "Easy",
+    "category": "Events",
+    "question": "On which day did God rest from all His work of creation?",
+    "correct_answer": "The seventh day",
+    "accepted_answers": [
+      "The seventh day",
+      "Seventh day",
+      "Day seven"
+    ],
+    "reference": "Genesis 2:2–3",
+    "explanation": "After creating the heavens and the earth in six days, God rested on the seventh day and blessed it.",
+    "context_verse": "Genesis 2:3 — \"Then God blessed the seventh day and sanctified it…\""
+  },
+  {
+    "id": 7,
+    "difficulty": "Easy",
+    "category": "Miracles",
+    "question": "What did Jesus turn water into at a wedding in Cana?",
+    "correct_answer": "Wine",
+    "accepted_answers": [
+      "Wine"
+    ],
+    "reference": "John 2:7–9",
+    "explanation": "At the wedding in Cana of Galilee, Jesus turned water into wine, performing His first recorded miracle.",
+    "context_verse": "John 2:11 — \"This beginning of signs Jesus did in Cana of Galilee, and manifested His glory…\""
+  },
+  {
+    "id": 8,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who was swallowed by a great fish after running from God’s command?",
+    "correct_answer": "Jonah",
+    "accepted_answers": [
+      "Jonah"
+    ],
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah tried to flee from God’s call to preach to Nineveh, but God sent a great fish to swallow him and bring him back to obedience.",
+    "context_verse": "Jonah 2:1 — \"Then Jonah prayed to the Lord his God from the fish’s belly.\""
+  },
+  {
+    "id": 9,
+    "difficulty": "Easy",
+    "category": "Books of the Bible",
+    "question": "What is the first book of the Bible?",
+    "correct_answer": "Genesis",
+    "accepted_answers": [
+      "Genesis"
+    ],
+    "reference": "Genesis 1:1",
+    "explanation": "Genesis is the first book of the Bible and begins with God’s creation of the heavens and the earth.",
+    "context_verse": "Genesis 1:1 — \"In the beginning God created the heavens and the earth.\""
+  },
+  {
+    "id": 10,
+    "difficulty": "Easy",
+    "category": "Events",
+    "question": "What sign did God place in the sky as a promise never to destroy the earth with a flood again?",
+    "correct_answer": "A rainbow",
+    "accepted_answers": [
+      "A rainbow",
+      "Rainbow"
+    ],
+    "reference": "Genesis 9:13–15",
+    "explanation": "God set the rainbow in the clouds as a covenant sign that He would never again destroy all flesh with a flood.",
+    "context_verse": "Genesis 9:13 — \"I set My rainbow in the cloud, and it shall be for the sign of the covenant between Me and the earth.\""
+  },
+  {
+    "id": 11,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who was the first man God created?",
+    "correct_answer": "Adam",
+    "accepted_answers": [
+      "Adam"
+    ],
+    "reference": "Genesis 2:7",
+    "explanation": "God formed Adam from the dust of the ground and breathed into him the breath of life.",
+    "context_verse": "Genesis 2:7 — \"And man became a living being.\""
+  },
+  {
+    "id": 12,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Who was the first woman God created?",
+    "correct_answer": "Eve",
+    "accepted_answers": [
+      "Eve"
+    ],
+    "reference": "Genesis 2:21–22",
+    "explanation": "God created Eve from Adam’s rib as a helper suitable for him.",
+    "context_verse": "Genesis 2:23 — \"This is now bone of my bones and flesh of my flesh…\""
+  },
+  {
+    "id": 13,
+    "difficulty": "Easy",
+    "category": "Jesus’ Life & Ministry",
+    "question": "How many disciples did Jesus choose to be with Him during His earthly ministry?",
+    "correct_answer": "Twelve",
+    "accepted_answers": [
+      "Twelve",
+      "12"
+    ],
+    "reference": "Matthew 10:1–2",
+    "explanation": "Jesus chose twelve disciples whom He also named apostles, to follow Him and be sent out to minister.",
+    "context_verse": "Matthew 10:2 — \"Now the names of the twelve apostles are these…\""
+  },
+  {
+    "id": 14,
+    "difficulty": "Easy",
+    "category": "Miracles",
+    "question": "How many loaves did Jesus use to feed about five thousand men, besides women and children?",
+    "correct_answer": "Five loaves and two fish",
+    "accepted_answers": [
+      "Five loaves and two fish",
+      "5 loaves and 2 fish",
+      "Five loaves and 2 fish"
+    ],
+    "reference": "Matthew 14:17–21",
+    "explanation": "Jesus multiplied five loaves and two fish to feed a great crowd, showing His compassion and divine power.",
+    "context_verse": "Matthew 14:20 — \"So they all ate and were filled…\""
+  },
+  {
+    "id": 15,
+    "difficulty": "Easy",
+    "category": "Promises",
+    "question": "According to Psalm 23, who is our shepherd?",
+    "correct_answer": "The Lord",
+    "accepted_answers": [
+      "The Lord",
+      "The LORD",
+      "God"
+    ],
+    "reference": "Psalm 23:1",
+    "explanation": "David declares that the Lord Himself is our shepherd, the One who leads, provides, and protects.",
+    "context_verse": "Psalm 23:1 — \"The Lord is my shepherd; I shall not want.\""
+  },
+  {
+    "id": 16,
+    "difficulty": "Easy",
+    "category": "Books of the Bible",
+    "question": "What is the last book of the Bible?",
+    "correct_answer": "Revelation",
+    "accepted_answers": [
+      "Revelation",
+      "The Book of Revelation"
+    ],
+    "reference": "Revelation 1:1",
+    "explanation": "Revelation is the final book of the Bible and reveals Jesus Christ’s ultimate victory and return.",
+    "context_verse": "Revelation 1:1 — \"The Revelation of Jesus Christ, which God gave Him to show His servants…\""
+  },
+  {
+    "id": 17,
+    "difficulty": "Easy",
+    "category": "Doctrine",
+    "question": "According to Jesus, what is the greatest commandment?",
+    "correct_answer": "To love the Lord your God with all your heart, soul, and mind",
+    "accepted_answers": [
+      "To love the Lord your God with all your heart, soul, and mind",
+      "Love the Lord your God with all your heart, soul, and mind"
+    ],
+    "reference": "Matthew 22:37–38",
+    "explanation": "Jesus taught that loving God with all that we are is the first and greatest commandment.",
+    "context_verse": "Matthew 22:38 — \"This is the first and great commandment.\""
+  },
+  {
+    "id": 18,
+    "difficulty": "Easy",
+    "category": "Doctrine",
+    "question": "What does the word \"Gospel\" mean?",
+    "correct_answer": "Good news",
+    "accepted_answers": [
+      "Good news"
+    ],
+    "reference": "1 Corinthians 15:1–3",
+    "explanation": "The Gospel is the good news that Christ died for our sins, was buried, and rose again the third day.",
+    "context_verse": "1 Corinthians 15:3 — \"Christ died for our sins according to the Scriptures.\""
+  },
+  {
+    "id": 19,
+    "difficulty": "Easy",
+    "category": "People",
+    "question": "Which apostle denied Jesus three times before the rooster crowed?",
+    "correct_answer": "Peter",
+    "accepted_answers": [
+      "Peter",
+      "The apostle Peter"
+    ],
+    "reference": "Luke 22:60–62",
+    "explanation": "Peter denied knowing Jesus three times out of fear, yet Jesus later restored and recommissioned him.",
+    "context_verse": "Luke 22:61 — \"And the Lord turned and looked at Peter.\""
+  },
+  {
+    "id": 20,
+    "difficulty": "Easy",
+    "category": "Events",
+    "question": "On what day of the week did Jesus rise from the dead?",
+    "correct_answer": "The first day of the week",
+    "accepted_answers": [
+      "The first day of the week",
+      "Sunday"
+    ],
+    "reference": "Matthew 28:1–6",
+    "explanation": "Jesus rose from the dead on the first day of the week, victorious over sin and death.",
+    "context_verse": "Matthew 28:6 — \"He is not here; for He is risen, as He said.\""
+  },
+  {
+    "id": 21,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Who was the first king of Israel?",
+    "correct_answer": "Saul",
+    "accepted_answers": [
+      "Saul",
+      "King Saul"
+    ],
+    "reference": "1 Samuel 10:1",
+    "explanation": "God allowed Israel to have a king and Samuel anointed Saul as the first king of Israel.",
+    "context_verse": "1 Samuel 10:1 — \"Then Samuel took a flask of oil and poured it on his head…\""
+  },
+  {
+    "id": 22,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Who led the Israelites into the Promised Land after Moses died?",
+    "correct_answer": "Joshua",
+    "accepted_answers": [
+      "Joshua"
+    ],
+    "reference": "Joshua 1:1–2",
+    "explanation": "After Moses’ death, God appointed Joshua to lead Israel into the land He had promised.",
+    "context_verse": "Joshua 1:2 — \"Moses My servant is dead. Now therefore, arise, go over this Jordan…\""
+  },
+  {
+    "id": 23,
+    "difficulty": "Medium",
+    "category": "Books of the Bible",
+    "question": "Which Old Testament book focuses on the rebuilding of the wall of Jerusalem?",
+    "correct_answer": "Nehemiah",
+    "accepted_answers": [
+      "Nehemiah"
+    ],
+    "reference": "Nehemiah 2:17–18",
+    "explanation": "Nehemiah records how God used Nehemiah to lead the people in rebuilding Jerusalem’s wall despite opposition.",
+    "context_verse": "Nehemiah 2:18 — \"So they said, ‘Let us rise up and build.’\""
+  },
+  {
+    "id": 24,
+    "difficulty": "Medium",
+    "category": "Parables",
+    "question": "In the parable of the sower, what does the seed represent?",
+    "correct_answer": "The word of God",
+    "accepted_answers": [
+      "The word of God",
+      "God’s word",
+      "The Word of God"
+    ],
+    "reference": "Luke 8:11",
+    "explanation": "Jesus explained that the seed is the word of God, which falls on different kinds of hearts.",
+    "context_verse": "Luke 8:11 — \"Now the parable is this: The seed is the word of God.\""
+  },
+  {
+    "id": 25,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to Ephesians, by what are we saved, and not by works?",
+    "correct_answer": "By grace through faith",
+    "accepted_answers": [
+      "By grace through faith",
+      "Grace through faith"
+    ],
+    "reference": "Ephesians 2:8–9",
+    "explanation": "Salvation is a gift of God’s grace received through faith in Christ, not earned by our works.",
+    "context_verse": "Ephesians 2:8 — \"For by grace you have been saved through faith…\""
+  },
+  {
+    "id": 26,
+    "difficulty": "Medium",
+    "category": "Events",
+    "question": "What river was Jesus baptized in?",
+    "correct_answer": "The Jordan River",
+    "accepted_answers": [
+      "The Jordan River",
+      "Jordan River",
+      "Jordan"
+    ],
+    "reference": "Matthew 3:13–17",
+    "explanation": "Jesus was baptized by John in the Jordan River, and the Spirit descended on Him like a dove.",
+    "context_verse": "Matthew 3:17 — \"This is My beloved Son, in whom I am well pleased.\""
+  },
+  {
+    "id": 27,
+    "difficulty": "Medium",
+    "category": "Miracles",
+    "question": "Which prophet called down fire from heaven on Mount Carmel to prove the Lord is God?",
+    "correct_answer": "Elijah",
+    "accepted_answers": [
+      "Elijah",
+      "The prophet Elijah"
+    ],
+    "reference": "1 Kings 18:36–38",
+    "explanation": "Elijah prayed, and God answered with fire from heaven, showing that He alone is God.",
+    "context_verse": "1 Kings 18:39 — \"The Lord, He is God! The Lord, He is God!\""
+  },
+  {
+    "id": 28,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Which disciple walked on the water toward Jesus before becoming afraid and beginning to sink?",
+    "correct_answer": "Peter",
+    "accepted_answers": [
+      "Peter",
+      "The apostle Peter"
+    ],
+    "reference": "Matthew 14:28–30",
+    "explanation": "Peter walked on the water toward Jesus, but when he looked at the wind and waves, he began to sink.",
+    "context_verse": "Matthew 14:31 — \"O you of little faith, why did you doubt?\""
+  },
+  {
+    "id": 29,
+    "difficulty": "Medium",
+    "category": "Promises",
+    "question": "Who declared, \"As for me and my house, we will serve the Lord\"?",
+    "correct_answer": "Joshua",
+    "accepted_answers": [
+      "Joshua"
+    ],
+    "reference": "Joshua 24:15",
+    "explanation": "Joshua publicly committed himself and his household to serve the Lord, urging Israel to choose whom they would serve.",
+    "context_verse": "Joshua 24:15 — \"But as for me and my house, we will serve the Lord.\""
+  },
+  {
+    "id": 30,
+    "difficulty": "Medium",
+    "category": "Books of the Bible",
+    "question": "Which New Testament book emphasizes faith without works being dead?",
+    "correct_answer": "James",
+    "accepted_answers": [
+      "James",
+      "The Book of James"
+    ],
+    "reference": "James 2:17",
+    "explanation": "James teaches that genuine faith produces good works and that faith without works is dead.",
+    "context_verse": "James 2:17 — \"Thus also faith by itself, if it does not have works, is dead.\""
+  },
+  {
+    "id": 31,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to Romans, what are the wages of sin?",
+    "correct_answer": "Death",
+    "accepted_answers": [
+      "Death"
+    ],
+    "reference": "Romans 6:23",
+    "explanation": "Paul explains that sin earns death, but God offers eternal life as a gift in Christ Jesus.",
+    "context_verse": "Romans 6:23 — \"For the wages of sin is death, but the gift of God is eternal life in Christ Jesus our Lord.\""
+  },
+  {
+    "id": 32,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "Who is described as the \"mediator between God and men\" in 1 Timothy?",
+    "correct_answer": "The Man Christ Jesus",
+    "accepted_answers": [
+      "The Man Christ Jesus",
+      "Christ Jesus",
+      "Jesus Christ"
+    ],
+    "reference": "1 Timothy 2:5",
+    "explanation": "Paul teaches that there is one God and one Mediator between God and men, the Man Christ Jesus.",
+    "context_verse": "1 Timothy 2:5 — \"For there is one God and one Mediator between God and men, the Man Christ Jesus.\""
+  },
+  {
+    "id": 33,
+    "difficulty": "Medium",
+    "category": "Parables",
+    "question": "In the parable of the prodigal son, what did the father do when his lost son returned?",
+    "correct_answer": "He ran to him, embraced him, and celebrated with a feast",
+    "accepted_answers": [
+      "He ran to him, embraced him, and celebrated with a feast",
+      "He ran to him and welcomed him with a feast"
+    ],
+    "reference": "Luke 15:20–24",
+    "explanation": "The father’s response shows God’s joyful welcome and forgiveness when sinners repent and return to Him.",
+    "context_verse": "Luke 15:24 — \"For this my son was dead and is alive again; he was lost and is found.\""
+  },
+  {
+    "id": 34,
+    "difficulty": "Medium",
+    "category": "Events",
+    "question": "Where were Jesus’ followers first called Christians?",
+    "correct_answer": "Antioch",
+    "accepted_answers": [
+      "Antioch"
+    ],
+    "reference": "Acts 11:26",
+    "explanation": "In Antioch, the disciples of Jesus were first called Christians, identifying them with Christ.",
+    "context_verse": "Acts 11:26 — \"And the disciples were first called Christians in Antioch.\""
+  },
+  {
+    "id": 35,
+    "difficulty": "Medium",
+    "category": "People",
+    "question": "Who was the prophet that confronted King David about his sin with Bathsheba?",
+    "correct_answer": "Nathan",
+    "accepted_answers": [
+      "Nathan",
+      "The prophet Nathan"
+    ],
+    "reference": "2 Samuel 12:1–7",
+    "explanation": "God sent Nathan to confront David, leading David to confess his sin and seek God’s mercy.",
+    "context_verse": "2 Samuel 12:7 — \"Then Nathan said to David, ‘You are the man!’\""
+  },
+  {
+    "id": 36,
+    "difficulty": "Medium",
+    "category": "Miracles",
+    "question": "Which apostle healed a lame man at the temple gate called Beautiful in the name of Jesus?",
+    "correct_answer": "Peter",
+    "accepted_answers": [
+      "Peter",
+      "The apostle Peter"
+    ],
+    "reference": "Acts 3:6–8",
+    "explanation": "Peter, with John, healed the lame man in Jesus’ name, showing that Jesus’ power continued through His apostles.",
+    "context_verse": "Acts 3:6 — \"In the name of Jesus Christ of Nazareth, rise up and walk.\""
+  },
+  {
+    "id": 37,
+    "difficulty": "Medium",
+    "category": "Promises",
+    "question": "According to Philippians, what will God supply for His people?",
+    "correct_answer": "All your need according to His riches in glory by Christ Jesus",
+    "accepted_answers": [
+      "All your need according to His riches in glory by Christ Jesus",
+      "All your needs according to His riches in glory by Christ Jesus"
+    ],
+    "reference": "Philippians 4:19",
+    "explanation": "Paul assures believers that God will supply every need they have through Christ Jesus.",
+    "context_verse": "Philippians 4:19 — \"And my God shall supply all your need according to His riches in glory by Christ Jesus.\""
+  },
+  {
+    "id": 38,
+    "difficulty": "Medium",
+    "category": "Books of the Bible",
+    "question": "Which Old Testament book is known for its focus on wisdom and begins with, \"The fear of the Lord is the beginning of knowledge\"?",
+    "correct_answer": "Proverbs",
+    "accepted_answers": [
+      "Proverbs",
+      "The Book of Proverbs"
+    ],
+    "reference": "Proverbs 1:7",
+    "explanation": "Proverbs is filled with practical wisdom and teaches that true knowledge begins with fearing the Lord.",
+    "context_verse": "Proverbs 1:7 — \"The fear of the Lord is the beginning of knowledge…\""
+  },
+  {
+    "id": 39,
+    "difficulty": "Medium",
+    "category": "Doctrine",
+    "question": "According to Jesus in John 14, who is \"the way, the truth, and the life\"?",
+    "correct_answer": "Jesus",
+    "accepted_answers": [
+      "Jesus",
+      "Jesus Christ"
+    ],
+    "reference": "John 14:6",
+    "explanation": "Jesus declares that He alone is the way to the Father, the truth, and the source of life.",
+    "context_verse": "John 14:6 — \"I am the way, the truth, and the life. No one comes to the Father except through Me.\""
+  },
+  {
+    "id": 40,
+    "difficulty": "Medium",
+    "category": "Jesus’ Life & Ministry",
+    "question": "Which Pharisee came to Jesus by night and later helped with His burial?",
+    "correct_answer": "Nicodemus",
+    "accepted_answers": [
+      "Nicodemus"
+    ],
+    "reference": "John 3:1–2; John 19:39",
+    "explanation": "Nicodemus first visited Jesus at night to ask questions and later showed his faith by assisting with Jesus’ burial.",
+    "context_verse": "John 3:3 — \"Unless one is born again, he cannot see the kingdom of God.\""
+  },
+  {
+    "id": 41,
+    "difficulty": "Difficult",
+    "category": "Prophecy & End Times",
+    "question": "Which prophet saw a vision of a valley full of dry bones that came to life?",
+    "correct_answer": "Ezekiel",
+    "accepted_answers": [
+      "Ezekiel",
+      "The prophet Ezekiel"
+    ],
+    "reference": "Ezekiel 37:1–10",
+    "explanation": "God showed Ezekiel a vision of dry bones coming to life as a picture of Israel’s restoration by His Spirit.",
+    "context_verse": "Ezekiel 37:5 — \"Surely I will cause breath to enter into you, and you shall live.\""
+  },
+  {
+    "id": 42,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Which king of Judah discovered the Book of the Law in the temple, leading to a great revival?",
+    "correct_answer": "Josiah",
+    "accepted_answers": [
+      "Josiah",
+      "King Josiah"
+    ],
+    "reference": "2 Kings 22:8–11",
+    "explanation": "During Josiah’s reign, the Book of the Law was found, and he led the nation in repentance and covenant renewal.",
+    "context_verse": "2 Kings 23:25 — \"Now before him there was no king like him…\""
+  },
+  {
+    "id": 43,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "Which priest-king is used in Hebrews as a type of Christ, being \"without father, without mother\" in the record?",
+    "correct_answer": "Melchizedek",
+    "accepted_answers": [
+      "Melchizedek"
+    ],
+    "reference": "Hebrews 7:1–3",
+    "explanation": "Hebrews presents Melchizedek as a picture of Christ’s eternal priesthood, greater than the Levitical priesthood.",
+    "context_verse": "Hebrews 7:3 — \"Made like the Son of God, remains a priest continually.\""
+  },
+  {
+    "id": 44,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Who was the high priest when the boy Samuel first heard the voice of the Lord calling him?",
+    "correct_answer": "Eli",
+    "accepted_answers": [
+      "Eli"
+    ],
+    "reference": "1 Samuel 3:1–3",
+    "explanation": "Eli served as high priest in Shiloh when God began to speak to the young Samuel at night.",
+    "context_verse": "1 Samuel 3:10 — \"Now the Lord came and stood and called… ‘Samuel! Samuel!’\""
+  },
+  {
+    "id": 45,
+    "difficulty": "Difficult",
+    "category": "Events",
+    "question": "What city’s walls fell down after the Israelites marched around them for seven days?",
+    "correct_answer": "Jericho",
+    "accepted_answers": [
+      "Jericho"
+    ],
+    "reference": "Joshua 6:15–20",
+    "explanation": "At God’s command, Israel marched around Jericho and shouted, and the walls collapsed by God’s power.",
+    "context_verse": "Joshua 6:20 — \"Then the wall fell down flat.\""
+  },
+  {
+    "id": 46,
+    "difficulty": "Difficult",
+    "category": "Books of the Bible",
+    "question": "Which Old Testament prophet is quoted in the New Testament as saying, \"The just shall live by faith\"?",
+    "correct_answer": "Habakkuk",
+    "accepted_answers": [
+      "Habakkuk"
+    ],
+    "reference": "Habakkuk 2:4",
+    "explanation": "Habakkuk declares that the just shall live by faith, a truth quoted in Romans, Galatians, and Hebrews.",
+    "context_verse": "Habakkuk 2:4 — \"But the just shall live by his faith.\""
+  },
+  {
+    "id": 47,
+    "difficulty": "Difficult",
+    "category": "Parables",
+    "question": "Which parable told by Jesus teaches that people should always pray and not lose heart, using a widow and an unjust judge?",
+    "correct_answer": "The Parable of the Persistent Widow",
+    "accepted_answers": [
+      "The Parable of the Persistent Widow",
+      "The parable of the persistent widow",
+      "The Parable of the Unjust Judge"
+    ],
+    "reference": "Luke 18:1–8",
+    "explanation": "Jesus used the persistent widow and unjust judge to show that God’s people should pray continually and not give up.",
+    "context_verse": "Luke 18:1 — \"Men always ought to pray and not lose heart.\""
+  },
+  {
+    "id": 48,
+    "difficulty": "Difficult",
+    "category": "Prophecy & End Times",
+    "question": "Which New Testament book specifically mentions the prophecy of Enoch, saying, \"Behold, the Lord comes with ten thousands of His saints\"?",
+    "correct_answer": "Jude",
+    "accepted_answers": [
+      "Jude",
+      "The Book of Jude"
+    ],
+    "reference": "Jude 1:14–15",
+    "explanation": "Jude records a prophecy of Enoch about the Lord coming in judgment with His holy ones.",
+    "context_verse": "Jude 1:14 — \"Now Enoch, the seventh from Adam, prophesied about these men also…\""
+  },
+  {
+    "id": 49,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "According to Romans 8, what cannot separate believers from the love of God which is in Christ Jesus our Lord?",
+    "correct_answer": "Nothing in all creation",
+    "accepted_answers": [
+      "Nothing in all creation",
+      "Nothing",
+      "Nothing can separate us"
+    ],
+    "reference": "Romans 8:38–39",
+    "explanation": "Paul lists many powerful forces and concludes that nothing in all creation can separate believers from God’s love in Christ.",
+    "context_verse": "Romans 8:39 — \"Nothing shall be able to separate us from the love of God which is in Christ Jesus our Lord.\""
+  },
+  {
+    "id": 50,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Which Old Testament figure is called \"the father of all those who believe\" in Romans 4?",
+    "correct_answer": "Abraham",
+    "accepted_answers": [
+      "Abraham"
+    ],
+    "reference": "Romans 4:11",
+    "explanation": "Abraham is described as the father of all who believe because he was justified by faith before circumcision.",
+    "context_verse": "Romans 4:11 — \"That he might be the father of all those who believe…\""
+  },
+  {
+    "id": 51,
+    "difficulty": "Difficult",
+    "category": "Events",
+    "question": "Which Old Testament prophet confronted the prophets of Baal on Mount Carmel?",
+    "correct_answer": "Elijah",
+    "accepted_answers": [
+      "Elijah",
+      "The prophet Elijah"
+    ],
+    "reference": "1 Kings 18:19–21",
+    "explanation": "Elijah challenged the prophets of Baal to a contest on Mount Carmel to show that the Lord is the true God.",
+    "context_verse": "1 Kings 18:21 — \"How long will you falter between two opinions?\""
+  },
+  {
+    "id": 52,
+    "difficulty": "Difficult",
+    "category": "Books of the Bible",
+    "question": "Which psalm begins, \"The Lord is my light and my salvation; whom shall I fear?\"",
+    "correct_answer": "Psalm 27",
+    "accepted_answers": [
+      "Psalm 27",
+      "Psalm 27:1"
+    ],
+    "reference": "Psalm 27:1",
+    "explanation": "Psalm 27 expresses David’s confidence in the Lord as his light, salvation, and stronghold.",
+    "context_verse": "Psalm 27:1 — \"The Lord is the strength of my life; of whom shall I be afraid?\""
+  },
+  {
+    "id": 53,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "According to Galatians, what is the fruit of the Spirit?",
+    "correct_answer": "Love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control",
+    "accepted_answers": [
+      "Love, joy, peace, longsuffering, kindness, goodness, faithfulness, gentleness, self-control",
+      "Love, joy, peace, patience, kindness, goodness, faithfulness, gentleness, self-control"
+    ],
+    "reference": "Galatians 5:22–23",
+    "explanation": "Paul lists the fruit of the Spirit as godly character traits that the Holy Spirit produces in believers.",
+    "context_verse": "Galatians 5:22–23 — \"But the fruit of the Spirit is love, joy, peace…\""
+  },
+  {
+    "id": 54,
+    "difficulty": "Difficult",
+    "category": "Prophecy & End Times",
+    "question": "In Daniel 2, what did the stone cut without hands do to the great statue in Nebuchadnezzar’s dream?",
+    "correct_answer": "It struck the statue and broke it in pieces, then became a great mountain",
+    "accepted_answers": [
+      "It struck the statue and broke it in pieces, then became a great mountain",
+      "It struck the statue, broke it, and became a great mountain"
+    ],
+    "reference": "Daniel 2:34–35",
+    "explanation": "The stone represents God’s kingdom, which will crush all earthly kingdoms and stand forever.",
+    "context_verse": "Daniel 2:44 — \"The God of heaven will set up a kingdom which shall never be destroyed.\""
+  },
+  {
+    "id": 55,
+    "difficulty": "Difficult",
+    "category": "People",
+    "question": "Which apostle is known as the \"son of encouragement\"?",
+    "correct_answer": "Barnabas",
+    "accepted_answers": [
+      "Barnabas"
+    ],
+    "reference": "Acts 4:36",
+    "explanation": "Joseph, called Barnabas by the apostles, is described as a son of encouragement because of his generous and supportive spirit.",
+    "context_verse": "Acts 4:36 — \"And Joses, who was also named Barnabas by the apostles…\""
+  },
+  {
+    "id": 56,
+    "difficulty": "Difficult",
+    "category": "Events",
+    "question": "Which Old Testament event is used in Hebrews as a picture of entering God’s rest by faith, warning against hardening the heart?",
+    "correct_answer": "Israel’s refusal to enter the Promised Land at Kadesh Barnea",
+    "accepted_answers": [
+      "Israel’s refusal to enter the Promised Land at Kadesh Barnea",
+      "Israel’s unbelief at Kadesh Barnea"
+    ],
+    "reference": "Hebrews 3:7–19; Numbers 13–14",
+    "explanation": "Hebrews warns believers by recalling Israel’s unbelief at Kadesh Barnea that kept them from entering God’s rest.",
+    "context_verse": "Hebrews 3:19 — \"So we see that they could not enter in because of unbelief.\""
+  },
+  {
+    "id": 57,
+    "difficulty": "Difficult",
+    "category": "Books of the Bible",
+    "question": "Which Old Testament book contains the line, \"The Lord is good, a stronghold in the day of trouble\"?",
+    "correct_answer": "Nahum",
+    "accepted_answers": [
+      "Nahum"
+    ],
+    "reference": "Nahum 1:7",
+    "explanation": "Nahum declares both God’s judgment on Nineveh and His goodness as a refuge for those who trust in Him.",
+    "context_verse": "Nahum 1:7 — \"He knows those who trust in Him.\""
+  },
+  {
+    "id": 58,
+    "difficulty": "Difficult",
+    "category": "Doctrine",
+    "question": "According to 2 Corinthians, who is \"the god of this age\" who has blinded the minds of unbelievers?",
+    "correct_answer": "The devil",
+    "accepted_answers": [
+      "The devil",
+      "Satan"
+    ],
+    "reference": "2 Corinthians 4:4",
+    "explanation": "Paul teaches that the devil blinds the minds of unbelievers so they will not see the light of the gospel of Christ.",
+    "context_verse": "2 Corinthians 4:4 — \"Whose minds the god of this age has blinded…\""
+  },
+  {
+    "id": 59,
+    "difficulty": "Difficult",
+    "category": "Prophecy & End Times",
+    "question": "In Revelation, what is the name of the place where the kings of the earth are gathered for the final battle?",
+    "correct_answer": "Armageddon",
+    "accepted_answers": [
+      "Armageddon"
+    ],
+    "reference": "Revelation 16:16",
+    "explanation": "Revelation describes an end-time gathering of the kings of the earth at Armageddon for the great day of God Almighty.",
+    "context_verse": "Revelation 16:16 — \"And they gathered them together to the place called in Hebrew, Armageddon.\""
+  },
+  {
+    "id": 60,
+    "difficulty": "Difficult",
+    "category": "Jesus’ Life & Ministry",
+    "question": "Which Old Testament passage does Jesus read in the synagogue at Nazareth, declaring its fulfillment in Himself?",
+    "correct_answer": "Isaiah 61:1–2",
+    "accepted_answers": [
+      "Isaiah 61:1–2",
+      "Isaiah 61"
+    ],
+    "reference": "Luke 4:16–21; Isaiah 61:1–2",
+    "explanation": "Jesus reads from Isaiah 61 and announces that He is the One anointed to preach good news and set the oppressed free.",
+    "context_verse": "Luke 4:21 — \"Today this Scripture is fulfilled in your hearing.\""
+  }
+]
