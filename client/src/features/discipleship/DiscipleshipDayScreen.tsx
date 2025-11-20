@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { DiscipleshipPlan, PlanItem } from "./discipleshipPlans";
+import { markItemCompleted } from "./discipleshipProgress";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Sparkles } from "lucide-react";
 
@@ -48,6 +49,8 @@ export function DiscipleshipDayScreen({
 
   const handleNext = () => {
     if (!isLast && safeIndex < totalItems - 1) {
+      // Mark current item as completed before moving to next
+      markItemCompleted(plan, currentItem.id);
       setIndex((i) => Math.min(i + 1, totalItems - 1));
     }
   };
@@ -63,6 +66,9 @@ export function DiscipleshipDayScreen({
     if (!isLast || safeIndex < totalItems - 1) {
       return;
     }
+    
+    // Mark the final item of the day as completed
+    markItemCompleted(plan, currentItem.id);
     
     const nextDay = dayNumber + 1;
     if (nextDay <= plan.days.length) {

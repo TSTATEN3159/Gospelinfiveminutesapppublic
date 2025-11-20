@@ -1,4 +1,4 @@
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { ArrowLeft, CheckCircle2, Circle } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,11 +13,26 @@ interface DiscipleshipPlanDetailPageProps {
 
 export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: DiscipleshipPlanDetailPageProps) {
   const [activeDayIndex, setActiveDayIndex] = useState(0);
+  const [progressTrigger, setProgressTrigger] = useState(0);
 
   const plan: DiscipleshipPlan | undefined = useMemo(
     () => DISCIPLESHIP_PLANS.find((p) => p.id === planId),
     [planId]
   );
+
+  // Listen for progress changes to re-render
+  useEffect(() => {
+    const handleProgressChange = (e: CustomEvent) => {
+      if (e.detail.planId === planId) {
+        setProgressTrigger(prev => prev + 1);
+      }
+    };
+    
+    window.addEventListener('discipleshipProgressChanged', handleProgressChange as EventListener);
+    return () => {
+      window.removeEventListener('discipleshipProgressChanged', handleProgressChange as EventListener);
+    };
+  }, [planId]);
 
   if (!plan) {
     return (
@@ -36,7 +51,8 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
   }
 
   const activeDay: PlanDay = plan.days[activeDayIndex];
-  const progress = loadPlanProgress(plan);
+  // Re-compute progress whenever progressTrigger changes
+  const progress = useMemo(() => loadPlanProgress(plan), [plan, progressTrigger]);
   const percent = Math.round(progress.ratio * 100);
 
   return (

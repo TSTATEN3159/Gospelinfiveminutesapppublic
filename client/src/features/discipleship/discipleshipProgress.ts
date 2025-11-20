@@ -54,4 +54,11 @@ export function markItemCompleted(plan: DiscipleshipPlan, itemId: string) {
   };
 
   localStorage.setItem(key, JSON.stringify(updated));
+  
+  // Trigger storage event for UI updates
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new CustomEvent('discipleshipProgressChanged', { 
+      detail: { planId: plan.id, itemId } 
+    }));
+  }
 }

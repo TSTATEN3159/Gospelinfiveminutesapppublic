@@ -79,11 +79,11 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
 
   // Filter state and progress tracking
   const [filter, setFilter] = useState<PlansFilter>("all");
-  const [progressData, setProgressData] = useState((appStore as any).getAllDiscipleshipProgress());
+  const [progressTrigger, setProgressTrigger] = useState(0);
 
   useEffect(() => {
     const handleProgressChange = () => {
-      setProgressData((appStore as any).getAllDiscipleshipProgress());
+      setProgressTrigger(prev => prev + 1);
     };
 
     window.addEventListener('discipleshipProgressChanged', handleProgressChange);
@@ -97,16 +97,16 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
     const completed = [];
 
     for (const plan of all) {
-      const progress = progressData[plan.id] || { completedDays: {}, isSaved: false };
+      const progress = loadPlanProgress(plan);
       
-      const completedDays = Object.keys(progress.completedDays || {}).length;
-      const totalDays = plan.totalDays || plan.days.length;
+      const completedDays = progress.completed;
+      const totalDays = progress.total;
       const isComplete = completedDays >= totalDays && totalDays > 0;
-      const isStartedOrSaved = progress.isSaved || completedDays > 0;
+      const isStarted = completedDays > 0;
 
       if (isComplete) {
         completed.push(plan);
-      } else if (isStartedOrSaved) {
+      } else if (isStarted) {
         started.push(plan);
       }
     }
@@ -126,7 +126,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
         completed: completed.length,
       }
     };
-  }, [filter, progressData]);
+  }, [filter, progressTrigger]);
 
   return (
     <div className="min-h-screen pb-20">
