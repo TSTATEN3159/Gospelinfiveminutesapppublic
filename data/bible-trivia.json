@@ -4453,5 +4453,410 @@
     "reference": "Luke 19:13",
     "explanation": "The master gave each of ten servants a mina to do business until he returned.",
     "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-124",
+    "level": "advanced",
+    "question": "In the parable of the unforgiving servant, how much did the servant owe the king?",
+    "choices": [
+      "One million denarii",
+      "Five thousand talents",
+      "One hundred denarii",
+      "Ten thousand talents"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 18:23–24",
+    "explanation": "Jesus used an unpayable debt to picture our need for God’s mercy.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-125",
+    "level": "beginner",
+    "question": "According to Hebrews 4:12, what is the Word of God?",
+    "choices": [
+      "Ancient and wise",
+      "Living and powerful",
+      "True and eternal",
+      "Holy and perfect"
+    ],
+    "correctIndex": 1,
+    "reference": "Hebrews 4:12",
+    "explanation": "God’s Word is alive and penetrates the human heart.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-126",
+    "level": "intermediate",
+    "question": "According to 2 Timothy 3:16, all Scripture is given by what?",
+    "choices": [
+      "Human wisdom",
+      "Divine revelation only",
+      "Apostolic tradition",
+      "Inspiration of God"
+    ],
+    "correctIndex": 3,
+    "reference": "2 Timothy 3:16",
+    "explanation": "Scripture is divinely breathed out by God and profitable for teaching.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-127",
+    "level": "advanced",
+    "question": "According to James 1:27, what is pure and undefiled religion before God?",
+    "choices": [
+      "To pray without ceasing",
+      "To visit orphans and widows in their trouble and keep oneself unspotted from the world",
+      "To give generously to the poor",
+      "To attend church regularly"
+    ],
+    "correctIndex": 1,
+    "reference": "James 1:27",
+    "explanation": "True religion involves mercy toward the needy and personal holiness.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-128",
+    "level": "beginner",
+    "question": "Who wrestled with a Man until daybreak and had his name changed to Israel?",
+    "choices": [
+      "Isaac",
+      "Jacob",
+      "Joseph",
+      "Esau"
+    ],
+    "correctIndex": 1,
+    "reference": "Genesis 32:24–28",
+    "explanation": "Jacob wrestled with God and received a new name meaning ‘he struggles with God.’",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-129",
+    "level": "intermediate",
+    "question": "Who prayed, ‘Speak, Lord, for Your servant hears’?",
+    "choices": [
+      "David",
+      "Saul",
+      "Samuel",
+      "Eli"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Samuel 3:10",
+    "explanation": "Young Samuel responded obediently when God called his name.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-130",
+    "level": "advanced",
+    "question": "Which prophet confronted King Ahab with the words, ‘Have you murdered and also taken possession?’",
+    "choices": [
+      "Elisha",
+      "Elijah",
+      "Isaiah",
+      "Nathan"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Kings 21:19",
+    "explanation": "Elijah confronted Ahab for killing Naboth and taking his vineyard.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-131",
+    "level": "beginner",
+    "question": "Which apostle walked on the water toward Jesus?",
+    "choices": [
+      "Andrew",
+      "James",
+      "Peter",
+      "John"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 14:28–29",
+    "explanation": "Peter walked on water until he looked at the storm and began to sink.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-132",
+    "level": "intermediate",
+    "question": "Who was stoned to death while testifying that he saw Jesus standing at the right hand of God?",
+    "choices": [
+      "Stephen",
+      "Paul",
+      "Barnabas",
+      "Philip"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 7:55–60",
+    "explanation": "Stephen was the first Christian martyr, boldly witnessing to Christ.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-133",
+    "level": "advanced",
+    "question": "Which apostle did King Herod kill with the sword?",
+    "choices": [
+      "James the son of Zebedee",
+      "Andrew",
+      "Peter",
+      "John"
+    ],
+    "correctIndex": 0,
+    "reference": "Acts 12:1–2",
+    "explanation": "Herod executed James, the brother of John, making him the first apostle martyred.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt4-1763662187812-134",
+    "level": "beginner",
+    "question": "Which book begins with ‘In the beginning God created the heavens and the earth’?",
+    "choices": [
+      "Leviticus",
+      "Numbers",
+      "Exodus",
+      "Genesis"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 1:1",
+    "explanation": "Genesis begins the Bible with God’s creation.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-135",
+    "level": "intermediate",
+    "question": "Which Old Testament book records the fall of man in the Garden of Eden?",
+    "choices": [
+      "Leviticus",
+      "Exodus",
+      "Genesis",
+      "Numbers"
+    ],
+    "correctIndex": 2,
+    "reference": "Genesis 3:1–24",
+    "explanation": "Genesis 3 tells how Adam and Eve disobeyed and brought sin into the world.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-136",
+    "level": "advanced",
+    "question": "Which minor prophet’s book ends with the promise of Elijah coming before the great and dreadful day of the Lord?",
+    "choices": [
+      "Haggai",
+      "Zephaniah",
+      "Malachi",
+      "Zechariah"
+    ],
+    "correctIndex": 2,
+    "reference": "Malachi 4:5",
+    "explanation": "Malachi ends the Old Testament with prophecy about Elijah’s role before the Lord’s coming.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-137",
+    "level": "beginner",
+    "question": "In the parable of the mustard seed, what does the mustard seed represent?",
+    "choices": [
+      "Faith",
+      "God's love",
+      "The kingdom of heaven",
+      "The church"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 13:31–32",
+    "explanation": "Jesus describes the kingdom’s growth from small beginnings to great expansion.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-138",
+    "level": "intermediate",
+    "question": "In the parable of the wise and foolish virgins, what cry rang out at midnight?",
+    "choices": [
+      "Faith",
+      "The church",
+      "‘Behold, the bridegroom is coming’",
+      "The kingdom"
+    ],
+    "correctIndex": 2,
+    "reference": "Matthew 25:6",
+    "explanation": "The midnight cry announces the bridegroom’s arrival, calling people to readiness.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-139",
+    "level": "advanced",
+    "question": "In the parable of the dishonest steward, why did the master commend the steward?",
+    "choices": [
+      "Because he was faithful",
+      "Because he repented",
+      "Because he acted shrewdly",
+      "Because he was honest"
+    ],
+    "correctIndex": 2,
+    "reference": "Luke 16:1–8",
+    "explanation": "Jesus highlights the steward’s clever foresight, not his dishonesty.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-140",
+    "level": "intermediate",
+    "question": "According to Romans 3:23, who has sinned?",
+    "choices": [
+      "Most people are good",
+      "Only unbelievers have sinned",
+      "Only some have sinned",
+      "All have sinned and fall short of the glory of God"
+    ],
+    "correctIndex": 3,
+    "reference": "Romans 3:23",
+    "explanation": "Every human being is sinful and needs God’s grace.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-141",
+    "level": "intermediate",
+    "question": "According to John 1:12, what right is given to all who receive Jesus?",
+    "choices": [
+      "Eternal life in heaven",
+      "The right to become children of God",
+      "The right to judge others",
+      "Authority over creation"
+    ],
+    "correctIndex": 1,
+    "reference": "John 1:12",
+    "explanation": "Those who believe in Jesus are adopted into God’s family.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-142",
+    "level": "advanced",
+    "question": "According to Colossians 2:9, what dwells in Christ bodily?",
+    "choices": [
+      "God's glory",
+      "All the fullness of the Godhead",
+      "Divine wisdom",
+      "The Holy Spirit only"
+    ],
+    "correctIndex": 1,
+    "reference": "Colossians 2:9",
+    "explanation": "Paul teaches that Christ fully embodies God in human flesh.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-143",
+    "level": "beginner",
+    "question": "Who baptized the Ethiopian eunuch?",
+    "choices": [
+      "Peter",
+      "Stephen",
+      "Barnabas",
+      "Philip"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 8:36–38",
+    "explanation": "Philip explained Isaiah’s prophecy and baptized the eunuch after he believed.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-144",
+    "level": "beginner",
+    "question": "Who was preserved during a famine by being fed by ravens at the brook Cherith?",
+    "choices": [
+      "Elisha",
+      "Nathan",
+      "Isaiah",
+      "Elijah"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 17:2–6",
+    "explanation": "God miraculously fed Elijah during the drought.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-145",
+    "level": "intermediate",
+    "question": "Who struck down a thousand Philistines with a donkey’s jawbone?",
+    "choices": [
+      "Deborah",
+      "Gideon",
+      "Samson",
+      "Jephthah"
+    ],
+    "correctIndex": 2,
+    "reference": "Judges 15:15",
+    "explanation": "Samson used a donkey’s jawbone to defeat many attackers by God’s strength.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-146",
+    "level": "advanced",
+    "question": "Which queen visited Solomon to test his wisdom with difficult questions?",
+    "choices": [
+      "Queen Jezebel",
+      "Queen Esther",
+      "The Queen of Sheba",
+      "Queen Vashti"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 10:1",
+    "explanation": "She came with great wealth and was astonished by Solomon’s wisdom.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-147",
+    "level": "beginner",
+    "question": "Which gospel writer was a physician?",
+    "choices": [
+      "Matthew",
+      "John",
+      "Luke",
+      "Mark"
+    ],
+    "correctIndex": 2,
+    "reference": "Colossians 4:14",
+    "explanation": "Paul refers to Luke as the beloved physician.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-148",
+    "level": "intermediate",
+    "question": "Which Old Testament book records the rebuilding of the temple under Zerubbabel?",
+    "choices": [
+      "Esther",
+      "Daniel",
+      "Nehemiah",
+      "Ezra"
+    ],
+    "correctIndex": 3,
+    "reference": "Ezra 3:8–13",
+    "explanation": "Ezra tells the story of the temple’s restoration after the exile.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-149",
+    "level": "intermediate",
+    "question": "In the parable of the prodigal son, what did the father give the returning son?",
+    "choices": [
+      "A feast and celebration",
+      "Gold and silver",
+      "A robe, a ring, and sandals",
+      "New clothes only"
+    ],
+    "correctIndex": 2,
+    "reference": "Luke 15:22",
+    "explanation": "These items symbolized sonship restored by grace.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt4-1763662187813-150",
+    "level": "advanced",
+    "question": "What is the field in the parable of the wheat and tares said to represent?",
+    "choices": [
+      "The church",
+      "Israel",
+      "The kingdom",
+      "The world"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 13:38",
+    "explanation": "Jesus explains all elements of this parable — the field is the world.",
+    "category": "Parables"
   }
 ]
