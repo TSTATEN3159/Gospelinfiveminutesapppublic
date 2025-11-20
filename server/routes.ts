@@ -2481,6 +2481,65 @@ Return only the application paragraph.
     }
   });
 
+  // Test daily email endpoint - send a sample email
+  app.post("/api/test-daily-email", async (req, res) => {
+    try {
+      const { email } = z.object({
+        email: z.string().email()
+      }).parse(req.body);
+      
+      const { sendDailyDiscipleshipEmail } = await import("./dailyEmailService");
+      const { generateMeaningAndApplication } = await import("./dailyVerseAI");
+      const { getDailyVerseReference, bookNames } = await import("./dailyVerseList");
+      const { bibleApiFallback } = await import("./services/bibleApiFallback");
+      
+      // Get today's verse
+      const dailyReferenceApiBible = getDailyVerseReference();
+      const [bookCode, chapter, verseNum] = dailyReferenceApiBible.split('.');
+      const bookName = bookNames[bookCode] || bookCode;
+      const dailyReference = `${bookName} ${chapter}:${verseNum}`;
+      
+      const verseData = await bibleApiFallback.getVerse(dailyReference, 'KJV');
+      const verse = {
+        reference: verseData.reference || dailyReference,
+        text: verseData.text?.replace(/<[^>]*>/g, '').trim() || verseData.text
+      };
+      
+      const { meaning, application } = await generateMeaningAndApplication(verse, "Friend");
+      
+      await sendDailyDiscipleshipEmail({
+        to: email,
+        name: "Friend",
+        verseReference: verse.reference,
+        verseText: verse.text,
+        meaning,
+        application,
+        triviaTitle: "Bible Scholar",
+        triviaStreak: 7,
+      });
+      
+      res.json({
+        success: true,
+        message: `Test email sent to ${email}! Check your inbox for today's verse with the parchment background and trivia reminder.`
+      });
+      
+    } catch (error) {
+      console.error("Test email error:", error);
+      
+      if (error instanceof z.ZodError) {
+        return res.status(400).json({
+          success: false,
+          error: "Please provide a valid email address."
+        });
+      }
+      
+      res.status(500).json({
+        success: false,
+        error: "Failed to send test email. Make sure SENDGRID_API_KEY is configured."
+      });
+    }
+  });
+
   // Daily Reminder Email Subscription - For daily verse emails in appUsers table
   app.post("/api/subscribe-daily-reminder", async (req, res) => {
     try {
