@@ -4108,5 +4108,350 @@
     "reference": "Mark 15:21",
     "explanation": "According to Mark 15:21, the answer is Simon of Cyrene.",
     "category": "New Testament"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-101",
+    "level": "beginner",
+    "question": "Who is the only Mediator between God and mankind?",
+    "choices": [
+      "The prophets",
+      "The Man Christ Jesus",
+      "The apostles",
+      "The Holy Spirit"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Timothy 2:5",
+    "explanation": "Paul teaches that Jesus Christ alone stands between God and humanity as Mediator.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-102",
+    "level": "beginner",
+    "question": "What does Psalm 119:105 say God’s Word is like for our lives?",
+    "choices": [
+      "A shield of protection",
+      "A sword for battle",
+      "A lamp to my feet and a light to my path",
+      "A crown of glory"
+    ],
+    "correctIndex": 2,
+    "reference": "Psalm 119:105",
+    "explanation": "God’s Word helps believers see the right direction for their lives.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-103",
+    "level": "intermediate",
+    "question": "According to John 14:26, who teaches believers all things?",
+    "choices": [
+      "The prophets",
+      "The Holy Spirit",
+      "God the Father",
+      "The apostles"
+    ],
+    "correctIndex": 1,
+    "reference": "John 14:26",
+    "explanation": "Jesus promised His disciples that the Holy Spirit would teach them and remind them of His words.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-104",
+    "level": "intermediate",
+    "question": "According to Romans 5:8, how did God demonstrate His love toward us?",
+    "choices": [
+      "He sent prophets to guide us",
+      "He gave us the law",
+      "Christ died for us while we were still sinners",
+      "He created the world for us"
+    ],
+    "correctIndex": 2,
+    "reference": "Romans 5:8",
+    "explanation": "God showed His love in that Christ died to save us while we were not seeking Him.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-105",
+    "level": "advanced",
+    "question": "According to 1 Corinthians 15:17, what would our faith be like if Christ is not risen?",
+    "choices": [
+      "We could still be saved",
+      "Our faith is futile and we are still in our sins",
+      "The gospel would still be true",
+      "We would still have hope"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Corinthians 15:17",
+    "explanation": "Paul teaches that the resurrection is essential—without it, there is no forgiveness.",
+    "category": "Doctrine"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-106",
+    "level": "beginner",
+    "question": "What was Paul’s occupation by trade?",
+    "choices": [
+      "Fisherman",
+      "Tentmaker",
+      "Tax collector",
+      "Carpenter"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 18:3",
+    "explanation": "Paul supported himself through tentmaking when needed during his ministry.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-107",
+    "level": "beginner",
+    "question": "Who was the apostle known as the beloved disciple?",
+    "choices": [
+      "John",
+      "Andrew",
+      "James",
+      "Peter"
+    ],
+    "correctIndex": 0,
+    "reference": "John 13:23",
+    "explanation": "John frequently refers to himself as the disciple whom Jesus loved.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-108",
+    "level": "intermediate",
+    "question": "Who first took the gospel to the Samaritans after persecution in Jerusalem?",
+    "choices": [
+      "Peter",
+      "Barnabas",
+      "Stephen",
+      "Philip"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 8:5–6",
+    "explanation": "Philip preached Christ in Samaria and many believed his message.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-109",
+    "level": "intermediate",
+    "question": "Who was the apostle that doubted until he saw Jesus’ wounds?",
+    "choices": [
+      "Thomas",
+      "Peter",
+      "John",
+      "James"
+    ],
+    "correctIndex": 0,
+    "reference": "John 20:24–28",
+    "explanation": "Thomas required physical proof before believing Jesus rose from the dead.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-110",
+    "level": "advanced",
+    "question": "Who was the apostle that Jesus appeared to last in His resurrection appearances?",
+    "choices": [
+      "Peter",
+      "John",
+      "James",
+      "Paul"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Corinthians 15:8",
+    "explanation": "Paul says he was the last to see the risen Lord, like one born out of due time.",
+    "category": "Apostles & Early Church"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-111",
+    "level": "beginner",
+    "question": "Who was the shepherd boy chosen by God to be king of Israel?",
+    "choices": [
+      "Samuel",
+      "Solomon",
+      "Saul",
+      "David"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Samuel 16:11–13",
+    "explanation": "God chose David to replace Saul as king due to his heart for God.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-112",
+    "level": "intermediate",
+    "question": "Which righteous man suffered greatly yet did not curse God?",
+    "choices": [
+      "Abraham",
+      "Job",
+      "Noah",
+      "Joseph"
+    ],
+    "correctIndex": 1,
+    "reference": "Job 1:1–22",
+    "explanation": "Job remained faithful even after losing family, wealth, and health.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-113",
+    "level": "intermediate",
+    "question": "Which king of Israel was known for his great wisdom?",
+    "choices": [
+      "Saul",
+      "Solomon",
+      "Hezekiah",
+      "David"
+    ],
+    "correctIndex": 1,
+    "reference": "1 Kings 3:11–12",
+    "explanation": "God gave Solomon exceptional wisdom in response to his humble prayer.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-114",
+    "level": "advanced",
+    "question": "Which judge of Israel made a rash vow that affected his only daughter?",
+    "choices": [
+      "Samson",
+      "Gideon",
+      "Jephthah",
+      "Jair"
+    ],
+    "correctIndex": 2,
+    "reference": "Judges 11:30–35",
+    "explanation": "Jephthah vowed to offer up the first thing from his house and deeply regretted the result.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-115",
+    "level": "beginner",
+    "question": "Which book contains the Ten Commandments?",
+    "choices": [
+      "Deuteronomy",
+      "Leviticus",
+      "Numbers",
+      "Exodus"
+    ],
+    "correctIndex": 3,
+    "reference": "Exodus 20:1–17",
+    "explanation": "The Ten Commandments were given to Moses in the book of Exodus.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-116",
+    "level": "beginner",
+    "question": "Which book is known as a song of love between a bride and groom?",
+    "choices": [
+      "Song of Solomon",
+      "Proverbs",
+      "Psalms",
+      "Ecclesiastes"
+    ],
+    "correctIndex": 0,
+    "reference": "Song of Solomon 1:1",
+    "explanation": "Song of Solomon expresses the beauty of love and God’s design for marriage.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-117",
+    "level": "intermediate",
+    "question": "Which gospel highlights Jesus as the Word who was with God and was God?",
+    "choices": [
+      "Mark",
+      "Matthew",
+      "John",
+      "Luke"
+    ],
+    "correctIndex": 2,
+    "reference": "John 1:1–14",
+    "explanation": "John emphasizes Jesus’ divine nature as the eternal Word.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-118",
+    "level": "intermediate",
+    "question": "Which book emphasizes that \"faith without works is dead\"?",
+    "choices": [
+      "Jude",
+      "1 Peter",
+      "James",
+      "1 John"
+    ],
+    "correctIndex": 2,
+    "reference": "James 2:17",
+    "explanation": "James stresses that true faith produces godly actions.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-119",
+    "level": "advanced",
+    "question": "Which Old Testament book contains the statement \"Man shall not live by bread alone\" later quoted by Jesus?",
+    "choices": [
+      "Leviticus",
+      "Exodus",
+      "Deuteronomy",
+      "Numbers"
+    ],
+    "correctIndex": 2,
+    "reference": "Deuteronomy 8:3",
+    "explanation": "Jesus quoted this passage to resist temptation in the wilderness.",
+    "category": "Books of the Bible"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-120",
+    "level": "beginner",
+    "question": "In the parable of the two builders, what happened to the house built on the rock?",
+    "choices": [
+      "It stood firm",
+      "It needed repairs",
+      "It fell down",
+      "It was damaged"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 7:24–25",
+    "explanation": "Jesus says the wise man builds his life on His teachings — like a house on a rock.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-121",
+    "level": "intermediate",
+    "question": "In the parable of the ten virgins, what did the wise virgins bring along with their lamps?",
+    "choices": [
+      "Wine",
+      "Oil",
+      "Incense",
+      "Water"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 25:1–4",
+    "explanation": "The wise virgins were prepared for the bridegroom’s coming by bringing extra oil.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-122",
+    "level": "intermediate",
+    "question": "Which parable describes a man who finds treasure hidden in a field and sells all he has to buy it?",
+    "choices": [
+      "The Parable of the Hidden Treasure",
+      "The Parable of the Talents",
+      "The Parable of the Pearl",
+      "The Parable of the Sower"
+    ],
+    "correctIndex": 0,
+    "reference": "Matthew 13:44",
+    "explanation": "Jesus teaches that the kingdom of heaven is worth any sacrifice.",
+    "category": "Parables"
+  },
+  {
+    "id": "q-chatgpt3-1763662055869-123",
+    "level": "advanced",
+    "question": "In the parable of the minas, how many servants received minas from their master?",
+    "choices": [
+      "Ten",
+      "Five",
+      "Seven",
+      "Twelve"
+    ],
+    "correctIndex": 0,
+    "reference": "Luke 19:13",
+    "explanation": "The master gave each of ten servants a mina to do business until he returned.",
+    "category": "Parables"
   }
 ]
