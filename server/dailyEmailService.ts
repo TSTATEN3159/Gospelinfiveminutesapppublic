@@ -61,7 +61,7 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
               </td>
             </tr>
 
-            <!-- Parchment Scripture block -->
+            <!-- Parchment Scripture block (split style) -->
             <tr>
               <td style="padding:12px 24px 0 24px;">
                 <div
@@ -70,31 +70,47 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
                     background-size:cover;
                     background-position:center;
                     border-radius:18px;
-                    padding:20px 18px 22px 18px;
+                    padding:18px 16px 20px 16px;
                     border:1px solid #e2c79f;
                   "
                 >
-                  <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#92400e; margin:0 0 6px;">
-                    Verse of the Day
-                  </p>
-                  <p style="font-size:15px; font-weight:700; margin:0 0 6px; color:#3b2f2f;">
-                    ${verseReference}
-                  </p>
-                  <p style="font-size:14px; line-height:1.5; margin:0 0 12px; color:#3b2f2f;">
-                    "${verseText}"
-                  </p>
-                  <p style="font-size:12px; font-weight:600; margin:0 0 4px; color:#6b4a2e;">
-                    Meaning
-                  </p>
-                  <p style="font-size:13px; line-height:1.5; margin:0 0 8px; color:#3f2f23;">
-                    ${meaning}
-                  </p>
-                  <p style="font-size:12px; font-weight:600; margin:8px 0 4px; color:#6b4a2e;">
-                    Application for today
-                  </p>
-                  <p style="font-size:13px; line-height:1.5; margin:0; color:#3f2f23;">
-                    ${application}
-                  </p>
+                  <!-- Top: Verse only -->
+                  <div style="margin-bottom:8px;">
+                    <p style="font-size:11px; text-transform:uppercase; letter-spacing:0.12em; color:#92400e; margin:0 0 4px;">
+                      Verse of the Day
+                    </p>
+                    <p style="font-size:15px; font-weight:700; margin:0 0 4px; color:#3b2f2f;">
+                      ${verseReference}
+                    </p>
+                    <p style="font-size:14px; line-height:1.5; margin:0; color:#3b2f2f;">
+                      "${verseText}"
+                    </p>
+                  </div>
+
+                  <!-- Divider -->
+                  <div style="height:1px; margin:10px 0 10px 0; background:rgba(148,90,40,0.35);"></div>
+
+                  <!-- Bottom: Meaning + Application on a lighter parchment overlay -->
+                  <div
+                    style="
+                      background:rgba(253,244,224,0.82);
+                      border-radius:12px;
+                      padding:10px 12px;
+                    "
+                  >
+                    <p style="font-size:12px; font-weight:600; margin:0 0 4px; color:#6b4a2e;">
+                      Meaning
+                    </p>
+                    <p style="font-size:13px; line-height:1.5; margin:0 0 8px; color:#3f2f23;">
+                      ${meaning}
+                    </p>
+                    <p style="font-size:12px; font-weight:600; margin:8px 0 4px; color:#6b4a2e;">
+                      Application for today
+                    </p>
+                    <p style="font-size:13px; line-height:1.5; margin:0; color:#3f2f23;">
+                      ${application}
+                    </p>
+                  </div>
                 </div>
               </td>
             </tr>
@@ -120,7 +136,7 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
                         : `Start your Bible Trivia journey today and begin your first streak as a <strong>${triviaTitle}</strong>.`
                     }
                   </p>
-                  <p style="font-size:12px; margin:0 0 12px; color:#cbd5e1;">
+                  <p style="font-size:12px; margin:0 0 12px; color:#cbd5f5;">
                     10 quick questions from Scripture. Keep your crown, deepen your roots in Christ.
                   </p>
                   <a

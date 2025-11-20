@@ -960,6 +960,126 @@
     "correctIndex": 0
   },
   {
+    "id": "beginner-1763609673389-0",
+    "level": "beginner",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-1",
+    "level": "beginner",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Moses",
+      "Elijah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-2",
+    "level": "beginner",
+    "question": "Which giant did David defeat with a slingshot?",
+    "choices": [
+      "Goliath",
+      "Saul",
+      "Samson",
+      "Absalom"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-3",
+    "level": "beginner",
+    "question": "What is the first commandment in the Ten Commandments?",
+    "choices": [
+      "You shall not steal",
+      "You shall have no other gods before Me",
+      "Honor your father and mother",
+      "You shall not bear false witness"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-4",
+    "level": "beginner",
+    "question": "Which book recounts the early church's growth after Jesus' ascension?",
+    "choices": [
+      "Matthew",
+      "Acts",
+      "Revelation",
+      "Hebrews"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-5",
+    "level": "beginner",
+    "question": "In which Gospel is the Lord's Prayer found?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-6",
+    "level": "beginner",
+    "question": "Which prophet was swallowed by a great fish?",
+    "choices": [
+      "Elijah",
+      "Isaiah",
+      "Jonah",
+      "Jeremiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-7",
+    "level": "beginner",
+    "question": "What did Jesus turn into wine at a wedding?",
+    "choices": [
+      "Water",
+      "Oil",
+      "Grapes",
+      "Bread"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-8",
+    "level": "beginner",
+    "question": "What does the Psalmist say about God's Word?",
+    "choices": [
+      "It's a lamp to my feet",
+      "It's a sword",
+      "It's a treasure",
+      "It's a song"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "beginner-1763609673389-9",
+    "level": "beginner",
+    "question": "Which letter did Paul write to address issues in a church that had many divisions?",
+    "choices": [
+      "Romans",
+      "Corinthians",
+      "Galatians",
+      "Ephesians"
+    ],
+    "correctIndex": 0
+  },
+  {
     "id": "intermediate-1763607966720-0",
     "level": "intermediate",
     "question": "What is the first book of the Bible?",
