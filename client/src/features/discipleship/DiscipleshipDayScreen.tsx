@@ -29,6 +29,18 @@ export function DiscipleshipDayScreen({
     setIndex(0);
   }, [dayNumber, plan.id]);
 
+  // Auto-mark the current item as completed when user views it
+  // This ensures progress is saved even if they navigate away without clicking Next
+  useEffect(() => {
+    if (currentItem) {
+      const timer = setTimeout(() => {
+        markItemCompleted(plan, currentItem.id);
+      }, 2000); // Mark as complete after viewing for 2 seconds
+      
+      return () => clearTimeout(timer);
+    }
+  }, [currentItem.id, plan]);
+
   if (!day) {
     return (
       <div className="p-4">
@@ -49,8 +61,7 @@ export function DiscipleshipDayScreen({
 
   const handleNext = () => {
     if (!isLast && safeIndex < totalItems - 1) {
-      // Mark current item as completed before moving to next
-      markItemCompleted(plan, currentItem.id);
+      // Item is already marked by auto-complete effect, just navigate
       setIndex((i) => Math.min(i + 1, totalItems - 1));
     }
   };
@@ -67,9 +78,7 @@ export function DiscipleshipDayScreen({
       return;
     }
     
-    // Mark the final item of the day as completed
-    markItemCompleted(plan, currentItem.id);
-    
+    // Item is already marked by auto-complete effect, just navigate
     const nextDay = dayNumber + 1;
     if (nextDay <= plan.days.length) {
       onGoToDay(nextDay);

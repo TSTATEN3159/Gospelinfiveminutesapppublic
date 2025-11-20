@@ -2484,14 +2484,29 @@ Return only the application paragraph.
   // Test daily email endpoint - send a sample email
   app.post("/api/test-daily-email", async (req, res) => {
     try {
-      const { email } = z.object({
-        email: z.string().email()
+      const { email, firstName } = z.object({
+        email: z.string().email(),
+        firstName: z.string().optional()
       }).parse(req.body);
       
       const { sendDailyDiscipleshipEmail } = await import("./dailyEmailService");
       const { generateMeaningAndApplication } = await import("./dailyVerseAI");
       const { getDailyVerseReference, bookNames } = await import("./dailyVerseList");
       const { bibleApiFallback } = await import("./services/bibleApiFallback");
+      
+      // Try to get user's first name from database if not provided
+      let userName = firstName || "Friend";
+      if (!firstName) {
+        const appUser = await storage.getAppUserByEmail(email);
+        if (appUser?.firstName) {
+          userName = appUser.firstName;
+        } else {
+          const subscriber = await storage.getSubscriber(email);
+          if (subscriber?.name) {
+            userName = subscriber.name.split(' ')[0]; // Get first name from full name
+          }
+        }
+      }
       
       // Get today's verse
       const dailyReferenceApiBible = getDailyVerseReference();
@@ -2505,11 +2520,11 @@ Return only the application paragraph.
         text: verseData.text?.replace(/<[^>]*>/g, '').trim() || verseData.text
       };
       
-      const { meaning, application } = await generateMeaningAndApplication(verse, "Friend");
+      const { meaning, application } = await generateMeaningAndApplication(verse, userName);
       
       await sendDailyDiscipleshipEmail({
         to: email,
-        name: "Friend",
+        name: userName,
         verseReference: verse.reference,
         verseText: verse.text,
         meaning,
@@ -2520,7 +2535,7 @@ Return only the application paragraph.
       
       res.json({
         success: true,
-        message: `Test email sent to ${email}! Check your inbox for today's verse with the parchment background and trivia reminder.`
+        message: `Test email sent to ${email} with personalized greeting for ${userName}! Check your inbox for today's verse with the parchment background and trivia reminder.`
       });
       
     } catch (error) {
