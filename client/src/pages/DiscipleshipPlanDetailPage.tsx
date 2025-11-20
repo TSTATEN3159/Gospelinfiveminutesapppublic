@@ -73,7 +73,7 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
               Progress
             </span>
             <span className="text-[11px] text-slate-500 dark:text-slate-400" data-testid="progress-stats">
-              {percent}% • {progress.completed}/{progress.total} steps
+              {percent}% • {progress.completed}/{progress.total} days
             </span>
           </div>
           <div className="h-2 w-full bg-slate-200 dark:bg-slate-700 rounded-full overflow-hidden">

@@ -245,7 +245,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
                           />
                         </div>
                         <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-1" data-testid={`progress-text-${plan.id}`}>
-                          {progress.completed}/{progress.total} steps • {percent}% done
+                          {progress.completed}/{progress.total} days • {percent}% done
                         </p>
                       </div>
                     </CardContent>

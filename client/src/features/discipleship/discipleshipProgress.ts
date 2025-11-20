@@ -27,13 +27,21 @@ export function loadPlanProgress(plan: DiscipleshipPlan): {
   }
 
   const completedIds = stored?.completedItemIds ?? [];
-  const allItemIds = plan.days.flatMap((d) => d.items.map((i) => i.id));
+  
+  // Count completed DAYS, not individual items
+  let completedDays = 0;
+  for (const day of plan.days) {
+    const dayItemIds = day.items.map(item => item.id);
+    const allDayItemsCompleted = dayItemIds.every(id => completedIds.includes(id));
+    if (allDayItemsCompleted && dayItemIds.length > 0) {
+      completedDays++;
+    }
+  }
 
-  const completed = allItemIds.filter((id) => completedIds.includes(id)).length;
-  const total = allItemIds.length;
-  const ratio = total === 0 ? 0 : completed / total;
+  const totalDays = plan.days.length;
+  const ratio = totalDays === 0 ? 0 : completedDays / totalDays;
 
-  return { completed, total, ratio, completedItemIds: completedIds };
+  return { completed: completedDays, total: totalDays, ratio, completedItemIds: completedIds };
 }
 
 export function markItemCompleted(plan: DiscipleshipPlan, itemId: string) {
