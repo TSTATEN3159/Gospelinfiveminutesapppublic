@@ -30,7 +30,15 @@ async function getSendGridCredentials() {
   if (!connectionSettings || (!connectionSettings.settings.api_key || !connectionSettings.settings.from_email)) {
     throw new Error('SendGrid not connected');
   }
-  return {apiKey: connectionSettings.settings.api_key, fromEmail: connectionSettings.settings.from_email};
+  
+  const apiKey = connectionSettings.settings.api_key;
+  const fromEmail = connectionSettings.settings.from_email;
+  
+  // Debug logging (safe - only shows first 3 chars)
+  console.log(`[SendGrid] API key starts with: ${apiKey?.substring(0, 3) || 'N/A'}`);
+  console.log(`[SendGrid] From email: ${fromEmail}`);
+  
+  return {apiKey, fromEmail};
 }
 
 export interface DailyEmailPayload {
@@ -59,18 +67,29 @@ export async function sendDailyDiscipleshipEmail(payload: DailyEmailPayload) {
   let apiKey: string;
   let fromEmail: string;
   
-  try {
-    const credentials = await getSendGridCredentials();
-    apiKey = credentials.apiKey;
-    fromEmail = credentials.fromEmail;
+  // Try environment variable first, then fall back to integration
+  const envApiKey = process.env.SENDGRID_API_KEY;
+  
+  if (envApiKey && envApiKey.startsWith('SG.')) {
+    apiKey = envApiKey;
+    fromEmail = "noreply@thegospelin5minutes.com"; // Use default from email
     sgMail.setApiKey(apiKey);
-  } catch (error: any) {
-    if (error.message?.includes('SendGrid not connected')) {
-      console.log('[DailyEmail] SendGrid integration not configured - skipping email');
-      return;
+    console.log('[DailyEmail] Using SENDGRID_API_KEY from environment');
+  } else {
+    try {
+      const credentials = await getSendGridCredentials();
+      apiKey = credentials.apiKey;
+      fromEmail = credentials.fromEmail;
+      sgMail.setApiKey(apiKey);
+      console.log('[DailyEmail] Using SendGrid integration credentials');
+    } catch (error: any) {
+      if (error.message?.includes('SendGrid not connected')) {
+        console.log('[DailyEmail] SendGrid not configured - skipping email');
+        return;
+      }
+      console.error('[DailyEmail] Error getting SendGrid credentials:', error);
+      throw error;
     }
-    console.error('[DailyEmail] Error getting SendGrid credentials:', error);
-    throw error;
   }
 
   const subject = `Your Daily Verse & Bible Trivia – ${verseReference}`;
