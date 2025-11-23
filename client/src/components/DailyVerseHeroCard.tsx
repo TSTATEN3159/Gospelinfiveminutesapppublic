@@ -6,6 +6,7 @@ import { MoreTranslationsCard } from "./MoreTranslationsCard";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
+import ShareCard from "@/plugins/share-card";
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
@@ -27,17 +28,17 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    const shareText = `"${displayText}"\n\n— ${displayReference}\n\nShared from The Gospel in 5 Minutes`;
-    const shared = await safeShare({
-      title: "Today's Focus Verse",
-      text: shareText
-    });
-    
-    if (shared) {
+    try {
+      await ShareCard.share({
+        verseText: displayText,
+        reference: displayReference,
+      });
       toast({
         title: "Verse Shared",
         description: "Daily verse shared successfully!",
       });
+    } catch (err) {
+      console.error("Share failed:", err);
     }
   };
 

@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
+import ShareCard from "@/plugins/share-card";
 
 interface Verse {
   text: string;
@@ -93,21 +94,13 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
 
   const shareVerse = async () => {
     setIsSharing(true);
-    const shareData = {
-      title: "Daily Bible Verse",
-      text: `"${verse.text}" - ${verse.reference}`,
-      url: window.location.href,
-    };
-
     try {
-      if (navigator.share) {
-        await navigator.share(shareData);
-      } else {
-        // Fallback to copying
-        await copyToClipboard();
-      }
+      await ShareCard.share({
+        verseText: verse.text,
+        reference: verse.reference,
+      });
     } catch (err) {
-      console.log("Share verse failed:", err);
+      console.error("Share failed:", err);
     } finally {
       setIsSharing(false);
     }
