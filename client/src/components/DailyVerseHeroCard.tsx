@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heart, Share2, BookmarkPlus, Mail } from "lucide-react";
+import { Heart, Share2, BookmarkPlus, Mail, Bell, BellOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { safeShare } from "@/utils/capabilities";
 import { MoreTranslationsCard } from "./MoreTranslationsCard";
@@ -7,6 +7,7 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Button } from "@/components/ui/button";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
 import ShareCard from "@/plugins/share-card";
+import VerseNotifications from "@/plugins/verse-notifications";
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
@@ -145,6 +146,47 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
     }
   };
 
+  const handleEnableDailyReminder = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      await VerseNotifications.scheduleDaily({
+        verseText: displayText,
+        reference: displayReference,
+        hour: 7,
+        minute: 0,
+      });
+      toast({
+        title: "Reminder Set!",
+        description: "You'll receive daily verse notifications at 7:00 AM.",
+      });
+    } catch (err) {
+      console.error('Failed to schedule daily notification', err);
+      toast({
+        title: "Reminder Failed",
+        description: "Unable to schedule notification. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDisableDailyReminder = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      await VerseNotifications.cancelAll();
+      toast({
+        title: "Reminder Disabled",
+        description: "Daily verse notifications have been turned off.",
+      });
+    } catch (err) {
+      console.error('Failed to cancel notifications', err);
+      toast({
+        title: "Error",
+        description: "Unable to cancel notifications. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
   return (
     <div
       className="w-full text-left rounded-2xl overflow-hidden bg-black shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
@@ -201,6 +243,22 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
           >
             <Heart className="w-3.5 h-3.5" />
             Copy
+          </button>
+          <button
+            onClick={handleEnableDailyReminder}
+            className="inline-flex items-center gap-1.5 hover:text-slate-200 transition-colors"
+            data-testid="button-enable-daily-reminder-hero"
+          >
+            <Bell className="w-3.5 h-3.5" />
+            7am Reminder
+          </button>
+          <button
+            onClick={handleDisableDailyReminder}
+            className="inline-flex items-center gap-1.5 hover:text-slate-200 transition-colors"
+            data-testid="button-disable-daily-reminder-hero"
+          >
+            <BellOff className="w-3.5 h-3.5" />
+            Turn off
           </button>
         </div>
         
