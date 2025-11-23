@@ -90,3 +90,14 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - **Type safety**: All numeric fields validated before use to prevent runtime errors
   - **Data integrity**: Removed unsafe shallow merge helper that could wipe nested objects (mastery, powerUps)
   - Trivia stats fully functional: daily streaks, crowns, Bible mastery scores, title progression, and power-ups
+
+### Native iOS Share Cards (November 23, 2025)
+- **Custom ShareCard Plugin**: Native iOS sharing plugin for verse sharing
+  - Created `ShareCardPlugin.swift` with UIActivityViewController integration
+  - Registered plugin in `AppDelegate.swift` using capacitorDidLoad()
+  - TypeScript wrapper at `client/src/plugins/share-card.ts` for web integration
+  - Share verses with native iOS share sheet showing verse text and reference
+- **Component Integration**: Updated DailyVerseCard and DailyVerseHeroCard components
+  - Replaced Web Share API with native ShareCard plugin for better iOS experience
+  - Share button now opens native iOS share sheet with formatted verse content
+  - Synced with Capacitor using `npx cap sync ios`
