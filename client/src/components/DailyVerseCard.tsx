@@ -22,7 +22,10 @@ import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ShareCard from "@/plugins/share-card";
 import VerseNotifications from "@/plugins/verse-notifications";
 import BrandedShareImage from "@/plugins/branded-share-image";
+import VerseSpeech from "@/plugins/verse-speech";
 import { Capacitor } from '@capacitor/core';
+import { useBibleTranslationStore } from '@/state/useBibleTranslationStore';
+import { getBibleTranslationById, languageCodeToVoiceLocale } from '@/config/bibleTranslations';
 
 interface Verse {
   text: string;
@@ -56,6 +59,11 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   const [emailInput, setEmailInput] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
+  
+  // Get current Bible translation for voice locale
+  const translationId = useBibleTranslationStore((s) => s.translationId);
+  const translation = getBibleTranslationById(translationId);
+  const voiceLocale = languageCodeToVoiceLocale(translation.languageCode);
 
   useEffect(() => {
     const bookmarks = appStore.getBookmarks();
@@ -340,6 +348,52 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
     }
   };
 
+  const handleListen = async () => {
+    try {
+      const platform = Capacitor.getPlatform();
+
+      if (Capacitor.isNativePlatform() && platform === 'ios') {
+        // Use native iOS TTS
+        await VerseSpeech.speak({
+          verseText: verse.text,
+          reference: verse.reference,
+          languageCode: voiceLocale,
+        });
+      } else {
+        // Web fallback - use existing web TTS
+        if (ttsSupported) {
+          speak(verse.text);
+        } else {
+          console.log('Audio playback is available in the iOS app.');
+          toast({
+            title: "iOS Feature",
+            description: "High-quality audio playback is available in the iOS app.",
+          });
+        }
+      }
+    } catch (e) {
+      console.error('Failed to speak verse', e);
+    }
+  };
+
+  const handleStopListening = async () => {
+    try {
+      const platform = Capacitor.getPlatform();
+
+      if (Capacitor.isNativePlatform() && platform === 'ios') {
+        // Use native iOS TTS
+        await VerseSpeech.stop();
+      } else {
+        // Web fallback - use existing web TTS
+        if (ttsSupported) {
+          cancel();
+        }
+      }
+    } catch (e) {
+      console.error('Failed to stop verse speech', e);
+    }
+  };
+
   return (
     <Card className="relative overflow-hidden shadow-lg" data-testid="card-dailyVerse">
       {backgroundImage && (
@@ -489,28 +543,16 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             Copy
           </Button>
           
-          {ttsSupported && (
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={handleTTSClick}
-              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-              data-testid="button-tts-verse"
-              aria-label={isSpeaking ? t.stopListening : t.listenToVerse}
-            >
-              {isSpeaking ? (
-                <>
-                  <VolumeX className="w-4 h-4 mr-2" />
-                  {t.stopListening}
-                </>
-              ) : (
-                <>
-                  <Volume2 className="w-4 h-4 mr-2" />
-                  {t.listenToVerse}
-                </>
-              )}
-            </Button>
-          )}
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleListen}
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            data-testid="button-listen"
+          >
+            <Volume2 className="w-4 h-4 mr-2" />
+            Listen
+          </Button>
           
           <Button
             variant="outline"
