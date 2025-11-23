@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Heart, Share2, BookmarkPlus, Mail, Bell, BellOff } from "lucide-react";
+import { Heart, Share2, BookmarkPlus, Mail, Bell, BellOff, Volume2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { safeShare } from "@/utils/capabilities";
@@ -10,7 +10,10 @@ import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e0171
 import ShareCard from "@/plugins/share-card";
 import VerseNotifications from "@/plugins/verse-notifications";
 import BrandedShareImage from "@/plugins/branded-share-image";
+import VerseSpeech from "@/plugins/verse-speech";
 import { Capacitor } from '@capacitor/core';
+import { useBibleTranslationStore } from '@/state/useBibleTranslationStore';
+import { getBibleTranslationById, languageCodeToVoiceLocale } from '@/config/bibleTranslations';
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
@@ -26,6 +29,11 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
   const [emailInput, setEmailInput] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
+  
+  // Get current Bible translation for voice locale
+  const translationId = useBibleTranslationStore((s) => s.translationId);
+  const translation = getBibleTranslationById(translationId);
+  const voiceLocale = languageCodeToVoiceLocale(translation.languageCode);
 
   // Use provided verse data or fallback while loading
   const displayReference = reference || "John 3:16";
@@ -235,6 +243,30 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
     }
   };
 
+  const handleListen = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    try {
+      const platform = Capacitor.getPlatform();
+
+      if (Capacitor.isNativePlatform() && platform === 'ios') {
+        // Use native iOS TTS
+        await VerseSpeech.speak({
+          verseText: displayText,
+          reference: displayReference,
+          languageCode: voiceLocale,
+        });
+      } else {
+        console.log('Audio playback is available in the iOS app.');
+        toast({
+          title: "iOS Feature",
+          description: "High-quality audio playback is available in the iOS app.",
+        });
+      }
+    } catch (e) {
+      console.error('Failed to speak verse', e);
+    }
+  };
+
   return (
     <div
       className="w-full text-left rounded-2xl overflow-hidden bg-black shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
@@ -291,6 +323,14 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
           >
             <Heart className="w-3.5 h-3.5" />
             Copy
+          </button>
+          <button
+            onClick={handleListen}
+            className="inline-flex items-center gap-1.5 hover:text-slate-200 transition-colors"
+            data-testid="button-listen-verse-hero"
+          >
+            <Volume2 className="w-3.5 h-3.5" />
+            Listen
           </button>
           <button
             onClick={handleEnableDailyReminder}
