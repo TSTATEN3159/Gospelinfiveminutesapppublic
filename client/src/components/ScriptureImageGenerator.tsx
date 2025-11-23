@@ -13,6 +13,8 @@ import { safeShare } from '@/utils/capabilities';
 import { Download, Share2, Loader2, Palette, Type, Image as ImageIcon, Upload, X } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VerseImageComposer } from '@/components/VerseImageComposer';
+import ScriptureImage from '@/plugins/scripture-image';
+import { Capacitor } from '@capacitor/core';
 
 interface ScriptureImageGeneratorProps {
   open: boolean;
@@ -245,6 +247,31 @@ export default function ScriptureImageGenerator({
   // Generate high-quality canvas version for download/share
   const handleGenerateForDownload = async () => {
     try {
+      // Try native iOS plugin first for professional cards
+      if (Capacitor.isNativePlatform()) {
+        try {
+          const { fileUrl } = await ScriptureImage.generate({
+            verseText: settings.verseText,
+            reference: settings.verseReference,
+            width: 1024,
+            height: 1024,
+          });
+          
+          // Convert file URL to blob for sharing
+          const response = await fetch(fileUrl);
+          const blob = await response.blob();
+          const dataUrl = URL.createObjectURL(blob);
+          
+          setPreviewUrl(dataUrl);
+          setGeneratedBlob(blob);
+          return;
+        } catch (nativeError) {
+          console.warn('Native image generation failed, falling back to canvas:', nativeError);
+          // Fall through to canvas approach
+        }
+      }
+      
+      // Fallback: Use canvas-based approach for web or if native fails
       const result = await generateImage(settings);
       setPreviewUrl(result.dataUrl);
       setGeneratedBlob(result.blob);
