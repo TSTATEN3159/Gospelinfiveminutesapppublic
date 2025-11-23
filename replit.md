@@ -101,3 +101,19 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Replaced Web Share API with native ShareCard plugin for better iOS experience
   - Share button now opens native iOS share sheet with formatted verse content
   - Synced with Capacitor using `npx cap sync ios`
+
+### Native iOS Daily Notifications (November 23, 2025)
+- **VerseNotifications Plugin**: Native iOS local notifications for daily scripture reminders
+  - Created `VerseNotificationsPlugin.swift` using UserNotifications framework
+  - Schedules repeating daily notifications at 7:00 AM with verse text and reference
+  - Requests notification permissions and handles authorization flow
+  - Supports scheduling custom notification times (hour/minute parameters)
+  - Includes `cancelAll()` method to disable all pending notifications
+  - Registered in `AppDelegate.swift` alongside ShareCardPlugin
+  - TypeScript wrapper at `client/src/plugins/verse-notifications.ts` for web integration
+- **UI Integration**: Added notification controls to daily verse components
+  - "Remind me daily at 7am" button enables native iOS notifications
+  - "Turn off reminder" button cancels all scheduled notifications
+  - Both buttons available in DailyVerseCard and DailyVerseHeroCard
+  - Toast notifications confirm successful scheduling and cancellation
+  - Bell and BellOff icons from Lucide React for visual clarity
