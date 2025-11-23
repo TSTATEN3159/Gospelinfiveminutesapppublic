@@ -54,6 +54,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     bridge?.registerPluginInstance(ShareCardPlugin())
     bridge?.registerPluginInstance(VerseNotificationsPlugin())
     bridge?.registerPluginInstance(ScriptureImagePlugin())
+    bridge?.registerPluginInstance(BackgroundImagePickerPlugin())
   }
 
 }
