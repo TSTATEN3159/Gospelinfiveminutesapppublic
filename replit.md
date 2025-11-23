@@ -132,3 +132,17 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Falls back to web-based canvas rendering on browsers
   - Seamless user experience across all platforms
   - Maintains all existing customization options for web users
+
+### Native iOS Photo Picker for Custom Backgrounds (November 23, 2025)
+- **BackgroundImagePicker Plugin**: Native iOS photo picker for custom scripture backgrounds
+  - Created `BackgroundImagePickerPlugin.swift` with UIImagePickerController integration
+  - Opens native iOS Photos library for background selection
+  - Saves selected photos to app storage with 90% JPEG compression
+  - Returns file URL for use in scripture image generation
+  - Registered in `AppDelegate.swift` alongside other native plugins
+  - TypeScript wrapper at `client/src/plugins/background-image-picker.ts`
+- **UI Integration**: Added to Scripture Image Generator backgrounds tab
+  - "Pick from Photos (iOS)" button appears only on iOS native platform
+  - Integrates seamlessly with existing custom background management
+  - Selected photos stored alongside web-uploaded custom backgrounds
+  - Maintains full compatibility with existing web upload flow
