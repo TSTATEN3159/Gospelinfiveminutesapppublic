@@ -6,6 +6,7 @@ import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNo
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
+import { useTranslation } from "react-i18next";
 import appStore from "@/lib/appStore";
 import { toggleSpeech, getIsSpeaking } from "@/utils/speechEngine";
 import {
@@ -40,6 +41,7 @@ interface DailyVerseCardProps {
 export default function DailyVerseCard({ verse, backgroundImage, onNavigate, language = "en" }: DailyVerseCardProps) {
   const { toast } = useToast();
   const t = useTranslations(language);
+  const { t: i18nT } = useTranslation();
   const { supported: ttsSupported, isSpeaking, speak, cancel } = useTextToSpeech();
   const [isSharing, setIsSharing] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -259,13 +261,13 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
       });
       toast({
         title: "Reminder Set!",
-        description: "You'll receive daily verse notifications at 7:00 AM.",
+        description: i18nT('notifications.scheduled'),
       });
     } catch (e) {
       console.error('Failed to schedule daily notification', e);
       toast({
         title: "Reminder Failed",
-        description: "Unable to schedule notification. Please try again.",
+        description: i18nT('notifications.error'),
         variant: "destructive",
       });
     }
@@ -276,13 +278,13 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
       await VerseNotifications.cancelAll();
       toast({
         title: "Reminder Disabled",
-        description: "Daily verse notifications have been turned off.",
+        description: i18nT('notifications.cancelled'),
       });
     } catch (e) {
       console.error('Failed to cancel notifications', e);
       toast({
         title: "Error",
-        description: "Unable to cancel notifications. Please try again.",
+        description: i18nT('notifications.error'),
         variant: "destructive",
       });
     }
@@ -469,7 +471,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             data-testid="button-share"
           >
             <Share2 className="w-4 h-4 mr-2" />
-            Share
+            {i18nT('buttons.share')}
           </Button>
           
           <Button
@@ -572,7 +574,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             data-testid="button-enable-daily-reminder"
           >
             <Bell className="w-4 h-4 mr-2" />
-            Remind me daily at 7am
+            {i18nT('buttons.remindDaily')}
           </Button>
           
           <Button
@@ -583,7 +585,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             data-testid="button-disable-daily-reminder"
           >
             <BellOff className="w-4 h-4 mr-2" />
-            Turn off reminder
+            {i18nT('buttons.turnOffReminder')}
           </Button>
         </div>
       </CardContent>

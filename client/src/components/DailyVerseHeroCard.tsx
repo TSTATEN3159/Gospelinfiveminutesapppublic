@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Heart, Share2, BookmarkPlus, Mail, Bell, BellOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { safeShare } from "@/utils/capabilities";
 import { MoreTranslationsCard } from "./MoreTranslationsCard";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -18,6 +19,7 @@ interface DailyVerseHeroCardProps {
 
 export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyVerseHeroCardProps) {
   const { toast } = useToast();
+  const { t } = useTranslation();
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [nameInput, setNameInput] = useState("");
@@ -157,13 +159,13 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
       });
       toast({
         title: "Reminder Set!",
-        description: "You'll receive daily verse notifications at 7:00 AM.",
+        description: t('notifications.scheduled'),
       });
     } catch (err) {
       console.error('Failed to schedule daily notification', err);
       toast({
         title: "Reminder Failed",
-        description: "Unable to schedule notification. Please try again.",
+        description: t('notifications.error'),
         variant: "destructive",
       });
     }
@@ -175,13 +177,13 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
       await VerseNotifications.cancelAll();
       toast({
         title: "Reminder Disabled",
-        description: "Daily verse notifications have been turned off.",
+        description: t('notifications.cancelled'),
       });
     } catch (err) {
       console.error('Failed to cancel notifications', err);
       toast({
         title: "Error",
-        description: "Unable to cancel notifications. Please try again.",
+        description: t('notifications.error'),
         variant: "destructive",
       });
     }
@@ -226,7 +228,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
             data-testid="button-share-verse-hero"
           >
             <Share2 className="w-3.5 h-3.5" />
-            Share
+            {t('buttons.share')}
           </button>
           <button
             onClick={handleSave}
@@ -250,7 +252,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
             data-testid="button-enable-daily-reminder-hero"
           >
             <Bell className="w-3.5 h-3.5" />
-            7am Reminder
+            {t('buttons.remindDaily')}
           </button>
           <button
             onClick={handleDisableDailyReminder}
@@ -258,7 +260,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
             data-testid="button-disable-daily-reminder-hero"
           >
             <BellOff className="w-3.5 h-3.5" />
-            Turn off
+            {t('buttons.turnOffReminder')}
           </button>
         </div>
         
