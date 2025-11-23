@@ -6,8 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2 } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Languages } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { useTranslation } from "react-i18next";
 import { bibleService } from "../services/bibleService";
 import appStore from "@/lib/appStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
@@ -62,6 +63,7 @@ interface AppPreferences {
 export default function SettingsPage({ onNavigate, streakDays = 0, language = "en", user }: SettingsPageProps) {
   const { toast } = useToast();
   const t = useTranslations(language);
+  const { i18n } = useTranslation();
   
   // Initialize profile data from user prop or defaults
   const [profile, setProfile] = useState<UserProfile>({
@@ -570,6 +572,33 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
               value={preferences.bibleVersion}
               onChange={(value) => handlePreferenceChange('bibleVersion', value)}
             />
+            
+            {/* Language Selector */}
+            <div>
+              <Label htmlFor="appLanguage" className="flex items-center gap-2">
+                <Languages className="w-4 h-4" />
+                App Language
+              </Label>
+              <Select 
+                value={i18n.language} 
+                onValueChange={(lang) => {
+                  i18n.changeLanguage(lang);
+                  handlePreferenceChange('language', lang);
+                  toast({
+                    title: "Language Changed",
+                    description: lang === 'es' ? 'Idioma cambiado a Español' : 'Language changed to English',
+                  });
+                }}
+              >
+                <SelectTrigger data-testid="select-app-language">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="en">English</SelectItem>
+                  <SelectItem value="es">Español</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
             
             <Button 
               variant="outline" 
