@@ -49,4 +49,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)
   }
 
+  override func capacitorDidLoad() {
+    super.capacitorDidLoad()
+    bridge?.registerPluginInstance(ShareCardPlugin())
+  }
+
 }
