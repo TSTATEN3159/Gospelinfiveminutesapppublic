@@ -209,7 +209,7 @@ function MainApp() {
   };
 
   const handleNavigate = (page: string, params?: any) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "bookmarks", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       
