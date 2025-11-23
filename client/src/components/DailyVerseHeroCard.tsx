@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
 import ShareCard from "@/plugins/share-card";
 import VerseNotifications from "@/plugins/verse-notifications";
+import BrandedShareImage from "@/plugins/branded-share-image";
 import { Capacitor } from '@capacitor/core';
 
 interface DailyVerseHeroCardProps {
@@ -38,10 +39,12 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
       const platform = Capacitor.getPlatform();
 
       if (Capacitor.isNativePlatform() && platform === 'ios') {
-        // Use native share plugin on iOS
-        if (ShareCard && typeof ShareCard.share === 'function') {
-          await ShareCard.share({ verseText, reference });
-        }
+        // Use native branded image share on iOS
+        await BrandedShareImage.shareVerse({
+          verseText,
+          reference,
+          tagline: 'The Gospel in Five Minutes',
+        });
       } else {
         // Web or non-iOS fallback
         if (navigator.share) {

@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ShareCard from "@/plugins/share-card";
 import VerseNotifications from "@/plugins/verse-notifications";
+import BrandedShareImage from "@/plugins/branded-share-image";
 import { Capacitor } from '@capacitor/core';
 
 interface Verse {
@@ -104,10 +105,12 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
       const platform = Capacitor.getPlatform();
 
       if (Capacitor.isNativePlatform() && platform === 'ios') {
-        // Use native share plugin on iOS
-        if (ShareCard && typeof ShareCard.share === 'function') {
-          await ShareCard.share({ verseText, reference });
-        }
+        // Use native branded image share on iOS
+        await BrandedShareImage.shareVerse({
+          verseText,
+          reference,
+          tagline: 'The Gospel in Five Minutes',
+        });
       } else {
         // Web or non-iOS fallback
         if (navigator.share) {
