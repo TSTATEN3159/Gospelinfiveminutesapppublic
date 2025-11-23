@@ -1,19 +1,11 @@
 import { useState } from "react";
-import { Heart, Share2, BookmarkPlus, Mail, Bell, BellOff, Volume2 } from "lucide-react";
+import { Heart, Share2, BookmarkPlus, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { useTranslation } from "react-i18next";
 import { safeShare } from "@/utils/capabilities";
 import { MoreTranslationsCard } from "./MoreTranslationsCard";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
-import ShareCard from "@/plugins/share-card";
-import VerseNotifications from "@/plugins/verse-notifications";
-import BrandedShareImage from "@/plugins/branded-share-image";
-import VerseSpeech from "@/plugins/verse-speech";
-import { Capacitor } from '@capacitor/core';
-import { useBibleTranslationStore } from '@/state/useBibleTranslationStore';
-import { getBibleTranslationById, languageCodeToVoiceLocale } from '@/config/bibleTranslations';
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
@@ -24,16 +16,10 @@ interface DailyVerseHeroCardProps {
 
 export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyVerseHeroCardProps) {
   const { toast } = useToast();
-  const { t } = useTranslation();
   const [isEmailDialogOpen, setIsEmailDialogOpen] = useState(false);
   const [emailInput, setEmailInput] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
-  
-  // Get current Bible translation for voice locale
-  const translationId = useBibleTranslationStore((s) => s.translationId);
-  const translation = getBibleTranslationById(translationId);
-  const voiceLocale = languageCodeToVoiceLocale(translation.languageCode);
 
   // Use provided verse data or fallback while loading
   const displayReference = reference || "John 3:16";
@@ -41,39 +27,17 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
 
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    try {
-      const verseText = displayText;
-      const reference = displayReference;
-      const platform = Capacitor.getPlatform();
-
-      if (Capacitor.isNativePlatform() && platform === 'ios') {
-        // Use native branded image share on iOS
-        await BrandedShareImage.shareVerse({
-          verseText,
-          reference,
-          tagline: 'The Gospel in Five Minutes',
-        });
-      } else {
-        // Web or non-iOS fallback
-        if (navigator.share) {
-          await navigator.share({
-            title: reference,
-            text: verseText,
-          });
-          toast({
-            title: "Verse Shared",
-            description: "Daily verse shared successfully!",
-          });
-        } else {
-          console.log('Sharing is only fully supported in the iOS app.');
-          toast({
-            title: "Share Unavailable",
-            description: "Full sharing features are available in the iOS app.",
-          });
-        }
-      }
-    } catch (err) {
-      console.error("Share failed:", err);
+    const shareText = `"${displayText}"\n\n— ${displayReference}\n\nShared from The Gospel in 5 Minutes`;
+    const shared = await safeShare({
+      title: "Today's Focus Verse",
+      text: shareText
+    });
+    
+    if (shared) {
+      toast({
+        title: "Verse Shared",
+        description: "Daily verse shared successfully!",
+      });
     }
   };
 
@@ -180,93 +144,6 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
     }
   };
 
-  const handleEnableDailyReminder = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    try {
-      const platform = Capacitor.getPlatform();
-
-      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
-        console.log('Daily 7AM notifications are only available in the iOS app.');
-        toast({
-          title: "iOS Feature",
-          description: "Daily 7AM notifications are available in the iOS app.",
-        });
-        return;
-      }
-
-      await VerseNotifications.scheduleDaily({
-        verseText: displayText,
-        reference: displayReference,
-        hour: 7,
-        minute: 0,
-      });
-      toast({
-        title: "Reminder Set!",
-        description: t('notifications.scheduled'),
-      });
-    } catch (err) {
-      console.error('Failed to schedule daily notification', err);
-      toast({
-        title: "Reminder Failed",
-        description: t('notifications.error'),
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleDisableDailyReminder = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    try {
-      const platform = Capacitor.getPlatform();
-
-      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
-        console.log('Turning off notifications is only required in the iOS app.');
-        toast({
-          title: "iOS Feature",
-          description: "Notification management is available in the iOS app.",
-        });
-        return;
-      }
-
-      await VerseNotifications.cancelAll();
-      toast({
-        title: "Reminder Disabled",
-        description: t('notifications.cancelled'),
-      });
-    } catch (err) {
-      console.error('Failed to cancel notifications', err);
-      toast({
-        title: "Error",
-        description: t('notifications.error'),
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleListen = async (e: React.MouseEvent) => {
-    e.stopPropagation();
-    try {
-      const platform = Capacitor.getPlatform();
-
-      if (Capacitor.isNativePlatform() && platform === 'ios') {
-        // Use native iOS TTS
-        await VerseSpeech.speak({
-          verseText: displayText,
-          reference: displayReference,
-          languageCode: voiceLocale,
-        });
-      } else {
-        console.log('Audio playback is available in the iOS app.');
-        toast({
-          title: "iOS Feature",
-          description: "High-quality audio playback is available in the iOS app.",
-        });
-      }
-    } catch (e) {
-      console.error('Failed to speak verse', e);
-    }
-  };
-
   return (
     <div
       className="w-full text-left rounded-2xl overflow-hidden bg-black shadow-[0_8px_32px_rgba(0,0,0,0.4)]"
@@ -306,7 +183,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
             data-testid="button-share-verse-hero"
           >
             <Share2 className="w-3.5 h-3.5" />
-            {t('buttons.share')}
+            Share
           </button>
           <button
             onClick={handleSave}
@@ -323,30 +200,6 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
           >
             <Heart className="w-3.5 h-3.5" />
             Copy
-          </button>
-          <button
-            onClick={handleListen}
-            className="inline-flex items-center gap-1.5 hover:text-slate-200 transition-colors"
-            data-testid="button-listen-verse-hero"
-          >
-            <Volume2 className="w-3.5 h-3.5" />
-            Listen
-          </button>
-          <button
-            onClick={handleEnableDailyReminder}
-            className="inline-flex items-center gap-1.5 hover:text-slate-200 transition-colors"
-            data-testid="button-enable-daily-reminder-hero"
-          >
-            <Bell className="w-3.5 h-3.5" />
-            {t('buttons.remindDaily')}
-          </button>
-          <button
-            onClick={handleDisableDailyReminder}
-            className="inline-flex items-center gap-1.5 hover:text-slate-200 transition-colors"
-            data-testid="button-disable-daily-reminder-hero"
-          >
-            <BellOff className="w-3.5 h-3.5" />
-            {t('buttons.turnOffReminder')}
           </button>
         </div>
         

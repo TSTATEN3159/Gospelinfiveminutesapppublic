@@ -2,11 +2,10 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX, Image as ImageIcon, Mail, Bell, BellOff } from "lucide-react";
+import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX, Image as ImageIcon, Mail } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
-import { useTranslation } from "react-i18next";
 import appStore from "@/lib/appStore";
 import { toggleSpeech, getIsSpeaking } from "@/utils/speechEngine";
 import {
@@ -19,13 +18,6 @@ import {
 } from "@/components/ui/dialog";
 import { Textarea } from "@/components/ui/textarea";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
-import ShareCard from "@/plugins/share-card";
-import VerseNotifications from "@/plugins/verse-notifications";
-import BrandedShareImage from "@/plugins/branded-share-image";
-import VerseSpeech from "@/plugins/verse-speech";
-import { Capacitor } from '@capacitor/core';
-import { useBibleTranslationStore } from '@/state/useBibleTranslationStore';
-import { getBibleTranslationById, languageCodeToVoiceLocale } from '@/config/bibleTranslations';
 
 interface Verse {
   text: string;
@@ -46,7 +38,6 @@ interface DailyVerseCardProps {
 export default function DailyVerseCard({ verse, backgroundImage, onNavigate, language = "en" }: DailyVerseCardProps) {
   const { toast } = useToast();
   const t = useTranslations(language);
-  const { t: i18nT } = useTranslation();
   const { supported: ttsSupported, isSpeaking, speak, cancel } = useTextToSpeech();
   const [isSharing, setIsSharing] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
@@ -59,11 +50,6 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   const [emailInput, setEmailInput] = useState("");
   const [nameInput, setNameInput] = useState("");
   const [isSubscribing, setIsSubscribing] = useState(false);
-  
-  // Get current Bible translation for voice locale
-  const translationId = useBibleTranslationStore((s) => s.translationId);
-  const translation = getBibleTranslationById(translationId);
-  const voiceLocale = languageCodeToVoiceLocale(translation.languageCode);
 
   useEffect(() => {
     const bookmarks = appStore.getBookmarks();
@@ -107,39 +93,21 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
 
   const shareVerse = async () => {
     setIsSharing(true);
-    try {
-      const verseText = verse.text;
-      const reference = verse.reference;
-      const platform = Capacitor.getPlatform();
+    const shareData = {
+      title: "Daily Bible Verse",
+      text: `"${verse.text}" - ${verse.reference}`,
+      url: window.location.href,
+    };
 
-      if (Capacitor.isNativePlatform() && platform === 'ios') {
-        // Use native branded image share on iOS
-        await BrandedShareImage.shareVerse({
-          verseText,
-          reference,
-          tagline: 'The Gospel in Five Minutes',
-        });
+    try {
+      if (navigator.share) {
+        await navigator.share(shareData);
       } else {
-        // Web or non-iOS fallback
-        if (navigator.share) {
-          await navigator.share({
-            title: reference,
-            text: verseText,
-          });
-          toast({
-            title: "Verse Shared",
-            description: "Daily verse shared successfully!",
-          });
-        } else {
-          console.log('Sharing is only fully supported in the iOS app.');
-          toast({
-            title: "Share Unavailable",
-            description: "Full sharing features are available in the iOS app.",
-          });
-        }
+        // Fallback to copying
+        await copyToClipboard();
       }
     } catch (err) {
-      console.error("Share failed:", err);
+      console.log("Share verse failed:", err);
     } finally {
       setIsSharing(false);
     }
@@ -284,113 +252,6 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
       });
     } finally {
       setIsSubscribing(false);
-    }
-  };
-
-  const handleEnableDailyReminder = async () => {
-    try {
-      const platform = Capacitor.getPlatform();
-
-      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
-        console.log('Daily 7AM notifications are only available in the iOS app.');
-        toast({
-          title: "iOS Feature",
-          description: "Daily 7AM notifications are available in the iOS app.",
-        });
-        return;
-      }
-
-      await VerseNotifications.scheduleDaily({
-        verseText: verse.text,
-        reference: verse.reference,
-        hour: 7,
-        minute: 0,
-      });
-      toast({
-        title: "Reminder Set!",
-        description: i18nT('notifications.scheduled'),
-      });
-    } catch (e) {
-      console.error('Failed to schedule daily notification', e);
-      toast({
-        title: "Reminder Failed",
-        description: i18nT('notifications.error'),
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleDisableDailyReminder = async () => {
-    try {
-      const platform = Capacitor.getPlatform();
-
-      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
-        console.log('Turning off notifications is only required in the iOS app.');
-        toast({
-          title: "iOS Feature",
-          description: "Notification management is available in the iOS app.",
-        });
-        return;
-      }
-
-      await VerseNotifications.cancelAll();
-      toast({
-        title: "Reminder Disabled",
-        description: i18nT('notifications.cancelled'),
-      });
-    } catch (e) {
-      console.error('Failed to cancel notifications', e);
-      toast({
-        title: "Error",
-        description: i18nT('notifications.error'),
-        variant: "destructive",
-      });
-    }
-  };
-
-  const handleListen = async () => {
-    try {
-      const platform = Capacitor.getPlatform();
-
-      if (Capacitor.isNativePlatform() && platform === 'ios') {
-        // Use native iOS TTS
-        await VerseSpeech.speak({
-          verseText: verse.text,
-          reference: verse.reference,
-          languageCode: voiceLocale,
-        });
-      } else {
-        // Web fallback - use existing web TTS
-        if (ttsSupported) {
-          speak(verse.text);
-        } else {
-          console.log('Audio playback is available in the iOS app.');
-          toast({
-            title: "iOS Feature",
-            description: "High-quality audio playback is available in the iOS app.",
-          });
-        }
-      }
-    } catch (e) {
-      console.error('Failed to speak verse', e);
-    }
-  };
-
-  const handleStopListening = async () => {
-    try {
-      const platform = Capacitor.getPlatform();
-
-      if (Capacitor.isNativePlatform() && platform === 'ios') {
-        // Use native iOS TTS
-        await VerseSpeech.stop();
-      } else {
-        // Web fallback - use existing web TTS
-        if (ttsSupported) {
-          cancel();
-        }
-      }
-    } catch (e) {
-      console.error('Failed to stop verse speech', e);
     }
   };
 
@@ -543,16 +404,28 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             Copy
           </Button>
           
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleListen}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-            data-testid="button-listen"
-          >
-            <Volume2 className="w-4 h-4 mr-2" />
-            Listen
-          </Button>
+          {ttsSupported && (
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleTTSClick}
+              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+              data-testid="button-tts-verse"
+              aria-label={isSpeaking ? t.stopListening : t.listenToVerse}
+            >
+              {isSpeaking ? (
+                <>
+                  <VolumeX className="w-4 h-4 mr-2" />
+                  {t.stopListening}
+                </>
+              ) : (
+                <>
+                  <Volume2 className="w-4 h-4 mr-2" />
+                  {t.listenToVerse}
+                </>
+              )}
+            </Button>
+          )}
           
           <Button
             variant="outline"
@@ -563,7 +436,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             data-testid="button-share"
           >
             <Share2 className="w-4 h-4 mr-2" />
-            {i18nT('buttons.share')}
+            Share
           </Button>
           
           <Button
@@ -657,28 +530,6 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
               </div>
             </DialogContent>
           </Dialog>
-          
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={handleEnableDailyReminder}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-            data-testid="button-enable-daily-reminder"
-          >
-            <Bell className="w-4 h-4 mr-2" />
-            {i18nT('buttons.remindDaily')}
-          </Button>
-          
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={handleDisableDailyReminder}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
-            data-testid="button-disable-daily-reminder"
-          >
-            <BellOff className="w-4 h-4 mr-2" />
-            {i18nT('buttons.turnOffReminder')}
-          </Button>
         </div>
       </CardContent>
       

@@ -49,14 +49,4 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return ApplicationDelegateProxy.shared.application(application, continue: userActivity, restorationHandler: restorationHandler)
   }
 
-  override func capacitorDidLoad() {
-    super.capacitorDidLoad()
-    bridge?.registerPluginInstance(ShareCardPlugin())
-    bridge?.registerPluginInstance(VerseNotificationsPlugin())
-    bridge?.registerPluginInstance(ScriptureImagePlugin())
-    bridge?.registerPluginInstance(BackgroundImagePickerPlugin())
-    bridge?.registerPluginInstance(BrandedShareImagePlugin())
-    bridge?.registerPluginInstance(VerseSpeechPlugin())
-  }
-
 }
