@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Languages } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Languages, Book } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTranslation } from "react-i18next";
 import { bibleService } from "../services/bibleService";
@@ -14,6 +14,8 @@ import appStore from "@/lib/appStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TextSizeControls } from "@/components/TextSizeControls";
 import { ReminderSettings } from "@/components/settings/ReminderSettings";
+import { useBibleTranslationStore } from "@/state/useBibleTranslationStore";
+import { BIBLE_TRANSLATIONS } from "@/config/bibleTranslations";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -64,6 +66,8 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
   const { toast } = useToast();
   const t = useTranslations(language);
   const { i18n } = useTranslation();
+  const translationId = useBibleTranslationStore((s) => s.translationId);
+  const setTranslationId = useBibleTranslationStore((s) => s.setTranslationId);
   
   // Initialize profile data from user prop or defaults
   const [profile, setProfile] = useState<UserProfile>({
@@ -568,17 +572,52 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
               />
             </div>
 
-            <BibleVersionSelector 
-              value={preferences.bibleVersion}
-              onChange={(value) => handlePreferenceChange('bibleVersion', value)}
-            />
+            {/* Bible Translation Selector */}
+            <div className="space-y-3 pt-4 border-t">
+              <div>
+                <Label className="font-medium text-base flex items-center gap-2">
+                  <Book className="w-4 h-4" />
+                  Bible Translation
+                </Label>
+                <p className="text-sm text-muted-foreground mt-1">
+                  Choose which Bible translation to use for verses in the app
+                </p>
+              </div>
+              
+              <div className="flex flex-wrap gap-2">
+                {BIBLE_TRANSLATIONS.map((tr) => (
+                  <button
+                    key={tr.id}
+                    type="button"
+                    onClick={() => {
+                      setTranslationId(tr.id);
+                      toast({
+                        title: "Bible Translation Changed",
+                        description: `Now using ${tr.shortLabel}`,
+                      });
+                    }}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium border-2 transition-all ${
+                      translationId === tr.id
+                        ? 'bg-primary text-primary-foreground border-primary shadow-md'
+                        : 'bg-background border-border hover:border-primary/50 hover:bg-accent'
+                    }`}
+                    data-testid={`button-translation-${tr.id}`}
+                  >
+                    {tr.label}
+                  </button>
+                ))}
+              </div>
+            </div>
             
-            {/* Language Selector */}
-            <div>
-              <Label htmlFor="appLanguage" className="flex items-center gap-2">
+            {/* UI Language Selector */}
+            <div className="pt-4 border-t">
+              <Label htmlFor="appLanguage" className="flex items-center gap-2 font-medium text-base">
                 <Languages className="w-4 h-4" />
                 App Language
               </Label>
+              <p className="text-sm text-muted-foreground mt-1 mb-2">
+                Choose the language for app menus and buttons
+              </p>
               <Select 
                 value={i18n.language} 
                 onValueChange={(lang) => {

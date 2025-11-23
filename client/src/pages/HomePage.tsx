@@ -28,6 +28,8 @@ import { videoService, type VideoItem } from "../services/videoService";
 import { useTranslations } from "../lib/translations";
 import { widgetUpdater } from "../lib/widgetUpdater";
 import { liveActivity } from "../lib/liveActivity";
+import { useBibleTranslationStore } from "@/state/useBibleTranslationStore";
+import { getBibleTranslationById } from "@/config/bibleTranslations";
 
 // Images
 import warmBibleDeskImage from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
@@ -56,6 +58,8 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   const t = useTranslations(language);
   const { supported: ttsSupported, isSpeaking, speak, cancel, isInitialized: ttsInitialized } = useTextToSpeech();
   const { streakDays: triviaStreak, dailyCrowns, highestTitle } = useTriviaHomeStats();
+  const translationId = useBibleTranslationStore((s) => s.translationId);
+  const translation = getBibleTranslationById(translationId);
   const hasShownTTSWarning = useRef(false);
   const [showVerseModal, setShowVerseModal] = useState(false);
   const [showBadgeModal, setShowBadgeModal] = useState(false);
@@ -101,19 +105,8 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         setLoading(true);
         setError(null);
         
-        // Get user's preferred Bible version from localStorage
-        const savedPreferences = localStorage.getItem("gospelAppPreferences");
-        let bibleVersion = 'NIV'; // Default
-        if (savedPreferences) {
-          try {
-            const prefs = JSON.parse(savedPreferences);
-            bibleVersion = prefs.bibleVersion || 'NIV';
-          } catch (e) {
-            console.warn('Could not parse saved preferences');
-          }
-        }
-        
-        const verse = await bibleService.getDailyVerse(bibleVersion);
+        // Use Bible translation from Zustand store
+        const verse = await bibleService.getDailyVerse(translation.apiCode);
         setDailyVerse(verse);
         
         // Update iOS widget with daily verse
@@ -146,7 +139,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
     };
 
     loadDailyContent();
-  }, []);
+  }, [translation.apiCode]);
 
   const handleBadgeEarned = (badgeType: string, streakDays: number) => {
     setBadgeData({ type: badgeType, days: streakDays });
