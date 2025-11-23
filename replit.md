@@ -117,3 +117,18 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Both buttons available in DailyVerseCard and DailyVerseHeroCard
   - Toast notifications confirm successful scheduling and cancellation
   - Bell and BellOff icons from Lucide React for visual clarity
+
+### Native iOS Scripture Image Cards (November 23, 2025)
+- **ScriptureImage Plugin**: Professional native iOS scripture image card generation
+  - Created `ScriptureImagePlugin.swift` using UIGraphicsImageRenderer for high-quality rendering
+  - Generates beautiful gradient card with centered, auto-fitting verse text
+  - Dynamic font sizing ensures text never overflows the card boundaries
+  - Professional styling with rounded corners, subtle shadows, and elegant typography
+  - Saves as PNG file and returns URL for sharing/display
+  - Registered in `AppDelegate.swift` alongside other native plugins
+  - TypeScript wrapper at `client/src/plugins/scripture-image.ts`
+- **Smart Integration**: Updated ScriptureImageGenerator component with intelligent fallback
+  - Native iOS plugin used automatically when on iOS devices for professional cards
+  - Falls back to web-based canvas rendering on browsers
+  - Seamless user experience across all platforms
+  - Maintains all existing customization options for web users
