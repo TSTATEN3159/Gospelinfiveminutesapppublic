@@ -54,3 +54,13 @@ export function getBibleTranslationById(id: BibleTranslationId): BibleTranslatio
     BIBLE_TRANSLATIONS.find((t) => t.id === DEFAULT_BIBLE_TRANSLATION_ID)!
   );
 }
+
+export function languageCodeToVoiceLocale(languageCode: 'en' | 'es'): string {
+  switch (languageCode) {
+    case 'es':
+      return 'es-ES'; // Spanish (Spain) - safe default
+    case 'en':
+    default:
+      return 'en-US'; // English (US) default
+  }
+}

@@ -56,6 +56,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     bridge?.registerPluginInstance(ScriptureImagePlugin())
     bridge?.registerPluginInstance(BackgroundImagePickerPlugin())
     bridge?.registerPluginInstance(BrandedShareImagePlugin())
+    bridge?.registerPluginInstance(VerseSpeechPlugin())
   }
 
 }
