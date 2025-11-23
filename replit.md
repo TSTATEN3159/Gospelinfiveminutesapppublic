@@ -146,3 +146,24 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Integrates seamlessly with existing custom background management
   - Selected photos stored alongside web-uploaded custom backgrounds
   - Maintains full compatibility with existing web upload flow
+
+### Native iOS Branded Share & Text-to-Speech (November 23, 2025)
+- **BrandedShareImagePlugin**: Professional branded verse image sharing for iOS
+  - Created `BrandedShareImagePlugin.swift` generating 1024x1024px professional verse cards
+  - Beautiful gradient background with centered white card, rounded corners, and shadow
+  - Auto-fitting verse text (scales from 34pt down to fit perfectly)
+  - Professional branding strip at bottom with "The Gospel in Five Minutes" tagline
+  - Optional logo support (if "ShareLogo" asset exists in iOS project)
+  - Opens native iOS share sheet with both image AND text for maximum viral impact
+  - Registered in `AppDelegate.swift` and synced with TypeScript wrapper at `client/src/plugins/branded-share-image.ts`
+  - Updated DailyVerseCard and DailyVerseHeroCard to use BrandedShareImage on iOS (Web Share API fallback for browsers)
+- **VerseSpeechPlugin**: Native iOS text-to-speech for scripture listening
+  - Created `VerseSpeechPlugin.swift` using AVSpeechSynthesizer for high-quality TTS
+  - Reads verse text and reference aloud with natural speech
+  - Language-aware voice selection: `en-US` for English translations, `es-ES` for Spanish (RVR1960)
+  - Maps Bible translation languageCode to iOS voice locale via `languageCodeToVoiceLocale()` helper in `bibleTranslations.ts`
+  - Supports `speak()`, `stop()`, and `isSpeaking()` methods
+  - Registered in `AppDelegate.swift` with TypeScript wrapper at `client/src/plugins/verse-speech.ts`
+  - Added "Listen" button to DailyVerseCard and DailyVerseHeroCard
+  - On iOS: Uses native TTS with appropriate voice for current Bible translation
+  - On Web: Falls back to existing web TTS or shows friendly iOS feature message
