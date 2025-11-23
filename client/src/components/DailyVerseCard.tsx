@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX, Image as ImageIcon, Mail } from "lucide-react";
+import { Copy, Share2, Book, Lightbulb, Heart, Bookmark, BookmarkCheck, StickyNote, Volume2, VolumeX, Image as ImageIcon, Mail, Bell, BellOff } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
@@ -19,6 +19,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ShareCard from "@/plugins/share-card";
+import VerseNotifications from "@/plugins/verse-notifications";
 
 interface Verse {
   text: string;
@@ -245,6 +246,45 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
       });
     } finally {
       setIsSubscribing(false);
+    }
+  };
+
+  const handleEnableDailyReminder = async () => {
+    try {
+      await VerseNotifications.scheduleDaily({
+        verseText: verse.text,
+        reference: verse.reference,
+        hour: 7,
+        minute: 0,
+      });
+      toast({
+        title: "Reminder Set!",
+        description: "You'll receive daily verse notifications at 7:00 AM.",
+      });
+    } catch (e) {
+      console.error('Failed to schedule daily notification', e);
+      toast({
+        title: "Reminder Failed",
+        description: "Unable to schedule notification. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDisableDailyReminder = async () => {
+    try {
+      await VerseNotifications.cancelAll();
+      toast({
+        title: "Reminder Disabled",
+        description: "Daily verse notifications have been turned off.",
+      });
+    } catch (e) {
+      console.error('Failed to cancel notifications', e);
+      toast({
+        title: "Error",
+        description: "Unable to cancel notifications. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 
@@ -523,6 +563,28 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
               </div>
             </DialogContent>
           </Dialog>
+          
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={handleEnableDailyReminder}
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            data-testid="button-enable-daily-reminder"
+          >
+            <Bell className="w-4 h-4 mr-2" />
+            Remind me daily at 7am
+          </Button>
+          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={handleDisableDailyReminder}
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            data-testid="button-disable-daily-reminder"
+          >
+            <BellOff className="w-4 h-4 mr-2" />
+            Turn off reminder
+          </Button>
         </div>
       </CardContent>
       
