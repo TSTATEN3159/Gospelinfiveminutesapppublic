@@ -52,6 +52,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   override func capacitorDidLoad() {
     super.capacitorDidLoad()
     bridge?.registerPluginInstance(ShareCardPlugin())
+    bridge?.registerPluginInstance(VerseNotificationsPlugin())
   }
 
 }

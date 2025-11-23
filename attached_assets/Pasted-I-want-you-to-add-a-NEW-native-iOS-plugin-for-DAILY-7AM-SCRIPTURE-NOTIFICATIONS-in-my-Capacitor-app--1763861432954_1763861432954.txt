@@ -1,0 +1,195 @@
+I want you to add a NEW native iOS plugin for DAILY 7AM SCRIPTURE NOTIFICATIONS in my Capacitor app.
+
+This plugin should schedule a local notification every day at 7:00 AM with the current daily verse and reference.
+
+Please follow these steps EXACTLY:
+
+━━━━━━━━━━━━━━━━━━
+📌 1️⃣ Create VerseNotificationsPlugin.swift
+━━━━━━━━━━━━━━━━━━
+In the iOS Xcode project (App target), create a new Swift file:
+
+VerseNotificationsPlugin.swift
+
+Paste THIS code into it:
+
+import Capacitor
+import UserNotifications
+
+@objc(VerseNotificationsPlugin)
+public class VerseNotificationsPlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "VerseNotificationsPlugin"
+    public let jsName = "VerseNotifications"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "scheduleDaily", returnType: CAPPluginReturnPromise),
+        CAPPluginMethod(name: "cancelAll", returnType: CAPPluginReturnPromise)
+    ]
+
+    @objc func scheduleDaily(_ call: CAPPluginCall) {
+        let verseText = call.getString("verseText") ?? "Daily Scripture"
+        let reference = call.getString("reference") ?? ""
+        let hour = call.getInt("hour") ?? 7
+        let minute = call.getInt("minute") ?? 0
+
+        let center = UNUserNotificationCenter.current()
+
+        // Ask for permission
+        center.requestAuthorization(options: [.alert, .sound, .badge]) { granted, error in
+            if let error = error {
+                call.reject("Notification permission error: \(error.localizedDescription)")
+                return
+            }
+
+            if !granted {
+                call.reject("Notification permission not granted")
+                return
+            }
+
+            // Remove existing scheduled notifications for cleanliness
+            center.removeAllPendingNotificationRequests()
+
+            let content = UNMutableNotificationContent()
+            content.title = "Daily Scripture"
+            content.body = "\(verseText)\n\(reference)"
+            content.sound = .default
+
+            var dateComponents = DateComponents()
+            dateComponents.hour = hour
+            dateComponents.minute = minute
+
+            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponents, repeats: true)
+            let request = UNNotificationRequest(identifier: "daily_scripture_notification", content: content, trigger: trigger)
+
+            center.add(request) { addError in
+                if let addError = addError {
+                    call.reject("Failed to schedule notification: \(addError.localizedDescription)")
+                } else {
+                    call.resolve()
+                }
+            }
+        }
+    }
+
+    @objc func cancelAll(_ call: CAPPluginCall) {
+        let center = UNUserNotificationCenter.current()
+        center.removeAllPendingNotificationRequests()
+        call.resolve()
+    }
+}
+
+━━━━━━━━━━━━━━━━━━
+📌 2️⃣ Register Plugin In AppDelegate.swift
+━━━━━━━━━━━━━━━━━━
+In App/App/AppDelegate.swift (or the file where capacitorDidLoad() is located), REGISTER this plugin just like ShareCardPlugin.
+
+Inside capacitorDidLoad(), add:
+
+bridge?.registerPluginInstance(VerseNotificationsPlugin())
+
+Example:
+
+override func capacitorDidLoad() {
+    super.capacitorDidLoad()
+    bridge?.registerPluginInstance(ShareCardPlugin())
+    bridge?.registerPluginInstance(VerseNotificationsPlugin())
+}
+
+━━━━━━━━━━━━━━━━━━
+📌 3️⃣ Add TypeScript Wrapper
+━━━━━━━━━━━━━━━━━━
+Create a new file:
+
+client/src/plugins/verse-notifications.ts
+
+Paste THIS:
+
+import { registerPlugin } from '@capacitor/core';
+
+export interface VerseNotificationsPlugin {
+  scheduleDaily(options: {
+    verseText: string;
+    reference: string;
+    hour?: number;
+    minute?: number;
+  }): Promise<void>;
+  cancelAll(): Promise<void>;
+}
+
+const VerseNotifications = registerPlugin<VerseNotificationsPlugin>('VerseNotifications');
+
+export default VerseNotifications;
+
+━━━━━━━━━━━━━━━━━━
+📌 4️⃣ Add “Daily 7AM Reminder” Button To Daily Verse UI
+━━━━━━━━━━━━━━━━━━
+In the Daily Verse UI (where the DailyVerseCard or DailyVerseHeroCard is defined and the Share button lives), do the following:
+
+1. Import the plugin at the top:
+
+import VerseNotifications from '@/plugins/verse-notifications';
+
+2. Add a handler function in the same component as the Share handler:
+
+const handleEnableDailyReminder = async () => {
+  try {
+    await VerseNotifications.scheduleDaily({
+      verseText: verse.text,
+      reference: verse.ref,
+      hour: 7,
+      minute: 0,
+    });
+    console.log('Daily 7AM verse notification scheduled.');
+  } catch (e) {
+    console.error('Failed to schedule daily notification', e);
+  }
+};
+
+(Optional) Also add a “Turn off reminder” handler:
+
+const handleDisableDailyReminder = async () => {
+  try {
+    await VerseNotifications.cancelAll();
+    console.log('Daily verse notifications cancelled.');
+  } catch (e) {
+    console.error('Failed to cancel notifications', e);
+  }
+};
+
+3. In the JSX for the Daily Verse section, under or next to the Share button, add a new small button:
+
+<Button
+  variant="outline"
+  size="sm"
+  onClick={handleEnableDailyReminder}
+>
+  Remind me daily at 7am
+</Button>
+
+(Optional) Add a second button for turning it off:
+
+<Button
+  variant="ghost"
+  size="sm"
+  onClick={handleDisableDailyReminder}
+>
+  Turn off reminder
+</Button>
+
+Make sure it uses the **same verse object** that the Share button uses (verse.text and verse.ref).
+
+━━━━━━━━━━━━━━━━━━
+📌 5️⃣ Sync & Test
+━━━━━━━━━━━━━━━━━━
+Run:
+
+npx cap sync ios
+
+Then open the iOS project in Xcode, run on a device or simulator, and test:
+
+1. Open the app
+2. Tap “Remind me daily at 7am”
+3. Accept notification permission
+4. Confirm a local notification is scheduled (you can temporarily change the time to a minute from now for testing)
+
+━━━━━━━━━━━━━━━━━━
+That’s all. Please implement this now and tell me when it’s complete.
