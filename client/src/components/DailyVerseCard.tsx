@@ -21,6 +21,7 @@ import { Textarea } from "@/components/ui/textarea";
 import ScriptureImageGenerator from "./ScriptureImageGenerator";
 import ShareCard from "@/plugins/share-card";
 import VerseNotifications from "@/plugins/verse-notifications";
+import { Capacitor } from '@capacitor/core';
 
 interface Verse {
   text: string;
@@ -98,10 +99,34 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   const shareVerse = async () => {
     setIsSharing(true);
     try {
-      await ShareCard.share({
-        verseText: verse.text,
-        reference: verse.reference,
-      });
+      const verseText = verse.text;
+      const reference = verse.reference;
+      const platform = Capacitor.getPlatform();
+
+      if (Capacitor.isNativePlatform() && platform === 'ios') {
+        // Use native share plugin on iOS
+        if (ShareCard && typeof ShareCard.share === 'function') {
+          await ShareCard.share({ verseText, reference });
+        }
+      } else {
+        // Web or non-iOS fallback
+        if (navigator.share) {
+          await navigator.share({
+            title: reference,
+            text: verseText,
+          });
+          toast({
+            title: "Verse Shared",
+            description: "Daily verse shared successfully!",
+          });
+        } else {
+          console.log('Sharing is only fully supported in the iOS app.');
+          toast({
+            title: "Share Unavailable",
+            description: "Full sharing features are available in the iOS app.",
+          });
+        }
+      }
     } catch (err) {
       console.error("Share failed:", err);
     } finally {
@@ -253,6 +278,17 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
 
   const handleEnableDailyReminder = async () => {
     try {
+      const platform = Capacitor.getPlatform();
+
+      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
+        console.log('Daily 7AM notifications are only available in the iOS app.');
+        toast({
+          title: "iOS Feature",
+          description: "Daily 7AM notifications are available in the iOS app.",
+        });
+        return;
+      }
+
       await VerseNotifications.scheduleDaily({
         verseText: verse.text,
         reference: verse.reference,
@@ -275,6 +311,17 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
 
   const handleDisableDailyReminder = async () => {
     try {
+      const platform = Capacitor.getPlatform();
+
+      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
+        console.log('Turning off notifications is only required in the iOS app.');
+        toast({
+          title: "iOS Feature",
+          description: "Notification management is available in the iOS app.",
+        });
+        return;
+      }
+
       await VerseNotifications.cancelAll();
       toast({
         title: "Reminder Disabled",

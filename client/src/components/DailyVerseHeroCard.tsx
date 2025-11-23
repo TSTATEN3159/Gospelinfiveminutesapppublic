@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
 import ShareCard from "@/plugins/share-card";
 import VerseNotifications from "@/plugins/verse-notifications";
+import { Capacitor } from '@capacitor/core';
 
 interface DailyVerseHeroCardProps {
   onPress?: () => void;
@@ -32,14 +33,34 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
   const handleShare = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
-      await ShareCard.share({
-        verseText: displayText,
-        reference: displayReference,
-      });
-      toast({
-        title: "Verse Shared",
-        description: "Daily verse shared successfully!",
-      });
+      const verseText = displayText;
+      const reference = displayReference;
+      const platform = Capacitor.getPlatform();
+
+      if (Capacitor.isNativePlatform() && platform === 'ios') {
+        // Use native share plugin on iOS
+        if (ShareCard && typeof ShareCard.share === 'function') {
+          await ShareCard.share({ verseText, reference });
+        }
+      } else {
+        // Web or non-iOS fallback
+        if (navigator.share) {
+          await navigator.share({
+            title: reference,
+            text: verseText,
+          });
+          toast({
+            title: "Verse Shared",
+            description: "Daily verse shared successfully!",
+          });
+        } else {
+          console.log('Sharing is only fully supported in the iOS app.');
+          toast({
+            title: "Share Unavailable",
+            description: "Full sharing features are available in the iOS app.",
+          });
+        }
+      }
     } catch (err) {
       console.error("Share failed:", err);
     }
@@ -151,6 +172,17 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
   const handleEnableDailyReminder = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
+      const platform = Capacitor.getPlatform();
+
+      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
+        console.log('Daily 7AM notifications are only available in the iOS app.');
+        toast({
+          title: "iOS Feature",
+          description: "Daily 7AM notifications are available in the iOS app.",
+        });
+        return;
+      }
+
       await VerseNotifications.scheduleDaily({
         verseText: displayText,
         reference: displayReference,
@@ -174,6 +206,17 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
   const handleDisableDailyReminder = async (e: React.MouseEvent) => {
     e.stopPropagation();
     try {
+      const platform = Capacitor.getPlatform();
+
+      if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
+        console.log('Turning off notifications is only required in the iOS app.');
+        toast({
+          title: "iOS Feature",
+          description: "Notification management is available in the iOS app.",
+        });
+        return;
+      }
+
       await VerseNotifications.cancelAll();
       toast({
         title: "Reminder Disabled",

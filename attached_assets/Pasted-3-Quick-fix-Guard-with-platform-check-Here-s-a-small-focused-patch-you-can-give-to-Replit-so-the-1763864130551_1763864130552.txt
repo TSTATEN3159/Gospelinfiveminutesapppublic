@@ -1,0 +1,158 @@
+3. Quick fix: Guard with platform check
+
+Here’s a small, focused patch you can give to Replit so the app behaves gracefully on web and iOS.
+
+👉 Copy & Paste This To Replit
+Right now, the Share button on the Daily Verse and the 7am notification buttons are failing when tested in the browser.
+
+I understand why: the native plugins (ShareCardPlugin, VerseNotificationsPlugin) only exist on iOS, not in the web preview.
+
+Please do the following small code fixes so things behave correctly:
+
+━━━━━━━━━━━━━━━━━━
+1️⃣ Update DailyVerseCard / DailyVerseHeroCard to guard native-only features
+━━━━━━━━━━━━━━━━━━
+In BOTH components (DailyVerseCard and DailyVerseHeroCard):
+
+At the top, make sure we import Capacitor:
+
+import { Capacitor } from '@capacitor/core';
+
+A) SHARE HANDLER
+
+Find the share handler you wired earlier, something like:
+
+const handleShare = async () => {
+  try {
+    await ShareCard.share({
+      verseText: verse.text,
+      reference: verse.ref,
+    });
+  } catch (e) {
+    console.error('Share failed', e);
+  }
+};
+
+Replace it with a platform-aware version:
+
+const handleShare = async () => {
+  try {
+    const verseText = verse.text;
+    const reference = verse.ref;
+    const platform = Capacitor.getPlatform();
+
+    if (Capacitor.isNativePlatform() && platform === 'ios') {
+      // Use native share plugin (ShareCard or BrandedShareImage if present)
+      if (ShareCard && typeof ShareCard.share === 'function') {
+        await ShareCard.share({ verseText, reference });
+      }
+    } else {
+      // Web or non-iOS fallback
+      if (navigator.share) {
+        await navigator.share({
+          title: reference,
+          text: verseText,
+        });
+      } else {
+        console.log('Sharing is only fully supported in the iOS app.');
+        // Optionally show a toast/snackbar here if one exists in the app
+      }
+    }
+  } catch (e) {
+    console.error('Share failed', e);
+  }
+};
+
+B) 7AM REMINDER HANDLERS
+
+Find the "Remind me daily at 7am" handler:
+
+const handleEnableDailyReminder = async () => {
+  try {
+    await VerseNotifications.scheduleDaily({
+      verseText: verse.text,
+      reference: verse.ref,
+      hour: 7,
+      minute: 0,
+    });
+    console.log('Daily 7AM verse notification scheduled.');
+  } catch (e) {
+    console.error('Failed to schedule daily notification', e);
+  }
+};
+
+Replace it with:
+
+const handleEnableDailyReminder = async () => {
+  try {
+    const platform = Capacitor.getPlatform();
+
+    if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
+      console.log('Daily 7AM notifications are only available in the iOS app.');
+      // Optionally show a toast/snackbar to inform the user
+      return;
+    }
+
+    await VerseNotifications.scheduleDaily({
+      verseText: verse.text,
+      reference: verse.ref,
+      hour: 7,
+      minute: 0,
+    });
+
+    console.log('Daily 7AM verse notification scheduled.');
+  } catch (e) {
+    console.error('Failed to schedule daily notification', e);
+  }
+};
+
+And for the "Turn off reminder" / cancel handler:
+
+const handleDisableDailyReminder = async () => {
+  try {
+    const platform = Capacitor.getPlatform();
+
+    if (!(Capacitor.isNativePlatform() && platform === 'ios')) {
+      console.log('Turning off notifications is only required in the iOS app.');
+      return;
+    }
+
+    await VerseNotifications.cancelAll();
+    console.log('Daily verse notifications cancelled.');
+  } catch (e) {
+    console.error('Failed to cancel notifications', e);
+  }
+};
+
+━━━━━━━━━━━━━━━━━━
+2️⃣ No changes required to the Swift plugins yet
+━━━━━━━━━━━━━━━━━━
+Do NOT change the Swift code. Just make these TS/React updates so:
+
+- Web preview no longer “fails” when clicking Share or 7am reminder.
+- iOS native app still uses the plugins as intended.
+
+After this, please run the app and confirm:
+- Share + 7am buttons no longer throw errors in web.
+- iOS build still uses the native plugins.
+Then summarize what you changed.
+
+4. How to properly test the native features
+
+To actually see Share + Notifications working for real:
+
+Run npx cap sync ios (Replit already did this).
+
+Open the iOS project in Xcode.
+
+Run on:
+
+iPhone simulator, or
+
+Physical iPhone (best).
+
+In the app:
+
+Tap Share → native share sheet appears.
+
+Tap Remind me daily at 7am → iOS asks for permission, schedules notification.
