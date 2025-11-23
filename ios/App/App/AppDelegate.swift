@@ -53,6 +53,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     super.capacitorDidLoad()
     bridge?.registerPluginInstance(ShareCardPlugin())
     bridge?.registerPluginInstance(VerseNotificationsPlugin())
+    bridge?.registerPluginInstance(ScriptureImagePlugin())
   }
 
 }
