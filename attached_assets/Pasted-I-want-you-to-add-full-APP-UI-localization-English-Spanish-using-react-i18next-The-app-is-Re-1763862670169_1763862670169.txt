@@ -1,0 +1,257 @@
+I want you to add full APP UI localization (English + Spanish) using react-i18next.
+
+The app is React + TypeScript + Capacitor. Please follow these steps exactly and wire it into the existing UI.
+
+━━━━━━━━━━━━━━━━━━
+📌 1️⃣ Install Localization Libraries
+━━━━━━━━━━━━━━━━━━
+Run:
+
+npm install i18next react-i18next i18next-browser-languagedetector
+
+━━━━━━━━━━━━━━━━━━
+📌 2️⃣ Create i18n Setup File
+━━━━━━━━━━━━━━━━━━
+Create a new folder and files:
+
+- client/src/locales/en/translation.json
+- client/src/locales/es/translation.json
+- client/src/i18n.ts
+
+Put THIS into client/src/locales/en/translation.json:
+
+{
+  "home": {
+    "title": "The Gospel in Five Minutes",
+    "dailyVerseTitle": "Daily Verse",
+    "plainMeaningTitle": "Plain Meaning",
+    "devotionalTitle": "365-Day Devotional",
+    "bibleTriviaTitle": "Bible Trivia"
+  },
+  "buttons": {
+    "share": "Share",
+    "remindDaily": "Remind me daily at 7am",
+    "turnOffReminder": "Turn off reminder",
+    "language": "Language",
+    "languageEnglish": "English",
+    "languageSpanish": "Spanish"
+  },
+  "settings": {
+    "title": "Settings",
+    "languageLabel": "App Language",
+    "languageDescription": "Choose the language for buttons, headings, and tiles."
+  },
+  "notifications": {
+    "scheduled": "Daily 7am reminder scheduled.",
+    "cancelled": "Daily reminder turned off.",
+    "error": "Something went wrong. Please try again."
+  }
+}
+
+Put THIS into client/src/locales/es/translation.json (neutral, respectful Spanish):
+
+{
+  "home": {
+    "title": "El Evangelio en Cinco Minutos",
+    "dailyVerseTitle": "Verso Diario",
+    "plainMeaningTitle": "Significado Sencillo",
+    "devotionalTitle": "Devocional de 365 Días",
+    "bibleTriviaTitle": "Preguntas Bíblicas"
+  },
+  "buttons": {
+    "share": "Compartir",
+    "remindDaily": "Recuérdame cada día a las 7 a.m.",
+    "turnOffReminder": "Desactivar recordatorio",
+    "language": "Idioma",
+    "languageEnglish": "Inglés",
+    "languageSpanish": "Español"
+  },
+  "settings": {
+    "title": "Configuración",
+    "languageLabel": "Idioma de la aplicación",
+    "languageDescription": "Elija el idioma para los botones, títulos y secciones."
+  },
+  "notifications": {
+    "scheduled": "Recordatorio diario a las 7 a.m. activado.",
+    "cancelled": "Recordatorio diario desactivado.",
+    "error": "Algo salió mal. Por favor, inténtelo de nuevo."
+  }
+}
+
+Now put THIS into client/src/i18n.ts:
+
+import i18n from 'i18next';
+import { initReactI18next } from 'react-i18next';
+import LanguageDetector from 'i18next-browser-languagedetector';
+
+import en from './locales/en/translation.json';
+import es from './locales/es/translation.json';
+
+i18n
+  .use(LanguageDetector)
+  .use(initReactI18next)
+  .init({
+    resources: {
+      en: { translation: en },
+      es: { translation: es },
+    },
+    fallbackLng: 'en',
+    supportedLngs: ['en', 'es'],
+    interpolation: {
+      escapeValue: false,
+    },
+    detection: {
+      // Let changeLanguage() win and persist in localStorage
+      order: ['localStorage', 'navigator', 'htmlTag'],
+      caches: ['localStorage'],
+    },
+  });
+
+export default i18n;
+
+━━━━━━━━━━━━━━━━━━
+📌 3️⃣ Initialize i18n in the App Entry File
+━━━━━━━━━━━━━━━━━━
+Find the main React entry file (likely client/src/main.tsx or client/src/index.tsx).
+
+At the VERY TOP, before ReactDOM.render/createRoot, import the i18n setup:
+
+import './i18n';
+
+Example (adjust to match existing file):
+
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import './i18n';
+
+ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>
+);
+
+This makes translations available in the whole app.
+
+━━━━━━━━━━━━━━━━━━
+📌 4️⃣ Localize Key UI Components (Home tiles + Daily Verse)
+━━━━━━━━━━━━━━━━━━
+Use the useTranslation() hook where we show user-facing text.
+
+A) HOME / DASHBOARD (tiles)
+Find the main “Home” / dashboard component where the primary tiles are rendered (Daily Verse, Plain Meaning, Devotional, Bible Trivia, etc.).
+
+At the top of that component file, add:
+
+import { useTranslation } from 'react-i18next';
+
+Inside the component:
+
+const { t } = useTranslation();
+
+Replace hard-coded labels with translation keys. For example:
+
+- “The Gospel in Five Minutes” → t('home.title')
+- “Daily Verse” tile title → t('home.dailyVerseTitle')
+- “Plain Meaning” tile title → t('home.plainMeaningTitle')
+- “365-Day Devotional” tile title → t('home.devotionalTitle')
+- “Bible Trivia” tile title → t('home.bibleTriviaTitle')
+
+Do NOT change any routing or logic, only the displayed text.
+
+B) DAILY VERSE CARDS (and buttons)
+In DailyVerseCard and DailyVerseHeroCard components:
+
+import { useTranslation } from 'react-i18next';
+
+Inside each component:
+
+const { t } = useTranslation();
+
+Update button labels:
+
+- Share button text → t('buttons.share')
+- “Remind me daily at 7am” → t('buttons.remindDaily')
+- “Turn off reminder” → t('buttons.turnOffReminder')
+
+If they currently use icons only with text next to them, just replace the text part. Do not change icons or behavior.
+
+━━━━━━━━━━━━━━━━━━
+📌 5️⃣ Add Language Selector to Settings Screen
+━━━━━━━━━━━━━━━━━━
+Find the Settings screen / component (where other user preferences live).
+
+At the top of the Settings component file:
+
+import { useTranslation } from 'react-i18next';
+
+Inside the component:
+
+const { t, i18n } = useTranslation();
+
+Add a simple language selector UI that switches between English and Spanish.
+
+For example, somewhere near the top of the settings page:
+
+<section className="space-y-2">
+  <h2 className="text-lg font-semibold">
+    {t('settings.languageLabel')}
+  </h2>
+  <p className="text-sm text-muted-foreground">
+    {t('settings.languageDescription')}
+  </p>
+
+  <div className="flex gap-2 mt-2">
+    <button
+      type="button"
+      className={`px-3 py-1 rounded-full text-sm border ${
+        i18n.language.startsWith('en') ? 'bg-primary text-primary-foreground' : ''
+      }`}
+      onClick={() => i18n.changeLanguage('en')}
+    >
+      {t('buttons.languageEnglish')}
+    </button>
+    <button
+      type="button"
+      className={`px-3 py-1 rounded-full text-sm border ${
+        i18n.language.startsWith('es') ? 'bg-primary text-primary-foreground' : ''
+      }`}
+      onClick={() => i18n.changeLanguage('es')}
+    >
+      {t('buttons.languageSpanish')}
+    </button>
+  </div>
+</section>
+
+Use your existing Button component / styles if preferred, but keep the same logic: i18n.changeLanguage('en' | 'es').
+
+Also update any existing Settings title text to use:
+
+- Page title → t('settings.title')
+
+━━━━━━━━━━━━━━━━━━
+📌 6️⃣ Keep Bible Text / Translations Separate
+━━━━━━━━━━━━━━━━━━
+Do NOT change how Bible verses are fetched or rendered yet.
+
+Right now:
+
+- This localization is ONLY for UI text (tiles, headings, buttons, settings, messages).
+- Bible text itself (verse.text, verse.ref, etc.) should continue to come from the existing Bible API / data source.
+
+We will later add a separate “Bible language / translation” selector that controls which translation the verse text is pulled from.
+
+━━━━━━━━━━━━━━━━━━
+📌 7️⃣ Test Flow
+━━━━━━━━━━━━━━━━━━
+1. Run the app.
+2. Confirm:
+   - Default language is English.
+   - All updated labels show via i18n (no broken keys).
+3. Go to Settings → change language to Español.
+4. Confirm:
+   - Home tiles, Daily Verse titles, button labels, Settings labels all switch to Spanish.
+5. Close and reopen the app (web or native):
+   - Confirm the selected language is remembered (thanks to i18next-browser-languagedetector + localStorage).
+
+Please implement all of this now and then summarize what you changed so I know it’s wired correctly.
