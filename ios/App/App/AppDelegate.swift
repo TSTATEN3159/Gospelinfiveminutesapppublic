@@ -55,6 +55,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     bridge?.registerPluginInstance(VerseNotificationsPlugin())
     bridge?.registerPluginInstance(ScriptureImagePlugin())
     bridge?.registerPluginInstance(BackgroundImagePickerPlugin())
+    bridge?.registerPluginInstance(BrandedShareImagePlugin())
   }
 
 }

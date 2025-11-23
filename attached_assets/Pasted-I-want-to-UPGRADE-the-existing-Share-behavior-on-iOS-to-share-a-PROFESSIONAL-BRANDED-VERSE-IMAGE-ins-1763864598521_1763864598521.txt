@@ -1,0 +1,337 @@
+I want to UPGRADE the existing Share behavior on iOS to share a PROFESSIONAL BRANDED VERSE IMAGE instead of just text.
+
+Requirements:
+
+- On NATIVE iOS:
+  - When the user taps Share on the Daily Verse:
+    - Generate a verse card image with:
+      - Verse text
+      - Reference
+      - My branding:
+        - App/logo mark in a corner
+        - Tagline text: "The Gospel in Five Minutes"
+      - Clean, professional layout similar to the current ScriptureImagePlugin
+    - Open the native iOS share sheet with that image (and optional text)
+- On WEB / non-iOS:
+  - Keep existing Share behavior (ShareCard plugin or Web Share API).
+
+Please do this by adding a NEW native plugin so it doesn’t break existing ones.
+
+━━━━━━━━━━━━━━━━━━
+📌 1️⃣ Create BrandedShareImagePlugin.swift
+━━━━━━━━━━━━━━━━━━
+In the iOS Xcode project (App target), create a new Swift file:
+
+BrandedShareImagePlugin.swift
+
+Paste THIS code into it:
+
+import Capacitor
+import UIKit
+
+@objc(BrandedShareImagePlugin)
+public class BrandedShareImagePlugin: CAPPlugin, CAPBridgedPlugin {
+    public let identifier = "BrandedShareImagePlugin"
+    public let jsName = "BrandedShareImage"
+    public let pluginMethods: [CAPPluginMethod] = [
+        CAPPluginMethod(name: "shareVerse", returnType: CAPPluginReturnPromise)
+    ]
+
+    @objc func shareVerse(_ call: CAPPluginCall) {
+        let verseText = call.getString("verseText") ?? ""
+        let reference = call.getString("reference") ?? ""
+        let tagline = call.getString("tagline") ?? "The Gospel in Five Minutes"
+
+        let width = 1024
+        let height = 1024
+        let size = CGSize(width: width, height: height)
+
+        let fullText = verseText.isEmpty ? reference : "\(verseText)\n\n\(reference)"
+
+        let renderer = UIGraphicsImageRenderer(size: size)
+        let image = renderer.image { ctx in
+            let context = ctx.cgContext
+            let rect = CGRect(origin: .zero, size: size)
+
+            // Background gradient
+            let topColor = UIColor.systemBackground
+            let bottomColor = UIColor.systemGray5
+
+            let colors = [topColor.cgColor, bottomColor.cgColor] as CFArray
+            let colorSpace = CGColorSpaceCreateDeviceRGB()
+            if let gradient = CGGradient(colorsSpace: colorSpace, colors: colors, locations: [0.0, 1.0]) {
+                context.drawLinearGradient(
+                    gradient,
+                    start: CGPoint(x: rect.midX, y: rect.minY),
+                    end: CGPoint(x: rect.midX, y: rect.maxY),
+                    options: []
+                )
+            } else {
+                UIColor.systemBackground.setFill()
+                context.fill(rect)
+            }
+
+            // Inner card
+            let cardInset: CGFloat = 64
+            let cardRect = rect.insetBy(dx: cardInset, dy: cardInset + 40) // leave room at bottom for branding
+            let cardPath = UIBezierPath(roundedRect: cardRect, cornerRadius: 36)
+            UIColor.white.withAlphaComponent(0.97).setFill()
+            context.setShadow(
+                offset: CGSize(width: 0, height: 10),
+                blur: 28,
+                color: UIColor.black.withAlphaComponent(0.2).cgColor
+            )
+            cardPath.fill()
+
+            // Reset shadow for text
+            context.setShadow(offset: .zero, blur: 0, color: nil)
+
+            // Main verse text
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.alignment = .center
+            paragraphStyle.lineBreakMode = .byWordWrapping
+
+            let maxTextWidth = cardRect.width - 40
+            let maxTextHeight = cardRect.height - 40
+
+            var fontSize: CGFloat = 34
+            var textRect = CGRect.zero
+            var attributes: [NSAttributedString.Key: Any] = [:]
+
+            repeat {
+                let font = UIFont.systemFont(ofSize: fontSize, weight: .semibold)
+                attributes = [
+                    .font: font,
+                    .foregroundColor: UIColor.label,
+                    .paragraphStyle: paragraphStyle
+                ]
+
+                let boundingSize = CGSize(width: maxTextWidth, height: CGFloat.greatestFiniteMagnitude)
+                textRect = (fullText as NSString).boundingRect(
+                    with: boundingSize,
+                    options: [.usesLineFragmentOrigin, .usesFontLeading],
+                    attributes: attributes,
+                    context: nil
+                )
+
+                fontSize -= 2
+            } while (textRect.height > maxTextHeight && fontSize > 16)
+
+            let drawRect = CGRect(
+                x: cardRect.midX - textRect.width / 2,
+                y: cardRect.midY - textRect.height / 2,
+                width: textRect.width,
+                height: textRect.height
+            )
+
+            (fullText as NSString).draw(in: drawRect, withAttributes: attributes)
+
+            // Branding strip at the bottom
+            let brandingHeight: CGFloat = 60
+            let brandingRect = CGRect(
+                x: cardInset,
+                y: rect.maxY - cardInset - brandingHeight,
+                width: rect.width - cardInset * 2,
+                height: brandingHeight
+            )
+
+            let brandingPath = UIBezierPath(roundedRect: brandingRect, cornerRadius: 24)
+            UIColor.black.withAlphaComponent(0.75).setFill()
+            brandingPath.fill()
+
+            // Tagline text on left
+            let taglineParagraph = NSMutableParagraphStyle()
+            taglineParagraph.alignment = .left
+            taglineParagraph.lineBreakMode = .byTruncatingTail
+
+            let taglineAttributes: [NSAttributedString.Key: Any] = [
+                .font: UIFont.systemFont(ofSize: 20, weight: .medium),
+                .foregroundColor: UIColor.white,
+                .paragraphStyle: taglineParagraph
+            ]
+
+            let taglineInsetRect = brandingRect.insetBy(dx: 20, dy: 10)
+            (tagline as NSString).draw(
+                in: taglineInsetRect,
+                withAttributes: taglineAttributes
+            )
+
+            // Optional logo on right (if we find an image named "ShareLogo" in assets)
+            if let logo = UIImage(named: "ShareLogo") {
+                let logoMaxHeight: CGFloat = brandingHeight - 16
+                let aspect = logo.size.width / logo.size.height
+                let logoHeight = logoMaxHeight
+                let logoWidth = logoHeight * aspect
+
+                let logoRect = CGRect(
+                    x: brandingRect.maxX - logoWidth - 16,
+                    y: brandingRect.midY - logoHeight / 2,
+                    width: logoWidth,
+                    height: logoHeight
+                )
+
+                context.saveGState()
+                context.setAlpha(0.9)
+                logo.draw(in: logoRect)
+                context.restoreGState()
+            }
+        }
+
+        // Prepare items for share sheet
+        let shareText = "\(verseText)\n\n\(reference)\n\nThe Gospel in Five Minutes"
+        var activityItems: [Any] = [image, shareText]
+
+        let activityVC = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+
+        DispatchQueue.main.async {
+            if let root = UIApplication.shared.windows.first?.rootViewController {
+                root.present(activityVC, animated: true, completion: nil)
+                call.resolve()
+            } else {
+                call.reject("No root view controller available for sharing")
+            }
+        }
+    }
+}
+
+Note:
+- The plugin looks for an asset named "ShareLogo" in the iOS asset catalog.
+- If it does not exist, it simply skips the logo and still shows the tagline.
+
+If possible, please add a simple logo image into the iOS asset catalog named exactly: ShareLogo
+(For now, you can reuse the app icon or a simplified mark).
+
+━━━━━━━━━━━━━━━━━━
+📌 2️⃣ Register Plugin In AppDelegate.swift
+━━━━━━━━━━━━━━━━━━
+In App/App/AppDelegate.swift (or wherever capacitorDidLoad() is defined), register the new plugin:
+
+bridge?.registerPluginInstance(BrandedShareImagePlugin())
+
+So the method will now include:
+
+override func capacitorDidLoad() {
+    super.capacitorDidLoad()
+    bridge?.registerPluginInstance(ShareCardPlugin())
+    bridge?.registerPluginInstance(VerseNotificationsPlugin())
+    bridge?.registerPluginInstance(ScriptureImagePlugin())
+    bridge?.registerPluginInstance(BackgroundImagePickerPlugin())
+    bridge?.registerPluginInstance(BrandedShareImagePlugin())
+}
+
+━━━━━━━━━━━━━━━━━━
+📌 3️⃣ Add TypeScript Wrapper
+━━━━━━━━━━━━━━━━━━
+Create a new file:
+
+client/src/plugins/branded-share-image.ts
+
+Paste THIS:
+
+import { registerPlugin } from '@capacitor/core';
+
+export interface BrandedShareImagePlugin {
+  shareVerse(options: {
+    verseText: string;
+    reference: string;
+    tagline?: string;
+  }): Promise<void>;
+}
+
+const BrandedShareImage = registerPlugin<BrandedShareImagePlugin>(
+  'BrandedShareImage'
+);
+
+export default BrandedShareImage;
+
+━━━━━━━━━━━━━━━━━━
+📌 4️⃣ Integrate With Existing Share Buttons (DailyVerseCard + DailyVerseHeroCard)
+━━━━━━━━━━━━━━━━━━
+We want this behavior:
+
+- On **native iOS**: Share uses BrandedShareImage (image + text).
+- On **web / other platforms**: Keep the existing Share behavior (ShareCard plugin or Web Share API).
+
+In BOTH DailyVerseCard and DailyVerseHeroCard:
+
+1. At the top of the file, add imports:
+
+import { Capacitor } from '@capacitor/core';
+import BrandedShareImage from '@/plugins/branded-share-image';
+import ShareCard from '@/plugins/share-card'; // keep this for non-iOS fallback if it exists now
+
+2. Update the share handler function.
+
+If there is an existing handleShare() (or similar), update it to:
+
+const handleShare = async () => {
+  try {
+    const verseText = verse.text;   // use whatever fields already exist in this component
+    const reference = verse.ref;
+
+    const platform = Capacitor.getPlatform();
+
+    if (Capacitor.isNativePlatform() && platform === 'ios') {
+      // Use native branded image share on iOS
+      await BrandedShareImage.shareVerse({
+        verseText,
+        reference,
+        tagline: 'The Gospel in Five Minutes',
+      });
+    } else {
+      // Fallback: existing ShareCard behavior (text share), or Web Share API
+      if (ShareCard && typeof ShareCard.share === 'function') {
+        await ShareCard.share({ verseText, reference });
+      } else if (navigator.share) {
+        await navigator.share({
+          title: reference,
+          text: verseText,
+        });
+      } else {
+        console.log('No native share available; consider copying verse to clipboard.');
+      }
+    }
+  } catch (e) {
+    console.error('Share failed', e);
+  }
+};
+
+Make sure the Share button calls handleShare as before:
+
+<Button
+  // ...
+  onClick={handleShare}
+>
+  {/* existing icon */}
+  {/* label, ideally from i18n: t('buttons.share') */}
+</Button>
+
+3. Do NOT remove the existing Share buttons or change the JSX structure beyond wiring the new handler.
+
+━━━━━━━━━━━━━━━━━━
+📌 5️⃣ Sync & Test
+━━━━━━━━━━━━━━━━━━
+Run:
+
+npx cap sync ios
+
+Then in Xcode:
+
+1. Build and run on an iOS simulator or device.
+2. Open the Daily Verse screen.
+3. Tap Share:
+   - On iOS:
+     - You should see the native share sheet.
+     - The shared content should include:
+       - A nicely designed image with verse + reference + dark branding bar at the bottom.
+       - Text that includes verse, reference, and "The Gospel in Five Minutes".
+   - On Web:
+     - Behavior should remain as before (text-based share).
+
+If ShareLogo asset exists:
+- Confirm logo appears at the right side of the bottom branding bar.
+If it doesn’t exist yet:
+- Confirm the tagline still appears without errors.
+
+━━━━━━━━━━━━━━━━━━
+That’s all. Please implement this fully and then summarize what you changed so I know it’s wired correctly.
