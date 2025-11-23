@@ -14,6 +14,7 @@ import { Download, Share2, Loader2, Palette, Type, Image as ImageIcon, Upload, X
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { VerseImageComposer } from '@/components/VerseImageComposer';
 import ScriptureImage from '@/plugins/scripture-image';
+import BackgroundImagePicker from '@/plugins/background-image-picker';
 import { Capacitor } from '@capacitor/core';
 
 interface ScriptureImageGeneratorProps {
@@ -241,6 +242,41 @@ export default function ScriptureImageGenerator({
         description: error.message || 'Failed to delete image',
         variant: 'destructive',
       });
+    }
+  };
+
+  const handlePickNativeBackground = async () => {
+    try {
+      if (!Capacitor.isNativePlatform() || Capacitor.getPlatform() !== 'ios') {
+        toast({
+          title: 'Not available',
+          description: 'Native photo picker is only available on iOS.',
+          variant: 'destructive',
+        });
+        return;
+      }
+
+      setIsUploading(true);
+      const { fileUrl } = await BackgroundImagePicker.pickImage();
+
+      // Fetch the image to convert it to a blob/file for web storage
+      const response = await fetch(fileUrl);
+      const blob = await response.blob();
+      const file = new File([blob], `picked-${Date.now()}.jpg`, { type: 'image/jpeg' });
+
+      // Use the existing custom background upload flow
+      await processCustomBackgroundFile(file);
+    } catch (error: any) {
+      console.error('Failed to pick native background image:', error);
+      if (!error.toString().includes('cancelled')) {
+        toast({
+          title: 'Photo picker failed',
+          description: error.message || 'Failed to pick image',
+          variant: 'destructive',
+        });
+      }
+    } finally {
+      setIsUploading(false);
     }
   };
 
@@ -520,6 +556,19 @@ export default function ScriptureImageGenerator({
                       <p className="text-xs text-muted-foreground text-center">
                         {customBackgrounds.length} of 10 personal images used · Total custom storage limited to 3.5MB
                       </p>
+
+                      {Capacitor.isNativePlatform() && Capacitor.getPlatform() === 'ios' && (
+                        <Button
+                          onClick={handlePickNativeBackground}
+                          disabled={isUploading}
+                          variant="outline"
+                          className="w-full"
+                          data-testid="button-pick-native-background"
+                        >
+                          <ImageIcon className="h-4 w-4 mr-2" />
+                          Pick from Photos (iOS)
+                        </Button>
+                      )}
                     </div>
 
                     {customBackgrounds.length > 0 && (
