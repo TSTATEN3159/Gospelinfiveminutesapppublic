@@ -51,19 +51,23 @@ function renderFormattedText(text: string) {
       
       if (restOfText) {
         // It's a label with content (like "**Meaning:** text")
+        // Check if boldPart already ends with colon to avoid double colons
+        const displayText = boldPart.endsWith(':') ? boldPart : `${boldPart}:`;
         elements.push(
           <p key={idx} className="text-[15px] leading-relaxed mb-3">
-            <span className="font-bold">{boldPart}:</span> {restOfText}
+            <span className="font-bold">{displayText}</span> {restOfText}
           </p>
         );
       } else {
         // It's just a bold section header
+        // Remove trailing colon from section headers
+        const headerText = boldPart.endsWith(':') ? boldPart.slice(0, -1) : boldPart;
         elements.push(
           <div key={idx} className="mt-5 first:mt-0 mb-3">
             <div className="flex items-center gap-2">
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-20" />
               <h3 className="text-sm font-bold tracking-wide uppercase opacity-90">
-                {boldPart}
+                {headerText}
               </h3>
               <div className="h-px flex-1 bg-gradient-to-r from-transparent via-current to-transparent opacity-20" />
             </div>
