@@ -348,7 +348,7 @@ function MainApp() {
               <NetworkStatus onRetry={() => window.location.reload()} />
               
               {/* Current Page Content */}
-              <main className="min-h-screen bg-background">
+              <main className="min-h-screen bg-background pb-20">
                 {renderCurrentPage()}
               </main>
 
