@@ -343,7 +343,7 @@ function MainApp() {
           <QueryClientProvider client={queryClient}>
             <TooltipProvider>
             <GlobalErrorBanner />
-            <div className="min-h-screen bg-background">
+            <div className="app-root min-h-screen bg-background">
               {/* Network Status - Apple-compliant auto-recovery */}
               <NetworkStatus onRetry={() => window.location.reload()} />
               
