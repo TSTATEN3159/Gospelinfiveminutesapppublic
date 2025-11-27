@@ -1,0 +1,114 @@
+// client/src/components/NativeTabBar.tsx
+import { useLocation, useNavigate } from "react-router-dom";
+import {
+  Home as HomeIcon,
+  Search as SearchIcon,
+  Calendar as CalendarIcon,
+  MoreHorizontal,
+  Crosshair,
+} from "lucide-react";
+
+const TABS = [
+  {
+    key: "home",
+    label: "Home",
+    path: "/",
+    icon: HomeIcon,
+  },
+  {
+    key: "disciple",
+    label: "Disciple",
+    path: "/disciple",
+    icon: Crosshair, // or any icon you like
+  },
+  {
+    key: "search",
+    label: "Search",
+    path: "/search",
+    icon: SearchIcon,
+  },
+  {
+    key: "daily",
+    label: "Daily",
+    path: "/daily",
+    icon: CalendarIcon,
+  },
+  {
+    key: "more",
+    label: "More",
+    path: "/more",
+    icon: MoreHorizontal,
+  },
+];
+
+export default function NativeTabBar() {
+  const location = useLocation();
+  const navigate = useNavigate();
+
+  // determine which tab is active based on the current pathname
+  const activeKey =
+    TABS.find((tab) =>
+      tab.path === "/"
+        ? location.pathname === "/" // exact match for home
+        : location.pathname.startsWith(tab.path)
+    )?.key ?? "home";
+
+  return (
+    <nav
+      className="
+        fixed bottom-0 left-0 right-0
+        border-t border-slate-800
+        bg-black/85 backdrop-blur-xl
+        z-40
+        safe-area-inset-b
+      "
+    >
+      <div className="mx-auto flex h-16 max-w-xl items-center justify-around px-2">
+        {TABS.map((tab) => {
+          const Icon = tab.icon;
+          const isActive = tab.key === activeKey;
+
+          return (
+            <button
+              key={tab.key}
+              type="button"
+              onClick={() => navigate(tab.path)}
+              className="
+                flex flex-col items-center justify-center
+                text-xs
+                focus:outline-none
+              "
+            >
+              <div
+                className={`
+                  flex h-9 w-9 items-center justify-center rounded-full
+                  transition-transform duration-150
+                  ${isActive ? "scale-110 bg-amber-500/15" : "scale-100"}
+                `}
+              >
+                <Icon
+                  className={
+                    isActive
+                      ? "h-5 w-5 text-amber-400"
+                      : "h-5 w-5 text-slate-300"
+                  }
+                />
+              </div>
+              <span
+                className={
+                  isActive
+                    ? "mt-1 text-[11px] font-semibold text-amber-300"
+                    : "mt-1 text-[11px] text-slate-300"
+                }
+              >
+                {tab.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+      {/* iOS safe-area padding at the very bottom */}
+      <div className="h-[env(safe-area-inset-bottom)]" />
+    </nav>
+  );
+}
