@@ -1,5 +1,4 @@
 import { Home, Search, Calendar, Sprout, MoreHorizontal } from "lucide-react";
-import { Button } from "@/components/ui/button";
 
 type NavPage = "home" | "discipleship-list" | "search" | "daily" | "more";
 
@@ -18,24 +17,51 @@ export default function BottomNavigation({ currentPage, onPageChange }: BottomNa
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-900 border-t border-border z-50">
-      <div className="flex justify-around items-center py-2 px-4 max-w-md mx-auto">
-        {navItems.map((item) => (
-          <Button
-            key={item.id}
-            variant={currentPage === item.id ? "default" : "ghost"}
-            size="sm"
-            onClick={() => onPageChange(item.id)}
-            className="flex flex-col items-center gap-1 h-auto py-2 px-3 relative"
-            data-testid={`nav-${item.id}`}
-          >
-            <item.icon className="w-5 h-5" />
-            <span className="text-xs">
-              {item.label}
-            </span>
-          </Button>
-        ))}
+    <nav
+      className="fixed bottom-0 left-0 right-0 border-t border-slate-800 bg-black/85 backdrop-blur-xl z-50"
+      style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
+    >
+      <div className="mx-auto flex h-16 max-w-xl items-center justify-around px-2">
+        {navItems.map((item) => {
+          const Icon = item.icon;
+          const isActive = currentPage === item.id;
+
+          return (
+            <button
+              key={item.id}
+              type="button"
+              onClick={() => onPageChange(item.id)}
+              className="flex flex-col items-center justify-center text-xs focus:outline-none"
+              data-testid={`nav-${item.id}`}
+            >
+              <div
+                className={`
+                  flex h-9 w-9 items-center justify-center rounded-full
+                  transition-transform duration-150
+                  ${isActive ? "scale-110 bg-amber-500/15" : "scale-100"}
+                `}
+              >
+                <Icon
+                  className={
+                    isActive
+                      ? "h-5 w-5 text-amber-400"
+                      : "h-5 w-5 text-slate-300"
+                  }
+                />
+              </div>
+              <span
+                className={
+                  isActive
+                    ? "mt-1 text-[11px] font-semibold text-amber-300"
+                    : "mt-1 text-[11px] text-slate-300"
+                }
+              >
+                {item.label}
+              </span>
+            </button>
+          );
+        })}
       </div>
-    </div>
+    </nav>
   );
 }
