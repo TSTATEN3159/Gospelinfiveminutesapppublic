@@ -2,13 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+/* iOS-native feeling font + dark appearance */
 html, body {
   width: 100%;
   height: 100%;
   margin: 0;
   padding: 0;
+  background-color: #000;
+  color: #f9fafb;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    system-ui, -system-ui, "Segoe UI", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
   /* IMPORTANT: allow native scroll & pinch */
   touch-action: pan-x pan-y pinch-zoom;
+}
+
+/* Make touch targets feel more iOS-like */
+button {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Dynamic Type friendliness (keeps text readable when user scales text size) */
+body {
+  font-size: 16px;
+}
+@media (min-width: 768px) {
+  body {
+    font-size: 17px;
+  }
+}
+
+/* Respect iOS safe areas for full-screen devices */
+.app-root {
+  min-height: 100vh;
+  padding-top: env(safe-area-inset-top);
+  padding-bottom: env(safe-area-inset-bottom);
+  background-color: #000;
 }
 
 /* LIGHT MODE */
