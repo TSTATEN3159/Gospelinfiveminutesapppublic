@@ -19,6 +19,7 @@
     "@capacitor/browser": "^7.0.2",
     "@capacitor/cli": "^7.4.3",
     "@capacitor/core": "^7.4.3",
+    "@capacitor/haptics": "^7.0.2",
     "@capacitor/ios": "^7.4.3",
     "@capacitor/live-updates": "^0.4.0",
     "@capacitor/local-notifications": "^7.0.3",

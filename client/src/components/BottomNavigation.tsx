@@ -1,4 +1,5 @@
 import { Home, Search, Calendar, Sprout, MoreHorizontal } from "lucide-react";
+import { Haptics, ImpactStyle } from "@capacitor/haptics";
 
 type NavPage = "home" | "discipleship-list" | "search" | "daily" | "more";
 
@@ -16,9 +17,19 @@ export default function BottomNavigation({ currentPage, onPageChange }: BottomNa
     { id: "more" as const, icon: MoreHorizontal, label: "More" },
   ];
 
+  const handleTabPress = async (pageId: NavPage) => {
+    // Trigger haptic feedback on native devices
+    try {
+      await Haptics.impact({ style: ImpactStyle.Light });
+    } catch {
+      // Haptics not available (web browser) - silently continue
+    }
+    onPageChange(pageId);
+  };
+
   return (
     <nav
-      className="fixed bottom-0 left-0 right-0 border-t border-slate-800 bg-black/85 backdrop-blur-xl z-50"
+      className="fixed bottom-0 left-0 right-0 z-50 bg-black/85 backdrop-blur-xl border-t border-slate-800"
       style={{ paddingBottom: 'env(safe-area-inset-bottom, 0px)' }}
     >
       <div className="mx-auto flex h-16 max-w-xl items-center justify-around px-2">
@@ -30,8 +41,8 @@ export default function BottomNavigation({ currentPage, onPageChange }: BottomNa
             <button
               key={item.id}
               type="button"
-              onClick={() => onPageChange(item.id)}
-              className="flex flex-col items-center justify-center text-xs focus:outline-none"
+              onClick={() => handleTabPress(item.id)}
+              className="flex flex-col items-center justify-center text-xs transition-all duration-150 focus:outline-none"
               data-testid={`nav-${item.id}`}
             >
               <div
