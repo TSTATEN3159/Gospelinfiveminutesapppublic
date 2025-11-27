@@ -1,5 +1,5 @@
 import { Home, Search, Calendar, Sprout, MoreHorizontal } from "lucide-react";
-import { Haptics, ImpactStyle } from "@capacitor/haptics";
+import { tapHaptic } from "@/lib/nativeEnhancements";
 
 type NavPage = "home" | "discipleship-list" | "search" | "daily" | "more";
 
@@ -18,12 +18,7 @@ export default function BottomNavigation({ currentPage, onPageChange }: BottomNa
   ];
 
   const handleTabPress = async (pageId: NavPage) => {
-    // Trigger haptic feedback on native devices
-    try {
-      await Haptics.impact({ style: ImpactStyle.Light });
-    } catch {
-      // Haptics not available (web browser) - silently continue
-    }
+    await tapHaptic();
     onPageChange(pageId);
   };
 
