@@ -1,10 +1,10 @@
 /**
  * Apple-Compliant Network Status Indicator
- * Provides seamless offline/online detection and user feedback
- * Transparent to users, graceful degradation
+ * Only shows offline message when browser definitively reports offline
+ * Does NOT rely on API health checks (which can falsely report offline on iOS)
  */
 
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Wifi, WifiOff, RefreshCw, CheckCircle } from 'lucide-react';
@@ -14,161 +14,69 @@ interface NetworkStatusProps {
   showOfflineMessage?: boolean;
 }
 
-interface ConnectionStatus {
-  isOnline: boolean;
-  lastChecked: Date;
-  retryAttempts: number;
-  isRetrying: boolean;
-}
-
 export default function NetworkStatus({ onRetry, showOfflineMessage = true }: NetworkStatusProps) {
-  const [status, setStatus] = useState<ConnectionStatus>({
-    isOnline: navigator.onLine,
-    lastChecked: new Date(),
-    retryAttempts: 0,
-    isRetrying: false
-  });
-
+  // Only rely on browser's navigator.onLine - not API health checks
+  const [isOnline, setIsOnline] = useState(true); // Assume online initially
   const [showRecoveryMessage, setShowRecoveryMessage] = useState(false);
+  const [isRetrying, setIsRetrying] = useState(false);
 
-  /**
-   * Apple-compliant network monitoring
-   * Uses standard browser APIs, no invasive polling
-   */
   useEffect(() => {
-    const handleOnline = () => {
-      setStatus(prev => ({
-        ...prev,
-        isOnline: true,
-        lastChecked: new Date(),
-        retryAttempts: 0,
-        isRetrying: false
-      }));
+    // Set initial state from browser (but don't show banner immediately)
+    // This prevents false positives on iOS app startup
+    const checkInitialState = () => {
+      if (!navigator.onLine) {
+        // Only set offline if browser definitively says so
+        setIsOnline(false);
+      }
+    };
 
-      // Show brief recovery message
-      if (!status.isOnline) {
+    // Delay initial check to avoid false positives during app startup
+    const initialCheckTimer = setTimeout(checkInitialState, 2000);
+
+    const handleOnline = () => {
+      const wasOffline = !isOnline;
+      setIsOnline(true);
+      setIsRetrying(false);
+
+      // Show brief recovery message only if we were showing offline
+      if (wasOffline) {
         setShowRecoveryMessage(true);
         setTimeout(() => setShowRecoveryMessage(false), 3000);
       }
     };
 
     const handleOffline = () => {
-      setStatus(prev => ({
-        ...prev,
-        isOnline: false,
-        lastChecked: new Date(),
-        isRetrying: false
-      }));
+      setIsOnline(false);
+      setIsRetrying(false);
     };
 
-    // Listen to browser network events
+    // Listen to browser network events only
     window.addEventListener('online', handleOnline);
     window.addEventListener('offline', handleOffline);
 
-    // Perform initial connection test
-    performConnectionTest();
-
     return () => {
+      clearTimeout(initialCheckTimer);
       window.removeEventListener('online', handleOnline);
       window.removeEventListener('offline', handleOffline);
     };
-  }, []);
+  }, [isOnline]);
 
-  /**
-   * Test actual API connectivity (not just network interface)
-   * Apple-compliant: uses app's own health endpoints
-   */
-  const performConnectionTest = async (): Promise<boolean> => {
-    try {
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 5000);
-
-      const { apiUrl } = await import('@/lib/api-config');
-      const response = await fetch(apiUrl('/api/health'), {
-        method: 'GET',
-        signal: controller.signal,
-        cache: 'no-cache'
-      });
-
-      clearTimeout(timeoutId);
-      
-      const isConnected = response.ok;
-      
-      setStatus(prev => ({
-        ...prev,
-        isOnline: isConnected,
-        lastChecked: new Date(),
-        isRetrying: false
-      }));
-
-      return isConnected;
-    } catch (error) {
-      setStatus(prev => ({
-        ...prev,
-        isOnline: false,
-        lastChecked: new Date(),
-        isRetrying: false
-      }));
-      
-      return false;
-    }
-  };
-
-  /**
-   * Smart retry mechanism with exponential backoff
-   */
-  const handleRetry = async (): Promise<void> => {
-    setStatus(prev => {
-      if (prev.retryAttempts >= 5) {
-        // Max retries reached, don't retry
-        return { ...prev, isRetrying: false };
+  const handleRetry = () => {
+    setIsRetrying(true);
+    
+    // Just trigger a page reload to retry everything
+    setTimeout(() => {
+      if (navigator.onLine) {
+        setIsOnline(true);
+        setIsRetrying(false);
+        onRetry?.();
+      } else {
+        setIsRetrying(false);
       }
-      
-      const newAttempts = prev.retryAttempts + 1;
-      
-      // Perform connection test
-      performConnectionTest().then(isConnected => {
-        if (isConnected) {
-          onRetry?.();
-          setStatus(current => ({
-            ...current,
-            retryAttempts: 0,
-            isRetrying: false
-          }));
-        } else if (newAttempts < 5) {
-          // Exponential backoff for failed retries
-          const delay = Math.min(1000 * Math.pow(2, newAttempts), 10000);
-          setTimeout(() => {
-            // Only retry if component is still mounted and in retry mode
-            setStatus(current => {
-              if (current.retryAttempts < 5 && !current.isOnline) {
-                handleRetry();
-              }
-              return current;
-            });
-          }, delay);
-        } else {
-          // Max retries reached
-          setStatus(current => ({ ...current, isRetrying: false }));
-        }
-      });
-      
-      return {
-        ...prev,
-        isRetrying: true,
-        retryAttempts: newAttempts
-      };
-    });
+    }, 1000);
   };
 
-  // Auto-recovery when network comes back
-  useEffect(() => {
-    if (status.isOnline && status.retryAttempts > 0) {
-      onRetry?.();
-    }
-  }, [status.isOnline, onRetry]);
-
-  // Show recovery message
+  // Show recovery message briefly after coming back online
   if (showRecoveryMessage) {
     return (
       <Alert className="border-green-200 bg-green-50 dark:bg-green-900/20 mb-4">
@@ -180,8 +88,8 @@ export default function NetworkStatus({ onRetry, showOfflineMessage = true }: Ne
     );
   }
 
-  // Only show offline message if requested and actually offline
-  if (!status.isOnline && showOfflineMessage) {
+  // Only show offline message if browser says we're offline
+  if (!isOnline && showOfflineMessage) {
     return (
       <Alert className="border-amber-200 bg-amber-50 dark:bg-amber-900/20 mb-4">
         <WifiOff className="h-4 w-4 text-amber-600 dark:text-amber-400" />
@@ -193,16 +101,16 @@ export default function NetworkStatus({ onRetry, showOfflineMessage = true }: Ne
             variant="outline"
             size="sm"
             onClick={handleRetry}
-            disabled={status.isRetrying}
+            disabled={isRetrying}
             className="ml-4 bg-white dark:bg-amber-950 border-amber-300 dark:border-amber-700"
             data-testid="button-retry-connection"
           >
-            {status.isRetrying ? (
+            {isRetrying ? (
               <RefreshCw className="h-3 w-3 animate-spin mr-1" />
             ) : (
               <Wifi className="h-3 w-3 mr-1" />
             )}
-            {status.isRetrying ? 'Connecting...' : 'Retry'}
+            {isRetrying ? 'Connecting...' : 'Retry'}
           </Button>
         </AlertDescription>
       </Alert>
@@ -216,7 +124,6 @@ export default function NetworkStatus({ onRetry, showOfflineMessage = true }: Ne
 // Hook for network status in components
 export function useNetworkStatus() {
   const [isOnline, setIsOnline] = useState(navigator.onLine);
-  const [lastChecked, setLastChecked] = useState(new Date());
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);
@@ -231,29 +138,5 @@ export function useNetworkStatus() {
     };
   }, []);
 
-  const checkConnection = async (): Promise<boolean> => {
-    try {
-      const { apiUrl } = await import('@/lib/api-config');
-      const response = await fetch(apiUrl('/api/health'), {
-        method: 'GET',
-        cache: 'no-cache',
-        signal: AbortSignal.timeout(3000)
-      });
-      
-      const connected = response.ok;
-      setIsOnline(connected);
-      setLastChecked(new Date());
-      return connected;
-    } catch {
-      setIsOnline(false);
-      setLastChecked(new Date());
-      return false;
-    }
-  };
-
-  return {
-    isOnline,
-    lastChecked,
-    checkConnection
-  };
+  return { isOnline };
 }
