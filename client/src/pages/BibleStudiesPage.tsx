@@ -7,6 +7,39 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } f
 import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft } from "lucide-react";
 import { useTranslations } from "@/lib/translations";
 
+// Stock images for Bible studies
+import vineyardImg from "@assets/stock_images/vineyard_grapes_vine_9099db84.jpg";
+import sunriseImg from "@assets/stock_images/sunrise_nature_peace_0892cf32.jpg";
+import sunriseImg2 from "@assets/stock_images/sunrise_nature_peace_ff922729.jpg";
+import prayingImg from "@assets/stock_images/person_praying_hands_0c7284fd.jpg";
+import prayingImg2 from "@assets/stock_images/person_praying_hands_d059791b.jpg";
+import prayingImg3 from "@assets/stock_images/person_praying_hands_353985e6.jpg";
+import crossImg from "@assets/stock_images/cross_silhouette_sun_1f233738.jpg";
+import crossImg2 from "@assets/stock_images/cross_silhouette_sun_9e2b44a7.jpg";
+import bibleImg from "@assets/stock_images/vintage_antique_open_8dee69cc.jpg";
+import bibleImg2 from "@assets/stock_images/vintage_antique_open_db920acb.jpg";
+import bibleImg3 from "@assets/stock_images/vintage_antique_open_578d4bbd.jpg";
+import mountainImg from "@assets/stock_images/mountain_path_hiking_740f2a0a.jpg";
+import mountainImg2 from "@assets/stock_images/mountain_path_hiking_9533c6a9.jpg";
+import candleImg from "@assets/stock_images/candle_flame_peacefu_be01f21e.jpg";
+import candleImg2 from "@assets/stock_images/candle_flame_peacefu_56ff867a.jpg";
+import stainedGlassImg from "@assets/stock_images/old_church_stained_g_8730bf31.jpg";
+import stainedGlassImg2 from "@assets/stock_images/old_church_stained_g_af0f1aab.jpg";
+import gardenImg from "@assets/stock_images/peaceful_garden_flow_e311bb65.jpg";
+import gardenImg2 from "@assets/stock_images/peaceful_garden_flow_3dffce97.jpg";
+import lighthouseImg from "@assets/stock_images/lighthouse_ocean_wav_6cd81196.jpg";
+import lighthouseImg2 from "@assets/stock_images/lighthouse_ocean_wav_10465666.jpg";
+import manuscriptImg from "@assets/stock_images/ancient_manuscript_o_33d66e5c.jpg";
+import manuscriptImg2 from "@assets/stock_images/ancient_manuscript_o_50723bc6.jpg";
+import wheatImg from "@assets/stock_images/wheat_field_golden_h_dc32731f.jpg";
+import wheatImg2 from "@assets/stock_images/wheat_field_golden_h_21d47110.jpg";
+import doveImg from "@assets/stock_images/dove_flying_peaceful_16f6aed4.jpg";
+import doveImg2 from "@assets/stock_images/dove_flying_peaceful_db061648.jpg";
+import treeRootsImg from "@assets/stock_images/tree_roots_deep_fore_a2e7b3b9.jpg";
+import treeRootsImg2 from "@assets/stock_images/tree_roots_deep_fore_fe112b14.jpg";
+import riverImg from "@assets/stock_images/river_stream_flowing_d6bc2325.jpg";
+import riverImg2 from "@assets/stock_images/river_stream_flowing_242ffe51.jpg";
+
 interface BibleStudyProps {
   currentUserId: string;
   language: string;
@@ -36,7 +69,7 @@ interface StudyLesson {
   prayer: string;
 }
 
-// Traditional Bible Studies - Public Domain Christian Classics
+// Classic Bible Studies - Public Domain Christian Classics
 const sampleStudies: BibleStudy[] = [
   // ANDREW MURRAY STUDIES
   {
@@ -48,6 +81,7 @@ const sampleStudies: BibleStudy[] = [
     duration: "5 sample chapters",
     difficulty: "Beginner",
     lessons: 5,
+    imageUrl: vineyardImg,
     featured: true
   },
   {
@@ -58,7 +92,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "2 sample meditations",
     difficulty: "Intermediate",
-    lessons: 2
+    lessons: 2,
+    imageUrl: sunriseImg
   },
   {
     id: "humility",
@@ -68,7 +103,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Character",
     duration: "2 sample chapters",
     difficulty: "Intermediate",
-    lessons: 2
+    lessons: 2,
+    imageUrl: treeRootsImg
   },
   {
     id: "absolute-surrender",
@@ -78,7 +114,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample chapters",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: crossImg
   },
   {
     id: "with-christ-school-of-prayer",
@@ -88,7 +125,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "3 sample lessons",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: prayingImg
   },
   // CHARLES SPURGEON STUDIES
   {
@@ -99,7 +137,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Encouragement",
     duration: "5 sample readings",
     difficulty: "Beginner",
-    lessons: 5
+    lessons: 5,
+    imageUrl: sunriseImg2
   },
   {
     id: "all-of-grace",
@@ -109,7 +148,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "5 sample chapters",
     difficulty: "Beginner",
-    lessons: 5
+    lessons: 5,
+    imageUrl: crossImg2
   },
   {
     id: "treasury-of-david",
@@ -119,7 +159,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Encouragement",
     duration: "3 sample Psalms",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: bibleImg
   },
   // E.M. BOUNDS STUDIES
   {
@@ -130,7 +171,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "5 sample chapters",
     difficulty: "Intermediate",
-    lessons: 5
+    lessons: 5,
+    imageUrl: prayingImg2
   },
   {
     id: "purpose-in-prayer",
@@ -140,7 +182,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "3 sample chapters",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: candleImg
   },
   {
     id: "weapon-of-prayer",
@@ -150,7 +193,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "3 sample chapters",
     difficulty: "Advanced",
-    lessons: 3
+    lessons: 3,
+    imageUrl: lighthouseImg
   },
   // CLASSIC DEVOTIONAL AUTHORS
   {
@@ -161,7 +205,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample meditations",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: stainedGlassImg
   },
   {
     id: "practice-presence-of-god",
@@ -171,7 +216,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample readings",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: gardenImg
   },
   {
     id: "pilgrims-progress",
@@ -181,7 +227,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample stages",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: mountainImg
   },
   // HANNAH WHITALL SMITH
   {
@@ -192,7 +239,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Encouragement",
     duration: "3 sample chapters",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: gardenImg2
   },
   // GEORGE MÜLLER
   {
@@ -203,7 +251,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "3 sample testimonies",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: doveImg
   },
   // R.A. TORREY
   {
@@ -214,7 +263,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "3 sample chapters",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: prayingImg3
   },
   // HUDSON TAYLOR
   {
@@ -225,7 +275,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample meditations",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: riverImg
   },
   // OSWALD CHAMBERS
   {
@@ -237,6 +288,7 @@ const sampleStudies: BibleStudy[] = [
     duration: "5 sample readings",
     difficulty: "Intermediate",
     lessons: 5,
+    imageUrl: mountainImg2,
     featured: true
   },
   // A.W. PINK
@@ -248,7 +300,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Character",
     duration: "3 sample chapters",
     difficulty: "Advanced",
-    lessons: 3
+    lessons: 3,
+    imageUrl: stainedGlassImg2
   },
   // FENELON
   {
@@ -259,7 +312,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample letters",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: manuscriptImg
   },
   // MADAME GUYON
   {
@@ -270,7 +324,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Prayer",
     duration: "3 sample chapters",
     difficulty: "Advanced",
-    lessons: 3
+    lessons: 3,
+    imageUrl: riverImg2
   },
   // WILLIAM LAW
   {
@@ -281,7 +336,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample chapters",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: bibleImg2
   },
   // JONATHAN EDWARDS
   {
@@ -292,7 +348,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Character",
     duration: "3 sample sections",
     difficulty: "Advanced",
-    lessons: 3
+    lessons: 3,
+    imageUrl: candleImg2
   },
   // D.L. MOODY
   {
@@ -303,7 +360,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample chapters",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: lighthouseImg2
   },
   // JOHN WESLEY
   {
@@ -314,7 +372,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Character",
     duration: "3 sample sections",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: wheatImg
   },
   // AUGUSTINE
   {
@@ -325,7 +384,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Discipleship",
     duration: "3 sample passages",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: manuscriptImg2
   },
   // CHARLES FINNEY
   {
@@ -336,7 +396,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Encouragement",
     duration: "3 sample lectures",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: doveImg2
   },
   // JOHN NEWTON
   {
@@ -347,7 +408,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Encouragement",
     duration: "3 sample letters",
     difficulty: "Beginner",
-    lessons: 3
+    lessons: 3,
+    imageUrl: bibleImg3
   },
   // SAMUEL RUTHERFORD
   {
@@ -358,7 +420,8 @@ const sampleStudies: BibleStudy[] = [
     category: "Encouragement",
     duration: "3 sample letters",
     difficulty: "Intermediate",
-    lessons: 3
+    lessons: 3,
+    imageUrl: treeRootsImg2
   }
 ];
 
@@ -1917,11 +1980,27 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
         {featuredStudy && (
           <Card className="shadow-lg border-0 overflow-hidden hover-elevate transition-all duration-300 cursor-pointer" data-testid={`featured-study-${featuredStudy.id}`}>
             <div className="md:flex">
-              <div className="md:w-1/3 h-64 md:h-auto bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center relative">
-                <div className="text-center p-8">
-                  <BookOpen className="w-16 h-16 text-amber-600 dark:text-amber-400 mx-auto mb-4" />
-                  <Badge className="bg-amber-600 text-white">{t.featured}</Badge>
-                </div>
+              <div className="md:w-1/3 h-64 md:h-auto relative overflow-hidden">
+                {featuredStudy.imageUrl ? (
+                  <>
+                    <img 
+                      src={featuredStudy.imageUrl} 
+                      alt={featuredStudy.title}
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <Badge className="bg-amber-600 text-white">{t.featured}</Badge>
+                    </div>
+                  </>
+                ) : (
+                  <div className="w-full h-full bg-gradient-to-br from-amber-100 to-orange-100 dark:from-amber-900/40 dark:to-orange-900/40 flex items-center justify-center">
+                    <div className="text-center p-8">
+                      <BookOpen className="w-16 h-16 text-amber-600 dark:text-amber-400 mx-auto mb-4" />
+                      <Badge className="bg-amber-600 text-white">{t.featured}</Badge>
+                    </div>
+                  </div>
+                )}
                 <div className="absolute top-4 right-4">
                   <Star className="w-6 h-6 text-amber-500 fill-current" />
                 </div>
@@ -1988,8 +2067,18 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                   }}
                   data-testid={`study-card-${study.id}`}
                 >
-                  <div className="h-40 bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 flex items-center justify-center">
-                    <BookOpen className="w-12 h-12 text-blue-600 dark:text-blue-400" />
+                  <div className="h-40 relative overflow-hidden">
+                    {study.imageUrl ? (
+                      <img 
+                        src={study.imageUrl} 
+                        alt={study.title}
+                        className="w-full h-full object-cover"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-blue-100 to-indigo-100 dark:from-blue-900/40 dark:to-indigo-900/40 flex items-center justify-center">
+                        <BookOpen className="w-12 h-12 text-blue-600 dark:text-blue-400" />
+                      </div>
+                    )}
                   </div>
                   <CardContent className="p-6">
                     <div className="flex flex-wrap gap-2 mb-3">
