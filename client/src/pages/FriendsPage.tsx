@@ -768,7 +768,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
                     placeholder="Enter their first name..."
                     value={inviteName}
                     onChange={(e) => setInviteName(e.target.value)}
-                    className="border-gray-300 focus:border-pink-500"
+                    className="border-gray-300 focus:border-pink-500 bg-white text-gray-900 placeholder:text-gray-400"
                     data-testid="input-invite-name"
                   />
                 </div>
@@ -779,7 +779,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
                     placeholder="Enter their email address..."
                     value={inviteEmail}
                     onChange={(e) => setInviteEmail(e.target.value)}
-                    className="border-gray-300 focus:border-pink-500"
+                    className="border-gray-300 focus:border-pink-500 bg-white text-gray-900 placeholder:text-gray-400"
                     data-testid="input-invite-email"
                   />
                 </div>
@@ -789,7 +789,7 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
                     placeholder="Add a personal note..."
                     value={inviteMessage}
                     onChange={(e) => setInviteMessage(e.target.value)}
-                    className="border-gray-300 focus:border-pink-500"
+                    className="border-gray-300 focus:border-pink-500 bg-white text-gray-900 placeholder:text-gray-400"
                     data-testid="input-invite-message"
                   />
                 </div>

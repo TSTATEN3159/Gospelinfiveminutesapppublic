@@ -222,7 +222,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
             </DialogHeader>
             <div className="grid gap-4 py-4">
               <div className="grid gap-2">
-                <label htmlFor="reminder-name-hero" className="text-sm font-medium">
+                <label htmlFor="reminder-name-hero" className="text-sm font-medium text-foreground">
                   Name (Optional)
                 </label>
                 <input
@@ -231,12 +231,12 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
                   placeholder="Your name"
                   value={nameInput}
                   onChange={(e) => setNameInput(e.target.value)}
-                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                   data-testid="input-reminder-name-hero"
                 />
               </div>
               <div className="grid gap-2">
-                <label htmlFor="reminder-email-hero" className="text-sm font-medium">
+                <label htmlFor="reminder-email-hero" className="text-sm font-medium text-foreground">
                   Email Address *
                 </label>
                 <input
@@ -245,7 +245,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
                   placeholder="your.email@example.com"
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
-                  className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
+                  className="flex h-9 w-full rounded-md border border-input bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 placeholder:text-gray-400 px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
                   data-testid="input-reminder-email-hero"
                   required
                 />
