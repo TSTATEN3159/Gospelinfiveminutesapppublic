@@ -35,10 +35,10 @@ export default function VideosPage({ onNavigate, streakDays = 0, language = "en"
   const loadVideos = async () => {
     setLoading(true);
     try {
-      // Load featured video and all videos in parallel
+      // Load featured video and all videos in parallel (now with 15+ videos per category)
       const [featured, allVideos] = await Promise.all([
         videoService.getFeaturedVideo(),
-        videoService.getVideos(undefined, 20)
+        videoService.getVideos(undefined, 30)
       ]);
 
       setFeaturedVideo(featured);
@@ -62,7 +62,7 @@ export default function VideosPage({ onNavigate, streakDays = 0, language = "en"
     try {
       const categoryVideos = category 
         ? await videoService.getVideosByCategory(category)
-        : await videoService.getVideos(undefined, 20);
+        : await videoService.getVideos(undefined, 30);
       setVideos(categoryVideos);
     } catch (error) {
       console.error('Error filtering videos:', error);

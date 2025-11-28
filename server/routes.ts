@@ -2052,16 +2052,28 @@ Return only the application paragraph.
     try {
       const { category, limit = 10 } = req.query;
 
-      // Define themes for different categories
+      // Define themes for different categories - expanded with 10 more video topics
       const themes = {
-        sermon: ['Faith', 'Grace', 'God\'s Love', 'Salvation', 'Hope'],
-        'gospel-tidbits': ['Wisdom', 'Encouragement', 'Peace', 'Joy', 'Strength'],
-        'christian-advice': ['Guidance', 'Purpose', 'Relationships', 'Trust', 'Forgiveness']
+        sermon: [
+          'Faith', 'Grace', 'God\'s Love', 'Salvation', 'Hope',
+          'Redemption', 'Mercy', 'Holiness', 'Righteousness', 'Resurrection',
+          'Eternal Life', 'Kingdom of God', 'Holy Spirit', 'Praise', 'Worship'
+        ],
+        'gospel-tidbits': [
+          'Wisdom', 'Encouragement', 'Peace', 'Joy', 'Strength',
+          'Patience', 'Kindness', 'Goodness', 'Faithfulness', 'Gentleness',
+          'Self-Control', 'Humility', 'Gratitude', 'Contentment', 'Perseverance'
+        ],
+        'christian-advice': [
+          'Guidance', 'Purpose', 'Relationships', 'Trust', 'Forgiveness',
+          'Marriage', 'Parenting', 'Friendship', 'Leadership', 'Service',
+          'Generosity', 'Integrity', 'Obedience', 'Stewardship', 'Discipleship'
+        ]
       };
 
       const videos = [];
       const categoryThemes = themes[category as keyof typeof themes] || themes.sermon;
-      const numVideos = Math.min(parseInt(limit as string), 10);
+      const numVideos = Math.min(parseInt(limit as string), 30);
 
       // Fetch videos from Christian Context API in parallel for better performance
       const themePromises = categoryThemes.slice(0, numVideos).map(async (theme: string, i: number) => {

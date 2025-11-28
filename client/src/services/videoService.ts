@@ -88,9 +88,9 @@ class VideoService {
     }
   }
 
-  // Get videos by category
+  // Get videos by category (expanded to 15 videos per category)
   async getVideosByCategory(category: VideoItem['category']): Promise<VideoItem[]> {
-    return this.getVideos(category, 10);
+    return this.getVideos(category, 15);
   }
 
   // Search videos by title or description
