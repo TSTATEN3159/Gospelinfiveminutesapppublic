@@ -6,13 +6,16 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Home } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Home, Cloud, Mic, RefreshCw, CheckCircle2 } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { bibleService } from "../services/bibleService";
 import appStore from "@/lib/appStore";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { TextSizeControls } from "@/components/TextSizeControls";
 import { ReminderSettings } from "@/components/settings/ReminderSettings";
+import { iCloudSync } from "@/lib/iCloudSync";
+import { siriShortcuts } from "@/lib/siriShortcuts";
+import { Capacitor } from "@capacitor/core";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -84,6 +87,157 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
   });
 
   const [isEditing, setIsEditing] = useState(false);
+  
+  // Apple Features state
+  const [iCloudCheckingAvailability, setICloudCheckingAvailability] = useState(true);
+  const [iCloudEnabled, setICloudEnabled] = useState(false);
+  const [iCloudAvailable, setICloudAvailable] = useState(false);
+  const [iCloudSyncing, setICloudSyncing] = useState(false);
+  const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
+  const [siriShortcutsSetup, setSiriShortcutsSetup] = useState<string[]>([]);
+  const isIOS = Capacitor.getPlatform() === 'ios';
+  
+  // Refresh Siri shortcuts state
+  const refreshSiriShortcuts = async () => {
+    try {
+      const shortcuts = await siriShortcuts.getVoiceShortcuts();
+      setSiriShortcutsSetup(shortcuts.map(s => s.type));
+    } catch (e) {
+      console.error('[Settings] Failed to refresh Siri shortcuts:', e);
+    }
+  };
+  
+  // Check iCloud availability on mount
+  useEffect(() => {
+    const checkAppleFeatures = async () => {
+      if (isIOS) {
+        setICloudCheckingAvailability(true);
+        try {
+          // Check stored preference first
+          const storedEnabled = iCloudSync.isSyncEnabled();
+          setICloudEnabled(storedEnabled);
+          
+          // Check actual availability
+          const availability = await iCloudSync.isAvailable();
+          setICloudAvailable(availability.available);
+          
+          // If user has it enabled but iCloud isn't available, disable it
+          if (storedEnabled && !availability.available) {
+            setICloudEnabled(false);
+            iCloudSync.setSyncEnabled(false);
+          }
+          
+          const lastSync = await iCloudSync.getLastSyncTime();
+          setLastSyncTime(lastSync);
+          
+          // Auto-donate Siri shortcuts
+          await siriShortcuts.donateAllShortcuts();
+          
+          // Get existing voice shortcuts
+          await refreshSiriShortcuts();
+        } catch (e) {
+          console.error('[Settings] Failed to check Apple features:', e);
+        } finally {
+          setICloudCheckingAvailability(false);
+        }
+      } else {
+        setICloudCheckingAvailability(false);
+      }
+    };
+    checkAppleFeatures();
+  }, [isIOS]);
+  
+  // Handle iCloud toggle change
+  const handleICloudToggle = async (checked: boolean) => {
+    setICloudEnabled(checked);
+    iCloudSync.setSyncEnabled(checked);
+    
+    if (checked) {
+      setICloudSyncing(true);
+      try {
+        const success = await iCloudSync.pushToCloud();
+        if (success) {
+          const newSyncTime = await iCloudSync.getLastSyncTime();
+          setLastSyncTime(newSyncTime);
+          toast({
+            title: "iCloud Sync Enabled",
+            description: "Your data will now sync across devices",
+          });
+        } else {
+          toast({
+            title: "Sync Failed",
+            description: "Unable to sync to iCloud. Please try again.",
+            variant: "destructive",
+          });
+          setICloudEnabled(false);
+          iCloudSync.setSyncEnabled(false);
+        }
+      } catch (e) {
+        console.error('[Settings] iCloud sync error:', e);
+        toast({
+          title: "Sync Error",
+          description: "An error occurred while syncing",
+          variant: "destructive",
+        });
+        setICloudEnabled(false);
+        iCloudSync.setSyncEnabled(false);
+      } finally {
+        setICloudSyncing(false);
+      }
+    } else {
+      toast({
+        title: "iCloud Sync Disabled",
+        description: "Your data will only be stored locally",
+      });
+    }
+  };
+  
+  // Handle manual sync
+  const handleManualSync = async () => {
+    setICloudSyncing(true);
+    try {
+      const success = await iCloudSync.syncFromCloud();
+      if (success) {
+        const newSyncTime = await iCloudSync.getLastSyncTime();
+        setLastSyncTime(newSyncTime);
+        toast({
+          title: "Sync Complete",
+          description: "Your data is up to date",
+        });
+      } else {
+        toast({
+          title: "Sync Failed",
+          description: "Unable to sync from iCloud",
+          variant: "destructive",
+        });
+      }
+    } catch (e) {
+      console.error('[Settings] Manual sync error:', e);
+      toast({
+        title: "Sync Error",
+        description: "An error occurred while syncing",
+        variant: "destructive",
+      });
+    } finally {
+      setICloudSyncing(false);
+    }
+  };
+  
+  // Handle adding Siri shortcut
+  const handleAddSiriShortcut = async (type: 'dailyVerse' | 'randomVerse' | 'prayerTime' | 'trivia') => {
+    try {
+      await siriShortcuts.presentAddToSiri(type);
+      // Refresh shortcuts list after adding
+      setTimeout(() => refreshSiriShortcuts(), 1000);
+    } catch (e) {
+      console.error('[Settings] Failed to add Siri shortcut:', e);
+      toast({
+        title: "Shortcut Error",
+        description: "Unable to add Siri shortcut",
+        variant: "destructive",
+      });
+    }
+  };
 
   // Bible Version Selector Component
   const BibleVersionSelector = ({ value, onChange }: { value: string, onChange: (value: string) => void }) => {
@@ -592,6 +746,142 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             </Button>
           </CardContent>
         </Card>
+
+        {/* Apple Features (iOS only) */}
+        {isIOS && (
+          <Card className="shadow-lg border-2">
+            <CardHeader>
+              <CardTitle className="flex items-center justify-center gap-2 text-center">
+                <Cloud className="w-5 h-5" />
+                Apple Features
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              {/* iCloud Sync */}
+              <div className="space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex-1">
+                    <Label htmlFor="iCloudSync" className="font-medium flex items-center gap-2">
+                      <Cloud className="w-4 h-4 text-blue-500" />
+                      iCloud Sync
+                    </Label>
+                    <p className="text-sm text-muted-foreground">
+                      Sync bookmarks, notes & progress across devices
+                    </p>
+                  </div>
+                  <Switch
+                    id="iCloudSync"
+                    checked={iCloudEnabled}
+                    disabled={!iCloudAvailable || iCloudCheckingAvailability || iCloudSyncing}
+                    onCheckedChange={handleICloudToggle}
+                    data-testid="switch-icloud-sync"
+                  />
+                </div>
+                
+                {iCloudCheckingAvailability && (
+                  <p className="text-xs text-muted-foreground flex items-center gap-1">
+                    <RefreshCw className="w-3 h-3 animate-spin" />
+                    Checking iCloud availability...
+                  </p>
+                )}
+                
+                {!iCloudCheckingAvailability && !iCloudAvailable && (
+                  <p className="text-xs text-amber-600 dark:text-amber-400">
+                    Sign in to iCloud in Settings to enable sync
+                  </p>
+                )}
+                
+                {iCloudEnabled && iCloudAvailable && (
+                  <div className="flex items-center justify-between pt-2">
+                    <span className="text-xs text-muted-foreground">
+                      {lastSyncTime 
+                        ? `Last synced: ${lastSyncTime.toLocaleString()}`
+                        : 'Never synced'}
+                    </span>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      disabled={iCloudSyncing}
+                      onClick={handleManualSync}
+                      data-testid="button-sync-now"
+                    >
+                      <RefreshCw className={`w-4 h-4 mr-1 ${iCloudSyncing ? 'animate-spin' : ''}`} />
+                      {iCloudSyncing ? 'Syncing...' : 'Sync Now'}
+                    </Button>
+                  </div>
+                )}
+              </div>
+              
+              <div className="border-t pt-4">
+                {/* Siri Shortcuts */}
+                <div className="space-y-3">
+                  <Label className="font-medium flex items-center gap-2">
+                    <Mic className="w-4 h-4 text-purple-500" />
+                    Siri Shortcuts
+                  </Label>
+                  <p className="text-sm text-muted-foreground">
+                    Use voice commands like "Hey Siri, what's today's verse"
+                  </p>
+                  
+                  <div className="grid grid-cols-2 gap-2 mt-3">
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-start"
+                      onClick={() => handleAddSiriShortcut('dailyVerse')}
+                      data-testid="button-siri-daily-verse"
+                    >
+                      {siriShortcutsSetup.includes('com.gospelapp.dailyverse') && (
+                        <CheckCircle2 className="w-3 h-3 mr-1 text-green-500" />
+                      )}
+                      Today's Verse
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-start"
+                      onClick={() => handleAddSiriShortcut('randomVerse')}
+                      data-testid="button-siri-random-verse"
+                    >
+                      {siriShortcutsSetup.includes('com.gospelapp.randomverse') && (
+                        <CheckCircle2 className="w-3 h-3 mr-1 text-green-500" />
+                      )}
+                      Random Verse
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-start"
+                      onClick={() => handleAddSiriShortcut('prayerTime')}
+                      data-testid="button-siri-prayer"
+                    >
+                      {siriShortcutsSetup.includes('com.gospelapp.prayertime') && (
+                        <CheckCircle2 className="w-3 h-3 mr-1 text-green-500" />
+                      )}
+                      Prayer Time
+                    </Button>
+                    <Button
+                      variant="outline"
+                      size="sm"
+                      className="justify-start"
+                      onClick={() => handleAddSiriShortcut('trivia')}
+                      data-testid="button-siri-trivia"
+                    >
+                      {siriShortcutsSetup.includes('com.gospelapp.trivia') && (
+                        <CheckCircle2 className="w-3 h-3 mr-1 text-green-500" />
+                      )}
+                      Bible Trivia
+                    </Button>
+                  </div>
+                  
+                  <p className="text-xs text-muted-foreground mt-2">
+                    Tap a button to add that command to Siri
+                  </p>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {/* Data & Privacy */}
         <Card className="shadow-lg border-2">

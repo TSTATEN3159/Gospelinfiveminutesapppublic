@@ -107,3 +107,35 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Categories: Sermon, Gospel Tidbits, Christian Advice
   - 30+ total videos with themes: Love, Hope, Peace, Joy, Faith, Forgiveness, Prayer, Salvation, Wisdom, Courage, Mercy, Redemption, Compassion, Patience, Gratitude, Healing, Growth, Service
   - Backend video fetch limit increased to 30
+
+### Apple Platform Features (November 28, 2025)
+- **Lock Screen Widgets (iOS 16+)**: Three widget families for lock screen display
+  - `accessoryCircular`: Small circular widget showing book abbreviation
+  - `accessoryRectangular`: Rectangular widget with verse excerpt and reference
+  - `accessoryInline`: Single-line widget for complications
+  - Widget data shared via App Groups container
+  - Swift WidgetKit implementation in `ios/App/GospelWidget/`
+- **iCloud Sync (CloudKit)**: Cross-device sync for user data
+  - Syncs bookmarks, notes, reading progress, and settings
+  - Custom Capacitor plugin with Swift CloudKit integration
+  - Settings page toggle with availability detection
+  - Manual "Sync Now" button with last sync timestamp
+  - Graceful handling when iCloud is unavailable
+  - TypeScript wrapper: `client/src/lib/iCloudSync.ts`
+  - Swift plugin: `ios/App/App/Plugins/iCloudSync.swift`
+- **Siri Shortcuts**: Voice-activated app features
+  - "Hey Siri, what's today's verse?" - Daily verse shortcut
+  - "Hey Siri, give me a random verse" - Random verse shortcut
+  - "Hey Siri, start prayer time" - Prayer time shortcut
+  - "Hey Siri, Bible trivia" - Trivia game shortcut
+  - Uses NSUserActivity for shortcut donations
+  - Settings page with per-shortcut setup buttons
+  - Checkmarks indicate which shortcuts are configured
+  - TypeScript wrapper: `client/src/lib/siriShortcuts.ts`
+  - Swift plugin: `ios/App/App/Plugins/SiriShortcuts.swift`
+- **Settings Page Integration**: New "Apple Features" card (iOS only)
+  - iCloud Sync toggle with availability check
+  - Loading state during availability detection
+  - Sync status with last sync time display
+  - 2x2 grid of Siri shortcut setup buttons
+  - Full error handling with toast notifications
