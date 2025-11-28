@@ -278,7 +278,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           totalFruit={abideData.totalFruit}
           streak={abideData.streak}
           todayFruitLabel={abideData.todayFruitLabel}
-          onTap={() => onNavigate?.('discipleship-list')}
+          onTap={() => onNavigate?.('abide')}
         />
 
         {/* Bible Trivia Section - World-Class Design */}

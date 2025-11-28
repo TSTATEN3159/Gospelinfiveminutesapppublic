@@ -52,6 +52,7 @@ import DiscipleshipListPage from "./pages/DiscipleshipListPage";
 import DiscipleshipPlanDetailPage from "./pages/DiscipleshipPlanDetailPage";
 import DiscipleshipReadingPage from "./pages/DiscipleshipReadingPage";
 import UnsubscribePage from "./pages/UnsubscribePage";
+import AbideSessionPage from "./pages/AbideSessionPage";
 import { BibleVersionCode } from "./config/bibleVersions";
 
 interface User {
@@ -64,7 +65,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading" | "unsubscribe";
+type AppPage = "home" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading" | "unsubscribe" | "abide";
 
 // Type-safe navigation params for each page
 type AppPageParams = {
@@ -331,6 +332,8 @@ function MainApp() {
               />;
             case "unsubscribe":
               return <UnsubscribePage />;
+            case "abide":
+              return <AbideSessionPage onNavigate={handleNavigate} />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -353,7 +356,7 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-plan", "discipleship-reading"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-plan", "discipleship-reading", "abide"].includes(currentPage) && (
                 <BottomNavigation 
                   currentPage={currentPage as "home" | "discipleship-list" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
