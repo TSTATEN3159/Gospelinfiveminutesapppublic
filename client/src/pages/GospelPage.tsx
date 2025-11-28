@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Heart, Cross, Sparkles, BookOpen, ArrowRight, Share2, Check, Home } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Heart, Cross, Sparkles, BookOpen, ArrowRight, Share2, Check, Home, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useToast } from '@/hooks/use-toast';
@@ -14,7 +14,7 @@ interface GospelStep {
   content: string;
   scripture: string;
   reference: string;
-  icon: 'heart' | 'cross' | 'sparkles' | 'book';
+  icon: 'heart' | 'cross' | 'sparkles' | 'refresh' | 'book';
   gradient: string;
 }
 
@@ -51,9 +51,19 @@ const gospelSteps: GospelStep[] = [
   },
   {
     id: 4,
+    title: "Repentance & New Life",
+    subtitle: "A changed heart, a transformed life",
+    content: "True faith requires godly sorrow—a sincere recognition that our sin grieves God. Following Jesus means turning away from sin, not just feeling sorry. A genuine disciple's life is transformed. You cannot continue living in sin while claiming to follow Christ. The Good News is that God gives you His Holy Spirit to empower this transformation from the inside out!",
+    scripture: "Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.",
+    reference: "2 Corinthians 5:17",
+    icon: 'refresh',
+    gradient: 'from-violet-500 to-purple-600'
+  },
+  {
+    id: 5,
     title: "Your Response",
     subtitle: "It's your choice",
-    content: "Salvation is a gift—you can't earn it or work for it. All you need to do is believe in Jesus, confess that you're a sinner in need of a Savior, and invite Him into your life. When you do, everything changes. Your sins are forgiven, you become a child of God, and you receive eternal life.",
+    content: "Salvation is a gift—you can't earn it or work for it. All you need to do is believe in Jesus, confess that you're a sinner in need of a Savior, repent and turn from your old ways, and invite Him into your life. When you do, everything changes. Your sins are forgiven, you become a child of God, and you receive eternal life.",
     scripture: "That if thou shalt confess with thy mouth the Lord Jesus, and shalt believe in thine heart that God hath raised him from the dead, thou shalt be saved.",
     reference: "Romans 10:9",
     icon: 'book',
@@ -156,6 +166,7 @@ export default function GospelPage({ onNavigate }: GospelPageProps) {
       case 'heart': return <Heart className="w-12 h-12" />;
       case 'cross': return <Cross className="w-12 h-12" />;
       case 'sparkles': return <Sparkles className="w-12 h-12" />;
+      case 'refresh': return <RefreshCw className="w-12 h-12" />;
       case 'book': return <BookOpen className="w-12 h-12" />;
       default: return <Heart className="w-12 h-12" />;
     }
