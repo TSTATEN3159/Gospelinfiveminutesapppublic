@@ -279,6 +279,34 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           loading={loading}
         />
 
+        {/* The Good News - Gospel Invitation Card */}
+        <div 
+          className="relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-transform"
+          onClick={() => onNavigate?.('gospel')}
+          data-testid="card-gospel-invitation"
+        >
+          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-rose-500" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent_50%)]" />
+          <div className="relative p-5 text-white">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
+                <Heart className="w-6 h-6 text-white" />
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold mb-1">The Good News</h3>
+                <p className="text-white/90 text-sm leading-relaxed mb-3">
+                  Discover the message that has changed billions of lives — and could change yours today.
+                </p>
+                <div className="flex items-center gap-2 text-white/80 text-xs">
+                  <span className="bg-white/20 px-2 py-0.5 rounded-full">5 min read</span>
+                  <span>•</span>
+                  <span>Life-changing</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Abide - My Growth Today Section */}
         <AbideTreePreview />
 

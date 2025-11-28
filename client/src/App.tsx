@@ -54,6 +54,8 @@ import DiscipleshipPlanDetailPage from "./pages/DiscipleshipPlanDetailPage";
 import DiscipleshipReadingPage from "./pages/DiscipleshipReadingPage";
 import UnsubscribePage from "./pages/UnsubscribePage";
 import AbideSessionPage from "./pages/AbideSessionPage";
+import GospelPage from "./pages/GospelPage";
+import NewBelieverPage from "./pages/NewBelieverPage";
 import { BibleVersionCode } from "./config/bibleVersions";
 
 interface User {
@@ -66,7 +68,7 @@ interface User {
   appUserId?: string;
 }
 
-type AppPage = "home" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading" | "unsubscribe" | "abide";
+type AppPage = "home" | "search" | "daily" | "more" | "privacy" | "terms" | "support" | "videos" | "blog" | "settings" | "friends" | "biblestudies" | "bibletrivia" | "savedverses" | "bookmarks" | "glassdemo" | "devotionals" | "reading-plans" | "reading-plan-detail" | "screenshot-tool" | "plain-meaning" | "instant-application" | "voice-settings" | "topic-search" | "image-scripture" | "discipleship-list" | "discipleship-plan" | "discipleship-reading" | "unsubscribe" | "abide" | "gospel" | "newBeliever";
 
 // Type-safe navigation params for each page
 type AppPageParams = {
@@ -257,7 +259,7 @@ function MainApp() {
   };
 
   const handleNavigate = (page: string, params?: any) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "bookmarks", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading", "abide", "unsubscribe"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "bookmarks", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading", "abide", "unsubscribe", "gospel", "newBeliever"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       
@@ -381,6 +383,10 @@ function MainApp() {
               return <UnsubscribePage />;
             case "abide":
               return <AbideSessionPage onNavigate={handleNavigate} />;
+            case "gospel":
+              return <GospelPage onNavigate={handleNavigate} />;
+            case "newBeliever":
+              return <NewBelieverPage onNavigate={handleNavigate} />;
             default:
               return <HomePage user={user || undefined} onNavigate={handleNavigateToLegal} onStreakUpdate={setStreakDays} language={language} />;
     }
@@ -406,7 +412,7 @@ function MainApp() {
               </main>
 
               {/* Bottom Navigation - Hide on legal pages and friends page */}
-              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-plan", "discipleship-reading", "abide"].includes(currentPage) && (
+              {!["privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "devotionals", "reading-plans", "reading-plan-detail", "plain-meaning", "instant-application", "voice-settings", "image-scripture", "topic-search", "bookmarks", "discipleship-plan", "discipleship-reading", "abide", "gospel", "newBeliever"].includes(currentPage) && (
                 <BottomNavigation 
                   currentPage={currentPage as "home" | "discipleship-list" | "search" | "daily" | "more"} 
                   onPageChange={(page) => setCurrentPage(page as AppPage)} 
