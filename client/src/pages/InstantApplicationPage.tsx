@@ -7,6 +7,8 @@ import { ScriptureReferencePicker, buildReferenceString } from "@/components/Scr
 import { FeatureBoundary } from "@/components/FeatureBoundary";
 import { InstantApplicationProvider, useInstantApplication } from "@/context/InstantApplicationProvider";
 
+import instantApplicationImage from '@assets/stock_images/mountain_peak_summit_3634e7cb.jpg';
+
 interface InstantApplicationPageProps {
   onNavigate: (page: string) => void;
 }
@@ -95,48 +97,57 @@ function InstantApplicationContent({ onNavigate }: InstantApplicationPageProps) 
 
   return (
     <>
-      {/* Navigation Header */}
-      <div className="relative z-50 bg-gradient-to-r from-purple-600 to-pink-600 px-4 py-3 shadow-lg">
-        <div className="max-w-sm mx-auto flex items-center justify-between">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onNavigate('daily')}
-            className="text-white hover:bg-white/20 active:bg-white/30"
-            data-testid="button-back"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back
-          </Button>
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => onNavigate('home')}
-            className="text-white hover:bg-white/20 active:bg-white/30"
-            data-testid="button-home"
-          >
-            <Home className="w-4 h-4 mr-2" />
-            Home
-          </Button>
+      {/* Hero Section with Image */}
+      <div className="relative h-56 overflow-hidden">
+        {/* Hero Image */}
+        <img 
+          src={instantApplicationImage} 
+          alt="Mountain peak at summit" 
+          className="w-full h-full object-cover"
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-purple-950/60"></div>
+        
+        {/* Navigation Buttons */}
+        <div className="absolute top-0 left-0 right-0 z-20 px-4 py-3 ios-safe-top">
+          <div className="max-w-sm mx-auto flex items-center justify-between">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onNavigate('daily')}
+              className="text-white hover:bg-white/20 active:bg-white/30 backdrop-blur-sm bg-black/20 rounded-full"
+              data-testid="button-back"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onNavigate('home')}
+              className="text-white hover:bg-white/20 active:bg-white/30 backdrop-blur-sm bg-black/20 rounded-full"
+              data-testid="button-home"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Home
+            </Button>
+          </div>
         </div>
-      </div>
-
-      {/* Title Section */}
-      <div className="relative px-4 py-6">
-        <div className="max-w-sm mx-auto">
-          
-          <div className="text-center">
+        
+        {/* Title Content */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-6">
+          <div className="max-w-sm mx-auto text-center">
             {/* Glass Icon */}
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-purple-500 to-pink-500 mb-4 shadow-2xl relative overflow-hidden">
+            <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 mb-3 shadow-2xl relative overflow-hidden">
               <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
-              <Target className="w-10 h-10 text-white relative z-10 drop-shadow-lg" />
+              <Target className="w-8 h-8 text-white relative z-10 drop-shadow-lg" />
               <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"></div>
             </div>
             
-            <h1 className="text-4xl font-bold bg-gradient-to-r from-purple-600 via-pink-600 to-purple-600 bg-clip-text text-transparent mb-2 drop-shadow-sm">
+            <h1 className="text-3xl font-bold text-white mb-1 drop-shadow-lg">
               Instant Application
             </h1>
-            <p className="text-base text-gray-600 dark:text-gray-400 font-medium">
+            <p className="text-sm text-white/90 font-medium drop-shadow-md">
               Transform Scripture into Action
             </p>
           </div>
