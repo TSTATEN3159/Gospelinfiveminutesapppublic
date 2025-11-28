@@ -14,8 +14,10 @@ html, body {
     system-ui, -system-ui, "Segoe UI", sans-serif;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
-  /* IMPORTANT: allow native scroll & pinch */
-  touch-action: pan-x pan-y pinch-zoom;
+  /* IMPORTANT: allow vertical scroll & pinch, but BLOCK horizontal movement */
+  touch-action: pan-y pinch-zoom;
+  overflow-x: hidden;
+  overscroll-behavior-x: none;
 }
 
 /* Make touch targets feel more iOS-like */
@@ -33,12 +35,19 @@ body {
   }
 }
 
+/* Lock horizontal scroll at root level */
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
 /* Respect iOS safe areas for full-screen devices */
 .app-root {
   min-height: 100vh;
   padding-top: env(safe-area-inset-top);
   padding-bottom: env(safe-area-inset-bottom);
   background-color: #000;
+  overflow-x: hidden;
 }
 
 /* LIGHT MODE */
