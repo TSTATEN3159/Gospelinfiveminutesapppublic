@@ -257,11 +257,11 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   };
 
   return (
-    <div className="flex flex-col h-[600px] overflow-hidden rounded-lg shadow-lg" data-testid="card-dailyVerse">
+    <div className="flex flex-col max-h-[90vh] overflow-hidden rounded-lg shadow-lg" data-testid="card-dailyVerse">
       {/* Top Image Section */}
       {backgroundImage && (
         <div 
-          className="w-full h-2/5 bg-cover bg-center relative flex-shrink-0"
+          className="w-full h-24 bg-cover bg-center relative flex-shrink-0"
           style={{ backgroundImage: `url(${backgroundImage})` }}
         >
           <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
@@ -270,17 +270,17 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
       
       {/* Bottom Text Section - Navy Background */}
       <div className="flex-1 bg-blue-900 dark:bg-blue-950 overflow-y-auto">
-        <CardContent className="relative z-10 p-6 text-white space-y-5 h-full flex flex-col">
+        <CardContent className="relative z-10 p-4 text-white space-y-2">
         {/* Verse Section */}
-        <div className="text-center space-y-4">
+        <div className="text-center space-y-2">
           <div className="flex items-center justify-center gap-2">
-            <h2 className="text-2xl font-bold">Daily Verse</h2>
-            <Volume2 className="w-4 h-4 text-white/70" />
+            <h2 className="text-lg font-bold">Daily Verse</h2>
+            <Volume2 className="w-3 h-3 text-white/70" />
           </div>
           <p className="text-xs text-white/70">Tap to listen</p>
           
           <blockquote 
-            className="text-lg leading-relaxed font-serif italic cursor-pointer hover:bg-white/10 transition-all rounded-lg p-3 select-none"
+            className="text-sm leading-snug font-serif italic cursor-pointer hover:bg-white/10 transition-all rounded-lg p-2 select-none"
             onClick={() => {
               toggleSpeech(verse.text, (wordIndex: number) => {
                 setHighlightedWordIndex(wordIndex);
@@ -313,49 +313,49 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             "
           </blockquote>
           
-          <cite className="text-sm font-semibold not-italic">
+          <cite className="text-xs font-semibold not-italic">
             - {verse.reference}
           </cite>
         </div>
 
-        <Separator className="bg-white/30" />
+        <Separator className="bg-white/30 my-1" />
 
         {/* Meaning Section */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 justify-center">
-            <Lightbulb className="w-5 h-5 text-yellow-300" />
-            <h3 className="font-bold text-lg">Meaning</h3>
+        <div className="space-y-1">
+          <div className="flex items-center gap-1 justify-center">
+            <Lightbulb className="w-4 h-4 text-yellow-300" />
+            <h3 className="font-bold text-sm">Meaning</h3>
           </div>
-          <p className="text-sm leading-relaxed text-white/90 text-center">
+          <p className="text-xs leading-tight text-white/90 text-center">
             {getMeaning()}
           </p>
         </div>
 
-        <Separator className="bg-white/30" />
+        <Separator className="bg-white/30 my-1" />
 
         {/* Application Section */}
-        <div className="space-y-3">
-          <div className="flex items-center gap-2 justify-center">
-            <Heart className="w-5 h-5 text-red-300" />
-            <h3 className="font-bold text-lg">Application</h3>
+        <div className="space-y-1">
+          <div className="flex items-center gap-1 justify-center">
+            <Heart className="w-4 h-4 text-red-300" />
+            <h3 className="font-bold text-sm">Application</h3>
           </div>
-          <p className="text-sm leading-relaxed text-white/90 text-center">
+          <p className="text-xs leading-tight text-white/90 text-center">
             {getApplication()}
           </p>
         </div>
 
-        <Separator className="bg-white/30" />
+        <Separator className="bg-white/30 my-1" />
 
         {/* Action Buttons */}
-        <div className="flex flex-wrap justify-center gap-3">
+        <div className="flex flex-wrap justify-center gap-1">
           <Button
             variant="outline"
             size="sm"
             onClick={toggleBookmark}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
             data-testid="button-bookmark"
           >
-            {isBookmarked ? <BookmarkCheck className="w-4 h-4 mr-2" /> : <Bookmark className="w-4 h-4 mr-2" />}
+            {isBookmarked ? <BookmarkCheck className="w-3 h-3 mr-1" /> : <Bookmark className="w-3 h-3 mr-1" />}
             {isBookmarked ? "Saved" : "Bookmark"}
           </Button>
 
@@ -364,10 +364,10 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
                 data-testid="button-add-note"
               >
-                <StickyNote className="w-4 h-4 mr-2" />
+                <StickyNote className="w-3 h-3 mr-1" />
                 {hasExistingNote ? "Edit Note" : "Add Note"}
               </Button>
             </DialogTrigger>
@@ -402,10 +402,10 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             variant="outline"
             size="sm"
             onClick={copyToClipboard}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
             data-testid="button-copy"
           >
-            <Copy className="w-4 h-4 mr-2" />
+            <Copy className="w-3 h-3 mr-1" />
             Copy
           </Button>
           
@@ -414,19 +414,19 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
               variant="outline"
               size="sm"
               onClick={handleTTSClick}
-              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+              className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
               data-testid="button-tts-verse"
               aria-label={isSpeaking ? t.stopListening : t.listenToVerse}
             >
               {isSpeaking ? (
                 <>
-                  <VolumeX className="w-4 h-4 mr-2" />
-                  {t.stopListening}
+                  <VolumeX className="w-3 h-3 mr-1" />
+                  Stop
                 </>
               ) : (
                 <>
-                  <Volume2 className="w-4 h-4 mr-2" />
-                  {t.listenToVerse}
+                  <Volume2 className="w-3 h-3 mr-1" />
+                  Listen
                 </>
               )}
             </Button>
@@ -437,10 +437,10 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             size="sm"
             onClick={shareVerse}
             disabled={isSharing}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
             data-testid="button-share"
           >
-            <Share2 className="w-4 h-4 mr-2" />
+            <Share2 className="w-3 h-3 mr-1" />
             Share
           </Button>
           
@@ -448,22 +448,22 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             variant="outline"
             size="sm"
             onClick={() => setIsImageGeneratorOpen(true)}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
             data-testid="button-create-image-daily"
           >
-            <ImageIcon className="w-4 h-4 mr-2" />
-            Create Image
+            <ImageIcon className="w-3 h-3 mr-1" />
+            Image
           </Button>
           
           <Button
             variant="outline"
             size="sm"
             onClick={goToChapter}
-            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+            className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
             data-testid="button-chapter"
           >
-            <Book className="w-4 h-4 mr-2" />
-            Read Chapter
+            <Book className="w-3 h-3 mr-1" />
+            Chapter
           </Button>
           
           <Dialog open={isEmailDialogOpen} onOpenChange={setIsEmailDialogOpen}>
@@ -471,11 +471,11 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
               <Button
                 variant="outline"
                 size="sm"
-                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20"
+                className="bg-white/10 backdrop-blur-sm border-white/20 text-white hover:bg-white/20 text-xs px-2 py-1 h-auto"
                 data-testid="button-daily-reminder-signup"
               >
-                <Mail className="w-4 h-4 mr-2" />
-                Daily Reminders
+                <Mail className="w-3 h-3 mr-1" />
+                Reminders
               </Button>
             </DialogTrigger>
             <DialogContent className="sm:max-w-[425px]">
