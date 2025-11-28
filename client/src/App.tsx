@@ -1,10 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { Toaster } from "@/components/ui/toaster";
 import { queryClient } from "./lib/queryClient";
 import { App as CapacitorApp } from '@capacitor/app';
 import * as LiveUpdates from '@capacitor/live-updates';
+import { useSwipeable } from "react-swipeable";
 
 // Components
 import UserRegistrationModal from "./components/UserRegistrationModal";
@@ -96,6 +97,41 @@ function MainApp() {
   
   // App is English-only (per Apple guidelines - iOS Settings handles language)
   const language = "en";
+
+  // Main tabs for swipe navigation (in order)
+  const MAIN_TABS: Array<"home" | "discipleship-list" | "search" | "daily" | "more"> = [
+    "home", "discipleship-list", "search", "daily", "more"
+  ];
+
+  // Check if current page is a main tab (swipeable)
+  const isMainTab = MAIN_TABS.includes(currentPage as any);
+  const currentTabIndex = MAIN_TABS.indexOf(currentPage as any);
+
+  // Swipe navigation handlers
+  const handleSwipeLeft = useCallback(() => {
+    if (!isMainTab) return;
+    const nextIndex = currentTabIndex + 1;
+    if (nextIndex < MAIN_TABS.length) {
+      setCurrentPage(MAIN_TABS[nextIndex]);
+    }
+  }, [isMainTab, currentTabIndex]);
+
+  const handleSwipeRight = useCallback(() => {
+    if (!isMainTab) return;
+    const prevIndex = currentTabIndex - 1;
+    if (prevIndex >= 0) {
+      setCurrentPage(MAIN_TABS[prevIndex]);
+    }
+  }, [isMainTab, currentTabIndex]);
+
+  const swipeHandlers = useSwipeable({
+    onSwipedLeft: handleSwipeLeft,
+    onSwipedRight: handleSwipeRight,
+    preventScrollOnSwipe: false, // Allow normal scrolling
+    trackMouse: false, // Only track touch on mobile
+    delta: 50, // Minimum swipe distance
+    swipeDuration: 500, // Max time for swipe gesture
+  });
 
   // Check if user is registered on first visit
   useEffect(() => {
@@ -361,8 +397,11 @@ function MainApp() {
               {/* Network Status - Apple-compliant auto-recovery */}
               <NetworkStatus onRetry={() => window.location.reload()} />
               
-              {/* Current Page Content */}
-              <main className="min-h-screen bg-background pb-20">
+              {/* Current Page Content - with swipe navigation on main tabs */}
+              <main 
+                {...(isMainTab ? swipeHandlers : {})}
+                className="min-h-screen bg-background pb-20"
+              >
                 {renderCurrentPage()}
               </main>
 
