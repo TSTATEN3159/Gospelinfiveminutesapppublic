@@ -6,7 +6,7 @@ import { BibleVersionSelector } from "@/components/BibleVersionSelector";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Download, Image as ImageIcon, Home } from "lucide-react";
+import { Download, Image as ImageIcon, Home, ArrowLeft } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
 
@@ -133,25 +133,38 @@ function ScriptureImageContent({
   return (
     <>
       {/* Header */}
-      <div className="px-4 pt-6 pb-4 border-b border-slate-800 flex items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-bold flex items-center gap-2">
-            <ImageIcon className="w-6 h-6 text-amber-400" />
-            Scripture Image
-          </h1>
-          <p className="text-xs text-slate-400">
-            Your verse is auto-fitted and centered. You can fine-tune below.
-          </p>
+      <div className="px-4 pt-6 pb-4 border-b border-slate-800 flex items-center justify-between gap-3 ios-safe-top">
+        <div className="flex items-center gap-3">
+          {onNavigate && (
+            <Button 
+              variant="ghost" 
+              size="icon"
+              onClick={() => onNavigate("more")}
+              data-testid="button-back"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+          )}
+          <div>
+            <h1 className="text-2xl font-bold flex items-center gap-2">
+              <ImageIcon className="w-6 h-6 text-amber-400" />
+              Scripture Image
+            </h1>
+            <p className="text-xs text-slate-400">
+              Your verse is auto-fitted and centered. You can fine-tune below.
+            </p>
+          </div>
         </div>
         {onNavigate && (
           <Button 
-            variant="outline" 
-            size="sm" 
+            variant="ghost" 
+            size="icon" 
             onClick={() => onNavigate("home")}
             data-testid="button-home"
+            aria-label="Go home"
           >
-            <Home className="w-4 h-4 mr-1" />
-            Home
+            <Home className="w-5 h-5" />
           </Button>
         )}
       </div>

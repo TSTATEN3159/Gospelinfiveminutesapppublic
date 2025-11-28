@@ -302,7 +302,7 @@ function MainApp() {
             case "bibletrivia":
               return <BibleTriviaPage onNavigate={handleNavigateToLegal} language={language} />;
             case "savedverses":
-              return <SavedVersesPage onBack={handleBackFromLegal} language={language} />;
+              return <SavedVersesPage onBack={handleBackFromLegal} onNavigate={handleNavigateToLegal} language={language} />;
             case "bookmarks":
               return <BookmarksPage onNavigate={handleNavigateToLegal} />;
             case "glassdemo":
