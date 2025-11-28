@@ -97,6 +97,7 @@ export default function SavedVersesPage({ onBack, onNavigate, language = "en" }:
               variant="ghost"
               size="icon"
               onClick={onBack}
+              className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               data-testid="button-back"
               aria-label="Go back"
             >

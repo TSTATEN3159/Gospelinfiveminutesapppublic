@@ -65,7 +65,7 @@ export default function DiscipleshipPlanDetailPage({ planId, onNavigate }: Disci
             onClick={() => onNavigate("discipleship-list")}
             data-testid="button-back"
             aria-label="Go back"
-            className="hover-elevate"
+            className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>

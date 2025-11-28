@@ -336,7 +336,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-3"
+            className="mr-3 rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             data-testid="button-back-settings"
             aria-label={t.goBackToMorePage}
           >
@@ -355,6 +355,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('home')}
+            className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             data-testid="button-home"
             aria-label="Go home"
           >

@@ -210,7 +210,7 @@ function ReadingPlanDetailPage({ onBack, planType: initialPlanType }: ReadingPla
               onClick={onBack}
               variant="ghost"
               size="icon"
-              className="hover:bg-emerald-200/50 dark:hover:bg-emerald-900/50"
+              className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               aria-label="Go back"
               data-testid="button-back"
             >

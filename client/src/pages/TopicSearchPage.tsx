@@ -37,7 +37,7 @@ function TopicSearchContent({ onNavigate }: TopicSearchPageProps) {
               variant="ghost"
               size="icon"
               onClick={handleBack}
-              className="rounded-full"
+              className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               data-testid="button-back"
               aria-label="Go back"
             >
@@ -51,7 +51,7 @@ function TopicSearchContent({ onNavigate }: TopicSearchPageProps) {
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('home')}
-            className="rounded-full"
+            className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             data-testid="button-home"
             aria-label="Go home"
           >

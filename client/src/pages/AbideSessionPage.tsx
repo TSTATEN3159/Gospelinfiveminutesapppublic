@@ -166,7 +166,7 @@ export default function AbideSessionPage({ onNavigate }: AbideSessionPageProps) 
       <div className="px-4 pt-4 pb-2 flex items-center justify-between ios-safe-top">
         <button
           onClick={goBack}
-          className="flex items-center text-sm text-slate-300"
+          className="flex items-center text-sm px-3 py-2 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
           data-testid="button-abide-back"
         >
           <ArrowLeft className="h-4 w-4 mr-1" />
@@ -177,7 +177,7 @@ export default function AbideSessionPage({ onNavigate }: AbideSessionPageProps) 
         </p>
         <button
           onClick={() => onNavigate?.("home")}
-          className="flex items-center text-sm text-slate-300"
+          className="flex items-center text-sm px-3 py-2 rounded-full bg-white/20 text-white hover:bg-white/30 transition-colors"
           data-testid="button-home"
         >
           <Home className="h-4 w-4" />

@@ -118,6 +118,7 @@ export default function DevotionalsPage({ onBack }: DevotionalsPageProps) {
               variant="ghost"
               size="icon"
               onClick={onBack}
+              className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
               data-testid="button-back"
             >
               <ArrowLeft className="w-5 h-5" />
