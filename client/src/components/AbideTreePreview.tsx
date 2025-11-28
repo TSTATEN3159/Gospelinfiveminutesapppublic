@@ -1,42 +1,22 @@
-import { useState, useEffect } from "react";
 import { Leaf, Flame } from "lucide-react";
 import { tapHaptic } from "@/lib/nativeEnhancements";
 
-interface AbideGrowthCardProps {
-  onStartAbide: () => void;
+interface Props {
+  totalFruit: number;
+  streak: number;
+  todayFruitLabel: string;
+  onTap?: () => void;
 }
 
-const FRUITS_OF_SPIRIT = [
-  "Love", "Joy", "Peace", "Patience", "Kindness",
-  "Goodness", "Faithfulness", "Gentleness", "Self-Control"
-];
-
-export function AbideGrowthCard({ onStartAbide }: AbideGrowthCardProps) {
-  const [todayFruitLabel, setTodayFruitLabel] = useState("Love");
-  const [totalFruit, setTotalFruit] = useState(0);
-  const [streak, setStreak] = useState(0);
-
-  useEffect(() => {
-    const today = new Date();
-    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
-    const fruitIndex = dayOfYear % FRUITS_OF_SPIRIT.length;
-    setTodayFruitLabel(FRUITS_OF_SPIRIT[fruitIndex]);
-
-    const saved = localStorage.getItem("abideGrowthData");
-    if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        setTotalFruit(data.totalFruit || 0);
-        setStreak(data.streak || 0);
-      } catch (e) {
-        console.warn("Could not parse abide growth data");
-      }
-    }
-  }, []);
-
+export default function AbideTreePreview({
+  totalFruit,
+  streak,
+  todayFruitLabel,
+  onTap,
+}: Props) {
   const handleTap = async () => {
     await tapHaptic();
-    onStartAbide();
+    onTap?.();
   };
 
   return (

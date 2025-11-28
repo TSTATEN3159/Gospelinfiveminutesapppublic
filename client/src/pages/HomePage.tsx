@@ -11,7 +11,7 @@ import ProfilePictureUpload from "../components/ProfilePictureUpload";
 import { DailyVerseHeroCard } from "../components/DailyVerseHeroCard";
 import { KingdomParablesTab } from "../components/KingdomParablesTab";
 import { BibleTriviaTile } from "../components/home/BibleTriviaTile";
-import { AbideGrowthCard } from "../components/home/AbideGrowthCard";
+import AbideTreePreview from "../components/AbideTreePreview";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -69,6 +69,9 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
+  // Abide Tree Preview data
+  const [abideData, setAbideData] = useState({ totalFruit: 0, streak: 0, todayFruitLabel: "Love" });
+  
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
   
@@ -95,6 +98,35 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
       });
     }
   }, [ttsInitialized, ttsSupported, toast, t.ttsNotSupported]);
+
+  // Load Abide Tree data
+  useEffect(() => {
+    const FRUITS_OF_SPIRIT = [
+      "Love", "Joy", "Peace", "Patience", "Kindness",
+      "Goodness", "Faithfulness", "Gentleness", "Self-Control"
+    ];
+    
+    const today = new Date();
+    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+    const fruitIndex = dayOfYear % FRUITS_OF_SPIRIT.length;
+    const todayFruit = FRUITS_OF_SPIRIT[fruitIndex];
+    
+    const saved = localStorage.getItem("abideGrowthData");
+    if (saved) {
+      try {
+        const data = JSON.parse(saved);
+        setAbideData({
+          totalFruit: data.totalFruit || 0,
+          streak: data.streak || 0,
+          todayFruitLabel: todayFruit
+        });
+      } catch (e) {
+        setAbideData({ totalFruit: 0, streak: 0, todayFruitLabel: todayFruit });
+      }
+    } else {
+      setAbideData({ totalFruit: 0, streak: 0, todayFruitLabel: todayFruit });
+    }
+  }, []);
 
   useEffect(() => {
     const loadDailyContent = async () => {
@@ -259,8 +291,11 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         />
 
         {/* Abide - My Growth Today Section */}
-        <AbideGrowthCard 
-          onStartAbide={() => onNavigate?.('discipleship-list')}
+        <AbideTreePreview
+          totalFruit={abideData.totalFruit}
+          streak={abideData.streak}
+          todayFruitLabel={abideData.todayFruitLabel}
+          onTap={() => onNavigate?.('discipleship-list')}
         />
 
         {/* Bible Trivia Section - World-Class Design */}
