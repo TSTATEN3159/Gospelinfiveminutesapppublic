@@ -115,6 +115,17 @@ function MainApp() {
     if (hash && ["glassdemo"].includes(hash)) {
       setCurrentPage(hash as AppPage);
     }
+
+    // Listen for custom navigation events from self-contained components
+    const handleCustomNavigate = (e: CustomEvent<{ page: string; params?: any }>) => {
+      const { page, params } = e.detail;
+      const validPages = ["home", "abide", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "bookmarks", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading", "unsubscribe"];
+      if (validPages.includes(page)) {
+        setCurrentPage(page as AppPage);
+      }
+    };
+    window.addEventListener("app-navigate", handleCustomNavigate as EventListener);
+    return () => window.removeEventListener("app-navigate", handleCustomNavigate as EventListener);
   }, []);
 
   // Initialize Live Updates for OTA updates
@@ -210,7 +221,7 @@ function MainApp() {
   };
 
   const handleNavigate = (page: string, params?: any) => {
-    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "bookmarks", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading"];
+    const validPages = ["home", "privacy", "terms", "support", "videos", "blog", "settings", "friends", "biblestudies", "bibletrivia", "savedverses", "bookmarks", "glassdemo", "devotionals", "daily", "reading-plans", "reading-plan-detail", "more", "search", "plain-meaning", "instant-application", "voice-settings", "topic-search", "image-scripture", "discipleship-list", "discipleship-plan", "discipleship-reading", "abide", "unsubscribe"];
     if (validPages.includes(page)) {
       setCurrentPage(page as AppPage);
       

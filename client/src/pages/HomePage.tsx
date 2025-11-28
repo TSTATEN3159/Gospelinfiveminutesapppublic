@@ -261,7 +261,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         />
 
         {/* Abide - My Growth Today Section */}
-        <AbideTreePreview onTap={() => onNavigate?.('abide')} />
+        <AbideTreePreview />
 
         {/* Bible Trivia Section - World-Class Design */}
         <BibleTriviaTile 

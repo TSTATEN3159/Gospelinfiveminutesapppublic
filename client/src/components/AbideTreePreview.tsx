@@ -3,11 +3,7 @@ import { Leaf, Flame } from "lucide-react";
 import { tapHaptic } from "@/lib/nativeEnhancements";
 import { getAbideState } from "@/lib/abideStorage";
 
-interface Props {
-  onTap?: () => void;
-}
-
-export default function AbideTreePreview({ onTap }: Props) {
+export default function AbideTreePreview() {
   const [totalFruit, setTotalFruit] = useState(0);
   const [streak, setStreak] = useState(0);
   const [todayFruitLabel, setTodayFruitLabel] = useState("Love");
@@ -31,7 +27,7 @@ export default function AbideTreePreview({ onTap }: Props) {
 
   const handleTap = async () => {
     await tapHaptic();
-    onTap?.();
+    window.dispatchEvent(new CustomEvent("app-navigate", { detail: { page: "abide" } }));
   };
 
   const maxSlots = 9;
