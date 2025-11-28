@@ -170,7 +170,7 @@ function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPagePro
             }}
           >
             <Share className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>Share The Gospel in 5 Minutes</span>
+            <span>Share</span>
           </button>
         </div>
       </div>
