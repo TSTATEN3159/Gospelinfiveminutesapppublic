@@ -271,23 +271,28 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           onStart={() => onNavigate?.('bibletrivia')}
         />
 
-        {/* Bible Study Section */}
+        {/* Classical Bible Studies Section */}
         <div className="bg-white dark:bg-gray-800 rounded-2xl overflow-hidden shadow-lg border-2 border-gray-200 dark:border-gray-700">
           <div className="relative h-40">
             <img 
               src={forestPathImage}
-              alt="Bible Studies"
+              alt="Classical Bible Studies"
               className="w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
           </div>
           <div className="p-4">
             <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-2">
-              Bible Studies
+              Classical Bible Studies
             </h2>
             <p className="text-gray-600 dark:text-gray-300 text-sm mb-3">
-              Explore comprehensive Bible studies with guided reflections and spiritual growth.
+              Explore 30 comprehensive Bible studies from classic Christian authors with guided reflections and spiritual growth.
             </p>
+            <div className="flex items-center gap-3 mb-3">
+              <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100">
+                30 Available
+              </Badge>
+            </div>
             <div className="flex justify-between items-center">
               <Button 
                 variant="ghost" 
