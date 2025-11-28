@@ -13,7 +13,7 @@ import {
 } from "@/services/triviaService";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader2, ArrowLeft } from "lucide-react";
+import { Loader2, ArrowLeft, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
 
@@ -353,26 +353,40 @@ function BibleTriviaPage({ onNavigate, language = "en" }: BibleTriviaPageProps) 
     <FeatureBoundary featureName="Bible Trivia">
       <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 dark:from-slate-900 dark:via-slate-800 dark:to-slate-900">
         <div className="max-w-7xl mx-auto py-6 px-4">
-          {/* Header with back button */}
-          <div className="mb-6 flex items-center gap-4">
+          {/* Header with back and home buttons */}
+          <div className="mb-6 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-4">
+              {onNavigate && (
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  onClick={() => onNavigate("more")}
+                  data-testid="button-back"
+                  aria-label="Go back"
+                >
+                  <ArrowLeft className="h-5 w-5" />
+                </Button>
+              )}
+              <div>
+                <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
+                  Bible Trivia
+                </h1>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Test your biblical knowledge across multiple game modes
+                </p>
+              </div>
+            </div>
             {onNavigate && (
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={() => onNavigate("home")}
-                data-testid="button-back"
+                data-testid="button-home"
+                aria-label="Go home"
               >
-                <ArrowLeft className="h-5 w-5" />
+                <Home className="h-5 w-5" />
               </Button>
             )}
-            <div>
-              <h1 className="text-3xl font-bold text-slate-900 dark:text-white">
-                Bible Trivia
-              </h1>
-              <p className="text-sm text-slate-600 dark:text-slate-400">
-                Test your biblical knowledge across multiple game modes
-              </p>
-            </div>
           </div>
 
           <div className="grid gap-6 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)]">

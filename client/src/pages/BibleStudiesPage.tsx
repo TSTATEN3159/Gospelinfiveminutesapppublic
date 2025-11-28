@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft } from "lucide-react";
+import { ArrowLeft, Search, Clock, Users, BookOpen, Star, ChevronRight, Play, ChevronLeft, Home } from "lucide-react";
 import { useTranslations } from "@/lib/translations";
 
 // Stock images for Bible studies
@@ -1903,14 +1903,14 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white dark:from-background dark:to-muted/20">
       {/* Header */}
       <div className="bg-white dark:bg-background px-4 py-6 border-b border-gray-100 dark:border-border ios-safe-top shadow-sm">
-        <div className="flex items-center mb-4">
+        <div className="flex items-center justify-between mb-4">
           <Button
             variant="ghost"
             size="icon"
-            onClick={() => onNavigate?.('home')}
-            className="mr-3 h-11 w-11 bg-amber-100/80 dark:bg-amber-900/50 hover:bg-amber-200 dark:hover:bg-amber-800 shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+            onClick={() => onNavigate?.('more')}
+            className="h-11 w-11 bg-amber-100/80 dark:bg-amber-900/50 hover:bg-amber-200 dark:hover:bg-amber-800 shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
             data-testid="button-back-bible-studies"
-            aria-label="Go back to Home page"
+            aria-label="Go back"
           >
             <ArrowLeft className="w-5 h-5 text-amber-700 dark:text-amber-300" />
           </Button>
@@ -1922,6 +1922,16 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mt-1">{t.bibleStudiesSubtitle}</p>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onNavigate?.('home')}
+            className="h-11 w-11 bg-amber-100/80 dark:bg-amber-900/50 hover:bg-amber-200 dark:hover:bg-amber-800 shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+            data-testid="button-home"
+            aria-label="Go home"
+          >
+            <Home className="w-5 h-5 text-amber-700 dark:text-amber-300" />
+          </Button>
         </div>
       </div>
 

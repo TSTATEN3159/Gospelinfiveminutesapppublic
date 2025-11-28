@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
+import { CheckCircle2, ArrowRight, ArrowLeft, Home } from "lucide-react";
 import { tapHaptic, successHaptic } from "@/lib/nativeEnhancements";
 import {
   AbideFruitType,
@@ -163,7 +163,7 @@ export default function AbideSessionPage({ onNavigate }: AbideSessionPageProps) 
       <AbideOnboarding />
 
       {/* Header */}
-      <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+      <div className="px-4 pt-4 pb-2 flex items-center justify-between ios-safe-top">
         <button
           onClick={goBack}
           className="flex items-center text-sm text-slate-300"
@@ -175,7 +175,13 @@ export default function AbideSessionPage({ onNavigate }: AbideSessionPageProps) 
         <p className="text-xs tracking-[0.16em] uppercase text-emerald-300/80">
           Abide · Step {stepIndex + 1} of {STEPS.length}
         </p>
-        <div className="w-8" />
+        <button
+          onClick={() => onNavigate?.("home")}
+          className="flex items-center text-sm text-slate-300"
+          data-testid="button-home"
+        >
+          <Home className="h-4 w-4" />
+        </button>
       </div>
 
       {/* Step progress bar */}
