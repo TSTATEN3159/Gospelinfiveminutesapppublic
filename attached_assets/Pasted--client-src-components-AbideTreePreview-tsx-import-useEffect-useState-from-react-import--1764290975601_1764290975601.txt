@@ -1,9 +1,12 @@
+// client/src/components/AbideTreePreview.tsx
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Leaf, Flame } from "lucide-react";
 import { tapHaptic } from "@/lib/nativeEnhancements";
 import { getAbideState } from "@/lib/abideStorage";
 
 export default function AbideTreePreview() {
+  const navigate = useNavigate();
   const [state, setState] = useState(getAbideState());
   const [justGrew, setJustGrew] = useState(false);
 
@@ -20,7 +23,7 @@ export default function AbideTreePreview() {
 
   const handleTap = async () => {
     await tapHaptic();
-    window.dispatchEvent(new CustomEvent("app-navigate", { detail: { page: "abide" } }));
+    navigate("/abide");
   };
 
   const fruits = state.fruitCounts;
@@ -40,7 +43,6 @@ export default function AbideTreePreview() {
         text-left 
         transition-transform active:scale-[0.98]
       "
-      data-testid="card-abide-growth"
     >
       {/* Background Light & Glow */}
       <div className="absolute inset-0">
