@@ -90,3 +90,20 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - **Type safety**: All numeric fields validated before use to prevent runtime errors
   - **Data integrity**: Removed unsafe shallow merge helper that could wipe nested objects (mastery, powerUps)
   - Trivia stats fully functional: daily streaks, crowns, Bible mastery scores, title progression, and power-ups
+
+### Friend Invitation System & Faith Videos (November 28, 2025)
+- **Friend Invitation System**: Manual invitation flow with token-based tracking
+  - New "Invite" tab in Friends page for sending invitations
+  - Invitation form with name, email, and optional personal message
+  - Token-based invitation tracking with status (pending/accepted/expired/cancelled)
+  - Notification banner when invited friends join the app
+  - Cancel pending invitations functionality
+  - Database tables: `friendInvitations`, `readingActivity`, `userPrivacySettings`
+- **Reading Activity Sharing**: Privacy-controlled activity tracking
+  - Track reading activity (verses, plans, time spent)
+  - Privacy settings for sharing activity with friends
+  - Opt-in model for sharing (private by default)
+- **Faith Videos Expansion**: Expanded from 5 to 15 themes per category
+  - Categories: Sermon, Gospel Tidbits, Christian Advice
+  - 30+ total videos with themes: Love, Hope, Peace, Joy, Faith, Forgiveness, Prayer, Salvation, Wisdom, Courage, Mercy, Redemption, Compassion, Patience, Gratitude, Healing, Growth, Service
+  - Backend video fetch limit increased to 30
