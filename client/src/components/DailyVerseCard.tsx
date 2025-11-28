@@ -257,16 +257,20 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
   };
 
   return (
-    <Card className="relative overflow-hidden shadow-lg" data-testid="card-dailyVerse">
+    <div className="flex flex-col h-[600px] overflow-hidden rounded-lg shadow-lg" data-testid="card-dailyVerse">
+      {/* Top Image Section */}
       {backgroundImage && (
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-80"
+          className="w-full h-2/5 bg-cover bg-center relative flex-shrink-0"
           style={{ backgroundImage: `url(${backgroundImage})` }}
-        />
+        >
+          <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/40" />
+        </div>
       )}
-      <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/30" />
       
-      <CardContent className="relative z-10 p-6 text-white space-y-6">
+      {/* Bottom Text Section - Navy Background */}
+      <div className="flex-1 bg-blue-900 dark:bg-blue-950 overflow-y-auto">
+        <CardContent className="relative z-10 p-6 text-white space-y-5 h-full flex flex-col">
         {/* Verse Section */}
         <div className="text-center space-y-4">
           <div className="flex items-center justify-center gap-2">
@@ -532,8 +536,9 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
             </DialogContent>
           </Dialog>
         </div>
-      </CardContent>
-      
+        </CardContent>
+      </div>
+
       {/* Scripture Image Generator */}
       <ScriptureImageGenerator
         open={isImageGeneratorOpen}
@@ -541,6 +546,6 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
         initialVerse={verse.text}
         initialReference={verse.reference}
       />
-    </Card>
+    </div>
   );
 }
