@@ -179,10 +179,10 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
             <Instagram className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Follow</span>
           </a>
-          <Button
-            size="sm"
-            className="flex-1 gap-2 text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
+          <Button 
+            className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
             data-testid="button-share-app"
+            aria-label="Share The Gospel in 5 Minutes with friends"
             onClick={async () => {
               const result = await safeShare({
                 title: 'The Gospel in 5 Minutes',
