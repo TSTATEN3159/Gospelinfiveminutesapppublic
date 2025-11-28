@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft, Contact, Download, Share, BookOpen, Smartphone, Shield, MessageCircle, Sparkles, Globe, Mail, Clock, CheckCircle, XCircle, Bell, Send } from "lucide-react";
+import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft, Home, Contact, Download, Share, BookOpen, Smartphone, Shield, MessageCircle, Sparkles, Globe, Mail, Clock, CheckCircle, XCircle, Bell, Send } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { apiUrl } from "@/lib/api-config";
@@ -527,18 +527,18 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
       <div className="bg-white dark:bg-background px-4 py-6 border-b border-gray-100 dark:border-border ios-safe-top shadow-sm">
-        <div className="flex items-center mb-4">
+        <div className="flex items-center justify-between mb-4">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+            className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             data-testid="button-back-friends"
             aria-label="Go back to More page"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <div className="flex-1 text-center pr-11">
+          <div className="flex-1 text-center">
             <h1 className="text-2xl font-bold text-amber-800 dark:text-amber-300" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive'
             }}>
@@ -546,6 +546,16 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
             </h1>
             <p className="text-gray-600 dark:text-gray-300 mt-1">Connect, share, and grow together in faith</p>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onNavigate?.('home')}
+            className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+            data-testid="button-home"
+            aria-label="Go home"
+          >
+            <Home className="w-5 h-5" />
+          </Button>
         </div>
       </div>
 

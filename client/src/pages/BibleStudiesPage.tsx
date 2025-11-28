@@ -1908,11 +1908,11 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="h-11 w-11 bg-amber-100/80 dark:bg-amber-900/50 hover:bg-amber-200 dark:hover:bg-amber-800 shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+            className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             data-testid="button-back-bible-studies"
             aria-label="Go back"
           >
-            <ArrowLeft className="w-5 h-5 text-amber-700 dark:text-amber-300" />
+            <ArrowLeft className="w-5 h-5" />
           </Button>
           <div className="flex-1 text-center">
             <h1 className="text-2xl font-bold text-amber-800 dark:text-amber-300" style={{ 
@@ -1926,11 +1926,11 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('home')}
-            className="h-11 w-11 bg-amber-100/80 dark:bg-amber-900/50 hover:bg-amber-200 dark:hover:bg-amber-800 shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
+            className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
             data-testid="button-home"
             aria-label="Go home"
           >
-            <Home className="w-5 h-5 text-amber-700 dark:text-amber-300" />
+            <Home className="w-5 h-5" />
           </Button>
         </div>
       </div>
@@ -2249,7 +2249,7 @@ export default function BibleStudiesPage({ currentUserId, language = "en", onNav
                         size="icon"
                         onClick={() => setShowStudyLesson(false)}
                         data-testid="button-close-lesson"
-                        className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-md hover:shadow-lg transition-all duration-300 rounded-full"
+                        className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
                         aria-label="Close lesson"
                       >
                         <ArrowLeft className="w-5 h-5" />
