@@ -14,8 +14,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { FolderPlus, Trash2, Edit2, BookOpen } from "lucide-react";
+import { FolderPlus, Trash2, Edit2, BookOpen, ArrowLeft, Home, Bookmark } from "lucide-react";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
+
+import bookmarksImage from '@assets/stock_images/bible_and_journal_wi_4f18af22.jpg';
 
 interface BookmarksPageProps {
   onNavigate?: (page: string, searchQuery?: string) => void;
@@ -114,13 +116,64 @@ function BookmarksPage({ onNavigate }: BookmarksPageProps) {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white dark:from-slate-900 dark:to-slate-950 pb-20">
-      <div className="px-4 pt-6 pb-4 border-b border-slate-200 dark:border-slate-800 bg-white/80 dark:bg-slate-900/80 backdrop-blur">
-        <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-50">
-          Bookmarks & Notes
-        </h1>
-        <p className="text-sm text-slate-500 dark:text-slate-400">
-          Save Scriptures in folders and add personal notes for meditation and teaching.
-        </p>
+      {/* Hero Section with Image */}
+      <div className="relative h-48 overflow-hidden">
+        {/* Hero Image */}
+        <img 
+          src={bookmarksImage} 
+          alt="Bible and journal for notes" 
+          className="w-full h-full object-cover"
+        />
+        {/* Dark overlay for readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/20 to-amber-950/60"></div>
+        
+        {/* Navigation Buttons */}
+        <div className="absolute top-0 left-0 right-0 z-20 px-4 py-3 ios-safe-top">
+          <div className="max-w-4xl mx-auto flex items-center justify-between">
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onNavigate?.('daily')}
+              className="text-white hover:bg-white/20 active:bg-white/30 backdrop-blur-sm bg-black/20 rounded-full"
+              data-testid="button-back"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Back
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => onNavigate?.('home')}
+              className="text-white hover:bg-white/20 active:bg-white/30 backdrop-blur-sm bg-black/20 rounded-full"
+              data-testid="button-home"
+            >
+              <Home className="w-4 h-4 mr-2" />
+              Home
+            </Button>
+          </div>
+        </div>
+        
+        {/* Title Content */}
+        <div className="absolute bottom-0 left-0 right-0 z-10 px-4 pb-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-3">
+              {/* Glass Icon */}
+              <div className="inline-flex items-center justify-center w-12 h-12 rounded-xl bg-gradient-to-br from-amber-500 to-orange-500 shadow-2xl relative overflow-hidden">
+                <div className="absolute inset-0 bg-white/20 backdrop-blur-sm"></div>
+                <Bookmark className="w-6 h-6 text-white relative z-10 drop-shadow-lg" />
+                <div className="absolute top-0 left-0 right-0 h-1/2 bg-gradient-to-b from-white/40 to-transparent"></div>
+              </div>
+              <div>
+                <h1 className="text-2xl font-bold text-white drop-shadow-lg">
+                  Bookmarks & Notes
+                </h1>
+                <p className="text-sm text-white/90 font-medium drop-shadow-md">
+                  Save Scriptures and add personal reflections
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="p-4 max-w-4xl mx-auto grid md:grid-cols-[240px,1fr] gap-4">
