@@ -7,7 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft, Contact, Download, Share, BookOpen, Smartphone, Shield, MessageCircle, Sparkles, Globe } from "lucide-react";
+import { Search, UserPlus, Users, Heart, UserCheck, UserX, Trash2, ArrowLeft, Contact, Download, Share, BookOpen, Smartphone, Shield, MessageCircle, Sparkles, Globe, Mail, Clock, CheckCircle, XCircle, Bell, Send } from "lucide-react";
 import { useQuery, useMutation } from "@tanstack/react-query";
 import { apiRequest, queryClient } from "@/lib/queryClient";
 import { apiUrl } from "@/lib/api-config";
@@ -64,6 +64,9 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   const [selectedFriend, setSelectedFriend] = useState<AppUser | null>(null);
   const [shareDialogOpen, setShareDialogOpen] = useState(false);
   const [activeTab, setActiveTab] = useState("search");
+  const [inviteName, setInviteName] = useState("");
+  const [inviteEmail, setInviteEmail] = useState("");
+  const [inviteMessage, setInviteMessage] = useState("");
   const { toast } = useToast();
   const t = useTranslations(language);
 
@@ -103,6 +106,80 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
   const { data: receivedVersesData, isLoading: isLoadingVerses } = useQuery({
     queryKey: ['/api/verses/received', currentUserId],
     queryFn: () => fetch(apiUrl(`/api/verses/received/${currentUserId}`)).then(r => r.json())
+  });
+
+  // Get friend invitations sent by user
+  const { data: invitationsData, isLoading: isLoadingInvitations } = useQuery({
+    queryKey: ['/api/friends/invitations', currentUserId],
+    queryFn: () => fetch(apiUrl(`/api/friends/invitations/${currentUserId}`)).then(r => r.json())
+  });
+
+  // Get friends who joined via invitation (for notifications)
+  const { data: joinedFriendsData } = useQuery({
+    queryKey: ['/api/friends/joined', currentUserId],
+    queryFn: () => fetch(apiUrl(`/api/friends/joined/${currentUserId}`)).then(r => r.json())
+  });
+
+  // Send friend invitation mutation
+  const sendInvitationMutation = useMutation({
+    mutationFn: async ({ name, email, message }: { name: string; email: string; message?: string }) => {
+      const res = await apiRequest('POST', '/api/friends/invite', {
+        inviterUserId: currentUserId,
+        inviteeName: name,
+        inviteeEmail: email,
+        message
+      });
+      const result = await res.json();
+      if (!result.success) {
+        throw new Error(result.error || 'Failed to send invitation');
+      }
+      return result;
+    },
+    onSuccess: (data) => {
+      toast({
+        title: "Invitation Sent!",
+        description: data.message || `Your invitation has been sent.`,
+      });
+      setInviteName("");
+      setInviteEmail("");
+      setInviteMessage("");
+      queryClient.invalidateQueries({ queryKey: ['/api/friends/invitations', currentUserId] });
+    },
+    onError: (error: any) => {
+      toast({
+        title: "Could not send invitation",
+        description: error?.message || 'Please try again.',
+        variant: "destructive",
+      });
+    }
+  });
+
+  // Cancel invitation mutation
+  const cancelInvitationMutation = useMutation({
+    mutationFn: async (invitationId: string) => {
+      const res = await apiRequest('DELETE', `/api/friends/invite/${invitationId}`, {
+        userId: currentUserId
+      });
+      return res.json();
+    },
+    onSuccess: () => {
+      toast({
+        title: "Invitation Cancelled",
+        description: "The invitation has been cancelled.",
+      });
+      queryClient.invalidateQueries({ queryKey: ['/api/friends/invitations', currentUserId] });
+    }
+  });
+
+  // Mark invitation as notified
+  const markNotifiedMutation = useMutation({
+    mutationFn: async (invitationId: string) => {
+      const res = await apiRequest('POST', `/api/friends/invite/${invitationId}/mark-notified`, {});
+      return res.json();
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['/api/friends/joined', currentUserId] });
+    }
   });
 
   // Send friend request mutation
@@ -620,7 +697,11 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
 
       <div className="px-4 py-6 space-y-6 bg-white">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-4xl mx-auto">
-          <TabsList className="grid w-full grid-cols-5 bg-white dark:bg-card shadow-sm border dark:border-border">
+          <TabsList className="grid w-full grid-cols-6 bg-white dark:bg-card shadow-sm border dark:border-border">
+            <TabsTrigger value="invite" data-testid="tab-invite-friends" className="data-[state=active]:bg-pink-50 dark:data-[state=active]:bg-pink-900/20 data-[state=active]:text-pink-700 dark:data-[state=active]:text-pink-300">
+              <Mail className="w-4 h-4 mr-1" />
+              Invite
+            </TabsTrigger>
             <TabsTrigger value="search" data-testid="tab-search-friends" className="data-[state=active]:bg-blue-50 dark:data-[state=active]:bg-blue-900/20 data-[state=active]:text-blue-700 dark:data-[state=active]:text-blue-300">
               <Search className="w-4 h-4 mr-1" />
               Search
@@ -642,6 +723,169 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
               Verses
             </TabsTrigger>
           </TabsList>
+
+          {/* Invite Friends Tab */}
+          <TabsContent value="invite" className="space-y-6">
+            {/* New Friend Notification */}
+            {joinedFriendsData?.newJoins > 0 && (
+              <Alert className="bg-green-50 border-green-200">
+                <Bell className="w-4 h-4 text-green-600" />
+                <AlertDescription className="text-green-800">
+                  <span className="font-semibold">{joinedFriendsData.newJoins} friend{joinedFriendsData.newJoins > 1 ? 's' : ''} you invited just joined!</span>
+                  <div className="mt-2 space-y-1">
+                    {joinedFriendsData.joinedFriends?.filter((f: any) => !f.notified).map((friend: any) => (
+                      <div key={friend.invitationId} className="flex items-center justify-between bg-white p-2 rounded-lg">
+                        <span>{friend.inviteeName} is now on the app!</span>
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          onClick={() => markNotifiedMutation.mutate(friend.invitationId)}
+                          data-testid={`button-dismiss-notification-${friend.invitationId}`}
+                        >
+                          Dismiss
+                        </Button>
+                      </div>
+                    ))}
+                  </div>
+                </AlertDescription>
+              </Alert>
+            )}
+
+            <Card className="shadow-lg border bg-card">
+              <CardHeader className="text-center">
+                <div className="bg-gradient-to-br from-pink-100 to-rose-100 dark:from-pink-900/40 dark:to-rose-900/40 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-md">
+                  <Mail className="w-8 h-8 text-pink-600 dark:text-pink-400" />
+                </div>
+                <CardTitle className="text-xl font-bold text-foreground">Invite a Friend</CardTitle>
+                <CardDescription className="text-muted-foreground">
+                  Send an invitation to someone you'd like to connect with in the app
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-1">Friend's First Name</label>
+                  <Input
+                    placeholder="Enter their first name..."
+                    value={inviteName}
+                    onChange={(e) => setInviteName(e.target.value)}
+                    className="border-gray-300 focus:border-pink-500"
+                    data-testid="input-invite-name"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-1">Friend's Email</label>
+                  <Input
+                    type="email"
+                    placeholder="Enter their email address..."
+                    value={inviteEmail}
+                    onChange={(e) => setInviteEmail(e.target.value)}
+                    className="border-gray-300 focus:border-pink-500"
+                    data-testid="input-invite-email"
+                  />
+                </div>
+                <div>
+                  <label className="block text-sm font-medium text-foreground mb-1">Personal Message (optional)</label>
+                  <Input
+                    placeholder="Add a personal note..."
+                    value={inviteMessage}
+                    onChange={(e) => setInviteMessage(e.target.value)}
+                    className="border-gray-300 focus:border-pink-500"
+                    data-testid="input-invite-message"
+                  />
+                </div>
+                <Button
+                  className="w-full bg-gradient-to-r from-pink-500 to-rose-500 text-white"
+                  disabled={!inviteName || !inviteEmail || sendInvitationMutation.isPending}
+                  onClick={() => sendInvitationMutation.mutate({ name: inviteName, email: inviteEmail, message: inviteMessage || undefined })}
+                  data-testid="button-send-invitation"
+                >
+                  {sendInvitationMutation.isPending ? (
+                    <>Sending...</>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4 mr-2" />
+                      Send Invitation
+                    </>
+                  )}
+                </Button>
+              </CardContent>
+            </Card>
+
+            {/* Sent Invitations List */}
+            <Card className="shadow-lg border bg-card">
+              <CardHeader>
+                <CardTitle className="text-lg font-bold text-foreground flex items-center">
+                  <Clock className="w-5 h-5 mr-2 text-muted-foreground" />
+                  Your Invitations
+                </CardTitle>
+                <CardDescription>Track the status of invitations you've sent</CardDescription>
+              </CardHeader>
+              <CardContent>
+                {isLoadingInvitations ? (
+                  <p className="text-center text-muted-foreground py-4">Loading invitations...</p>
+                ) : invitationsData?.invitations?.length === 0 ? (
+                  <p className="text-center text-muted-foreground py-4">You haven't sent any invitations yet</p>
+                ) : (
+                  <div className="space-y-3">
+                    {invitationsData?.invitations?.map((invitation: any) => (
+                      <div key={invitation.id} className="flex items-center justify-between p-3 bg-muted/30 rounded-lg">
+                        <div className="flex items-center gap-3">
+                          <Avatar className="w-10 h-10">
+                            <AvatarFallback className={
+                              invitation.status === 'accepted' ? 'bg-green-100 text-green-600' :
+                              invitation.status === 'pending' ? 'bg-blue-100 text-blue-600' :
+                              'bg-gray-100 text-gray-600'
+                            }>
+                              {invitation.inviteeName.substring(0, 2).toUpperCase()}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div>
+                            <h4 className="font-medium text-foreground">{invitation.inviteeName}</h4>
+                            <p className="text-sm text-muted-foreground">{invitation.inviteeEmail}</p>
+                          </div>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          {invitation.status === 'pending' && (
+                            <>
+                              <Badge variant="secondary" className="bg-blue-100 text-blue-700">
+                                <Clock className="w-3 h-3 mr-1" />
+                                Pending
+                              </Badge>
+                              <Button
+                                size="sm"
+                                variant="ghost"
+                                onClick={() => cancelInvitationMutation.mutate(invitation.id)}
+                                disabled={cancelInvitationMutation.isPending}
+                                data-testid={`button-cancel-invite-${invitation.id}`}
+                              >
+                                <XCircle className="w-4 h-4 text-gray-500" />
+                              </Button>
+                            </>
+                          )}
+                          {invitation.status === 'accepted' && (
+                            <Badge variant="secondary" className="bg-green-100 text-green-700">
+                              <CheckCircle className="w-3 h-3 mr-1" />
+                              Joined!
+                            </Badge>
+                          )}
+                          {invitation.status === 'expired' && (
+                            <Badge variant="secondary" className="bg-gray-100 text-gray-600">
+                              Expired
+                            </Badge>
+                          )}
+                          {invitation.status === 'cancelled' && (
+                            <Badge variant="secondary" className="bg-gray-100 text-gray-600">
+                              Cancelled
+                            </Badge>
+                          )}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          </TabsContent>
 
           {/* Search Friends Tab */}
           <TabsContent value="search" className="space-y-6">

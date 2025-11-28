@@ -4,7 +4,7 @@ import { z } from "zod";
 import OpenAI from "openai";
 import Stripe from "stripe";
 import { storage } from "./storage";
-import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema, triviaStats, appUsers, subscribers } from "@shared/schema";
+import { insertSubscriberSchema, insertAppUserSchema, insertFriendshipSchema, insertReadingProgressSchema, triviaStats, appUsers, subscribers, friendInvitations, readingActivity, userPrivacySettings, insertFriendInvitationSchema, insertReadingActivitySchema, insertUserPrivacySettingsSchema } from "@shared/schema";
 import { sendBlogUpdateEmails } from "./email-service";
 import { appMonitor } from "./services/appMonitor";
 import { db } from "./db";
@@ -3129,6 +3129,495 @@ Return only the application paragraph.
       res.status(500).json({
         success: false,
         error: "Failed to remove friend."
+      });
+    }
+  });
+
+  // =========================================================================
+  // FRIEND INVITATION SYSTEM - Manual email-based invitations
+  // =========================================================================
+  
+  // Send a friend invitation by email
+  app.post("/api/friends/invite", async (req, res) => {
+    try {
+      const { inviterUserId, inviteeName, inviteeEmail, message } = z.object({
+        inviterUserId: z.string().min(1),
+        inviteeName: z.string().min(1).max(100),
+        inviteeEmail: z.string().email(),
+        message: z.string().max(500).optional()
+      }).parse(req.body);
+      
+      console.log("[API] POST /api/friends/invite", { inviterUserId, inviteeName, inviteeEmail });
+      
+      // Check if inviter exists
+      const inviter = await storage.getAppUser(inviterUserId);
+      if (!inviter) {
+        return res.status(404).json({
+          success: false,
+          error: "Inviter user not found."
+        });
+      }
+      
+      // Check if already invited (pending invitation)
+      const existingInvites = await db
+        .select()
+        .from(friendInvitations)
+        .where(sql`${friendInvitations.inviterUserId} = ${inviterUserId} AND ${friendInvitations.inviteeEmail} = ${inviteeEmail} AND ${friendInvitations.status} = 'pending'`);
+      
+      if (existingInvites.length > 0) {
+        return res.status(400).json({
+          success: false,
+          error: "You have already sent an invitation to this email."
+        });
+      }
+      
+      // Check if they're already friends (invitee might already have an account)
+      const existingUser = await db
+        .select()
+        .from(appUsers)
+        .where(eq(appUsers.email, inviteeEmail))
+        .limit(1);
+      
+      if (existingUser.length > 0) {
+        const existingFriendship = await storage.checkFriendship(inviterUserId, existingUser[0].id);
+        if (existingFriendship) {
+          return res.status(400).json({
+            success: false,
+            error: "You are already friends with this person."
+          });
+        }
+      }
+      
+      // Generate unique invite token
+      const inviteToken = `inv_${Date.now()}_${Math.random().toString(36).substring(2, 15)}`;
+      
+      // Create the invitation
+      const [invitation] = await db.insert(friendInvitations).values({
+        inviterUserId,
+        inviteeName,
+        inviteeEmail: inviteeEmail.toLowerCase(),
+        message: message || null,
+        inviteToken,
+        status: 'pending'
+      }).returning();
+      
+      // TODO: Send invitation email via SendGrid (optional enhancement)
+      // For now, just create the invitation record
+      
+      res.json({
+        success: true,
+        invitation: {
+          id: invitation.id,
+          inviteeName: invitation.inviteeName,
+          inviteeEmail: invitation.inviteeEmail,
+          status: invitation.status,
+          createdAt: invitation.createdAt,
+          expiresAt: invitation.expiresAt,
+          inviteToken: invitation.inviteToken
+        },
+        message: `Invitation sent to ${inviteeName}!`
+      });
+    } catch (error: any) {
+      console.error("Send friend invitation error:", error);
+      if (error?.name === 'ZodError') {
+        return res.status(400).json({
+          success: false,
+          error: "Invalid request data."
+        });
+      }
+      res.status(500).json({
+        success: false,
+        error: "Failed to send invitation."
+      });
+    }
+  });
+  
+  // Get all invitations sent by a user
+  app.get("/api/friends/invitations/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({
+        userId: z.string().min(1)
+      }).parse(req.params);
+      
+      const invitations = await db
+        .select()
+        .from(friendInvitations)
+        .where(eq(friendInvitations.inviterUserId, userId))
+        .orderBy(sql`${friendInvitations.createdAt} DESC`);
+      
+      // Mark expired invitations
+      const now = new Date();
+      const processedInvitations = invitations.map(inv => ({
+        ...inv,
+        status: inv.expiresAt < now && inv.status === 'pending' ? 'expired' : inv.status
+      }));
+      
+      res.json({
+        success: true,
+        invitations: processedInvitations
+      });
+    } catch (error) {
+      console.error("Get friend invitations error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get invitations."
+      });
+    }
+  });
+  
+  // Cancel a pending invitation
+  app.delete("/api/friends/invite/:invitationId", async (req, res) => {
+    try {
+      const { invitationId } = z.object({
+        invitationId: z.string().min(1)
+      }).parse(req.params);
+      
+      const { userId } = z.object({
+        userId: z.string().min(1)
+      }).parse(req.body);
+      
+      // Verify the invitation belongs to this user
+      const [invitation] = await db
+        .select()
+        .from(friendInvitations)
+        .where(sql`${friendInvitations.id} = ${invitationId} AND ${friendInvitations.inviterUserId} = ${userId}`);
+      
+      if (!invitation) {
+        return res.status(404).json({
+          success: false,
+          error: "Invitation not found."
+        });
+      }
+      
+      // Update status to cancelled
+      await db
+        .update(friendInvitations)
+        .set({ status: 'cancelled' })
+        .where(eq(friendInvitations.id, invitationId));
+      
+      res.json({
+        success: true,
+        message: "Invitation cancelled."
+      });
+    } catch (error) {
+      console.error("Cancel invitation error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to cancel invitation."
+      });
+    }
+  });
+  
+  // Check if a new user was invited (called during signup/login)
+  app.post("/api/friends/check-invitation", async (req, res) => {
+    try {
+      const { email, newUserId } = z.object({
+        email: z.string().email(),
+        newUserId: z.string().min(1)
+      }).parse(req.body);
+      
+      // Find pending invitations for this email
+      const pendingInvitations = await db
+        .select()
+        .from(friendInvitations)
+        .where(sql`${friendInvitations.inviteeEmail} = ${email.toLowerCase()} AND ${friendInvitations.status} = 'pending'`);
+      
+      if (pendingInvitations.length === 0) {
+        return res.json({
+          success: true,
+          hasInvitations: false
+        });
+      }
+      
+      // Process each invitation - mark as accepted and notify inviters
+      const processedInviters: string[] = [];
+      
+      for (const invitation of pendingInvitations) {
+        // Update invitation status
+        await db
+          .update(friendInvitations)
+          .set({
+            status: 'accepted',
+            joinedUserId: newUserId
+          })
+          .where(eq(friendInvitations.id, invitation.id));
+        
+        // Create friendship between inviter and new user
+        try {
+          await storage.createFriendship({
+            userId: invitation.inviterUserId,
+            friendId: newUserId,
+            status: 'accepted'
+          });
+          processedInviters.push(invitation.inviterUserId);
+        } catch (err) {
+          console.log("Friendship may already exist:", err);
+        }
+      }
+      
+      res.json({
+        success: true,
+        hasInvitations: true,
+        invitationsAccepted: pendingInvitations.length,
+        inviters: processedInviters
+      });
+    } catch (error) {
+      console.error("Check invitation error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to check invitations."
+      });
+    }
+  });
+  
+  // Get friends who joined through invitations (with notification status)
+  app.get("/api/friends/joined/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({
+        userId: z.string().min(1)
+      }).parse(req.params);
+      
+      // Get accepted invitations where the inviter hasn't been notified yet
+      const joinedFriends = await db
+        .select({
+          invitation: friendInvitations,
+          joinedUser: appUsers
+        })
+        .from(friendInvitations)
+        .leftJoin(appUsers, eq(friendInvitations.joinedUserId, appUsers.id))
+        .where(sql`${friendInvitations.inviterUserId} = ${userId} AND ${friendInvitations.status} = 'accepted'`);
+      
+      // Separate into notified and not notified
+      const unnotified = joinedFriends.filter(f => !f.invitation.notifiedOnJoin);
+      const allJoined = joinedFriends.map(f => ({
+        invitationId: f.invitation.id,
+        inviteeName: f.invitation.inviteeName,
+        inviteeEmail: f.invitation.inviteeEmail,
+        joinedUserId: f.invitation.joinedUserId,
+        joinedUser: f.joinedUser ? {
+          id: f.joinedUser.id,
+          firstName: f.joinedUser.firstName,
+          lastName: f.joinedUser.lastName
+        } : null,
+        notified: f.invitation.notifiedOnJoin
+      }));
+      
+      res.json({
+        success: true,
+        joinedFriends: allJoined,
+        newJoins: unnotified.length
+      });
+    } catch (error) {
+      console.error("Get joined friends error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get joined friends."
+      });
+    }
+  });
+  
+  // Mark invitation as notified
+  app.post("/api/friends/invite/:invitationId/mark-notified", async (req, res) => {
+    try {
+      const { invitationId } = z.object({
+        invitationId: z.string().min(1)
+      }).parse(req.params);
+      
+      await db
+        .update(friendInvitations)
+        .set({ notifiedOnJoin: true })
+        .where(eq(friendInvitations.id, invitationId));
+      
+      res.json({
+        success: true,
+        message: "Marked as notified."
+      });
+    } catch (error) {
+      console.error("Mark notified error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to update notification status."
+      });
+    }
+  });
+  
+  // =========================================================================
+  // READING ACTIVITY & PRIVACY SETTINGS
+  // =========================================================================
+  
+  // Record reading activity
+  app.post("/api/activity/reading", async (req, res) => {
+    try {
+      const { userId, activityType, reference, details } = z.object({
+        userId: z.string().min(1),
+        activityType: z.string().min(1),
+        reference: z.string().min(1),
+        details: z.string().optional()
+      }).parse(req.body);
+      
+      const [activity] = await db.insert(readingActivity).values({
+        userId,
+        activityType,
+        reference,
+        details: details || null
+      }).returning();
+      
+      res.json({
+        success: true,
+        activity
+      });
+    } catch (error) {
+      console.error("Record reading activity error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to record activity."
+      });
+    }
+  });
+  
+  // Get reading activity for a friend (if privacy allows)
+  app.get("/api/activity/friend/:userId/:friendId", async (req, res) => {
+    try {
+      const { userId, friendId } = z.object({
+        userId: z.string().min(1),
+        friendId: z.string().min(1)
+      }).parse(req.params);
+      
+      // Check if they are friends
+      const friendship = await storage.checkFriendship(userId, friendId);
+      if (!friendship) {
+        return res.status(403).json({
+          success: false,
+          error: "You are not friends with this user."
+        });
+      }
+      
+      // Check friend's privacy settings
+      const [privacySettings] = await db
+        .select()
+        .from(userPrivacySettings)
+        .where(eq(userPrivacySettings.userId, friendId));
+      
+      if (!privacySettings?.shareReadingActivity) {
+        return res.json({
+          success: true,
+          sharingEnabled: false,
+          activities: [],
+          message: "This friend has not enabled activity sharing."
+        });
+      }
+      
+      // Get recent activity (last 7 days)
+      const activities = await db
+        .select()
+        .from(readingActivity)
+        .where(sql`${readingActivity.userId} = ${friendId} AND ${readingActivity.createdAt} > now() - interval '7 days'`)
+        .orderBy(sql`${readingActivity.createdAt} DESC`)
+        .limit(20);
+      
+      res.json({
+        success: true,
+        sharingEnabled: true,
+        activities
+      });
+    } catch (error) {
+      console.error("Get friend activity error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get friend's activity."
+      });
+    }
+  });
+  
+  // Get/update privacy settings
+  app.get("/api/privacy/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({
+        userId: z.string().min(1)
+      }).parse(req.params);
+      
+      const [settings] = await db
+        .select()
+        .from(userPrivacySettings)
+        .where(eq(userPrivacySettings.userId, userId));
+      
+      if (!settings) {
+        // Return defaults if no settings exist
+        return res.json({
+          success: true,
+          settings: {
+            userId,
+            shareReadingActivity: false,
+            shareDevotionalProgress: false,
+            sharePlanProgress: false
+          }
+        });
+      }
+      
+      res.json({
+        success: true,
+        settings
+      });
+    } catch (error) {
+      console.error("Get privacy settings error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to get privacy settings."
+      });
+    }
+  });
+  
+  app.put("/api/privacy/:userId", async (req, res) => {
+    try {
+      const { userId } = z.object({
+        userId: z.string().min(1)
+      }).parse(req.params);
+      
+      const { shareReadingActivity, shareDevotionalProgress, sharePlanProgress } = z.object({
+        shareReadingActivity: z.boolean().optional(),
+        shareDevotionalProgress: z.boolean().optional(),
+        sharePlanProgress: z.boolean().optional()
+      }).parse(req.body);
+      
+      // Upsert privacy settings
+      const [existing] = await db
+        .select()
+        .from(userPrivacySettings)
+        .where(eq(userPrivacySettings.userId, userId));
+      
+      if (existing) {
+        await db
+          .update(userPrivacySettings)
+          .set({
+            shareReadingActivity: shareReadingActivity ?? existing.shareReadingActivity,
+            shareDevotionalProgress: shareDevotionalProgress ?? existing.shareDevotionalProgress,
+            sharePlanProgress: sharePlanProgress ?? existing.sharePlanProgress,
+            updatedAt: new Date()
+          })
+          .where(eq(userPrivacySettings.userId, userId));
+      } else {
+        await db.insert(userPrivacySettings).values({
+          userId,
+          shareReadingActivity: shareReadingActivity ?? false,
+          shareDevotionalProgress: shareDevotionalProgress ?? false,
+          sharePlanProgress: sharePlanProgress ?? false
+        });
+      }
+      
+      const [updated] = await db
+        .select()
+        .from(userPrivacySettings)
+        .where(eq(userPrivacySettings.userId, userId));
+      
+      res.json({
+        success: true,
+        settings: updated
+      });
+    } catch (error) {
+      console.error("Update privacy settings error:", error);
+      res.status(500).json({
+        success: false,
+        error: "Failed to update privacy settings."
       });
     }
   });
