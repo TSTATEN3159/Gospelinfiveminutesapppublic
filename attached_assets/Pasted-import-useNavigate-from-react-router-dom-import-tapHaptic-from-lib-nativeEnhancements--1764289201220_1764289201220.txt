@@ -1,42 +1,23 @@
-import { useState, useEffect } from "react";
-import { Leaf, Flame } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { tapHaptic } from "@/lib/nativeEnhancements";
+import { Leaf, Flame } from "lucide-react";
 
-interface AbideGrowthCardProps {
-  onStartAbide: () => void;
+interface Props {
+  totalFruit: number;
+  streak: number;
+  todayFruitLabel: string; // e.g. "Love"
 }
 
-const FRUITS_OF_SPIRIT = [
-  "Love", "Joy", "Peace", "Patience", "Kindness",
-  "Goodness", "Faithfulness", "Gentleness", "Self-Control"
-];
-
-export function AbideGrowthCard({ onStartAbide }: AbideGrowthCardProps) {
-  const [todayFruitLabel, setTodayFruitLabel] = useState("Love");
-  const [totalFruit, setTotalFruit] = useState(0);
-  const [streak, setStreak] = useState(0);
-
-  useEffect(() => {
-    const today = new Date();
-    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
-    const fruitIndex = dayOfYear % FRUITS_OF_SPIRIT.length;
-    setTodayFruitLabel(FRUITS_OF_SPIRIT[fruitIndex]);
-
-    const saved = localStorage.getItem("abideGrowthData");
-    if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        setTotalFruit(data.totalFruit || 0);
-        setStreak(data.streak || 0);
-      } catch (e) {
-        console.warn("Could not parse abide growth data");
-      }
-    }
-  }, []);
+export default function AbideTreePreview({
+  totalFruit,
+  streak,
+  todayFruitLabel,
+}: Props) {
+  const navigate = useNavigate();
 
   const handleTap = async () => {
     await tapHaptic();
-    onStartAbide();
+    navigate("/abide"); // route to full Abide experience
   };
 
   return (
@@ -48,10 +29,8 @@ export function AbideGrowthCard({ onStartAbide }: AbideGrowthCardProps) {
         border border-emerald-700/40
         shadow-[0_20px_60px_rgba(2,44,34,0.45)]
         flex flex-col items-start
-        px-5 py-4 text-left
-        active:scale-[0.98] transition-transform
+        px-5 py-4 mb-6 text-left
       "
-      data-testid="card-abide-growth"
     >
       <p className="text-xs uppercase tracking-[0.15em] text-emerald-200/80 mb-1">
         Abide — My Growth Today
@@ -73,7 +52,7 @@ export function AbideGrowthCard({ onStartAbide }: AbideGrowthCardProps) {
 
       {/* Tree + Fruit Bubbles Preview */}
       <div className="flex items-center gap-1 mt-2">
-        {Array.from({ length: Math.min(totalFruit, 9) }).map((_, i) => (
+        {Array.from({ length: totalFruit }).map((_, i) => (
           <div
             key={i}
             className="h-5 w-5 rounded-full bg-amber-400 shadow-md shadow-amber-700/50"

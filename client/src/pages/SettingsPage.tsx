@@ -80,7 +80,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
     soundEnabled: true,
     darkMode: false,
     language: 'en',
-    bibleVersion: 'NIV'
+    bibleVersion: 'KJV'
   });
 
   const [isEditing, setIsEditing] = useState(false);
@@ -287,7 +287,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
         soundEnabled: true,
         darkMode: false,
         language: 'en',
-        bibleVersion: 'NIV'
+        bibleVersion: 'KJV'
       };
 
       setProfile(emptyProfile);

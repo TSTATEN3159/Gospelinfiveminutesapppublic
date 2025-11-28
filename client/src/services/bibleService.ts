@@ -392,12 +392,12 @@ export const getBibleVerse = (version?: string) => {
     if (savedPreferences) {
       try {
         const prefs = JSON.parse(savedPreferences);
-        version = prefs.bibleVersion || 'NIV';
+        version = prefs.bibleVersion || 'KJV';
       } catch (e) {
-        version = 'NIV';
+        version = 'KJV';
       }
     } else {
-      version = 'NIV';
+      version = 'KJV';
     }
   }
   return bibleService.getDailyVerse(version);

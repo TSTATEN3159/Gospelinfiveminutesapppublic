@@ -104,11 +104,11 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         
         // Get user's preferred Bible version from localStorage
         const savedPreferences = localStorage.getItem("gospelAppPreferences");
-        let bibleVersion = 'NIV'; // Default
+        let bibleVersion = 'KJV'; // Default (supported: KJV, WEB, ASV, BBE)
         if (savedPreferences) {
           try {
             const prefs = JSON.parse(savedPreferences);
-            bibleVersion = prefs.bibleVersion || 'NIV';
+            bibleVersion = prefs.bibleVersion || 'KJV';
           } catch (e) {
             console.warn('Could not parse saved preferences');
           }
