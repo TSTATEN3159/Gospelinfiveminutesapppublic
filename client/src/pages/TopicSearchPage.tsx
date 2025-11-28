@@ -3,6 +3,7 @@ import { BibleVersionCode } from "@/config/bibleVersions";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
 import { HeaderNavigation } from "@/components/NavigationButtons";
 import { AppPage } from "@/config/routesConfig";
+import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 
 interface TopicSearchPageProps {
   onNavigate?: (page: string, data?: any) => void;
@@ -28,7 +29,7 @@ function TopicSearchContent({ onNavigate }: TopicSearchPageProps) {
 
   return (
     <>
-      {/* Header with Back and Home Buttons */}
+      {/* Header with Back and Home Buttons - stays outside zoom */}
       <div className="sticky top-0 z-10 bg-amber-50/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-amber-200 dark:border-gray-700 ios-safe-top">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -49,13 +50,24 @@ function TopicSearchContent({ onNavigate }: TopicSearchPageProps) {
         </div>
       </div>
 
-      {/* Content */}
-      <div className="px-4 py-6">
-        <TopicalBibleSearchCard 
-          onNavigate={onNavigate}
-          onCreateImageFromVerse={handleCreateImageFromVerse}
-        />
-      </div>
+      {/* Zoomable Content */}
+      <TransformWrapper
+        minScale={1}
+        maxScale={2.5}
+        initialScale={1}
+        pinch={{ disabled: false }}
+        wheel={{ disabled: true }}
+        doubleClick={{ disabled: true }}
+      >
+        <TransformComponent>
+          <div className="px-4 py-6">
+            <TopicalBibleSearchCard 
+              onNavigate={onNavigate}
+              onCreateImageFromVerse={handleCreateImageFromVerse}
+            />
+          </div>
+        </TransformComponent>
+      </TransformWrapper>
     </>
   );
 }
