@@ -105,7 +105,7 @@ export default function AbideTreePreview() {
         </p>
 
         <h2 className="relative z-10 text-[18px] font-semibold text-emerald-50 leading-tight mb-2">
-          Where spiritual growth becomes visible
+          "He who abides in Me bears much fruit"
         </h2>
 
         {/* Top info row */}
@@ -132,7 +132,7 @@ export default function AbideTreePreview() {
           {/* Fruit row */}
           <div className="flex-1">
             <p className="text-[12px] text-emerald-100/80 mb-1.5">
-              Each day you abide, the fruit of the Spirit grows on your tree.
+              As branches bear fruit by remaining in the Vine, so you bear fruit by abiding in Christ.
             </p>
             <div className="flex items-center mt-1 gap-1.5 flex-wrap">
               {Array.from({
@@ -167,8 +167,7 @@ export default function AbideTreePreview() {
 
         {/* CTA */}
         <p className="relative z-10 mt-4 text-[12px] font-medium text-emerald-200/75">
-          Tap to Abide — 5 minutes with Jesus. Your obedience becomes visible
-          fruit.
+          Tap to abide in Christ — and bear fruit that remains. <span className="text-emerald-300/60">John 15:5</span>
         </p>
       </div>
     </button>
