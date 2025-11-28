@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Leaf, Flame } from "lucide-react";
 import { tapHaptic } from "@/lib/nativeEnhancements";
-import { getAbideState } from "@/lib/abideStorage";
+import { getAbideState, getTodaysFruit } from "@/lib/abideStorage";
 
 interface TiltState {
   x: number;
@@ -62,7 +62,6 @@ export default function AbideTreePreview() {
     setTilt({ x: 0, y: 0 });
   };
 
-  const fruits = state.fruitCounts;
   const maxSlots = 12;
 
   return (
@@ -113,16 +112,8 @@ export default function AbideTreePreview() {
         <div className="relative z-10 flex justify-between items-center mb-3">
           <span className="flex items-center gap-1 text-[13px] text-emerald-200">
             <Leaf className="h-4 w-4 text-emerald-300" />
-            {state.lastAbideDate ? (
-              <>
-                Today's Fruit:{" "}
-                <span className="font-medium">
-                  {getTodayFruitLabel(fruits)}
-                </span>
-              </>
-            ) : (
-              <>Begin your first fruit</>
-            )}
+            Today's Fruit:{" "}
+            <span className="font-medium">{getTodaysFruit()}</span>
           </span>
 
           <span className="flex items-center gap-1 text-[12px] text-amber-300">
@@ -182,13 +173,6 @@ export default function AbideTreePreview() {
       </div>
     </button>
   );
-}
-
-function getTodayFruitLabel(fruits: Record<string, number>) {
-  const keys = Object.keys(fruits);
-  if (!keys.length) return "Love";
-  const sum = keys.reduce((acc, k) => acc + (fruits[k] || 0), 0);
-  return keys[sum % keys.length] || "Love";
 }
 
 function TreeOfLifeSVG() {
