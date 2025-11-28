@@ -36,12 +36,14 @@ interface StudyLesson {
   prayer: string;
 }
 
+// Traditional Bible Studies - Public Domain Christian Classics
 const sampleStudies: BibleStudy[] = [
+  // ANDREW MURRAY STUDIES
   {
     id: "abide-in-christ",
     title: "Abide in Christ (Preview)",
-    author: "Andrew Murray (1828-1917)",
-    description: "Experience 5 sample chapters from this classic 31-day devotional exploring what it means to have continuous, intimate fellowship with Christ. Based on John 15, Murray teaches that abiding in Jesus is not a work we do, but a yielding to let Him do all for us. This timeless work has helped millions discover the secret of resting in Christ's keeping power.",
+    author: "Andrew Murray",
+    description: "Experience 5 sample chapters from this classic 31-day devotional exploring what it means to have continuous, intimate fellowship with Christ. Based on John 15, Murray teaches that abiding in Jesus is not a work we do, but a yielding to let Him do all for us.",
     category: "Discipleship",
     duration: "5 sample chapters",
     difficulty: "Beginner",
@@ -49,54 +51,204 @@ const sampleStudies: BibleStudy[] = [
     featured: true
   },
   {
-    id: "morning-and-evening",
-    title: "Morning and Evening (Preview)",
-    author: "Charles H. Spurgeon (1834-1892)",
-    description: "Sample 5 readings from Spurgeon's beloved devotional. The 'Prince of Preachers' wrote 732 daily readings (morning and evening for each day) to help believers begin and end each day with Scripture and reflection. These samples showcase his characteristic warmth, wit, and deep pastoral insight.",
-    category: "Encouragement",
-    duration: "5 sample readings",
-    difficulty: "Beginner",
-    lessons: 5
-  },
-  {
-    id: "power-through-prayer",
-    title: "Power Through Prayer (Preview)",
-    author: "E.M. Bounds (1835-1913)",
-    description: "Preview 5 chapters from this 20-chapter masterwork on prayer. Edward McKendree Bounds spent the last 17 years of his life writing about prayer. This powerful work declares that 'the Church is looking for better methods; God is looking for better men.'",
-    category: "Prayer",
-    duration: "5 sample chapters",
-    difficulty: "Intermediate",
-    lessons: 5
-  },
-  {
     id: "waiting-on-god",
     title: "Waiting on God (Preview)",
-    author: "Andrew Murray (1828-1917)",
-    description: "Sample 2 meditations from Murray's 31-day journey into the art of waiting upon God in prayer. Murray shows how waiting on God is not passive, but the highest form of active faith—learning to rest in His timing while remaining expectant for His work.",
+    author: "Andrew Murray",
+    description: "Sample 2 meditations from Murray's 31-day journey into the art of waiting upon God in prayer. Murray shows how waiting on God is not passive, but the highest form of active faith.",
     category: "Prayer",
     duration: "2 sample meditations",
     difficulty: "Intermediate",
     lessons: 2
   },
   {
+    id: "humility",
+    title: "Humility: The Beauty of Holiness (Preview)",
+    author: "Andrew Murray",
+    description: "Sample 2 chapters from Murray's profound study on humility as the root of every grace and virtue. 'Humility is the blossom of which heaven is the fruit.'",
+    category: "Character",
+    duration: "2 sample chapters",
+    difficulty: "Intermediate",
+    lessons: 2
+  },
+  {
+    id: "absolute-surrender",
+    title: "Absolute Surrender (Preview)",
+    author: "Andrew Murray",
+    description: "Sample 3 addresses from Murray's powerful call to complete consecration to God. 'God is ready to assume full responsibility for the life wholly yielded to Him.'",
+    category: "Discipleship",
+    duration: "3 sample chapters",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  {
+    id: "with-christ-school-of-prayer",
+    title: "With Christ in the School of Prayer (Preview)",
+    author: "Andrew Murray",
+    description: "Sample 3 lessons from Murray's comprehensive guide to prayer. Learn from Jesus Himself as the Master Teacher reveals the secrets of effective intercession.",
+    category: "Prayer",
+    duration: "3 sample lessons",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  // CHARLES SPURGEON STUDIES
+  {
+    id: "morning-and-evening",
+    title: "Morning and Evening (Preview)",
+    author: "Charles H. Spurgeon",
+    description: "Sample 5 readings from Spurgeon's beloved devotional. The 'Prince of Preachers' wrote 732 daily readings to help believers begin and end each day with Scripture and reflection.",
+    category: "Encouragement",
+    duration: "5 sample readings",
+    difficulty: "Beginner",
+    lessons: 5
+  },
+  {
     id: "all-of-grace",
     title: "All of Grace (Preview)",
-    author: "Charles H. Spurgeon (1834-1892)",
-    description: "Experience 5 chapters from Spurgeon's most beloved evangelistic work, written to explain the gospel in simple, compelling terms. He writes: 'I have felt that I would gladly give my two hands if I might by their loss bring you to Christ.'",
+    author: "Charles H. Spurgeon",
+    description: "Experience 5 chapters from Spurgeon's most beloved evangelistic work, written to explain the gospel in simple, compelling terms.",
     category: "Discipleship",
     duration: "5 sample chapters",
     difficulty: "Beginner",
     lessons: 5
   },
   {
-    id: "humility",
-    title: "Humility: The Beauty of Holiness (Preview)",
-    author: "Andrew Murray (1828-1917)",
-    description: "Sample 2 chapters from Murray's profound study on humility as the root of every grace and virtue. He shows how Jesus—though equal with God—humbled Himself, and how we are called to follow His example. 'Humility is the blossom of which heaven is the fruit.'",
-    category: "Character",
-    duration: "2 sample chapters",
+    id: "treasury-of-david",
+    title: "Treasury of David: Psalms (Preview)",
+    author: "Charles H. Spurgeon",
+    description: "Sample 3 expositions from Spurgeon's monumental 7-volume commentary on the Psalms. Rich devotional insight into the songs of Israel.",
+    category: "Encouragement",
+    duration: "3 sample Psalms",
     difficulty: "Intermediate",
-    lessons: 2
+    lessons: 3
+  },
+  // E.M. BOUNDS STUDIES
+  {
+    id: "power-through-prayer",
+    title: "Power Through Prayer (Preview)",
+    author: "E.M. Bounds",
+    description: "Preview 5 chapters from this 20-chapter masterwork on prayer. 'The Church is looking for better methods; God is looking for better men.'",
+    category: "Prayer",
+    duration: "5 sample chapters",
+    difficulty: "Intermediate",
+    lessons: 5
+  },
+  {
+    id: "purpose-in-prayer",
+    title: "Purpose in Prayer (Preview)",
+    author: "E.M. Bounds",
+    description: "Sample 3 chapters exploring how prayer moves the arm of God. Bounds shows that purposeful, persistent prayer accomplishes what nothing else can.",
+    category: "Prayer",
+    duration: "3 sample chapters",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  {
+    id: "weapon-of-prayer",
+    title: "The Weapon of Prayer (Preview)",
+    author: "E.M. Bounds",
+    description: "Sample 3 chapters on prayer as spiritual warfare. Learn to wield prayer as the mighty weapon God designed it to be.",
+    category: "Prayer",
+    duration: "3 sample chapters",
+    difficulty: "Advanced",
+    lessons: 3
+  },
+  // CLASSIC DEVOTIONAL AUTHORS
+  {
+    id: "imitation-of-christ",
+    title: "The Imitation of Christ (Preview)",
+    author: "Thomas à Kempis",
+    description: "Sample 3 meditations from the most widely read Christian devotional book after the Bible. Written in the 15th century, its wisdom remains timeless.",
+    category: "Discipleship",
+    duration: "3 sample meditations",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  {
+    id: "practice-presence-of-god",
+    title: "The Practice of the Presence of God (Preview)",
+    author: "Brother Lawrence",
+    description: "Sample 3 conversations and letters from this beloved classic. A humble monastery cook shares how to experience God's presence in every moment.",
+    category: "Discipleship",
+    duration: "3 sample readings",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  {
+    id: "pilgrims-progress",
+    title: "The Pilgrim's Progress (Preview)",
+    author: "John Bunyan",
+    description: "Sample 3 stages from the greatest Christian allegory ever written. Journey with Christian from the City of Destruction to the Celestial City.",
+    category: "Discipleship",
+    duration: "3 sample stages",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  // HANNAH WHITALL SMITH
+  {
+    id: "christians-secret-happy-life",
+    title: "The Christian's Secret of a Happy Life (Preview)",
+    author: "Hannah Whitall Smith",
+    description: "Sample 3 chapters from this classic guide to victorious Christian living. Discover the secret of resting in God's keeping power.",
+    category: "Encouragement",
+    duration: "3 sample chapters",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  // GEORGE MÜLLER
+  {
+    id: "answers-to-prayer",
+    title: "Answers to Prayer (Preview)",
+    author: "George Müller",
+    description: "Sample 3 testimonies from Müller's remarkable life of faith. He cared for 10,000 orphans without ever asking for money—only praying.",
+    category: "Prayer",
+    duration: "3 sample testimonies",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  // R.A. TORREY
+  {
+    id: "how-to-pray",
+    title: "How to Pray (Preview)",
+    author: "R.A. Torrey",
+    description: "Sample 3 chapters of practical instruction on prayer from the great evangelist and Bible teacher. Clear, powerful teaching on effective prayer.",
+    category: "Prayer",
+    duration: "3 sample chapters",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  // HUDSON TAYLOR
+  {
+    id: "union-and-communion",
+    title: "Union and Communion (Preview)",
+    author: "Hudson Taylor",
+    description: "Sample 3 meditations on the Song of Solomon from the pioneer missionary to China. Discover the intimate relationship Christ desires with His bride.",
+    category: "Discipleship",
+    duration: "3 sample meditations",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  // OSWALD CHAMBERS
+  {
+    id: "my-utmost-for-his-highest",
+    title: "My Utmost for His Highest (Preview)",
+    author: "Oswald Chambers",
+    description: "Sample 5 daily readings from the most popular devotional of the 20th century. Challenging, inspiring insights that have touched millions.",
+    category: "Discipleship",
+    duration: "5 sample readings",
+    difficulty: "Intermediate",
+    lessons: 5,
+    featured: true
+  },
+  // A.W. PINK
+  {
+    id: "attributes-of-god",
+    title: "The Attributes of God (Preview)",
+    author: "A.W. Pink",
+    description: "Sample 3 chapters exploring the nature and character of God. A profound study of who God is and what that means for believers.",
+    category: "Character",
+    duration: "3 sample chapters",
+    difficulty: "Advanced",
+    lessons: 3
   }
 ];
 
@@ -439,6 +591,634 @@ const humilityLessons: StudyLesson[] = [
   }
 ];
 
+// Andrew Murray's "Absolute Surrender" (Public Domain, 1895)
+const absoluteSurrenderLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Address 1: Absolute Surrender",
+    content: "What God Demands: Absolute Surrender. God is worthy of absolute surrender. When Jesus died on the cross, He gave everything. When He calls us to follow Him, He asks for everything in return.\n\nWhat is absolute surrender? It is yielding our whole being to God—every thought, every desire, every plan, every relationship. It is saying to God, 'I am Thine—wholly Thine. Do with me as Thou wilt.'\n\nMany Christians live defeated lives because they have never made an unconditional surrender to God. They give Him part of their lives, but hold back areas they are not willing to yield.\n\nGod cannot fill what is not empty. He cannot use what is not surrendered. He cannot bless what is not given. The blessing of the Lord comes only upon a life that is wholly His.\n\n'God is ready to assume full responsibility for the life wholly yielded to Him.' What a promise! What comfort for the surrendered soul!",
+    verse: "Romans 12:1",
+    verseText: "I beseech you therefore, brethren, by the mercies of God, that ye present your bodies a living sacrifice, holy, acceptable unto God, which is your reasonable service.",
+    reflection: [
+      "What areas of your life have you been holding back from God?",
+      "What does it mean that God is ready to 'assume full responsibility' for your life?",
+      "Why is partial surrender actually no surrender at all?"
+    ],
+    prayer: "Lord, I surrender absolutely to Thee. Take my life and let it be wholly Thine. I hold nothing back. Assume full responsibility for this life that is now fully yielded to Thee. Amen."
+  },
+  {
+    id: 2,
+    title: "Address 2: The Fruit of the Spirit",
+    content: "The fruit of the Spirit is not produced by our effort, but by our abiding. As a branch bears fruit not by straining but by remaining connected to the vine, so we bear spiritual fruit by remaining surrendered to Christ.\n\nLove, joy, peace, longsuffering, gentleness, goodness, faith, meekness, temperance—these are not virtues we must manufacture. They are the natural overflow of a life filled with the Spirit.\n\nThe great mistake of many Christians is trying to produce the fruit while neglecting the root. They work at being patient, at being loving, at being joyful—but they do not cultivate the inner life of surrender that alone can produce these graces.\n\nSurrender is the secret. When we yield ourselves completely to God, His Spirit flows through us, and the fruit appears naturally. It is His life in us that produces His fruit through us.\n\nDo not try to imitate the fruit—seek the root. Do not strive for love—surrender to the One who is love.",
+    verse: "Galatians 5:22-23",
+    verseText: "But the fruit of the Spirit is love, joy, peace, longsuffering, gentleness, goodness, faith, meekness, temperance: against such there is no law.",
+    reflection: [
+      "Have you been trying to produce fruit through effort rather than through surrender?",
+      "What is the difference between imitating the fruit and having the root?",
+      "How does surrender relate to the fruit of the Spirit in your daily life?"
+    ],
+    prayer: "Holy Spirit, I surrender to Thy working in my life. I cease striving to produce fruit and simply yield to Thee. Let Thy life flow through me and produce Thy fruit. Amen."
+  },
+  {
+    id: 3,
+    title: "Address 3: Kept by the Power of God",
+    content: "One of the greatest hindrances to absolute surrender is the fear that we cannot maintain it. We have tried before and failed. How can we be sure we will not fail again?\n\nThe answer is this: We are not kept by our own power but by the power of God. 'Kept by the power of God through faith unto salvation.' It is not our faithfulness that keeps us, but His.\n\nOur part is to trust; God's part is to keep. Our part is to surrender; God's part is to preserve what is surrendered. When we commit ourselves to Him, He takes responsibility for keeping us.\n\nThis is the secret of the victorious life—not our holding on to God, but His holding on to us. Not our grip on Him, but His grip on us. We are safe not because of our strength but because of His.\n\nSurrender your life to God and trust Him to keep what you have committed to Him. He is faithful who promised, and He will do it.",
+    verse: "1 Peter 1:5",
+    verseText: "Who are kept by the power of God through faith unto salvation ready to be revealed in the last time.",
+    reflection: [
+      "What fears have prevented you from making an absolute surrender to God?",
+      "How does knowing you are kept by God's power change your approach to Christian living?",
+      "What does it mean practically to trust God to keep what you commit to Him?"
+    ],
+    prayer: "Father, I commit myself to Thee. I trust not in my own ability to stay surrendered, but in Thy power to keep me. Keep that which I have committed unto Thee. I rest in Thy keeping power. Amen."
+  }
+];
+
+// Andrew Murray's "With Christ in the School of Prayer" (Public Domain, 1895)
+const withChristSchoolOfPrayerLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Lesson 1: The Only Teacher",
+    content: "Lord, teach us to pray.' This request of the disciples shows us that prayer is not natural—it must be taught. And who better to teach us than Jesus Himself, the Master of prayer?\n\nJesus' whole life was a life of prayer. He prayed at His baptism, before choosing His disciples, before feeding the multitudes, in Gethsemane, on the cross. He knew the Father's heart as no one else did.\n\nThe disciples saw something in Jesus' prayer that they lacked in their own. They observed the power, the peace, the intimacy with the Father. And they said, 'Teach us.'\n\nThis must be our prayer too. Not 'teach us a method' but 'teach us to pray.' Not techniques but a relationship. Not formulas but fellowship with the Father.\n\nJesus is willing to teach us. He invites us to sit at His feet in the school of prayer. Let us come as learners, humble and eager, ready to be taught by the Master.",
+    verse: "Luke 11:1",
+    verseText: "And it came to pass, that, as he was praying in a certain place, when he ceased, one of his disciples said unto him, Lord, teach us to pray, as John also taught his disciples.",
+    reflection: [
+      "Have you truly asked Jesus to teach you to pray?",
+      "What drew the disciples to want to pray like Jesus?",
+      "What is the difference between learning prayer techniques and being taught by Christ?"
+    ],
+    prayer: "Lord Jesus, teach me to pray. I come to Thee as a learner in Thy school of prayer. I do not want mere methods—I want fellowship with the Father such as Thou hadst. Teach me, Master. Amen."
+  },
+  {
+    id: 2,
+    title: "Lesson 2: In Spirit and Truth",
+    content: "God is a Spirit: and they that worship him must worship him in spirit and in truth.' True prayer is not a matter of words or postures—it is a matter of spirit. It is the inner man reaching out to the Father.\n\nTo pray in spirit means to pray from the heart, not merely from the lips. It means to pray in the power of the Holy Spirit who dwells within us and helps our infirmities.\n\nTo pray in truth means to pray sincerely, without pretense. It means to come to God as we really are, not wearing masks or playing roles. God sees the heart; we cannot deceive Him.\n\nMany prayers never rise higher than the ceiling because they are prayers of the lips only. The words are there, but the heart is far away. Such prayers are form without power.\n\nLet us learn to pray in spirit and in truth—from the depths of our being, in the power of the Spirit, with complete sincerity before God.",
+    verse: "John 4:24",
+    verseText: "God is a Spirit: and they that worship him must worship him in spirit and in truth.",
+    reflection: [
+      "What is the difference between praying from the lips and praying from the heart?",
+      "How does the Holy Spirit help us in our prayers?",
+      "What does it mean to pray 'in truth'—without pretense before God?"
+    ],
+    prayer: "Father, I would worship Thee in spirit and in truth. Help me to pray from my heart, not merely my lips. Let the Holy Spirit guide my prayers. I come to Thee in sincerity, hiding nothing. Amen."
+  },
+  {
+    id: 3,
+    title: "Lesson 3: Ask, and It Shall Be Given",
+    content: "Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you.' These are among the most wonderful and yet most neglected words of Jesus.\n\nNotice the ascending intensity: asking, seeking, knocking. Sometimes asking is enough. But when the answer does not come immediately, we are to seek more diligently. And when seeking does not prevail, we are to knock—to persist with holy importunity.\n\nThe promise is absolute: 'It shall be given.' 'Ye shall find.' 'It shall be opened.' Not maybe. Not perhaps. Shall. Jesus pledges His word.\n\nWhy then do our prayers so often seem unanswered? Perhaps because we ask amiss. Perhaps because we give up too soon. Perhaps because we do not really believe.\n\nLet us take Jesus at His word. Let us ask in faith, seek with persistence, and knock with holy determination. The Father delights to give good things to those who ask Him.",
+    verse: "Matthew 7:7-8",
+    verseText: "Ask, and it shall be given you; seek, and ye shall find; knock, and it shall be opened unto you: For every one that asketh receiveth; and he that seeketh findeth; and to him that knocketh it shall be opened.",
+    reflection: [
+      "What is the difference between asking, seeking, and knocking?",
+      "Why do you think Jesus emphasized persistence in prayer?",
+      "What prevents you from taking Jesus at His word regarding answered prayer?"
+    ],
+    prayer: "Lord, I take Thee at Thy word. I ask, believing I shall receive. I seek, knowing I shall find. I knock, trusting the door will open. Increase my faith to pray with holy persistence. Amen."
+  }
+];
+
+// Spurgeon's "Treasury of David" (Public Domain, 1869-1885)
+const treasuryOfDavidLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Psalm 1: The Way of the Blessed",
+    content: "Blessed is the man that walketh not in the counsel of the ungodly.' The first Psalm stands as a preface to the entire Psalter, setting before us the two ways—the way of the righteous and the way of the ungodly.\n\nNotice the progression of evil: walking, standing, sitting. Sin begins with a single step in the wrong direction, advances to lingering in the way of sinners, and ends in settling down among the scornful.\n\nBut the blessed man is not merely negative—avoiding evil. He delights in the law of the Lord. His meditation is positive, constant, day and night. He does not read Scripture as a duty but as a delight.\n\nSuch a man is like a tree—not a wild tree in the desert, but a planted tree by rivers of water. He is established, nourished, fruitful. His leaf does not wither. Whatsoever he doeth shall prosper.\n\nWhich way are you walking? There is no middle road. You are either planted by the waters or blown about like chaff.",
+    verse: "Psalm 1:1-3",
+    verseText: "Blessed is the man that walketh not in the counsel of the ungodly, nor standeth in the way of sinners, nor sitteth in the seat of the scornful. But his delight is in the law of the LORD; and in his law doth he meditate day and night. And he shall be like a tree planted by the rivers of water.",
+    reflection: [
+      "What is the progression of evil described in this Psalm?",
+      "What does it mean to 'delight' in God's Word rather than merely read it?",
+      "How does the image of a tree by rivers of water describe the blessed life?"
+    ],
+    prayer: "Lord, let me be like that tree planted by the waters. May I delight in Thy Word and meditate on it continually. Keep me from the way of the ungodly and establish me in the path of righteousness. Amen."
+  },
+  {
+    id: 2,
+    title: "Psalm 23: The Shepherd Psalm",
+    content: "The Lord is my shepherd; I shall not want.' This most beloved of all Psalms has comforted countless millions through the ages. It breathes the spirit of quiet confidence in God's care.\n\n'The Lord is MY shepherd'—not a shepherd, not the shepherd of Israel, but MY shepherd. This is personal, intimate, possessive. Do you know God in this personal way?\n\nBecause the Lord is our shepherd, we shall not want. Not we 'may not want' or 'should not want,' but shall not want. The good Shepherd provides everything His sheep need.\n\nGreen pastures for rest and nourishment. Still waters for refreshment. Right paths for guidance. Comfort in the valley of death's shadow. A table prepared in the presence of enemies. An overflowing cup. Goodness and mercy following all our days.\n\nThe Psalm ends where every believer longs to be: 'I will dwell in the house of the Lord forever.' From pastures to palace, from wilderness to worship—the Shepherd leads us home.",
+    verse: "Psalm 23:1-4",
+    verseText: "The LORD is my shepherd; I shall not want. He maketh me to lie down in green pastures: he leadeth me beside the still waters. He restoreth my soul: he leadeth me in the paths of righteousness for his name's sake. Yea, though I walk through the valley of the shadow of death, I will fear no evil: for thou art with me.",
+    reflection: [
+      "Can you say 'The Lord is MY shepherd' with full assurance?",
+      "What does it mean that you 'shall not want'?",
+      "How does knowing the Shepherd is with you change your experience of dark valleys?"
+    ],
+    prayer: "Lord, Thou art my Shepherd. I trust Thee to lead me in green pastures and beside still waters. When I walk through dark valleys, I will fear no evil, for Thou art with me. Amen."
+  },
+  {
+    id: 3,
+    title: "Psalm 51: The Prayer of the Penitent",
+    content: "Have mercy upon me, O God, according to thy lovingkindness.' This is the prayer of David after his great sin with Bathsheba. It is the most deeply penitential of all the Psalms.\n\nNotice that David does not make excuses. He does not minimize his sin or blame his circumstances. He acknowledges his transgression and confesses that he has sinned against God.\n\n'Against thee, thee only, have I sinned.' All sin is ultimately against God. David had wronged Bathsheba, murdered Uriah, and brought reproach upon the nation—yet the deepest offense was against God Himself.\n\nWhat does the penitent seek? Not merely forgiveness but cleansing. Not merely pardon but purity. 'Create in me a clean heart, O God.' He wants the stain removed, the pollution washed away.\n\nThis is the prayer for all who have sinned—and that is all of us. Come to God as David came: honestly, humbly, pleading for mercy based not on your merit but on His lovingkindness.",
+    verse: "Psalm 51:1-2, 10",
+    verseText: "Have mercy upon me, O God, according to thy lovingkindness: according unto the multitude of thy tender mercies blot out my transgressions. Wash me throughly from mine iniquity, and cleanse me from my sin... Create in me a clean heart, O God; and renew a right spirit within me.",
+    reflection: [
+      "Why is it so important to acknowledge our sin without excuses?",
+      "What does it mean that all sin is ultimately against God?",
+      "What is the difference between seeking forgiveness and seeking cleansing?"
+    ],
+    prayer: "Have mercy upon me, O God, according to Thy lovingkindness. I confess my sin—I make no excuses. Wash me thoroughly and create in me a clean heart. Renew a right spirit within me. Amen."
+  }
+];
+
+// E.M. Bounds' "Purpose in Prayer" (Public Domain, 1920)
+const purposeInPrayerLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: Prayer and the Promises",
+    content: "God's promises are the foundation of prayer. They are the checks which faith presents at the bank of heaven. They are the encouragements which embolden us to come to the throne of grace.\n\nWithout the promises, prayer would be presumption. Who would dare to ask God for anything unless He had first promised to give? But with the promises, prayer becomes confidence, assurance, certainty.\n\n'Whatsoever ye shall ask in my name, that will I do.' 'If ye shall ask anything in my name, I will do it.' 'Ask, and it shall be given you.' These are not idle words. They are pledges from the throne.\n\nThe problem is not that God's promises fail, but that we fail to claim them. We read them, we admire them, we even memorize them—but we do not take them to God and ask Him to fulfill them.\n\nPrayer with purpose lays hold of the promises. It reminds God of what He has said. It pleads His own Word back to Him. And God, who cannot lie, is bound to answer.",
+    verse: "2 Peter 1:4",
+    verseText: "Whereby are given unto us exceeding great and precious promises: that by these ye might be partakers of the divine nature, having escaped the corruption that is in the world through lust.",
+    reflection: [
+      "How do God's promises serve as the foundation for confident prayer?",
+      "Why do we often fail to claim God's promises in prayer?",
+      "What promise of God will you take to Him in prayer today?"
+    ],
+    prayer: "Father, Thy promises are exceeding great and precious. Teach me to pray according to Thy promises, to claim them by faith, and to trust Thee to fulfill Thy Word. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 2: Prayer and Desire",
+    content: "The prayer of desire moves the arm of God. Weak desires make weak prayers. Strong desires make powerful prayers. God responds to the intensity of our asking.\n\n'Ye shall seek me, and find me, when ye shall search for me with all your heart.' Not half-hearted seeking, not casual inquiry, but wholehearted pursuit. This is the prayer that prevails.\n\nMany prayers fail because they are too cold, too formal, too indifferent. We pray because we ought to, not because we want to. We go through the motions, but our hearts are elsewhere.\n\nDesire is the soul of prayer. Without desire, words are empty. With desire, even sighs and groans are eloquent before God. 'The effectual fervent prayer of a righteous man availeth much.'\n\nDo you really want what you are asking for? Are you willing to pay the price? Does your prayer rise from the depths of your being? If so, pray on—your prayer shall be answered.",
+    verse: "Jeremiah 29:13",
+    verseText: "And ye shall seek me, and find me, when ye shall search for me with all your heart.",
+    reflection: [
+      "What is the relationship between desire and effective prayer?",
+      "Why do many prayers fail to prevail with God?",
+      "How can you cultivate deeper desire in your prayer life?"
+    ],
+    prayer: "Lord, kindle in me a burning desire for the things I ask. Let my prayers rise from the depths of my heart. Give me such hunger for Thee and Thy will that I cannot help but pray with fervor. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 3: Prayer and Faith",
+    content: "Without faith it is impossible to please God. And without faith, it is impossible to pray effectively. Faith is to prayer what wings are to a bird—the means by which it rises.\n\nWhat is faith in prayer? It is believing that God hears. It is believing that God will answer. It is believing before you see, trusting before you receive.\n\n'What things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them.' Not believe that you shall receive—but believe that you receive. Present tense. Now.\n\nThis is not wishful thinking. This is not positive thinking. This is faith in the faithful God who has promised. It is taking God at His word and acting upon it.\n\nFaith does not demand signs. It does not need to see in order to believe. It rests in the character of God—His power, His wisdom, His love—and says, 'Though He slay me, yet will I trust in Him.'",
+    verse: "Mark 11:24",
+    verseText: "Therefore I say unto you, What things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them.",
+    reflection: [
+      "What is the difference between faith and wishful thinking?",
+      "Why does Jesus tell us to believe we 'receive' (present tense) rather than 'shall receive'?",
+      "How can you grow in faith as you pray?"
+    ],
+    prayer: "Lord, increase my faith. Help me to believe before I see, to trust before I receive. I take Thee at Thy word. I believe that when I pray according to Thy will, Thou dost hear and answer. Amen."
+  }
+];
+
+// E.M. Bounds' "The Weapon of Prayer" (Public Domain, 1931)
+const weaponOfPrayerLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: Prayer—A Spiritual Weapon",
+    content: "We wrestle not against flesh and blood, but against principalities, against powers.' The Christian life is a war, and prayer is our chief weapon in this spiritual battle.\n\nMany Christians fight with carnal weapons—argument, money, influence, organization. But these are powerless against spiritual foes. 'The weapons of our warfare are not carnal, but mighty through God.'\n\nPrayer is the weapon that unlocks heaven's armory. It is the means by which we lay hold of God's power. It brings supernatural resources to bear upon natural problems.\n\nThe devil fears prayer more than anything else. He will let you do almost anything—work, give, even preach—if he can keep you from praying. For he knows that prayer releases a power he cannot withstand.\n\nLearn to wield the weapon of prayer. Put on the whole armor of God and take the sword of the Spirit. Pray always with all prayer and supplication in the Spirit.",
+    verse: "Ephesians 6:12, 18",
+    verseText: "For we wrestle not against flesh and blood, but against principalities, against powers, against the rulers of the darkness of this world, against spiritual wickedness in high places... Praying always with all prayer and supplication in the Spirit.",
+    reflection: [
+      "Why are carnal weapons ineffective against spiritual enemies?",
+      "How is prayer a weapon in spiritual warfare?",
+      "Why does the devil particularly fear the praying Christian?"
+    ],
+    prayer: "Lord, teach me to wage spiritual warfare through prayer. Help me to take up the weapon You have provided. Make me a praying warrior who stands in the gap and defeats the powers of darkness. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 2: The Power of Intercession",
+    content: "Intercessory prayer is the mightiest force in the world. It moves the hand that moves the universe. Through intercession, we participate in God's work of redemption.\n\nTo intercede is to stand between—between God and those for whom we pray. It is to bear the burdens of others on our hearts. It is to plead their case before the throne of grace.\n\nAbraham interceded for Sodom. Moses interceded for Israel. Samuel interceded for his people. Paul interceded for the churches. And Jesus, our great High Priest, ever lives to make intercession for us.\n\nThis is the highest form of prayer—not praying for ourselves but for others. It is prayer that forgets self in love for others. It costs time, energy, and often tears.\n\nGod is looking for intercessors. 'I sought for a man among them, that should make up the hedge, and stand in the gap.' Will you be that man, that woman?",
+    verse: "1 Timothy 2:1",
+    verseText: "I exhort therefore, that, first of all, supplications, prayers, intercessions, and giving of thanks, be made for all men.",
+    reflection: [
+      "What does it mean to 'stand in the gap' for others?",
+      "Why is intercessory prayer considered the highest form of prayer?",
+      "For whom is God calling you to intercede?"
+    ],
+    prayer: "Father, give me a heart that prays for others. Burden me with the needs of those around me. Help me to stand in the gap and plead their cause before Thy throne. Make me an intercessor. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 3: Prayer and Spiritual Victory",
+    content: "Prayer is the path to spiritual victory. Every great advance in the kingdom of God has been preceded and accompanied by prayer. Every revival, every awakening, every transformation—all have their roots in prayer.\n\nThe early church prayed, and three thousand were converted in a day. The disciples prayed, and the place was shaken where they were assembled. Peter was in prison, and the church prayed—and an angel opened the doors.\n\nWhy do we not see such victories today? Is God's arm shortened? Has His power diminished? No! We do not have because we do not ask. We do not receive because we do not pray.\n\nSpiritual victory never comes to the prayerless. You may organize, you may strategize, you may work until you drop—but without prayer, there will be no lasting victory.\n\nDo you want to see God work mightily? Then pray mightily. Do you want spiritual victory? Then take up the weapon of prayer and fight on your knees.",
+    verse: "2 Chronicles 7:14",
+    verseText: "If my people, which are called by my name, shall humble themselves, and pray, and seek my face, and turn from their wicked ways; then will I hear from heaven, and will forgive their sin, and will heal their land.",
+    reflection: [
+      "Why has every great spiritual advance been rooted in prayer?",
+      "What is the connection between prayerlessness and spiritual defeat?",
+      "What spiritual victory are you seeking, and are you willing to pray for it?"
+    ],
+    prayer: "Lord, I want spiritual victory. I know it comes only through prayer. Teach me to pray mightily and to fight on my knees. Let me see Thy power manifested as I give myself to prayer. Amen."
+  }
+];
+
+// Thomas à Kempis' "The Imitation of Christ" (Public Domain, 15th Century)
+const imitationOfChristLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Book 1, Chapter 1: Of the Imitation of Christ",
+    content: "He that followeth me shall not walk in darkness, saith the Lord. These are the words of Christ, by which we are admonished to imitate His life and manners, if we would be truly enlightened and delivered from all blindness of heart.\n\nLet therefore our chief study be to meditate upon the life of Jesus Christ. The doctrine of Christ exceedeth all the doctrines of holy men; and he that hath His Spirit will find therein a hidden manna.\n\nBut it happeneth that many, although they often hear the gospel of Christ, are yet but little affected, because they have not the Spirit of Christ. Whosoever therefore would fully understand the words of Christ must endeavor to conform his whole life to that of Christ.\n\nWhat doth it profit thee to discourse profoundly of the Trinity, if thou be void of humility, and art thereby displeasing to the Trinity? Surely high words do not make a man holy and just; but a virtuous life maketh him dear to God.\n\nVanity of vanities, and all is vanity, except to love God and serve Him only.",
+    verse: "John 8:12",
+    verseText: "Then spake Jesus again unto them, saying, I am the light of the world: he that followeth me shall not walk in darkness, but shall have the light of life.",
+    reflection: [
+      "What does it mean to 'imitate' the life of Christ?",
+      "Why is knowledge of Christ without the Spirit of Christ insufficient?",
+      "How does à Kempis define true wisdom versus mere learning?"
+    ],
+    prayer: "Lord Jesus, I would imitate Thy life. Give me not only knowledge of Thy words but Thy Spirit to understand and live them. Conform my whole life to Thine. Amen."
+  },
+  {
+    id: 2,
+    title: "Book 2, Chapter 1: Of the Inward Life",
+    content: "The kingdom of God is within you, saith the Lord. Turn thee with thy whole heart unto the Lord, and forsake this wretched world, and thy soul shall find rest.\n\nLearn to despise outward things and give thyself to things inward, and thou shalt perceive the kingdom of God to come in thee. For the kingdom of God is peace and joy in the Holy Ghost, which is not given unto the unholy.\n\nChrist will come unto thee, and show thee His own consolation, if thou prepare for Him a worthy mansion within thee. All His glory and beauty is from within, and there He delighteth Himself.\n\nThe inward man He often visiteth; and hath with him sweet discourses, pleasant solace, much peace, familiarity exceeding wonderful.\n\nO faithful soul, make ready thy heart for this Bridegroom, that He may vouchsafe to come unto thee and dwell within thee.",
+    verse: "Luke 17:21",
+    verseText: "Neither shall they say, Lo here! or, lo there! for, behold, the kingdom of God is within you.",
+    reflection: [
+      "What does it mean that the kingdom of God is 'within you'?",
+      "Why is the inward life more important than outward appearances?",
+      "How can you prepare your heart as a 'worthy mansion' for Christ?"
+    ],
+    prayer: "Lord, turn me from outward distractions to the inward life. Come and dwell within me. Make my heart a worthy mansion for Thee. Let me know Thy kingdom of peace and joy within. Amen."
+  },
+  {
+    id: 3,
+    title: "Book 3, Chapter 5: Of Self-Resignation",
+    content: "Son, forsake thyself, and thou shalt find Me. Stand without choosing and without any self-seeking, and thou shalt always gain. For greater grace shall be added to thee the moment thou resignest thyself and dost not take thyself back.\n\nLord, how often shall I resign myself, and wherein shall I forsake myself?\n\nAlways; every hour: both in small matters and in great. I except nothing, but will have thee to be found stripped of all things. Otherwise, how canst thou be Mine, and I thine, unless thou be stripped of thine own will both within and without?\n\nThe sooner thou dost this, the better it shall be with thee; and the more fully and sincerely, the more thou shalt please Me, and the greater shall be thy gain.\n\nSome resign themselves, but with some exceptions; for they do not put their whole trust in God, therefore they are busy to provide for themselves. Some also at first offer all; but afterwards being assailed by temptation, they return again to that which they had left.",
+    verse: "Matthew 16:24",
+    verseText: "Then said Jesus unto his disciples, If any man will come after me, let him deny himself, and take up his cross, and follow me.",
+    reflection: [
+      "What is the difference between partial and complete self-resignation?",
+      "Why does à Kempis say we must be 'stripped of all things'?",
+      "What areas of your life are you still holding back from complete surrender?"
+    ],
+    prayer: "Lord, I resign myself wholly to Thee. Strip me of all self-seeking and self-will. Let me be Thine completely, without exception, that I may find my all in Thee. Amen."
+  }
+];
+
+// Brother Lawrence's "The Practice of the Presence of God" (Public Domain, 1692)
+const practicePresenceOfGodLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "First Conversation",
+    content: "Brother Lawrence said that the most excellent method he had found of going to God was that of doing our common business without any view of pleasing men, and purely for the love of God.\n\nThat we ought not to be weary of doing little things for the love of God, who regards not the greatness of the work, but the love with which it is performed.\n\nThat in the beginning of the spiritual life, we ought to be faithful in doing our duty and denying ourselves; but after that, unspeakable pleasures follow.\n\nThat in difficulties we need only have recourse to Jesus Christ, and beg His grace, with which everything becomes easy.\n\nThat all bodily mortifications and other exercises are useless, except as they serve to arrive at the union with God by love; that he had well considered this, and found it the shortest way to go straight to Him by a continual exercise of love and doing all things for His sake.",
+    verse: "Colossians 3:23",
+    verseText: "And whatsoever ye do, do it heartily, as to the Lord, and not unto men.",
+    reflection: [
+      "How can common, everyday tasks become acts of worship?",
+      "Why does God regard the love behind our work more than its greatness?",
+      "What would change if you did everything purely for the love of God?"
+    ],
+    prayer: "Lord, let me practice Thy presence in all I do. Help me to do the smallest things with great love. Transform my common work into holy service. Let every task be an act of worship. Amen."
+  },
+  {
+    id: 2,
+    title: "Fourth Conversation",
+    content: "Brother Lawrence spoke to me with great openness and told me that useless thoughts spoil all; that the mischief begins there; but that we ought to reject them as soon as we perceive their impertinence to the matter in hand, and return to our communion with God.\n\nThat at the beginning he had often passed his time appointed for prayer in rejecting wandering thoughts and falling back into them. That he could never regulate his devotion by certain methods as some do.\n\nThat all consists in one hearty renunciation of everything which we are sensible does not lead to God, that we may accustom ourselves to a continual conversation with Him.\n\nThat we need only to recognize God intimately present with us, to address ourselves to Him every moment, that we may beg His assistance for knowing His will in things doubtful, and for rightly performing those which we plainly see He requires of us.\n\nThat our sanctification did not depend upon changing our works, but in doing that for God's sake which we commonly do for our own.",
+    verse: "1 Thessalonians 5:17",
+    verseText: "Pray without ceasing.",
+    reflection: [
+      "How do we deal with wandering thoughts during prayer?",
+      "What does 'continual conversation' with God look like in daily life?",
+      "How can our ordinary work become sanctified by doing it for God?"
+    ],
+    prayer: "Father, teach me to turn to Thee in every moment. When my thoughts wander, bring me back to Thy presence. Let my whole life become a continual conversation with Thee. Amen."
+  },
+  {
+    id: 3,
+    title: "Letter 9: Walking in God's Presence",
+    content: "Let us think often that our only business in this life is to please God. Perhaps all besides is but folly and vanity.\n\nYou and I have lived above forty years in religion (i.e., the religious life). Have we employed them in loving and serving God, who by His mercy has called us for that purpose? I am filled with shame and confusion when I reflect on one hand upon the great favors which God has done me, and on the other, upon the ill use I have made of them.\n\nLet us begin in earnest. Let us put aside all else. Time presses. Let us enter into ourselves. The time is short.\n\nI do not say that we should suffer much pain; no, for the love of God can sweeten sufferings. What we must do is to establish ourselves in a sense of God's presence by continually conversing with Him.\n\nThink of Him the most you can. The more one knows Him, the more one desires to know Him. And as knowledge is commonly the measure of love, the deeper and more extensive our knowledge shall be, the greater will be our love.",
+    verse: "Psalm 16:11",
+    verseText: "Thou wilt shew me the path of life: in thy presence is fulness of joy; at thy right hand there are pleasures for evermore.",
+    reflection: [
+      "If our only business is to please God, how should that change our priorities?",
+      "How does knowing God more deeply increase our love for Him?",
+      "What would it mean to 'enter into yourself' and begin in earnest?"
+    ],
+    prayer: "Lord, time is short and eternity is long. Help me to set aside all that does not matter and focus on what does—knowing Thee and loving Thee. Let me live in Thy presence continually. Amen."
+  }
+];
+
+// John Bunyan's "The Pilgrim's Progress" (Public Domain, 1678)
+const pilgrimsProgressLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Part 1: The City of Destruction",
+    content: "As I walked through the wilderness of this world, I lighted on a certain place where was a Den, and I laid me down in that place to sleep: and, as I slept, I dreamed a dream.\n\nI saw a man clothed with rags, standing in a certain place, with his face from his own house, a book in his hand, and a great burden upon his back. I looked, and saw him open the book, and read therein; and as he read, he wept, and trembled; and not being able longer to contain, he brake out with a lamentable cry, saying, 'What shall I do?'\n\nThis man's name was Christian, and his burden was his sin. The book was the Bible, and it showed him that he was in great danger—dwelling in the City of Destruction, which would surely be burned with fire from heaven.\n\nA man named Evangelist came to him and asked, 'Wherefore dost thou cry?' Christian answered, 'Sir, I perceive by the book in my hand that I am condemned to die, and after that to come to judgment, and I find that I am not willing to do the first, nor able to do the second.'\n\nEvangelist pointed to a distant light and said, 'Keep that light in your eye, and go up directly thereto.'",
+    verse: "Matthew 7:13-14",
+    verseText: "Enter ye in at the strait gate: for wide is the gate, and broad is the way, that leadeth to destruction, and many there be which go in thereat: Because strait is the gate, and narrow is the way, which leadeth unto life, and few there be that find it.",
+    reflection: [
+      "What does Christian's burden represent in our own lives?",
+      "Why is the first step on the spiritual journey recognizing our danger?",
+      "What 'light' has God given you to follow?"
+    ],
+    prayer: "Lord, I recognize the burden of my sin. Like Christian, I cry out, 'What shall I do?' Point me to the way of salvation and give me grace to follow the light. Amen."
+  },
+  {
+    id: 2,
+    title: "Part 2: The Wicket Gate and the Cross",
+    content: "So Christian came to the gate. Over the gate was written, 'Knock, and it shall be opened unto you.' He knocked, therefore, more than once or twice, saying: 'May I now enter here?'\n\nAt last there came a grave person to the gate, named Good-will, who opened the gate and pulled Christian in. 'Why did you pull me in?' asked Christian. Good-will replied, 'A little distance from this gate, there is a strong castle, of which Beelzebub is the captain. From there they shoot arrows at those who come up to this gate, to kill them before they can enter in.'\n\nChristian asked, 'I rejoice and tremble. But what must I do now?' Good-will pointed him forward to a narrow way.\n\nChristian ran until he came to a place somewhat ascending; and upon that place stood a Cross, and a little below, in the bottom, a Sepulchre. Just as Christian came up to the Cross, his burden loosed from off his shoulders, and fell from off his back, and began to tumble, and so continued to do till it came to the mouth of the Sepulchre, where it fell in, and I saw it no more.\n\nThen was Christian glad and lightsome, and said with a merry heart, 'He hath given me rest by His sorrow, and life by His death.'",
+    verse: "1 Peter 2:24",
+    verseText: "Who his own self bare our sins in his own body on the tree, that we, being dead to sins, should live unto righteousness: by whose stripes ye were healed.",
+    reflection: [
+      "Why does Good-will need to 'pull' Christian through the gate?",
+      "What happens to Christian's burden at the Cross?",
+      "Have you experienced the freedom of having your burden roll away?"
+    ],
+    prayer: "Lord Jesus, I come to Thy Cross. Let my burden of sin roll away into Thy empty tomb. Give me rest by Thy sorrow and life by Thy death. I praise Thee for setting me free. Amen."
+  },
+  {
+    id: 3,
+    title: "Part 3: The Palace Beautiful and the Valley",
+    content: "After leaving the Cross, Christian came to the Palace Beautiful, where he was welcomed by Discretion, Prudence, Piety, and Charity. Here he was armed for the journey ahead.\n\nThey brought him into the armory, where they showed him all manner of furniture which their Lord had provided for pilgrims: sword, shield, helmet, breastplate, prayer, and shoes that would not wear out. They harnessed him from head to foot with what was of proof, lest he should be assaulted in the way.\n\nBut the next part of the journey led through the Valley of Humiliation, where Christian met a foul fiend named Apollyon. The monster straddled the whole breadth of the way and said, 'Prepare thyself to die; for I swear by my infernal den, that thou shalt go no further; here will I spill thy soul.'\n\nA most dreadful fight ensued, lasting above half a day. Christian was wounded in his head, hand, and foot. But when Apollyon was making his final attack, Christian reached for his sword and gave him a deadly thrust, saying, 'Rejoice not against me, O mine enemy: when I fall, I shall arise.'\n\nAt this, Apollyon spread his dragon wings and sped away.",
+    verse: "Ephesians 6:11",
+    verseText: "Put on the whole armour of God, that ye may be able to stand against the wiles of the devil.",
+    reflection: [
+      "Why is it important to be armed before entering the battle?",
+      "What weapons did Christian use to defeat Apollyon?",
+      "How do you respond when the enemy seems to be winning the fight?"
+    ],
+    prayer: "Lord, arm me with the armor of God. When I face the enemy, let me stand firm. Though I fall, I shall arise. Give me victory through the sword of the Spirit and the power of prayer. Amen."
+  }
+];
+
+// Hannah Whitall Smith's "The Christian's Secret of a Happy Life" (Public Domain, 1875)
+const christiansSecretHappyLifeLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: Is It Scriptural?",
+    content: "A keen observer once said that the Christians he knew seemed to wear a look of 'sadness and unrest.' Surely this is not how it ought to be. The Bible is full of promises of joy, peace, and victory.\n\nMany Christians know they are saved but have never learned the secret of happy, victorious living. They struggle and fail, rise and fall, until Christianity seems more of a burden than a blessing.\n\nBut Scripture reveals another way. 'The fruit of the Spirit is love, joy, peace.' 'My peace I give unto you.' 'These things have I spoken unto you, that my joy might remain in you, and that your joy might be full.'\n\nThis life of rest and victory is not for a select few super-saints. It is the normal Christian life—what God intends for all His children. The fact that so few experience it does not mean it is unavailable; it only means that few have discovered the secret.\n\nThe secret is simple, though not easy to learn: it is complete trust in God, moment by moment, for everything.",
+    verse: "John 15:11",
+    verseText: "These things have I spoken unto you, that my joy might remain in you, and that your joy might be full.",
+    reflection: [
+      "Is your Christian life characterized more by struggle or by rest?",
+      "Why do you think so few Christians experience the 'happy life' Christ offers?",
+      "What might it mean to trust God 'moment by moment, for everything'?"
+    ],
+    prayer: "Lord, I want the full joy Thou hast promised. I am tired of struggling and failing. Reveal to me the secret of the happy, victorious life. Teach me to trust Thee completely. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 4: How to Enter In",
+    content: "The way into this life of rest is simply by faith. Just as we entered salvation by faith, so we enter the victorious life by faith. But many do not understand what faith means.\n\nFaith is not feeling. You may not feel anything at all and yet be exercising real faith. Many make the mistake of looking to their feelings for evidence that they have believed. But feelings are not faith.\n\nFaith is not effort. Some try very hard to believe, straining and struggling as if faith were something to be achieved. But faith is exactly the opposite—it is a resting, a ceasing from effort.\n\nWhat then is faith? Faith is taking God at His word. It is saying, 'God has promised, and I believe Him.' It is committing yourself to God's keeping and leaving yourself there.\n\nThere is nothing mystical about it. When you sit in a chair, you trust it to hold you. When you deposit money in a bank, you trust the bank to keep it. Faith in God is simply trusting Him to do what He has promised.",
+    verse: "Hebrews 4:3",
+    verseText: "For we which have believed do enter into rest.",
+    reflection: [
+      "How have you confused faith with feelings or effort?",
+      "What does it mean practically to 'take God at His word'?",
+      "What promise of God do you need to trust right now?"
+    ],
+    prayer: "Lord, I take Thee at Thy word. I cease from my own efforts and rest in Thy promises. I commit myself to Thy keeping and leave myself there by faith. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 8: Difficulties Concerning the Will",
+    content: "The greatest difficulty most Christians have in entering the life of rest is surrendering their wills to God. They want God's best, but they want to keep control. They are willing for God to bless them, but not to rule them.\n\nBut the secret of happiness is found in one thing: making God's will our will. Not grudging submission, but glad surrender. Not saying, 'Thy will be done' with a sigh, but with a shout of joy.\n\nMany Christians see God's will as something to be endured rather than embraced. They picture Him as a hard taskmaster whose will is sure to be unpleasant. Nothing could be further from the truth.\n\nGod's will is 'good, and acceptable, and perfect.' It is the very best thing that could possibly happen to us. When we truly see this, we will stop resisting and start resting.\n\nThe surrendered will is not a weak will—it is the strongest will of all. For it is united with the will of Omnipotence.",
+    verse: "Romans 12:2",
+    verseText: "And be not conformed to this world: but be ye transformed by the renewing of your mind, that ye may prove what is that good, and acceptable, and perfect, will of God.",
+    reflection: [
+      "What areas of your life are you reluctant to surrender to God?",
+      "How does seeing God's will as 'good, acceptable, and perfect' change your attitude?",
+      "What would it look like to say 'Thy will be done' with a shout of joy?"
+    ],
+    prayer: "Father, I surrender my will to Thine—not with resignation but with joy. Thy will is good and perfect. Unite my will with Thine. Let me find my happiness in Thy will. Amen."
+  }
+];
+
+// George Müller's "Answers to Prayer" (Public Domain, 1895)
+const answersToPrayerLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "The Commencement of the Orphan Work",
+    content: "In November 1835, I was stirred up to pray about establishing an Orphan-House. The reasons were: First, that God might be glorified, should He be pleased to furnish me with the means, in its being seen that it is not a vain thing to trust in Him. Second, the spiritual welfare of the orphans.\n\nI had no means to start such a work. I had no buildings, no funds, no prospect of support. But I had God.\n\nI asked no man for money. I made no appeals. I simply laid the matter before God in prayer, believing that He who had put the work into my heart would provide the means to accomplish it.\n\nOn December 10, 1835, I received one shilling—the first donation toward this work. By the next morning, I had received £50 more. Day by day the money came in, unsolicited, in answer to prayer alone.\n\nOver the years that followed, I cared for over ten thousand orphans. We never went into debt. We never asked anyone for money. We simply prayed—and God provided. 'Behold, I am the Lord, the God of all flesh: is there anything too hard for me?'",
+    verse: "Philippians 4:19",
+    verseText: "But my God shall supply all your need according to his riches in glory by Christ Jesus.",
+    reflection: [
+      "Why did Müller refuse to ask anyone for money?",
+      "What can we learn from his approach to beginning a work for God?",
+      "How does this testimony increase your faith in prayer?"
+    ],
+    prayer: "Lord, Thou art the God who provides. Increase my faith to trust Thee for the impossible. Teach me to bring my needs to Thee alone, believing that nothing is too hard for Thee. Amen."
+  },
+  {
+    id: 2,
+    title: "When There Was Not a Penny in Hand",
+    content: "One morning we had no food for the orphans. Not a penny was in hand. But I was as sure that God would provide as if the money were already there.\n\nI sent word to the matron to have the children ready for breakfast, as usual. She was astonished, knowing there was nothing to give them. But I told her to have them seated—the Lord would provide.\n\nWe were about to sit down to empty tables when there came a knock at the door. A baker stood there with enough bread for everyone. 'I could not sleep last night,' he said. 'Something told me you would need bread this morning, so I got up at 2 a.m. to bake it.'\n\nBefore the bread was consumed, another knock came. A milkman's cart had broken down in front of the orphanage, and he needed to empty his load. 'Would you like the milk?' he asked.\n\nGod sent bread and milk to those who trusted Him. Not always dramatically—but always faithfully.",
+    verse: "Matthew 6:33",
+    verseText: "But seek ye first the kingdom of God, and his righteousness; and all these things shall be added unto you.",
+    reflection: [
+      "How did Müller demonstrate faith even before the answer came?",
+      "What does this story teach about God's timing?",
+      "Are there needs in your life that you should trust to God rather than worrying about?"
+    ],
+    prayer: "Father, I trust Thee to provide for my needs. When I cannot see how, help me to believe Thou canst. Let me seek first Thy kingdom, trusting all these things to be added. Amen."
+  },
+  {
+    id: 3,
+    title: "The Secret of Müller's Prayer Life",
+    content: "Many have asked me the secret of my service. I can only give one answer: I have made it a habit to read through the whole Bible through, four or five times a year. But I always find some new light.\n\nI have also learned that prayer and the Word must go together. I do not mean repeating prayers from a book. I mean pouring out my heart before God about every concern—large or small.\n\nAnother secret has been waiting upon God until the answer comes. I do not give up. I do not conclude that the answer is 'No' simply because it does not come at once. I pray until I receive—or until God clearly shows me His will is otherwise.\n\nI have learned to test everything by Scripture. I seek to have no will of my own. I ask God to work in me to will and to do of His good pleasure. I make a study of what His will is.\n\nAbove all, I have learned that what God wants is faith—simple, childlike faith that takes Him at His word.",
+    verse: "James 5:16",
+    verseText: "The effectual fervent prayer of a righteous man availeth much.",
+    reflection: [
+      "What role did Scripture play in Müller's prayer life?",
+      "What does it mean to 'wait upon God until the answer comes'?",
+      "What aspect of Müller's prayer life could you implement this week?"
+    ],
+    prayer: "Lord, teach me to pray like Müller prayed—with Scripture, with persistence, with faith. Help me to seek Thy will above my own. Give me childlike trust in Thy Word. Amen."
+  }
+];
+
+// R.A. Torrey's "How to Pray" (Public Domain, 1900)
+const howToPrayLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: The Importance of Prayer",
+    content: "Prayer is the key that unlocks all the storehouses of God's infinite grace and power. All that God is and all that God has is at the disposal of prayer.\n\nPrayer can do anything that God can do, and as God can do anything, prayer is omnipotent. No one can put any limit on what prayer can do.\n\nThe lack of prayer is the cause of the lack of power. We are not straitened in God; we are straitened in ourselves. The problem is not that God's arm is shortened; the problem is that we do not ask.\n\nPrayer is the secret of the great souls of history. Every mighty revival began with prayer. Every great missionary thrust was born in prayer. Every significant advance of the kingdom has had its roots in the prayer closet.\n\nIf we wish to be men and women of power—power for service, power for God, power over sin—we must be men and women of prayer. There is no other way.",
+    verse: "James 4:2",
+    verseText: "Ye have not, because ye ask not.",
+    reflection: [
+      "Why is prayerlessness the cause of powerlessness in Christian life?",
+      "What would change in your life if you truly believed prayer could do 'anything God can do'?",
+      "What is preventing you from becoming a person of prayer?"
+    ],
+    prayer: "Lord, forgive my prayerlessness. I want to be a person of power—power for service, for righteousness, for Thee. Teach me to pray. Make me a person of the prayer closet. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 3: Praying Unto God",
+    content: "We should always remember that we are praying to God. That sounds simple, but many forget it. They are thinking about their prayers—how well or how poorly they pray—rather than thinking about God.\n\nWhen you pray, lift your eyes to God. See Him on His throne. Remember His power, His wisdom, His love. Consider that nothing is impossible to Him.\n\nPrayer is coming into the audience chamber of the King of kings. Prayer is pouring out your heart to your Father who loves you. Prayer is speaking with your Friend who sticks closer than a brother.\n\nThink about God. Think about His ability to answer. Think about His willingness to help. Think about His faithfulness to His promises.\n\nMany prayers fail because they are addressed to the wrong person—to ourselves, to our feelings, to the thin air. True prayer goes straight to God.",
+    verse: "Hebrews 4:16",
+    verseText: "Let us therefore come boldly unto the throne of grace, that we may obtain mercy, and find grace to help in time of need.",
+    reflection: [
+      "When you pray, are you focused on God or on your own praying?",
+      "How does thinking about God's character affect your prayers?",
+      "What does it mean to 'come boldly' to the throne of grace?"
+    ],
+    prayer: "Father, I lift my eyes to Thee. Thou art the Almighty God, the loving Father, the faithful Friend. I come boldly to Thy throne. Hear my prayer and answer according to Thy grace. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 6: Praying in the Name of Jesus",
+    content: "To pray in the name of Jesus is not simply to tack His name at the end of a prayer. It means far more than that.\n\nTo pray in Jesus' name is to pray in His merit, not our own. We come to God not because we are worthy but because Jesus is worthy. His righteousness is our passport into God's presence.\n\nTo pray in Jesus' name is to pray as His representative. It is to pray for what He would pray for, what advances His kingdom and glorifies His name.\n\nTo pray in Jesus' name is to pray in His authority. He has given us the right to use His name. 'Whatsoever ye shall ask in my name, that will I do, that the Father may be glorified in the Son.'\n\nWhat power is in the name of Jesus! At that name, every knee shall bow. At that name, demons flee. At that name, heaven's resources are released. Learn to pray in the mighty name of Jesus.",
+    verse: "John 14:13-14",
+    verseText: "And whatsoever ye shall ask in my name, that will I do, that the Father may be glorified in the Son. If ye shall ask any thing in my name, I will do it.",
+    reflection: [
+      "What does it really mean to pray 'in Jesus' name'?",
+      "How does praying in Jesus' name change what you ask for?",
+      "Why is Jesus' name so powerful in prayer?"
+    ],
+    prayer: "Lord Jesus, I come to the Father in Thy name—not in my merit but in Thine. As Thy representative, I pray for what glorifies Thee. In Thy authority, I ask. Answer, Lord, for Thy name's sake. Amen."
+  }
+];
+
+// Hudson Taylor's "Union and Communion" (Public Domain, 1894)
+const unionAndCommunionLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: The Unsatisfied Life",
+    content: "Too many Christians live an unsatisfied life. They know Christ as Savior but not as the Lover of their souls. They have life but not abundant life. They exist, but they do not overflow.\n\nThe Song of Solomon speaks of an intimacy with Christ that many believers have never experienced. 'Let him kiss me with the kisses of his mouth: for thy love is better than wine.'\n\nThis is not the language of formality but of passion. This is not cold orthodoxy but warm devotion. This is not religion but relationship—the most intimate relationship possible.\n\nChrist desires this intimacy with you. He says, 'Behold, I stand at the door, and knock.' He wants to come in and sup with you—to share fellowship, communion, intimacy.\n\nAre you satisfied with where you are in your relationship with Christ? Or do you sense that there is more—much more—that you have not yet experienced?",
+    verse: "Song of Solomon 1:2",
+    verseText: "Let him kiss me with the kisses of his mouth: for thy love is better than wine.",
+    reflection: [
+      "In what ways has your Christian life been 'unsatisfied'?",
+      "What does it mean to know Christ not just as Savior but as the 'Lover of your soul'?",
+      "How intimate is your relationship with Christ right now?"
+    ],
+    prayer: "Lord Jesus, I want more of Thee. I am not satisfied with a formal, distant relationship. Draw me closer. Let me know Thee intimately. Let Thy love satisfy my deepest longings. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 2: Nearness to Christ",
+    content: "Christ invites us to nearness. 'Draw me, we will run after thee.' We cannot draw ourselves; we must be drawn. But when He draws, we run—eagerly, willingly, joyfully.\n\nNotice the progression: 'Draw me' is singular, but 'we will run' is plural. When one soul is drawn near to Christ, others are influenced and follow. Nearness to Christ always results in drawing others.\n\nBut there is a condition: 'The king hath brought me into his chambers.' Not merely into His presence but into His chambers—the private rooms, the place of intimacy. This is where secrets are shared, where love is expressed, where hearts are united.\n\nMany Christians stay in the outer courts. They know about Christ but do not know Him. They serve Him but do not commune with Him. They work for Him but do not rest in Him.\n\nChrist calls you into His chambers. Will you come?",
+    verse: "Song of Solomon 1:4",
+    verseText: "Draw me, we will run after thee: the king hath brought me into his chambers.",
+    reflection: [
+      "What does it mean to be 'drawn' by Christ rather than to draw yourself?",
+      "How does your nearness to Christ affect others around you?",
+      "What would it mean for you to move from the outer courts into His chambers?"
+    ],
+    prayer: "Lord, draw me. I cannot draw myself to Thee. But when Thou drawest, I will run. Bring me into Thy chambers. Let me know the intimacy Thou hast prepared for those who love Thee. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 4: The Joy of Union",
+    content: "The bride says, 'I sat down under his shadow with great delight, and his fruit was sweet to my taste.' Here is the posture of communion—sitting, resting, delighting.\n\nToo many Christians are too busy to sit with Christ. They are always running, always doing, always working. But intimacy requires stillness. Communion requires time. Love requires attention.\n\n'His shadow'—the shadow of Christ is protection from the scorching heat of life's burdens. In His shadow we find rest from our labors, peace from our struggles, comfort from our sorrows.\n\n'His fruit was sweet'—not bitter, not merely tolerable, but sweet. When we are in close communion with Christ, we find that He satisfies completely. His love is sweet. His Word is sweet. His presence is sweet.\n\nLearn to sit at His feet. Learn to rest in His shadow. Learn to taste His sweetness. This is the secret of the abundant life.",
+    verse: "Song of Solomon 2:3",
+    verseText: "As the apple tree among the trees of the wood, so is my beloved among the sons. I sat down under his shadow with great delight, and his fruit was sweet to my taste.",
+    reflection: [
+      "What does 'sitting under His shadow' look like in your daily life?",
+      "Are you too busy for communion with Christ?",
+      "What would it take to taste and see that the Lord is 'sweet'?"
+    ],
+    prayer: "Lord Jesus, I want to sit under Thy shadow with great delight. Still my busy heart. Let me taste Thy sweetness. In Thy presence I find rest, and Thy fruit is sweeter than any earthly pleasure. Amen."
+  }
+];
+
+// Oswald Chambers' "My Utmost for His Highest" (Public Domain, 1927)
+const myUtmostLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "January 1: Let Us Keep to the Point",
+    content: "'My Utmost for His Highest.' This is the motto for the Christian life. Not my minimum, but my utmost. Not for my glory, but for His highest purpose.\n\nMy determination is to be my utmost for His highest, my best for His glory. I am here not to serve my purposes but His. I am not my own; I have been bought with a price.\n\nThe great challenge of the Christian life is to stay focused on this purpose. We are so easily distracted. We substitute lesser goods for the greatest good. We lose sight of the main thing.\n\nWhat is the main thing? 'That I may know him.' Not that I may know about Him, but that I may know Him personally, intimately, increasingly. Everything else is secondary.\n\nLet us keep to the point. In a world of distractions, let us be single-minded. In an age of half-heartedness, let us give our utmost. For His highest—that is the goal.",
+    verse: "Philippians 3:10",
+    verseText: "That I may know him, and the power of his resurrection, and the fellowship of his sufferings, being made conformable unto his death.",
+    reflection: [
+      "What does 'my utmost for His highest' mean for your daily life?",
+      "What distractions keep you from knowing Christ more deeply?",
+      "Are you giving your minimum or your utmost to God?"
+    ],
+    prayer: "Lord, I want to give my utmost for Thy highest. I am Thine, not my own. Help me to know Thee—not about Thee, but Thee. Keep me focused on what matters most. Amen."
+  },
+  {
+    id: 2,
+    title: "January 13: The Cost of Discipleship",
+    content: "'If any man come to me, and hate not his father, and mother...he cannot be my disciple.' Jesus did not say this to harden us but to help us. He was warning us of the cost.\n\nDiscipleship is costly. It costs you your self-will, your independence, your right to choose your own way. It costs you everything—in exchange for everything.\n\nMany start with enthusiasm but fall away when the cost becomes clear. They want the benefits of the kingdom without the demands of the King. But Jesus is looking for disciples, not admirers.\n\nThe word 'hate' seems harsh, but Jesus is making a comparison. Your love for Him must be so great that all other loves pale in comparison—seem like hate by contrast.\n\nAre you willing to pay the price? Are you prepared to put Christ above all—above family, above career, above comfort, above life itself? This is what it means to be His disciple.",
+    verse: "Luke 14:26",
+    verseText: "If any man come to me, and hate not his father, and mother, and wife, and children, and brethren, and sisters, yea, and his own life also, he cannot be my disciple.",
+    reflection: [
+      "What has discipleship cost you so far?",
+      "Is there anything you are holding back from Christ?",
+      "What does it mean to love Christ so much that all other loves seem like 'hate' by comparison?"
+    ],
+    prayer: "Lord Jesus, I want to be Thy disciple, not just Thy admirer. I count the cost and choose to follow. Let my love for Thee surpass all other loves. I give Thee everything. Amen."
+  },
+  {
+    id: 3,
+    title: "March 6: Am I My Brother's Keeper?",
+    content: "Cain's question reveals the fundamental selfishness of sin: 'Am I my brother's keeper?' The answer is yes. We are responsible for one another.\n\nGod does not put us in isolation. He puts us in community, in relationship, in responsibility. We are not saved to be spiritual hermits but to be part of a body.\n\nThe mark of true Christianity is not just love for God but love for one another. 'By this shall all men know that ye are my disciples, if ye have love one to another.'\n\nThis is not mere sentiment. It is sacrificial service. It is bearing one another's burdens. It is preferring others above ourselves. It is laying down our lives for the brethren.\n\nYes, you are your brother's keeper. The question is not whether you are responsible but whether you will accept the responsibility. Will you care for those God has put in your life?",
+    verse: "1 John 3:16",
+    verseText: "Hereby perceive we the love of God, because he laid down his life for us: and we ought to lay down our lives for the brethren.",
+    reflection: [
+      "Do you tend toward spiritual independence or interdependence?",
+      "Who has God put in your life that you are responsible to love and serve?",
+      "What does it mean practically to 'lay down your life for the brethren'?"
+    ],
+    prayer: "Father, forgive my selfishness. Help me to see that I am my brother's keeper. Teach me to love not in word only but in deed and truth. Let me lay down my life for others. Amen."
+  },
+  {
+    id: 4,
+    title: "May 7: The Vision and the Verity",
+    content: "God gives us visions of what we may become, but the vision is always followed by the valley. The mountaintop experience must be tested in the flatland of ordinary life.\n\nPeter saw the Transfiguration—Christ in His glory. But then he had to come down from the mountain and face a demon-possessed boy, failure, and denial. The vision was real, but so was the valley.\n\nThis is God's way. He shows us what can be, then tests us to see if we will believe it when we cannot see it. The vision gives us the goal; the valley proves our faith.\n\nDo not be discouraged when the valley follows the vision. This is normal. The vision is not taken away—it is being worked into you through the discipline of the valley.\n\nHold onto the vision, even when the valley seems to deny it. In time, the vision will become verity—reality. What God has shown you, He will accomplish in you.",
+    verse: "2 Peter 1:17-18",
+    verseText: "For he received from God the Father honour and glory, when there came such a voice to him from the excellent glory, This is my beloved Son, in whom I am well pleased. And this voice which came from heaven we heard, when we were with him in the holy mount.",
+    reflection: [
+      "What visions has God given you that are being tested in the valley?",
+      "How do you respond when the valley seems to contradict the vision?",
+      "How is the valley working the vision into reality in your life?"
+    ],
+    prayer: "Lord, help me hold onto the vision even in the valley. I believe what Thou hast shown me. Work it into me through the discipline of difficulty. Turn the vision into verity. Amen."
+  },
+  {
+    id: 5,
+    title: "December 31: Yesterday",
+    content: "As this year closes, what will you do with yesterday? Will you carry its failures into the new year? Will you drag its regrets behind you?\n\nThe beauty of the Christian life is that we can leave yesterday behind. 'Forgetting those things which are behind, and reaching forth unto those things which are before.'\n\nThis does not mean we learn nothing from the past. But it means we are not imprisoned by it. Our failures are forgiven. Our sins are covered. Our mistakes are redeemed.\n\n'His compassions fail not. They are new every morning.' What a promise! Not old compassions, but new ones. Not stale mercies, but fresh ones. Every morning is a new beginning.\n\nAs you face the new year, leave yesterday with God. Take from it the lessons He taught you, but leave the guilt, the regret, the failure. Press forward to what lies ahead. Christ calls you onward.",
+    verse: "Philippians 3:13-14",
+    verseText: "Brethren, I count not myself to have apprehended: but this one thing I do, forgetting those things which are behind, and reaching forth unto those things which are before, I press toward the mark for the prize of the high calling of God in Christ Jesus.",
+    reflection: [
+      "What from the past year do you need to leave behind?",
+      "What lessons has God taught you that you should carry forward?",
+      "What does it mean practically to 'press toward the mark'?"
+    ],
+    prayer: "Father, I leave yesterday with Thee. I thank Thee for Thy mercies that are new every morning. I press forward to what lies ahead. Let me apprehend that for which I have been apprehended by Christ. Amen."
+  }
+];
+
+// A.W. Pink's "The Attributes of God" (Public Domain, 1930)
+const attributesOfGodLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: The Solitariness of God",
+    content: "In the beginning, God. There was a time when God dwelt alone. Before there was any creature, God was. He needed nothing outside Himself. He was complete in Himself—self-existent, self-sufficient, self-satisfied.\n\nGod did not create because He was lonely or because He needed companions. He created for His own glory, according to His own pleasure. 'For thy pleasure they are and were created.'\n\nThis truth is humbling. We are not necessary to God. He existed in perfect blessedness for an eternity before we were. He would lose nothing of His essential glory if we had never been.\n\nAnd yet, wonder of wonders, He chose to create us. He chose to love us. He chose to redeem us. Not because He needed us, but because He wanted us.\n\nUnderstanding God's solitariness is the beginning of true worship. It puts us in our proper place—as recipients of His grace, not contributors to His glory.",
+    verse: "Isaiah 40:13-14",
+    verseText: "Who hath directed the Spirit of the LORD, or being his counsellor hath taught him? With whom took he counsel, and who instructed him, and taught him in the path of judgment, and taught him knowledge, and shewed to him the way of understanding?",
+    reflection: [
+      "What does it mean that God existed in perfect blessedness before creation?",
+      "How does understanding God's self-sufficiency change your perspective on worship?",
+      "Why is it humbling—and yet wonderful—that God chose to create and love us?"
+    ],
+    prayer: "Lord, Thou art complete in Thyself, needing nothing. And yet Thou hast chosen to love me. This humbles me and fills me with wonder. I worship Thee, the self-existent, self-sufficient God. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 3: The Sovereignty of God",
+    content: "God is sovereign. This means He is supreme, absolute, independent. He does according to His will in the army of heaven and among the inhabitants of the earth. None can stay His hand or say to Him, 'What doest thou?'\n\nGod's sovereignty extends to all things. Not a sparrow falls without His will. Not a hair of our head is outside His control. All events, all circumstances, all creatures—all are under His absolute dominion.\n\nThis is not fatalism. Fatalism believes in blind chance or impersonal force. Sovereignty believes in a loving, wise, all-powerful God who works all things according to His good purpose.\n\nMany reject this doctrine because they want to be sovereign themselves. They want to control their own destinies. But this is the essence of human pride—placing self on the throne that belongs to God alone.\n\nTo bow to God's sovereignty is to find peace. When we cease fighting against His will and submit to His wise and loving rule, we find rest for our souls.",
+    verse: "Daniel 4:35",
+    verseText: "And all the inhabitants of the earth are reputed as nothing: and he doeth according to his will in the army of heaven, and among the inhabitants of the earth: and none can stay his hand, or say unto him, What doest thou?",
+    reflection: [
+      "What is the difference between God's sovereignty and fatalism?",
+      "In what areas of your life do you struggle to submit to God's sovereign will?",
+      "How does accepting God's sovereignty bring peace?"
+    ],
+    prayer: "Sovereign Lord, I bow before Thy throne. Thou doest all things well. I cease my fighting and submit to Thy wise and loving rule. Thy will be done, on earth as it is in heaven. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 9: The Love of God",
+    content: "God is love. This is His nature, not merely His attitude. He does not merely act lovingly; He is love. Love is the very essence of His being.\n\nBut we must not sentimentalize God's love. It is not weak or indulgent. It is holy love—love that is compatible with His justice, His wrath against sin, His sovereign purposes.\n\nGod's love is sovereign—He loves whom He will. It is eternal—He loved us before the foundation of the world. It is infinite—it is boundless, measureless, unfathomable. It is unchangeable—He loves us the same yesterday, today, and forever.\n\nThe supreme demonstration of God's love is the cross. 'Herein is love, not that we loved God, but that he loved us, and sent his Son to be the propitiation for our sins.'\n\nWe cannot earn God's love or lose it. It is fixed upon us by His sovereign choice. It holds us fast through every storm. It will never let us go.",
+    verse: "1 John 4:10",
+    verseText: "Herein is love, not that we loved God, but that he loved us, and sent his Son to be the propitiation for our sins.",
+    reflection: [
+      "What is the difference between God 'being love' and God 'acting lovingly'?",
+      "How does the cross demonstrate the nature of God's love?",
+      "How does knowing that God's love is sovereign, eternal, infinite, and unchangeable affect your security in Him?"
+    ],
+    prayer: "Father, Thou art love. I cannot comprehend Thy love, but I rest in it. Thou hast loved me with an everlasting love. Help me to grasp how wide and long and high and deep is the love of Christ. Amen."
+  }
+];
+
 // Map study IDs to their lesson sets
 const studyLessonsMap: Record<string, StudyLesson[]> = {
   "abide-in-christ": abideInChristLessons,
@@ -446,7 +1226,21 @@ const studyLessonsMap: Record<string, StudyLesson[]> = {
   "power-through-prayer": powerThroughPrayerLessons,
   "all-of-grace": allOfGraceLessons,
   "waiting-on-god": waitingOnGodLessons,
-  "humility": humilityLessons
+  "humility": humilityLessons,
+  "absolute-surrender": absoluteSurrenderLessons,
+  "with-christ-school-of-prayer": withChristSchoolOfPrayerLessons,
+  "treasury-of-david": treasuryOfDavidLessons,
+  "purpose-in-prayer": purposeInPrayerLessons,
+  "weapon-of-prayer": weaponOfPrayerLessons,
+  "imitation-of-christ": imitationOfChristLessons,
+  "practice-presence-of-god": practicePresenceOfGodLessons,
+  "pilgrims-progress": pilgrimsProgressLessons,
+  "christians-secret-happy-life": christiansSecretHappyLifeLessons,
+  "answers-to-prayer": answersToPrayerLessons,
+  "how-to-pray": howToPrayLessons,
+  "union-and-communion": unionAndCommunionLessons,
+  "my-utmost-for-his-highest": myUtmostLessons,
+  "attributes-of-god": attributesOfGodLessons
 };
 
 // Helper function to get lessons for a specific study
