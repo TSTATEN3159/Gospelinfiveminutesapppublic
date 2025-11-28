@@ -35,6 +35,7 @@ import warmBibleDeskImage from '@assets/stock_images/person_writing_journ_f6e312
 import mountainLakeImage from '@assets/stock_images/hands_holding_bible__58f7c786.jpg';
 import forestPathImage from '@assets/stock_images/forest_path_sunlight_7c167ac0.jpg';
 import spreadWordImage from '@assets/stock_images/spreading_god\'s_word_2db1f7d8.jpg';
+import woodenCrossImage from '@assets/stock_images/wooden_cross_sunset__ea9ca9d4.jpg';
 
 interface User {
   firstName: string;
@@ -281,54 +282,60 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
 
         {/* The Good News of Jesus Christ - Most Important Card */}
         <div 
-          className="relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-transform shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+          className="relative overflow-hidden rounded-3xl cursor-pointer active:scale-[0.98] transition-transform shadow-[0_25px_65px_rgba(0,0,0,0.5)] border border-amber-900/50"
           onClick={() => onNavigate?.('gospel')}
           data-testid="card-gospel-invitation"
         >
-          {/* Beautiful gradient background with warm, inviting colors */}
-          <div className="absolute inset-0 bg-gradient-to-br from-rose-600 via-amber-500 to-orange-400" />
+          {/* Warm gradient background */}
+          <div className="absolute inset-0 bg-gradient-to-b from-amber-900 via-orange-950 to-black" />
           
-          {/* Radial glow effect for warmth */}
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.3),transparent_60%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,200,100,0.2),transparent_40%)]" />
+          {/* Radial glow effect */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(251,191,36,0.15),transparent_50%)]" />
           
-          {/* Cross silhouette subtle overlay */}
-          <div className="absolute top-4 right-4 w-20 h-20 opacity-10">
-            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-full bg-white rounded-full" />
-            <div className="absolute top-1/4 left-0 w-full h-3 bg-white rounded-full" />
-          </div>
-          
-          <div className="relative px-6 py-8 text-white">
-            {/* Glowing icon */}
-            <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)]">
-              <Heart className="w-8 h-8 text-white drop-shadow-lg" fill="currentColor" />
+          <div className="relative flex">
+            {/* Left side - High-definition photo */}
+            <div className="w-[42%] relative">
+              <img 
+                src={woodenCrossImage}
+                alt="The Cross of Jesus Christ"
+                className="absolute inset-0 w-full h-full object-cover"
+              />
+              {/* Gradient fade to content */}
+              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-amber-900/90" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/20" />
             </div>
             
-            {/* Main title */}
-            <h3 className="text-2xl font-bold text-center mb-2 drop-shadow-md">
-              The Good News
-            </h3>
-            <p className="text-center text-white/90 text-sm font-medium mb-4">
-              of Jesus Christ
-            </p>
-            
-            {/* Compelling description */}
-            <p className="text-center text-white/95 text-base leading-relaxed mb-6 max-w-xs mx-auto">
-              Discover the message that has transformed billions of lives throughout history — and could change yours today.
-            </p>
-            
-            {/* Call to action button */}
-            <div className="flex justify-center mb-4">
-              <div className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-6 py-3 rounded-full transition-all shadow-lg">
-                <span className="font-semibold text-white">Begin Your Journey</span>
-                <BookOpen className="w-5 h-5 text-white" />
+            {/* Right side - Content */}
+            <div className="flex-1 px-5 py-6 relative z-10">
+              {/* Header label */}
+              <p className="text-xs uppercase tracking-[0.18em] text-amber-300/80 mb-2">
+                THE GOSPEL
+              </p>
+              
+              {/* Main title */}
+              <h3 className="text-xl font-bold text-amber-50 leading-tight mb-1">
+                The Good News
+              </h3>
+              <p className="text-amber-200/90 text-sm font-medium mb-3">
+                of Jesus Christ
+              </p>
+              
+              {/* Description */}
+              <p className="text-amber-100/80 text-sm leading-relaxed mb-4">
+                Discover the message that has transformed billions of lives — and could change yours today.
+              </p>
+              
+              {/* Call to action */}
+              <div className="inline-flex items-center gap-2 bg-amber-500/20 hover:bg-amber-500/30 backdrop-blur-sm px-4 py-2.5 rounded-full transition-all border border-amber-400/30">
+                <span className="font-semibold text-amber-100 text-sm">Begin Your Journey</span>
+                <Heart className="w-4 h-4 text-amber-300" fill="currentColor" />
               </div>
-            </div>
-            
-            {/* Tags */}
-            <div className="flex items-center justify-center gap-3 text-white/80 text-xs">
-              <span className="bg-white/15 px-3 py-1 rounded-full">5 min read</span>
-              <span className="bg-white/15 px-3 py-1 rounded-full">Life-changing</span>
+              
+              {/* Tags */}
+              <div className="flex items-center gap-2 mt-4 text-amber-200/60 text-xs">
+                <span className="bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-400/20">5 min</span>
+                <span className="bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-400/20">Life-changing</span>
+              </div>
             </div>
           </div>
         </div>

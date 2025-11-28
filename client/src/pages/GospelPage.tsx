@@ -7,6 +7,16 @@ import { useToast } from '@/hooks/use-toast';
 import { Share } from '@capacitor/share';
 import { Capacitor } from '@capacitor/core';
 
+// Stock images for Gospel presentation
+import sunriseImage from '@assets/stock_images/beautiful_sunrise_go_5ee50391.jpg';
+import stormCloudsImage from '@assets/stock_images/dramatic_storm_cloud_d3bb5316.jpg';
+import woodenCrossImage from '@assets/stock_images/wooden_cross_mountai_a2b55c31.jpg';
+import prayingHandsImage from '@assets/stock_images/person_praying_hands_0c7284fd.jpg';
+import worshipHandsImage from '@assets/stock_images/church_worship_hands_478f58d8.jpg';
+import peoplePrayingImage from '@assets/stock_images/people_praying_toget_0e6a8b15.jpg';
+import churchInteriorImage from '@assets/stock_images/modern_church_interi_1e9df37b.jpg';
+import crossSilhouetteImage from '@assets/stock_images/cross_silhouette_sun_9382d340.jpg';
+
 interface GospelStep {
   id: number;
   title: string;
@@ -16,6 +26,7 @@ interface GospelStep {
   reference: string;
   icon: 'heart' | 'cross' | 'sparkles' | 'refresh' | 'book';
   gradient: string;
+  image: string;
 }
 
 const gospelSteps: GospelStep[] = [
@@ -27,7 +38,8 @@ const gospelSteps: GospelStep[] = [
     scripture: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",
     reference: "John 3:16",
     icon: 'heart',
-    gradient: 'from-rose-500 to-pink-600'
+    gradient: 'from-rose-500 to-pink-600',
+    image: sunriseImage
   },
   {
     id: 2,
@@ -37,7 +49,8 @@ const gospelSteps: GospelStep[] = [
     scripture: "For all have sinned, and come short of the glory of God.",
     reference: "Romans 3:23",
     icon: 'cross',
-    gradient: 'from-slate-600 to-slate-800'
+    gradient: 'from-slate-600 to-slate-800',
+    image: stormCloudsImage
   },
   {
     id: 3,
@@ -47,7 +60,8 @@ const gospelSteps: GospelStep[] = [
     scripture: "But God commendeth his love toward us, in that, while we were yet sinners, Christ died for us.",
     reference: "Romans 5:8",
     icon: 'sparkles',
-    gradient: 'from-amber-500 to-orange-600'
+    gradient: 'from-amber-500 to-orange-600',
+    image: woodenCrossImage
   },
   {
     id: 4,
@@ -57,7 +71,8 @@ const gospelSteps: GospelStep[] = [
     scripture: "Therefore if any man be in Christ, he is a new creature: old things are passed away; behold, all things are become new.",
     reference: "2 Corinthians 5:17",
     icon: 'refresh',
-    gradient: 'from-violet-500 to-purple-600'
+    gradient: 'from-violet-500 to-purple-600',
+    image: prayingHandsImage
   },
   {
     id: 5,
@@ -67,7 +82,8 @@ const gospelSteps: GospelStep[] = [
     scripture: "That if thou shalt confess with thy mouth the Lord Jesus, and shalt believe in thine heart that God hath raised him from the dead, thou shalt be saved.",
     reference: "Romans 10:9",
     icon: 'book',
-    gradient: 'from-emerald-500 to-teal-600'
+    gradient: 'from-emerald-500 to-teal-600',
+    image: worshipHandsImage
   }
 ];
 
@@ -244,41 +260,56 @@ export default function GospelPage({ onNavigate }: GospelPageProps) {
             animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -50 }}
             transition={{ duration: 0.3 }}
-            className="p-6 pb-32"
+            className="pb-32"
           >
-            {/* Icon */}
-            <div className={`mx-auto w-24 h-24 rounded-full bg-gradient-to-br ${step.gradient} flex items-center justify-center mb-8 shadow-2xl`}>
-              <IconComponent icon={step.icon} />
+            {/* Hero Image */}
+            <div className="relative h-48 overflow-hidden">
+              <img 
+                src={step.image}
+                alt={step.title}
+                className="w-full h-full object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-b from-slate-900/30 via-transparent to-slate-900" />
+              
+              {/* Icon overlay */}
+              <div className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-1/2">
+                <div className={`w-20 h-20 rounded-full bg-gradient-to-br ${step.gradient} flex items-center justify-center shadow-2xl border-4 border-slate-900`}>
+                  <IconComponent icon={step.icon} />
+                </div>
+              </div>
             </div>
 
-            {/* Step number */}
-            <p className="text-center text-white/60 text-sm mb-2">
-              Step {step.id} of {gospelSteps.length}
-            </p>
-
-            {/* Title */}
-            <h2 className="text-3xl font-bold text-center mb-2">
-              {step.title}
-            </h2>
-            
-            <p className="text-white/70 text-center mb-8">
-              {step.subtitle}
-            </p>
-
-            {/* Main content */}
-            <p className="text-lg leading-relaxed text-white/90 mb-8">
-              {step.content}
-            </p>
-
-            {/* Scripture */}
-            <Card className="bg-white/10 border-white/20 p-6">
-              <p className="text-lg italic text-white/90 mb-3 font-serif leading-relaxed">
-                "{step.scripture}"
+            {/* Text content with padding for icon */}
+            <div className="px-6 pt-14">
+              {/* Step number */}
+              <p className="text-center text-white/60 text-sm mb-2">
+                Step {step.id} of {gospelSteps.length}
               </p>
-              <p className="text-right text-amber-400 font-medium">
-                — {step.reference}
+
+              {/* Title */}
+              <h2 className="text-3xl font-bold text-center mb-2">
+                {step.title}
+              </h2>
+              
+              <p className="text-white/70 text-center mb-6">
+                {step.subtitle}
               </p>
-            </Card>
+
+              {/* Main content */}
+              <p className="text-lg leading-relaxed text-white/90 mb-6">
+                {step.content}
+              </p>
+
+              {/* Scripture */}
+              <Card className="bg-white/10 border-white/20 p-6">
+                <p className="text-lg italic text-white/90 mb-3 font-serif leading-relaxed">
+                  "{step.scripture}"
+                </p>
+                <p className="text-right text-amber-400 font-medium">
+                  — {step.reference}
+                </p>
+              </Card>
+            </div>
           </motion.div>
         </AnimatePresence>
 
