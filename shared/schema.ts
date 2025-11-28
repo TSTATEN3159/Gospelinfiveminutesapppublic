@@ -395,3 +395,78 @@ export const insertTriviaStatsSchema = createInsertSchema(triviaStats).pick({
 
 export type InsertTriviaStats = z.infer<typeof insertTriviaStatsSchema>;
 export type TriviaStatsRecord = typeof triviaStats.$inferSelect;
+
+// Friend invitation status enum
+export const invitationStatusEnum = pgEnum('invitation_status', ['pending', 'accepted', 'expired', 'cancelled']);
+
+// Friend Invitations - Manual friend invitation system
+export const friendInvitations = pgTable("friend_invitations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  inviterUserId: varchar("inviter_user_id").notNull().references(() => appUsers.id),
+  inviteeName: text("invitee_name").notNull(), // First name of the invited friend
+  inviteeEmail: text("invitee_email").notNull(), // Email of the invited friend
+  status: invitationStatusEnum("status").notNull().default("pending"),
+  inviteToken: varchar("invite_token").notNull().unique(), // Unique token for tracking invitation
+  message: text("message"), // Optional personal message
+  notifiedOnJoin: boolean("notified_on_join").notNull().default(false), // Whether inviter was notified when friend joined
+  joinedUserId: varchar("joined_user_id").references(() => appUsers.id), // The user ID when they join
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+  expiresAt: timestamp("expires_at").notNull().default(sql`now() + interval '30 days'`),
+}, (table) => {
+  return {
+    inviterEmailIdx: index('friend_invitations_inviter_email_idx').on(table.inviterUserId, table.inviteeEmail),
+  };
+});
+
+export const insertFriendInvitationSchema = createInsertSchema(friendInvitations).pick({
+  inviterUserId: true,
+  inviteeName: true,
+  inviteeEmail: true,
+  message: true,
+});
+
+export type InsertFriendInvitation = z.infer<typeof insertFriendInvitationSchema>;
+export type FriendInvitation = typeof friendInvitations.$inferSelect;
+
+// Reading Activity - Tracks what users are reading for sharing with friends
+export const readingActivity = pgTable("reading_activity", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  userId: varchar("user_id").notNull().references(() => appUsers.id),
+  activityType: text("activity_type").notNull(), // 'verse_read', 'devotional', 'plan_progress', 'bible_study'
+  reference: text("reference").notNull(), // e.g., "John 3:16", "Day 5 of Salvation Plan"
+  details: text("details"), // JSON with additional context
+  createdAt: timestamp("created_at").notNull().default(sql`now()`),
+}, (table) => {
+  return {
+    userCreatedIdx: index('reading_activity_user_created_idx').on(table.userId, table.createdAt),
+  };
+});
+
+export const insertReadingActivitySchema = createInsertSchema(readingActivity).pick({
+  userId: true,
+  activityType: true,
+  reference: true,
+  details: true,
+});
+
+export type InsertReadingActivity = z.infer<typeof insertReadingActivitySchema>;
+export type ReadingActivity = typeof readingActivity.$inferSelect;
+
+// User Privacy Settings - Controls what friends can see
+export const userPrivacySettings = pgTable("user_privacy_settings", {
+  userId: varchar("user_id").primaryKey().references(() => appUsers.id),
+  shareReadingActivity: boolean("share_reading_activity").notNull().default(false), // Allow friends to see reading activity
+  shareDevotionalProgress: boolean("share_devotional_progress").notNull().default(false),
+  sharePlanProgress: boolean("share_plan_progress").notNull().default(false),
+  updatedAt: timestamp("updated_at").notNull().default(sql`now()`),
+});
+
+export const insertUserPrivacySettingsSchema = createInsertSchema(userPrivacySettings).pick({
+  userId: true,
+  shareReadingActivity: true,
+  shareDevotionalProgress: true,
+  sharePlanProgress: true,
+});
+
+export type InsertUserPrivacySettings = z.infer<typeof insertUserPrivacySettingsSchema>;
+export type UserPrivacySettings = typeof userPrivacySettings.$inferSelect;
