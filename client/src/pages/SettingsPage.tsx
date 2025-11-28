@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Home, Cloud, Mic, RefreshCw, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Home, Cloud, Mic, RefreshCw, CheckCircle2, Activity } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { bibleService } from "../services/bibleService";
 import appStore from "@/lib/appStore";
@@ -15,6 +15,7 @@ import { TextSizeControls } from "@/components/TextSizeControls";
 import { ReminderSettings } from "@/components/settings/ReminderSettings";
 import { iCloudSync } from "@/lib/iCloudSync";
 import { siriShortcuts } from "@/lib/siriShortcuts";
+import { liveActivity } from "@/lib/liveActivity";
 import { Capacitor } from "@capacitor/core";
 import {
   AlertDialog,
@@ -95,6 +96,9 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
   const [iCloudSyncing, setICloudSyncing] = useState(false);
   const [lastSyncTime, setLastSyncTime] = useState<Date | null>(null);
   const [siriShortcutsSetup, setSiriShortcutsSetup] = useState<string[]>([]);
+  const [liveActivitySupported, setLiveActivitySupported] = useState(false);
+  const [liveActivityEnabled, setLiveActivityEnabled] = useState(false);
+  const [liveActivityChecking, setLiveActivityChecking] = useState(true);
   const isIOS = Capacitor.getPlatform() === 'ios';
   
   // Refresh Siri shortcuts state
@@ -135,13 +139,21 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
           
           // Get existing voice shortcuts
           await refreshSiriShortcuts();
+          
+          // Check Live Activity support
+          const liveActivityStatus = await liveActivity.isSupported();
+          setLiveActivitySupported(liveActivityStatus.supported);
+          setLiveActivityEnabled(liveActivityStatus.enabled && localStorage.getItem('liveActivityEnabled') === 'true');
+          setLiveActivityChecking(false);
         } catch (e) {
           console.error('[Settings] Failed to check Apple features:', e);
         } finally {
           setICloudCheckingAvailability(false);
+          setLiveActivityChecking(false);
         }
       } else {
         setICloudCheckingAvailability(false);
+        setLiveActivityChecking(false);
       }
     };
     checkAppleFeatures();
@@ -236,6 +248,49 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
         description: "Unable to add Siri shortcut",
         variant: "destructive",
       });
+    }
+  };
+  
+  // Handle Live Activity toggle
+  const handleLiveActivityToggle = async (checked: boolean) => {
+    setLiveActivityEnabled(checked);
+    localStorage.setItem('liveActivityEnabled', checked ? 'true' : 'false');
+    
+    if (checked) {
+      // Start Live Activity with current verse
+      try {
+        const { apiUrl } = await import('@/lib/api-config');
+        const response = await fetch(apiUrl('/api/daily-verse'));
+        const data = await response.json();
+        
+        if (data.success && data.verse) {
+          await liveActivity.startCountdown(data.verse.text, data.verse.reference);
+          toast({
+            title: "Live Activity Started",
+            description: "Daily verse now shows on your lock screen",
+          });
+        }
+      } catch (e) {
+        console.error('[Settings] Failed to start Live Activity:', e);
+        toast({
+          title: "Live Activity Error",
+          description: "Unable to start Live Activity",
+          variant: "destructive",
+        });
+        setLiveActivityEnabled(false);
+        localStorage.setItem('liveActivityEnabled', 'false');
+      }
+    } else {
+      // Stop Live Activity
+      try {
+        await liveActivity.stopCountdown();
+        toast({
+          title: "Live Activity Stopped",
+          description: "Removed from lock screen",
+        });
+      } catch (e) {
+        console.error('[Settings] Failed to stop Live Activity:', e);
+      }
     }
   };
 
@@ -810,6 +865,49 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
                     </Button>
                   </div>
                 )}
+              </div>
+              
+              <div className="border-t pt-4">
+                {/* Live Activities */}
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex-1">
+                      <Label htmlFor="liveActivity" className="font-medium flex items-center gap-2">
+                        <Activity className="w-4 h-4 text-orange-500" />
+                        Live Activities
+                      </Label>
+                      <p className="text-sm text-muted-foreground">
+                        Show daily verse on lock screen & Dynamic Island
+                      </p>
+                    </div>
+                    <Switch
+                      id="liveActivity"
+                      checked={liveActivityEnabled}
+                      disabled={!liveActivitySupported || liveActivityChecking}
+                      onCheckedChange={handleLiveActivityToggle}
+                      data-testid="switch-live-activity"
+                    />
+                  </div>
+                  
+                  {liveActivityChecking && (
+                    <p className="text-xs text-muted-foreground flex items-center gap-1">
+                      <RefreshCw className="w-3 h-3 animate-spin" />
+                      Checking Live Activity support...
+                    </p>
+                  )}
+                  
+                  {!liveActivityChecking && !liveActivitySupported && (
+                    <p className="text-xs text-amber-600 dark:text-amber-400">
+                      Live Activities require iOS 16.1 or later
+                    </p>
+                  )}
+                  
+                  {liveActivityEnabled && liveActivitySupported && (
+                    <p className="text-xs text-green-600 dark:text-green-400">
+                      Verse countdown active on lock screen
+                    </p>
+                  )}
+                </div>
               </div>
               
               <div className="border-t pt-4">

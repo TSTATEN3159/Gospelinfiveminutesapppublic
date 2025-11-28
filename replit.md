@@ -133,8 +133,18 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Checkmarks indicate which shortcuts are configured
   - TypeScript wrapper: `client/src/lib/siriShortcuts.ts`
   - Swift plugin: `ios/App/App/Plugins/SiriShortcuts.swift`
+- **Live Activities**: Dynamic Island and lock screen verse display
+  - Shows daily verse with countdown to midnight (next verse)
+  - Dynamic Island compact/expanded views
+  - Lock screen persistent display
+  - Toggle in Settings to enable/disable
+  - Auto-starts when user enables, respects preference on app load
+  - TypeScript wrapper: `client/src/lib/liveActivity.ts`
+  - Swift plugin: `ios/App/App/Plugins/LiveActivityManager.swift`
+  - Widget UI: `ios/App/GospelWidget/LiveActivityWidget.swift`
 - **Settings Page Integration**: New "Apple Features" card (iOS only)
   - iCloud Sync toggle with availability check
+  - Live Activities toggle with support detection
   - Loading state during availability detection
   - Sync status with last sync time display
   - 2x2 grid of Siri shortcut setup buttons

@@ -130,9 +130,10 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           });
           console.log(`[Widget] Updated with ${verse.reference} (theme: ${theme})`);
           
-          // Start/Update Live Activity countdown to midnight
+          // Start/Update Live Activity countdown to midnight (if user enabled it)
           const liveActivitySupport = await liveActivity.isSupported();
-          if (liveActivitySupport.supported && liveActivitySupport.enabled) {
+          const liveActivityUserEnabled = localStorage.getItem('liveActivityEnabled') === 'true';
+          if (liveActivitySupport.supported && liveActivitySupport.enabled && liveActivityUserEnabled) {
             await liveActivity.startCountdown(verse.text, verse.reference);
             console.log('[LiveActivity] Midnight countdown started');
           }
