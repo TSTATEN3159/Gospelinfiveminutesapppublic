@@ -12,7 +12,7 @@
 import { useEffect } from "react";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Lightbulb, ArrowLeft, Sparkles, Loader2, BookOpen } from "lucide-react";
+import { Lightbulb, ArrowLeft, Sparkles, Loader2, BookOpen, Home, Target, Search } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { ScriptureReferencePicker, buildReferenceString } from "@/components/ScriptureReferencePicker";
 import { PlainMeaningProvider, usePlainMeaning } from "@/context/PlainMeaningProvider";
@@ -107,20 +107,35 @@ function PlainMeaningContent({ onNavigate }: PlainMeaningPageProps) {
   return (
     <>
 
-      {/* Header - Now relative to parent */}
-      <div className="relative backdrop-blur-xl bg-white/70 dark:bg-gray-900/70 px-4 py-6 border-b border-blue-200/20 dark:border-blue-800/20 ios-safe-top">
-        <div className="max-w-sm mx-auto">
+      {/* Sticky Header */}
+      <div className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 px-4 py-4 border-b border-blue-200/30 dark:border-blue-800/30 ios-safe-top shadow-sm">
+        <div className="max-w-sm mx-auto flex items-center justify-between">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onNavigate('daily')}
-            className="mb-6 -ml-2 hover-elevate active-elevate-2"
+            className="hover-elevate active-elevate-2"
             data-testid="button-back"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back
           </Button>
-          
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => onNavigate('home')}
+            className="hover-elevate active-elevate-2"
+            data-testid="button-home"
+          >
+            <Home className="w-4 h-4 mr-2" />
+            Home
+          </Button>
+        </div>
+      </div>
+
+      {/* Title Section */}
+      <div className="relative px-4 py-6">
+        <div className="max-w-sm mx-auto">
           <div className="text-center">
             {/* Glass Icon */}
             <div className="inline-flex items-center justify-center w-20 h-20 rounded-3xl bg-gradient-to-br from-blue-500 to-cyan-500 mb-4 shadow-2xl relative overflow-hidden">
@@ -302,6 +317,54 @@ function PlainMeaningContent({ onNavigate }: PlainMeaningPageProps) {
             </div>
           </div>
         )}
+
+        {/* Bottom Navigation */}
+        <div className="relative rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 dark:bg-gray-900/40 border border-white/50 dark:border-gray-700/50 p-4 shadow-lg mt-8">
+          <div className="absolute inset-0 bg-gradient-to-br from-white/50 to-transparent opacity-50"></div>
+          <div className="relative z-10">
+            <h4 className="text-sm font-semibold text-gray-600 dark:text-gray-400 mb-3 text-center">
+              Explore More Features
+            </h4>
+            <div className="flex flex-col gap-2">
+              <Button
+                variant="ghost"
+                onClick={() => onNavigate('instant-application')}
+                className="w-full justify-start hover-elevate active-elevate-2 h-12"
+                data-testid="nav-instant-application"
+              >
+                <Target className="w-5 h-5 mr-3 text-purple-600" />
+                <span className="text-gray-700 dark:text-gray-300">Instant Application</span>
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => onNavigate('topics')}
+                className="w-full justify-start hover-elevate active-elevate-2 h-12"
+                data-testid="nav-topics"
+              >
+                <Search className="w-5 h-5 mr-3 text-emerald-600" />
+                <span className="text-gray-700 dark:text-gray-300">Topical Bible Search</span>
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => onNavigate('daily')}
+                className="w-full justify-start hover-elevate active-elevate-2 h-12"
+                data-testid="nav-daily"
+              >
+                <BookOpen className="w-5 h-5 mr-3 text-amber-600" />
+                <span className="text-gray-700 dark:text-gray-300">Daily Verse</span>
+              </Button>
+              <Button
+                variant="ghost"
+                onClick={() => onNavigate('home')}
+                className="w-full justify-start hover-elevate active-elevate-2 h-12"
+                data-testid="nav-home"
+              >
+                <Home className="w-5 h-5 mr-3 text-blue-600" />
+                <span className="text-gray-700 dark:text-gray-300">Home</span>
+              </Button>
+            </div>
+          </div>
+        </div>
       </div>
     </>
   );
