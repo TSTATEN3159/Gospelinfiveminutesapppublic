@@ -8,6 +8,7 @@ import { useTextToSpeech } from "@/hooks/useTextToSpeech";
 import { useTranslations } from "@/lib/translations";
 import appStore from "@/lib/appStore";
 import { toggleSpeech, getIsSpeaking } from "@/utils/speechEngine";
+import { apiUrl } from "@/lib/api-config";
 import {
   Dialog,
   DialogContent,
@@ -217,7 +218,7 @@ export default function DailyVerseCard({ verse, backgroundImage, onNavigate, lan
     setIsSubscribing(true);
     
     try {
-      const response = await fetch("/api/subscribe-daily-reminder", {
+      const response = await fetch(apiUrl("/api/subscribe-daily-reminder"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

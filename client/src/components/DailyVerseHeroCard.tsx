@@ -5,6 +5,7 @@ import { safeShare } from "@/utils/capabilities";
 import { MoreTranslationsCard } from "./MoreTranslationsCard";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { apiUrl } from "@/lib/api-config";
 import mountainPeakImage from '@assets/stock_images/snowy_peak_bright_bl_12e01717.jpg';
 
 interface DailyVerseHeroCardProps {
@@ -106,7 +107,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
     setIsSubscribing(true);
     
     try {
-      const response = await fetch("/api/subscribe-daily-reminder", {
+      const response = await fetch(apiUrl("/api/subscribe-daily-reminder"), {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
