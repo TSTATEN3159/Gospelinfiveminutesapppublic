@@ -249,6 +249,116 @@ const sampleStudies: BibleStudy[] = [
     duration: "3 sample chapters",
     difficulty: "Advanced",
     lessons: 3
+  },
+  // FENELON
+  {
+    id: "christian-counsel",
+    title: "Christian Counsel (Preview)",
+    author: "François Fénelon",
+    description: "Sample 3 letters of spiritual direction from the beloved French archbishop. Gentle, wise guidance for the soul seeking deeper union with God.",
+    category: "Discipleship",
+    duration: "3 sample letters",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  // MADAME GUYON
+  {
+    id: "experiencing-depths",
+    title: "Experiencing the Depths of Jesus Christ (Preview)",
+    author: "Madame Guyon",
+    description: "Sample 3 chapters on contemplative prayer and the interior life. A guide to moving beyond surface religion into the depths of Christ.",
+    category: "Prayer",
+    duration: "3 sample chapters",
+    difficulty: "Advanced",
+    lessons: 3
+  },
+  // WILLIAM LAW
+  {
+    id: "serious-call",
+    title: "A Serious Call to a Devout and Holy Life (Preview)",
+    author: "William Law",
+    description: "Sample 3 chapters from the book that transformed John Wesley. A powerful summons to live every aspect of life for God's glory.",
+    category: "Discipleship",
+    duration: "3 sample chapters",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  // JONATHAN EDWARDS
+  {
+    id: "religious-affections",
+    title: "Religious Affections (Preview)",
+    author: "Jonathan Edwards",
+    description: "Sample 3 sections from America's greatest theologian. Distinguish true spiritual experience from mere emotion or self-deception.",
+    category: "Character",
+    duration: "3 sample sections",
+    difficulty: "Advanced",
+    lessons: 3
+  },
+  // D.L. MOODY
+  {
+    id: "way-to-god",
+    title: "The Way to God (Preview)",
+    author: "D.L. Moody",
+    description: "Sample 3 chapters from the great evangelist. Clear, practical teaching on salvation, faith, and the Christian life.",
+    category: "Discipleship",
+    duration: "3 sample chapters",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  // JOHN WESLEY
+  {
+    id: "christian-perfection",
+    title: "A Plain Account of Christian Perfection (Preview)",
+    author: "John Wesley",
+    description: "Sample 3 sections on growing in holiness from the founder of Methodism. What it means to love God with all your heart.",
+    category: "Character",
+    duration: "3 sample sections",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  // AUGUSTINE
+  {
+    id: "confessions",
+    title: "Confessions (Preview)",
+    author: "Augustine of Hippo",
+    description: "Sample 3 passages from the most influential autobiography in Christian history. A soul's journey from sin to salvation.",
+    category: "Discipleship",
+    duration: "3 sample passages",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  // CHARLES FINNEY
+  {
+    id: "lectures-on-revival",
+    title: "Lectures on Revival (Preview)",
+    author: "Charles Finney",
+    description: "Sample 3 lectures from the father of modern revivalism. Principles for personal and corporate spiritual awakening.",
+    category: "Encouragement",
+    duration: "3 sample lectures",
+    difficulty: "Intermediate",
+    lessons: 3
+  },
+  // JOHN NEWTON
+  {
+    id: "letters-of-newton",
+    title: "Letters of John Newton (Preview)",
+    author: "John Newton",
+    description: "Sample 3 letters from the author of 'Amazing Grace.' Pastoral wisdom from a former slave trader transformed by Christ.",
+    category: "Encouragement",
+    duration: "3 sample letters",
+    difficulty: "Beginner",
+    lessons: 3
+  },
+  // SAMUEL RUTHERFORD
+  {
+    id: "letters-of-rutherford",
+    title: "Letters of Samuel Rutherford (Preview)",
+    author: "Samuel Rutherford",
+    description: "Sample 3 letters from the Scottish pastor whose correspondence became a devotional classic. Written from prison, full of Christ's love.",
+    category: "Encouragement",
+    duration: "3 sample letters",
+    difficulty: "Intermediate",
+    lessons: 3
   }
 ];
 
@@ -1219,6 +1329,436 @@ const attributesOfGodLessons: StudyLesson[] = [
   }
 ];
 
+// François Fénelon's "Christian Counsel" (Public Domain, 17th Century)
+const christianCounselLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Letter 1: On Simplicity",
+    content: "True simplicity is that grace which frees the soul from all unnecessary reflections upon itself. It is different from sincerity. Sincerity is a virtue below simplicity.\n\nSimplicity goes straight to God without self-reflection. The simple soul does not analyze whether it is doing well or poorly. It simply does what it believes God wants, and leaves the results to Him.\n\nThe truly simple soul is not occupied with itself at all. It is wholly occupied with God. It does not ask, 'Am I making progress?' It simply loves and trusts.\n\nThis simplicity is the death of self-love. Self-love is constantly examining, comparing, measuring. Simplicity forgets self altogether in its focus on God.\n\nSeek this simplicity. Do not be always turning inward to see how you are doing. Turn outward to God. Do what love requires, and leave yourself in His hands.",
+    verse: "Matthew 6:22",
+    verseText: "The light of the body is the eye: if therefore thine eye be single, thy whole body shall be full of light.",
+    reflection: [
+      "What is the difference between sincerity and simplicity?",
+      "How does self-examination become self-absorption?",
+      "What would it look like to forget yourself in your focus on God?"
+    ],
+    prayer: "Lord, give me the grace of holy simplicity. Free me from constant self-reflection. Help me to do what love requires and leave myself in Thy hands. Amen."
+  },
+  {
+    id: 2,
+    title: "Letter 2: On Dryness in Prayer",
+    content: "Do not be troubled when you find yourself dry and cold in prayer. God is weaning you from sensible consolations so that you may love Him for Himself alone.\n\nWhen God gives us feelings of sweetness, we are tempted to love the gift more than the Giver. We come to prayer seeking the pleasure rather than seeking God. So He withdraws the pleasure.\n\nIn the dry times, faith becomes pure. You pray not because it feels good, but because you love God. You seek not experiences, but Him. This is a higher kind of prayer.\n\nDo not try to force feelings that will not come. Simply present yourself to God in your poverty. Say, 'Lord, I have nothing to offer Thee but my weakness. I love Thee, though I feel nothing.'\n\nThis humble, naked faith pleases God far more than all our fervent emotions. He sees the will that perseveres when feeling fails.",
+    verse: "Psalm 42:1-2",
+    verseText: "As the hart panteth after the water brooks, so panteth my soul after thee, O God. My soul thirsteth for God, for the living God.",
+    reflection: [
+      "Have you experienced dryness in prayer? How did you respond?",
+      "Why might God withdraw feelings of sweetness in prayer?",
+      "How can dryness actually purify our love for God?"
+    ],
+    prayer: "Father, I come to Thee in my dryness. I have nothing to offer but my weakness. I love Thee, though I feel nothing. Accept my naked faith and teach me to love Thee for Thyself alone. Amen."
+  },
+  {
+    id: 3,
+    title: "Letter 3: On Bearing with Ourselves",
+    content: "We must bear with ourselves without flattering ourselves. This is one of the most important lessons of the spiritual life.\n\nMany become discouraged when they see their faults. They expected to become perfect quickly, and when they fall, they are angry with themselves. But this anger is itself a form of pride.\n\nTrue humility accepts that we are weak and will fall often. It does not excuse sin, but neither does it expect instant perfection. It accepts the slow work of grace.\n\nBear with yourself as God bears with you—patiently, gently, hopefully. When you fall, do not waste time in self-reproach. Rise immediately and turn back to God.\n\nGod is not surprised by your failures. He knows your weakness better than you do. He asks only that you keep turning back to Him, again and again, with childlike trust.",
+    verse: "Psalm 103:13-14",
+    verseText: "Like as a father pitieth his children, so the LORD pitieth them that fear him. For he knoweth our frame; he remembereth that we are dust.",
+    reflection: [
+      "Do you get angry with yourself when you fail? Is this humility or pride?",
+      "What does it mean to bear with yourself without flattering yourself?",
+      "How does God bear with our weakness?"
+    ],
+    prayer: "Father, teach me to bear with myself as Thou dost bear with me. When I fall, help me not to waste time in self-reproach but to rise and return to Thee with childlike trust. Amen."
+  }
+];
+
+// Madame Guyon's "Experiencing the Depths of Jesus Christ" (Public Domain, 1685)
+const experiencingDepthsLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: The Way to God",
+    content: "There is a way to God that is simple and direct, available to all believers. It does not require great learning or special gifts. It requires only a heart that desires God.\n\nThis way is the way of turning inward to find God who dwells within. 'The kingdom of God is within you.' Christ lives in you by His Spirit. You need not search far.\n\nBegin by turning your attention inward, away from external things. Quiet your busy thoughts. Center your heart on God's presence within.\n\nThis is not complicated. It is simply love turning toward its object. As a flower turns toward the sun, so the soul turns toward God.\n\nDo not strain or struggle. Simply turn. Simply rest. Simply be present to Him who is always present to you. This is the beginning of the deep life.",
+    verse: "Luke 17:21",
+    verseText: "Neither shall they say, Lo here! or, lo there! for, behold, the kingdom of God is within you.",
+    reflection: [
+      "What does it mean that God dwells within you?",
+      "How can you begin turning your attention inward to God?",
+      "Why is this way available to all believers, regardless of education?"
+    ],
+    prayer: "Lord, Thou dwellest within me. Teach me to turn inward and find Thee there. Quiet my busy thoughts. Let my heart rest in Thy presence. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 3: Abandonment to God",
+    content: "The deepest Christian experience comes through abandonment—complete surrender of yourself to God's will and way.\n\nAbandonment means giving up control. It means ceasing to manage your own spiritual life and letting God manage it. It means trusting Him with everything, even your growth in holiness.\n\nMany Christians hold back from complete abandonment because they fear what God might ask of them. But this fear is groundless. God is love. His will for you is always better than your will for yourself.\n\nAbandonment is not passive resignation. It is active trust. It is placing yourself entirely in God's hands, moment by moment, decision by decision.\n\nWhen you have truly abandoned yourself to God, you find a peace that nothing can disturb. You have stopped fighting. You have stopped trying to control. You have let go—and God has caught you.",
+    verse: "Psalm 37:5",
+    verseText: "Commit thy way unto the LORD; trust also in him; and he shall bring it to pass.",
+    reflection: [
+      "What areas of your life have you not yet abandoned to God?",
+      "What fears hold you back from complete surrender?",
+      "How is abandonment different from passive resignation?"
+    ],
+    prayer: "Lord, I abandon myself to Thee. I cease trying to control my life and my spiritual growth. I place myself entirely in Thy hands. Catch me as I let go. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 7: The Prayer of Stillness",
+    content: "There is a prayer beyond words—the prayer of stillness. In this prayer, the soul simply rests in God's presence, saying nothing, wanting nothing, doing nothing.\n\nThis is not emptiness. It is fullness. The soul is so full of God that words are inadequate. Love speaks without speaking. Communion happens without conversation.\n\nTo enter this prayer, begin with a simple turning toward God within. Let go of all other thoughts and desires. Rest in His presence as a child rests in its mother's arms.\n\nDo not be distracted if thoughts come. Gently let them go and return to stillness. Do not judge yourself for wandering. Simply return, again and again.\n\nIn this stillness, God does His deepest work. What takes years to accomplish through effort, He accomplishes in moments through stillness. Let Him work. Rest and let Him work.",
+    verse: "Psalm 46:10",
+    verseText: "Be still, and know that I am God.",
+    reflection: [
+      "Have you ever experienced prayer beyond words?",
+      "What makes stillness difficult for you?",
+      "What might God accomplish in you through the prayer of stillness?"
+    ],
+    prayer: "Lord, teach me to be still. Quiet my racing thoughts. Let me rest in Thy presence without words. Do Thy deepest work in me through stillness. Amen."
+  }
+];
+
+// William Law's "A Serious Call to a Devout and Holy Life" (Public Domain, 1728)
+const seriousCallLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: The Nature of Devotion",
+    content: "Devotion is not merely praying at certain times. It is dedicating all the actions of life to God. The devout person does not merely say prayers—he lives a life of prayer.\n\nWe readily grant that we should pray with devotion. But why should we not eat and drink, work and rest, with the same devotion? All of life belongs to God, not just the moments we set aside for worship.\n\nA man may pray fervently in church and yet live carelessly at home. He may be devout on his knees but proud in his business. This is not true devotion—it is playacting.\n\nTrue devotion transforms every aspect of life. The devout person asks of every action, 'Is this pleasing to God? Does this glorify Him?' Nothing is too small for this scrutiny.\n\nThis is the serious call to a devout life: not to add more religious duties, but to make all of life a religious duty. Every hour is holy. Every task is worship.",
+    verse: "1 Corinthians 10:31",
+    verseText: "Whether therefore ye eat, or drink, or whatsoever ye do, do all to the glory of God.",
+    reflection: [
+      "Is your devotion limited to 'religious' activities, or does it extend to all of life?",
+      "What would change if you asked of every action, 'Does this glorify God?'",
+      "How can eating, working, and resting become acts of worship?"
+    ],
+    prayer: "Lord, I would be devout not merely in my prayers but in my whole life. Let every action be dedicated to Thee. Make all of my life a life of worship. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 4: The Use of Time",
+    content: "Time is a precious gift, given us for the purpose of preparing for eternity. How we use our time reveals what we truly value.\n\nMany who would never waste money think nothing of wasting time. Yet time is more precious than money. Money lost can be regained; time lost is lost forever.\n\nThe devout person redeems the time. He does not fritter away his hours in idle amusements or vain pursuits. He asks, 'What is the best use of this hour for God's glory and my soul's welfare?'\n\nThis does not mean ceaseless activity. Rest is proper. Recreation has its place. But even our rest should be governed by wisdom, not by self-indulgence.\n\nConsider: in a few years, you will stand before God to give account of your life. Will you be able to say that you used your time wisely? Begin now to redeem the time.",
+    verse: "Ephesians 5:15-16",
+    verseText: "See then that ye walk circumspectly, not as fools, but as wise, Redeeming the time, because the days are evil.",
+    reflection: [
+      "Do you value your time as much as you value your money?",
+      "How much of your time is spent on things of eternal significance?",
+      "What changes would you make if you knew you would give account for every hour?"
+    ],
+    prayer: "Lord, my time is a gift from Thee. Teach me to use it wisely. Help me to redeem the time, using every hour for Thy glory and my soul's eternal welfare. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 7: Humility in Daily Life",
+    content: "Humility is not merely a religious virtue to be practiced in prayer. It must govern all our interactions with others in daily life.\n\nThe humble person does not think of himself more highly than he ought. He does not demand the best seat, the first word, the highest praise. He is content to be overlooked.\n\nPride shows itself in a thousand small ways: in the tone of voice that says, 'I am superior'; in the impatience with those who are slower; in the resentment when others are praised.\n\nTrue humility comes from seeing ourselves as God sees us. We are creatures, dependent on His grace for every breath. We are sinners, saved only by His mercy. What have we to be proud of?\n\nPractice humility in small things. Prefer others before yourself. Speak well of those who speak ill of you. Rejoice when others succeed. This daily practice will transform your character.",
+    verse: "Philippians 2:3",
+    verseText: "Let nothing be done through strife or vainglory; but in lowliness of mind let each esteem other better than themselves.",
+    reflection: [
+      "In what small ways does pride show itself in your daily interactions?",
+      "What would it look like to prefer others before yourself today?",
+      "How does seeing ourselves as God sees us produce humility?"
+    ],
+    prayer: "Lord, humble my proud heart. Help me not to think of myself more highly than I ought. Teach me to prefer others before myself in the small interactions of daily life. Amen."
+  }
+];
+
+// Jonathan Edwards' "Religious Affections" (Public Domain, 1746)
+const religiousAffectionsLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Part 1: The Nature of True Religion",
+    content: "True religion, in great part, consists in holy affections. By 'affections' I mean the vigorous and sensible exercises of the inclination and will of the soul.\n\nTrue religion is not merely in the head. It is in the heart. It is not enough to believe right doctrine; the heart must be engaged, the affections stirred.\n\nBut not all religious affections are true. Many people feel strongly about religion who have no true grace. Their affections are raised by their own imagination, not by the Holy Spirit.\n\nHow then do we distinguish true religious affections from false? This is the great question of the spiritual life. Many are deceived, thinking themselves saved when they are not.\n\nTrue affections have their source in the Holy Spirit's work. They arise from a spiritual perception of divine things—a sight of God's beauty, a taste of His sweetness, an experience of His love.",
+    verse: "Matthew 22:37",
+    verseText: "Jesus said unto him, Thou shalt love the Lord thy God with all thy heart, and with all thy soul, and with all thy mind.",
+    reflection: [
+      "What is the difference between religion in the head and religion in the heart?",
+      "Why is it important to distinguish true from false religious affections?",
+      "What is the source of true religious affections?"
+    ],
+    prayer: "Lord, give me true religious affections—affections that arise from Thy Spirit's work in my heart. Let me not be deceived by false emotions, but let me truly love Thee with all my heart. Amen."
+  },
+  {
+    id: 2,
+    title: "Part 2: Signs That Do Not Prove True Grace",
+    content: "Many things that people take as evidence of true grace prove nothing at all. Great religious feelings may be present without any true grace.\n\nIntense emotions are no sure sign. A person may be moved to tears, stirred to great heights of feeling, and yet have no true grace. The devil can counterfeit emotion.\n\nMuch talk about religion is no sure sign. Some who speak most fluently about divine things have never truly experienced them. They have the words without the reality.\n\nExtraordinary experiences are no sure sign. Visions, voices, remarkable impressions—these prove nothing. Satan can produce these as easily as God can.\n\nEven love and joy are no certain evidence, for even these can be counterfeited. Self-love can produce feelings that look like love for God. Natural temperament can produce joy without grace.\n\nWe must look deeper than these surface signs for the true marks of God's work.",
+    verse: "Matthew 7:21-22",
+    verseText: "Not every one that saith unto me, Lord, Lord, shall enter into the kingdom of heaven... Many will say to me in that day, Lord, Lord, have we not prophesied in thy name?",
+    reflection: [
+      "Have you ever confused intense emotion with true spiritual experience?",
+      "Why can even love and joy be counterfeited?",
+      "What might be more reliable signs of true grace than feelings?"
+    ],
+    prayer: "Lord, protect me from self-deception. Let me not trust in feelings or experiences alone. Give me the true marks of Thy grace that cannot be counterfeited. Amen."
+  },
+  {
+    id: 3,
+    title: "Part 3: True Signs of Gracious Affections",
+    content: "What then are the true signs of gracious affections? These affections arise from a spiritual sense of divine things—a new kind of perception that only the regenerate possess.\n\nTrue affections rest on the moral excellency of divine things. The natural man may be awed by God's power or grateful for His blessings. But only the spiritual man delights in God's holiness, loves His justice, and finds beauty in His moral perfection.\n\nTrue affections are attended by humility. False affections puff up; true affections humble. The more a person truly sees God, the more he sees his own sinfulness and unworthiness.\n\nTrue affections produce a change of nature. They are not like paint on the surface but like sap in the tree—they transform from within. The person with true grace is fundamentally different from what he was before.\n\nFinally, true affections are known by their fruit. Christian practice is the chief evidence of grace. Not what we feel, but what we do, reveals our true condition.",
+    verse: "Matthew 7:16-17",
+    verseText: "Ye shall know them by their fruits. Do men gather grapes of thorns, or figs of thistles? Even so every good tree bringeth forth good fruit.",
+    reflection: [
+      "Do you love God's holiness, not just His blessings?",
+      "Have your religious experiences humbled you or puffed you up?",
+      "What fruit in your life gives evidence of true grace?"
+    ],
+    prayer: "Lord, give me true signs of grace—love for Thy holiness, deep humility, and fruit that shows a changed nature. Let my practice confirm my profession. Amen."
+  }
+];
+
+// D.L. Moody's "The Way to God" (Public Domain, 1884)
+const wayToGodLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Chapter 1: The Love of God",
+    content: "God loves you. This is the starting point of the gospel. Before we can talk about sin or salvation, we must understand that God loves us with an everlasting love.\n\nMany people think of God as angry, waiting to punish them. But 'God is love.' He is not looking for reasons to condemn you; He is looking for ways to save you.\n\n'For God so loved the world.' Not just the good people, not just the religious people—the world. That includes you, with all your sins and failures.\n\n'That He gave His only begotten Son.' This is how much God loves you. He gave His best, His dearest, His only Son. He held nothing back.\n\n'That whosoever believeth in Him should not perish.' The door is open to everyone. Whosoever! That word takes in every man, woman, and child who ever lived. If you will believe, you will not perish.",
+    verse: "John 3:16",
+    verseText: "For God so loved the world, that he gave his only begotten Son, that whosoever believeth in him should not perish, but have everlasting life.",
+    reflection: [
+      "Do you truly believe that God loves you?",
+      "What does it tell you about God's love that He gave His only Son?",
+      "What does 'whosoever' mean for you personally?"
+    ],
+    prayer: "Father, help me to grasp how much Thou dost love me. Thou hast given Thy Son for me. Let me receive this love and believe in Him whom Thou hast sent. Amen."
+  },
+  {
+    id: 2,
+    title: "Chapter 3: The New Birth",
+    content: "Jesus said, 'Ye must be born again.' This is not optional. It is not a suggestion. It is a must. Without the new birth, no one can see the kingdom of God.\n\nWhat is the new birth? It is not reformation—trying to do better. It is not education—learning religious truths. It is not church membership—joining an organization.\n\nThe new birth is a supernatural work of God's Spirit in the human heart. It is a new creation. Old things pass away; all things become new.\n\nYou cannot give yourself the new birth, any more than you could give yourself your first birth. It is God's work, not yours. But you can put yourself in the way of it.\n\nHow? By believing on the Lord Jesus Christ. 'As many as received Him, to them gave He power to become the sons of God, even to them that believe on His name.'",
+    verse: "John 3:7",
+    verseText: "Marvel not that I said unto thee, Ye must be born again.",
+    reflection: [
+      "Have you been born again, or are you relying on reformation or religion?",
+      "What is the difference between the new birth and self-improvement?",
+      "How does one receive this new birth from God?"
+    ],
+    prayer: "Lord, I need to be born again. I cannot give myself this new life. Work in me by Thy Spirit. Give me a new heart. Make me a new creation in Christ. Amen."
+  },
+  {
+    id: 3,
+    title: "Chapter 5: Assurance of Salvation",
+    content: "Can you know for certain that you are saved? Yes, you can. God wants you to know. He has given you His Word precisely so that you may know.\n\n'These things have I written unto you that believe on the name of the Son of God; that ye may know that ye have eternal life.' Not hope, not wish, not think—know.\n\nAssurance is not presumption. It is faith in God's Word. If God says that everyone who believes in His Son has eternal life, and you believe in His Son, then you have eternal life. It is that simple.\n\nThe devil wants you to doubt. He whispers, 'You're not good enough. You've sinned too much. You don't feel saved.' But your salvation does not depend on your goodness or your feelings. It depends on Christ.\n\nRest on the Word. God said it. That settles it. Believe it and be at peace.",
+    verse: "1 John 5:13",
+    verseText: "These things have I written unto you that believe on the name of the Son of God; that ye may know that ye have eternal life.",
+    reflection: [
+      "Do you have assurance of your salvation, or do you doubt?",
+      "On what is your assurance based—feelings or God's Word?",
+      "How can you combat the devil's whispers of doubt?"
+    ],
+    prayer: "Father, I believe in Thy Son Jesus Christ. According to Thy Word, I have eternal life. Help me to rest in this assurance. Silence the doubts of the enemy. Let me know that I am Thine. Amen."
+  }
+];
+
+// John Wesley's "A Plain Account of Christian Perfection" (Public Domain, 1766)
+const christianPerfectionLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Section 1: What is Christian Perfection?",
+    content: "Christian perfection is not sinless perfection. We never claimed that. It is not freedom from ignorance or mistake. It is not freedom from temptation.\n\nWhat then is it? It is loving God with all the heart, soul, mind, and strength. It is the pure love of God reigning alone in the heart.\n\nThe perfect Christian is not one who never errs, but one whose heart is wholly given to God. He may make mistakes of judgment, but his intention is pure. He loves God supremely.\n\nThis is not an impossible ideal. It is God's command: 'Thou shalt love the Lord thy God with all thy heart.' God does not command impossibilities. What He commands, He enables.\n\nDo not be content with less than God's best for you. Press on toward the mark. Love is the prize—pure, perfect love for God and for your neighbor.",
+    verse: "Deuteronomy 6:5",
+    verseText: "And thou shalt love the LORD thy God with all thine heart, and with all thy soul, and with all thy might.",
+    reflection: [
+      "How is 'Christian perfection' different from sinless perfection?",
+      "What does it mean for love to reign alone in the heart?",
+      "Do you believe this is possible in this life?"
+    ],
+    prayer: "Lord, I want to love Thee with all my heart. Purify my love until Thou alone dost reign within. Let me not be content with less than Thy best for me. Amen."
+  },
+  {
+    id: 2,
+    title: "Section 2: How is Perfection Attained?",
+    content: "Some believe that Christian perfection is attained gradually, through a long process of growth. Others believe it is received instantaneously, by faith. I believe it is both.\n\nThere is a gradual work of sanctification from the moment of conversion. The believer grows in grace, putting off the old man and putting on the new.\n\nBut there is also a moment when God cleanses the heart entirely—when the struggle with inward sin gives way to settled peace. This is received by faith, just as justification is received by faith.\n\nHow do we receive this blessing? By believing that God is able to do it now. By believing that He is willing to do it now. By believing that He does it now.\n\nDo not put this off to your deathbed. Do not wait for some future time. Christ can sanctify you wholly today. Look to Him and believe.",
+    verse: "1 Thessalonians 5:23-24",
+    verseText: "And the very God of peace sanctify you wholly; and I pray God your whole spirit and soul and body be preserved blameless unto the coming of our Lord Jesus Christ. Faithful is he that calleth you, who also will do it.",
+    reflection: [
+      "Have you experienced both gradual growth and moments of breakthrough?",
+      "What is holding you back from believing God can sanctify you wholly now?",
+      "What would it mean to believe that God does it now?"
+    ],
+    prayer: "God of peace, sanctify me wholly. I believe Thou art able. I believe Thou art willing. I believe Thou dost do it now. Cleanse my heart and fill me with perfect love. Amen."
+  },
+  {
+    id: 3,
+    title: "Section 3: How is Perfection Maintained?",
+    content: "Receiving the blessing of entire sanctification is one thing. Maintaining it is another. Many who have received have also lost.\n\nThe first enemy is pride. When God gives great blessings, we are tempted to think ourselves better than others. This pride grieves the Spirit and opens the door to the enemy.\n\nAnother enemy is unbelief. We begin to doubt whether we really received. We listen to the whispers of Satan. We look at our feelings rather than at Christ.\n\nThe way to maintain the blessing is the same way we received it—by faith. We must abide in Christ moment by moment. We must walk in the light as He is in the light.\n\nIf we do fall, we must not despair. We can return to Christ and receive again what we have lost. His grace is greater than our failure.",
+    verse: "Jude 1:24",
+    verseText: "Now unto him that is able to keep you from falling, and to present you faultless before the presence of his glory with exceeding joy.",
+    reflection: [
+      "What are the greatest threats to maintaining spiritual progress?",
+      "How does pride creep in after God blesses us?",
+      "What does it mean to abide in Christ moment by moment?"
+    ],
+    prayer: "Lord, keep me from falling. Guard me against pride and unbelief. Help me to abide in Thee moment by moment. And if I fall, restore me quickly by Thy grace. Amen."
+  }
+];
+
+// Augustine's "Confessions" (Public Domain, 397 AD)
+const confessionsLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Book 1: The Restless Heart",
+    content: "Thou hast made us for Thyself, O Lord, and our hearts are restless until they rest in Thee.\n\nThis is the testimony of my own soul. I sought happiness in pleasure, in success, in philosophy—but found only emptiness. The human heart has a God-shaped void that nothing else can fill.\n\nI confess my early sins—the theft of pears, not from hunger but from the sheer pleasure of wrongdoing. I confess the lusts of youth that held me captive. I was bound by chains of my own forging.\n\nMy mother Monica prayed for me year after year. She never stopped believing that God would save me. Her tears were not wasted.\n\nLooking back, I see that even when I was running from God, He was pursuing me. His grace was at work long before I knew it. He was preparing me for the day when I would finally come home.",
+    verse: "Psalm 27:8",
+    verseText: "When thou saidst, Seek ye my face; my heart said unto thee, Thy face, LORD, will I seek.",
+    reflection: [
+      "In what ways has your heart been restless, seeking satisfaction in things other than God?",
+      "How have you seen God pursuing you even when you were running from Him?",
+      "What 'chains of your own forging' have held you captive?"
+    ],
+    prayer: "O Lord, Thou hast made me for Thyself. My heart is restless until it rests in Thee. I confess my wanderings. Draw me back to Thyself. Amen."
+  },
+  {
+    id: 2,
+    title: "Book 8: The Garden Conversion",
+    content: "I was in the garden, torn between two wills. Part of me wanted God; part of me clung to sin. I was paralyzed by the struggle.\n\nThen I heard a child's voice from a neighboring house, singing, 'Take up and read, take up and read.' I took it as a command from God. I picked up the Scriptures and read the first passage my eyes fell upon.\n\n'Not in rioting and drunkenness, not in chambering and wantonness, not in strife and envying: but put ye on the Lord Jesus Christ, and make not provision for the flesh, to fulfil the lusts thereof.'\n\nI needed to read no further. In that instant, all the darkness of doubt vanished. Light flooded my heart. The chains fell away.\n\nI ran to my mother with the news. Her prayers had been answered. The son of so many tears could not be lost.",
+    verse: "Romans 13:13-14",
+    verseText: "Let us walk honestly, as in the day; not in rioting and drunkenness, not in chambering and wantonness, not in strife and envying: But put ye on the Lord Jesus Christ, and make not provision for the flesh, to fulfil the lusts thereof.",
+    reflection: [
+      "Have you ever been torn between two wills—wanting God but clinging to sin?",
+      "How has God used unexpected means to speak to you?",
+      "What chains have fallen away when you turned fully to Christ?"
+    ],
+    prayer: "Lord Jesus, I put Thee on. I make no provision for the flesh. Free me from the struggle between two wills. Let light flood my heart and chains fall away. Amen."
+  },
+  {
+    id: 3,
+    title: "Book 10: The Memory and God",
+    content: "Late have I loved Thee, O Beauty so ancient and so new, late have I loved Thee! Thou wert within me, and I was outside, and there I searched for Thee.\n\nI looked for God in the beauty of creation, in the pleasures of the senses, in the achievements of the mind. All these things said to me, 'We are not God; look higher.'\n\nAt last I looked within and found Thee there—Thou who hadst been with me all along. Thou wert more inward than my inmost self, and higher than my highest.\n\nWhere then did I find Thee? In the memory of Thee that was planted in my heart. I knew I was seeking something I had somehow lost. When I found Thee, I recognized Thee as the One I had always been looking for.\n\nNow I love Thee, late though it be. I had been looking for Thee in all the wrong places. Thou wert within, waiting for me to come home.",
+    verse: "Psalm 139:7-8",
+    verseText: "Whither shall I go from thy spirit? or whither shall I flee from thy presence? If I ascend up into heaven, thou art there: if I make my bed in hell, behold, thou art there.",
+    reflection: [
+      "Have you been looking for God 'outside' when He is within?",
+      "What does it mean that God is 'more inward than your inmost self'?",
+      "How can the phrase 'late have I loved Thee' become your prayer?"
+    ],
+    prayer: "O Beauty so ancient and so new, late have I loved Thee! Thou wert within, and I was outside. Now I turn within and find Thee there. I love Thee, Lord, late though it be. Amen."
+  }
+];
+
+// Charles Finney's "Lectures on Revival" (Public Domain, 1835)
+const lecturesOnRevivalLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Lecture 1: What a Revival of Religion Is",
+    content: "A revival is not a miracle. It is the natural result of the right use of means. God has established laws in the spiritual realm just as in the natural realm.\n\nRevival presupposes that the church has sunk into a backslidden state. Christians have lost their first love. The world has crept in. Prayer has grown cold.\n\nIn revival, Christians are convicted of their sins. They repent deeply. They return to their first love. They begin to obey God fully.\n\nSinners are also convicted. The Spirit works mightily. Souls are converted in great numbers. The community is shaken.\n\nRevival is desperately needed in our day. The church is weak. The world is strong. Sinners are perishing. But God is ready to revive us—if we will meet His conditions.",
+    verse: "Habakkuk 3:2",
+    verseText: "O LORD, I have heard thy speech, and was afraid: O LORD, revive thy work in the midst of the years, in the midst of the years make known; in wrath remember mercy.",
+    reflection: [
+      "Do you believe revival follows spiritual laws, or is it purely miraculous?",
+      "What signs of backsliding do you see in the church today?",
+      "What role do you play in preparing for revival?"
+    ],
+    prayer: "O Lord, revive Thy work! We are backslidden and cold. Convict us of our sins. Restore our first love. Pour out Thy Spirit on us and on the lost around us. Amen."
+  },
+  {
+    id: 2,
+    title: "Lecture 2: The Conditions of Revival",
+    content: "If my people, which are called by my name, shall humble themselves, and pray, and seek my face, and turn from their wicked ways; then will I hear from heaven, and will forgive their sin, and will heal their land.\n\nHere are God's conditions for revival: humility, prayer, seeking God's face, and repentance. When these conditions are met, God promises to hear, forgive, and heal.\n\nHumility comes first. Pride is the great barrier to revival. We must acknowledge our need, confess our failures, and take our proper place before God.\n\nPrayer must be united and earnest. Not formal prayers, but desperate, believing prayer. 'The effectual fervent prayer of a righteous man availeth much.'\n\nWe must seek God's face, not just His hand. We want His presence, not just His blessings. And we must turn from our wicked ways—all of them, not just the obvious ones.",
+    verse: "2 Chronicles 7:14",
+    verseText: "If my people, which are called by my name, shall humble themselves, and pray, and seek my face, and turn from their wicked ways; then will I hear from heaven, and will forgive their sin, and will heal their land.",
+    reflection: [
+      "Which of these conditions—humility, prayer, seeking God's face, repentance—is most needed in your life?",
+      "What is the difference between seeking God's hand and seeking His face?",
+      "What 'wicked ways' might God be calling you to turn from?"
+    ],
+    prayer: "Father, I humble myself before Thee. I pray earnestly for revival. I seek Thy face, not just Thy hand. I turn from every wicked way. Hear from heaven and revive us. Amen."
+  },
+  {
+    id: 3,
+    title: "Lecture 4: Prevailing Prayer",
+    content: "Prevailing prayer is prayer that obtains the blessing it seeks. It is possible to pray and not prevail. Many prayers are never answered because they are not prayed in the right way.\n\nTo prevail in prayer, you must pray for a definite object. Vague prayers get vague answers—or no answers at all. Know what you are asking for.\n\nYou must pray in faith, believing that God hears and will answer. 'What things soever ye desire, when ye pray, believe that ye receive them, and ye shall have them.'\n\nYou must pray in the name of Jesus, relying on His merit, not your own. You must pray with a submissive spirit, willing for God's will to be done.\n\nAnd you must pray with persistence. Don't give up. Keep asking, keep seeking, keep knocking. The prayer that prevails is the prayer that perseveres.",
+    verse: "James 5:16",
+    verseText: "The effectual fervent prayer of a righteous man availeth much.",
+    reflection: [
+      "Are your prayers specific or vague?",
+      "What does it mean to believe you receive before you see the answer?",
+      "How persistent are you in prayer when answers do not come quickly?"
+    ],
+    prayer: "Lord, teach me to pray prevailing prayer. Help me to be specific, to believe, to pray in Jesus' name, to submit to Thy will, and to persist until the answer comes. Amen."
+  }
+];
+
+// John Newton's Letters (Public Domain, 18th Century)
+const lettersOfNewtonLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Letter 1: On the Grace That Saved Me",
+    content: "Amazing grace, how sweet the sound, that saved a wretch like me! I once was lost, but now am found; was blind, but now I see.\n\nI was a slave trader, dealing in human misery for profit. I blasphemed God. I lived in open wickedness. If ever a man deserved hell, it was I.\n\nBut God, who is rich in mercy, reached down into my pit and lifted me out. He did not save me because I was seeking Him; I was running from Him. He saved me by His sovereign grace alone.\n\nThis is my testimony: I am a great sinner, and Christ is a great Savior. The worse your sin, the more glorious His grace appears in saving you.\n\nDo not despair of God's mercy. If He could save John Newton, He can save anyone. His arm is not shortened. His grace is not diminished. Come to Him as you are, and He will receive you.",
+    verse: "1 Timothy 1:15",
+    verseText: "This is a faithful saying, and worthy of all acceptation, that Christ Jesus came into the world to save sinners; of whom I am chief.",
+    reflection: [
+      "What does your own story of grace look like?",
+      "Why does Newton call himself a 'great sinner'?",
+      "How does the depth of our sin magnify the greatness of God's grace?"
+    ],
+    prayer: "Lord Jesus, I am a sinner, but Thou art a Savior. I come to Thee as I am. Receive me by Thy grace. Let me never forget where Thou hast brought me from. Amen."
+  },
+  {
+    id: 2,
+    title: "Letter 2: On Growth in Grace",
+    content: "The Christian life is a journey, not a destination. We are pilgrims, pressing on toward the celestial city. Do not be discouraged that you have not yet arrived.\n\nI compare the growth of a believer to the stages of a voyage. First there is the beginning—leaving the port of our old life, setting sail for the new. Then the middle passage—often stormy, often calm, always moving forward. Finally the end—entering the harbor of glory.\n\nMany young Christians are troubled because they do not feel as holy as they wish to be. But feeling and being are different things. You may be making more progress than you know.\n\nThe marks of growth are not always what we expect. Sometimes growing in grace means growing in awareness of our sin. The closer we get to the light, the more we see our dirt.\n\nPress on. Do not grow weary. The One who began a good work in you will bring it to completion.",
+    verse: "Philippians 1:6",
+    verseText: "Being confident of this very thing, that he which hath begun a good work in you will perform it until the day of Jesus Christ.",
+    reflection: [
+      "At what stage of the voyage do you find yourself?",
+      "How has growing in grace also meant growing in awareness of sin?",
+      "What encouragement do you take from the promise that God will complete His work?"
+    ],
+    prayer: "Lord, I am on the voyage. Sometimes it is stormy, sometimes calm. Help me to press on and not grow weary. Complete the good work Thou hast begun in me. Amen."
+  },
+  {
+    id: 3,
+    title: "Letter 3: On Communion with God",
+    content: "The great business of life is communion with God. All else is secondary. If we have fellowship with Him, we can bear anything. If we lose fellowship with Him, nothing else can satisfy.\n\nThis communion is not a matter of feeling always. Sometimes God seems far away, though He is near. We walk by faith, not by sight—and not by feeling either.\n\nThe means of communion are simple: prayer, the Word, worship, obedience. Through these ordinary channels, extraordinary grace flows.\n\nDo not neglect the means. Many complain of dryness who have abandoned the very practices that bring life. Return to the basics. Open your Bible. Get on your knees.\n\nAnd remember: communion is two-way. We speak to God; He speaks to us. We love Him; He loves us. It is not mere meditation but relationship—the most wonderful relationship possible.",
+    verse: "1 John 1:3",
+    verseText: "That which we have seen and heard declare we unto you, that ye also may have fellowship with us: and truly our fellowship is with the Father, and with his Son Jesus Christ.",
+    reflection: [
+      "What practices help you maintain communion with God?",
+      "Have you confused communion with feelings?",
+      "How can you deepen your two-way relationship with God?"
+    ],
+    prayer: "Father, I want fellowship with Thee. Help me not to neglect the means of grace. When Thou seemest far, let me walk by faith. Deepen my communion with Thee day by day. Amen."
+  }
+];
+
+// Samuel Rutherford's Letters (Public Domain, 17th Century)
+const lettersOfRutherfordLessons: StudyLesson[] = [
+  {
+    id: 1,
+    title: "Letter 1: Christ's Loveliness",
+    content: "Oh, if ye knew Him, and saw His beauty, your love, your heart, your desires would close with Him and cleave to Him! Love, love—Christ is the well of love, and His love passeth knowledge.\n\nI have been in the depths, in prison for my Lord's sake. But I would not exchange my prison and my Christ for the palace and all the world. He visits me here. He is sweeter than honey.\n\nI have seen Him, and I cannot now part from Him. He has ravished my heart. No one is like my Beloved. He is altogether lovely.\n\nDo you know Him? Not know about Him, but know Him—as a lover knows the beloved? This is the knowledge that matters. This is the pearl of great price.\n\nSeek Him. Seek Him until you find Him. And when you find Him, hold Him and do not let Him go. He is worth infinitely more than all you leave behind.",
+    verse: "Song of Solomon 5:16",
+    verseText: "His mouth is most sweet: yea, he is altogether lovely. This is my beloved, and this is my friend, O daughters of Jerusalem.",
+    reflection: [
+      "Do you know Christ, or only know about Him?",
+      "What does it mean that Christ is 'altogether lovely'?",
+      "What would you give up to have more of Christ?"
+    ],
+    prayer: "Lord Jesus, Thou art altogether lovely. Ravish my heart with Thyself. Let me know Thee, not just about Thee. Let me love Thee more than anything this world can offer. Amen."
+  },
+  {
+    id: 2,
+    title: "Letter 2: The Sweetness of Suffering",
+    content: "I find crosses, losses, and sadness sweeter, when Christ is there, than a full table without His presence. Give me suffering with Christ over comfort without Him.\n\nMy imprisonment has taught me this: the cross is not my enemy but my friend. It drives me to Christ. It strips away false comforts. It shows me what really matters.\n\nDo not pray for easy lives. Pray to be strong men and women. The furnace refines the gold. The pruning brings forth fruit. The trial produces patience.\n\nI am more thankful for my afflictions than for all my comforts. In comfort I was prone to wander. In affliction I cling to Christ.\n\nIf you are suffering, take heart. Christ is nearest when the night is darkest. He does His best work in the furnace. Trust Him there.",
+    verse: "Romans 8:28",
+    verseText: "And we know that all things work together for good to them that love God, to them who are the called according to his purpose.",
+    reflection: [
+      "Can you say that suffering with Christ is sweeter than comfort without Him?",
+      "How has affliction driven you closer to Christ?",
+      "What good has God worked through your trials?"
+    ],
+    prayer: "Lord, make my crosses sweet because Thou art in them. Let affliction drive me to Thee rather than from Thee. Do Thy refining work. I trust Thee in the furnace. Amen."
+  },
+  {
+    id: 3,
+    title: "Letter 3: Longing for Heaven",
+    content: "Oh, to be beyond the sea! Oh, to be where there is no more sin, no more sorrow, no more parting! The Lamb is there, and we shall see His face.\n\nThis world is not my home. I am a stranger here, a pilgrim passing through. My citizenship is in heaven. My heart is already there.\n\nI long for that day when faith shall become sight. When we shall know as we are known. When every tear shall be wiped away.\n\nBut while I wait, I serve. While I long, I labor. The hope of heaven does not make me idle on earth. It makes me earnest—for the night is coming when no man can work.\n\nKeep your eyes on the prize. Run the race set before you. Press toward the mark. Soon, very soon, we shall be at home with our Lord forever.",
+    verse: "Philippians 1:23",
+    verseText: "For I am in a strait betwixt two, having a desire to depart, and to be with Christ; which is far better.",
+    reflection: [
+      "Do you long for heaven, or are you too comfortable on earth?",
+      "How does the hope of heaven affect your life on earth?",
+      "What do you most look forward to about being with Christ?"
+    ],
+    prayer: "Lord, I long to be with Thee forever. This world is not my home. But while I wait, help me to serve. Keep my eyes on the prize until I reach the goal. Amen."
+  }
+];
+
 // Map study IDs to their lesson sets
 const studyLessonsMap: Record<string, StudyLesson[]> = {
   "abide-in-christ": abideInChristLessons,
@@ -1240,7 +1780,17 @@ const studyLessonsMap: Record<string, StudyLesson[]> = {
   "how-to-pray": howToPrayLessons,
   "union-and-communion": unionAndCommunionLessons,
   "my-utmost-for-his-highest": myUtmostLessons,
-  "attributes-of-god": attributesOfGodLessons
+  "attributes-of-god": attributesOfGodLessons,
+  "christian-counsel": christianCounselLessons,
+  "experiencing-depths": experiencingDepthsLessons,
+  "serious-call": seriousCallLessons,
+  "religious-affections": religiousAffectionsLessons,
+  "way-to-god": wayToGodLessons,
+  "christian-perfection": christianPerfectionLessons,
+  "confessions": confessionsLessons,
+  "lectures-on-revival": lecturesOnRevivalLessons,
+  "letters-of-newton": lettersOfNewtonLessons,
+  "letters-of-rutherford": lettersOfRutherfordLessons
 };
 
 // Helper function to get lessons for a specific study

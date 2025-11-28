@@ -1150,8 +1150,8 @@ export const translations: Record<string, Translations> = {
     retry: "Retry",
     
     // Bible Studies Page
-    bibleStudiesTitle: "Traditional Bible Studies",
-    bibleStudiesSubtitle: "Classic devotional works from beloved Christian authors",
+    bibleStudiesTitle: "Classic Bible Studies",
+    bibleStudiesSubtitle: "Timeless devotional works from beloved Christian authors",
     featuredStudies: "Featured Studies",
     browseAllStudies: "Browse all Studies",
     searchBibleStudies: "Search Bible studies...",
