@@ -5,11 +5,13 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogTrigger } from "@/components/ui/dialog";
-import { ArrowLeft, BookOpen, Clock, Eye, Heart, Mail, AlertCircle, Loader2, RefreshCw } from "lucide-react";
+import { BookOpen, Clock, Eye, Heart, Mail, AlertCircle, Loader2, RefreshCw, Home } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import { useTranslations } from '@/lib/translations';
 import bibleGoldenImage from '@assets/stock_images/open_bible_golden_su_6f7daf93.jpg';
+import { HeaderNavigation } from "@/components/NavigationButtons";
+import { AppPage } from "@/config/routesConfig";
 
 interface BlogPageProps {
   onNavigate?: (page: string) => void;
@@ -198,23 +200,24 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
       return indexA - indexB;
     });
 
+  const handleNavigate = (page: AppPage) => {
+    if (onNavigate) {
+      onNavigate(page);
+    }
+  };
+
   return (
     <div className="min-h-screen pb-20 bg-white dark:bg-gray-900">
       {/* Professional Header Section */}
       <div className="bg-white dark:bg-gray-800 px-4 py-8 border-b border-slate-200/60 dark:border-slate-700/60 ios-safe-top shadow-lg">
-        <div className="flex items-center mb-6">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => onNavigate?.('more')}
-            className="mr-3 shadow-lg bg-gradient-to-br from-slate-100 to-blue-100 dark:from-slate-700 dark:to-blue-700"
-            data-testid="button-back-blog"
-            aria-label="Go back to More page"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
+        <div className="flex items-center justify-between mb-6">
+          <HeaderNavigation
+            currentPage="blog"
+            onNavigate={handleNavigate}
+            showHome={false}
+          />
           <div className="flex-1 text-center">
-            <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent mb-2" style={{ 
+            <h1 className="text-3xl font-bold bg-gradient-to-r from-slate-800 via-blue-700 to-indigo-800 bg-clip-text text-transparent dark:from-slate-200 dark:via-blue-300 dark:to-indigo-300 mb-2" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive',
               textShadow: '1px 1px 2px rgba(0,0,0,0.1)'
             }}>
@@ -223,17 +226,24 @@ export default function BlogPage({ onNavigate, streakDays = 0, language = "en" }
             <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">{t.blogPageSubtitle}</p>
             <div className="w-24 h-1 bg-gradient-to-r from-slate-400 via-blue-500 to-indigo-500 mx-auto mt-3 rounded-full shadow-lg"></div>
           </div>
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleManualRefresh}
-            disabled={isRefreshing}
-            className="ml-3 shadow-lg bg-gradient-to-br from-slate-100 to-blue-100 dark:from-slate-700 dark:to-blue-700"
-            data-testid="button-refresh-blog"
-            aria-label="Refresh content"
-          >
-            <RefreshCw className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleManualRefresh}
+              disabled={isRefreshing}
+              className="rounded-full bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200 hover:bg-gray-200 dark:hover:bg-gray-700"
+              data-testid="button-refresh-blog"
+              aria-label="Refresh content"
+            >
+              <RefreshCw className={`w-5 h-5 ${isRefreshing ? 'animate-spin' : ''}`} />
+            </Button>
+            <HeaderNavigation
+              currentPage="blog"
+              onNavigate={handleNavigate}
+              showBack={false}
+            />
+          </div>
         </div>
         {lastUpdated && (
           <div className="text-center text-xs text-slate-500 dark:text-slate-400 mb-4">
