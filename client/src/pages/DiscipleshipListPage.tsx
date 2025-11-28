@@ -155,8 +155,8 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
         {/* Personalized Greeting */}
         <PersonalizedGreeting language={language} />
 
-        {/* Social Buttons */}
-        <div className="flex gap-2 mt-4">
+        {/* Social Buttons - Centered to match Home page */}
+        <div className="flex items-center justify-center gap-2 flex-wrap">
           <a 
             href="https://www.facebook.com/TheGospelIn5Minutes" 
             target="_blank" 
@@ -210,7 +210,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
             }}
           >
             <Share className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>{t.share}</span>
+            <span>Share</span>
           </button>
         </div>
       </div>
