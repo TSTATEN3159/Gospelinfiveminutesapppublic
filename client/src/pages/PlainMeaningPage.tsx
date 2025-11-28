@@ -107,14 +107,14 @@ function PlainMeaningContent({ onNavigate }: PlainMeaningPageProps) {
   return (
     <>
 
-      {/* Sticky Header */}
-      <div className="sticky top-0 z-50 backdrop-blur-xl bg-white/80 dark:bg-gray-900/80 px-4 py-4 border-b border-blue-200/30 dark:border-blue-800/30 ios-safe-top shadow-sm">
+      {/* Navigation Header */}
+      <div className="relative z-50 bg-gradient-to-r from-blue-600 to-cyan-600 px-4 py-3 shadow-lg">
         <div className="max-w-sm mx-auto flex items-center justify-between">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => onNavigate('daily')}
-            className="hover-elevate active-elevate-2"
+            className="text-white hover:bg-white/20 active:bg-white/30"
             data-testid="button-back"
           >
             <ArrowLeft className="w-4 h-4 mr-2" />
@@ -124,7 +124,7 @@ function PlainMeaningContent({ onNavigate }: PlainMeaningPageProps) {
             variant="ghost"
             size="sm"
             onClick={() => onNavigate('home')}
-            className="hover-elevate active-elevate-2"
+            className="text-white hover:bg-white/20 active:bg-white/30"
             data-testid="button-home"
           >
             <Home className="w-4 h-4 mr-2" />
