@@ -29,6 +29,7 @@ import { videoService, type VideoItem } from "../services/videoService";
 import { useTranslations } from "../lib/translations";
 import { widgetUpdater } from "../lib/widgetUpdater";
 import { liveActivity } from "../lib/liveActivity";
+import { getAbideState, getTodaysFruit } from "../lib/abideStorage";
 
 // Images
 import warmBibleDeskImage from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
@@ -101,31 +102,13 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
 
   // Load Abide Tree data
   useEffect(() => {
-    const FRUITS_OF_SPIRIT = [
-      "Love", "Joy", "Peace", "Patience", "Kindness",
-      "Goodness", "Faithfulness", "Gentleness", "Self-Control"
-    ];
-    
-    const today = new Date();
-    const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
-    const fruitIndex = dayOfYear % FRUITS_OF_SPIRIT.length;
-    const todayFruit = FRUITS_OF_SPIRIT[fruitIndex];
-    
-    const saved = localStorage.getItem("abideGrowthData");
-    if (saved) {
-      try {
-        const data = JSON.parse(saved);
-        setAbideData({
-          totalFruit: data.totalFruit || 0,
-          streak: data.streak || 0,
-          todayFruitLabel: todayFruit
-        });
-      } catch (e) {
-        setAbideData({ totalFruit: 0, streak: 0, todayFruitLabel: todayFruit });
-      }
-    } else {
-      setAbideData({ totalFruit: 0, streak: 0, todayFruitLabel: todayFruit });
-    }
+    const state = getAbideState();
+    const todayFruit = getTodaysFruit();
+    setAbideData({
+      totalFruit: state.totalFruit,
+      streak: state.streak,
+      todayFruitLabel: todayFruit
+    });
   }, []);
 
   useEffect(() => {

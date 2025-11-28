@@ -1,0 +1,223 @@
+// client/src/pages/AbideSessionPage.tsx
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { CheckCircle2, ArrowRight, ArrowLeft } from "lucide-react";
+import { tapHaptic, successHaptic } from "@/lib/nativeEnhancements";
+import {
+  AbideFruitType,
+  completeAbideToday,
+} from "@/lib/abideStorage";
+import AbideOnboarding from "@/components/AbideOnboarding";
+
+const TODAY_FRUIT: AbideFruitType = "Love";
+
+const STEPS = ["Hear", "Reflect", "Act", "Pray"] as const;
+type StepKey = (typeof STEPS)[number];
+
+export default function AbideSessionPage() {
+  const [stepIndex, setStepIndex] = useState(0);
+  const [selectedAction, setSelectedAction] = useState<string | null>(null);
+  const [reflection, setReflection] = useState("");
+  const [isCompleting, setIsCompleting] = useState(false);
+
+  const navigate = useNavigate();
+  const step: StepKey = STEPS[stepIndex];
+
+  const goNext = async () => {
+    await tapHaptic();
+    if (stepIndex < STEPS.length - 1) {
+      setStepIndex((i) => i + 1);
+    }
+  };
+
+  const goBack = async () => {
+    await tapHaptic();
+    if (stepIndex > 0) {
+      setStepIndex((i) => i - 1);
+    } else {
+      navigate(-1);
+    }
+  };
+
+  const handleComplete = async () => {
+    setIsCompleting(true);
+    await successHaptic();
+    completeAbideToday(TODAY_FRUIT);
+    navigate("/"); // back to home (Tree will update)
+  };
+
+  const actions = [
+    "Encourage someone who seems down today.",
+    "Serve someone quietly without seeking recognition.",
+    "Pray for someone who hurt you.",
+    "Send a message of kindness to a friend or family member.",
+  ];
+
+  return (
+    <div className="relative min-h-screen bg-black text-slate-50 pb-24">
+      {/* Onboarding layer (first-time explanation) */}
+      <AbideOnboarding />
+
+      {/* Header */}
+      <div className="px-4 pt-4 pb-2 flex items-center justify-between">
+        <button
+          onClick={goBack}
+          className="flex items-center text-sm text-slate-300"
+        >
+          <ArrowLeft className="h-4 w-4 mr-1" />
+          Back
+        </button>
+        <p className="text-xs tracking-[0.16em] uppercase text-emerald-300/80">
+          Abide · Step {stepIndex + 1} of {STEPS.length}
+        </p>
+        <div className="w-8" />
+      </div>
+
+      {/* Step progress bar */}
+      <div className="px-4 mb-4">
+        <div className="flex gap-2">
+          {STEPS.map((_, i) => (
+            <div
+              key={i}
+              className={`h-1 flex-1 rounded-full ${
+                i <= stepIndex ? "bg-emerald-400" : "bg-slate-700"
+              }`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Content area */}
+      <div className="px-4">
+        {step === "Hear" && (
+          <div className="rounded-3xl bg-gradient-to-br from-emerald-900/80 to-slate-900/80 border border-emerald-700/40 px-5 py-5 mb-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-emerald-200/80 mb-2">
+              Step 1 · Hear the Word
+            </p>
+            <p className="text-sm text-emerald-50 mb-3">
+              “A new commandment I give to you, that you love one another: just
+              as I have loved you, you also are to love one another.”
+            </p>
+            <p className="text-xs text-emerald-200/80 mb-1">John 13:34</p>
+            <p className="text-[11px] text-slate-300/90">
+              Take a slow breath. Let Jesus’ command settle in your heart. This
+              is today’s fruit: <span className="text-emerald-200">Love</span>.
+            </p>
+          </div>
+        )}
+
+        {step === "Reflect" && (
+          <div className="rounded-3xl bg-slate-900/80 border border-slate-700/70 px-5 py-5 mb-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-emerald-200/80 mb-2">
+              Step 2 · Reflect
+            </p>
+            <p className="text-sm text-slate-50 mb-3">
+              Where is God inviting you to show love today?
+            </p>
+            <textarea
+              className="w-full rounded-2xl bg-black/60 border border-slate-700 px-3 py-2 text-sm text-slate-100 placeholder:text-slate-500 resize-none min-h-[90px]"
+              placeholder="Write a sentence or two about who God is putting on your heart..."
+              value={reflection}
+              onChange={(e) => setReflection(e.target.value)}
+            />
+            <p className="text-[11px] text-slate-400 mt-2">
+              This is just between you and the Lord. Writing helps you listen.
+            </p>
+          </div>
+        )}
+
+        {step === "Act" && (
+          <div className="rounded-3xl bg-slate-900/80 border border-slate-700/70 px-5 py-5 mb-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-emerald-200/80 mb-2">
+              Step 3 · Choose One Action
+            </p>
+            <p className="text-sm text-slate-50 mb-3">
+              Choose <span className="font-semibold">one</span> way you will
+              walk in love today:
+            </p>
+            <div className="space-y-2">
+              {actions.map((action) => {
+                const isSelected = selectedAction === action;
+                return (
+                  <button
+                    key={action}
+                    onClick={async () => {
+                      await tapHaptic();
+                      setSelectedAction(action);
+                    }}
+                    className={`w-full text-left text-[13px] rounded-2xl px-3 py-2 border transition ${
+                      isSelected
+                        ? "border-emerald-400 bg-emerald-900/60 text-emerald-100"
+                        : "border-slate-700 bg-black/40 text-slate-200"
+                    }`}
+                  >
+                    {action}
+                  </button>
+                );
+              })}
+            </div>
+            <p className="text-[11px] text-slate-400 mt-2">
+              Keep it small and real. Obedience grows fruit.
+            </p>
+          </div>
+        )}
+
+        {step === "Pray" && (
+          <div className="rounded-3xl bg-gradient-to-br from-slate-900 to-black border border-slate-700 px-5 py-5 mb-4">
+            <p className="text-xs uppercase tracking-[0.18em] text-emerald-200/80 mb-2">
+              Step 4 · Pray it In
+            </p>
+            <p className="text-sm text-slate-50 mb-3">
+              Pray this simple prayer out loud or in your heart:
+            </p>
+            <p className="text-sm text-slate-200 italic mb-3">
+              “Lord Jesus, thank You for loving me first. Fill me with Your
+              Spirit so I can love others the way You have loved me. Help me to
+              walk out this one step of obedience today. Amen.”
+            </p>
+            <p className="text-[11px] text-slate-400">
+              When you’re ready, mark today’s Abide as done. Your fruit will
+              grow on the Tree.
+            </p>
+          </div>
+        )}
+      </div>
+
+      {/* Bottom actions */}
+      <div className="fixed bottom-0 left-0 right-0 bg-black/90 border-t border-slate-800 px-4 py-3">
+        <div className="flex items-center justify-between">
+          {stepIndex > 0 ? (
+            <button
+              onClick={goBack}
+              className="text-[13px] text-slate-300 flex items-center"
+            >
+              <ArrowLeft className="h-4 w-4 mr-1" />
+              Back
+            </button>
+          ) : (
+            <div />
+          )}
+
+          {step !== "Pray" ? (
+            <button
+              onClick={goNext}
+              className="ml-auto inline-flex items-center rounded-full bg-emerald-500 px-5 py-2 text-[13px] font-semibold text-black shadow-lg shadow-emerald-900/60"
+            >
+              Next
+              <ArrowRight className="h-4 w-4 ml-1" />
+            </button>
+          ) : (
+            <button
+              disabled={isCompleting}
+              onClick={handleComplete}
+              className="ml-auto inline-flex items-center rounded-full bg-emerald-400 px-5 py-2 text-[13px] font-semibold text-black shadow-lg shadow-emerald-900/60 disabled:opacity-60"
+            >
+              <CheckCircle2 className="h-4 w-4 mr-1" />
+              Mark Today’s Abide Done
+            </button>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}

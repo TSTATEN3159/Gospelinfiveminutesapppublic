@@ -1,0 +1,133 @@
+export type AbideFruitType =
+  | "Love"
+  | "Joy"
+  | "Peace"
+  | "Patience"
+  | "Kindness"
+  | "Goodness"
+  | "Faithfulness"
+  | "Gentleness"
+  | "Self-Control";
+
+export interface AbideState {
+  totalFruit: number;
+  streak: number;
+  lastAbideDate: string | null;
+  fruitCounts: Record<AbideFruitType, number>;
+  onboardingCompleted: boolean;
+}
+
+const STORAGE_KEY = "abide_state_v1";
+
+const FRUIT_TYPES: AbideFruitType[] = [
+  "Love",
+  "Joy",
+  "Peace",
+  "Patience",
+  "Kindness",
+  "Goodness",
+  "Faithfulness",
+  "Gentleness",
+  "Self-Control",
+];
+
+function createDefaultState(): AbideState {
+  const fruitCounts: Record<AbideFruitType, number> = FRUIT_TYPES.reduce(
+    (acc, fruit) => {
+      acc[fruit] = 0;
+      return acc;
+    },
+    {} as Record<AbideFruitType, number>
+  );
+
+  return {
+    totalFruit: 0,
+    streak: 0,
+    lastAbideDate: null,
+    fruitCounts,
+    onboardingCompleted: false,
+  };
+}
+
+export function getAbideState(): AbideState {
+  if (typeof window === "undefined") return createDefaultState();
+
+  try {
+    const raw = window.localStorage.getItem(STORAGE_KEY);
+    if (!raw) return createDefaultState();
+    const parsed = JSON.parse(raw) as AbideState;
+    return {
+      ...createDefaultState(),
+      ...parsed,
+      fruitCounts: { ...createDefaultState().fruitCounts, ...parsed.fruitCounts },
+    };
+  } catch {
+    return createDefaultState();
+  }
+}
+
+function saveAbideState(state: AbideState) {
+  if (typeof window === "undefined") return;
+  window.localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function formatDate(date: Date): string {
+  return date.toISOString().slice(0, 10);
+}
+
+function isSameDay(a: string | null, b: string): boolean {
+  return !!a && a === b;
+}
+
+function isYesterday(a: string | null, today: string): boolean {
+  if (!a) return false;
+  const prev = new Date(a + "T00:00:00");
+  const cur = new Date(today + "T00:00:00");
+  const diff = (cur.getTime() - prev.getTime()) / (1000 * 60 * 60 * 24);
+  return diff === 1;
+}
+
+export function completeAbideToday(fruitType: AbideFruitType): AbideState {
+  const state = getAbideState();
+  const today = formatDate(new Date());
+
+  if (isSameDay(state.lastAbideDate, today)) {
+    return state;
+  }
+
+  let newStreak = 1;
+  if (isYesterday(state.lastAbideDate, today)) {
+    newStreak = state.streak + 1;
+  }
+
+  const newFruitCounts = { ...state.fruitCounts };
+  newFruitCounts[fruitType] = (newFruitCounts[fruitType] || 0) + 1;
+
+  const updated: AbideState = {
+    ...state,
+    totalFruit: state.totalFruit + 1,
+    streak: newStreak,
+    lastAbideDate: today,
+    fruitCounts: newFruitCounts,
+  };
+
+  saveAbideState(updated);
+  return updated;
+}
+
+export function markAbideOnboardingCompleted() {
+  const state = getAbideState();
+  const updated: AbideState = { ...state, onboardingCompleted: true };
+  saveAbideState(updated);
+}
+
+export function isAbideOnboardingCompleted(): boolean {
+  return getAbideState().onboardingCompleted;
+}
+
+export function getTodaysFruit(): AbideFruitType {
+  const today = new Date();
+  const dayOfYear = Math.floor((today.getTime() - new Date(today.getFullYear(), 0, 0).getTime()) / (1000 * 60 * 60 * 24));
+  const fruitIndex = dayOfYear % FRUIT_TYPES.length;
+  return FRUIT_TYPES[fruitIndex];
+}
