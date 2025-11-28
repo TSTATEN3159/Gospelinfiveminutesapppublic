@@ -1,4 +1,6 @@
+// client/src/components/AbideTreePreview.tsx
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Leaf, Flame } from "lucide-react";
 import { tapHaptic } from "@/lib/nativeEnhancements";
 import { getAbideState } from "@/lib/abideStorage";
@@ -9,6 +11,7 @@ interface TiltState {
 }
 
 export default function AbideTreePreview() {
+  const navigate = useNavigate();
   const [state, setState] = useState(getAbideState());
   const [justGrew, setJustGrew] = useState(false);
   const [tilt, setTilt] = useState<TiltState>({ x: 0, y: 0 });
@@ -26,7 +29,7 @@ export default function AbideTreePreview() {
 
   const handleTap = async () => {
     await tapHaptic();
-    window.dispatchEvent(new CustomEvent("app-navigate", { detail: { page: "abide" } }));
+    navigate("/abide");
   };
 
   const handleMove = (
@@ -48,10 +51,10 @@ export default function AbideTreePreview() {
       return;
     }
 
-    const x = (clientX - rect.left) / rect.width - 0.5;
+    const x = (clientX - rect.left) / rect.width - 0.5; // -0.5 to 0.5
     const y = (clientY - rect.top) / rect.height - 0.5;
 
-    const maxTilt = 7;
+    const maxTilt = 7; // degrees
     setTilt({
       x: -y * maxTilt,
       y: x * maxTilt,
@@ -80,7 +83,6 @@ export default function AbideTreePreview() {
       style={{
         transform: `perspective(900px) rotateX(${tilt.x}deg) rotateY(${tilt.y}deg)`,
       }}
-      data-testid="card-abide-growth"
     >
       <div
         className="
@@ -115,7 +117,7 @@ export default function AbideTreePreview() {
             <Leaf className="h-4 w-4 text-emerald-300" />
             {state.lastAbideDate ? (
               <>
-                Today's Fruit:{" "}
+                Today’s Fruit:{" "}
                 <span className="font-medium">
                   {getTodayFruitLabel(fruits)}
                 </span>
