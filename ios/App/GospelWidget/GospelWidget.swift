@@ -88,9 +88,134 @@ struct GospelWidgetEntryView : View {
             MediumWidgetView(entry: entry)
         case .systemLarge:
             LargeWidgetView(entry: entry)
+        case .accessoryCircular:
+            if #available(iOSApplicationExtension 16.0, *) {
+                AccessoryCircularView(entry: entry)
+            }
+        case .accessoryRectangular:
+            if #available(iOSApplicationExtension 16.0, *) {
+                AccessoryRectangularView(entry: entry)
+            }
+        case .accessoryInline:
+            if #available(iOSApplicationExtension 16.0, *) {
+                AccessoryInlineView(entry: entry)
+            }
         default:
             MediumWidgetView(entry: entry)
         }
+    }
+}
+
+// MARK: - Lock Screen Widgets (iOS 16+)
+
+@available(iOSApplicationExtension 16.0, *)
+struct AccessoryCircularView: View {
+    var entry: VerseEntry
+    
+    var body: some View {
+        ZStack {
+            AccessoryWidgetBackground()
+            
+            VStack(spacing: 2) {
+                Image(systemName: "book.fill")
+                    .font(.system(size: 16, weight: .medium))
+                    .foregroundColor(.primary)
+                
+                Text(shortReference(entry.reference))
+                    .font(.system(size: 8, weight: .semibold))
+                    .foregroundColor(.secondary)
+                    .minimumScaleFactor(0.5)
+            }
+        }
+    }
+    
+    private func shortReference(_ ref: String) -> String {
+        // Convert "John 3:16" to "Jn 3:16"
+        let abbreviations: [String: String] = [
+            "Genesis": "Gen", "Exodus": "Ex", "Leviticus": "Lev", "Numbers": "Num",
+            "Deuteronomy": "Dt", "Joshua": "Josh", "Judges": "Jdg", "Ruth": "Ru",
+            "1 Samuel": "1Sa", "2 Samuel": "2Sa", "1 Kings": "1Ki", "2 Kings": "2Ki",
+            "1 Chronicles": "1Ch", "2 Chronicles": "2Ch", "Ezra": "Ezr", "Nehemiah": "Neh",
+            "Esther": "Est", "Job": "Job", "Psalms": "Ps", "Psalm": "Ps",
+            "Proverbs": "Pr", "Ecclesiastes": "Ec", "Song of Solomon": "SS",
+            "Isaiah": "Is", "Jeremiah": "Jer", "Lamentations": "La", "Ezekiel": "Ez",
+            "Daniel": "Da", "Hosea": "Hos", "Joel": "Jl", "Amos": "Am",
+            "Obadiah": "Ob", "Jonah": "Jon", "Micah": "Mic", "Nahum": "Na",
+            "Habakkuk": "Hab", "Zephaniah": "Zep", "Haggai": "Hag", "Zechariah": "Zec",
+            "Malachi": "Mal", "Matthew": "Mt", "Mark": "Mk", "Luke": "Lk",
+            "John": "Jn", "Acts": "Ac", "Romans": "Ro", "1 Corinthians": "1Co",
+            "2 Corinthians": "2Co", "Galatians": "Gal", "Ephesians": "Eph",
+            "Philippians": "Php", "Colossians": "Col", "1 Thessalonians": "1Th",
+            "2 Thessalonians": "2Th", "1 Timothy": "1Ti", "2 Timothy": "2Ti",
+            "Titus": "Tit", "Philemon": "Phm", "Hebrews": "Heb", "James": "Jas",
+            "1 Peter": "1Pe", "2 Peter": "2Pe", "1 John": "1Jn", "2 John": "2Jn",
+            "3 John": "3Jn", "Jude": "Jud", "Revelation": "Rev"
+        ]
+        
+        var shortened = ref
+        for (book, abbr) in abbreviations {
+            if ref.hasPrefix(book) {
+                shortened = ref.replacingOccurrences(of: book, with: abbr)
+                break
+            }
+        }
+        return shortened
+    }
+}
+
+@available(iOSApplicationExtension 16.0, *)
+struct AccessoryRectangularView: View {
+    var entry: VerseEntry
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 4) {
+            HStack(spacing: 4) {
+                Image(systemName: "book.fill")
+                    .font(.system(size: 10, weight: .medium))
+                
+                Text("Daily Verse")
+                    .font(.system(size: 10, weight: .bold))
+                    .textCase(.uppercase)
+            }
+            .foregroundColor(.secondary)
+            
+            Text(verseSnippet(entry.verse, maxLength: 60))
+                .font(.system(size: 12, weight: .medium))
+                .lineLimit(2)
+                .foregroundColor(.primary)
+            
+            Text(entry.reference)
+                .font(.system(size: 10, weight: .semibold))
+                .foregroundColor(.secondary)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+    
+    private func verseSnippet(_ verse: String, maxLength: Int) -> String {
+        if verse.count > maxLength {
+            return String(verse.prefix(maxLength)) + "..."
+        }
+        return verse
+    }
+}
+
+@available(iOSApplicationExtension 16.0, *)
+struct AccessoryInlineView: View {
+    var entry: VerseEntry
+    
+    var body: some View {
+        HStack(spacing: 4) {
+            Image(systemName: "book.fill")
+            Text("\(entry.reference): \(inlineSnippet(entry.verse))")
+        }
+    }
+    
+    private func inlineSnippet(_ verse: String) -> String {
+        let maxLength = 30
+        if verse.count > maxLength {
+            return String(verse.prefix(maxLength)) + "..."
+        }
+        return verse
     }
 }
 
@@ -299,6 +424,15 @@ private func themeColors(for theme: String) -> [Color] {
 
 // MARK: - Widget Configuration
 @main
+struct GospelWidgetBundle: WidgetBundle {
+    var body: some Widget {
+        GospelWidget()
+        if #available(iOSApplicationExtension 16.0, *) {
+            LockScreenWidget()
+        }
+    }
+}
+
 struct GospelWidget: Widget {
     let kind: String = "GospelWidget"
 
@@ -309,6 +443,20 @@ struct GospelWidget: Widget {
         .configurationDisplayName("Daily Verse")
         .description("Start your day with God's Word on your home screen")
         .supportedFamilies([.systemSmall, .systemMedium, .systemLarge])
+    }
+}
+
+@available(iOSApplicationExtension 16.0, *)
+struct LockScreenWidget: Widget {
+    let kind: String = "LockScreenWidget"
+
+    var body: some WidgetConfiguration {
+        StaticConfiguration(kind: kind, provider: Provider()) { entry in
+            GospelWidgetEntryView(entry: entry)
+        }
+        .configurationDisplayName("Verse on Lock Screen")
+        .description("See today's verse every time you check your phone")
+        .supportedFamilies([.accessoryCircular, .accessoryRectangular, .accessoryInline])
     }
 }
 
