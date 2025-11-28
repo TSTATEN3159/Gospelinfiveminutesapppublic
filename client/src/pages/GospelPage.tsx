@@ -71,6 +71,9 @@ export default function GospelPage({ onNavigate }: GospelPageProps) {
   const [showPrayer, setShowPrayer] = useState(false);
   const [showCelebration, setShowCelebration] = useState(false);
   const [prayerStep, setPrayerStep] = useState(0);
+  const [hasAccepted, setHasAccepted] = useState(() => 
+    localStorage.getItem('hasAcceptedChrist') === 'true'
+  );
   const { toast } = useToast();
 
   const prayerLines = [
@@ -102,6 +105,7 @@ export default function GospelPage({ onNavigate }: GospelPageProps) {
     setShowDecision(false);
     setShowPrayer(true);
     setPrayerStep(0);
+    setHasAccepted(true);
   };
 
   const nextPrayerLine = () => {
@@ -118,7 +122,7 @@ export default function GospelPage({ onNavigate }: GospelPageProps) {
   };
 
   const handleShare = async () => {
-    const shareText = "Today I made the most important decision of my life - I accepted Jesus Christ as my Lord and Savior! 🙏✝️ #NewLife #BornAgain";
+    const shareText = "Today I made the most important decision of my life - I accepted Jesus Christ as my Lord and Savior! #NewLife #BornAgain";
     
     if (Capacitor.isNativePlatform()) {
       try {
@@ -319,63 +323,110 @@ export default function GospelPage({ onNavigate }: GospelPageProps) {
               <Cross className="w-10 h-10 text-white" />
             </div>
 
-            <h2 className="text-3xl font-bold mb-4">
-              The Question That Changes Everything
-            </h2>
-            
-            <p className="text-xl text-white/80 mb-2">
-              Jesus is knocking at the door of your heart.
-            </p>
-            
-            <p className="text-lg text-white/70 mb-8 italic">
-              "Behold, I stand at the door, and knock: if any man hear my voice, and open the door, I will come in to him."
-              <span className="block mt-2 text-amber-400 not-italic">— Revelation 3:20</span>
-            </p>
+            {hasAccepted ? (
+              <>
+                <h2 className="text-3xl font-bold mb-4">
+                  Welcome Back, Believer!
+                </h2>
+                
+                <p className="text-xl text-white/80 mb-8">
+                  You've already made the best decision of your life. Now let's keep growing together!
+                </p>
 
-            <p className="text-white/90 mb-10">
-              Would you like to open that door today and receive Jesus as your Lord and Savior?
-            </p>
+                <div className="space-y-4">
+                  <Button
+                    onClick={() => onNavigate('newBeliever')}
+                    className="w-full h-14 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white font-semibold"
+                    data-testid="button-continue-growing"
+                  >
+                    <ArrowRight className="w-5 h-5 mr-2" />
+                    Continue Growing
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => onNavigate('discipleship-list')}
+                    className="w-full h-14 border-white/40 text-white hover:bg-white/10"
+                    data-testid="button-discipleship-plans"
+                  >
+                    <BookOpen className="w-5 h-5 mr-2" />
+                    Explore Discipleship Plans
+                  </Button>
+
+                  <Button
+                    variant="ghost"
+                    onClick={() => onNavigate('home')}
+                    className="w-full h-12 text-white/70 hover:text-white hover:bg-white/10"
+                    data-testid="button-go-home"
+                  >
+                    <Home className="w-5 h-5 mr-2" />
+                    Return Home
+                  </Button>
+                </div>
+              </>
+            ) : (
+              <>
+                <h2 className="text-3xl font-bold mb-4">
+                  The Question That Changes Everything
+                </h2>
+                
+                <p className="text-xl text-white/80 mb-2">
+                  Jesus is knocking at the door of your heart.
+                </p>
+                
+                <p className="text-lg text-white/70 mb-8 italic">
+                  "Behold, I stand at the door, and knock: if any man hear my voice, and open the door, I will come in to him."
+                  <span className="block mt-2 text-amber-400 not-italic">— Revelation 3:20</span>
+                </p>
+
+                <p className="text-white/90 mb-10">
+                  Would you like to open that door today and receive Jesus as your Lord and Savior?
+                </p>
+
+                <div className="space-y-4">
+                  <Button
+                    onClick={handleAcceptJesus}
+                    className="w-full h-16 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-lg font-bold shadow-2xl"
+                    data-testid="button-accept-jesus"
+                  >
+                    <Heart className="w-6 h-6 mr-3" />
+                    Yes, I Want to Receive Jesus
+                  </Button>
+
+                  <Button
+                    variant="outline"
+                    onClick={() => {
+                      localStorage.setItem('hasAcceptedChrist', 'true');
+                      setHasAccepted(true);
+                      toast({
+                        title: "We're So Glad!",
+                        description: "Keep growing in your faith with our discipleship plans!",
+                      });
+                      onNavigate('discipleship-list');
+                    }}
+                    className="w-full h-14 border-white/40 text-white hover:bg-white/10"
+                    data-testid="button-already-believer"
+                  >
+                    <Check className="w-5 h-5 mr-2" />
+                    I Already Know Jesus
+                  </Button>
+
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      setShowDecision(false);
+                      setCurrentStep(0);
+                    }}
+                    className="w-full h-12 text-white/70 hover:text-white hover:bg-white/10"
+                    data-testid="button-learn-more"
+                  >
+                    <BookOpen className="w-5 h-5 mr-2" />
+                    I Want to Learn More
+                  </Button>
+                </div>
+              </>
+            )}
           </motion.div>
-
-          <div className="space-y-4">
-            <Button
-              onClick={handleAcceptJesus}
-              className="w-full h-16 bg-gradient-to-r from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 text-white text-lg font-bold shadow-2xl"
-              data-testid="button-accept-jesus"
-            >
-              <Heart className="w-6 h-6 mr-3" />
-              Yes, I Want to Receive Jesus
-            </Button>
-
-            <Button
-              variant="outline"
-              onClick={() => {
-                toast({
-                  title: "We're So Glad!",
-                  description: "Keep growing in your faith with our discipleship plans!",
-                });
-                onNavigate('discipleship');
-              }}
-              className="w-full h-14 border-white/40 text-white hover:bg-white/10"
-              data-testid="button-already-believer"
-            >
-              <Check className="w-5 h-5 mr-2" />
-              I Already Know Jesus
-            </Button>
-
-            <Button
-              variant="ghost"
-              onClick={() => {
-                setShowDecision(false);
-                setCurrentStep(0);
-              }}
-              className="w-full h-12 text-white/70 hover:text-white hover:bg-white/10"
-              data-testid="button-learn-more"
-            >
-              <BookOpen className="w-5 h-5 mr-2" />
-              I Want to Learn More
-            </Button>
-          </div>
         </div>
       </div>
     );

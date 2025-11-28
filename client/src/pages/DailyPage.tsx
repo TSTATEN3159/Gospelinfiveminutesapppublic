@@ -182,7 +182,7 @@ function DailyPage({ onNavigate, streakDays = 0, language = "en" }: DailyPagePro
 
       {/* Feelings & Scripture Section */}
       <div className="px-4 py-3">
-        <EmotionScriptureSection backgroundImage={feelingsImage} />
+        <EmotionScriptureSection backgroundImage={feelingsImage} onNavigate={onNavigate} />
       </div>
 
       {/* Scripture Memory Helper Section */}

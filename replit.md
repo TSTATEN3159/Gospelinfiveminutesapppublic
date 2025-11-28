@@ -149,3 +149,14 @@ The application implements a smart tiered fallback system for Bible APIs (API.Bi
   - Sync status with last sync time display
   - 2x2 grid of Siri shortcut setup buttons
   - Full error handling with toast notifications
+- **Gospel Presentation System**: Complete evangelism feature with strategic placement
+  - `GospelPage.tsx`: 4-step immersive presentation (God's Love, Our Problem, God's Solution, Your Response)
+  - Step-by-step swiping with beautiful gradients and Scripture backing
+  - Decision moment with three clear options: Accept Jesus, Already Know Him, Learn More
+  - Guided salvation prayer with progressive text reveal
+  - Celebration screen with confetti animation and "What Just Happened" explanation
+  - `NewBelieverPage.tsx`: 6 next steps for new believers with progress tracking
+  - Homepage integration: Prominent "Good News" card entry point
+  - Feelings page integration: Gospel prompt appears for seeking emotions (Lost, Empty, Searching, etc.)
+  - Share decision functionality via native share sheet
+  - Saves salvation date to localStorage for future reference

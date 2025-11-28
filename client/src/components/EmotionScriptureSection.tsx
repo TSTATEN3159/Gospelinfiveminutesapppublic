@@ -4,7 +4,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { Heart, Copy, Sparkles, Compass } from "lucide-react";
+import { Heart, Copy, Sparkles, Compass, ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useToast } from "@/hooks/use-toast";
 
@@ -18,9 +18,11 @@ const emotions = [
   "Anxious", "Peaceful", "Joyful", "Worried", "Grateful", "Lonely", "Hopeful", "Afraid", "Loved", "Sad",
   "Angry", "Confused", "Confident", "Overwhelmed", "Blessed", "Discouraged", "Excited", "Tired", "Curious", "Content",
   "Frustrated", "Amazed", "Nervous", "Calm", "Hurt", "Inspired", "Doubtful", "Secure", "Restless", "Thoughtful",
-  "Cheerful", "Stressed", "Optimistic", "Ashamed", "Proud", "Jealous", "Patient", "Impatient", "Forgiving", "Resentful"
-  // Add more emotions to reach 100+
+  "Cheerful", "Stressed", "Optimistic", "Ashamed", "Proud", "Jealous", "Patient", "Impatient", "Forgiving", "Resentful",
+  "Lost", "Empty", "Searching", "Hopeless", "Broken", "Guilty"
 ];
+
+const gospelPromptEmotions = ["Lost", "Empty", "Searching", "Hopeless", "Broken", "Guilty", "Confused", "Lonely"];
 
 const mockScriptures: Record<string, ScriptureResponse> = {
   "Anxious": {
@@ -37,14 +39,45 @@ const mockScriptures: Record<string, ScriptureResponse> = {
     verse: "The Lord your God goes with you; he will never leave you nor forsake you.",
     reference: "Deuteronomy 31:6",
     encouragement: "You are never truly alone. God's presence is with you always, offering comfort and companionship."
+  },
+  "Lost": {
+    verse: "For the Son of man is come to seek and to save that which was lost.",
+    reference: "Luke 19:10",
+    encouragement: "Jesus came specifically for you. He's not angry—He's searching for you with love."
+  },
+  "Empty": {
+    verse: "Jesus said unto her, I am the resurrection, and the life: he that believeth in me, though he were dead, yet shall he live.",
+    reference: "John 11:25",
+    encouragement: "That empty feeling is real—and Jesus offers to fill it with life that truly satisfies."
+  },
+  "Searching": {
+    verse: "And ye shall seek me, and find me, when ye shall search for me with all your heart.",
+    reference: "Jeremiah 29:13",
+    encouragement: "Your search matters. God promises that those who genuinely seek Him will find Him."
+  },
+  "Hopeless": {
+    verse: "For I know the thoughts that I think toward you, saith the Lord, thoughts of peace, and not of evil, to give you an expected end.",
+    reference: "Jeremiah 29:11",
+    encouragement: "Even when you can't see hope, God has a plan and a future for you. Don't give up."
+  },
+  "Broken": {
+    verse: "The Lord is nigh unto them that are of a broken heart; and saveth such as be of a contrite spirit.",
+    reference: "Psalm 34:18",
+    encouragement: "God draws close to the brokenhearted. Your brokenness is not the end—it's where His healing begins."
+  },
+  "Guilty": {
+    verse: "If we confess our sins, he is faithful and just to forgive us our sins, and to cleanse us from all unrighteousness.",
+    reference: "1 John 1:9",
+    encouragement: "Guilt doesn't have to be permanent. God offers complete forgiveness and a fresh start."
   }
 };
 
 interface EmotionScriptureSectionProps {
   backgroundImage?: string;
+  onNavigate?: (page: string) => void;
 }
 
-export default function EmotionScriptureSection({ backgroundImage }: EmotionScriptureSectionProps) {
+export default function EmotionScriptureSection({ backgroundImage, onNavigate }: EmotionScriptureSectionProps) {
   const [selectedEmotion, setSelectedEmotion] = useState("");
   const [scriptureResponse, setScriptureResponse] = useState<ScriptureResponse | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -207,6 +240,27 @@ export default function EmotionScriptureSection({ backgroundImage }: EmotionScri
                     Try Another
                   </Button>
                 </div>
+                
+                {/* Gospel invitation for spiritual searching emotions */}
+                {gospelPromptEmotions.includes(selectedEmotion) && onNavigate && (
+                  <div className="mt-4 bg-gradient-to-r from-indigo-50 to-purple-50 p-4 rounded-lg border border-indigo-200">
+                    <div className="flex items-center gap-2 mb-2">
+                      <Heart className="w-4 h-4 text-indigo-600" />
+                      <span className="text-sm font-medium text-indigo-800">There's More...</span>
+                    </div>
+                    <p className="text-indigo-700 text-sm leading-relaxed mb-3">
+                      If you're searching for real answers, there's a message that has changed billions of lives—and it could change yours.
+                    </p>
+                    <Button 
+                      onClick={() => onNavigate('gospel')}
+                      className="w-full bg-gradient-to-r from-indigo-600 to-purple-600 text-white hover:from-indigo-700 hover:to-purple-700"
+                      data-testid="button-discover-gospel"
+                    >
+                      Discover the Good News
+                      <ArrowRight className="w-4 h-4 ml-2" />
+                    </Button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
