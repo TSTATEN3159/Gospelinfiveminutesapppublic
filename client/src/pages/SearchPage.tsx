@@ -90,8 +90,8 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
           </a>
           
           {/* Share Button - Professional Green */}
-          <Button 
-            className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all"
+          <button 
+            className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
             data-testid="button-share-search"
             aria-label="Share The Gospel in 5 Minutes with friends"
             onClick={() => {
@@ -109,8 +109,8 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             }}
           >
             <Share className="w-3.5 h-3.5" aria-hidden="true" />
-            <span>{t.share}</span>
-          </Button>
+            <span>Share The Gospel in 5 Minutes</span>
+          </button>
         </div>
       </div>
 
