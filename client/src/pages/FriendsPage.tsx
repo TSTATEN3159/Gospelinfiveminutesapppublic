@@ -532,13 +532,13 @@ export default function FriendsPage({ currentUserId, language, onNavigate }: Fri
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-3"
+            className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full"
             data-testid="button-back-friends"
             aria-label="Go back to More page"
           >
             <ArrowLeft className="w-5 h-5" />
           </Button>
-          <div className="flex-1 text-center">
+          <div className="flex-1 text-center pr-11">
             <h1 className="text-2xl font-bold text-amber-800 dark:text-amber-300" style={{ 
               fontFamily: 'Dancing Script, Brush Script MT, cursive'
             }}>
