@@ -11,6 +11,7 @@ import ProfilePictureUpload from "../components/ProfilePictureUpload";
 import { DailyVerseHeroCard } from "../components/DailyVerseHeroCard";
 import { KingdomParablesTab } from "../components/KingdomParablesTab";
 import { BibleTriviaTile } from "../components/home/BibleTriviaTile";
+import { AbideGrowthCard } from "../components/home/AbideGrowthCard";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -255,6 +256,11 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           reference={dailyVerse?.reference}
           text={dailyVerse?.text}
           loading={loading}
+        />
+
+        {/* Abide - My Growth Today Section */}
+        <AbideGrowthCard 
+          onStartAbide={() => onNavigate?.('discipleship-list')}
         />
 
         {/* Bible Trivia Section - World-Class Design */}
