@@ -29,7 +29,6 @@ import { videoService, type VideoItem } from "../services/videoService";
 import { useTranslations } from "../lib/translations";
 import { widgetUpdater } from "../lib/widgetUpdater";
 import { liveActivity } from "../lib/liveActivity";
-import { getAbideState, getTodaysFruit } from "../lib/abideStorage";
 
 // Images
 import warmBibleDeskImage from '@assets/stock_images/person_writing_journ_f6e312be.jpg';
@@ -70,8 +69,6 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   
-  // Abide Tree Preview data
-  const [abideData, setAbideData] = useState({ totalFruit: 0, streak: 0, todayFruitLabel: "Love" });
   
   // iOS platform detection for Apple Store compliance
   const isIOS = Capacitor.getPlatform() === 'ios';
@@ -100,16 +97,6 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
     }
   }, [ttsInitialized, ttsSupported, toast, t.ttsNotSupported]);
 
-  // Load Abide Tree data
-  useEffect(() => {
-    const state = getAbideState();
-    const todayFruit = getTodaysFruit();
-    setAbideData({
-      totalFruit: state.totalFruit,
-      streak: state.streak,
-      todayFruitLabel: todayFruit
-    });
-  }, []);
 
   useEffect(() => {
     const loadDailyContent = async () => {
@@ -274,12 +261,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
         />
 
         {/* Abide - My Growth Today Section */}
-        <AbideTreePreview
-          totalFruit={abideData.totalFruit}
-          streak={abideData.streak}
-          todayFruitLabel={abideData.todayFruitLabel}
-          onTap={() => onNavigate?.('abide')}
-        />
+        <AbideTreePreview onTap={() => onNavigate?.('abide')} />
 
         {/* Bible Trivia Section - World-Class Design */}
         <BibleTriviaTile 

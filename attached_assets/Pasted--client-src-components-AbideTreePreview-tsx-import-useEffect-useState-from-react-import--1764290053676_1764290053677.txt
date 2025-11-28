@@ -1,13 +1,12 @@
+// client/src/components/AbideTreePreview.tsx
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Leaf, Flame } from "lucide-react";
 import { tapHaptic } from "@/lib/nativeEnhancements";
 import { getAbideState } from "@/lib/abideStorage";
 
-interface Props {
-  onTap?: () => void;
-}
-
-export default function AbideTreePreview({ onTap }: Props) {
+export default function AbideTreePreview() {
+  const navigate = useNavigate();
   const [totalFruit, setTotalFruit] = useState(0);
   const [streak, setStreak] = useState(0);
   const [todayFruitLabel, setTodayFruitLabel] = useState("Love");
@@ -17,11 +16,12 @@ export default function AbideTreePreview({ onTap }: Props) {
     const state = getAbideState();
     setTotalFruit(state.totalFruit);
     setStreak(state.streak);
-    
+    // simple rotation for now (can make smarter later)
     const options = Object.keys(state.fruitCounts);
     const index = state.totalFruit % options.length;
     setTodayFruitLabel(options[index] || "Love");
 
+    // small trick: if they already have some fruit, trigger pop effect
     if (state.totalFruit > 0) {
       setJustGrew(true);
       const t = setTimeout(() => setJustGrew(false), 400);
@@ -31,7 +31,7 @@ export default function AbideTreePreview({ onTap }: Props) {
 
   const handleTap = async () => {
     await tapHaptic();
-    onTap?.();
+    navigate("/abide");
   };
 
   const maxSlots = 9;
@@ -47,7 +47,6 @@ export default function AbideTreePreview({ onTap }: Props) {
         flex flex-col items-start
         px-5 py-4 mb-6 text-left
       "
-      data-testid="card-abide-growth"
     >
       <p className="text-xs uppercase tracking-[0.15em] text-emerald-200/80 mb-1">
         Abide — My Growth Today
@@ -57,7 +56,7 @@ export default function AbideTreePreview({ onTap }: Props) {
         <div className="flex items-center gap-2">
           <Leaf className="h-5 w-5 text-emerald-300" />
           <p className="text-[13px] font-medium text-emerald-100">
-            Today's Fruit: {todayFruitLabel}
+            Today’s Fruit: {todayFruitLabel}
           </p>
         </div>
 
