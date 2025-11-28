@@ -1,0 +1,80 @@
+// AppShell.tsx (or in App.tsx if you prefer)
+import { useState, ReactNode } from "react";
+import { useSwipeable } from "react-swipeable";
+
+// 1. Define the pages in the order you want to swipe through
+type PageId = "HOME" | "TRIVIA" | "PLANS";
+
+const PAGES: { id: PageId; label: string; icon: string }[] = [
+  { id: "HOME", label: "Home", icon: "🏠" },
+  { id: "TRIVIA", label: "Trivia", icon: "❓" },
+  { id: "PLANS", label: "Plans", icon: "📖" },
+];
+
+// 2. Your existing page components
+import HomePage from "./pages/HomePage";
+import TriviaPage from "./pages/TriviaPage";
+import PlansPage from "./pages/PlansPage";
+
+function renderPage(id: PageId): ReactNode {
+  switch (id) {
+    case "HOME":
+      return <HomePage />;
+    case "TRIVIA":
+      return <TriviaPage />;
+    case "PLANS":
+      return <PlansPage />;
+    default:
+      return <HomePage />;
+  }
+}
+
+export default function AppShell() {
+  const [currentPage, setCurrentPage] = useState<PageId>("HOME");
+
+  const currentIndex = PAGES.findIndex((p) => p.id === currentPage);
+
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      const next = PAGES[currentIndex + 1];
+      if (next) setCurrentPage(next.id);
+    },
+    onSwipedRight: () => {
+      const prev = PAGES[currentIndex - 1];
+      if (prev) setCurrentPage(prev.id);
+    },
+    preventScrollOnSwipe: true,
+    trackMouse: true, // lets you test with mouse in browser
+  });
+
+  return (
+    <div
+      {...handlers}
+      className="flex flex-col h-screen bg-slate-950 text-slate-50"
+    >
+      {/* MAIN CONTENT */}
+      <div className="flex-1 overflow-hidden">
+        {renderPage(currentPage)}
+      </div>
+
+      {/* BOTTOM TABS — still state-based, no router */}
+      <nav className="h-16 border-t border-slate-800 bg-slate-900 flex items-stretch">
+        {PAGES.map((page) => {
+          const active = page.id === currentPage;
+          return (
+            <button
+              key={page.id}
+              onClick={() => setCurrentPage(page.id)}
+              className={`flex-1 flex flex-col items-center justify-center text-[11px] ${
+                active ? "text-amber-300 font-semibold" : "text-slate-400"
+              }`}
+            >
+              <span className="text-xl mb-0.5">{page.icon}</span>
+              <span>{page.label}</span>
+            </button>
+          );
+        })}
+      </nav>
+    </div>
+  );
+}
