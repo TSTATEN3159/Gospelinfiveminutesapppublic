@@ -1,7 +1,7 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Flame, Crown } from "lucide-react";
-import triviaImage from "@assets/stock_images/trivia_quiz_game_que_e7881549.jpg";
+import libraryBooksImage from "@assets/stock_images/library_books_shelve_bc687803.jpg";
 
 interface BibleTriviaTileProps {
   onStart?: () => void;
@@ -23,7 +23,7 @@ export function BibleTriviaTile({
     <Card className="overflow-hidden rounded-3xl border-0 shadow-[0_18px_50px_rgba(15,23,42,0.35)] bg-slate-950/90 text-slate-50">
       <div className="relative h-40 w-full md:h-48">
         <img
-          src={triviaImage}
+          src={libraryBooksImage}
           alt="Bible Trivia Challenge"
           className="h-full w-full object-cover object-center"
         />
