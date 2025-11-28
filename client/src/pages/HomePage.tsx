@@ -68,6 +68,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
   const [dailyVideo, setDailyVideo] = useState<VideoItem | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [bibleStudiesStarted, setBibleStudiesStarted] = useState(0);
   
   
   // iOS platform detection for Apple Store compliance
@@ -149,6 +150,23 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
     };
 
     loadDailyContent();
+  }, []);
+
+  // Load Bible Studies progress
+  useEffect(() => {
+    const bibleStudiesData = localStorage.getItem("bibleStudiesProgress");
+    if (bibleStudiesData) {
+      try {
+        const progress = JSON.parse(bibleStudiesData);
+        const startedCount = Object.keys(progress).filter(key => progress[key]?.started).length;
+        setBibleStudiesStarted(startedCount);
+      } catch (e) {
+        // Fallback: count any localStorage keys starting with study IDs
+        const studyIds = ["abide-in-christ", "waiting-on-god", "humility", "absolute-surrender", "with-christ-school-of-prayer", "morning-and-evening", "all-of-grace", "treasury-of-david", "power-through-prayer", "purpose-in-prayer", "weapon-of-prayer", "imitation-of-christ", "practice-presence-of-god", "pilgrims-progress", "christians-secret-happy-life", "answers-to-prayer", "how-to-pray", "union-and-communion", "my-utmost-for-his-highest", "attributes-of-god", "christian-counsel", "experiencing-depths", "serious-call", "religious-affections", "way-to-god", "christian-perfection", "confessions", "lectures-on-revival", "letters-of-newton", "letters-of-rutherford"];
+        const started = studyIds.filter(id => localStorage.getItem(`bibleStudy-${id}-progress`)).length;
+        setBibleStudiesStarted(started);
+      }
+    }
   }, []);
 
   const handleBadgeEarned = (badgeType: string, streakDays: number) => {
@@ -290,8 +308,11 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
             </p>
             <div className="flex items-center gap-3 mb-3">
               <Badge variant="secondary" className="bg-blue-100 dark:bg-blue-900 text-blue-900 dark:text-blue-100">
-                30 Available
+                {bibleStudiesStarted > 0 ? `${bibleStudiesStarted} Started` : '30 Available'}
               </Badge>
+              <span className="text-xs text-gray-500 dark:text-gray-400">
+                {bibleStudiesStarted > 0 && `of 30`}
+              </span>
             </div>
             <div className="flex justify-between items-center">
               <Button 
