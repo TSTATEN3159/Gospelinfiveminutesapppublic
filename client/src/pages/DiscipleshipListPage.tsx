@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
-import { Users, Shield, Settings, Play, BookOpen, BookmarkCheck, ChevronRight, Flame, Share, TrendingUp } from "lucide-react";
+import { Users, Shield, Settings, Play, BookOpen, BookmarkCheck, ChevronRight, Flame, Share, TrendingUp, Facebook, Instagram } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { DISCIPLESHIP_PLANS } from "@/features/discipleship/discipleshipPlans";
 import { loadPlanProgress } from "@/features/discipleship/discipleshipProgress";
@@ -155,12 +155,33 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
         {/* Personalized Greeting */}
         <PersonalizedGreeting language={language} />
 
-        {/* Share Button */}
+        {/* Social Buttons */}
         <div className="flex gap-2 mt-4">
+          <a 
+            href="https://www.facebook.com/TheGospelIn5Minutes" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-blue-600 hover:bg-blue-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
+            data-testid="button-facebook-discipleship"
+            aria-label="Follow us on Facebook - Opens in new window"
+          >
+            <Facebook className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Follow</span>
+          </a>
+          <a 
+            href="https://www.instagram.com/thegospelinfiveminutes/" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="flex items-center gap-1 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
+            data-testid="button-instagram-discipleship"
+            aria-label="Follow us on Instagram - Opens in new window"
+          >
+            <Instagram className="w-3.5 h-3.5" aria-hidden="true" />
+            <span>Follow</span>
+          </a>
           <Button
-            variant="outline"
             size="sm"
-            className="flex-1 gap-2 text-xs"
+            className="flex-1 gap-2 text-xs bg-emerald-600 hover:bg-emerald-700 text-white"
             data-testid="button-share-app"
             onClick={async () => {
               const result = await safeShare({
