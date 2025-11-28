@@ -56,7 +56,8 @@ export default function AbideTreePreview({
         {Array.from({ length: Math.min(totalFruit, 9) }).map((_, i) => (
           <div
             key={i}
-            className="h-5 w-5 rounded-full bg-amber-400 shadow-md shadow-amber-700/50"
+            className="h-5 w-5 rounded-full bg-amber-400 shadow-md shadow-amber-700/50 fruit-pop"
+            style={{ animationDelay: `${i * 60}ms` }}
           />
         ))}
 

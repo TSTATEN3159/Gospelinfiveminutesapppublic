@@ -279,7 +279,13 @@ export default function AbideSessionPage({ onNavigate }: AbideSessionPageProps) 
             <p className="text-sm text-slate-200 italic mb-3">
               "{prayer}"
             </p>
-            <p className="text-[11px] text-slate-400">
+            
+            {/* Fruit preview with pop animation */}
+            <div className="flex justify-center my-4">
+              <div className="h-12 w-12 rounded-full bg-gradient-to-br from-amber-300 to-amber-500 shadow-lg shadow-amber-700/50 fruit-pop" />
+            </div>
+            
+            <p className="text-[11px] text-slate-400 text-center">
               When you're ready, mark today's Abide as done. Your fruit will
               grow on the Tree.
             </p>
