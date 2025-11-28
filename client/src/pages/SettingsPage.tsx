@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2 } from "lucide-react";
+import { ArrowLeft, User, Bell, Shield, Database, Smartphone, Save, Edit3, Download, Trash2, Volume2, Home } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { bibleService } from "../services/bibleService";
 import appStore from "@/lib/appStore";
@@ -331,7 +331,7 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
     <div className="min-h-screen pb-20">
       {/* Header Section - Same style as HomePage */}
       <div className="bg-background border-b border-border px-4 py-6 ios-safe-top">
-        <div className="flex items-center mb-4">
+        <div className="flex items-center justify-between mb-4">
           <Button
             variant="ghost"
             size="icon"
@@ -351,6 +351,15 @@ export default function SettingsPage({ onNavigate, streakDays = 0, language = "e
             </h1>
             <p className="text-muted-foreground mt-1">{t.settingsDescription}</p>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onNavigate?.('home')}
+            data-testid="button-home"
+            aria-label="Go home"
+          >
+            <Home className="w-5 h-5" />
+          </Button>
         </div>
       </div>
 

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink } from "lucide-react";
+import { ArrowLeft, Play, Clock, Users, Heart, Lightbulb, BookOpen, ExternalLink, Home } from "lucide-react";
 import { videoService, type VideoItem } from "@/services/videoService";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { useToast } from "@/hooks/use-toast";
@@ -126,12 +126,12 @@ export default function VideosPage({ onNavigate, streakDays = 0, language = "en"
     <div className="min-h-screen bg-white dark:bg-gray-900 pb-20">
       {/* Professional Header Section */}
       <div className="bg-white dark:bg-gray-900 px-6 py-8 border-b border-slate-200 dark:border-slate-800 ios-safe-top">
-        <div className="flex items-center mb-8">
+        <div className="flex items-center justify-between mb-8">
           <Button
             variant="ghost"
             size="icon"
             onClick={() => onNavigate?.('more')}
-            className="mr-4 h-11 w-11 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105"
+            className="h-11 w-11 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105"
             data-testid="button-back-videos"
             aria-label="Go back to More page"
           >
@@ -147,6 +147,16 @@ export default function VideosPage({ onNavigate, streakDays = 0, language = "en"
             <div className="h-1.5 w-32 bg-gradient-to-r from-slate-500 via-blue-500 to-indigo-500 rounded-full mx-auto shadow-sm mb-4" />
             <p className="text-slate-600 dark:text-slate-400 font-semibold text-lg">{t.videosPageSubtitle}</p>
           </div>
+          <Button
+            variant="ghost"
+            size="icon"
+            onClick={() => onNavigate?.('home')}
+            className="h-11 w-11 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all duration-300 rounded-full shadow-lg hover:shadow-xl transform hover:scale-105"
+            data-testid="button-home"
+            aria-label="Go home"
+          >
+            <Home className="w-5 h-5 text-slate-700 dark:text-slate-300" />
+          </Button>
         </div>
       </div>
 

@@ -1,6 +1,6 @@
 import TopicalBibleSearchCard from "@/components/TopicalBibleSearchCard";
 import { BibleVersionCode } from "@/config/bibleVersions";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
 
@@ -29,22 +29,34 @@ function TopicSearchContent({ onNavigate }: TopicSearchPageProps) {
 
   return (
     <>
-      {/* Header with Back Button */}
-      <div className="sticky top-0 z-10 bg-amber-50/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-amber-200 dark:border-gray-700">
-        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center gap-3">
+      {/* Header with Back and Home Buttons */}
+      <div className="sticky top-0 z-10 bg-amber-50/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-amber-200 dark:border-gray-700 ios-safe-top">
+        <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={handleBack}
+              className="rounded-full"
+              data-testid="button-back"
+              aria-label="Go back"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
+              Topical Bible Search
+            </h1>
+          </div>
           <Button
             variant="ghost"
             size="icon"
-            onClick={handleBack}
+            onClick={() => onNavigate?.('home')}
             className="rounded-full"
-            data-testid="button-back"
-            aria-label="Go back"
+            data-testid="button-home"
+            aria-label="Go home"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <Home className="w-5 h-5" />
           </Button>
-          <h1 className="text-lg font-semibold text-gray-900 dark:text-gray-50">
-            Topical Bible Search
-          </h1>
         </div>
       </div>
 

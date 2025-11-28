@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { ArrowLeft, BookOpen, Calendar, Check, Flame, ChevronRight } from "lucide-react";
+import { ArrowLeft, BookOpen, Calendar, Check, Flame, ChevronRight, Home } from "lucide-react";
 import { Progress } from "@/components/ui/progress";
 import { apiUrl } from "@/lib/api-config";
 import appStore from "@/lib/appStore";
@@ -102,7 +102,7 @@ function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPageProps) {
       {/* Header */}
       <div className="bg-gradient-to-br from-emerald-100/80 to-green-100/80 dark:from-emerald-950/80 dark:to-green-950/80 backdrop-blur-xl border-b border-emerald-200/50 dark:border-emerald-900/30 ios-safe-top">
         <div className="max-w-2xl mx-auto px-4 py-6">
-          <div className="flex items-center gap-3 mb-4">
+          <div className="flex items-center justify-between gap-3 mb-4">
             <Button
               onClick={onBack}
               variant="ghost"
@@ -119,6 +119,16 @@ function ReadingPlansPage({ onBack, onNavigate }: ReadingPlansPageProps) {
                 Bible Reading Plans
               </h1>
             </div>
+            <Button
+              onClick={() => onNavigate('home')}
+              variant="ghost"
+              size="icon"
+              className="hover:bg-emerald-200/50 dark:hover:bg-emerald-900/50"
+              aria-label="Go home"
+              data-testid="button-home"
+            >
+              <Home className="w-5 h-5" />
+            </Button>
           </div>
           <div className="bg-white/60 dark:bg-gray-900/60 backdrop-blur-xl rounded-2xl p-4 border border-emerald-200/50 dark:border-emerald-800/50 shadow-lg">
             <p className="text-emerald-900 dark:text-emerald-100 font-medium">

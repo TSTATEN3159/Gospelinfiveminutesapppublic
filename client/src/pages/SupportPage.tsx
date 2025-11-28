@@ -1,4 +1,4 @@
-import { ArrowLeft, Mail, MessageCircle, Trash2, Download, Shield, FileText, Scale } from "lucide-react";
+import { ArrowLeft, Mail, MessageCircle, Trash2, Download, Shield, FileText, Scale, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { useState } from "react";
@@ -117,12 +117,15 @@ export default function SupportPage({ onBack, onNavigate, language = "en" }: Sup
   return (
     <div className="min-h-screen bg-background pb-20">
       {/* Header */}
-      <div className="bg-background px-4 py-6 border-b border-border sticky top-0 z-10">
-        <div className="flex items-center gap-3">
+      <div className="bg-background px-4 py-6 border-b border-border sticky top-0 z-10 ios-safe-top">
+        <div className="flex items-center justify-between gap-3">
           <Button variant="ghost" size="icon" onClick={onBack} data-testid="button-back" aria-label="Go back to More page" className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full">
             <ArrowLeft className="w-5 h-5" />
           </Button>
           <h1 className="text-xl font-bold text-foreground text-center flex-1">{t.supportAndPrivacy}</h1>
+          <Button variant="ghost" size="icon" onClick={() => onNavigate?.('home')} data-testid="button-home" aria-label="Go home" className="h-11 w-11 bg-accent/50 dark:bg-accent/30 hover:bg-accent dark:hover:bg-accent shadow-lg hover:shadow-xl transition-all duration-300 rounded-full">
+            <Home className="w-5 h-5" />
+          </Button>
         </div>
       </div>
 
