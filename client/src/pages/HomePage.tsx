@@ -279,30 +279,56 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
           loading={loading}
         />
 
-        {/* The Good News - Gospel Invitation Card */}
+        {/* The Good News of Jesus Christ - Most Important Card */}
         <div 
-          className="relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-transform"
+          className="relative overflow-hidden rounded-2xl cursor-pointer active:scale-[0.98] transition-transform shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
           onClick={() => onNavigate?.('gospel')}
           data-testid="card-gospel-invitation"
         >
-          <div className="absolute inset-0 bg-gradient-to-br from-indigo-600 via-purple-600 to-rose-500" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_20%,rgba(255,255,255,0.2),transparent_50%)]" />
-          <div className="relative p-5 text-white">
-            <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center flex-shrink-0">
-                <Heart className="w-6 h-6 text-white" />
+          {/* Beautiful gradient background with warm, inviting colors */}
+          <div className="absolute inset-0 bg-gradient-to-br from-rose-600 via-amber-500 to-orange-400" />
+          
+          {/* Radial glow effect for warmth */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(255,255,255,0.3),transparent_60%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_80%,rgba(255,200,100,0.2),transparent_40%)]" />
+          
+          {/* Cross silhouette subtle overlay */}
+          <div className="absolute top-4 right-4 w-20 h-20 opacity-10">
+            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-3 h-full bg-white rounded-full" />
+            <div className="absolute top-1/4 left-0 w-full h-3 bg-white rounded-full" />
+          </div>
+          
+          <div className="relative px-6 py-8 text-white">
+            {/* Glowing icon */}
+            <div className="w-16 h-16 mx-auto mb-5 rounded-full bg-white/25 backdrop-blur-sm flex items-center justify-center shadow-[0_0_30px_rgba(255,255,255,0.3)]">
+              <Heart className="w-8 h-8 text-white drop-shadow-lg" fill="currentColor" />
+            </div>
+            
+            {/* Main title */}
+            <h3 className="text-2xl font-bold text-center mb-2 drop-shadow-md">
+              The Good News
+            </h3>
+            <p className="text-center text-white/90 text-sm font-medium mb-4">
+              of Jesus Christ
+            </p>
+            
+            {/* Compelling description */}
+            <p className="text-center text-white/95 text-base leading-relaxed mb-6 max-w-xs mx-auto">
+              Discover the message that has transformed billions of lives throughout history — and could change yours today.
+            </p>
+            
+            {/* Call to action button */}
+            <div className="flex justify-center mb-4">
+              <div className="inline-flex items-center gap-2 bg-white/20 hover:bg-white/30 backdrop-blur-sm px-6 py-3 rounded-full transition-all shadow-lg">
+                <span className="font-semibold text-white">Begin Your Journey</span>
+                <BookOpen className="w-5 h-5 text-white" />
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold mb-1">The Good News</h3>
-                <p className="text-white/90 text-sm leading-relaxed mb-3">
-                  Discover the message that has changed billions of lives — and could change yours today.
-                </p>
-                <div className="flex items-center gap-2 text-white/80 text-xs">
-                  <span className="bg-white/20 px-2 py-0.5 rounded-full">5 min read</span>
-                  <span>•</span>
-                  <span>Life-changing</span>
-                </div>
-              </div>
+            </div>
+            
+            {/* Tags */}
+            <div className="flex items-center justify-center gap-3 text-white/80 text-xs">
+              <span className="bg-white/15 px-3 py-1 rounded-full">5 min read</span>
+              <span className="bg-white/15 px-3 py-1 rounded-full">Life-changing</span>
             </div>
           </div>
         </div>

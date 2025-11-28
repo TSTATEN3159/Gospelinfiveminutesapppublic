@@ -155,7 +155,7 @@ export function DailyVerseHeroCard({ onPress, reference, text, loading }: DailyV
         onClick={onPress}
         className="w-full text-left focus:outline-none focus:ring-2 focus:ring-blue-500/50 transition-all hover:shadow-[0_12px_40px_rgba(0,0,0,0.5)]"
       >
-        <div className="relative w-full aspect-[16/10]">
+        <div className="relative w-full aspect-[16/9]">
         <img
           src={mountainPeakImage}
           alt={displayReference}
