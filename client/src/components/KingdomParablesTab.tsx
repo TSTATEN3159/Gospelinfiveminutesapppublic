@@ -7,7 +7,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 
 import sowerImage from "@assets/stock_images/farmer_sowing_seeds__0ca2eebf.jpg";
 import samaritanImage from "@assets/stock_images/helping_hands_compas_9cade49f.jpg";
-import prodigalImage from "@assets/stock_images/father_embracing_son_4baff2c4.jpg";
+import prodigalImage from "@assets/stock_images/father_with_open_arm_49c76557.jpg";
 import mustardImage from "@assets/stock_images/small_plant_seedling_c5a00be4.jpg";
 import sheepImage from "@assets/stock_images/shepherd_with_flock__3825dbd2.jpg";
 import barnImage from "@assets/stock_images/old_wooden_barn_farm_5ddc5f93.jpg";
