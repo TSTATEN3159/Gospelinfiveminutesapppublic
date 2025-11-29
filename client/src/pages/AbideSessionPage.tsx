@@ -318,7 +318,11 @@ export default function AbideSessionPage({ onNavigate }: AbideSessionPageProps) 
           {step !== "Pray" ? (
             <button
               onClick={goNext}
-              className="ml-auto inline-flex items-center rounded-full bg-emerald-500 px-5 py-2 text-[13px] font-semibold text-black shadow-lg shadow-emerald-900/60"
+              onTouchEnd={(e) => {
+                e.preventDefault();
+                goNext();
+              }}
+              className="ml-auto inline-flex items-center rounded-full bg-emerald-500 px-6 py-3 text-[14px] font-semibold text-black shadow-lg shadow-emerald-900/60 active:bg-emerald-600 touch-manipulation"
               data-testid="button-abide-next"
             >
               Next

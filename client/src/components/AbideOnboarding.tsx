@@ -84,11 +84,15 @@ export default function AbideOnboarding() {
 
           <button
             onClick={handleNext}
-            className="inline-flex items-center rounded-full bg-emerald-400 px-4 py-1.5 text-[12px] font-semibold text-black"
+            onTouchEnd={(e) => {
+              e.preventDefault();
+              handleNext();
+            }}
+            className="inline-flex items-center rounded-full bg-emerald-400 px-5 py-2.5 text-[13px] font-semibold text-black active:bg-emerald-500 touch-manipulation"
             data-testid="button-onboarding-next"
           >
             {index === slides.length - 1 ? "Start Abiding" : "Next"}
-            <ArrowRight className="h-3 w-3 ml-1" />
+            <ArrowRight className="h-4 w-4 ml-1.5" />
           </button>
         </div>
 

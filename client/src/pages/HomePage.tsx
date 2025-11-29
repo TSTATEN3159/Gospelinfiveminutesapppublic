@@ -298,7 +298,7 @@ export default function HomePage({ user, onNavigate, onStreakUpdate, language = 
               <img 
                 src={woodenCrossImage}
                 alt="The Cross of Jesus Christ"
-                className="absolute inset-0 w-full h-full object-cover"
+                className="absolute inset-0 w-full h-full object-cover object-[35%_center]"
               />
               {/* Gradient fade to content */}
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-amber-900/90" />
