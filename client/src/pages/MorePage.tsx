@@ -7,7 +7,7 @@ import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useTestFlight } from "@/hooks/useTestFlight";
-import { safeShare } from "@/utils/capabilities";
+import { shareAppWithIcon } from "@/utils/shareUtils";
 import { useToast } from "@/hooks/use-toast";
 import holyBibleImage from '@assets/stock_images/open_bible_pages_scr_bfe91e5c.jpg';
 import blogWritingImage from '@assets/stock_images/person_writing_journ_4816488f.jpg';
@@ -155,31 +155,7 @@ export default function MorePage({ language, onNavigate, streakDays = 0 }: MoreP
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
             data-testid="button-share-more"
             aria-label="Share The Gospel in 5 Minutes with friends"
-            onClick={async () => {
-              const result = await safeShare({
-                title: 'The Gospel in 5 Minutes',
-                text: 'Discover daily Bible verses and spiritual guidance with The Gospel in 5 Minutes app!',
-                url: 'https://www.thegospelin5minutes.org'
-              });
-              
-              if (result === 'shared') {
-                toast({
-                  title: "Shared!",
-                  description: "Link shared successfully",
-                });
-              } else if (result === 'copied') {
-                toast({
-                  title: "Link Copied",
-                  description: "Link copied to clipboard",
-                });
-              } else {
-                toast({
-                  title: "Sharing unavailable",
-                  description: "Sharing is not available on this device",
-                  variant: "destructive"
-                });
-              }
-            }}
+            onClick={() => shareAppWithIcon(toast)}
           >
             <Share className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Share</span>

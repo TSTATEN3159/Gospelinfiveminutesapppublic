@@ -7,7 +7,7 @@ import { loadPlanProgress } from "@/features/discipleship/discipleshipProgress";
 import { useTranslations } from "@/lib/translations";
 import { Capacitor } from '@capacitor/core';
 import { useTestFlight } from "@/hooks/useTestFlight";
-import { safeShare } from "@/utils/capabilities";
+import { shareAppWithIcon } from "@/utils/shareUtils";
 import { useToast } from "@/hooks/use-toast";
 import AppLogo from "../components/AppLogo";
 import PersonalizedGreeting from "../components/PersonalizedGreeting";
@@ -183,31 +183,7 @@ export default function DiscipleshipListPage({ onNavigate, language, streakDays 
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
             data-testid="button-share-app"
             aria-label="Share The Gospel in 5 Minutes with friends"
-            onClick={async () => {
-              const result = await safeShare({
-                title: 'The Gospel in 5 Minutes',
-                text: 'Check out this free Bible app!',
-                url: 'https://thegospelin5minutes.com'
-              });
-              
-              if (result === 'shared') {
-                toast({
-                  title: "Shared!",
-                  description: "Link shared successfully",
-                });
-              } else if (result === 'copied') {
-                toast({
-                  title: "Link Copied",
-                  description: "Link copied to clipboard",
-                });
-              } else {
-                toast({
-                  title: "Sharing unavailable",
-                  description: "Sharing is not available on this device",
-                  variant: "destructive"
-                });
-              }
-            }}
+            onClick={() => shareAppWithIcon(toast)}
           >
             <Share className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Share</span>
