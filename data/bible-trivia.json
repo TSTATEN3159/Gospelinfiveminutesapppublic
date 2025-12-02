@@ -2271,7 +2271,9 @@
       "Jonah",
       "Daniel"
     ],
-    "correctIndex": 0
+    "correctIndex": 2,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command to preach to Nineveh."
   },
   {
     "id": "beginner-1763662325636-2",
@@ -2869,6 +2871,201 @@
       "Samson"
     ],
     "correctIndex": 0
+  },
+  {
+    "id": "q-chatgpt-batch8-243",
+    "level": "beginner",
+    "question": "What did Jesus calm when the disciples were afraid?",
+    "choices": [
+      "A storm",
+      "Jeremiah",
+      "Lydia",
+      "Moses"
+    ],
+    "correctIndex": 0,
+    "reference": "Mark 4:37–41",
+    "explanation": "Jesus rebuked the wind and the sea, and there was a great calm.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch8-246",
+    "level": "beginner",
+    "question": "Who was the first woman created?",
+    "choices": [
+      "Isaiah",
+      "Eve",
+      "Andrew",
+      "Timothy"
+    ],
+    "correctIndex": 1,
+    "reference": "Genesis 2:21–22",
+    "explanation": "God created Eve from Adam's rib.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch8-249",
+    "level": "beginner",
+    "question": "What river parted for Joshua and Israel before they entered the Promised Land?",
+    "choices": [
+      "Love",
+      "Living Water",
+      "Mount Carmel",
+      "Jordan River"
+    ],
+    "correctIndex": 3,
+    "reference": "Joshua 3:14–17",
+    "explanation": "The Jordan River parted during flood stage as the priests stepped in.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch8-252",
+    "level": "beginner",
+    "question": "Which book asks, 'Can two walk together, unless they are agreed?'",
+    "choices": [
+      "Amos",
+      "Samuel",
+      "Dead Sea",
+      "Tabernacle"
+    ],
+    "correctIndex": 0,
+    "reference": "Amos 3:3",
+    "explanation": "This teaches the necessity of unity and agreement.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch8-255",
+    "level": "beginner",
+    "question": "Who preached the sermon on the Day of Pentecost?",
+    "choices": [
+      "Babylon",
+      "Peter",
+      "Aaron",
+      "Canaan"
+    ],
+    "correctIndex": 1,
+    "reference": "Acts 2:14–40",
+    "explanation": "Peter preached boldly and thousands believed.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch8-258",
+    "level": "beginner",
+    "question": "Who tempted Jesus in the wilderness?",
+    "choices": [
+      "Mark",
+      "Lot",
+      "Leah",
+      "The devil"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 4:1–10",
+    "explanation": "Satan tempted Jesus with power and glory, but Jesus resisted.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch8-261",
+    "level": "beginner",
+    "question": "In Revelation, what creature is loosed for a little season at the end of the millennium?",
+    "choices": [
+      "Grace",
+      "Nazareth",
+      "Ruth",
+      "Satan"
+    ],
+    "correctIndex": 3,
+    "reference": "Revelation 20:7",
+    "explanation": "Satan is released briefly before final judgment.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch8-264",
+    "level": "beginner",
+    "question": "How many days and nights did it rain in the flood?",
+    "choices": [
+      "Five",
+      "One",
+      "Two",
+      "Forty days and forty nights"
+    ],
+    "correctIndex": 3,
+    "reference": "Genesis 7:12",
+    "explanation": "God sent rain for forty days and forty nights.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch8-267",
+    "level": "beginner",
+    "question": "Who was the first high priest of Israel?",
+    "choices": [
+      "Ephesus",
+      "Aaron",
+      "Philippi",
+      "Jerusalem"
+    ],
+    "correctIndex": 1,
+    "reference": "Exodus 28:1",
+    "explanation": "Aaron and his sons were appointed priests for Israel.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch8-270",
+    "level": "beginner",
+    "question": "Which chapter describes the armor of God?",
+    "choices": [
+      "Ephesians 6",
+      "Psalm 23",
+      "Hebrews 11",
+      "Psalm 119"
+    ],
+    "correctIndex": 0,
+    "reference": "Ephesians 6:10–18",
+    "explanation": "Believers are told to put on the whole armor of God.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-273",
+    "level": "beginner",
+    "question": "Who was thrown into the lions' den?",
+    "choices": [
+      "Daniel",
+      "Elizabeth",
+      "Elisha",
+      "Deborah"
+    ],
+    "correctIndex": 0,
+    "reference": "Daniel 6:16–24",
+    "explanation": "God shut the mouths of the lions to protect Daniel.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt-batch8-276",
+    "level": "beginner",
+    "question": "Who was the wisest king that ever lived?",
+    "choices": [
+      "Abraham",
+      "Barnabas",
+      "Aaron",
+      "Solomon"
+    ],
+    "correctIndex": 3,
+    "reference": "1 Kings 3:12",
+    "explanation": "God gave Solomon wisdom beyond all others.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch8-279",
+    "level": "beginner",
+    "question": "Which feast required Israelites to live in booths for seven days?",
+    "choices": [
+      "Eve",
+      "Nehemiah",
+      "Feast of Tabernacles",
+      "Rome"
+    ],
+    "correctIndex": 2,
+    "reference": "Leviticus 23:33–43",
+    "explanation": "This feast remembers Israel's journey in the wilderness.",
+    "category": "Feasts & Covenants"
   },
   {
     "id": "q-1763657896805-21",
@@ -4746,6 +4943,954 @@
     "category": "Tabernacle & Temple"
   },
   {
+    "id": "q-chatgpt-batch8-241",
+    "level": "intermediate",
+    "question": "Which chapter of the Bible contains the Ten Commandments?",
+    "choices": [
+      "Exodus 20",
+      "Psalm 119",
+      "Psalm 23",
+      "Hebrews 11"
+    ],
+    "correctIndex": 0,
+    "reference": "Exodus 20:1–17",
+    "explanation": "The Ten Commandments were given to Moses on Mount Sinai in Exodus 20.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-244",
+    "level": "intermediate",
+    "question": "What did Jesus feed to the four thousand in the wilderness?",
+    "choices": [
+      "Eve",
+      "Seven loaves and a few small fish",
+      "Esther",
+      "Leah"
+    ],
+    "correctIndex": 1,
+    "reference": "Mark 8:1–9",
+    "explanation": "Jesus fed four thousand with seven loaves and a few fish.",
+    "category": "Miracles of Jesus"
+  },
+  {
+    "id": "q-chatgpt-batch8-247",
+    "level": "intermediate",
+    "question": "Who was the wife of Abraham?",
+    "choices": [
+      "Sarah",
+      "Moses",
+      "Peter",
+      "David"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 17:15",
+    "explanation": "Sarah was renamed from Sarai and became the mother of Isaac.",
+    "category": "Women of the Bible"
+  },
+  {
+    "id": "q-chatgpt-batch8-250",
+    "level": "intermediate",
+    "question": "What was the hometown of Jesus?",
+    "choices": [
+      "Mount Sinai",
+      "Nazareth",
+      "Mount Zion",
+      "Gospel"
+    ],
+    "correctIndex": 1,
+    "reference": "Matthew 2:23",
+    "explanation": "Jesus was called a Nazarene because He grew up in Nazareth.",
+    "category": "Geography"
+  },
+  {
+    "id": "q-chatgpt-batch8-253",
+    "level": "intermediate",
+    "question": "Which book urges, 'Trust in the LORD with all your heart'?",
+    "choices": [
+      "Canaan",
+      "Mount Zion",
+      "Ezekiel",
+      "Proverbs"
+    ],
+    "correctIndex": 3,
+    "reference": "Proverbs 3:5–6",
+    "explanation": "Proverbs encourages trust in God rather than self.",
+    "category": "Wisdom Literature"
+  },
+  {
+    "id": "q-chatgpt-batch8-256",
+    "level": "intermediate",
+    "question": "What did believers devote themselves to in Acts 2:42?",
+    "choices": [
+      "Philippi",
+      "Law",
+      "Joseph",
+      "The apostles' doctrine, fellowship, breaking of bread, and prayers"
+    ],
+    "correctIndex": 3,
+    "reference": "Acts 2:42",
+    "explanation": "Four priorities marked the early Church community.",
+    "category": "Birth of the Church"
+  },
+  {
+    "id": "q-chatgpt-batch8-259",
+    "level": "intermediate",
+    "question": "Who ministered to Jesus after His temptation?",
+    "choices": [
+      "Jeremiah",
+      "Lydia",
+      "Moses",
+      "Angels"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 4:11",
+    "explanation": "Angels strengthened Jesus after Satan left Him.",
+    "category": "Angels & Spiritual Warfare"
+  },
+  {
+    "id": "q-chatgpt-batch8-262",
+    "level": "intermediate",
+    "question": "What book contains the vision of four horsemen?",
+    "choices": [
+      "Joshua",
+      "Revelation",
+      "Priscilla",
+      "Jordan River"
+    ],
+    "correctIndex": 1,
+    "reference": "Revelation 6:1–8",
+    "explanation": "The four horsemen symbolize judgments during the end times.",
+    "category": "Prophecy & End Times"
+  },
+  {
+    "id": "q-chatgpt-batch8-265",
+    "level": "intermediate",
+    "question": "How many books are in the Bible?",
+    "choices": [
+      "Forty",
+      "Three",
+      "One thousand",
+      "66"
+    ],
+    "correctIndex": 3,
+    "reference": "Protestant Canon",
+    "explanation": "The Bible contains 39 Old Testament and 27 New Testament books.",
+    "category": "Numbers in Scripture"
+  },
+  {
+    "id": "q-chatgpt-batch8-268",
+    "level": "intermediate",
+    "question": "What veil in the temple was torn when Jesus died?",
+    "choices": [
+      "Samaria",
+      "Prayer",
+      "Babylon",
+      "The veil separating the Holy Place and Most Holy Place"
+    ],
+    "correctIndex": 3,
+    "reference": "Matthew 27:51",
+    "explanation": "The torn veil showed access to God through Christ.",
+    "category": "Tabernacle & Temple"
+  },
+  {
+    "id": "q-chatgpt-batch8-271",
+    "level": "intermediate",
+    "question": "Which chapter famously contains the fruit of the Spirit?",
+    "choices": [
+      "Revelation 21",
+      "Galatians 5",
+      "Genesis 1",
+      "Matthew 5"
+    ],
+    "correctIndex": 1,
+    "reference": "Galatians 5:22–23",
+    "explanation": "The fruit of the Spirit describes godly character.",
+    "category": "Bible Chapter Breakdown"
+  },
+  {
+    "id": "q-chatgpt-batch8-274",
+    "level": "intermediate",
+    "question": "Who interpreted dreams for Pharaoh and later for the cupbearer and baker?",
+    "choices": [
+      "Joseph",
+      "Barnabas",
+      "David",
+      "Enoch"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 40–41",
+    "explanation": "Joseph interpreted dreams which led to his rise to power in Egypt.",
+    "category": "People"
+  },
+  {
+    "id": "q-chatgpt-batch8-277",
+    "level": "intermediate",
+    "question": "Which king tore his kingdom into two parts because of sin?",
+    "choices": [
+      "Joseph",
+      "Ezra",
+      "Rehoboam",
+      "Deborah"
+    ],
+    "correctIndex": 2,
+    "reference": "1 Kings 12:1–19",
+    "explanation": "After Solomon's death, Rehoboam's harsh policy led to division.",
+    "category": "Kings of Israel & Judah"
+  },
+  {
+    "id": "q-chatgpt-batch8-280",
+    "level": "intermediate",
+    "question": "Which covenant did God make with Abraham involving circumcision?",
+    "choices": [
+      "The covenant of circumcision",
+      "Canaan",
+      "Abraham",
+      "Light of the World"
+    ],
+    "correctIndex": 0,
+    "reference": "Genesis 17:9–14",
+    "explanation": "Circumcision was the sign of God's covenant with Abraham.",
+    "category": "Feasts & Covenants"
+  },
+  {
+    "id": "intermediate-1764635471857-0",
+    "level": "intermediate",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Man",
+      "Plants"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-1",
+    "level": "intermediate",
+    "question": "Who defeated Goliath?",
+    "choices": [
+      "Saul",
+      "David",
+      "Samuel",
+      "Jonathan"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-2",
+    "level": "intermediate",
+    "question": "Which book contains the verse 'The Lord is my shepherd'?",
+    "choices": [
+      "Proverbs",
+      "Isaiah",
+      "Psalms",
+      "Ecclesiastes"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-3",
+    "level": "intermediate",
+    "question": "Who was thrown into the lion's den?",
+    "choices": [
+      "Daniel",
+      "Moses",
+      "Elijah",
+      "Joseph"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-4",
+    "level": "intermediate",
+    "question": "What is the first miracle performed by Jesus?",
+    "choices": [
+      "Healing a blind man",
+      "Turning water into wine",
+      "Feeding the 5000",
+      "Walking on water"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-5",
+    "level": "intermediate",
+    "question": "Which New Testament book discusses the armor of God?",
+    "choices": [
+      "Romans",
+      "Ephesians",
+      "Philippians",
+      "Hebrews"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-6",
+    "level": "intermediate",
+    "question": "Who was known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "Solomon",
+      "David",
+      "Moses",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-7",
+    "level": "intermediate",
+    "question": "What did Jesus teach His followers to pray?",
+    "choices": [
+      "Our Father in heaven",
+      "Hail Mary",
+      "Holy Spirit, guide us",
+      "Blessed are the meek"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-8",
+    "level": "intermediate",
+    "question": "What book of the Bible tells the story of creation?",
+    "choices": [
+      "Exodus",
+      "Genesis",
+      "Leviticus",
+      "Numbers"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635471857-9",
+    "level": "intermediate",
+    "question": "What is the last book of the New Testament?",
+    "choices": [
+      "James",
+      "Revelation",
+      "John",
+      "Hebrews"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-0",
+    "level": "intermediate",
+    "question": "What fruit did Adam and Eve eat in the Garden of Eden?",
+    "choices": [
+      "Apple",
+      "Fig",
+      "Grape",
+      "Pomegranate"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-1",
+    "level": "intermediate",
+    "question": "Who was thrown into a den of lions for praying to God?",
+    "choices": [
+      "Daniel",
+      "Shadrach",
+      "Meshach",
+      "Abednego"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-2",
+    "level": "intermediate",
+    "question": "Which king built the first temple in Jerusalem?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Hezekiah",
+      "Saul"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-3",
+    "level": "intermediate",
+    "question": "What did Jesus turn water into at the wedding in Cana?",
+    "choices": [
+      "Wine",
+      "Oil",
+      "Vinegar",
+      "Juice"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-4",
+    "level": "intermediate",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Moses",
+      "Jonah",
+      "Elijah",
+      "Peter"
+    ],
+    "correctIndex": 1,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command."
+  },
+  {
+    "id": "intermediate-1764635630444-5",
+    "level": "intermediate",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "For God so loved the world",
+      "Jesus wept",
+      "Pray without ceasing",
+      "I can do all things"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-6",
+    "level": "intermediate",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Moses",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-7",
+    "level": "intermediate",
+    "question": "What miraculous event is associated with the Red Sea?",
+    "choices": [
+      "Parting of the sea",
+      "Water turning to blood",
+      "Manna from heaven",
+      "Bitter water sweetened"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-8",
+    "level": "intermediate",
+    "question": "What was the profession of Matthew before following Jesus?",
+    "choices": [
+      "Fisherman",
+      "Tax collector",
+      "Pharisee",
+      "Tent maker"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635630444-9",
+    "level": "intermediate",
+    "question": "Which book of the Bible contains the Lord's Prayer?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-0",
+    "level": "intermediate",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Light",
+      "Land",
+      "Animals",
+      "Plants"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-1",
+    "level": "intermediate",
+    "question": "Who was known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "Solomon",
+      "David",
+      "Moses",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-2",
+    "level": "intermediate",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "Saul",
+      "David",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-3",
+    "level": "intermediate",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "For God so loved.",
+      "Rejoice always.",
+      "Pray without ceasing."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-4",
+    "level": "intermediate",
+    "question": "Who interpreted dreams for Pharaoh?",
+    "choices": [
+      "Daniel",
+      "Joseph",
+      "Moses",
+      "Abraham"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-5",
+    "level": "intermediate",
+    "question": "Which book contains the 'fruit of the Spirit'?",
+    "choices": [
+      "Romans",
+      "Galatians",
+      "Ephesians",
+      "Philippians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-6",
+    "level": "intermediate",
+    "question": "What did David use to defeat Goliath?",
+    "choices": [
+      "Sword",
+      "Sling and stones",
+      "Bow and arrows",
+      "Net"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-7",
+    "level": "intermediate",
+    "question": "In which book is the Lord's Prayer found?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635934831-8",
+    "level": "intermediate",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Moses",
+      "Elijah",
+      "Jonah",
+      "Peter"
+    ],
+    "correctIndex": 2,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command."
+  },
+  {
+    "id": "intermediate-1764635934831-9",
+    "level": "intermediate",
+    "question": "What is the theme of Ecclesiastes?",
+    "choices": [
+      "Love",
+      "Vanity",
+      "Faith",
+      "Wisdom"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-0",
+    "level": "intermediate",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Humans",
+      "Plants"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-1",
+    "level": "intermediate",
+    "question": "Who was thrown into a den of lions for praying to God?",
+    "choices": [
+      "Shadrach",
+      "Meshach",
+      "Daniel",
+      "Ezekiel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-2",
+    "level": "intermediate",
+    "question": "Which king was known for his wisdom?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Saul",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-3",
+    "level": "intermediate",
+    "question": "What miracle did Jesus perform at a wedding in Cana?",
+    "choices": [
+      "Healed a blind man",
+      "Fed 5,000",
+      "Walked on water",
+      "Turned water into wine"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-4",
+    "level": "intermediate",
+    "question": "Who wrote the Book of Proverbs?",
+    "choices": [
+      "Moses",
+      "David",
+      "Solomon",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-5",
+    "level": "intermediate",
+    "question": "In which book is the story of David and Goliath found?",
+    "choices": [
+      "1 Samuel",
+      "2 Samuel",
+      "Kings",
+      "Judges"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-6",
+    "level": "intermediate",
+    "question": "Who was the first murderer according to the Bible?",
+    "choices": [
+      "Cain",
+      "Abel",
+      "Esau",
+      "Jacob"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-7",
+    "level": "intermediate",
+    "question": "What is the last book of the New Testament?",
+    "choices": [
+      "Hebrews",
+      "Revelation",
+      "John",
+      "Acts"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-8",
+    "level": "intermediate",
+    "question": "What is the main theme of the Book of Ecclesiastes?",
+    "choices": [
+      "Hope",
+      "Love",
+      "Vanity",
+      "Faith"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941092-9",
+    "level": "intermediate",
+    "question": "Who was the first woman created?",
+    "choices": [
+      "Eve",
+      "Sarah",
+      "Rebecca",
+      "Miriam"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941419-0",
+    "level": "intermediate",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Sky",
+      "Light",
+      "Animals"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941419-1",
+    "level": "intermediate",
+    "question": "Who fought Goliath in battle?",
+    "choices": [
+      "Saul",
+      "David",
+      "Samuel",
+      "Jonathan"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941419-2",
+    "level": "intermediate",
+    "question": "Which book contains the verse 'The fear of the Lord is the beginning of knowledge'?",
+    "choices": [
+      "Proverbs",
+      "Psalms",
+      "Job",
+      "Ecclesiastes"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941420-3",
+    "level": "intermediate",
+    "question": "Who was thrown into the lion's den for praying to God?",
+    "choices": [
+      "Shadrach",
+      "Meshach",
+      "Daniel",
+      "Ezekiel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941420-4",
+    "level": "intermediate",
+    "question": "What fruit did Eve eat in the Garden of Eden?",
+    "choices": [
+      "Apple",
+      "Fig",
+      "Grape",
+      "Pomegranate"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941420-5",
+    "level": "intermediate",
+    "question": "In which book can you find the Beatitudes?",
+    "choices": [
+      "Mark",
+      "Matthew",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941420-6",
+    "level": "intermediate",
+    "question": "Which prophet was swallowed by a great fish?",
+    "choices": [
+      "Elijah",
+      "Jonah",
+      "Isaiah",
+      "Jeremiah"
+    ],
+    "correctIndex": 1,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command."
+  },
+  {
+    "id": "intermediate-1764635941420-7",
+    "level": "intermediate",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Moses",
+      "Saul"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941420-8",
+    "level": "intermediate",
+    "question": "What was the first miracle performed by Jesus?",
+    "choices": [
+      "Healing the sick",
+      "Walking on water",
+      "Turning water into wine",
+      "Feeding the 5000"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635941420-9",
+    "level": "intermediate",
+    "question": "What is the last book of the New Testament?",
+    "choices": [
+      "Acts",
+      "Hebrews",
+      "Revelation",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-0",
+    "level": "intermediate",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Animals",
+      "Light",
+      "Man",
+      "Plants"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-1",
+    "level": "intermediate",
+    "question": "Who was thrown into the lion's den?",
+    "choices": [
+      "Daniel",
+      "Joseph",
+      "Moses",
+      "Esther"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-2",
+    "level": "intermediate",
+    "question": "Which king built the temple in Jerusalem?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Saul",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-3",
+    "level": "intermediate",
+    "question": "What was Jesus' first miracle?",
+    "choices": [
+      "Healing a blind man",
+      "Turning water into wine",
+      "Walking on water",
+      "Feeding the 5000"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-4",
+    "level": "intermediate",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "Solomon",
+      "David",
+      "Job",
+      "Isaiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-5",
+    "level": "intermediate",
+    "question": "What is the last book of the New Testament?",
+    "choices": [
+      "Revelation",
+      "Hebrews",
+      "Acts",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-6",
+    "level": "intermediate",
+    "question": "In which book do we find the Beatitudes?",
+    "choices": [
+      "Matthew",
+      "Luke",
+      "Mark",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-7",
+    "level": "intermediate",
+    "question": "Who betrayed Jesus for thirty pieces of silver?",
+    "choices": [
+      "Peter",
+      "John",
+      "Judas",
+      "Thomas"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-8",
+    "level": "intermediate",
+    "question": "What did David use to defeat Goliath?",
+    "choices": [
+      "A sword",
+      "A spear",
+      "A slingshot",
+      "A bow"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635947401-9",
+    "level": "intermediate",
+    "question": "What is the greatest commandment according to Jesus?",
+    "choices": [
+      "Do not steal",
+      "Love your neighbor",
+      "Honor your father and mother",
+      "Love the Lord your God"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "intermediate-1764635952295-0",
+    "level": "intermediate",
+    "question": "What was the first miracle performed by Jesus according to the Gospels?",
+    "choices": [
+      "Walking on water",
+      "Turning water into wine",
+      "Feeding the 5000",
+      "Healing a blind man"
+    ],
+    "correctIndex": 0
+  },
+  {
     "id": "q-1763657896805-41",
     "level": "advanced",
     "question": "Which prophet saw a vision of a valley full of dry bones that came to life?",
@@ -6366,21 +7511,6 @@
     "category": "Tabernacle & Temple"
   },
   {
-    "id": "q-chatgpt-batch8-241",
-    "level": "intermediate",
-    "question": "Which chapter of the Bible contains the Ten Commandments?",
-    "choices": [
-      "Exodus 20",
-      "Psalm 119",
-      "Psalm 23",
-      "Hebrews 11"
-    ],
-    "correctIndex": 0,
-    "reference": "Exodus 20:1–17",
-    "explanation": "The Ten Commandments were given to Moses on Mount Sinai in Exodus 20.",
-    "category": "Bible Chapter Breakdown"
-  },
-  {
     "id": "q-chatgpt-batch8-242",
     "level": "advanced",
     "question": "Which psalm is known as the Shepherd's Psalm?",
@@ -6394,36 +7524,6 @@
     "reference": "Psalm 23",
     "explanation": "Psalm 23 describes the Lord as our Shepherd who cares for us.",
     "category": "Bible Chapter Breakdown"
-  },
-  {
-    "id": "q-chatgpt-batch8-243",
-    "level": "beginner",
-    "question": "What did Jesus calm when the disciples were afraid?",
-    "choices": [
-      "A storm",
-      "Jeremiah",
-      "Lydia",
-      "Moses"
-    ],
-    "correctIndex": 0,
-    "reference": "Mark 4:37–41",
-    "explanation": "Jesus rebuked the wind and the sea, and there was a great calm.",
-    "category": "Miracles of Jesus"
-  },
-  {
-    "id": "q-chatgpt-batch8-244",
-    "level": "intermediate",
-    "question": "What did Jesus feed to the four thousand in the wilderness?",
-    "choices": [
-      "Eve",
-      "Seven loaves and a few small fish",
-      "Esther",
-      "Leah"
-    ],
-    "correctIndex": 1,
-    "reference": "Mark 8:1–9",
-    "explanation": "Jesus fed four thousand with seven loaves and a few fish.",
-    "category": "Miracles of Jesus"
   },
   {
     "id": "q-chatgpt-batch8-245",
@@ -6441,36 +7541,6 @@
     "category": "Miracles of Jesus"
   },
   {
-    "id": "q-chatgpt-batch8-246",
-    "level": "beginner",
-    "question": "Who was the first woman created?",
-    "choices": [
-      "Isaiah",
-      "Eve",
-      "Andrew",
-      "Timothy"
-    ],
-    "correctIndex": 1,
-    "reference": "Genesis 2:21–22",
-    "explanation": "God created Eve from Adam's rib.",
-    "category": "Women of the Bible"
-  },
-  {
-    "id": "q-chatgpt-batch8-247",
-    "level": "intermediate",
-    "question": "Who was the wife of Abraham?",
-    "choices": [
-      "Sarah",
-      "Moses",
-      "Peter",
-      "David"
-    ],
-    "correctIndex": 0,
-    "reference": "Genesis 17:15",
-    "explanation": "Sarah was renamed from Sarai and became the mother of Isaac.",
-    "category": "Women of the Bible"
-  },
-  {
     "id": "q-chatgpt-batch8-248",
     "level": "advanced",
     "question": "Who was the woman who hid the spies Joshua sent to Jericho?",
@@ -6484,36 +7554,6 @@
     "reference": "Joshua 2:1–14",
     "explanation": "Rahab protected the spies and was spared when Jericho fell.",
     "category": "Women of the Bible"
-  },
-  {
-    "id": "q-chatgpt-batch8-249",
-    "level": "beginner",
-    "question": "What river parted for Joshua and Israel before they entered the Promised Land?",
-    "choices": [
-      "Love",
-      "Living Water",
-      "Mount Carmel",
-      "Jordan River"
-    ],
-    "correctIndex": 3,
-    "reference": "Joshua 3:14–17",
-    "explanation": "The Jordan River parted during flood stage as the priests stepped in.",
-    "category": "Geography"
-  },
-  {
-    "id": "q-chatgpt-batch8-250",
-    "level": "intermediate",
-    "question": "What was the hometown of Jesus?",
-    "choices": [
-      "Mount Sinai",
-      "Nazareth",
-      "Mount Zion",
-      "Gospel"
-    ],
-    "correctIndex": 1,
-    "reference": "Matthew 2:23",
-    "explanation": "Jesus was called a Nazarene because He grew up in Nazareth.",
-    "category": "Geography"
   },
   {
     "id": "q-chatgpt-batch8-251",
@@ -6531,36 +7571,6 @@
     "category": "Geography"
   },
   {
-    "id": "q-chatgpt-batch8-252",
-    "level": "beginner",
-    "question": "Which book asks, 'Can two walk together, unless they are agreed?'",
-    "choices": [
-      "Amos",
-      "Samuel",
-      "Dead Sea",
-      "Tabernacle"
-    ],
-    "correctIndex": 0,
-    "reference": "Amos 3:3",
-    "explanation": "This teaches the necessity of unity and agreement.",
-    "category": "Wisdom Literature"
-  },
-  {
-    "id": "q-chatgpt-batch8-253",
-    "level": "intermediate",
-    "question": "Which book urges, 'Trust in the LORD with all your heart'?",
-    "choices": [
-      "Canaan",
-      "Mount Zion",
-      "Ezekiel",
-      "Proverbs"
-    ],
-    "correctIndex": 3,
-    "reference": "Proverbs 3:5–6",
-    "explanation": "Proverbs encourages trust in God rather than self.",
-    "category": "Wisdom Literature"
-  },
-  {
     "id": "q-chatgpt-batch8-254",
     "level": "advanced",
     "question": "Which book features a conversation between a suffering man and his friends?",
@@ -6574,36 +7584,6 @@
     "reference": "Job 2–37",
     "explanation": "Job and his friends wrestle with the meaning of suffering.",
     "category": "Wisdom Literature"
-  },
-  {
-    "id": "q-chatgpt-batch8-255",
-    "level": "beginner",
-    "question": "Who preached the sermon on the Day of Pentecost?",
-    "choices": [
-      "Babylon",
-      "Peter",
-      "Aaron",
-      "Canaan"
-    ],
-    "correctIndex": 1,
-    "reference": "Acts 2:14–40",
-    "explanation": "Peter preached boldly and thousands believed.",
-    "category": "Birth of the Church"
-  },
-  {
-    "id": "q-chatgpt-batch8-256",
-    "level": "intermediate",
-    "question": "What did believers devote themselves to in Acts 2:42?",
-    "choices": [
-      "Philippi",
-      "Law",
-      "Joseph",
-      "The apostles' doctrine, fellowship, breaking of bread, and prayers"
-    ],
-    "correctIndex": 3,
-    "reference": "Acts 2:42",
-    "explanation": "Four priorities marked the early Church community.",
-    "category": "Birth of the Church"
   },
   {
     "id": "q-chatgpt-batch8-257",
@@ -6621,36 +7601,6 @@
     "category": "Birth of the Church"
   },
   {
-    "id": "q-chatgpt-batch8-258",
-    "level": "beginner",
-    "question": "Who tempted Jesus in the wilderness?",
-    "choices": [
-      "Mark",
-      "Lot",
-      "Leah",
-      "The devil"
-    ],
-    "correctIndex": 3,
-    "reference": "Matthew 4:1–10",
-    "explanation": "Satan tempted Jesus with power and glory, but Jesus resisted.",
-    "category": "Angels & Spiritual Warfare"
-  },
-  {
-    "id": "q-chatgpt-batch8-259",
-    "level": "intermediate",
-    "question": "Who ministered to Jesus after His temptation?",
-    "choices": [
-      "Jeremiah",
-      "Lydia",
-      "Moses",
-      "Angels"
-    ],
-    "correctIndex": 3,
-    "reference": "Matthew 4:11",
-    "explanation": "Angels strengthened Jesus after Satan left Him.",
-    "category": "Angels & Spiritual Warfare"
-  },
-  {
     "id": "q-chatgpt-batch8-260",
     "level": "advanced",
     "question": "Who stood to oppose Balaam when he was riding his donkey?",
@@ -6664,36 +7614,6 @@
     "reference": "Numbers 22:22–35",
     "explanation": "The Angel of the Lord blocked Balaam's reckless path.",
     "category": "Angels & Spiritual Warfare"
-  },
-  {
-    "id": "q-chatgpt-batch8-261",
-    "level": "beginner",
-    "question": "In Revelation, what creature is loosed for a little season at the end of the millennium?",
-    "choices": [
-      "Grace",
-      "Nazareth",
-      "Ruth",
-      "Satan"
-    ],
-    "correctIndex": 3,
-    "reference": "Revelation 20:7",
-    "explanation": "Satan is released briefly before final judgment.",
-    "category": "Prophecy & End Times"
-  },
-  {
-    "id": "q-chatgpt-batch8-262",
-    "level": "intermediate",
-    "question": "What book contains the vision of four horsemen?",
-    "choices": [
-      "Joshua",
-      "Revelation",
-      "Priscilla",
-      "Jordan River"
-    ],
-    "correctIndex": 1,
-    "reference": "Revelation 6:1–8",
-    "explanation": "The four horsemen symbolize judgments during the end times.",
-    "category": "Prophecy & End Times"
   },
   {
     "id": "q-chatgpt-batch8-263",
@@ -6711,36 +7631,6 @@
     "category": "Prophecy & End Times"
   },
   {
-    "id": "q-chatgpt-batch8-264",
-    "level": "beginner",
-    "question": "How many days and nights did it rain in the flood?",
-    "choices": [
-      "Five",
-      "One",
-      "Two",
-      "Forty days and forty nights"
-    ],
-    "correctIndex": 3,
-    "reference": "Genesis 7:12",
-    "explanation": "God sent rain for forty days and forty nights.",
-    "category": "Numbers in Scripture"
-  },
-  {
-    "id": "q-chatgpt-batch8-265",
-    "level": "intermediate",
-    "question": "How many books are in the Bible?",
-    "choices": [
-      "Forty",
-      "Three",
-      "One thousand",
-      "66"
-    ],
-    "correctIndex": 3,
-    "reference": "Protestant Canon",
-    "explanation": "The Bible contains 39 Old Testament and 27 New Testament books.",
-    "category": "Numbers in Scripture"
-  },
-  {
     "id": "q-chatgpt-batch8-266",
     "level": "advanced",
     "question": "How many souls were saved on Noah's ark?",
@@ -6754,36 +7644,6 @@
     "reference": "1 Peter 3:20",
     "explanation": "Eight were saved — Noah, his wife, his three sons, and their wives.",
     "category": "Numbers in Scripture"
-  },
-  {
-    "id": "q-chatgpt-batch8-267",
-    "level": "beginner",
-    "question": "Who was the first high priest of Israel?",
-    "choices": [
-      "Ephesus",
-      "Aaron",
-      "Philippi",
-      "Jerusalem"
-    ],
-    "correctIndex": 1,
-    "reference": "Exodus 28:1",
-    "explanation": "Aaron and his sons were appointed priests for Israel.",
-    "category": "Tabernacle & Temple"
-  },
-  {
-    "id": "q-chatgpt-batch8-268",
-    "level": "intermediate",
-    "question": "What veil in the temple was torn when Jesus died?",
-    "choices": [
-      "Samaria",
-      "Prayer",
-      "Babylon",
-      "The veil separating the Holy Place and Most Holy Place"
-    ],
-    "correctIndex": 3,
-    "reference": "Matthew 27:51",
-    "explanation": "The torn veil showed access to God through Christ.",
-    "category": "Tabernacle & Temple"
   },
   {
     "id": "q-chatgpt-batch8-269",
@@ -6801,36 +7661,6 @@
     "category": "Tabernacle & Temple"
   },
   {
-    "id": "q-chatgpt-batch8-270",
-    "level": "beginner",
-    "question": "Which chapter describes the armor of God?",
-    "choices": [
-      "Ephesians 6",
-      "Psalm 23",
-      "Hebrews 11",
-      "Psalm 119"
-    ],
-    "correctIndex": 0,
-    "reference": "Ephesians 6:10–18",
-    "explanation": "Believers are told to put on the whole armor of God.",
-    "category": "Bible Chapter Breakdown"
-  },
-  {
-    "id": "q-chatgpt-batch8-271",
-    "level": "intermediate",
-    "question": "Which chapter famously contains the fruit of the Spirit?",
-    "choices": [
-      "Revelation 21",
-      "Galatians 5",
-      "Genesis 1",
-      "Matthew 5"
-    ],
-    "correctIndex": 1,
-    "reference": "Galatians 5:22–23",
-    "explanation": "The fruit of the Spirit describes godly character.",
-    "category": "Bible Chapter Breakdown"
-  },
-  {
     "id": "q-chatgpt-batch8-272",
     "level": "advanced",
     "question": "Which chapter is known for the Valley of Dry Bones prophecy?",
@@ -6844,36 +7674,6 @@
     "reference": "Ezekiel 37:1–14",
     "explanation": "Ezekiel's vision pictures Israel's restoration to life.",
     "category": "Bible Chapter Breakdown"
-  },
-  {
-    "id": "q-chatgpt-batch8-273",
-    "level": "beginner",
-    "question": "Who was thrown into the lions' den?",
-    "choices": [
-      "Daniel",
-      "Elizabeth",
-      "Elisha",
-      "Deborah"
-    ],
-    "correctIndex": 0,
-    "reference": "Daniel 6:16–24",
-    "explanation": "God shut the mouths of the lions to protect Daniel.",
-    "category": "People"
-  },
-  {
-    "id": "q-chatgpt-batch8-274",
-    "level": "intermediate",
-    "question": "Who interpreted dreams for Pharaoh and later for the cupbearer and baker?",
-    "choices": [
-      "Joseph",
-      "Barnabas",
-      "David",
-      "Enoch"
-    ],
-    "correctIndex": 0,
-    "reference": "Genesis 40–41",
-    "explanation": "Joseph interpreted dreams which led to his rise to power in Egypt.",
-    "category": "People"
   },
   {
     "id": "q-chatgpt-batch8-275",
@@ -6891,36 +7691,6 @@
     "category": "People"
   },
   {
-    "id": "q-chatgpt-batch8-276",
-    "level": "beginner",
-    "question": "Who was the wisest king that ever lived?",
-    "choices": [
-      "Abraham",
-      "Barnabas",
-      "Aaron",
-      "Solomon"
-    ],
-    "correctIndex": 3,
-    "reference": "1 Kings 3:12",
-    "explanation": "God gave Solomon wisdom beyond all others.",
-    "category": "Kings of Israel & Judah"
-  },
-  {
-    "id": "q-chatgpt-batch8-277",
-    "level": "intermediate",
-    "question": "Which king tore his kingdom into two parts because of sin?",
-    "choices": [
-      "Joseph",
-      "Ezra",
-      "Rehoboam",
-      "Deborah"
-    ],
-    "correctIndex": 2,
-    "reference": "1 Kings 12:1–19",
-    "explanation": "After Solomon's death, Rehoboam's harsh policy led to division.",
-    "category": "Kings of Israel & Judah"
-  },
-  {
     "id": "q-chatgpt-batch8-278",
     "level": "advanced",
     "question": "Which king was humbled for his pride and ate grass like an ox?",
@@ -6936,33 +7706,851 @@
     "category": "Kings of Israel & Judah"
   },
   {
-    "id": "q-chatgpt-batch8-279",
-    "level": "beginner",
-    "question": "Which feast required Israelites to live in booths for seven days?",
+    "id": "advanced-1764635767759-0",
+    "level": "advanced",
+    "question": "What did God create on the first day?",
     "choices": [
-      "Eve",
-      "Nehemiah",
-      "Feast of Tabernacles",
-      "Rome"
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
     ],
-    "correctIndex": 2,
-    "reference": "Leviticus 23:33–43",
-    "explanation": "This feast remembers Israel's journey in the wilderness.",
-    "category": "Feasts & Covenants"
+    "correctIndex": 0
   },
   {
-    "id": "q-chatgpt-batch8-280",
-    "level": "intermediate",
-    "question": "Which covenant did God make with Abraham involving circumcision?",
+    "id": "advanced-1764635767759-1",
+    "level": "advanced",
+    "question": "Who was swallowed by a great fish?",
     "choices": [
-      "The covenant of circumcision",
-      "Canaan",
-      "Abraham",
-      "Light of the World"
+      "Elijah",
+      "Moses",
+      "Jonah",
+      "Daniel"
     ],
-    "correctIndex": 0,
-    "reference": "Genesis 17:9–14",
-    "explanation": "Circumcision was the sign of God's covenant with Abraham.",
-    "category": "Feasts & Covenants"
+    "correctIndex": 2,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command."
+  },
+  {
+    "id": "advanced-1764635767759-2",
+    "level": "advanced",
+    "question": "Which king built the first temple in Jerusalem?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Saul",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635767759-3",
+    "level": "advanced",
+    "question": "Who is known for his wisdom and wrote many Proverbs?",
+    "choices": [
+      "Solomon",
+      "David",
+      "Moses",
+      "Elijah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635767759-4",
+    "level": "advanced",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "For God so loved.",
+      "In the beginning.",
+      "The Lord is my shepherd."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635767759-5",
+    "level": "advanced",
+    "question": "What was the first miracle performed by Jesus?",
+    "choices": [
+      "Healing the blind",
+      "Turning water into wine",
+      "Feeding the 5000",
+      "Walking on water"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635767759-6",
+    "level": "advanced",
+    "question": "Who wrote the book of Revelation?",
+    "choices": [
+      "Peter",
+      "John",
+      "Paul",
+      "Matthew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635767759-7",
+    "level": "advanced",
+    "question": "Which book contains the phrase 'The Lord is my shepherd'?",
+    "choices": [
+      "Job",
+      "Psalms",
+      "Isaiah",
+      "Proverbs"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635767759-8",
+    "level": "advanced",
+    "question": "Who was the strong man who lost his strength when his hair was cut?",
+    "choices": [
+      "David",
+      "Samson",
+      "Saul",
+      "Goliath"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635767759-9",
+    "level": "advanced",
+    "question": "Which New Testament letter emphasizes faith over works?",
+    "choices": [
+      "Hebrews",
+      "James",
+      "Romans",
+      "Ephesians"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-0",
+    "level": "advanced",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-1",
+    "level": "advanced",
+    "question": "Who was thrown into a lion's den for praying to God?",
+    "choices": [
+      "Daniel",
+      "Shadrach",
+      "Meshach",
+      "Abednego"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-2",
+    "level": "advanced",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Saul",
+      "Moses"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-3",
+    "level": "advanced",
+    "question": "Which Gospel contains the Beatitudes?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-4",
+    "level": "advanced",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "Pray without ceasing.",
+      "God is love.",
+      "The Lord is my shepherd."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-5",
+    "level": "advanced",
+    "question": "What did Moses receive on Mount Sinai?",
+    "choices": [
+      "The Ark of the Covenant",
+      "The Ten Commandments",
+      "The Tabernacle",
+      "The Law of Atonement"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-6",
+    "level": "advanced",
+    "question": "Which apostle betrayed Jesus?",
+    "choices": [
+      "Peter",
+      "James",
+      "John",
+      "Judas Iscariot"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-7",
+    "level": "advanced",
+    "question": "What is the primary focus of the Book of Revelation?",
+    "choices": [
+      "The creation of the world",
+      "The life of Jesus",
+      "End times prophecy",
+      "The history of Israel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-8",
+    "level": "advanced",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "David",
+      "Saul",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635938205-9",
+    "level": "advanced",
+    "question": "In which book is the story of David and Goliath found?",
+    "choices": [
+      "1 Samuel",
+      "2 Samuel",
+      "Kings",
+      "Chronicles"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-0",
+    "level": "advanced",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Moses",
+      "Jonah",
+      "Elijah",
+      "Daniel"
+    ],
+    "correctIndex": 1,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command."
+  },
+  {
+    "id": "advanced-1764635943889-1",
+    "level": "advanced",
+    "question": "What did David use to defeat Goliath?",
+    "choices": [
+      "Sword",
+      "Sling and stones",
+      "Bow and arrow",
+      "His fists"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-2",
+    "level": "advanced",
+    "question": "In which book do we find the verse 'For I know the plans I have for you'?",
+    "choices": [
+      "Isaiah",
+      "Jeremiah",
+      "Ezekiel",
+      "Psalms"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-3",
+    "level": "advanced",
+    "question": "What is the first book of the New Testament?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-4",
+    "level": "advanced",
+    "question": "Who is known for his wisdom and wrote many proverbs?",
+    "choices": [
+      "Solomon",
+      "David",
+      "Job",
+      "Moses"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-5",
+    "level": "advanced",
+    "question": "What was the name of the garden where Jesus prayed before His crucifixion?",
+    "choices": [
+      "Gethsemane",
+      "Nazareth",
+      "Bethlehem",
+      "Capernaum"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-6",
+    "level": "advanced",
+    "question": "Which miracle did Jesus perform at a wedding in Cana?",
+    "choices": [
+      "Healing a blind man",
+      "Turning water into wine",
+      "Feeding the 5000",
+      "Walking on water"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-7",
+    "level": "advanced",
+    "question": "Who interpreted dreams for Pharaoh?",
+    "choices": [
+      "Joseph",
+      "Daniel",
+      "Moses",
+      "Aaron"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-8",
+    "level": "advanced",
+    "question": "Which book contains the Beatitudes?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635943889-9",
+    "level": "advanced",
+    "question": "What is the last book of the Bible?",
+    "choices": [
+      "Revelation",
+      "Hebrews",
+      "Acts",
+      "Jude"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-0",
+    "level": "advanced",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Man"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-1",
+    "level": "advanced",
+    "question": "Who was the first king of Israel?",
+    "choices": [
+      "David",
+      "Saul",
+      "Solomon",
+      "Samuel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-2",
+    "level": "advanced",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "For God so loved the world.",
+      "In the beginning God created.",
+      "Pray without ceasing."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-3",
+    "level": "advanced",
+    "question": "What fruit did Adam and Eve eat from the forbidden tree?",
+    "choices": [
+      "Apple",
+      "Fig",
+      "Pomegranate",
+      "Grape"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-4",
+    "level": "advanced",
+    "question": "Who interpreted Pharaoh's dreams?",
+    "choices": [
+      "Moses",
+      "Joseph",
+      "Daniel",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-5",
+    "level": "advanced",
+    "question": "In which book do we find the Lord's Prayer?",
+    "choices": [
+      "Matthew",
+      "Luke",
+      "Mark",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-6",
+    "level": "advanced",
+    "question": "What is the main theme of the book of Proverbs?",
+    "choices": [
+      "Law",
+      "Wisdom",
+      "Prophecy",
+      "Praise"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-7",
+    "level": "advanced",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Moses",
+      "Elijah",
+      "Jonah",
+      "Noah"
+    ],
+    "correctIndex": 2,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command."
+  },
+  {
+    "id": "advanced-1764635964723-8",
+    "level": "advanced",
+    "question": "Who wrote the majority of the New Testament letters?",
+    "choices": [
+      "Peter",
+      "John",
+      "Paul",
+      "James"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635964723-9",
+    "level": "advanced",
+    "question": "What is the last book of the Bible?",
+    "choices": [
+      "Acts",
+      "Revelation",
+      "Genesis",
+      "Psalms"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-0",
+    "level": "advanced",
+    "question": "What did God create on the first day?",
+    "choices": [
+      "Land",
+      "Light",
+      "Animals",
+      "Humans"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-1",
+    "level": "advanced",
+    "question": "Who was thrown into a lion's den for praying to God?",
+    "choices": [
+      "Shadrach",
+      "Meshach",
+      "Daniel",
+      "Nebuchadnezzar"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-2",
+    "level": "advanced",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "For God so loved.",
+      "Pray without ceasing.",
+      "Blessed are the meek."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-3",
+    "level": "advanced",
+    "question": "Which book contains the phrase, 'The fear of the Lord is the beginning of wisdom'?",
+    "choices": [
+      "Proverbs",
+      "Psalms",
+      "Ecclesiastes",
+      "Job"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-4",
+    "level": "advanced",
+    "question": "Who betrayed Jesus for thirty pieces of silver?",
+    "choices": [
+      "Peter",
+      "Judas",
+      "John",
+      "Thomas"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-5",
+    "level": "advanced",
+    "question": "Which king built the first temple in Jerusalem?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Saul",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-6",
+    "level": "advanced",
+    "question": "What did God send to feed the Israelites in the wilderness?",
+    "choices": [
+      "Manna",
+      "Quail",
+      "Bread",
+      "Fish"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-7",
+    "level": "advanced",
+    "question": "Which apostle is known for doubting Jesus' resurrection until he saw Him?",
+    "choices": [
+      "Peter",
+      "James",
+      "Thomas",
+      "Andrew"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-8",
+    "level": "advanced",
+    "question": "In which book of the Bible is the Lord's Prayer found?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635985596-9",
+    "level": "advanced",
+    "question": "What is the final book of the New Testament?",
+    "choices": [
+      "Revelation",
+      "Acts",
+      "Romans",
+      "Hebrews"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-0",
+    "level": "advanced",
+    "question": "What fruit did Adam and Eve eat in the Garden of Eden?",
+    "choices": [
+      "Apple",
+      "Banana",
+      "Fig",
+      "Grape"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-1",
+    "level": "advanced",
+    "question": "Who was the giant defeated by David?",
+    "choices": [
+      "Goliath",
+      "Saul",
+      "Absalom",
+      "Samson"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-2",
+    "level": "advanced",
+    "question": "Which book of the Bible contains the Beatitudes?",
+    "choices": [
+      "Matthew",
+      "Luke",
+      "Mark",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-3",
+    "level": "advanced",
+    "question": "Who interpreted Pharaoh's dreams?",
+    "choices": [
+      "Moses",
+      "Daniel",
+      "Joseph",
+      "Solomon"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-4",
+    "level": "advanced",
+    "question": "Which prophet was swallowed by a great fish?",
+    "choices": [
+      "Jonah",
+      "Elijah",
+      "Isaiah",
+      "Jeremiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-5",
+    "level": "advanced",
+    "question": "What is the main theme of the book of Proverbs?",
+    "choices": [
+      "Love",
+      "Wisdom",
+      "Faith",
+      "Hope"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-6",
+    "level": "advanced",
+    "question": "Who was the mother of Jesus?",
+    "choices": [
+      "Mary",
+      "Elizabeth",
+      "Martha",
+      "Sarah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-7",
+    "level": "advanced",
+    "question": "What structure did Solomon build for the Lord?",
+    "choices": [
+      "Temple",
+      "Palace",
+      "Tower",
+      "Ark"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-8",
+    "level": "advanced",
+    "question": "Which king wrote many of the Psalms?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Saul",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635991204-9",
+    "level": "advanced",
+    "question": "In which book is the story of the Good Samaritan found?",
+    "choices": [
+      "Matthew",
+      "Mark",
+      "Luke",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-0",
+    "level": "advanced",
+    "question": "What was the first miracle Jesus performed?",
+    "choices": [
+      "Walking on water",
+      "Turning water into wine",
+      "Feeding the 5000",
+      "Healing a blind man"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-1",
+    "level": "advanced",
+    "question": "Who was swallowed by a great fish?",
+    "choices": [
+      "Moses",
+      "Elijah",
+      "Jonah",
+      "Daniel"
+    ],
+    "correctIndex": 2,
+    "reference": "Jonah 1:17",
+    "explanation": "Jonah was swallowed by a great fish after fleeing from God's command."
+  },
+  {
+    "id": "advanced-1764635995488-2",
+    "level": "advanced",
+    "question": "Which king is known for his wisdom?",
+    "choices": [
+      "David",
+      "Solomon",
+      "Saul",
+      "Hezekiah"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-3",
+    "level": "advanced",
+    "question": "What did David use to defeat Goliath?",
+    "choices": [
+      "A sword",
+      "A spear",
+      "A slingshot",
+      "A bow"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-4",
+    "level": "advanced",
+    "question": "What is the shortest verse in the Bible?",
+    "choices": [
+      "Jesus wept.",
+      "For God so loved the world.",
+      "Pray without ceasing.",
+      "The Lord is my shepherd."
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-5",
+    "level": "advanced",
+    "question": "Which book contains the Beatitudes?",
+    "choices": [
+      "Mark",
+      "Luke",
+      "Matthew",
+      "John"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-6",
+    "level": "advanced",
+    "question": "Who interpreted dreams for Pharaoh?",
+    "choices": [
+      "Joseph",
+      "Daniel",
+      "Moses",
+      "Samson"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-7",
+    "level": "advanced",
+    "question": "What is the main theme of the book of Ecclesiastes?",
+    "choices": [
+      "Love",
+      "Wisdom",
+      "Futility of life",
+      "Faithfulness"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-8",
+    "level": "advanced",
+    "question": "Which prophet confronted King Ahab?",
+    "choices": [
+      "Elijah",
+      "Isaiah",
+      "Jeremiah",
+      "Ezekiel"
+    ],
+    "correctIndex": 0
+  },
+  {
+    "id": "advanced-1764635995488-9",
+    "level": "advanced",
+    "question": "In which city was Jesus born?",
+    "choices": [
+      "Nazareth",
+      "Jerusalem",
+      "Bethlehem",
+      "Capernaum"
+    ],
+    "correctIndex": 0
   }
 ]
