@@ -1,0 +1,252 @@
+Here’s what’s going wrong and how to fix it cleanly.
+
+Right now:
+
+* Your `handleShare` relies on `navigator.share` via `safeShare`.
+* In a Capacitor iOS/Android app, `navigator.share` is **often undefined** inside the WebView.
+* When that happens, `safeShare` returns `false`, and you fall back to `handleDownload()` instead of showing the native share sheet.
+* That’s why you see “download” behavior instead of the system share options (Messages, Mail, etc.).
+
+You already have the **canvas + background swapping** behavior in place. The missing piece is:
+
+> “Take the canvas image and share it *natively* in the app.”
+
+So the fix is:
+
+* Use **Capacitor’s `Share` + `Filesystem` plugins on native**
+* Keep your existing `safeShare` for the **web/PWA** case.
+
+---
+
+## 1. Updated `handleShare` for ScriptureImagePage.tsx
+
+### Imports at the top of `ScriptureImagePage.tsx`
+
+Add these:
+
+```ts
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+```
+
+### Add a small helper inside the same file
+
+Put this somewhere above your component or inside the file (not inside the component body):
+
+```ts
+const blobToBase64 = (blob: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result;
+      if (typeof result === 'string') {
+        // result is "data:image/png;base64,AAAA..."
+        const base64 = result.split(',')[1];
+        if (!base64) {
+          reject(new Error('Failed to parse base64 from data URL'));
+        } else {
+          resolve(base64);
+        }
+      } else {
+        reject(new Error('Unexpected FileReader result'));
+      }
+    };
+    reader.onerror = () => reject(new Error('Failed to read blob'));
+    reader.readAsDataURL(blob);
+  });
+};
+```
+
+### Replace your existing `handleShare` with this one
+
+```ts
+const handleShare = async () => {
+  if (!canvasRef.current) return;
+
+  try {
+    // 1. Render the current verse + chosen background into a PNG
+    const blob = await new Promise<Blob>((resolve, reject) => {
+      canvasRef.current?.toBlob((b) => {
+        if (b) resolve(b);
+        else reject(new Error('Failed to create image from canvas'));
+      }, 'image/png');
+    });
+
+    const fileName = `scripture-${reference.replace(/\s+/g, '_')}.png`;
+    const shareText = `"${verseText}"\n\n— ${reference}`;
+
+    // 2. Native app (iOS / Android via Capacitor)
+    if (Capacitor.isNativePlatform()) {
+      // Convert blob → base64 so Filesystem can save it
+      const base64Data = await blobToBase64(blob);
+
+      const saved = await Filesystem.writeFile({
+        path: fileName,
+        directory: Directory.Cache,
+        data: base64Data,
+      });
+
+      // Use Capacitor Share plugin to open the native share sheet
+      await Share.share({
+        title: reference,
+        text: shareText,
+        url: saved.uri,      // share the image file URI
+        dialogTitle: 'Share verse image',
+      });
+
+      toast({
+        title: 'Image Shared',
+        description: 'Your scripture image has been shared.',
+      });
+
+      return; // stop here, no need for web fallback
+    }
+
+    // 3. Web / PWA: use Web Share API via safeShare
+    const file = new File([blob], fileName, { type: 'image/png' });
+
+    const shared = await safeShare({
+      title: reference,
+      text: shareText,
+      files: [file],
+    });
+
+    if (shared) {
+      toast({
+        title: 'Image Shared',
+        description: 'Your scripture image has been shared.',
+      });
+    } else {
+      // Web share not supported → download instead
+      handleDownload();
+    }
+  } catch (err) {
+    console.error('Share failed:', err);
+    toast({
+      title: 'Share Unavailable',
+      description: 'Downloading image instead.',
+    });
+    handleDownload();
+  }
+};
+```
+
+### What this does
+
+* **Keeps your existing pop-up & background selection behavior**
+  You already draw the verse + selected background on the `<canvas>`. This share function just captures whatever the user currently sees.
+
+* **On native iOS/Android (Capacitor)**
+
+  * Grabs the canvas as a PNG `Blob`.
+  * Converts it to base64.
+  * Saves it to the device’s **cache** with Capacitor `Filesystem`.
+  * Opens the **native share sheet** with Capacitor `Share` using the file’s URI.
+  * User sees all the standard share options: Messages, Mail, Facebook, IG, Files, etc.
+
+* **On web / PWA**
+
+  * Uses your existing `safeShare` + `navigator.share` when available.
+  * If not supported (e.g., desktop browser with no Web Share API), it falls back to **download**.
+
+---
+
+## 2. `safeShare` (you can keep it mostly as-is)
+
+Your current `safeShare` is fine. You can optionally add one tiny defensive tweak:
+
+```ts
+export async function safeShare(data: ShareData): Promise<boolean> {
+  if (typeof navigator === 'undefined' || typeof navigator.share !== 'function') {
+    return false;
+  }
+
+  try {
+    if (data.files && data.files.length > 0) {
+      if (!navigator.canShare || !navigator.canShare({ files: data.files })) {
+        const { files, ...dataWithoutFiles } = data;
+        await navigator.share(dataWithoutFiles);
+        return true;
+      }
+    }
+
+    await navigator.share(data);
+    return true;
+  } catch (err: any) {
+    if (err?.name === 'AbortError') {
+      // User closed the share sheet; that's not an error from UI perspective
+      return false;
+    }
+    console.error('Share failed:', err);
+    return false;
+  }
+}
+```
+
+No other changes required here.
+
+---
+
+## 3. How this fits your “Share” flow with backgrounds
+
+You already described the UX perfectly; your code just needs to hook into it:
+
+1. User taps **“Share”** on the Daily Verse tile.
+2. You open your **Scripture Image** pop-up/modal (which you already have).
+3. In that modal:
+
+   * User cycles through background options (photo, gradient, texture, etc.).
+   * Each time they choose a background, you redraw onto the canvas.
+4. User taps **“Share Now”**.
+
+   * That button calls the updated `handleShare`.
+   * On native: share sheet pops up with the rendered image.
+   * On web: Web Share / download fallback.
+
+So the “background selector” doesn’t need to change—just make sure it **redraws the verse + background on the canvas** before `handleShare` runs.
+
+---
+
+## 4. If you want a “widget” instead of custom share code
+
+Because you’re in a **Capacitor React** app, your best “widget-like” (drop-in) choice is really:
+
+* **Capacitor `Share` plugin** (which we’re now using)
+* It wraps the native iOS `UIActivityViewController` and Android share intents (the actual system share UI).
+
+If you were doing native SwiftUI, you could use:
+
+* `ShareLink` in SwiftUI:
+
+  ```swift
+  ShareLink(item: image, preview: SharePreview("The Gospel in Five Minutes", image: image)) {
+      Label("Share Verse", systemImage: "square.and.arrow.up")
+  }
+  ```
+
+…but inside your current stack, that’s exactly what Capacitor’s `Share.share()` is already doing behind the scenes.
+
+So: **use the updated `handleShare` + Capacitor Share/Filesystem plugins**—that’s effectively your “widget,” just from the JavaScript side.
+
+---
+
+### TL;DR what to paste into Replit
+
+1. Add these imports in `ScriptureImagePage.tsx`:
+
+```ts
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+```
+
+2. Add the `blobToBase64` helper (exact block above).
+
+3. Replace your existing `handleShare` with the updated version.
+
+After that, your Daily Verse share flow should:
+
+* Respect the user’s chosen background,
+* Produce a verse image from the canvas, and
+* Bring up the **proper share sheet** on iOS/Android instead of just downloading.

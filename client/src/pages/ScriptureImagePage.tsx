@@ -11,6 +11,30 @@ import { safeShare } from "@/utils/capabilities";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
+import { Capacitor } from '@capacitor/core';
+import { Share } from '@capacitor/share';
+import { Filesystem, Directory } from '@capacitor/filesystem';
+
+const blobToBase64 = (blob: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => {
+      const result = reader.result;
+      if (typeof result === 'string') {
+        const base64 = result.split(',')[1];
+        if (!base64) {
+          reject(new Error('Failed to parse base64 from data URL'));
+        } else {
+          resolve(base64);
+        }
+      } else {
+        reject(new Error('Unexpected FileReader result'));
+      }
+    };
+    reader.onerror = () => reject(new Error('Failed to read blob'));
+    reader.readAsDataURL(blob);
+  });
+};
 
 interface ScriptureImagePageProps {
   initialReference?: string;
@@ -130,38 +154,63 @@ function ScriptureImageContent({
 
   const handleShare = async () => {
     if (!canvasRef.current) return;
-    
+
     try {
       const blob = await new Promise<Blob>((resolve, reject) => {
-        canvasRef.current?.toBlob((blob) => {
-          if (blob) resolve(blob);
-          else reject(new Error("Failed to create image"));
-        }, "image/png");
+        canvasRef.current?.toBlob((b) => {
+          if (b) resolve(b);
+          else reject(new Error('Failed to create image from canvas'));
+        }, 'image/png');
       });
-      
-      const file = new File([blob], `scripture-${reference.replace(/\s+/g, "_")}.png`, { type: "image/png" });
-      
-      const shareData = {
+
+      const fileName = `scripture-${reference.replace(/\s+/g, '_')}.png`;
+      const shareText = `"${verseText}"\n\n— ${reference}`;
+
+      if (Capacitor.isNativePlatform()) {
+        const base64Data = await blobToBase64(blob);
+
+        const saved = await Filesystem.writeFile({
+          path: fileName,
+          directory: Directory.Cache,
+          data: base64Data,
+        });
+
+        await Share.share({
+          title: reference,
+          text: shareText,
+          url: saved.uri,
+          dialogTitle: 'Share verse image',
+        });
+
+        toast({
+          title: 'Image Shared',
+          description: 'Your scripture image has been shared.',
+        });
+
+        return;
+      }
+
+      const file = new File([blob], fileName, { type: 'image/png' });
+
+      const shared = await safeShare({
         title: reference,
-        text: `"${verseText}"\n\n— ${reference}`,
+        text: shareText,
         files: [file],
-      };
-      
-      const shared = await safeShare(shareData);
-      
+      });
+
       if (shared) {
         toast({
-          title: "Image Shared",
-          description: "Your scripture image has been shared.",
+          title: 'Image Shared',
+          description: 'Your scripture image has been shared.',
         });
       } else {
         handleDownload();
       }
     } catch (err) {
-      console.error("Share failed:", err);
+      console.error('Share failed:', err);
       toast({
-        title: "Share Unavailable",
-        description: "Downloading image instead.",
+        title: 'Share Unavailable',
+        description: 'Downloading image instead.',
       });
       handleDownload();
     }
