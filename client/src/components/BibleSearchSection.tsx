@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff, Image as ImageIcon, ChevronLeft, ChevronRight } from "lucide-react";
+import { Search, Copy, Book, BookOpen, Sparkles, ScrollText, Volume2, VolumeX, Mic, MicOff, Image as ImageIcon, ChevronLeft, ChevronRight, Share2 } from "lucide-react";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import {
   AlertDialog,
@@ -30,6 +30,7 @@ import ScriptureCard from "./ScriptureCard";
 import { MoreTranslationsCard } from "./MoreTranslationsCard";
 import { getVersion, setVersion } from "@/store/versionPrefs";
 import { getNextReference, getPrevReference, getBookIndexByName, formatReference } from "@/utils/scriptureUtils";
+import { shareVerse } from "@/utils/shareUtils";
 import bibleStructure from "@/data/bibleStructure.json";
 
 interface SearchResult {
@@ -594,6 +595,15 @@ export default function BibleSearchSection({ backgroundImage, initialSearchQuery
               >
                 <Copy className="w-4 h-4 mr-2" />
                 Copy Verse
+              </Button>
+              
+              <Button
+                onClick={() => shareVerse(searchResult!, toast)}
+                className="bg-blue-600 text-white"
+                data-testid="button-shareVerse"
+              >
+                <Share2 className="w-4 h-4 mr-2" />
+                Share Verse
               </Button>
               
               <Button

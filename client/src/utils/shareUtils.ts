@@ -59,6 +59,7 @@ interface VerseShareData {
 
 export async function shareVerse(verse: VerseShareData, toast: any): Promise<'shared' | 'copied' | 'cancelled' | 'failed'> {
   const verseText = `"${verse.text}" - ${verse.reference} (${verse.version})`;
+  const fullShareText = `${verseText}\n\nShared from The Gospel in 5 Minutes app\n${APP_STORE_URL}`;
   const shareData = {
     title: verse.reference,
     text: `${verseText}\n\nShared from The Gospel in 5 Minutes app`,
@@ -74,10 +75,10 @@ export async function shareVerse(verse: VerseShareData, toast: any): Promise<'sh
     }
   } else {
     try {
-      await navigator.clipboard.writeText(verseText);
+      await navigator.clipboard.writeText(fullShareText);
       toast({
         title: "Verse copied!",
-        description: "The verse has been copied to your clipboard.",
+        description: "The verse and app link have been copied to your clipboard.",
       });
       return 'copied';
     } catch (err) {
