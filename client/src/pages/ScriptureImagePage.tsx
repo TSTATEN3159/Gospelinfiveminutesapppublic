@@ -6,7 +6,9 @@ import { BibleVersionSelector } from "@/components/BibleVersionSelector";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
-import { Download, Image as ImageIcon, Home, ArrowLeft } from "lucide-react";
+import { Download, Share2, Image as ImageIcon, Home, ArrowLeft } from "lucide-react";
+import { safeShare } from "@/utils/capabilities";
+import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
 
@@ -28,6 +30,7 @@ function ScriptureImageContent({
   onNavigate
 }: ScriptureImagePageProps) {
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const { toast } = useToast();
 
   const [verseText, setVerseText] = useState(initialText);
   const [reference, setReference] = useState(initialReference);
@@ -119,6 +122,49 @@ function ScriptureImageContent({
     link.download = `${reference.replace(/\s+/g, "_")}.png`;
     link.href = canvasRef.current.toDataURL("image/png");
     link.click();
+    toast({
+      title: "Image Downloaded",
+      description: "Your scripture image has been saved.",
+    });
+  };
+
+  const handleShare = async () => {
+    if (!canvasRef.current) return;
+    
+    try {
+      const blob = await new Promise<Blob>((resolve, reject) => {
+        canvasRef.current?.toBlob((blob) => {
+          if (blob) resolve(blob);
+          else reject(new Error("Failed to create image"));
+        }, "image/png");
+      });
+      
+      const file = new File([blob], `scripture-${reference.replace(/\s+/g, "_")}.png`, { type: "image/png" });
+      
+      const shareData = {
+        title: reference,
+        text: `"${verseText}"\n\n— ${reference}`,
+        files: [file],
+      };
+      
+      const shared = await safeShare(shareData);
+      
+      if (shared) {
+        toast({
+          title: "Image Shared",
+          description: "Your scripture image has been shared.",
+        });
+      } else {
+        handleDownload();
+      }
+    } catch (err) {
+      console.error("Share failed:", err);
+      toast({
+        title: "Share Unavailable",
+        description: "Downloading image instead.",
+      });
+      handleDownload();
+    }
   };
 
   const handleBackgroundChange = (id: string) => {
@@ -176,7 +222,7 @@ function ScriptureImageContent({
         <Card className="bg-slate-900 border-slate-800">
           <CardHeader>
             <CardTitle className="text-sm text-slate-200">
-              Preview (1290 x 2796)
+              Your Image
             </CardTitle>
           </CardHeader>
           <CardContent className="flex flex-col items-center gap-3">
@@ -199,12 +245,22 @@ function ScriptureImageContent({
             <div className="flex gap-2">
               <Button 
                 size="sm" 
+                onClick={handleShare} 
+                disabled={!verseText || !reference}
+                data-testid="button-share"
+              >
+                <Share2 className="w-4 h-4 mr-1" />
+                Share
+              </Button>
+              <Button 
+                size="sm" 
+                variant="outline"
                 onClick={handleDownload} 
                 disabled={!verseText || !reference}
                 data-testid="button-download"
               >
                 <Download className="w-4 h-4 mr-1" />
-                Download PNG
+                Download
               </Button>
             </div>
           </CardContent>
