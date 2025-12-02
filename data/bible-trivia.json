@@ -333,7 +333,9 @@
       "Exodus",
       "Numbers"
     ],
-    "correctIndex": 0
+    "correctIndex": 2,
+    "reference": "Exodus 20:1-17",
+    "explanation": "God gave the Ten Commandments to Moses on Mount Sinai, recorded in Exodus 20."
   },
   {
     "id": "beginner-1763658041919-3",
