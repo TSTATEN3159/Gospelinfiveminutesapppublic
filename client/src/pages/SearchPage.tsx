@@ -15,6 +15,59 @@ import { useTranslations } from "@/lib/translations";
 import { useToast } from "@/hooks/use-toast";
 import { Capacitor } from '@capacitor/core';
 
+const APP_STORE_URL = 'https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791';
+
+async function shareAppWithIcon(toast: any): Promise<'shared' | 'copied' | 'cancelled' | 'failed'> {
+  const shareData = {
+    title: 'The Gospel in 5 Minutes',
+    text: 'Download The Gospel in 5 Minutes app - daily Bible verses and spiritual guidance!',
+    url: APP_STORE_URL
+  };
+
+  try {
+    const iconResponse = await fetch('/icon-512.png');
+    if (iconResponse.ok) {
+      const iconBlob = await iconResponse.blob();
+      const iconFile = new File([iconBlob], 'gospel-app-icon.png', { type: 'image/png' });
+      
+      if (navigator.canShare && navigator.canShare({ files: [iconFile] })) {
+        await navigator.share({
+          ...shareData,
+          files: [iconFile]
+        });
+        return 'shared';
+      }
+    }
+  } catch (err) {
+    console.log('File share not supported, falling back to URL share');
+  }
+
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+      return 'shared';
+    } catch (err) {
+      return 'cancelled';
+    }
+  } else {
+    try {
+      await navigator.clipboard.writeText(APP_STORE_URL);
+      toast({
+        title: "Link copied!",
+        description: "App Store link copied to clipboard successfully.",
+      });
+      return 'copied';
+    } catch (err) {
+      toast({
+        title: "Copy failed",
+        description: "Unable to copy link. Please try again.",
+        variant: "destructive",
+      });
+      return 'failed';
+    }
+  }
+}
+
 interface SearchPageProps {
   onNavigate?: (page: string, searchQuery?: string) => void;
   streakDays?: number;
@@ -94,19 +147,7 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
             className="flex items-center gap-1 bg-emerald-600 hover:bg-emerald-700 text-white px-2.5 py-1.5 rounded-md text-xs font-medium shadow-sm hover:shadow-md transition-all ios-tap-target"
             data-testid="button-share-search"
             aria-label="Share The Gospel in 5 Minutes with friends"
-            onClick={() => {
-              if (navigator.share) {
-                navigator.share({
-                  title: 'The Gospel in 5 Minutes',
-                  text: 'Download The Gospel in 5 Minutes app - daily Bible verses and spiritual guidance!',
-                  url: 'https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791'
-                }).catch(console.error);
-              } else {
-                navigator.clipboard.writeText('https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791').then(() => {
-                  console.log('Link copied to clipboard');
-                }).catch(console.error);
-              }
-            }}
+            onClick={() => shareAppWithIcon(toast)}
           >
             <Share className="w-3.5 h-3.5" aria-hidden="true" />
             <span>Share</span>
@@ -180,34 +221,7 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
                 {/* CTA Button */}
                 <div className="pt-2">
                   <Button
-                    onClick={async () => {
-                      if (navigator.share) {
-                        try {
-                          await navigator.share({
-                            title: 'The Gospel in 5 Minutes',
-                            text: 'Download The Gospel in 5 Minutes app - daily Bible verses and spiritual guidance!',
-                            url: 'https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791'
-                          });
-                        } catch (err) {
-                          // User cancelled sharing or sharing not supported
-                        }
-                      } else {
-                        // Fallback for browsers that don't support Web Share API
-                        try {
-                          await navigator.clipboard.writeText('https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791');
-                          toast({
-                            title: "Link copied!",
-                            description: "App Store link copied to clipboard successfully.",
-                          });
-                        } catch (err) {
-                          toast({
-                            title: "Copy failed",
-                            description: "Unable to copy link. Please try again.",
-                            variant: "destructive",
-                          });
-                        }
-                      }
-                    }}
+                    onClick={() => shareAppWithIcon(toast)}
                     className="bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-black font-bold px-8 py-4 text-base shadow-2xl hover:shadow-xl transition-all duration-300 transform hover:scale-105"
                     data-testid="button-share-app-search"
                   >
