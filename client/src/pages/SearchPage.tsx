@@ -98,11 +98,11 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
               if (navigator.share) {
                 navigator.share({
                   title: 'The Gospel in 5 Minutes',
-                  text: 'Search for any Bible verse by reference with The Gospel in 5 Minutes app!',
-                  url: 'https://www.thegospelin5minutes.org'
+                  text: 'Download The Gospel in 5 Minutes app - daily Bible verses and spiritual guidance!',
+                  url: 'https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791'
                 }).catch(console.error);
               } else {
-                navigator.clipboard.writeText('https://www.thegospelin5minutes.org').then(() => {
+                navigator.clipboard.writeText('https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791').then(() => {
                   console.log('Link copied to clipboard');
                 }).catch(console.error);
               }
@@ -185,8 +185,8 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
                         try {
                           await navigator.share({
                             title: 'The Gospel in 5 Minutes',
-                            text: 'Get daily Bible verses and spiritual guidance with this amazing app!',
-                            url: 'https://www.thegospelin5minutes.org'
+                            text: 'Download The Gospel in 5 Minutes app - daily Bible verses and spiritual guidance!',
+                            url: 'https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791'
                           });
                         } catch (err) {
                           // User cancelled sharing or sharing not supported
@@ -194,10 +194,10 @@ export default function SearchPage({ onNavigate, streakDays = 0, language = "en"
                       } else {
                         // Fallback for browsers that don't support Web Share API
                         try {
-                          await navigator.clipboard.writeText('https://www.thegospelin5minutes.org');
+                          await navigator.clipboard.writeText('https://apps.apple.com/us/app/the-gospel-in-five-minutes/id6754119791');
                           toast({
                             title: "Link copied!",
-                            description: "App link copied to clipboard successfully.",
+                            description: "App Store link copied to clipboard successfully.",
                           });
                         } catch (err) {
                           toast({
