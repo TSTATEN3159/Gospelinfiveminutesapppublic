@@ -7,7 +7,6 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Slider } from "@/components/ui/slider";
 import { Download, Share2, Image as ImageIcon, Home, ArrowLeft } from "lucide-react";
-import { safeShare } from "@/utils/capabilities";
 import { useToast } from "@/hooks/use-toast";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { FeatureBoundary } from "@/components/FeatureBoundary";
@@ -190,22 +189,7 @@ function ScriptureImageContent({
         return;
       }
 
-      const file = new File([blob], fileName, { type: 'image/png' });
-
-      const shared = await safeShare({
-        title: reference,
-        text: shareText,
-        files: [file],
-      });
-
-      if (shared) {
-        toast({
-          title: 'Image Shared',
-          description: 'Your scripture image has been shared.',
-        });
-      } else {
-        handleDownload();
-      }
+      handleDownload();
     } catch (err) {
       console.error('Share failed:', err);
       toast({
